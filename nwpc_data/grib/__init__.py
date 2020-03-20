@@ -6,6 +6,8 @@ import xarray as xr
 from ._util import (
     _fill_parameter,
     _fill_level,
+    _fill_level_type,
+    _fill_level_value,
     _fill_index_path,
     _load_first_variable,
 )
@@ -14,14 +16,14 @@ from ._util import (
 def load_field_from_file(
         file_path: str or Path,
         parameter: str or typing.Dict,
-        level_type: str or int,
+        level_type: str,
         level: int,
         with_index: str or bool = False,
 ) -> xr.DataArray or None:
     """
     Load **one** field from GRIB2 file.
 
-    This function will load the first variable fitting searching conditions.
+    This function loads the first variable fitting searching conditions.
 
     Parameters
     ----------
@@ -34,7 +36,7 @@ def load_field_from_file(
             - discipline
             - parameterCategory
             - parameterNumber
-    level_type: str or int
+    level_type: str
         level type, see typeOfLevel key using grib_ls of ecCodes.
     level: int
         level value.
@@ -147,12 +149,87 @@ def load_field_from_file(
 
 
     """
+    data_set = load_fields_from_file(
+        file_path=file_path,
+        parameter=parameter,
+        level_type=level_type,
+        level=level,
+        with_index=with_index
+    )
+
+    if data_set is None:
+        return None
+
+    return _load_first_variable(data_set)
+
+
+def load_fields_from_file(
+        file_path: str or Path,
+        parameter: str or typing.Dict = None,
+        level_type: str = None,
+        level: int = None,
+        with_index: str or bool = False,
+) -> xr.Dataset or None:
+    """
+    Load fields from GRIB2 file.
+
+    Parameters
+    ----------
+    file_path: str or Path
+        GRIB2 data file path
+    parameter: str or typing.Dict
+        see `load_field_from_file`
+    level_type: str
+        see `load_field_from_file`
+    level: int
+        see `load_field_from_file`
+    with_index: str or bool
+        see `load_field_from_file`
+
+    Returns
+    -------
+    xr.Dataset or None:
+        `xr.Dataset` if found, or None if not.
+
+    Examples
+    --------
+    >>> load_fields_from_file(
+    ...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
+    ...     parameter="t",
+    ...     level_type="isobaricInhPa",
+    ... )
+    <xarray.Dataset>
+    Dimensions:        (isobaricInhPa: 36, latitude: 720, longitude: 1440)
+    Coordinates:
+        time           datetime64[ns] ...
+        step           timedelta64[ns] ...
+      * isobaricInhPa  (isobaricInhPa) int64 1000 975 950 925 900 850 ... 5 4 3 2 1
+      * latitude       (latitude) float64 89.88 89.62 89.38 ... -89.38 -89.62 -89.88
+      * longitude      (longitude) float64 0.0 0.25 0.5 0.75 ... 359.2 359.5 359.8
+        valid_time     datetime64[ns] ...
+    Data variables:
+        t              (isobaricInhPa, latitude, longitude) float32 ...
+    Attributes:
+        GRIB_edition:            2
+        GRIB_centre:             babj
+        GRIB_centreDescription:  Beijing
+        GRIB_subCentre:          0
+        Conventions:             CF-1.7
+        institution:             Beijing
+        history:                 2020-03-20T08:15:39 GRIB to CDM+CF via cfgrib-0....
+
+    """
     filter_by_keys = {}
     read_keys = []
 
-    _fill_parameter(parameter, filter_by_keys, read_keys)
+    if parameter is not None:
+        _fill_parameter(parameter, filter_by_keys, read_keys)
 
-    _fill_level(level_type, level, filter_by_keys, read_keys)
+    if level_type is not None:
+        _fill_level_type(level_type, filter_by_keys, read_keys)
+
+    if level is not None:
+        _fill_level_value(level, filter_by_keys, read_keys)
 
     backend_kwargs = {
         "filter_by_keys": filter_by_keys
@@ -168,7 +245,4 @@ def load_field_from_file(
         backend_kwargs=backend_kwargs
     )
 
-    if data_set is None:
-        return None
-
-    return _load_first_variable(data_set)
+    return data_set

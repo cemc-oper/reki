@@ -31,6 +31,28 @@ def _fill_level(
     return filter_by_keys, read_keys
 
 
+def _fill_level_type(
+        level_type: str,
+        filter_by_keys: typing.Dict,
+        read_keys: typing.List
+) -> typing.Tuple[typing.Dict, typing.List]:
+    filter_by_keys.update({
+        "typeOfLevel": level_type,
+    })
+    return filter_by_keys, read_keys
+
+
+def _fill_level_value(
+        level: int,
+        filter_by_keys: typing.Dict,
+        read_keys: typing.List
+) -> typing.Tuple[typing.Dict, typing.List]:
+    filter_by_keys.update({
+        "level": level,
+    })
+    return filter_by_keys, read_keys
+
+
 def _fill_index_path(
         with_index: str or bool,
         backend_kwargs: typing.Dict,
