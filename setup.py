@@ -47,6 +47,7 @@ setup(
         "numpy",
         "cfgrib",
         "xarray",
+        "eccodes-python",
     ],
 
     extras_require={
