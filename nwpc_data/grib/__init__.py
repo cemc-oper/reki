@@ -7,7 +7,7 @@ import cfgrib
 
 def load_field_from_file(
         file_path: str or Path,
-        param: str or typing.Dict,
+        parameter: str or typing.Dict,
         level_type: str or int,
         level: int,
         with_index: str or bool = False,
@@ -21,7 +21,7 @@ def load_field_from_file(
     ----------
     file_path: str or Path
         GRIB2 file path
-    param: str or typing.Dict
+    parameter: str or typing.Dict
         parameter identifier. support two types:
         - str: parameter name, see shortName key using grib_ls of ecCodes.
         - typing.Dict: parameter keys, including:
@@ -47,7 +47,7 @@ def load_field_from_file(
     Read 850hPa temperature from a GRAEPS GFS grib2 file.
     >>> load_field_from_file(
    ...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
-   ...     param="t",
+   ...     parameter="t",
    ...     level_type="isobaricInhPa",
    ...     level=850,
    ... )
@@ -94,7 +94,7 @@ def load_field_from_file(
     Load a filed without shortName.
     >>> load_field_from_file(
     ...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
-    ...     param={
+    ...     parameter={
     ...         "discipline": 0,
     ...         "parameterCategory": 2,
     ...         "parameterNumber": 225,
@@ -143,18 +143,10 @@ def load_field_from_file(
     """
     filter_by_keys = {}
     read_keys = []
-    if isinstance(param, str):
-        filter_by_keys["shortName"] = param
-    elif isinstance(param, typing.Dict):
-        filter_by_keys.update(param)
-        read_keys.extend(param.keys())
-    else:
-        raise ValueError(f"param is not supported: {param}")
 
-    filter_by_keys.update({
-        "typeOfLevel": level_type,
-        "level": level,
-    })
+    _fill_parameter(parameter, filter_by_keys, read_keys)
+
+    _fill_level(level_type, level, filter_by_keys, read_keys)
 
     backend_kwargs = {
         "filter_by_keys": filter_by_keys
@@ -162,17 +154,60 @@ def load_field_from_file(
     if len(read_keys) > 0:
         backend_kwargs["read_keys"] = read_keys
 
-    if isinstance(with_index, str):
-        backend_kwargs["indexpath"] = with_index
-    elif isinstance(with_index, bool):
-        if not with_index:
-            backend_kwargs["indexpath"] = ""
+    _fill_index_path(with_index, backend_kwargs)
 
     data_set = xr.open_dataset(
         file_path,
         engine="cfgrib",
         backend_kwargs=backend_kwargs
     )
+
     if data_set is None:
         return None
-    return data_set[list(data_set.data_vars)[0]]
+
+    return _load_first_variable(data_set)
+
+
+def _fill_parameter(
+        parameter: str or dict,
+        filter_by_keys: dict,
+        read_keys: typing.List
+) -> typing.Tuple[typing.Dict, typing.List]:
+    if isinstance(parameter, str):
+        filter_by_keys["shortName"] = parameter
+    elif isinstance(parameter, typing.Dict):
+        filter_by_keys.update(parameter)
+        read_keys.extend(parameter.keys())
+    else:
+        raise ValueError(f"parameter is not supported: {parameter}")
+    return filter_by_keys, read_keys
+
+
+def _fill_level(
+        level_type: str,
+        level: int,
+        filter_by_keys: typing.Dict,
+        read_keys: typing.List
+) -> typing.Tuple[typing.Dict, typing.List]:
+    filter_by_keys.update({
+        "typeOfLevel": level_type,
+        "level": level,
+    })
+    return filter_by_keys, read_keys
+
+
+def _fill_index_path(
+        with_index: str or bool,
+        backend_kwargs: typing.Dict,
+) -> typing.Dict:
+    if isinstance(with_index, str):
+        backend_kwargs["indexpath"] = with_index
+    elif isinstance(with_index, bool):
+        if not with_index:
+            backend_kwargs["indexpath"] = ""
+    return backend_kwargs
+
+
+def _load_first_variable(data_set: xr.Dataset) -> xr.DataArray:
+    first_variable_name = list(data_set.data_vars)[0]
+    return data_set[first_variable_name]
