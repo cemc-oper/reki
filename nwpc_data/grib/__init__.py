@@ -21,7 +21,7 @@ def load_field_from_file(
         with_index: str or bool = False,
 ) -> xr.DataArray or None:
     """
-    Load **one** field from GRIB2 file.
+    Load **one** field from GRIB2 file using [ecmwf/cfgrib](https://github.com/ecmwf/cfgrib).
 
     This function loads the first data fitting searching conditions.
 
@@ -171,7 +171,7 @@ def load_fields_from_file(
         with_index: str or bool = False,
 ) -> xr.Dataset or None:
     """
-    Load fields from GRIB2 file.
+    Load fields from GRIB2 file using [ecmwf/cfgrib](https://github.com/ecmwf/cfgrib).
 
     Parameters
     ----------
