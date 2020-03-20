@@ -119,7 +119,7 @@ jspm_packages
 # for develop
 playground/
 
-# for spark param --py-files
+# for spark parameter --py-files
 *.zip
 
 # celery
