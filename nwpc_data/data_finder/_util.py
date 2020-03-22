@@ -3,6 +3,7 @@ import typing
 from pathlib import Path
 
 import pandas as pd
+from jinja2 import Template
 
 
 def get_hour(forecast_time: pd.Timedelta) -> int:
@@ -27,8 +28,9 @@ class TimeVars(object):
 def generate_template_parser(start_time, forecast_time):
     time_vars = TimeVars(start_time=start_time, forecast_time=forecast_time)
 
-    def parse_template(template):
-        return template.format(time_vars=time_vars)
+    def parse_template(template_content):
+        template = Template(template_content)
+        return template.render(time_vars=time_vars)
 
     return parse_template
 
@@ -44,9 +46,9 @@ def check_level(path_level, level: str or typing.List):
 
 def find_file(config: dict, start_time, forecast_time, level: str or typing.List) -> Path or None:
     parse_template = generate_template_parser(start_time, forecast_time)
-    file_name = parse_template(config['file_name'])
+    file_name = parse_template(config["file_name"])
     file_path = None
-    paths = config['paths']
+    paths = config["paths"]
     for a_path_object in paths:
         path_level = a_path_object["level"]
         if not check_level(path_level, level):

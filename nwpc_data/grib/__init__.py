@@ -2,6 +2,7 @@ from pathlib import Path
 import typing
 
 import xarray as xr
+from loguru import logger
 
 from ._util import (
     _fill_parameter,

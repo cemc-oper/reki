@@ -48,6 +48,8 @@ setup(
         "cfgrib",
         "xarray",
         "eccodes-python",
+        "loguru",
+        "jinja2",
     ],
 
     extras_require={
