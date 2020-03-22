@@ -13,10 +13,49 @@ def find_local_file(
         data_type: str,
         start_time: str or pd.Timestamp or datetime.datetime,
         forecast_time: str or pd.Timedelta,
+        data_level: str = "archive",
         config_dir: str or Path or None = None,
-        level: str = "archive",
-):
+) -> Path or None:
     """Find local data path using config files in config dir.
+
+    Parameters
+    ----------
+    data_type: str
+        data type, relative path of config file to `config_dir` without suffix.
+        For example grapes_gfs_gmf/grib2/orig means using config file `{config_dir}/grapes_gfs_gmf/grib2/orig.yaml`.
+    start_time: str or pd.Timestamp or datetime.datetime
+        start time of production. YYYYMMDDHH if str.
+    forecast_time: str or pd.Timedelta
+        forecast time of production. A string (such as `3h`) will be parsed by `pd.to_timedelta`.
+    data_level: str
+        data storage level, ["archive", "runtime", ... ], default is archive.
+    config_dir: str or Path or None
+        config root directory. If None, use embedded config files in `conf` directory.
+
+    Returns
+    -------
+    Path or None
+        file path if found or None if not.
+
+    Examples
+    --------
+    Find an existing orig grib2 file of GRAPES GFS.
+
+    >>> find_local_file(
+    ...     "grapes_gfs_gmf/grib2/orig",
+    ...     start_time="2020032100",
+    ...     forecast_time="3h",
+    ... )
+    /g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020032021/ORIG/gmf.gra.2020032100003.grb2
+
+    Find a non-existing orig grib2 file of GRAPES GFS.
+    >>> find_local_file(
+    ...     "grapes_gfs_gmf/grib2/orig",
+    ...     start_time="2020032100",
+    ...     forecast_time="1h",
+    ... )
+    None
+
     """
     if config_dir is None:
         config_dir = get_default_local_config_path()
@@ -31,5 +70,5 @@ def find_local_file(
         start_time = pd.to_datetime(start_time, format="%Y%m%d%H")
 
     config = load_config(config_file_path)
-    file_path = find_file(config, start_time, forecast_time, level)
+    file_path = find_file(config, start_time, forecast_time, data_level)
     return file_path
