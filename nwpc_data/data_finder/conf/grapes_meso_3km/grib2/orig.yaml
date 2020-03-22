@@ -1,0 +1,13 @@
+# grapes meso 3km
+#   grib2 orig
+
+file_name: rmf.hgra.{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}.grb2
+
+paths:
+  - type: local
+    level: runtime
+    path: /g2/nwp_pd/NWP_GRAPES_MESO_3KM_POST_DATA/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/togrib2/output
+
+  - type: local
+    level: archive
+    path: /g1/COMMONDATA/OPER/NWPC/GRAPES_MESO_3KM/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/ORIG
