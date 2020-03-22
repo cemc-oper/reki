@@ -1,8 +1,6 @@
 # gmf grapes gfs
 #   grib2 orig
 
-default: NOTFOUND
-
 file_name: gmf.gra.{time_vars.Year}{time_vars.Month}{time_vars.Day}{time_vars.Hour}{time_vars.Forecast}.grb2
 
 paths:
