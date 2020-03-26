@@ -43,12 +43,13 @@ setup(
 
     install_requires=[
         "pyyaml",
-        "pandas",
-        "numpy",
-        "cfgrib",
-        "xarray",
-        "eccodes-python",
         "jinja2",
+        "numpy",
+        "pandas",
+        "xarray",
+        "cfgrib",
+        "eccodes-python",
+        "dask",
     ],
 
     extras_require={
