@@ -12,8 +12,9 @@ from nwpc_data.data_finder._util import find_file
 def find_local_file(
         data_type: str,
         start_time: str or pd.Timestamp or datetime.datetime,
-        forecast_time: str or pd.Timedelta,
+        forecast_time: str or pd.Timedelta = "0",
         data_level: str = "archive",
+        path_type: str = "local",
         config_dir: str or Path or None = None,
 ) -> Path or None:
     """Find local data path using config files in config dir.
@@ -22,13 +23,15 @@ def find_local_file(
     ----------
     data_type: str
         data type, relative path of config file to `config_dir` without suffix.
-        For example grapes_gfs_gmf/grib2/orig means using config file `{config_dir}/grapes_gfs_gmf/grib2/orig.yaml`.
+        For example 'grapes_gfs_gmf/grib2/orig' means using config file `{config_dir}/grapes_gfs_gmf/grib2/orig.yaml`.
     start_time: str or pd.Timestamp or datetime.datetime
         start time of production. YYYYMMDDHH if str.
     forecast_time: str or pd.Timedelta
         forecast time of production. A string (such as `3h`) will be parsed by `pd.to_timedelta`.
     data_level: str
-        data storage level, ["archive", "runtime", ... ], default is archive.
+        data storage level, ["archive", "runtime", "storage", ... ], default is archive.
+    path_type: str
+        path type, ["local", "storage", ...], for future usage.
     config_dir: str or Path or None
         config root directory. If None, use embedded config files in `conf` directory.
 
@@ -55,6 +58,15 @@ def find_local_file(
     ...     forecast_time="1h",
     ... )
     None
+
+    Find a grib2 file in storage for GRAPES MESO 3km.
+    >>> find_local_file(
+    ...     "grapes_meso_3km/grib2/orig",
+    ...     start_time="2020032100",
+    ...     forecast_time="1h",
+    ...     data_level="storage",
+    ... )
+    /sstorage1/COMMONDATA/OPER/NWPC/GRAPES_MESO_3KM/Prod-grib/2020032021/ORIG/rmf.hgra.2020032100001.grb2
 
     """
     if config_dir is None:
