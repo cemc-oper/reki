@@ -53,7 +53,7 @@ def load_field_from_file(
     Examples
     --------
     Read 850hPa temperature from a GRAEPS GFS grib2 file.
-    >>> load_field_from_file(
+    >>> load_message_from_file(
    ...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
    ...     parameter="t",
    ...     level_type="isobaricInhPa",
@@ -100,7 +100,7 @@ def load_field_from_file(
         standard_name:                            air_temperature
 
     Load a filed without shortName.
-    >>> load_field_from_file(
+    >>> load_message_from_file(
     ...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
     ...     parameter={
     ...         "discipline": 0,
@@ -178,13 +178,13 @@ def load_fields_from_file(
     file_path: str or Path
         GRIB2 data file path
     parameter: str or typing.Dict
-        see `load_field_from_file`
+        see `load_message_from_file`
     level_type: str
-        see `load_field_from_file`
+        see `load_message_from_file`
     level: int
-        see `load_field_from_file`
+        see `load_message_from_file`
     with_index: str or bool
-        see `load_field_from_file`
+        see `load_message_from_file`
 
     Returns
     -------
@@ -193,7 +193,7 @@ def load_fields_from_file(
 
     Examples
     --------
-    >>> load_fields_from_file(
+    >>> load_messages_from_file(
     ...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
     ...     parameter="t",
     ...     level_type="isobaricInhPa",

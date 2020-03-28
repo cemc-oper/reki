@@ -10,7 +10,7 @@ from nwpc_data.grib.eccodes._util import (
 )
 
 
-def load_field_from_file(
+def load_message_from_file(
         file_path: str or Path,
         parameter: str or typing.Dict,
         level_type: str,
@@ -47,7 +47,7 @@ def load_field_from_file(
     Examples
     --------
     Load 850hPa temperature from GRAPES GFS and get values from GRIB message.
-    >>> t = load_field_from_file(
+    >>> t = load_message_from_file(
     ... file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
     ... parameter="t",
     ... level_type="isobaricInhPa",
@@ -93,7 +93,7 @@ def load_field_from_file(
         return None
 
 
-def load_fields_from_file(
+def load_messages_from_file(
         file_path: str or Path,
         parameter: str or typing.Dict,
         level_type: str or typing.List or None = None,
