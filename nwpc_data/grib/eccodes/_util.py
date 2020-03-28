@@ -3,12 +3,27 @@ import typing
 import eccodes
 
 
+def _check_message(
+        message_id,
+        parameter: str or typing.Dict,
+        level_type: str or typing.List[str] or None,
+        level: int or typing.List[int] or None,
+) -> bool:
+    if not _check_parameter(message_id, parameter):
+        return False
+    if not _check_level_type(message_id, level_type):
+        return False
+    if not _check_level_value(message_id, level):
+        return False
+    return True
+
+
 def _check_parameter(message_id, parameter: str or typing.Dict) -> bool:
     if isinstance(parameter, str):
         short_name = eccodes.codes_get(message_id, "shortName")
         return short_name == parameter
     elif isinstance(parameter, typing.Dict):
-        for key, value in parameter:
+        for key, value in parameter.items():
             if eccodes.codes_get(message_id, key) != value:
                 return False
         return True
