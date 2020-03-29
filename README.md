@@ -4,11 +4,14 @@ Load GRIB2 data using [cfgrib](https://github.com/ecmwf/cfgrib) or [eccodes-pyth
 
 ## Installation
 
-Clone or download the latest source code from GitHub and install using `pip`:
+Download the latest source code from GitHub and install using `pip`:
 
 ```bash
 pip install .
 ```
+
+`nwpc-data` uses ecCodes to decode GRIB files (which is needed by `cfgrib` and `eccodes-python`). 
+Please install ecCodes through conda or other package source.
 
 ## Getting started
 
@@ -185,9 +188,9 @@ Attributes:
     units:                           K
 ```
 
-`eccodes` engine also provides some function to load message from GRIB2 file.
+`eccodes` engine also provides some functions to load message from GRIB2 file.
 
-`nwpc_data.eccodes.load_message_from_file` return a GRIB handler.
+`nwpc_data.eccodes.load_message_from_file` returns a GRIB handler.
 Users can use it to get attrs or values using `eccodes-python`.
 
 For example, load 850hPa temperature from GRAPES GFS and get values from GRIB message.
