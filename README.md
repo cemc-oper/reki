@@ -1,6 +1,6 @@
 # nwpc-data
 
-Load GRIB2 data using [cfgrib](https://github.com/ecmwf/cfgrib).
+Load GRIB2 data using [cfgrib](https://github.com/ecmwf/cfgrib) or [eccodes-python](https://github.com/ecmwf/eccodes-python).
 
 ## Installation
 
@@ -116,6 +116,68 @@ Attributes:
     GRIB_parameterNumber:                     225
     long_name:                                original GRIB paramId: 0
     units:                                    1
+```
+
+### Engines
+
+`nwpc-data` loads GRIB2 file using `cfgrib` by default.
+If you care about loading speed with `cfgrib`, please use `eccodes-python` with option `engine="eccodes"`, 
+in which GRIB2 message is loaded by `eccodes-python` and converted into `xarray.DataArray` by `nwpc-data`.
+
+```pycon
+>>> load_field_from_file(
+...     file_path="/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
+...     parameter="t",
+...     level_type="isobaricInhPa",
+...     level=850,
+...     engine="eccodes",
+... )
+<xarray.DataArray (latitude: 720, longitude: 1440)>
+array([[249.19234375, 249.16234375, 249.16234375, ..., 249.15234375,
+        249.19234375, 249.14234375],
+       [249.45234375, 249.45234375, 249.42234375, ..., 249.45234375,
+        249.44234375, 249.44234375],
+       [249.69234375, 249.68234375, 249.68234375, ..., 249.70234375,
+        249.67234375, 249.68234375],
+       ...,
+       [235.33234375, 235.45234375, 235.62234375, ..., 235.47234375,
+        235.63234375, 235.48234375],
+       [235.78234375, 235.91234375, 235.64234375, ..., 235.80234375,
+        235.72234375, 235.82234375],
+       [235.66234375, 235.86234375, 235.82234375, ..., 235.85234375,
+        235.68234375, 235.70234375]])
+Coordinates:
+  * latitude   (latitude) float64 89.88 89.62 89.38 ... -89.38 -89.62 -89.88
+  * longitude  (longitude) float64 0.0 0.25 0.5 0.75 ... 359.0 359.2 359.5 359.8
+Attributes:
+    GRIB_edition:                    2
+    GRIB_centre:                     babj
+    GRIB_subCentre:                  0
+    GRIB_tablesVersion:              4
+    GRIB_localTablesVersion:         1
+    GRIB_dataType:                   fc
+    GRIB_dataDate:                   20200318
+    GRIB_dataTime:                   0
+    GRIB_step:                       105
+    GRIB_stepType:                   instant
+    GRIB_stepUnits:                  1
+    GRIB_stepRange:                  105
+    GRIB_name:                       Temperature
+    GRIB_shortName:                  t
+    GRIB_cfName:                     air_temperature
+    GRIB_discipline:                 0
+    GRIB_parameterCategory:          0
+    GRIB_parameterNumber:            0
+    GRIB_gridType:                   regular_ll
+    GRIB_gridDefinitionDescription:  Latitude/longitude 
+    GRIB_typeOfFirstFixedSurface:    pl
+    GRIB_typeOfLevel:                isobaricInhPa
+    GRIB_level:                      850
+    GRIB_numberOfPoints:             1036800
+    GRIB_missingValue:               9999
+    GRIB_units:                      K
+    long_name:                       Temperature
+    units:                           K
 ```
 
 ## Examples
