@@ -118,11 +118,16 @@ Attributes:
     units:                                    1
 ```
 
-### Engines
+## Engines
 
 `nwpc-data` loads GRIB2 file using `cfgrib` by default.
+
+### eccodes-python
+
 If you care about loading speed with `cfgrib`, please use `eccodes-python` with option `engine="eccodes"`, 
 in which GRIB2 message is loaded by `eccodes-python` and converted into `xarray.DataArray` by `nwpc-data`.
+
+**WARNING**: This feature is under construction.
 
 ```pycon
 >>> load_field_from_file(
@@ -179,6 +184,40 @@ Attributes:
     long_name:                       Temperature
     units:                           K
 ```
+
+`eccodes` engine also provides some function to load message from GRIB2 file.
+
+`nwpc_data.eccodes.load_message_from_file` return a GRIB handler.
+Users can use it to get attrs or values using `eccodes-python`.
+
+For example, load 850hPa temperature from GRAPES GFS and get values from GRIB message.
+
+```pycon
+>>> t = load_message_from_file(
+... file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
+... parameter="t",
+... level_type="isobaricInhPa",
+... level=850,
+... )
+>>> data = eccodes.codes_get_double_array(t, "values")
+>>> data = data.reshape([720, 1440])
+>>> data
+array([[249.19234375, 249.16234375, 249.16234375, ..., 249.15234375,
+    249.19234375, 249.14234375],
+   [249.45234375, 249.45234375, 249.42234375, ..., 249.45234375,
+    249.44234375, 249.44234375],
+   [249.69234375, 249.68234375, 249.68234375, ..., 249.70234375,
+    249.67234375, 249.68234375],
+   ...,
+   [235.33234375, 235.45234375, 235.62234375, ..., 235.47234375,
+    235.63234375, 235.48234375],
+   [235.78234375, 235.91234375, 235.64234375, ..., 235.80234375,
+    235.72234375, 235.82234375],
+   [235.66234375, 235.86234375, 235.82234375, ..., 235.85234375,
+    235.68234375, 235.70234375]])
+```
+
+**NOTE**: Please release the handler using `eccodes.codes_release` manually.
 
 ## Examples
 
