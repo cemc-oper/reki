@@ -16,6 +16,7 @@ def find_local_file(
         data_level: str = "archive",
         path_type: str = "local",
         config_dir: str or Path or None = None,
+        **kwargs,
 ) -> Path or None:
     """Find local data path using config files in config dir.
 
@@ -34,6 +35,8 @@ def find_local_file(
         path type, ["local", "storage", ...], for future usage.
     config_dir: str or Path or None
         config root directory. If None, use embedded config files in `conf` directory.
+    kwargs:
+        other options needed by path template. All of them will be added into `query_vars`.
 
     Returns
     -------
@@ -68,6 +71,16 @@ def find_local_file(
     ... )
     /sstorage1/COMMONDATA/OPER/NWPC/GRAPES_MESO_3KM/Prod-grib/2020032021/ORIG/rmf.hgra.2020032100001.grb2
 
+    Find a grib2 file in storage for GRAPES GEPS.
+    >>> find_local_file(
+    ...     "grapes_geps/grib2/orig",
+    ...     start_time="2020032100",
+    ...     forecast_time="3h",
+    ...     data_level="storage",
+    ...     number=1,
+    ... )
+    /sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GEPS/Prod-grib/2020032100/grib2/gef.gra.001.2020032100003.grb2
+
     """
     if config_dir is None:
         config_dir = get_default_local_config_path()
@@ -82,5 +95,5 @@ def find_local_file(
         start_time = pd.to_datetime(start_time, format="%Y%m%d%H")
 
     config = load_config(config_file_path)
-    file_path = find_file(config, start_time, forecast_time, data_level)
+    file_path = find_file(config, start_time, forecast_time, data_level, **kwargs)
     return file_path

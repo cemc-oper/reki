@@ -44,11 +44,30 @@ Find a grib2 file in storage for GRAPES MESO 3km.
 /sstorage1/COMMONDATA/OPER/NWPC/GRAPES_MESO_3KM/Prod-grib/2020032021/ORIG/rmf.hgra.2020032100001.grb2
 ```
 
+Find a grib2 file for member 1 of GRAPES GEPS using `number=1`.
+
+```pycon
+>>> find_local_file(
+...     "grapes_geps/grib2/orig",
+...     start_time="2020032100",
+...     forecast_time="3h",
+...     data_level="storage",
+...     number=1,
+... )
+/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GEPS/Prod-grib/2020032100/grib2/gef.gra.001.2020032100003.grb2
+```
+
 ## Config
 
 An example config file is as follows:
 
 ```yaml
+query:
+  system: grapes_gfs_gmf
+  stream: oper
+  type: grib2
+  name: orig
+
 file_name: gmf.gra.{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}.grb2
 
 paths:

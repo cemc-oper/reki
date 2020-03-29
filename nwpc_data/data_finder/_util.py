@@ -25,12 +25,11 @@ class TimeVars(object):
         self.Hour4DV = start_date_time_4dvar.strftime("%H")
 
 
-def generate_template_parser(start_time, forecast_time):
-    time_vars = TimeVars(start_time=start_time, forecast_time=forecast_time)
+def generate_template_parser(time_vars, query_vars):
 
     def parse_template(template_content):
         template = Template(template_content)
-        return template.render(time_vars=time_vars)
+        return template.render(time_vars=time_vars, query_vars=query_vars)
 
     return parse_template
 
@@ -44,8 +43,13 @@ def check_level(path_level, level: str or typing.List):
         raise ValueError(f"level is not supported {level}")
 
 
-def find_file(config: dict, start_time, forecast_time, level: str or typing.List) -> Path or None:
-    parse_template = generate_template_parser(start_time, forecast_time)
+def find_file(config: dict, start_time, forecast_time, level: str or typing.List, **kwargs) -> Path or None:
+    query_vars = config["query"]
+    query_vars.update(kwargs)
+
+    time_vars = TimeVars(start_time=start_time, forecast_time=forecast_time)
+
+    parse_template = generate_template_parser(time_vars, query_vars)
     file_name = parse_template(config["file_name"])
     file_path = None
     paths = config["paths"]

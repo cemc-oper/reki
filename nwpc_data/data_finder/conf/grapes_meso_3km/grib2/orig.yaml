@@ -1,5 +1,8 @@
-# grapes meso 3km
-#   grib2 orig
+query:
+  system: grapes_meso_3km
+  stream: oper
+  type: grib2
+  name: orig
 
 file_name: rmf.hgra.{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}.grb2
 
