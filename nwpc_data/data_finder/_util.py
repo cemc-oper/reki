@@ -34,16 +34,22 @@ def generate_template_parser(time_vars, query_vars):
     return parse_template
 
 
-def check_level(path_level, level: str or typing.List):
-    if isinstance(level, str):
-        return path_level == level
-    elif isinstance(level, typing.List):
-        return path_level in level
+def check_data_level(data_level, required_level: str or typing.List):
+    if isinstance(required_level, str):
+        return data_level == required_level
+    elif isinstance(required_level, typing.List):
+        return data_level in required_level
     else:
-        raise ValueError(f"level is not supported {level}")
+        raise ValueError(f"level is not supported {required_level}")
 
 
-def find_file(config: dict, start_time, forecast_time, level: str or typing.List, **kwargs) -> Path or None:
+def find_file(
+        config: dict,
+        start_time: datetime.datetime or pd.Timestamp,
+        forecast_time: pd.Timedelta,
+        data_level: str or typing.List,
+        **kwargs
+) -> Path or None:
     query_vars = config["query"]
     query_vars.update(kwargs)
 
@@ -54,8 +60,8 @@ def find_file(config: dict, start_time, forecast_time, level: str or typing.List
     file_path = None
     paths = config["paths"]
     for a_path_object in paths:
-        path_level = a_path_object["level"]
-        if not check_level(path_level, level):
+        current_data_level = a_path_object["level"]
+        if not check_data_level(current_data_level, data_level):
             continue
 
         path_template = a_path_object["path"]
