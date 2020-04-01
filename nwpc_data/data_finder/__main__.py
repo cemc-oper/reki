@@ -23,10 +23,10 @@ def print_local_help(ctx, param, value):
     click.echo("\nDifferent steams use different additional options.\n")
 
     oper_parser = create_oper_option_parser()
-    click.echo(format_help(oper_parser))
+    click.echo(oper_parser.format_help())
 
     eps_parser = create_eps_option_parser()
-    click.echo(format_help(eps_parser))
+    click.echo(eps_parser.format_help())
 
     ctx.exit()
 
