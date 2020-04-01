@@ -8,12 +8,27 @@ from ._config import (
     find_config,
     load_config,
 )
-
 from ._util import find_file
 
 
 def main():
     cli()
+
+
+def print_local_help(ctx, param, value):
+    if value is False:
+        return
+    click.echo(ctx.get_help())
+
+    click.echo("\nDifferent steams use different additional options.\n")
+
+    oper_parser = create_oper_option_parser()
+    click.echo(format_help(oper_parser))
+
+    eps_parser = create_eps_option_parser()
+    click.echo(format_help(eps_parser))
+
+    ctx.exit()
 
 
 @click.group()
@@ -27,8 +42,16 @@ def cli():
 @click.option("--data-type", required=True, help="data type, such as grapes_gfs_gmf/grib2/orig")
 @click.option("--data-level", default="archive", type=click.Choice(["archive", "storage"]), help="data level")
 @click.option("--config-dir", default=None, help="config directory")
+@click.option(
+    "--help", "-h",
+    is_flag=True,
+    expose_value=False,
+    is_eager=True,
+    callback=print_local_help,
+    help="Show this message and exit.")
 @click.argument('query_args', nargs=-1, type=click.UNPROCESSED)
-def find_local(data_type, data_level, config_dir, query_args):
+@click.pass_context
+def find_local(ctx, data_type, data_level, config_dir, query_args):
     if config_dir is None:
         config_dir = get_default_local_config_path()
 
@@ -77,7 +100,11 @@ def find_eps_file(config: dict, data_level: str, query_args: tuple):
 
 
 def create_oper_option_parser():
-    parser = argparse.ArgumentParser(description='Parse options for stream oper.')
+    parser = argparse.ArgumentParser(
+        description='Additional options for stream oper.',
+        usage=None,
+        add_help=False
+    )
     parser.add_argument('--start-time', dest="start_time",
                         help='start time, such as YYYMMDDHH')
     parser.add_argument('--forecast-time', dest='forecast_time',
@@ -86,7 +113,11 @@ def create_oper_option_parser():
 
 
 def create_eps_option_parser():
-    parser = argparse.ArgumentParser(description='Parse options for stream oper.')
+    parser = argparse.ArgumentParser(
+        description='Additional options for stream eps.',
+        usage=None,
+        add_help=False
+    )
     parser.add_argument('--start-time', dest="start_time",
                         help='start time, such as YYYMMDDHH')
     parser.add_argument('--forecast-time', dest='forecast_time',
@@ -94,6 +125,27 @@ def create_eps_option_parser():
     parser.add_argument('--number', dest='number', type=int,
                         help='member number')
     return parser
+
+
+# copy from argparse module
+def format_help(parser: argparse.ArgumentParser):
+    formatter = parser._get_formatter()
+
+    # description
+    formatter.add_text(parser.description)
+
+    # positionals, optionals and user-defined groups
+    for action_group in parser._action_groups:
+        formatter.start_section(action_group.title)
+        formatter.add_text(action_group.description)
+        formatter.add_arguments(action_group._group_actions)
+        formatter.end_section()
+
+    # epilog
+    # formatter.add_text(parser.epilog)
+
+    # determine help from format above
+    return formatter.format_help()
 
 
 if __name__ == "__main__":
