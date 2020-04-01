@@ -9,7 +9,7 @@ file_name: "gef.gra.{{ '%.3d' | format(query_vars.number) }}.{{ time_vars.Year }
 paths:
   - type: local
     level: archive
-    path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GEPS/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/grib2'
+    path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_GEPS/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/grib2'
 
   - type: local
     level: storage
