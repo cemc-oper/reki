@@ -91,6 +91,29 @@ If other parameters are needed, put them in `query_vars`.
 Embedded config files are in `conf` directory. 
 Please use them if you are in CMA-PI HPC.
 
+## Command Line Tool
+
+Data finder also provides a module level CLI tool to find local files.
+
+The following command: 
+
+```shell script
+python -m nwpc_data.data_finder local \
+    --start-time "2020010100" \
+    --forecast-time "3h" \
+    --data-type="grapes_geps/grib2/orig" \
+    --data-level="storage" \
+    --number=1
+```
+
+will print GRIB2 file path for GRAPES GEPS member 1.
+
+```
+/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GEPS/Prod-grib/2020010100/grib2/gef.gra.001.2020010100003.grb2
+```
+
+If required file is not found, command will print `None`.
+
 ## Related projects
 
 Please visit [nwpc-oper/nwpc-data-client](https://github.com/nwpc-oper/nwpc-data-client) project.
