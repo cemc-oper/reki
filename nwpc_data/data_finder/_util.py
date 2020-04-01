@@ -6,43 +6,6 @@ import pandas as pd
 from jinja2 import Template
 
 
-def get_hour(forecast_time: pd.Timedelta) -> int:
-    return int(forecast_time.seconds/3600) + forecast_time.days * 24
-
-
-class TimeVars(object):
-    def __init__(self, start_time: datetime.datetime or pd.Timestamp, forecast_time: pd.Timedelta):
-        self.Year = start_time.strftime("%Y")
-        self.Month = start_time.strftime("%m")
-        self.Day = start_time.strftime("%d")
-        self.Hour = start_time.strftime("%H")
-        self.Forecast = f"{get_hour(forecast_time):03}"
-
-        start_date_time_4dvar = start_time - datetime.timedelta(hours=3)
-        self.Year4DV = start_date_time_4dvar.strftime("%Y")
-        self.Month4DV = start_date_time_4dvar.strftime("%m")
-        self.Day4DV = start_date_time_4dvar.strftime("%d")
-        self.Hour4DV = start_date_time_4dvar.strftime("%H")
-
-
-def generate_template_parser(time_vars, query_vars):
-
-    def parse_template(template_content):
-        template = Template(template_content)
-        return template.render(time_vars=time_vars, query_vars=query_vars)
-
-    return parse_template
-
-
-def check_data_level(data_level, required_level: str or typing.List):
-    if isinstance(required_level, str):
-        return data_level == required_level
-    elif isinstance(required_level, typing.List):
-        return data_level in required_level
-    else:
-        raise ValueError(f"level is not supported {required_level}")
-
-
 def find_file(
         config: dict,
         start_time: datetime.datetime or pd.Timestamp,
@@ -50,8 +13,12 @@ def find_file(
         data_level: str or typing.List,
         **kwargs
 ) -> Path or None:
-    query_vars = config["query"]
-    query_vars.update(kwargs)
+    query_vars = QueryVars()
+
+    for key in config["query"]:
+        setattr(query_vars, key, config["query"][key])
+    for key in kwargs:
+        setattr(query_vars, key, kwargs[key])
 
     time_vars = TimeVars(start_time=start_time, forecast_time=forecast_time)
 
@@ -72,3 +39,45 @@ def find_file(
             break
 
     return file_path
+
+
+def check_data_level(data_level, required_level: str or typing.List):
+    if isinstance(required_level, str):
+        return data_level == required_level
+    elif isinstance(required_level, typing.List):
+        return data_level in required_level
+    else:
+        raise ValueError(f"level is not supported {required_level}")
+
+
+def get_hour(forecast_time: pd.Timedelta) -> int:
+    return int(forecast_time.seconds/3600) + forecast_time.days * 24
+
+
+class QueryVars(object):
+    pass
+
+
+class TimeVars(object):
+    def __init__(self, start_time: datetime.datetime or pd.Timestamp, forecast_time: pd.Timedelta):
+        self.Year = start_time.strftime("%Y")
+        self.Month = start_time.strftime("%m")
+        self.Day = start_time.strftime("%d")
+        self.Hour = start_time.strftime("%H")
+        self.Forecast = f"{get_hour(forecast_time):03}"
+
+        start_date_time_4dvar = start_time - datetime.timedelta(hours=3)
+        self.Year4DV = start_date_time_4dvar.strftime("%Y")
+        self.Month4DV = start_date_time_4dvar.strftime("%m")
+        self.Day4DV = start_date_time_4dvar.strftime("%d")
+        self.Hour4DV = start_date_time_4dvar.strftime("%H")
+
+
+
+def generate_template_parser(time_vars, query_vars):
+
+    def parse_template(template_content):
+        template = Template(template_content)
+        return template.render(time_vars=time_vars, query_vars=query_vars)
+
+    return parse_template
