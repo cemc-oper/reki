@@ -55,7 +55,7 @@ def find_oper_file(config: dict, data_level: str, query_args: tuple):
     forecast_time = pd.to_timedelta(values["forecast_time"])
     start_time = pd.to_datetime(values["start_time"], format="%Y%m%d%H")
 
-    file_path = find_file(config, start_time, forecast_time, data_level)
+    file_path = find_file(config, data_level, start_time, forecast_time)
     if file_path is None:
         print("None")
     else:
@@ -72,7 +72,7 @@ def find_eps_file(config: dict, data_level: str, query_args: tuple):
     forecast_time = pd.to_timedelta(values["forecast_time"])
     start_time = pd.to_datetime(values["start_time"], format="%Y%m%d%H")
 
-    file_path = find_file(config, start_time, forecast_time, data_level, number=int(values["number"]))
+    file_path = find_file(config, data_level, start_time, forecast_time, number=int(values["number"]))
     if file_path is None:
         print("None")
     else:

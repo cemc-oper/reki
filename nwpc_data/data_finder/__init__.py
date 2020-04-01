@@ -95,5 +95,5 @@ def find_local_file(
         start_time = pd.to_datetime(start_time, format="%Y%m%d%H")
 
     config = load_config(config_file_path)
-    file_path = find_file(config, start_time, forecast_time, data_level, **kwargs)
+    file_path = find_file(config, data_level, start_time, forecast_time, **kwargs)
     return file_path

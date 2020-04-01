@@ -8,9 +8,9 @@ from jinja2 import Template
 
 def find_file(
         config: dict,
+        data_level: str or typing.List,
         start_time: datetime.datetime or pd.Timestamp,
         forecast_time: pd.Timedelta,
-        data_level: str or typing.List,
         **kwargs
 ) -> Path or None:
     query_vars = QueryVars()
