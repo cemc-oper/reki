@@ -128,7 +128,12 @@ def create_eps_option_parser():
 
 
 # copy from argparse module
-def format_help(parser: argparse.ArgumentParser):
+def _format_help(parser: argparse.ArgumentParser):
+    """
+    Notes
+    -----
+    This is an experimental function. Do not use it.
+    """
     formatter = parser._get_formatter()
 
     # description
