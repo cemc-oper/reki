@@ -52,6 +52,7 @@ setup(
         "cfgrib",
         "eccodes-python",
         "dask",
+        "click",
     ],
 
     extras_require={
