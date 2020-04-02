@@ -68,7 +68,7 @@ query:
   type: grib2
   name: orig
 
-file_name: g'mf.gra.{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}.grb2'
+file_name: 'gmf.gra.{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}.grb2'
 
 paths:
   - type: local
@@ -87,6 +87,11 @@ paths:
 `file_name` and `path` in `paths` are Jinja2 templates using variable `time_vars`.
 
 If other parameters are needed, put them in `query_vars`.
+For example, GRAPES GEPS needs member number to locate GRIB 2 file. `query_vars.number` is the member number.
+
+```yaml
+file_name: "gef.gra.{{ '%.3d' | format(query_vars.number) }}.{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}.grb2"
+```
 
 Embedded config files are in `conf` directory. 
 Please use them if you are in CMA-PI HPC.
