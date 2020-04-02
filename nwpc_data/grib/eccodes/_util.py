@@ -42,6 +42,13 @@ def _check_level_type(
         return message_type == level_type
     elif isinstance(level_type, typing.List):
         return message_type in level_type
+    elif isinstance(level_type, typing.Dict):
+        for key in level_type:
+            requested_value = level_type[key]
+            value = eccodes.codes_get(message_id, key, ktype=type(requested_value))
+            if requested_value != value:
+                return False
+        return True
     else:
         raise ValueError(f"level_type is not supported: {level_type}")
 
