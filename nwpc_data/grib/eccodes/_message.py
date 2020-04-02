@@ -9,6 +9,7 @@ from nwpc_data.grib.eccodes._util import (
     _check_level_value,
     _check_message,
 )
+from nwpc_data.grib._level import fix_level_type
 
 
 def load_message_from_file(
@@ -49,10 +50,10 @@ def load_message_from_file(
     --------
     Load 850hPa temperature from GRAPES GFS and get values from GRIB message.
     >>> t = load_message_from_file(
-    ... file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
-    ... parameter="t",
-    ... level_type="isobaricInhPa",
-    ... level=850,
+    ...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
+    ...     parameter="t",
+    ...     level_type="isobaricInhPa",
+    ...     level=850,
     ... )
     >>> data = eccodes.codes_get_double_array(t, "values")
     >>> data = data.reshape([720, 1440])
@@ -72,12 +73,13 @@ def load_message_from_file(
         235.68234375, 235.70234375]])
 
     """
+    fixed_level_type = fix_level_type(level_type)
     with open(file_path, "rb") as f:
         while True:
             message_id = eccodes.codes_grib_new_from_file(f)
             if message_id is None:
                 return None
-            if not _check_message(message_id, parameter, level_type, level):
+            if not _check_message(message_id, parameter, fixed_level_type, level):
                 eccodes.codes_release(message_id)
                 continue
 
