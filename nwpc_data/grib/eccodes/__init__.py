@@ -8,5 +8,7 @@ from ._xarray import (
 )
 
 from ._bytes import (
-    load_bytes_from_file
+    load_bytes_from_file,
+    create_message_from_bytes,
+    create_messages_from_bytes,
 )
