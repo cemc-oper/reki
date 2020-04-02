@@ -32,13 +32,17 @@ def _fill_level(
 
 
 def _fill_level_type(
-        level_type: str,
+        level_type: str or dict,
         filter_by_keys: typing.Dict,
         read_keys: typing.List
 ) -> typing.Tuple[typing.Dict, typing.List]:
-    filter_by_keys.update({
-        "typeOfLevel": level_type,
-    })
+    if isinstance(level_type, dict):
+        filter_by_keys.update(level_type)
+        read_keys.extend([key for key in level_type if key not in read_keys])
+    else:
+        filter_by_keys.update({
+            "typeOfLevel": level_type,
+        })
     return filter_by_keys, read_keys
 
 
