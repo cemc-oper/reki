@@ -1,6 +1,5 @@
 from pathlib import Path
 import typing
-import io
 
 import eccodes
 
@@ -15,9 +14,9 @@ def load_bytes_from_file(
         parameter: str or typing.Dict,
         level_type: str = None,
         level: int = None,
-) -> io.BytesIO or None:
+) -> bytes or None:
     """
-    Load one message from grib file and return a file-like io.BytesIO object.
+    Load one message from grib file and return message's original bytes.
 
     Parameters
     ----------
@@ -28,7 +27,24 @@ def load_bytes_from_file(
 
     Returns
     -------
-    io.BytesIO or None
+    bytes or None
+
+    Examples
+    --------
+    Load bytes of 850hPa temperature from GRAPES GFS GMF and create GRIB message using `eccodes.codes_new_from_message`.
+
+    >>> file_path = "/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2"
+    >>> message_bytes = load_bytes_from_file(
+    ...     file_path=file_path,
+    ...     parameter="t",
+    ...     level_type="pl",
+    ...     level=850,
+    ... )
+    >>> message = eccodes.codes_new_from_message(message_bytes)
+    >>> values = eccodes.codes_get_double_array(message, "values")
+    >>> print(len(values))
+    1036800
+
     """
     offset = 0
     fixed_level_type = fix_level_type(level_type)
@@ -42,10 +58,4 @@ def load_bytes_from_file(
                 eccodes.codes_release(message_id)
                 offset += length
                 continue
-            break
-
-    with open(file_path, "rb") as f:
-        f.seek(offset)
-        b = f.read(length)
-        message_bytes = io.BytesIO(b)
-        return message_bytes
+            return eccodes.codes_get_message(message_id)
