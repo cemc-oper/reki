@@ -3,8 +3,8 @@ from pathlib import Path
 import yaml
 
 
-def find_config(config_dir, data_type: str):
-    config_file_path = Path(config_dir, data_type+".yaml")
+def find_config(config_dir, data_type: str, data_class: str = "od"):
+    config_file_path = Path(config_dir, data_class, data_type+".yaml")
     if config_file_path.is_file():
         return config_file_path
     else:

@@ -15,6 +15,7 @@ def find_local_file(
         forecast_time: str or pd.Timedelta = "0",
         data_level: str = "archive",
         path_type: str = "local",
+        data_class: str = "od",
         config_dir: str or Path or None = None,
         **kwargs,
 ) -> Path or None:
@@ -33,6 +34,8 @@ def find_local_file(
         data storage level, ["archive", "runtime", "storage", ... ], default is archive.
     path_type: str
         path type, ["local", "storage", ...], for future usage.
+    data_class: str
+        data class, ``od`` means operation systems, for future usage.
     config_dir: str or Path or None
         config root directory. If None, use embedded config files in `conf` directory.
     kwargs:
@@ -85,7 +88,7 @@ def find_local_file(
     if config_dir is None:
         config_dir = get_default_local_config_path()
 
-    config_file_path = find_config(config_dir, data_type)
+    config_file_path = find_config(config_dir, data_type, data_class)
     if config_file_path is None:
         raise ValueError(f"data type is not found: {data_type}")
 
