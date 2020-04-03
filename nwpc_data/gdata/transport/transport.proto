@@ -1,0 +1,7 @@
+syntax = "proto2";
+
+package transport;
+
+message RawField {
+    required bytes raw_bytes = 1;
+}

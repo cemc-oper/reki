@@ -56,8 +56,12 @@ setup(
     ],
 
     extras_require={
-        'test': ['pytest'],
-        'cov': ['pytest-cov', 'codecov']
+        "gdata": [
+            "protobuf",
+            "requests",
+        ],
+        "test": ['pytest'],
+        "cov": ['pytest-cov', 'codecov']
     },
 
     entry_points={
