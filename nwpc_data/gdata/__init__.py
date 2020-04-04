@@ -33,11 +33,11 @@ def load_message(
 
     result = requests.post(url, json={
         "query": {
-            "data_class": data_class,
+            "class": data_class,
             "system": system,
             "stream": stream,
-            "data_type": data_type,
-            "data_name": data_name,
+            "type": data_type,
+            "name": data_name,
             "start_time": start_time,
             "forecast_time": forecast_time,
             "parameter": parameter,
