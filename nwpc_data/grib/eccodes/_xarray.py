@@ -5,7 +5,7 @@ import eccodes
 import numpy as np
 import xarray as xr
 
-from nwpc_data.grib.eccodes._util import (
+from ._util import (
     _check_message
 )
 

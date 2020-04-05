@@ -1,14 +1,21 @@
 # nwpc-data
 
-Load GRIB2 data using [cfgrib](https://github.com/ecmwf/cfgrib) or [eccodes-python](https://github.com/ecmwf/eccodes-python).
+Load GRIB2 data using [eccodes-python](https://github.com/ecmwf/eccodes-python)
+or [cfgrib](https://github.com/ecmwf/cfgrib).
 
 ## Installation
 
-Download the latest source code from GitHub and install using `pip`:
+Download the latest source code from GitHub and install using `pip`.
+
+**NOTE**: Installation script is not completed. 
+Please use `-e` option to install package in development mode.
 
 ```bash
-pip install .
+pip install -e .
 ```
+
+If you are using system python, such as apps/python/3.6.3/gnu on HPC CMA-PI,
+please use `--user` option to install on user directory.
 
 `nwpc-data` uses ecCodes to decode GRIB files (which is needed by `cfgrib` and `eccodes-python`). 
 Please install ecCodes through conda or other package source.
@@ -197,10 +204,10 @@ For example, load 850hPa temperature from GRAPES GFS and get values from GRIB me
 
 ```pycon
 >>> t = load_message_from_file(
-... file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
-... parameter="t",
-... level_type="isobaricInhPa",
-... level=850,
+...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
+...     parameter="t",
+...     level_type="isobaricInhPa",
+...     level=850,
 ... )
 >>> data = eccodes.codes_get_double_array(t, "values")
 >>> data = data.reshape([720, 1440])

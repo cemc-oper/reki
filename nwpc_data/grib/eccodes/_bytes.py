@@ -3,10 +3,10 @@ import typing
 
 import eccodes
 
-from nwpc_data.grib.eccodes._util import (
+from nwpc_data.grib._level import fix_level_type
+from ._util import (
     _check_message,
 )
-from nwpc_data.grib._level import fix_level_type
 
 
 def load_bytes_from_file(

@@ -12,7 +12,7 @@ def load_field_from_file(
         parameter: str or typing.Dict,
         level_type: str or typing.Dict = None,
         level: int = None,
-        engine: str = "cfgrib",
+        engine: str = "eccodes",
         **kwargs
 ) -> xr.DataArray or None:
     """

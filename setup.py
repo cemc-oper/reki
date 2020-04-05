@@ -39,7 +39,7 @@ setup(
 
     keywords='nwpc data grib2',
 
-    packages=find_packages(exclude=['docs', 'tests']),
+    packages=find_packages(exclude=['docs', 'tests', 'example']),
 
     include_package_data=True,
 
@@ -49,13 +49,15 @@ setup(
         "numpy",
         "pandas",
         "xarray",
-        "cfgrib",
         "eccodes-python",
         "dask",
         "click",
     ],
 
     extras_require={
+        "cfgrib": [
+            "cfgrib",
+        ],
         "gdata": [
             "protobuf",
             "requests",
