@@ -16,7 +16,7 @@ def load_field_from_file(
         **kwargs
 ) -> xr.DataArray or None:
     """
-    Load **one** field from GRIB2 file. Default engine is cfgrib.
+    Load **one** field from GRIB2 file. Default engine is eccodes.
 
     If loading speed is
 
@@ -28,7 +28,7 @@ def load_field_from_file(
         level type, pl, sfc, ml, or use ecCodes key `typeOfLevel`, or set ecCodes keys directly.
     level: int or None
     engine: str
-        cfgrib or eccodes
+        GRIB decoding engine, `eccodes` for eccodes-python or `cfgrib` for cfgrib
     kwargs: dict
         other parameters used by engine.
 
