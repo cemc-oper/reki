@@ -17,13 +17,14 @@ pip install -e .
 If you are using system python, such as apps/python/3.6.3/gnu on HPC CMA-PI,
 please use `--user` option to install on user directory.
 
-`nwpc-data` uses ecCodes to decode GRIB files (which is needed by `eccodes-python` and `cfgrib`). 
+`nwpc-data` uses ecCodes to decode GRIB files
+(which is needed by [eccodes-python](https://github.com/ecmwf/eccodes-python) and [cfgrib](https://github.com/ecmwf/cfgrib)). 
 Please install ecCodes through conda or other package source.
 
 ## Getting started
 
 `load_message_from_file` from `nwpc_data.eccodes` returns a GRIB handler.
-Users can use it to get attrs or values using `eccodes-python`.
+Users can use it to get attrs or values with functions from [eccodes-python](https://github.com/ecmwf/eccodes-python) .
 
 For example, load 850hPa temperature from GRAPES GFS and get values from GRIB message.
 
@@ -55,7 +56,8 @@ array([[249.19234375, 249.16234375, 249.16234375, ..., 249.15234375,
 **NOTE**: Please release the handler using `eccodes.codes_release` manually.
 
 `eccodes` engine also provides some functions to load array from GRIB2 file
-in which GRIB2 message is loaded by `eccodes-python` and converted into `xarray.DataArray` by `nwpc-data`.
+in which GRIB2 message is loaded by [eccodes-python](https://github.com/ecmwf/eccodes-python)
+and converted into `xarray.DataArray` by `nwpc-data`.
 
 **WARNING**: This feature is under construction.
 
@@ -117,11 +119,12 @@ Attributes:
 
 ## Engines
 
-`nwpc-data` loads GRIB2 file using `eccodes` by default and also supports cfgrib.
+`nwpc-data` loads GRIB2 file using `eccodes` by default and also supports `cfgrib`.
 
 ### cfgrib
 
-If you don't care about loading speed, please use cfgrib with option `engine="cfgrib"`.
+If you don't care about loading speed, please use [cfgrib](https://github.com/ecmwf/cfgrib) engine
+with option `engine="cfgrib"`.
 
 Please install cfgrib before using this engine.
 
