@@ -40,7 +40,7 @@ def cli():
     ignore_unknown_options=True,
 ))
 @click.option("--data-type", required=True, help="data type, such as grapes_gfs_gmf/grib2/orig")
-@click.option("--data-level", default="archive", type=click.Choice(["archive", "storage"]), help="data level")
+@click.option("--data-level", default="archive,storage", help="data level, split by comma, such as archive, storage")
 @click.option("--config-dir", default=None, help="config directory")
 @click.option(
     "--help", "-h",
@@ -58,6 +58,11 @@ def find_local(ctx, data_type, data_level, config_dir, query_args):
     config_file_path = find_config(config_dir, data_type)
     if config_file_path is None:
         raise ValueError(f"data type is not found: {data_type}")
+
+    if data_level == "":
+        data_level = None
+    else:
+        data_level = data_level.split(",")
 
     config = load_config(config_file_path)
 

@@ -41,10 +41,12 @@ def find_file(
     return file_path
 
 
-def check_data_level(data_level, required_level: str or typing.List):
-    if isinstance(required_level, str):
+def check_data_level(data_level, required_level: str or typing.Iterable or None):
+    if required_level is None:
+        return True
+    elif isinstance(required_level, str):
         return data_level == required_level
-    elif isinstance(required_level, typing.List):
+    elif isinstance(required_level, typing.Iterable):
         return data_level in required_level
     else:
         raise ValueError(f"level is not supported {required_level}")

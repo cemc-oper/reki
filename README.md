@@ -23,10 +23,12 @@ Please install ecCodes through conda or other package source.
 
 ## Getting started
 
+`nwpc-data` has several functions to help users to find one filed from a local GRIB 2 file.
+
 `load_message_from_file` from `nwpc_data.eccodes` returns a GRIB handler.
 Users can use it to get attrs or values with functions from [eccodes-python](https://github.com/ecmwf/eccodes-python) .
 
-For example, load 850hPa temperature from GRAPES GFS and get values from GRIB message.
+For example, load 850hPa temperature from GRAPES GFS and get values from the returned message.
 
 ```pycon
 >>> t = load_message_from_file(

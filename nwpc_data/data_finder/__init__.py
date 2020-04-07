@@ -1,4 +1,5 @@
 import datetime
+import typing
 from pathlib import Path
 
 import pandas as pd
@@ -13,7 +14,7 @@ def find_local_file(
         data_type: str,
         start_time: str or pd.Timestamp or datetime.datetime,
         forecast_time: str or pd.Timedelta = "0",
-        data_level: str = "archive",
+        data_level: str or typing.Iterable or None = ("archive", "storage"),
         path_type: str = "local",
         data_class: str = "od",
         config_dir: str or Path or None = None,
@@ -30,8 +31,8 @@ def find_local_file(
         start time of production. YYYYMMDDHH if str.
     forecast_time: str or pd.Timedelta
         forecast time of production. A string (such as `3h`) will be parsed by `pd.to_timedelta`.
-    data_level: str
-        data storage level, ["archive", "runtime", "storage", ... ], default is archive.
+    data_level: str or typing.Iterable or None
+        data storage level, ["archive", "runtime", "storage", ... ], default is ("archive", "storage").
     path_type: str
         path type, ["local", "storage", ...], for future usage.
     data_class: str
