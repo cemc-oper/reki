@@ -60,9 +60,9 @@ def _check_level_value(
     if level is None:
         return True
     message_level = eccodes.codes_get(message_id, "level", ktype=int)
-    if isinstance(message_level, int):
+    if isinstance(level, int):
         return message_level == level
-    elif isinstance(message_level, typing.List):
+    elif isinstance(level, typing.List):
         return message_level in level
     else:
         raise ValueError(f"level is not supported: {level}")

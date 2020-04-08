@@ -14,7 +14,7 @@ def load_field_from_file(
         file_path: str or Path,
         parameter: str or typing.Dict,
         level_type: str,
-        level: int,
+        level: int or typing.List,
 ) -> xr.DataArray or None:
     """
     Load **one** field from local GRIB2 file using eccodes-python.
@@ -90,22 +90,45 @@ def load_field_from_file(
         units:                           K
 
     """
+    messages = []
     with open(file_path, "rb") as f:
         while True:
             message_id = eccodes.codes_grib_new_from_file(f)
             if message_id is None:
-                return None
+                break
             if not _check_message(message_id, parameter, level_type, level):
                 eccodes.codes_release(message_id)
                 continue
+            messages.append(message_id)
+            if isinstance(level, typing.List):
+                continue
+            else:
+                break
 
-            data = create_xarray_array(message_id)
-            eccodes.codes_release(message_id)
-            return data
+    if len(messages) == 0:
         return None
+
+    if len(messages) == 1:
+        message_id = messages[0]
+        data = create_xarray_array(message_id)
+        eccodes.codes_release(message_id)
+        return data
+
+    if len(messages) > 1:
+        xarray_messages = [create_xarray_array(message) for message in messages]
+        for m in messages:
+            eccodes.codes_release(m)
+
+        data = xr.concat(xarray_messages, level_type)
+        return data
+
+    return None
 
 
 def create_xarray_array(message):
+    """
+    Create xarray.DataArray from one GRIB 2 message.
+    """
     values = eccodes.codes_get_double_array(message, "values")
 
     attr_keys = [
@@ -149,7 +172,12 @@ def create_xarray_array(message):
         'Nj',
     ]
 
-    all_keys = attr_keys + grid_keys
+    level_keys = [
+        "typeOfFirstFixedSurface",
+        "typeOfSecondFixedSurface",
+    ]
+
+    all_keys = attr_keys + grid_keys + level_keys
 
     all_attrs = {}
     for key in all_keys:
@@ -172,16 +200,27 @@ def create_xarray_array(message):
     lons = np.linspace(longitudeOfFirstGridPointInDegrees, longitudeOfLastGridPointInDegrees, ni, endpoint=True)
     lats = np.linspace(latitudeOfFirstGridPointInDegrees, latitudeOfLastGridPointInDegrees, nj, endpoint=True)
 
+    coords = {
+        "latitude": lats,
+        "longitude": lons,
+    }
+
+    # add level coordinate
+    if all_attrs["typeOfLevel"] not in ("undef", "unknown"):
+        coords[all_attrs["typeOfLevel"]] = all_attrs["level"]
+    else:
+        level_name = f"level_{all_attrs['typeOfFirstFixedSurface']}"
+        if all_attrs['typeOfSecondFixedSurface'] != 255:
+            level_name += f"{all_attrs['typeOfSecondFixedSurface']}"
+        coords[level_name] = all_attrs["level"]
+
     data = xr.DataArray(
         values,
         dims=("latitude", "longitude"),
-        coords={
-            "latitude": lats,
-            "longitude": lons,
-        }
+        coords=coords,
     )
 
-    data_attrs = {f"GRIB_{key}": all_attrs[key] for key in attr_keys if all_attrs[key] not in  ("undef", "unknown") }
+    data_attrs = {f"GRIB_{key}": all_attrs[key] for key in attr_keys if all_attrs[key] not in ("undef", "unknown") }
     data.attrs = data_attrs
 
     if "GRIB_name" in data.attrs:
@@ -195,3 +234,11 @@ def create_xarray_array(message):
     if "GRIB_units" in data.attrs:
         data.attrs["units"] = data.attrs["GRIB_units"]
     return data
+
+
+def _get_level_coordinate_name(data):
+    coords = data.coords
+    for coord in coords:
+        if coord.startswith("level_"):
+            return coord
+    return None
