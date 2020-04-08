@@ -55,7 +55,7 @@ def load_field_from_file(
     Examples
     --------
     Read 850hPa temperature from a GRAEPS GFS grib2 file.
-    >>> load_message_from_file(
+    >>> load_field_from_file(
    ...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
    ...     parameter="t",
    ...     level_type="isobaricInhPa",
@@ -102,7 +102,7 @@ def load_field_from_file(
         standard_name:                            air_temperature
 
     Load a filed without shortName.
-    >>> load_message_from_file(
+    >>> load_field_from_file(
     ...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
     ...     parameter={
     ...         "discipline": 0,
@@ -195,7 +195,7 @@ def load_fields_from_file(
 
     Examples
     --------
-    >>> load_messages_from_file(
+    >>> load_fields_from_file(
     ...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
     ...     parameter="t",
     ...     level_type="isobaricInhPa",
