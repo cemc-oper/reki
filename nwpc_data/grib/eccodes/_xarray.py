@@ -23,8 +23,16 @@ def load_field_from_file(
     ----------
     file_path
     parameter
-    level_type
-    level
+    level_type: str or typing.Dict
+        level type. Use GRIB key `typeOfLevel`.
+        If `typeOfLevel` is not available, use dict to specify filter conditions.
+        For example, to get one filed from GRAPES GFS modelvar GRIB2 file, use:
+            {
+                "typeOfFirstFixedSurface": 131
+            }
+    level: int or typing.List
+        level value. If use a scalar, level will be a non-dimension coordinate.
+        If your want to extract multi levels, use a list and level will be a dimension.
 
     Returns
     -------
@@ -132,9 +140,9 @@ def load_field_from_file(
     return None
 
 
-def create_xarray_array(message):
+def create_xarray_array(message) -> xr.DataArray:
     """
-    Create xarray.DataArray from one GRIB 2 message.
+    Create ``xarray.DataArray`` from one GRIB 2 message.
     """
     values = eccodes.codes_get_double_array(message, "values")
 
@@ -194,18 +202,22 @@ def create_xarray_array(message):
             value = "undef"
         all_attrs[key] = value
 
-    latitudeOfFirstGridPointInDegrees = all_attrs["latitudeOfFirstGridPointInDegrees"]
-    longitudeOfFirstGridPointInDegrees = all_attrs["longitudeOfFirstGridPointInDegrees"]
-    latitudeOfLastGridPointInDegrees = all_attrs["latitudeOfLastGridPointInDegrees"]
-    longitudeOfLastGridPointInDegrees = all_attrs["longitudeOfLastGridPointInDegrees"]
-    iDirectionIncrementInDegrees = all_attrs["iDirectionIncrementInDegrees"]
-    jDirectionIncrementInDegrees = all_attrs["jDirectionIncrementInDegrees"]
+    latitude_of_first_grid_point_in_degrees = all_attrs["latitudeOfFirstGridPointInDegrees"]
+    longitude_of_first_grid_point_in_degrees = all_attrs["longitudeOfFirstGridPointInDegrees"]
+    latitude_of_last_grid_point_in_degrees = all_attrs["latitudeOfLastGridPointInDegrees"]
+    longitude_of_last_grid_point_in_degrees = all_attrs["longitudeOfLastGridPointInDegrees"]
     ni = all_attrs["Ni"]
     nj = all_attrs["Nj"]
 
     values = values.reshape(nj, ni)
-    lons = np.linspace(longitudeOfFirstGridPointInDegrees, longitudeOfLastGridPointInDegrees, ni, endpoint=True)
-    lats = np.linspace(latitudeOfFirstGridPointInDegrees, latitudeOfLastGridPointInDegrees, nj, endpoint=True)
+    lons = np.linspace(
+        longitude_of_first_grid_point_in_degrees, longitude_of_last_grid_point_in_degrees, ni,
+        endpoint=True
+    )
+    lats = np.linspace(
+        latitude_of_first_grid_point_in_degrees, latitude_of_last_grid_point_in_degrees, nj,
+        endpoint=True
+    )
 
     coords = {
         "latitude": lats,
@@ -213,6 +225,9 @@ def create_xarray_array(message):
     }
 
     # add level coordinate
+    #   if message has typeOfLevel, use typeOfLevel as coordinate name,
+    #   else use "level_{typeOfFirstFixedSurface}",
+    #   or "level_{typeOfFirstFixedSurface}_{typeOfSecondFixedSurface}" if typeOfSecondFixedSurface is not 255.
     if all_attrs["typeOfLevel"] not in ("undef", "unknown"):
         coords[all_attrs["typeOfLevel"]] = all_attrs["level"]
     else:
@@ -230,6 +245,7 @@ def create_xarray_array(message):
     data_attrs = {f"GRIB_{key}": all_attrs[key] for key in attr_keys if all_attrs[key] not in ("undef", "unknown") }
     data.attrs = data_attrs
 
+    # set long_name
     if "GRIB_name" in data.attrs:
         data.attrs["long_name"] = data.attrs["GRIB_name"]
     else:
@@ -238,12 +254,24 @@ def create_xarray_array(message):
                 f"parm={all_attrs['parameterNumber']}")
         data.attrs["long_name"] = name
 
+    # set units
     if "GRIB_units" in data.attrs:
         data.attrs["units"] = data.attrs["GRIB_units"]
     return data
 
 
-def _get_level_coordinate_name(data):
+def _get_level_coordinate_name(data: xr.DataArray) -> str or None:
+    """
+    Get coordinate name from ``xarray.DataArray`` object.
+
+    Parameters
+    ----------
+    data: xr.DataArray
+
+    Returns
+    -------
+    str or None
+    """
     coords = data.coords
     for coord in coords:
         if coord.startswith("level_"):
