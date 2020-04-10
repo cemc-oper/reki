@@ -119,7 +119,14 @@ def load_field_from_file(
         for m in messages:
             eccodes.codes_release(m)
 
-        data = xr.concat(xarray_messages, level_type)
+        if isinstance(level_type, str):
+            level_dim_name = level_type
+        elif isinstance(level_type, typing.Dict):
+            level_dim_name = _get_level_coordinate_name(xarray_messages[0])
+        else:
+            raise ValueError(f"level_type is not supported: {level_type}")
+
+        data = xr.concat(xarray_messages, level_dim_name)
         return data
 
     return None
