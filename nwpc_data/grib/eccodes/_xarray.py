@@ -13,7 +13,7 @@ from ._util import (
 def load_field_from_file(
         file_path: str or Path,
         parameter: str or typing.Dict,
-        level_type: str,
+        level_type: str or typing.Dict,
         level: int or typing.List,
 ) -> xr.DataArray or None:
     """
