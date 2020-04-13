@@ -16,7 +16,7 @@ def load_message_from_file(
         file_path: str or Path,
         parameter: str or typing.Dict,
         level_type: str,
-        level: int,
+        level: int or float,
         **kwargs,
 ) -> int or None:
     """
@@ -94,7 +94,7 @@ def load_messages_from_file(
         file_path: str or Path,
         parameter: str or typing.Dict,
         level_type: str or typing.List or None = None,
-        level: int or typing.List or None = None,
+        level: int or float or typing.List or None = None,
         **kwargs,
 ) -> typing.List or None:
     messages = []

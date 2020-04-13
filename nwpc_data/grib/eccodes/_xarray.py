@@ -97,10 +97,8 @@ def create_xarray_array(message) -> xr.DataArray:
     name, value = get_level_from_attrs(all_attrs)
     coords[name] = value
 
-    coords.update({
-        "latitude": lats,
-        "longitude": lons,
-    })
+    coords["latitude"] = lats
+    coords["longitude"] = lons
 
     data = xr.DataArray(
         values,

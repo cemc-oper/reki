@@ -55,12 +55,12 @@ def _check_level_type(
 
 def _check_level_value(
         message_id,
-        level: int or typing.List[int] or None,
+        level: int or float or typing.List[int] or None,
 ) -> bool:
     if level is None:
         return True
-    message_level = eccodes.codes_get(message_id, "level", ktype=int)
-    if isinstance(level, int):
+    message_level = eccodes.codes_get(message_id, "level", ktype=float)
+    if isinstance(level, int) or isinstance(level, float):
         return message_level == level
     elif isinstance(level, typing.List):
         return message_level in level

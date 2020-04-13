@@ -12,7 +12,7 @@ def load_field_from_file(
         file_path: str or Path,
         parameter: str or typing.Dict,
         level_type: str or typing.Dict,
-        level: int or typing.List,
+        level: int or float or typing.List or None,
 ) -> xr.DataArray or None:
     """
     Load **one** field from local GRIB2 file using eccodes-python.
@@ -29,7 +29,7 @@ def load_field_from_file(
             {
                 "typeOfFirstFixedSurface": 131
             }
-    level: int or typing.List
+    level: int or float or typing.List or None
         level value. If use a scalar, level will be a non-dimension coordinate.
         If your want to extract multi levels, use a list and level will be a dimension (level, lat, lon).
 
@@ -107,7 +107,7 @@ def load_field_from_file(
                 eccodes.codes_release(message_id)
                 continue
             messages.append(message_id)
-            if isinstance(level, typing.List):
+            if isinstance(level, typing.List) or level is None:
                 continue
             else:
                 break
