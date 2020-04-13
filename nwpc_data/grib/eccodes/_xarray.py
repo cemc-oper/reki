@@ -1,6 +1,7 @@
 import eccodes
 import numpy as np
 import xarray as xr
+import pandas as pd
 
 
 def create_xarray_array(message) -> xr.DataArray:
@@ -22,6 +23,7 @@ def create_xarray_array(message) -> xr.DataArray:
         'stepType',
         'stepUnits',
         'stepRange',
+        'endStep',
         "name",
         "shortName",
         'cfName',
@@ -98,6 +100,20 @@ def create_xarray_array(message) -> xr.DataArray:
         if all_attrs['typeOfSecondFixedSurface'] != 255:
             level_name += f"{all_attrs['typeOfSecondFixedSurface']}"
         coords[level_name] = all_attrs["level"]
+
+    # add time coordinate
+    start_time = pd.to_datetime(f"{all_attrs['dataDate']}{all_attrs['dataTime']:04}")
+    coords["time"] = start_time
+
+    if all_attrs["stepUnits"] == 1:
+        forecast_hour = pd.Timedelta(hours=all_attrs["endStep"])
+    elif all_attrs["stepUnits"] == 0:
+        forecast_hour = pd.Timedelta(minutes=all_attrs["endStep"])
+    elif all_attrs["stepUnits"] == 2:
+        forecast_hour = pd.Timedelta(days=all_attrs["endStep"])
+    else:
+        raise ValueError(f"stepUnits is not supported: {all_attrs['stepUnits']}")
+    coords["step"] = forecast_hour
 
     data = xr.DataArray(
         values,
