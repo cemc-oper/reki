@@ -84,36 +84,23 @@ def create_xarray_array(message) -> xr.DataArray:
         endpoint=True
     )
 
-    coords = {
-        "latitude": lats,
-        "longitude": lons,
-    }
+    coords = {}
+
+    # add time and step coordinate
+    name, value = get_time_from_attrs(all_attrs)
+    coords[name] = value
+
+    name, value = get_step_from_attrs(all_attrs)
+    coords[name] = value
 
     # add level coordinate
-    #   if message has typeOfLevel, use typeOfLevel as coordinate name,
-    #   else use "level_{typeOfFirstFixedSurface}",
-    #   or "level_{typeOfFirstFixedSurface}_{typeOfSecondFixedSurface}" if typeOfSecondFixedSurface is not 255.
-    if all_attrs["typeOfLevel"] not in ("undef", "unknown"):
-        coords[all_attrs["typeOfLevel"]] = all_attrs["level"]
-    else:
-        level_name = f"level_{all_attrs['typeOfFirstFixedSurface']}"
-        if all_attrs['typeOfSecondFixedSurface'] != 255:
-            level_name += f"{all_attrs['typeOfSecondFixedSurface']}"
-        coords[level_name] = all_attrs["level"]
+    name, value = get_level_from_attrs(all_attrs)
+    coords[name] = value
 
-    # add time coordinate
-    start_time = pd.to_datetime(f"{all_attrs['dataDate']}{all_attrs['dataTime']:04}")
-    coords["time"] = start_time
-
-    if all_attrs["stepUnits"] == 1:
-        forecast_hour = pd.Timedelta(hours=all_attrs["endStep"])
-    elif all_attrs["stepUnits"] == 0:
-        forecast_hour = pd.Timedelta(minutes=all_attrs["endStep"])
-    elif all_attrs["stepUnits"] == 2:
-        forecast_hour = pd.Timedelta(days=all_attrs["endStep"])
-    else:
-        raise ValueError(f"stepUnits is not supported: {all_attrs['stepUnits']}")
-    coords["step"] = forecast_hour
+    coords.update({
+        "latitude": lats,
+        "longitude": lons,
+    })
 
     data = xr.DataArray(
         values,
@@ -158,3 +145,34 @@ def get_level_coordinate_name(data: xr.DataArray) -> str or None:
         if coord.startswith("level_"):
             return coord
     return None
+
+
+def get_time_from_attrs(all_attrs):
+    start_time = pd.to_datetime(f"{all_attrs['dataDate']}{all_attrs['dataTime']:04}")
+    return "time", start_time
+
+
+def get_step_from_attrs(all_attrs):
+    if all_attrs["stepUnits"] == 1:
+        forecast_hour = pd.Timedelta(hours=all_attrs["endStep"])
+    elif all_attrs["stepUnits"] == 0:
+        forecast_hour = pd.Timedelta(minutes=all_attrs["endStep"])
+    elif all_attrs["stepUnits"] == 2:
+        forecast_hour = pd.Timedelta(days=all_attrs["endStep"])
+    else:
+        raise ValueError(f"stepUnits is not supported: {all_attrs['stepUnits']}")
+    return "step", forecast_hour
+
+
+def get_level_from_attrs(all_attrs):
+    # add level coordinate
+    #   if message has typeOfLevel, use typeOfLevel as coordinate name,
+    #   else use "level_{typeOfFirstFixedSurface}",
+    #   or "level_{typeOfFirstFixedSurface}_{typeOfSecondFixedSurface}" if typeOfSecondFixedSurface is not 255.
+    if all_attrs["typeOfLevel"] not in ("undef", "unknown"):
+        return all_attrs["typeOfLevel"], all_attrs["level"]
+    else:
+        level_name = f"level_{all_attrs['typeOfFirstFixedSurface']}"
+        if all_attrs['typeOfSecondFixedSurface'] != 255:
+            level_name += f"{all_attrs['typeOfSecondFixedSurface']}"
+        return level_name, all_attrs["level"]
