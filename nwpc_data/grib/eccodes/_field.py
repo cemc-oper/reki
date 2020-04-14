@@ -156,7 +156,13 @@ def load_field_from_files(
         field_list.append(field)
 
     data_set = xr.combine_by_coords(
-        [f.expand_dims(["time", "step"]).to_dataset(name="var_1") for f in field_list]
+        [f.expand_dims(["time", "step"]).to_dataset() for f in field_list]
     )
-    data = data_set["var_1"].transpose("time", "step", ...)
+    data = _load_first_variable(data_set)
+    data = data.transpose("time", "step", ...)
     return data
+
+
+def _load_first_variable(data_set: xr.Dataset) -> xr.DataArray:
+    first_variable_name = list(data_set.data_vars)[0]
+    return data_set[first_variable_name]

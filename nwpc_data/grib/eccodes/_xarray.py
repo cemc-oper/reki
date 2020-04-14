@@ -34,7 +34,6 @@ def create_xarray_array(
         'discipline',
         'parameterCategory',
         'parameterNumber',
-        'shortName',
         'gridType',
         'gridDefinitionDescription',
         'typeOfFirstFixedSurface',
@@ -106,27 +105,35 @@ def create_xarray_array(
 
     dims = ("latitude", "longitude")
 
-    data = xr.DataArray(
-        values,
-        dims=dims,
-        coords=coords,
-    )
-
-    data_attrs = {f"GRIB_{key}": all_attrs[key] for key in attr_keys if all_attrs[key] not in ("undef", "unknown") }
-    data.attrs = data_attrs
+    data_attrs = {f"GRIB_{key}": all_attrs[key] for key in attr_keys if all_attrs[key] not in ("undef", "unknown")}
 
     # set long_name
-    if "GRIB_name" in data.attrs:
-        data.attrs["long_name"] = data.attrs["GRIB_name"]
+    if "GRIB_name" in data_attrs:
+        data_attrs["long_name"] = data_attrs["GRIB_name"]
     else:
         name = (f"discipline={all_attrs['discipline']} "
                 f"parmcat={all_attrs['parameterCategory']} "
                 f"parm={all_attrs['parameterNumber']}")
-        data.attrs["long_name"] = name
+        data_attrs["long_name"] = name
+
+    # set name
+    if "shortName" in all_attrs:
+        var_name = all_attrs["shortName"]
+    else:
+        var_name = f"{all_attrs['discipline']}_{all_attrs['parameterCategory']}_{all_attrs['parameterNumber']}"
 
     # set units
-    if "GRIB_units" in data.attrs:
-        data.attrs["units"] = data.attrs["GRIB_units"]
+    if "GRIB_units" in data_attrs:
+        data_attrs["units"] = data_attrs["GRIB_units"]
+
+    data = xr.DataArray(
+        values,
+        dims=dims,
+        coords=coords,
+        attrs=data_attrs,
+        name=var_name,
+    )
+
     return data
 
 
