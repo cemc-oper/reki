@@ -137,3 +137,26 @@ def load_field_from_file(
         return data
 
     return None
+
+
+def load_field_from_files(
+        file_list: typing.List,
+        parameter: str or typing.Dict,
+        level_type: str or typing.Dict,
+        level: int or float or typing.List or None,
+) -> xr.DataArray or None:
+    field_list = []
+    for file_path in file_list:
+        field = load_field_from_file(
+            file_path,
+            parameter=parameter,
+            level_type=level_type,
+            level=level,
+        )
+        field_list.append(field)
+
+    data_set = xr.combine_by_coords(
+        [f.expand_dims(["time", "step"]).to_dataset(name="var_1") for f in field_list]
+    )
+    data = data_set["var_1"].transpose("time", "step", ...)
+    return data

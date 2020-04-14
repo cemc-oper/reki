@@ -1,10 +1,14 @@
+import typing
+
 import eccodes
 import numpy as np
 import xarray as xr
 import pandas as pd
 
 
-def create_xarray_array(message) -> xr.DataArray:
+def create_xarray_array(
+        message
+) -> xr.DataArray:
     """
     Create ``xarray.DataArray`` from one GRIB 2 message.
     """
@@ -87,22 +91,24 @@ def create_xarray_array(message) -> xr.DataArray:
     coords = {}
 
     # add time and step coordinate
-    name, value = get_time_from_attrs(all_attrs)
-    coords[name] = value
+    time_name, value = get_time_from_attrs(all_attrs)
+    coords[time_name] = value
 
-    name, value = get_step_from_attrs(all_attrs)
-    coords[name] = value
+    step_name, value = get_step_from_attrs(all_attrs)
+    coords[step_name] = value
 
     # add level coordinate
-    name, value = get_level_from_attrs(all_attrs)
-    coords[name] = value
+    level_name, value = get_level_from_attrs(all_attrs)
+    coords[level_name] = value
 
     coords["latitude"] = lats
     coords["longitude"] = lons
 
+    dims = ("latitude", "longitude")
+
     data = xr.DataArray(
         values,
-        dims=("latitude", "longitude"),
+        dims=dims,
         coords=coords,
     )
 
