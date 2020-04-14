@@ -3,6 +3,7 @@ from pathlib import Path
 
 import eccodes
 import xarray as xr
+from tqdm import tqdm
 
 from nwpc_data.grib.eccodes._util import _check_message
 from nwpc_data.grib.eccodes._xarray import create_xarray_array, get_level_coordinate_name
@@ -98,11 +99,20 @@ def load_field_from_file(
 
     """
     messages = []
+
     with open(file_path, "rb") as f:
+        total_count = eccodes.codes_count_in_file(f)
+
+    with open(file_path, "rb") as f:
+        pbar = tqdm(
+            total=total_count,
+            desc="Filtering",
+        )
         while True:
             message_id = eccodes.codes_grib_new_from_file(f)
             if message_id is None:
                 break
+            pbar.update(1)
             if not _check_message(message_id, parameter, level_type, level):
                 eccodes.codes_release(message_id)
                 continue
@@ -111,6 +121,7 @@ def load_field_from_file(
                 continue
             else:
                 break
+        pbar.close()
 
     if len(messages) == 0:
         return None
@@ -122,9 +133,20 @@ def load_field_from_file(
         return data
 
     if len(messages) > 1:
-        xarray_messages = [create_xarray_array(message) for message in messages]
+        pbar = tqdm(
+            total=len(messages),
+            desc="Creating DataArrays",
+        )
+
+        def creat_array(message):
+            array = create_xarray_array(message)
+            pbar.update(1)
+            return array
+
+        xarray_messages = [creat_array(message) for message in messages]
         for m in messages:
             eccodes.codes_release(m)
+        pbar.close()
 
         if isinstance(level_type, str):
             level_dim_name = level_type
@@ -133,6 +155,7 @@ def load_field_from_file(
         else:
             raise ValueError(f"level_type is not supported: {level_type}")
 
+        print("concat DataArrays...")
         data = xr.concat(xarray_messages, level_dim_name)
         return data
 
@@ -147,6 +170,7 @@ def load_field_from_files(
 ) -> xr.DataArray or None:
     field_list = []
     for file_path in file_list:
+        print(file_path)
         field = load_field_from_file(
             file_path,
             parameter=parameter,

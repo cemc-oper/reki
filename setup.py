@@ -52,6 +52,7 @@ setup(
         "eccodes-python",
         "dask",
         "click",
+        "tqdm",
     ],
 
     extras_require={

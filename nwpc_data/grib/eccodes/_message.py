@@ -2,6 +2,7 @@ import typing
 from pathlib import Path
 
 import eccodes
+# from tqdm import tqdm
 
 from nwpc_data.grib._level import fix_level_type
 from ._util import (
@@ -98,11 +99,20 @@ def load_messages_from_file(
         **kwargs,
 ) -> typing.List or None:
     messages = []
+
+    # print("count...")
+    # with open(file_path, "rb") as f:
+    #     total_count = eccodes.codes_count_in_file(f)
+    #     print(total_count)
+    # print("count..done")
+
     with open(file_path, "rb") as f:
+        # pbar = tqdm(total=total_count)
         while True:
             message_id = eccodes.codes_grib_new_from_file(f)
             if message_id is None:
                 break
+            # pbar.update(1)
             if not _check_parameter(message_id, parameter):
                 eccodes.codes_release(message_id)
                 continue
@@ -117,6 +127,7 @@ def load_messages_from_file(
             new_message_id = eccodes.codes_clone(message_id)
             eccodes.codes_release(message_id)
             messages.append(new_message_id)
+        # pbar.close()
         if len(messages) == 0:
             return None
         return messages
