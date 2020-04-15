@@ -47,7 +47,7 @@ def _fill_level_type(
 
 
 def _fill_level_value(
-        level: int,
+        level: int or float,
         filter_by_keys: typing.Dict,
         read_keys: typing.List
 ) -> typing.Tuple[typing.Dict, typing.List]:
