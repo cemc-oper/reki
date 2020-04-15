@@ -14,6 +14,7 @@ def load_field_from_file(
         parameter: str or typing.Dict,
         level_type: str or typing.Dict,
         level: int or float or typing.List or None,
+        show_progress: bool = True,
 ) -> xr.DataArray or None:
     """
     Load **one** field from local GRIB2 file using eccodes-python.
@@ -33,6 +34,8 @@ def load_field_from_file(
     level: int or float or typing.List or None
         level value. If use a scalar, level will be a non-dimension coordinate.
         If your want to extract multi levels, use a list and level will be a dimension (level, lat, lon).
+    show_progress: bool
+        show progress bar.
 
     Returns
     -------
@@ -100,19 +103,22 @@ def load_field_from_file(
     """
     messages = []
 
-    with open(file_path, "rb") as f:
-        total_count = eccodes.codes_count_in_file(f)
+    if show_progress:
+        with open(file_path, "rb") as f:
+            total_count = eccodes.codes_count_in_file(f)
 
     with open(file_path, "rb") as f:
-        pbar = tqdm(
-            total=total_count,
-            desc="Filtering",
-        )
+        if show_progress:
+            pbar = tqdm(
+                total=total_count,
+                desc="Filtering",
+            )
         while True:
             message_id = eccodes.codes_grib_new_from_file(f)
             if message_id is None:
                 break
-            pbar.update(1)
+            if show_progress:
+                pbar.update(1)
             if not _check_message(message_id, parameter, level_type, level):
                 eccodes.codes_release(message_id)
                 continue
@@ -121,7 +127,8 @@ def load_field_from_file(
                 continue
             else:
                 break
-        pbar.close()
+        if show_progress:
+            pbar.close()
 
     if len(messages) == 0:
         return None
@@ -133,20 +140,23 @@ def load_field_from_file(
         return data
 
     if len(messages) > 1:
-        pbar = tqdm(
-            total=len(messages),
-            desc="Creating DataArrays",
-        )
+        if show_progress:
+            pbar = tqdm(
+                total=len(messages),
+                desc="Creating DataArrays",
+            )
 
         def creat_array(message):
             array = create_xarray_array(message)
-            pbar.update(1)
+            if show_progress:
+                pbar.update(1)
             return array
 
         xarray_messages = [creat_array(message) for message in messages]
         for m in messages:
             eccodes.codes_release(m)
-        pbar.close()
+        if show_progress:
+            pbar.close()
 
         if isinstance(level_type, str):
             level_dim_name = level_type
@@ -167,6 +177,7 @@ def load_field_from_files(
         parameter: str or typing.Dict,
         level_type: str or typing.Dict,
         level: int or float or typing.List or None,
+        show_progress: bool = True,
 ) -> xr.DataArray or None:
     field_list = []
     for file_path in file_list:
@@ -176,6 +187,7 @@ def load_field_from_files(
             parameter=parameter,
             level_type=level_type,
             level=level,
+            show_progress=show_progress,
         )
         field_list.append(field)
 
