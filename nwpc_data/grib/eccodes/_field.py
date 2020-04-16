@@ -179,6 +179,28 @@ def load_field_from_files(
         level: int or float or typing.List or None,
         show_progress: bool = True,
 ) -> xr.DataArray or None:
+    """
+    Load one field from multiply files.
+
+    Parameters
+    ----------
+    file_list: typing.List
+        file list.
+    parameter: str or typing.Dict
+        see ``load_field_from_file``
+    level_type: str or typing.Dict
+        see ``load_field_from_file``
+    level: int or float or typing.List or None
+        see ``load_field_from_file``
+    show_progress: bool
+        see ``load_field_from_file``
+
+    Returns
+    -------
+    xr.DataArray or None:
+        xr.DataArray if found, or None if not.
+
+    """
     field_list = []
     for file_path in file_list:
         print(file_path)

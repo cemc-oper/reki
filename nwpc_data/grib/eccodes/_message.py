@@ -21,7 +21,7 @@ def load_message_from_file(
         **kwargs,
 ) -> int or None:
     """
-    Load one message from GRIB 2 file using eccodes-python library.
+    Load the **first** message from GRIB 2 file using eccodes-python library.
 
     Returned message is a copied one of original message and file is closed before return.
     And the returned message should be released by user using `eccodes.codes_release()`.
@@ -98,6 +98,34 @@ def load_messages_from_file(
         level: int or float or typing.List or None = None,
         **kwargs,
 ) -> typing.List or None:
+    """
+    Load multiply messages from file.
+
+    This function will scan all messages in GRIB 2 file and return all messages which fit conditions.
+
+    Parameters
+    ----------
+    file_path: str or Path
+    parameter: str or typing.Dict
+        see ``load_message_from_file``, required option.
+    level_type: str or typing.List or None
+        level type.
+        - string, same as ``load_message_from_file``
+        - typing.List, level type should be in the list.
+        - None, don't check level type.
+    level: int or float or typing.List or None
+        level value.
+        - string, same as ``load_message_from_file``
+        - typing.List, level value should be in the list.
+        - None, don't check level value. For example, load all messages of some typeOfLevel.
+    kwargs: dict
+        other parameters
+
+    Returns
+    -------
+    typing.List or None:
+        a list of message number or None if no message is found.
+    """
     messages = []
 
     # print("count...")
