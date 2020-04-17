@@ -13,7 +13,7 @@ def load_field_from_file(
         file_path: str or Path,
         parameter: str or typing.Dict,
         level_type: str or typing.Dict,
-        level: int or float or typing.List or None,
+        level: int or float or typing.List or None = None,
         level_dim: str or None = None,
         show_progress: bool = True,
 ) -> xr.DataArray or None:
