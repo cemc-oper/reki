@@ -3,6 +3,8 @@ from pathlib import Path
 
 import xarray as xr
 
+from nwpc_data.grib._level import fix_level_type
+
 from ._util import (
     _fill_parameter,
     _fill_level,
@@ -16,7 +18,7 @@ from ._util import (
 def load_field_from_file(
         file_path: str or Path,
         parameter: str or typing.Dict,
-        level_type: str,
+        level_type: str or typing.Dict,
         level: int or float or None = None,
         with_index: str or bool = False,
 ) -> xr.DataArray or None:
@@ -36,7 +38,7 @@ def load_field_from_file(
             - discipline
             - parameterCategory
             - parameterNumber
-    level_type: str
+    level_type: str or typing.Dict
         level type, see typeOfLevel key using grib_ls of ecCodes.
     level: int or float or None
         level value. If none, all levels will be loaded.
@@ -226,6 +228,7 @@ def load_fields_from_file(
         _fill_parameter(parameter, filter_by_keys, read_keys)
 
     if level_type is not None:
+        level_type = fix_level_type(level_type)
         _fill_level_type(level_type, filter_by_keys, read_keys)
 
     if level is not None:

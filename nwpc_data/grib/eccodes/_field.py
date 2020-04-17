@@ -5,6 +5,7 @@ import eccodes
 import xarray as xr
 from tqdm import tqdm
 
+from nwpc_data.grib._level import fix_level_type
 from nwpc_data.grib.eccodes._util import _check_message
 from nwpc_data.grib.eccodes._xarray import create_data_array_from_message, get_level_coordinate_name
 
@@ -105,6 +106,9 @@ def load_field_from_file(
 
     """
     messages = []
+
+    # fix level_type
+    level_type = fix_level_type(level_type)
 
     if show_progress:
         with open(file_path, "rb") as f:
