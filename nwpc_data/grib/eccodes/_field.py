@@ -14,6 +14,7 @@ def load_field_from_file(
         parameter: str or typing.Dict,
         level_type: str or typing.Dict,
         level: int or float or typing.List or None,
+        level_dim: str or None = None,
         show_progress: bool = True,
 ) -> xr.DataArray or None:
     """
@@ -34,6 +35,8 @@ def load_field_from_file(
     level: int or float or typing.List or None
         level value. If use a scalar, level will be a non-dimension coordinate.
         If your want to extract multi levels, use a list and level will be a dimension (level, lat, lon).
+    level_dim: str or None
+        name of level dim. If none, function will generate a name for level dim.
     show_progress: bool
         show progress bar.
 
@@ -147,7 +150,7 @@ def load_field_from_file(
             )
 
         def creat_array(message):
-            array = create_data_array_from_message(message)
+            array = create_data_array_from_message(message, level_dim_name=level_dim)
             if show_progress:
                 pbar.update(1)
             return array
@@ -158,10 +161,15 @@ def load_field_from_file(
         if show_progress:
             pbar.close()
 
-        if isinstance(level_type, str):
-            level_dim_name = level_type
-        elif isinstance(level_type, typing.Dict):
-            level_dim_name = get_level_coordinate_name(xarray_messages[0])
+        if level_dim is None:
+            if isinstance(level_type, str):
+                level_dim_name = level_type
+            elif isinstance(level_type, typing.Dict):
+                level_dim_name = get_level_coordinate_name(xarray_messages[0])
+            else:
+                raise ValueError(f"level_type is not supported: {level_type}")
+        elif isinstance(level_dim, str):
+            level_dim_name = level_dim
         else:
             raise ValueError(f"level_type is not supported: {level_type}")
 

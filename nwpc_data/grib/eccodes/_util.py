@@ -33,7 +33,7 @@ def _check_parameter(message_id, parameter: str or typing.Dict) -> bool:
 
 def _check_level_type(
         message_id,
-        level_type: str or typing.List[str] or None,
+        level_type: str or typing.List[str] or typing.Dict or None,
 ) -> bool:
     if level_type is None:
         return True

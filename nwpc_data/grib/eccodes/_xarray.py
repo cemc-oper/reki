@@ -1,4 +1,5 @@
 import typing
+import math
 
 import eccodes
 import numpy as np
@@ -7,7 +8,8 @@ import pandas as pd
 
 
 def create_data_array_from_message(
-        message
+        message,
+        level_dim_name: str or None = None,
 ) -> xr.DataArray:
     """
     Create ``xarray.DataArray`` from one GRIB 2 message.
@@ -58,6 +60,8 @@ def create_data_array_from_message(
     level_keys = [
         "typeOfFirstFixedSurface",
         "typeOfSecondFixedSurface",
+        "scaleFactorOfFirstFixedSurface",
+        "scaledValueOfFirstFixedSurface",
     ]
 
     all_keys = attr_keys + grid_keys + level_keys
@@ -97,7 +101,7 @@ def create_data_array_from_message(
     coords[step_name] = value
 
     # add level coordinate
-    level_name, value = get_level_from_attrs(all_attrs)
+    level_name, value = get_level_from_attrs(all_attrs, level_dim_name)
     coords[level_name] = value
 
     coords["latitude"] = lats
@@ -175,15 +179,26 @@ def get_step_from_attrs(all_attrs):
     return "step", forecast_hour
 
 
-def get_level_from_attrs(all_attrs):
+def get_level_from_attrs(all_attrs: dict, level_dim_name: str or None = None):
     # add level coordinate
     #   if message has typeOfLevel, use typeOfLevel as coordinate name,
     #   else use "level_{typeOfFirstFixedSurface}",
     #   or "level_{typeOfFirstFixedSurface}_{typeOfSecondFixedSurface}" if typeOfSecondFixedSurface is not 255.
-    if all_attrs["typeOfLevel"] not in ("undef", "unknown"):
-        return all_attrs["typeOfLevel"], all_attrs["level"]
+    if level_dim_name == "isobaricInPa":
+        value = math.pow(10, all_attrs["scaleFactorOfFirstFixedSurface"]) * all_attrs["scaledValueOfFirstFixedSurface"]
+        return level_dim_name, value
+    elif level_dim_name == "isobaricInhPa":
+        value = math.pow(10, all_attrs["scaleFactorOfFirstFixedSurface"]) * all_attrs["scaledValueOfFirstFixedSurface"]
+        return level_dim_name, value / 100.0
+    elif isinstance(level_dim_name, str):
+        return level_dim_name, all_attrs["level"]
+    elif level_dim_name is None:
+        if all_attrs["typeOfLevel"] not in ("undef", "unknown"):
+            return all_attrs["typeOfLevel"], all_attrs["level"]
+        else:
+            level_name = f"level_{all_attrs['typeOfFirstFixedSurface']}"
+            if all_attrs['typeOfSecondFixedSurface'] != 255:
+                level_name += f"{all_attrs['typeOfSecondFixedSurface']}"
+            return level_name, all_attrs["level"]
     else:
-        level_name = f"level_{all_attrs['typeOfFirstFixedSurface']}"
-        if all_attrs['typeOfSecondFixedSurface'] != 255:
-            level_name += f"{all_attrs['typeOfSecondFixedSurface']}"
-        return level_name, all_attrs["level"]
+        raise TypeError(f"level_dim_name is not supported: {level_dim_name}")
