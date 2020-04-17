@@ -13,3 +13,5 @@ from ._bytes import (
     create_message_from_bytes,
     create_messages_from_bytes,
 )
+
+from ._xarray import create_data_array_from_message

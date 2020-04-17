@@ -6,7 +6,7 @@ import xarray as xr
 import pandas as pd
 
 
-def create_xarray_array(
+def create_data_array_from_message(
         message
 ) -> xr.DataArray:
     """

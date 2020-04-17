@@ -6,7 +6,7 @@ import xarray as xr
 from tqdm import tqdm
 
 from nwpc_data.grib.eccodes._util import _check_message
-from nwpc_data.grib.eccodes._xarray import create_xarray_array, get_level_coordinate_name
+from nwpc_data.grib.eccodes._xarray import create_data_array_from_message, get_level_coordinate_name
 
 
 def load_field_from_file(
@@ -135,7 +135,7 @@ def load_field_from_file(
 
     if len(messages) == 1:
         message_id = messages[0]
-        data = create_xarray_array(message_id)
+        data = create_data_array_from_message(message_id)
         eccodes.codes_release(message_id)
         return data
 
@@ -147,7 +147,7 @@ def load_field_from_file(
             )
 
         def creat_array(message):
-            array = create_xarray_array(message)
+            array = create_data_array_from_message(message)
             if show_progress:
                 pbar.update(1)
             return array
