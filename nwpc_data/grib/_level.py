@@ -26,3 +26,4 @@ def fix_level_type(level_type: str or typing.Dict or None) -> str or typing.Dict
             "typeOfFirstFixedSurface": 131,
             # "typeOfSecondFixedSurface": 255,
         }
+    return level_type

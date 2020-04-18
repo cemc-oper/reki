@@ -179,15 +179,31 @@ def get_step_from_attrs(all_attrs):
     return "step", forecast_hour
 
 
-def get_level_from_attrs(all_attrs: dict, level_dim_name: str or None = None):
-    # add level coordinate
-    #   if message has typeOfLevel, use typeOfLevel as coordinate name,
-    #   else use "level_{typeOfFirstFixedSurface}",
-    #   or "level_{typeOfFirstFixedSurface}_{typeOfSecondFixedSurface}" if typeOfSecondFixedSurface is not 255.
+def get_level_from_attrs(
+        all_attrs: dict,
+        level_dim_name: str or None = None,
+) -> typing.Tuple[str, float or int]:
+    """
+    Get level coordinate name and value.
+
+    If message has typeOfLevel, use typeOfLevel as coordinate name,
+    else use "level_{typeOfFirstFixedSurface}",
+    or "level_{typeOfFirstFixedSurface}_{typeOfSecondFixedSurface}" if typeOfSecondFixedSurface is not 255.
+
+    Parameters
+    ----------
+    all_attrs
+    level_dim_name
+
+    Returns
+    -------
+    typing.Tuple[str, float or int]
+
+    """
     if level_dim_name == "isobaricInPa":
         value = math.pow(10, all_attrs["scaleFactorOfFirstFixedSurface"]) * all_attrs["scaledValueOfFirstFixedSurface"]
         return level_dim_name, value
-    elif level_dim_name == "isobaricInhPa":
+    elif level_dim_name in ("isobaricInhPa", "pl"):
         value = math.pow(10, all_attrs["scaleFactorOfFirstFixedSurface"]) * all_attrs["scaledValueOfFirstFixedSurface"]
         return level_dim_name, value / 100.0
     elif isinstance(level_dim_name, str):
