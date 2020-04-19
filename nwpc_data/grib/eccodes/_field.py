@@ -176,7 +176,9 @@ def load_field_from_file(
         else:
             raise ValueError(f"level_type is not supported: {level_type}")
 
-        print("concat DataArrays...")
+        if show_progress:
+            print("concat DataArrays...")
+
         data = xr.concat(xarray_messages, level_dim_name)
         return data
 
