@@ -1,0 +1,16 @@
+query:
+  system: fnl
+  stream: cm
+  type: grib2
+  name: fnl
+
+file_name: 'fnl_{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}_{{ time_vars.Hour }}_00.grib2'
+
+paths:
+  - type: local
+    level: archive
+    path: '/g1/COMMONDATA/glob/fnl/{{ time_vars.Year }}'
+
+  - type: local
+    level: storage
+    path: '/sstorage1/COMMONDATA/glob/fnl/{{ time_vars.Year }}'
