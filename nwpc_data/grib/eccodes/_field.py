@@ -15,7 +15,7 @@ def load_field_from_file(
         level_type: str or typing.Dict,
         level: int or float or typing.List or None = None,
         level_dim: str or None = None,
-        show_progress: bool = True,
+        show_progress: bool = False,
 ) -> xr.DataArray or None:
     """
     Load **one** field from local GRIB2 file using eccodes-python.
