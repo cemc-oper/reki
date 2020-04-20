@@ -7,13 +7,6 @@ or [cfgrib](https://github.com/ecmwf/cfgrib).
 
 Download the latest source code from GitHub and install using `pip`.
 
-**NOTE**: Installation script is not completed. 
-Please use `-e` option to install package in development mode.
-
-```bash
-pip install -e .
-```
-
 If you are using system python, such as apps/python/3.6.3/gnu on HPC CMA-PI,
 please use `--user` option to install on user directory.
 
@@ -25,12 +18,13 @@ Please install ecCodes through conda or other package source.
 
 `nwpc-data` has several functions to help users to find one filed from a local GRIB 2 file.
 
-`load_message_from_file` from `nwpc_data.eccodes` returns a GRIB handler.
+`load_message_from_file` from `nwpc_data.grib.eccodes` returns a GRIB handler.
 Users can use it to get attrs or values with functions from [eccodes-python](https://github.com/ecmwf/eccodes-python) .
 
 For example, load 850hPa temperature from GRAPES GFS and get values from the returned message.
 
 ```pycon
+>>> from nwpc_data.grib.eccodes import load_message_from_file
 >>> t = load_message_from_file(
 ...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
 ...     parameter="t",
@@ -64,14 +58,14 @@ and converted into `xarray.DataArray` by `nwpc-data`.
 **WARNING**: This feature is under construction.
 
 ```pycon
+>>> from nwpc_data.grib.eccodes import load_field_from_file
 >>> load_field_from_file(
 ...     file_path="/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
 ...     parameter="t",
 ...     level_type="isobaricInhPa",
 ...     level=850,
-...     engine="eccodes",
 ... )
-<xarray.DataArray (latitude: 720, longitude: 1440)>
+<xarray.DataArray 't' (latitude: 720, longitude: 1440)>
 array([[249.19234375, 249.16234375, 249.16234375, ..., 249.15234375,
         249.19234375, 249.14234375],
        [249.45234375, 249.45234375, 249.42234375, ..., 249.45234375,
@@ -86,8 +80,12 @@ array([[249.19234375, 249.16234375, 249.16234375, ..., 249.15234375,
        [235.66234375, 235.86234375, 235.82234375, ..., 235.85234375,
         235.68234375, 235.70234375]])
 Coordinates:
-  * latitude   (latitude) float64 89.88 89.62 89.38 ... -89.38 -89.62 -89.88
-  * longitude  (longitude) float64 0.0 0.25 0.5 0.75 ... 359.0 359.2 359.5 359.8
+    time           datetime64[ns] 2020-03-18
+    step           timedelta64[ns] 4 days 09:00:00
+    valid_time     datetime64[ns] 2020-03-22T09:00:00
+    isobaricInhPa  int64 850
+  * latitude       (latitude) float64 89.88 89.62 89.38 ... -89.38 -89.62 -89.88
+  * longitude      (longitude) float64 0.0 0.25 0.5 0.75 ... 359.2 359.5 359.8
 Attributes:
     GRIB_edition:                    2
     GRIB_centre:                     babj
@@ -97,10 +95,13 @@ Attributes:
     GRIB_dataType:                   fc
     GRIB_dataDate:                   20200318
     GRIB_dataTime:                   0
+    GRIB_validityDate:               20200322
+    GRIB_validityTime:               900
     GRIB_step:                       105
     GRIB_stepType:                   instant
     GRIB_stepUnits:                  1
     GRIB_stepRange:                  105
+    GRIB_endStep:                    105
     GRIB_name:                       Temperature
     GRIB_shortName:                  t
     GRIB_cfName:                     air_temperature
