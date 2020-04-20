@@ -4,7 +4,7 @@ from pathlib import Path
 import eccodes
 # from tqdm import tqdm
 
-from nwpc_data.grib._level import fix_level_type
+from nwpc_data.grib.eccodes._level import _fix_level
 from ._util import (
     _check_parameter,
     _check_level_type,
@@ -74,7 +74,7 @@ def load_message_from_file(
         235.68234375, 235.70234375]])
 
     """
-    fixed_level_type = fix_level_type(level_type)
+    fixed_level_type, _ = _fix_level(level_type, None)
     with open(file_path, "rb") as f:
         while True:
             message_id = eccodes.codes_grib_new_from_file(f)
@@ -126,6 +126,8 @@ def load_messages_from_file(
     typing.List or None:
         a list of message number or None if no message is found.
     """
+    fixed_level_type, _ = _fix_level(level_type, None)
+
     messages = []
 
     # print("count...")
@@ -144,7 +146,7 @@ def load_messages_from_file(
             if not _check_parameter(message_id, parameter):
                 eccodes.codes_release(message_id)
                 continue
-            if not _check_level_type(message_id, level_type):
+            if not _check_level_type(message_id, fixed_level_type):
                 eccodes.codes_release(message_id)
                 continue
             if not _check_level_value(message_id, level):

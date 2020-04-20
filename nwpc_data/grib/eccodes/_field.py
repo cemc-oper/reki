@@ -5,6 +5,7 @@ import eccodes
 import xarray as xr
 from tqdm import tqdm
 
+from nwpc_data.grib.eccodes._level import _fix_level
 from nwpc_data.grib.eccodes._util import _check_message
 from nwpc_data.grib.eccodes._xarray import create_data_array_from_message, get_level_coordinate_name
 
@@ -257,35 +258,3 @@ def load_field_from_files(
 def _load_first_variable(data_set: xr.Dataset) -> xr.DataArray:
     first_variable_name = list(data_set.data_vars)[0]
     return data_set[first_variable_name]
-
-
-def _fix_level(
-        level_type: str or typing.Dict or None,
-        level_dim: str or None,
-) -> typing.Tuple[str or dict, str]:
-    if level_type is None:
-        return level_type, level_dim
-
-    if isinstance(level_type, dict):
-        return level_type, level_dim
-
-    if level_type == "pl":
-        if level_dim is None:
-            level_dim = level_type
-        return {
-            "typeOfFirstFixedSurface": 100,
-        }, level_dim
-    elif level_type == "sfc":
-        if level_dim is None:
-            level_dim = level_type
-        return {
-            "typeOfLevel": "sfc"
-        }, level_dim
-    elif level_type == "ml":
-        if level_dim is None:
-            level_dim = level_type
-        return {
-            "typeOfFirstFixedSurface": 131,
-            # "typeOfSecondFixedSurface": 255,
-        }, level_dim
-    return level_type, level_dim
