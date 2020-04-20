@@ -25,6 +25,8 @@ def create_data_array_from_message(
         'dataType',
         'dataDate',
         'dataTime',
+        'validityDate',
+        'validityTime',
         'step',
         'stepType',
         'stepUnits',
@@ -99,6 +101,11 @@ def create_data_array_from_message(
 
     step_name, value = get_step_from_attrs(all_attrs)
     coords[step_name] = value
+
+    # add valid time coordinate
+    valid_time_name, value = get_valid_time_from_attrs(all_attrs)
+    if valid_time_name is not None:
+        coords[valid_time_name] = value
 
     # add level coordinate
     level_name, value = get_level_from_attrs(all_attrs, level_dim_name)
@@ -177,6 +184,15 @@ def get_step_from_attrs(all_attrs):
     else:
         raise ValueError(f"stepUnits is not supported: {all_attrs['stepUnits']}")
     return "step", forecast_hour
+
+
+def get_valid_time_from_attrs(all_attrs):
+    if all_attrs["validityDate"] in ("undef", "unknown"):
+        return None, None
+    if all_attrs["validityTime"] in ("undef", "unknown"):
+        return None, None
+    valid_time = pd.to_datetime(f"{all_attrs['validityDate']}{all_attrs['validityTime']:04}")
+    return "valid_time", valid_time
 
 
 def get_level_from_attrs(
