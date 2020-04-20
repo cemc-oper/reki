@@ -24,34 +24,48 @@ def load_field_from_file(
 
     Parameters
     ----------
-    file_path
-    parameter
+    file_path: str or Path
+    parameter: str or typing.Dict
+        parameter name.
+        Use GRIB key `shortName` or a dict of filter conditions such as:
+            {
+                "discipline": 0,
+                "parameterCategory": 2,
+                "parameterNumber": 225,
+            }
+
     level_type: str or typing.Dict
         level type.
-        1.  Use "pl", "ml" or "sfc". They will be converted into dict.
-        2.  Use GRIB key `typeOfLevel`, such as
-                - "isobaricInhPa"
-                - "isobaricInPa"
-                - "surface"
-                - "heightAboveGround"
-                - ...
-            See https://apps.ecmwf.int/codes/grib/format/edition-independent/3/ for more values.
-        3.  If `typeOfLevel` is not available, use dict to specify filter conditions.
-            For example, to get one filed from GRAPES GFS modelvar GRIB2 file, use:
-                {
-                    "typeOfFirstFixedSurface": 131
-                }
+
+        - Use "pl", "ml" or "sfc". They will be converted into dict.
+        - Use GRIB key `typeOfLevel`, such as
+            - "isobaricInhPa"
+            - "isobaricInPa"
+            - "surface"
+            - "heightAboveGround"
+            - ...
+          See https://apps.ecmwf.int/codes/grib/format/edition-independent/3/ for more values.
+        - If `typeOfLevel` is not available, use dict to specify filter conditions.
+          For example, to get one filed from GRAPES GFS modelvar GRIB2 file, use:
+            {
+                "typeOfFirstFixedSurface": 131
+            }
+
     level: int or float or typing.List or None
         level value(s).
-        If use a scalar, level will be a non-dimension coordinate.
-        If your want to extract multi levels, use a list and level will be a dimension (level, lat, lon).
-        If use `None`, all levels of level_type will be packed in the result field.
+
+        - If use a scalar, level will be a non-dimension coordinate.
+        - If your want to extract multi levels, use a list and level will be a dimension (level, lat, lon).
+        - If use `None`, all levels of level_type will be packed in the result field.
+
     level_dim: str or None
         name of level dimension.
         If none, function will generate a name for level dim.
         If `level_type="pl"`, some values can be used:
+
             - `None` or `pl` or `isobaricInhPa`: level_dim is a float number with unit hPa.
             - `isobaricInPa`: level_dim is a float number with unit Pa.
+
     show_progress: bool
         show progress bar.
 
@@ -127,7 +141,6 @@ def load_field_from_file(
     """
     messages = []
 
-    # fix level_type
     level_type, level_dim = _fix_level(level_type, level_dim)
 
     if show_progress:
@@ -170,7 +183,7 @@ def load_field_from_file(
         if show_progress:
             pbar = tqdm(
                 total=len(messages),
-                desc="Creating DataArrays",
+                desc="Decoding",
             )
 
         def creat_array(message):
@@ -198,7 +211,7 @@ def load_field_from_file(
             raise ValueError(f"level_type is not supported: {level_type}")
 
         if show_progress:
-            print("concat DataArrays...")
+            print("Packing...")
 
         data = xr.concat(xarray_messages, level_dim_name)
         return data
@@ -211,7 +224,8 @@ def load_field_from_files(
         parameter: str or typing.Dict,
         level_type: str or typing.Dict,
         level: int or float or typing.List or None,
-        show_progress: bool = True,
+        level_dim: str or None = None,
+        show_progress: bool = False,
 ) -> xr.DataArray or None:
     """
     Load one field from multiply files.
@@ -226,6 +240,8 @@ def load_field_from_files(
         see ``load_field_from_file``
     level: int or float or typing.List or None
         see ``load_field_from_file``
+    level_dim: str or None
+        level dimension name.
     show_progress: bool
         see ``load_field_from_file``
 
@@ -243,6 +259,7 @@ def load_field_from_files(
             parameter=parameter,
             level_type=level_type,
             level=level,
+            level_dim=level_dim,
             show_progress=show_progress,
         )
         field_list.append(field)

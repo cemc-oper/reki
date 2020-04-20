@@ -16,7 +16,7 @@ from ._util import (
 def load_message_from_file(
         file_path: str or Path,
         parameter: str or typing.Dict,
-        level_type: str,
+        level_type: str or typing.Dict,
         level: int or float,
         **kwargs,
 ) -> int or None:
@@ -32,12 +32,14 @@ def load_message_from_file(
         GRIB 2 file path.
     parameter: str or typing.Dict
         short name of the field or a dictionary including some GRIB keys:
+
         - discipline
         - parameterCategory
         - parameterNumber
-    level_type: str
-        level type
-    level: int
+
+    level_type: str or typing.Dict
+        level type.
+    level: int or float
         level value.
     kwargs: dict
         ignored
@@ -50,6 +52,7 @@ def load_message_from_file(
     Examples
     --------
     Load 850hPa temperature from GRAPES GFS and get values from GRIB message.
+
     >>> t = load_message_from_file(
     ...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
     ...     parameter="t",
@@ -94,7 +97,7 @@ def load_message_from_file(
 def load_messages_from_file(
         file_path: str or Path,
         parameter: str or typing.Dict,
-        level_type: str or typing.List or None = None,
+        level_type: str or typing.Dict or typing.List or None = None,
         level: int or float or typing.List or None = None,
         **kwargs,
 ) -> typing.List or None:
@@ -113,9 +116,10 @@ def load_messages_from_file(
         - string, same as ``load_message_from_file``
         - typing.List, level type should be in the list.
         - None, don't check level type.
-    level: int or float or typing.List or None
+    level: int or float or typing.Dict or typing.List or None
         level value.
         - string, same as ``load_message_from_file``
+        - typing.Dict, same as ``load_message_from_file``
         - typing.List, level value should be in the list.
         - None, don't check level value. For example, load all messages of some typeOfLevel.
     kwargs: dict
