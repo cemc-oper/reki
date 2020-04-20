@@ -26,17 +26,31 @@ def load_field_from_file(
     file_path
     parameter
     level_type: str or typing.Dict
-        level type. Use GRIB key `typeOfLevel`.
-        If `typeOfLevel` is not available, use dict to specify filter conditions.
-        For example, to get one filed from GRAPES GFS modelvar GRIB2 file, use:
-            {
-                "typeOfFirstFixedSurface": 131
-            }
+        level type.
+        1.  Use "pl", "ml" or "sfc". They will be converted into dict.
+        2.  Use GRIB key `typeOfLevel`, such as
+                - "isobaricInhPa"
+                - "isobaricInPa"
+                - "surface"
+                - "heightAboveGround"
+                - ...
+            See https://apps.ecmwf.int/codes/grib/format/edition-independent/3/ for more values.
+        3.  If `typeOfLevel` is not available, use dict to specify filter conditions.
+            For example, to get one filed from GRAPES GFS modelvar GRIB2 file, use:
+                {
+                    "typeOfFirstFixedSurface": 131
+                }
     level: int or float or typing.List or None
-        level value. If use a scalar, level will be a non-dimension coordinate.
+        level value(s).
+        If use a scalar, level will be a non-dimension coordinate.
         If your want to extract multi levels, use a list and level will be a dimension (level, lat, lon).
+        If use `None`, all levels of level_type will be packed in the result field.
     level_dim: str or None
-        name of level dim. If none, function will generate a name for level dim.
+        name of level dimension.
+        If none, function will generate a name for level dim.
+        If `level_type="pl"`, some values can be used:
+            - `None` or `pl` or `isobaricInhPa`: level_dim is a float number with unit hPa.
+            - `isobaricInPa`: level_dim is a float number with unit Pa.
     show_progress: bool
         show progress bar.
 
@@ -54,9 +68,8 @@ def load_field_from_file(
     ...     parameter="t",
     ...     level_type="isobaricInhPa",
     ...     level=850,
-    ...     engine="eccodes",
     ... )
-    <xarray.DataArray (latitude: 720, longitude: 1440)>
+    <xarray.DataArray 't' (latitude: 720, longitude: 1440)>
     array([[249.19234375, 249.16234375, 249.16234375, ..., 249.15234375,
             249.19234375, 249.14234375],
            [249.45234375, 249.45234375, 249.42234375, ..., 249.45234375,
@@ -71,8 +84,12 @@ def load_field_from_file(
            [235.66234375, 235.86234375, 235.82234375, ..., 235.85234375,
             235.68234375, 235.70234375]])
     Coordinates:
-      * latitude   (latitude) float64 89.88 89.62 89.38 ... -89.38 -89.62 -89.88
-      * longitude  (longitude) float64 0.0 0.25 0.5 0.75 ... 359.0 359.2 359.5 359.8
+        time           datetime64[ns] 2020-03-18
+        step           timedelta64[ns] 4 days 09:00:00
+        valid_time     datetime64[ns] 2020-03-22T09:00:00
+        isobaricInhPa  int64 850
+      * latitude       (latitude) float64 89.88 89.62 89.38 ... -89.38 -89.62 -89.88
+      * longitude      (longitude) float64 0.0 0.25 0.5 0.75 ... 359.2 359.5 359.8
     Attributes:
         GRIB_edition:                    2
         GRIB_centre:                     babj
@@ -82,10 +99,13 @@ def load_field_from_file(
         GRIB_dataType:                   fc
         GRIB_dataDate:                   20200318
         GRIB_dataTime:                   0
+        GRIB_validityDate:               20200322
+        GRIB_validityTime:               900
         GRIB_step:                       105
         GRIB_stepType:                   instant
         GRIB_stepUnits:                  1
         GRIB_stepRange:                  105
+        GRIB_endStep:                    105
         GRIB_name:                       Temperature
         GRIB_shortName:                  t
         GRIB_cfName:                     air_temperature
