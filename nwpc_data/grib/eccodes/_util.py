@@ -1,4 +1,5 @@
 import typing
+import math
 
 import eccodes
 
@@ -13,7 +14,7 @@ def _check_message(
         return False
     if not _check_level_type(message_id, level_type):
         return False
-    if not _check_level_value(message_id, level):
+    if not _check_level_value(message_id, level, level_type):
         return False
     return True
 
@@ -56,10 +57,22 @@ def _check_level_type(
 def _check_level_value(
         message_id,
         level: int or float or typing.List[int] or None,
+        level_type: str or typing.Dict or None = None
 ) -> bool:
     if level is None:
         return True
+
     message_level = eccodes.codes_get(message_id, "level", ktype=float)
+
+    # check for `pl` using unit hPa.
+    # WARNING: This may be changed.
+    if isinstance(level_type, typing.Dict):
+        if "typeOfFirstFixedSurface" in level_type and level_type["typeOfFirstFixedSurface"] == 100:
+            f = eccodes.codes_get(message_id, "scaleFactorOfFirstFixedSurface")
+            v = eccodes.codes_get(message_id, "scaledValueOfFirstFixedSurface")
+            level_in_pa = math.pow(10, f) * v
+            message_level = level_in_pa / 100.0
+
     if isinstance(level, int) or isinstance(level, float):
         return message_level == level
     elif isinstance(level, typing.List):

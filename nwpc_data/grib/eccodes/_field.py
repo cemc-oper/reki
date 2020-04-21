@@ -141,7 +141,7 @@ def load_field_from_file(
     """
     messages = []
 
-    level_type, level_dim = _fix_level(level_type, level_dim)
+    fixed_level_type, fixed_level_dim = _fix_level(level_type, level_dim)
 
     if show_progress:
         with open(file_path, "rb") as f:
@@ -159,7 +159,7 @@ def load_field_from_file(
                 break
             if show_progress:
                 pbar.update(1)
-            if not _check_message(message_id, parameter, level_type, level):
+            if not _check_message(message_id, parameter, fixed_level_type, level):
                 eccodes.codes_release(message_id)
                 continue
             messages.append(message_id)
@@ -175,7 +175,7 @@ def load_field_from_file(
 
     if len(messages) == 1:
         message_id = messages[0]
-        data = create_data_array_from_message(message_id, level_dim_name=level_dim)
+        data = create_data_array_from_message(message_id, level_dim_name=fixed_level_dim)
         eccodes.codes_release(message_id)
         return data
 
@@ -187,7 +187,7 @@ def load_field_from_file(
             )
 
         def creat_array(message):
-            array = create_data_array_from_message(message, level_dim_name=level_dim)
+            array = create_data_array_from_message(message, level_dim_name=fixed_level_dim)
             if show_progress:
                 pbar.update(1)
             return array
