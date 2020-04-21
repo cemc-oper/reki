@@ -175,7 +175,7 @@ def load_field_from_file(
 
     if len(messages) == 1:
         message_id = messages[0]
-        data = create_data_array_from_message(message_id)
+        data = create_data_array_from_message(message_id, level_dim_name=level_dim)
         eccodes.codes_release(message_id)
         return data
 
