@@ -2,13 +2,18 @@ import typing
 
 
 def _fix_level(
-        level_type: str or typing.Dict or None,
+        level_type: str or typing.Dict or typing.List or None,
         level_dim: str or None,
 ) -> typing.Tuple[str or dict, str]:
     if level_type is None:
         return level_type, level_dim
 
     if isinstance(level_type, dict):
+        return level_type, level_dim
+
+    if isinstance(level_type, typing.List):
+        _, level_dim = _fix_level(level_type[0], level_dim)
+        level_type = [_fix_level(cur_level, level_dim)[0] for cur_level in level_type]
         return level_type, level_dim
 
     if level_type == "pl":

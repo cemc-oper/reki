@@ -34,7 +34,7 @@ def _check_parameter(message_id, parameter: str or typing.Dict) -> bool:
 
 def _check_level_type(
         message_id,
-        level_type: str or typing.List[str] or typing.Dict or None,
+        level_type: str or typing.List or typing.Dict or None,
 ) -> bool:
     if level_type is None:
         return True
@@ -42,7 +42,10 @@ def _check_level_type(
     if isinstance(level_type, str):
         return message_type == level_type
     elif isinstance(level_type, typing.List):
-        return message_type in level_type
+        for cur_level_type in level_type:
+            if _check_level_type(message_id, cur_level_type):
+                return True
+        return False
     elif isinstance(level_type, typing.Dict):
         for key in level_type:
             requested_value = level_type[key]
