@@ -16,8 +16,8 @@ from ._util import (
 def load_message_from_file(
         file_path: str or Path,
         parameter: str or typing.Dict,
-        level_type: str or typing.Dict,
-        level: int or float,
+        level_type: str or typing.Dict or None = None,
+        level: int or float or None = None,
         **kwargs,
 ) -> int or None:
     """
