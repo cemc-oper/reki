@@ -41,6 +41,7 @@ def cli():
 ))
 @click.option("--data-type", required=True, help="data type, such as grapes_gfs_gmf/grib2/orig")
 @click.option("--data-level", default="archive,storage", help="data level, split by comma, such as archive, storage")
+@click.option("--data-class", default="od", help="data class, od or cm")
 @click.option("--config-dir", default=None, help="config directory")
 @click.option(
     "--help", "-h",
@@ -51,11 +52,11 @@ def cli():
     help="Show this message and exit.")
 @click.argument('query_args', nargs=-1, type=click.UNPROCESSED)
 @click.pass_context
-def find_local(ctx, data_type, data_level, config_dir, query_args):
+def find_local(ctx, data_type, data_level, data_class, config_dir, query_args):
     if config_dir is None:
         config_dir = get_default_local_config_path()
 
-    config_file_path = find_config(config_dir, data_type)
+    config_file_path = find_config(config_dir, data_type, data_class)
     if config_file_path is None:
         raise ValueError(f"data type is not found: {data_type}")
 
@@ -68,7 +69,7 @@ def find_local(ctx, data_type, data_level, config_dir, query_args):
 
     stream = config["query"]["stream"]
 
-    if stream == "oper":
+    if stream in ("oper", "cm"):
         find_oper_file(config, data_level, query_args)
     elif stream == "eps":
         find_eps_file(config, data_level, query_args)
@@ -110,10 +111,17 @@ def create_oper_option_parser():
         usage=None,
         add_help=False
     )
-    parser.add_argument('--start-time', dest="start_time",
-                        help='start time, such as YYYMMDDHH')
-    parser.add_argument('--forecast-time', dest='forecast_time',
-                        help='forecast time, such as 3h')
+    parser.add_argument(
+        '--start-time',
+        dest="start_time",
+        help='start time, such as YYYMMDDHH'
+    )
+    parser.add_argument(
+        '--forecast-time',
+        dest='forecast_time',
+        default="0h",
+        help='forecast time, such as 3h'
+    )
     return parser
 
 
@@ -123,12 +131,22 @@ def create_eps_option_parser():
         usage=None,
         add_help=False
     )
-    parser.add_argument('--start-time', dest="start_time",
-                        help='start time, such as YYYMMDDHH')
-    parser.add_argument('--forecast-time', dest='forecast_time',
-                        help='forecast time, such as 3h')
-    parser.add_argument('--number', dest='number', type=int,
-                        help='member number')
+    parser.add_argument(
+        '--start-time',
+        dest="start_time",
+        help='start time, such as YYYMMDDHH'
+    )
+    parser.add_argument(
+        '--forecast-time',
+        dest='forecast_time',
+        default="0h",
+        help='forecast time, such as 3h'
+    )
+    parser.add_argument(
+        '--number',
+        dest='number',
+        type=int,
+        help='member number')
     return parser
 
 

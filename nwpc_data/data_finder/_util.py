@@ -75,7 +75,6 @@ class TimeVars(object):
         self.Hour4DV = start_date_time_4dvar.strftime("%H")
 
 
-
 def generate_template_parser(time_vars, query_vars):
 
     def parse_template(template_content):
