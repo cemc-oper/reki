@@ -12,7 +12,7 @@ from nwpc_data.grib.eccodes._xarray import create_data_array_from_message, get_l
 
 def load_field_from_file(
         file_path: str or Path,
-        parameter: str or typing.Dict,
+        parameter: str or typing.Dict or None = None,
         level_type: str or typing.Dict or None = None,
         level: int or float or typing.List or None = None,
         level_dim: str or None = None,
