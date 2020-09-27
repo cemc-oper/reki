@@ -1,0 +1,12 @@
+query:
+  system: muvos
+  stream: vfy
+  type: obs
+  name: gts
+
+file_name: "gts{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}.txt"
+
+paths:
+  - type: local
+    level: archive
+    path: '/g2/nwp_vfy/MUVOS/obs/station/GTS/{{ time_vars.Year }}{{ time_vars.Month }}'
