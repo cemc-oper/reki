@@ -1,0 +1,12 @@
+query:
+  system: muvos
+  stream: vfy
+  type: grid_ana
+  name: rain_06
+
+file_name: "obs.{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}.grib1"
+
+paths:
+  - type: local
+    level: archive
+    path: '/g2/nwp_vfy/MUVOS/obs/grid_ANA/rain/rain_06/grib/{{ time_vars.Year }}{{ time_vars.Month }}'
