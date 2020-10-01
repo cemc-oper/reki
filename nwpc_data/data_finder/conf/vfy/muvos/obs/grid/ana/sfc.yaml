@@ -4,7 +4,7 @@ query:
   type: grid_ana
   name: sfc
 
-file_name: "SFC.{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}.grib1"
+file_name: "SFC.{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}.grb1"
 
 paths:
   - type: local
