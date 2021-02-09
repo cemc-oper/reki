@@ -102,12 +102,14 @@ class TimeVars(object):
         self.Month = start_time.strftime("%m")
         self.Day = start_time.strftime("%d")
         self.Hour = start_time.strftime("%H")
+        self.Minute = start_time.strftime("%M")
         self.Forecast = f"{get_hour(forecast_time):03}"
 
         start_date_time_4dvar = start_time - datetime.timedelta(hours=3)
         self.Year4DV = start_date_time_4dvar.strftime("%Y")
         self.Month4DV = start_date_time_4dvar.strftime("%m")
         self.Day4DV = start_date_time_4dvar.strftime("%d")
+        self.Minute4DV = start_time.strftime("%M")
         self.Hour4DV = start_date_time_4dvar.strftime("%H")
 
 

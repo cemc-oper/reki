@@ -1,0 +1,12 @@
+query:
+  system: RMAPS_IN
+  stream: smart2022
+  type: obs/grid
+  name: bth
+
+file_name: 'Z_NAFP_C_BMS_*_P_RMAPS-RISE_1KM_BTH_{{ query_vars.parameter }}_{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Minute }}_*.nc'
+
+paths:
+  - type: local
+    level: archive
+    path: '/g1/u/nwpc_ep3/SMART2022/OBS/grid/RMAPS_IN/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}'
