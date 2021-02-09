@@ -9,7 +9,7 @@ def load_field_from_file(
         file_path: str or Path,
         parameter: str or typing.Dict = None,
         level_type: str or typing.Dict = None,
-        level: int = None,
+        level: typing.Optional[typing.Union[int, float]] = None,
         **kwargs
 ) -> xr.DataArray or None:
     """
@@ -20,9 +20,9 @@ def load_field_from_file(
     file_path: str
     parameter: str or typing.Dict
     level_type: str or typing.Dict
-        level type, pl, sfc, ml, or use ecCodes key `typeOfLevel`, or set ecCodes keys directly.
+        level type, default is level.
     level: int or None
-    kwargs: dict
+    kwargs: typing.Union[int, float] or None
         other parameters used by engine.
 
     Returns
@@ -30,11 +30,20 @@ def load_field_from_file(
     DataArray or None:
         DataArray if found one field, or None if not.
     """
-    with xr.open_dataset(file_path) as ds:
-        if parameter is None:
-            return _load_first_variable(ds)
-        else:
-            return ds[parameter]
+    ds = xr.open_dataset(file_path)
+    if parameter is None:
+        field = _load_first_variable(ds)
+    else:
+        field = ds[parameter]
+
+    if level is not None:
+        if level_type is None:
+            level_type = "level"
+        field = field.loc[{
+            level_type: level
+        }]
+
+    return field
 
 
 def _load_first_variable(data_set: xr.Dataset) -> xr.DataArray:
