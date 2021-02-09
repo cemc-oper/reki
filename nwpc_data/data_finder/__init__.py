@@ -7,7 +7,7 @@ import pandas as pd
 from nwpc_data.data_finder._config import (
     find_config, load_config, get_default_local_config_path,
 )
-from nwpc_data.data_finder._util import find_file
+from nwpc_data.data_finder._util import find_file, find_files
 
 
 def find_local_file(
@@ -100,4 +100,32 @@ def find_local_file(
 
     config = load_config(config_file_path)
     file_path = find_file(config, data_level, start_time, forecast_time, **kwargs)
+    return file_path
+
+
+def find_local_files(
+        data_type: str,
+        start_time: str or pd.Timestamp or datetime.datetime,
+        forecast_time: str or pd.Timedelta = "0",
+        data_level: str or typing.Iterable or None = ("archive", "storage"),
+        path_type: str = "local",
+        data_class: str = "od",
+        config_dir: str or Path or None = None,
+        glob: bool = True,
+        **kwargs,
+) -> Path or None:
+    if config_dir is None:
+        config_dir = get_default_local_config_path()
+
+    config_file_path = find_config(config_dir, data_type, data_class)
+    if config_file_path is None:
+        raise ValueError(f"data type is not found: {data_type}")
+
+    if isinstance(forecast_time, str):
+        forecast_time = pd.to_timedelta(forecast_time)
+    if isinstance(start_time, str):
+        start_time = pd.to_datetime(start_time, format="%Y%m%d%H")
+
+    config = load_config(config_file_path)
+    file_path = find_files(config, data_level, start_time, forecast_time, glob, **kwargs)
     return file_path

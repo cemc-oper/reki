@@ -41,6 +41,42 @@ def find_file(
     return file_path
 
 
+def find_files(
+        config: dict,
+        data_level: str or typing.List,
+        start_time: datetime.datetime or pd.Timestamp,
+        forecast_time: pd.Timedelta,
+        glob: bool = True,
+        **kwargs
+) -> typing.List[Path] or None:
+    query_vars = QueryVars()
+
+    for key in config["query"]:
+        setattr(query_vars, key, config["query"][key])
+    for key in kwargs:
+        setattr(query_vars, key, kwargs[key])
+
+    time_vars = TimeVars(start_time=start_time, forecast_time=forecast_time)
+
+    parse_template = generate_template_parser(time_vars, query_vars)
+    file_name = parse_template(config["file_name"])
+    file_paths = []
+    paths = config["paths"]
+    for a_path_object in paths:
+        current_data_level = a_path_object["level"]
+        if not check_data_level(current_data_level, data_level):
+            continue
+
+        path_template = a_path_object["path"]
+        current_dir_path = Path(parse_template(path_template))
+        current_files = current_dir_path.glob(file_name)
+        file_paths.extend([f for f in current_files if f.is_file()])
+
+    if len(file_paths) == 0:
+        return None
+    return file_paths
+
+
 def check_data_level(data_level, required_level: str or typing.Iterable or None):
     if required_level is None:
         return True
