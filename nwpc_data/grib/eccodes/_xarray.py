@@ -112,8 +112,24 @@ def create_data_array_from_message(
     level_name, value = get_level_from_attrs(all_attrs, level_dim_name)
     coords[level_name] = value
 
-    coords["latitude"] = lats
-    coords["longitude"] = lons
+    coords["latitude"] = xr.Variable(
+        "latitude",
+        lats,
+        attrs={
+            "units": "degrees_north",
+            "standard_name": "latitude",
+            "long_name": "latitude"
+        },
+    )
+    coords["longitude"] = xr.Variable(
+        "longitude",
+        lons,
+        attrs={
+            "units": "degrees_east",
+            "standard_name": "longitude",
+            "long_name": "longitude"
+        }
+    )
 
     dims = ("latitude", "longitude")
 
@@ -145,6 +161,7 @@ def create_data_array_from_message(
         attrs=data_attrs,
         name=var_name,
     )
+
 
     return data
 
