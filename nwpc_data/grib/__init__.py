@@ -8,13 +8,13 @@ from ._level import fix_level_type
 
 
 def load_field_from_file(
-        file_path: str or Path,
-        parameter: str or typing.Dict,
-        level_type: str or typing.Dict = None,
-        level: int = None,
+        file_path: typing.Union[str, Path],
+        parameter: typing.Union[str, typing.Dict],
+        level_type: typing.Optional[typing.Union[str, typing.Dict]] = None,
+        level: typing.Optional[int] = None,
         engine: str = "eccodes",
         **kwargs
-) -> xr.DataArray or None:
+) -> typing.Optional[xr.DataArray]:
     """
     Load **one** field from GRIB2 file. Default engine is eccodes.
 

@@ -1,18 +1,19 @@
 import typing
 import math
 
-import eccodes
 import numpy as np
 import xarray as xr
 import pandas as pd
 
+import eccodes
+
 
 def create_data_array_from_message(
         message,
-        level_dim_name: str or None = None,
+        level_dim_name: typing.Optional[str] = None,
 ) -> xr.DataArray:
     """
-    Create ``xarray.DataArray`` from one GRIB 2 message.
+    Create ``xarray.DataArray`` from one GRIB2 message.
     """
     values = eccodes.codes_get_double_array(message, "values")
 
@@ -148,7 +149,7 @@ def create_data_array_from_message(
     return data
 
 
-def get_level_coordinate_name(data: xr.DataArray) -> str or None:
+def get_level_coordinate_name(data: xr.DataArray) -> typing.Optional[str]:
     """
     Get coordinate name from ``xarray.DataArray`` object.
 
@@ -170,7 +171,10 @@ def get_level_coordinate_name(data: xr.DataArray) -> str or None:
 
 
 def get_time_from_attrs(all_attrs):
-    start_time = pd.to_datetime(f"{all_attrs['dataDate']}{all_attrs['dataTime']:04}")
+    start_time = pd.to_datetime(
+        f"{all_attrs['dataDate']}{all_attrs['dataTime']:04}",
+        format="%Y%m%d%H%M"
+    )
     return "time", start_time
 
 
@@ -196,9 +200,9 @@ def get_valid_time_from_attrs(all_attrs):
 
 
 def get_level_from_attrs(
-        all_attrs: dict,
-        level_dim_name: str or None = None,
-) -> typing.Tuple[str, float or int]:
+        all_attrs: typing.Dict,
+        level_dim_name: typing.Optional[str] = None,
+) -> typing.Tuple[str, typing.Union[float,int]]:
     """
     Get level coordinate name and value.
 
