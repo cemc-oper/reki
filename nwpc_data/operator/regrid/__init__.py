@@ -9,7 +9,7 @@ def interpolate_grid(
         data: xr.DataArray,
         target: xr.DataArray,
         scheme: str = "linear",
-        engine = None,
+        engine: str = "scipy",
         **kwargs: typing.Dict,
 ) -> xr.DataArray:
     """
@@ -19,7 +19,7 @@ def interpolate_grid(
     data
     target
     scheme
-    engine
+    kwargs
 
     Returns
     -------
@@ -34,7 +34,7 @@ def interpolate_grid(
     target_latitudes = target.latitude.values
     target_longitudes = target.longitude.values
 
-    interpolator = _get_interpolator(scheme, **kwargs)
+    interpolator = _get_interpolator(scheme, engine, **kwargs)
 
     target_values = interpolator.interpolate_grid(
         latitudes=latitudes,
