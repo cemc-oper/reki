@@ -1,0 +1,12 @@
+query:
+  system: cmadaas
+  stream: smart2022
+  type: obs/station
+  name: olympics
+
+file_name: 'obs_{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+
+paths:
+  - type: local
+    level: archive
+    path: '/g11/nwpc_ep3/SMART2022/OBS/station/obs'
