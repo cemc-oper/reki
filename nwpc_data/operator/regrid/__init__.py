@@ -26,32 +26,13 @@ def interpolate_grid(
 
     """
 
-    latitudes = data.latitude.values
-    longitudes = data.longitude.values
 
-    values = data.values
-
-    target_latitudes = target.latitude.values
-    target_longitudes = target.longitude.values
 
     interpolator = _get_interpolator(scheme, engine, **kwargs)
 
-    target_values = interpolator.interpolate_grid(
-        latitudes=latitudes,
-        longitudes=longitudes,
-        values=values,
-        target_latitudes=target_latitudes,
-        target_longitudes=target_longitudes,
-    )
-
-    coords = data.coords.to_dataset()
-    coords["longitude"] = target["longitude"]
-    coords["latitude"] = target["latitude"]
-
-    target_field = xr.DataArray(
-        target_values,
-        coords=coords.coords,
-        dims=data.dims
+    target_field = interpolator.interpolate_grid(
+        data=data,
+        target=target,
     )
 
     return target_field

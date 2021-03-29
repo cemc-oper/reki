@@ -2,17 +2,15 @@ import abc
 import typing
 
 import numpy as np
+import xarray as xr
 
 
 class BaseInterpolator(abc.ABC):
     @abc.abstractmethod
     def interpolate_grid(
             self,
-            latitudes: np.ndarray,
-            longitudes: np.ndarray,
-            values: np.ndarray,
-            target_latitudes: np.ndarray,
-            target_longitudes: np.ndarray,
+            data: xr.DataArray,
+            target: xr.DataArray,
     ) -> np.ndarray:
         pass
 
@@ -30,5 +28,25 @@ def _get_interpolator(
             return ScipyRectBivariateSplineInterpolator(scheme, **kwargs)
         else:
             raise ValueError(f"{scheme} is not supported for engine {engine}")
+    elif engine == "xarray":
+        from ._xarray import XarrayInterpolator
+        return XarrayInterpolator(scheme, **kwargs)
     else:
         raise ValueError(f"engine {engine} is not supported")
+
+
+def _create_data_array(
+        data: xr.DataArray,
+        target: xr.DataArray,
+        target_values: np.ndarray,
+) -> xr.DataArray:
+    coords = data.coords.to_dataset()
+    coords["longitude"] = target["longitude"]
+    coords["latitude"] = target["latitude"]
+
+    target_field = xr.DataArray(
+        target_values,
+        coords=coords.coords,
+        dims=data.dims
+    )
+    return target_field

@@ -1,12 +1,16 @@
 import typing
 
 import numpy as np
+import xarray as xr
 from scipy.interpolate import (
     interpn,
     RectBivariateSpline
 )
 
-from ._interpolator import BaseInterpolator
+from ._interpolator import (
+    BaseInterpolator,
+    _create_data_array
+)
 
 
 class ScipyInterpnInterpolator(BaseInterpolator):
@@ -20,12 +24,17 @@ class ScipyInterpnInterpolator(BaseInterpolator):
 
     def interpolate_grid(
             self,
-            latitudes,
-            longitudes,
-            values: np.ndarray,
-            target_latitudes,
-            target_longitudes,
-    ) -> np.ndarray:
+            data: xr.DataArray,
+            target: xr.DataArray,
+    ) -> xr.DataArray:
+        latitudes = data.latitude.values
+        longitudes = data.longitude.values
+
+        values = data.values
+
+        target_latitudes = target.latitude.values
+        target_longitudes = target.longitude.values
+
         target_x, target_y = np.meshgrid(
             target_longitudes,
             target_latitudes,
@@ -39,7 +48,13 @@ class ScipyInterpnInterpolator(BaseInterpolator):
             **self.kwargs
         )
 
-        return target_values
+        target_field =_create_data_array(
+            data=data,
+            target=target,
+            target_values=target_values
+        )
+
+        return target_field
 
 
 class ScipyRectBivariateSplineInterpolator(BaseInterpolator):
@@ -53,12 +68,17 @@ class ScipyRectBivariateSplineInterpolator(BaseInterpolator):
 
     def interpolate_grid(
             self,
-            latitudes,
-            longitudes,
-            values: np.ndarray,
-            target_latitudes,
-            target_longitudes,
-    ) -> np.ndarray:
+            data: xr.DataArray,
+            target: xr.DataArray,
+    ) -> xr.DataArray:
+        latitudes = data.latitude.values
+        longitudes = data.longitude.values
+
+        values = data.values
+
+        target_latitudes = target.latitude.values
+        target_longitudes = target.longitude.values
+
         rbs = RectBivariateSpline(
             latitudes[::-1],
             longitudes,
@@ -71,4 +91,10 @@ class ScipyRectBivariateSplineInterpolator(BaseInterpolator):
             target_longitudes
         )[::-1, :]
 
-        return target_values
+        target_field =_create_data_array(
+            data=data,
+            target=target,
+            target_values=target_values
+        )
+
+        return target_field
