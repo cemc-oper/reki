@@ -9,6 +9,7 @@ from ._util import (
     _check_parameter,
     _check_level_type,
     _check_level_value,
+    _check_keys,
     _check_message,
 )
 
@@ -42,7 +43,7 @@ def load_message_from_file(
     level: int or float
         level value.
     kwargs: dict
-        ignored
+        other grib key used to filter.
 
     Returns
     -------
@@ -83,7 +84,7 @@ def load_message_from_file(
             message_id = eccodes.codes_grib_new_from_file(f)
             if message_id is None:
                 return None
-            if not _check_message(message_id, parameter, fixed_level_type, level):
+            if not _check_message(message_id, parameter, fixed_level_type, level, **kwargs):
                 eccodes.codes_release(message_id)
                 continue
 
@@ -123,7 +124,7 @@ def load_messages_from_file(
         - typing.List, level value should be in the list.
         - None, don't check level value. For example, load all messages of some typeOfLevel.
     kwargs: dict
-        other parameters
+        other grib key used to filter.
 
     Returns
     -------
@@ -154,6 +155,9 @@ def load_messages_from_file(
                 eccodes.codes_release(message_id)
                 continue
             if not _check_level_value(message_id, level):
+                eccodes.codes_release(message_id)
+                continue
+            if not _check_keys(message_id, **kwargs):
                 eccodes.codes_release(message_id)
                 continue
 

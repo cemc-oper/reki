@@ -9,12 +9,15 @@ def _check_message(
         parameter: str or typing.Dict or None,
         level_type: str or typing.List[str] or None,
         level: int or typing.List[int] or None,
+        **kwargs,
 ) -> bool:
     if not _check_parameter(message_id, parameter):
         return False
     if not _check_level_type(message_id, level_type):
         return False
     if not _check_level_value(message_id, level, level_type):
+        return False
+    if not _check_keys(message_id, **kwargs):
         return False
     return True
 
@@ -84,3 +87,11 @@ def _check_level_value(
         return message_level in level
     else:
         raise ValueError(f"level is not supported: {level}")
+
+
+def _check_keys(message_id, **kwargs):
+    for key, value in kwargs.items():
+        v = eccodes.codes_get(message_id, key)
+        if value != v:
+            return False
+    return True

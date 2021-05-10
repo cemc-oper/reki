@@ -17,6 +17,7 @@ def load_field_from_file(
         level: int or float or typing.List or None = None,
         level_dim: str or None = None,
         show_progress: bool = False,
+        **kwargs
 ) -> xr.DataArray or None:
     """
     Load **one** field from local GRIB2 file using eccodes-python.
@@ -159,7 +160,7 @@ def load_field_from_file(
                 break
             if show_progress:
                 pbar.update(1)
-            if not _check_message(message_id, parameter, fixed_level_type, level):
+            if not _check_message(message_id, parameter, fixed_level_type, level, **kwargs):
                 eccodes.codes_release(message_id)
                 continue
             messages.append(message_id)
@@ -226,6 +227,7 @@ def load_field_from_files(
         level: int or float or typing.List or None,
         level_dim: str or None = None,
         show_progress: bool = False,
+        **kwargs
 ) -> xr.DataArray or None:
     """
     Load one field from multiply files.
@@ -261,6 +263,7 @@ def load_field_from_files(
             level=level,
             level_dim=level_dim,
             show_progress=show_progress,
+            **kwargs
         )
         field_list.append(field)
 
