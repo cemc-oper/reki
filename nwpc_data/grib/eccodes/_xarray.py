@@ -33,23 +33,23 @@ def create_data_array_from_message(
         'stepUnits',
         'stepRange',
         'endStep',
+    ]
+
+    parameter_keys = [
         "name",
         "shortName",
         'cfName',
         'discipline',
         'parameterCategory',
         'parameterNumber',
-        'gridType',
-        'gridDefinitionDescription',
-        'typeOfFirstFixedSurface',
-        'typeOfLevel',
-        'level',
-        'numberOfPoints',
-        "missingValue",
         'units',
     ]
 
     grid_keys = [
+        'gridType',
+        'gridDefinitionDescription',
+        'numberOfPoints',
+        "missingValue",
         'latitudeOfFirstGridPointInDegrees',
         'longitudeOfFirstGridPointInDegrees',
         'latitudeOfLastGridPointInDegrees',
@@ -61,13 +61,15 @@ def create_data_array_from_message(
     ]
 
     level_keys = [
+        'typeOfLevel',
+        'level',
         "typeOfFirstFixedSurface",
         "typeOfSecondFixedSurface",
         "scaleFactorOfFirstFixedSurface",
         "scaledValueOfFirstFixedSurface",
     ]
 
-    all_keys = attr_keys + grid_keys + level_keys
+    all_keys = attr_keys + parameter_keys + grid_keys + level_keys
 
     all_attrs = {}
     for key in all_keys:
