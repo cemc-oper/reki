@@ -18,8 +18,6 @@ def load_field_from_file(
     """
     Load **one** field from GRIB2 file. Default engine is eccodes.
 
-    If loading speed is
-
     Parameters
     ----------
     file_path: str
@@ -37,7 +35,7 @@ def load_field_from_file(
     DataArray or None:
         DataArray if found one field, or None if not.
     """
-    fixed_level_type = fix_level_type(level_type)
+    fixed_level_type = fix_level_type(level_type, engine=engine)
     if engine == "cfgrib":
         from .cfgrib import load_field_from_file
         return load_field_from_file(
