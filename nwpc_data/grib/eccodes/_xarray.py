@@ -1,4 +1,4 @@
-import typing
+from typing import Dict, Optional, Union, Tuple
 import math
 
 import numpy as np
@@ -10,7 +10,7 @@ import eccodes
 
 def create_data_array_from_message(
         message,
-        level_dim_name: typing.Optional[str] = None,
+        level_dim_name: Optional[str] = None,
 ) -> xr.DataArray:
     """
     Create ``xarray.DataArray`` from one GRIB2 message.
@@ -164,11 +164,10 @@ def create_data_array_from_message(
         name=var_name,
     )
 
-
     return data
 
 
-def get_level_coordinate_name(data: xr.DataArray) -> typing.Optional[str]:
+def get_level_coordinate_name(data: xr.DataArray) -> Optional[str]:
     """
     Get coordinate name from ``xarray.DataArray`` object.
 
@@ -219,9 +218,9 @@ def get_valid_time_from_attrs(all_attrs):
 
 
 def get_level_from_attrs(
-        all_attrs: typing.Dict,
-        level_dim_name: typing.Optional[str] = None,
-) -> typing.Tuple[str, typing.Union[float,int]]:
+        all_attrs: Dict,
+        level_dim_name: Optional[str] = None,
+) -> Tuple[str, Union[float, int]]:
     """
     Get level coordinate name and value.
 

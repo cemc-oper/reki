@@ -1,5 +1,5 @@
 import typing
-from typing import Union, List, Dict
+from typing import Union, List, Dict, Optional
 from pathlib import Path
 
 import eccodes
@@ -12,14 +12,14 @@ from nwpc_data.grib.eccodes._xarray import create_data_array_from_message, get_l
 
 
 def load_field_from_file(
-        file_path: str or Path,
-        parameter: str or typing.Dict or None = None,
-        level_type: str or typing.Dict or None = None,
-        level: Union[int, float, List, typing.Dict] = None,
-        level_dim: str or None = None,
+        file_path: Union[str, Path],
+        parameter: Union[str, Dict] = None,
+        level_type: Union[str, Dict] = None,
+        level: Union[int, float, List, Dict] = None,
+        level_dim: Optional[str] = None,
         show_progress: bool = False,
         **kwargs
-) -> xr.DataArray or None:
+) -> Optional[xr.DataArray]:
     """
     Load **one** field from local GRIB2 file using eccodes-python.
     Or load multi levels into one field.
@@ -225,14 +225,14 @@ def load_field_from_file(
 
 
 def load_field_from_files(
-        file_list: typing.List,
-        parameter: str or typing.Dict,
-        level_type: str or typing.Dict,
-        level: int or float or typing.List or None,
-        level_dim: str or None = None,
+        file_list: List,
+        parameter: Union[str, Dict],
+        level_type: Union[str, Dict],
+        level: Optional[Union[int, float, List, Dict]],
+        level_dim: Optional[str] = None,
         show_progress: bool = False,
         **kwargs
-) -> xr.DataArray or None:
+) -> Optional[xr.DataArray]:
     """
     Load one field from multiply files.
 

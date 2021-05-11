@@ -1,9 +1,9 @@
-import typing
+from typing import Optional, Union, Dict
 
 
 def fix_level_type(
-        level_type: typing.Optional[typing.Union[str, typing.Dict]]
-) -> typing.Optional[typing.Union[str, typing.Dict]]:
+        level_type: Optional[Union[str, Dict]]
+) -> Optional[Union[str, Dict]]:
     """
 
     Notes

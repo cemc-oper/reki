@@ -1,4 +1,4 @@
-import typing
+from typing import Dict
 
 import xarray as xr
 
@@ -10,7 +10,7 @@ def interpolate_grid(
         target: xr.DataArray,
         scheme: str = "linear",
         engine: str = "scipy",
-        **kwargs: typing.Dict,
+        **kwargs: Dict,
 ) -> xr.DataArray:
     """
 
@@ -25,9 +25,6 @@ def interpolate_grid(
     -------
 
     """
-
-
-
     interpolator = _get_interpolator(scheme, engine, **kwargs)
 
     target_field = interpolator.interpolate_grid(

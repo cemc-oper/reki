@@ -1,17 +1,17 @@
 from pathlib import Path
 import typing
+from typing import Union, Dict, Optional
 
-import pandas as pd
 import xarray as xr
 
 
 def load_field_from_file(
         file_path: str or Path,
-        parameter: str or typing.Dict = None,
-        level_type: str or typing.Dict = None,
-        level: typing.Optional[typing.Union[int, float]] = None,
+        parameter: Union[str, Dict] = None,
+        level_type: Union[str, Dict] = None,
+        level: Optional[Union[int, float]] = None,
         **kwargs
-) -> xr.DataArray or None:
+) -> Optional[xr.DataArray]:
     """
     Load **one** field from NetCDF file.
 

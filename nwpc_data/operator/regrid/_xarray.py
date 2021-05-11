@@ -1,4 +1,3 @@
-import numpy as np
 import xarray as xr
 
 from ._interpolator import BaseInterpolator

@@ -1,4 +1,5 @@
 import typing
+from typing import Union, List, Dict, Optional
 from pathlib import Path
 
 import eccodes
@@ -15,12 +16,12 @@ from ._util import (
 
 
 def load_message_from_file(
-        file_path: str or Path,
-        parameter: str or typing.Dict or None = None,
-        level_type: str or typing.Dict or None = None,
-        level: int or float or None = None,
+        file_path: Union[str, Path],
+        parameter: Union[str, Dict] = None,
+        level_type: Union[str, Dict] = None,
+        level: Union[int, float, Dict] = None,
         **kwargs,
-) -> int or None:
+) -> Optional[int]:
     """
     Load the **first** message from GRIB 2 file using eccodes-python library.
 
@@ -40,7 +41,7 @@ def load_message_from_file(
 
     level_type: str or typing.Dict
         level type.
-    level: int or float
+    level: int or float or typing.Dict
         level value.
     kwargs: dict
         other grib key used to filter.
@@ -96,12 +97,12 @@ def load_message_from_file(
 
 
 def load_messages_from_file(
-        file_path: str or Path,
-        parameter: str or typing.Dict,
-        level_type: str or typing.Dict or typing.List or None = None,
-        level: int or float or typing.List or None = None,
+        file_path: Union[str, Path],
+        parameter: Union[str, Dict],
+        level_type: Union[str, Dict, List] = None,
+        level: Union[int, float, List, Dict] = None,
         **kwargs,
-) -> typing.List or None:
+) -> Optional[List]:
     """
     Load multiply messages from file.
 

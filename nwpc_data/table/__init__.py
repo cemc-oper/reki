@@ -1,12 +1,12 @@
-import typing
+from typing import Union
 from pathlib import Path
 
 import pandas as pd
 
 
 def load_table_from_file(
-        file_path: typing.Union[str, Path],
-        sep="\s+|,",
+        file_path: Union[str, Path],
+        sep=r"\s+|,",
         **kwargs
 ) -> pd.DataFrame:
     """

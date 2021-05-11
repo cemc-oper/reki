@@ -1,5 +1,5 @@
 from pathlib import Path
-import typing
+from typing import List, Dict, Union, Optional
 
 import eccodes
 
@@ -10,11 +10,11 @@ from ._util import (
 
 
 def load_bytes_from_file(
-        file_path: str or Path,
-        parameter: str or typing.Dict,
+        file_path: Union[str, Path],
+        parameter: Union[str, Dict],
         level_type: str = None,
         level: int = None,
-) -> bytes or None:
+) -> Optional[bytes]:
     """
     Load one message from grib file and return message's original bytes.
 
@@ -61,7 +61,7 @@ def load_bytes_from_file(
             return eccodes.codes_get_message(message_id)
 
 
-def create_message_from_bytes(raw_message: bytes) -> int or None:
+def create_message_from_bytes(raw_message: bytes) -> Optional[int]:
     """
     Create **the first** message from raw bytes.
 
@@ -78,7 +78,7 @@ def create_message_from_bytes(raw_message: bytes) -> int or None:
     return eccodes.codes_new_from_message(raw_message)
 
 
-def create_messages_from_bytes(raw_message: bytes) -> typing.List[int]:
+def create_messages_from_bytes(raw_message: bytes) -> List[int]:
     """
     Create all messages from raw bytes.
 

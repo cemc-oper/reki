@@ -1,5 +1,6 @@
 import datetime
 import typing
+from typing import Union, Optional, Iterable
 from pathlib import Path
 
 import pandas as pd
@@ -12,14 +13,14 @@ from nwpc_data.data_finder._util import find_file, find_files
 
 def find_local_file(
         data_type: str,
-        start_time: str or pd.Timestamp or datetime.datetime,
-        forecast_time: str or pd.Timedelta = "0",
-        data_level: str or typing.Iterable or None = ("archive", "storage"),
+        start_time: Union[str, pd.Timestamp, datetime.datetime],
+        forecast_time: Union[str, pd.Timedelta] = "0",
+        data_level: Optional[Union[str, Iterable]] = ("archive", "storage"),
         path_type: str = "local",
         data_class: str = "od",
-        config_dir: str or Path or None = None,
+        config_dir: Union[str, Path] = None,
         **kwargs,
-) -> Path or None:
+) -> Optional[Path]:
     """Find local data path using config files in config dir.
 
     Parameters
@@ -105,15 +106,15 @@ def find_local_file(
 
 def find_local_files(
         data_type: str,
-        start_time: str or pd.Timestamp or datetime.datetime,
-        forecast_time: str or pd.Timedelta = "0",
-        data_level: str or typing.Iterable or None = ("archive", "storage"),
+        start_time: Union[str, pd.Timestamp, datetime.datetime],
+        forecast_time: Union[str, pd.Timedelta] = "0",
+        data_level: Optional[Union[str, Iterable]] = ("archive", "storage"),
         path_type: str = "local",
         data_class: str = "od",
-        config_dir: str or Path or None = None,
+        config_dir: Union[str, Path] = None,
         glob: bool = True,
         **kwargs,
-) -> Path or None:
+) -> Optional[Path]:
     if config_dir is None:
         config_dir = get_default_local_config_path()
 

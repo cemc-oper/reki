@@ -1,5 +1,5 @@
 import datetime
-import typing
+from typing import List, Union, Optional, Iterable
 from pathlib import Path
 
 import pandas as pd
@@ -8,11 +8,11 @@ from jinja2 import Template
 
 def find_file(
         config: dict,
-        data_level: str or typing.List,
-        start_time: datetime.datetime or pd.Timestamp,
+        data_level: Union[str, List],
+        start_time: Union[datetime.datetime, pd.Timestamp],
         forecast_time: pd.Timedelta,
         **kwargs
-) -> Path or None:
+) -> Optional[Path]:
     query_vars = QueryVars()
 
     for key in config["query"]:
@@ -43,12 +43,12 @@ def find_file(
 
 def find_files(
         config: dict,
-        data_level: str or typing.List,
-        start_time: datetime.datetime or pd.Timestamp,
+        data_level: Union[str, List],
+        start_time: Union[datetime.datetime, pd.Timestamp],
         forecast_time: pd.Timedelta,
         glob: bool = True,
         **kwargs
-) -> typing.List[Path] or None:
+) -> Optional[List[Path]]:
     query_vars = QueryVars()
 
     for key in config["query"]:
@@ -77,12 +77,12 @@ def find_files(
     return file_paths
 
 
-def check_data_level(data_level, required_level: str or typing.Iterable or None):
+def check_data_level(data_level, required_level: Optional[Union[str, Iterable]]):
     if required_level is None:
         return True
     elif isinstance(required_level, str):
         return data_level == required_level
-    elif isinstance(required_level, typing.Iterable):
+    elif isinstance(required_level, Iterable):
         return data_level in required_level
     else:
         raise ValueError(f"level is not supported {required_level}")

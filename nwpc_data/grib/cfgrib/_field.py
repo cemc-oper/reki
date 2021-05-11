@@ -1,4 +1,5 @@
 import typing
+from typing import Dict, Union, Optional
 from pathlib import Path
 
 import xarray as xr
@@ -16,12 +17,12 @@ from ._util import (
 
 
 def load_field_from_file(
-        file_path: str or Path,
-        parameter: str or typing.Dict,
-        level_type: str or typing.Dict,
-        level: int or float or None = None,
-        with_index: str or bool = False,
-) -> xr.DataArray or None:
+        file_path: Union[str, Path],
+        parameter: Union[str, Dict],
+        level_type: Union[str, Dict],
+        level: Union[int, float] = None,
+        with_index: Union[str, bool] = False,
+) -> Optional[xr.DataArray]:
     """
     Load **one** field from GRIB2 file using [ecmwf/cfgrib](https://github.com/ecmwf/cfgrib).
 
@@ -166,12 +167,12 @@ def load_field_from_file(
 
 
 def load_fields_from_file(
-        file_path: str or Path,
-        parameter: str or typing.Dict = None,
+        file_path: Union[str, Path],
+        parameter: Union[str, Dict] = None,
         level_type: str = None,
-        level: int or float or None = None,
-        with_index: str or bool = False,
-) -> xr.Dataset or None:
+        level: Union[int, float] = None,
+        with_index: Union[str, bool] = False,
+) -> Optional[xr.Dataset]:
     """
     Load fields from GRIB2 file using [ecmwf/cfgrib](https://github.com/ecmwf/cfgrib).
 

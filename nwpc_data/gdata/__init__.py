@@ -1,4 +1,5 @@
 import datetime
+from typing import Union, Optional
 
 import pandas as pd
 import xarray as xr
@@ -15,14 +16,14 @@ def load_message(
         stream: str,
         data_type: str,
         data_name: str,
-        start_time: datetime.datetime or pd.Timestamp or str,
-        forecast_time: pd.Timedelta or str,
+        start_time: Union[datetime.datetime, pd.Timestamp, str],
+        forecast_time: Union[pd.Timedelta, str],
         parameter: str,
         server: str,
-        level_type: str = None,
-        level: int = None,
+        level_type: Optional[str] = None,
+        level: Optional[int] = None,
         data_class: str = "od",
-) -> int or None:
+) -> Optional[int]:
     url = f"http://{server}/api/v1/gdata/fetch/field"
 
     if not isinstance(start_time, str):
@@ -63,14 +64,14 @@ def load_field(
         stream: str,
         data_type: str,
         data_name: str,
-        start_time: datetime.datetime or pd.Timestamp or str,
-        forecast_time: pd.Timedelta or str,
+        start_time: Union[datetime.datetime, pd.Timestamp, str],
+        forecast_time: Union[pd.Timedelta, str],
         parameter: str,
         server: str,
         level_type: str = None,
         level: int = None,
         data_class: str = "od",
-) -> xr.DataArray or None:
+) -> Optional[xr.DataArray]:
     message = load_message(
         data_class=data_class,
         system=system,

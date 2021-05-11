@@ -1,16 +1,16 @@
-import typing
+from typing import Dict, List, Union, Tuple
 
 import xarray as xr
 
 
 def _fill_parameter(
-        parameter: str or dict,
-        filter_by_keys: dict,
-        read_keys: typing.List
-) -> typing.Tuple[typing.Dict, typing.List]:
+        parameter: Union[str, Dict],
+        filter_by_keys: Dict,
+        read_keys: List
+) -> Tuple[Dict, List]:
     if isinstance(parameter, str):
         filter_by_keys["shortName"] = parameter
-    elif isinstance(parameter, typing.Dict):
+    elif isinstance(parameter, Dict):
         filter_by_keys.update(parameter)
         read_keys.extend(parameter.keys())
     else:
@@ -21,9 +21,9 @@ def _fill_parameter(
 def _fill_level(
         level_type: str,
         level: int,
-        filter_by_keys: typing.Dict,
-        read_keys: typing.List
-) -> typing.Tuple[typing.Dict, typing.List]:
+        filter_by_keys: Dict,
+        read_keys: List
+) -> Tuple[Dict, List]:
     filter_by_keys.update({
         "typeOfLevel": level_type,
         "level": level,
@@ -32,10 +32,10 @@ def _fill_level(
 
 
 def _fill_level_type(
-        level_type: str or dict,
-        filter_by_keys: typing.Dict,
-        read_keys: typing.List
-) -> typing.Tuple[typing.Dict, typing.List]:
+        level_type: Union[str, dict],
+        filter_by_keys: Dict,
+        read_keys: List
+) -> Tuple[Dict, List]:
     if isinstance(level_type, dict):
         filter_by_keys.update(level_type)
         read_keys.extend([key for key in level_type if key not in read_keys])
@@ -47,10 +47,10 @@ def _fill_level_type(
 
 
 def _fill_level_value(
-        level: int or float,
-        filter_by_keys: typing.Dict,
-        read_keys: typing.List
-) -> typing.Tuple[typing.Dict, typing.List]:
+        level: Union[int, float],
+        filter_by_keys: Dict,
+        read_keys: List
+) -> Tuple[Dict, List]:
     filter_by_keys.update({
         "level": level,
     })
@@ -58,9 +58,9 @@ def _fill_level_value(
 
 
 def _fill_index_path(
-        with_index: str or bool,
-        backend_kwargs: typing.Dict,
-) -> typing.Dict:
+        with_index: Union[str, bool],
+        backend_kwargs: Dict,
+) -> Dict:
     if isinstance(with_index, str):
         backend_kwargs["indexpath"] = with_index
     elif isinstance(with_index, bool):
