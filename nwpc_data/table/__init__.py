@@ -10,14 +10,14 @@ def load_table_from_file(
         **kwargs
 ) -> pd.DataFrame:
     """
-    Load data from table file using `pd.read_table`.
+    Load data from table file using ``pd.read_table``.
 
     Parameters
     ----------
     file_path: str or Path
     sep: str
     kwargs:
-        additional arguments for `pd.read_table()`
+        additional arguments for ``pd.read_table()``
 
     Returns
     -------

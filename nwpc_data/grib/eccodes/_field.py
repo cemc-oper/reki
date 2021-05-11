@@ -1,4 +1,5 @@
 import typing
+from typing import Union, List, Dict
 from pathlib import Path
 
 import eccodes
@@ -14,7 +15,7 @@ def load_field_from_file(
         file_path: str or Path,
         parameter: str or typing.Dict or None = None,
         level_type: str or typing.Dict or None = None,
-        level: int or float or typing.List or None = None,
+        level: Union[int, float, List, typing.Dict] = None,
         level_dim: str or None = None,
         show_progress: bool = False,
         **kwargs
@@ -52,11 +53,14 @@ def load_field_from_file(
                 "typeOfFirstFixedSurface": 131
             }
 
-    level: int or float or typing.List or None
+    level: int or float or typing.List or typing.Dict or None
         level value(s).
 
         - If use a scalar, level will be a non-dimension coordinate.
         - If your want to extract multi levels, use a list and level will be a dimension (level, lat, lon).
+        - If use a dict, message will be filtered by dict keys. Support custom calculate keys:
+            - ``first_level``
+            - ``second_level``
         - If use `None`, all levels of level_type will be packed in the result field.
 
     level_dim: str or None

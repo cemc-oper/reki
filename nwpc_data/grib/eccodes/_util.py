@@ -8,7 +8,7 @@ def _check_message(
         message_id,
         parameter: str or typing.Dict or None,
         level_type: str or typing.List[str] or None,
-        level: int or typing.List[int] or None,
+        level: int or typing.List[int] or typing.Dict or None,
         **kwargs,
 ) -> bool:
     if not _check_parameter(message_id, parameter):
@@ -64,7 +64,7 @@ def _check_level_type(
 
 def _check_level_value(
         message_id,
-        level: int or float or typing.List[int] or None,
+        level: int or float or typing.List[int] or typing.Dict or None,
         level_type: str or typing.Dict or None = None
 ) -> bool:
     if level is None:
@@ -76,15 +76,26 @@ def _check_level_value(
     # WARNING: This may be changed.
     if isinstance(level_type, typing.Dict):
         if "typeOfFirstFixedSurface" in level_type and level_type["typeOfFirstFixedSurface"] == 100:
-            f = eccodes.codes_get(message_id, "scaleFactorOfFirstFixedSurface")
-            v = eccodes.codes_get(message_id, "scaledValueOfFirstFixedSurface")
-            level_in_pa = math.pow(10, f) * v
+            level_in_pa = _get_level_value("First")
             message_level = level_in_pa / 100.0
 
     if isinstance(level, int) or isinstance(level, float):
         return message_level == level
     elif isinstance(level, typing.List):
         return message_level in level
+    elif isinstance(level, typing.Dict):
+        current_level_dict = level.copy()
+        if "first_level" in current_level_dict:
+            required_first_level = current_level_dict.pop("first_level")
+            first_level = _get_level_value(message_id, "First")
+            if first_level != float(required_first_level):
+                return False
+        if "second_level" in current_level_dict:
+            required_second_level = current_level_dict.pop("second_level")
+            second_level = _get_level_value(message_id, "Second")
+            if second_level != float(required_second_level):
+                return False
+        return _check_keys(message_id, **current_level_dict)
     else:
         raise ValueError(f"level is not supported: {level}")
 
@@ -95,3 +106,10 @@ def _check_keys(message_id, **kwargs):
         if value != v:
             return False
     return True
+
+
+def _get_level_value(message_id, name="First"):
+    f = eccodes.codes_get(message_id, f"scaleFactorOf{name}FixedSurface")
+    v = eccodes.codes_get(message_id, f"scaledValueOf{name}FixedSurface")
+    level = math.pow(10, -1 * f) * v
+    return level
