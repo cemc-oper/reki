@@ -49,7 +49,7 @@ setup(
         "numpy",
         "pandas",
         "xarray",
-        "eccodes-python",
+        "eccodes",
         "dask",
         "click",
         "tqdm",
