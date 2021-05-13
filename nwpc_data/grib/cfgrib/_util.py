@@ -1,6 +1,9 @@
 from typing import Dict, List, Union, Tuple
 
 import xarray as xr
+import numpy as np
+
+from nwpc_data.grib._parameter import _convert_parameter
 
 
 def _fill_parameter(
@@ -8,9 +11,16 @@ def _fill_parameter(
         filter_by_keys: Dict,
         read_keys: List
 ) -> Tuple[Dict, List]:
+    parameter = _convert_parameter(parameter)
+
     if isinstance(parameter, str):
         filter_by_keys["shortName"] = parameter
     elif isinstance(parameter, Dict):
+        # TODO: convert int64 to int, move to another place.
+        for key, value in parameter.items():
+            if isinstance(value, np.int64):
+                parameter[key] = int(value)
+
         filter_by_keys.update(parameter)
         read_keys.extend(parameter.keys())
     else:
