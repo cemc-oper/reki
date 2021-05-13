@@ -1,6 +1,6 @@
 from typing import Union, Dict
 
-from nwpc_data.grib.config.short_name import SHORT_NAME_TABLE
+from nwpc_data.grib.config import SHORT_NAME_TABLE
 
 
 def _convert_parameter(parameter: Union[str, Dict]) -> Union[str, Dict]:

@@ -1,10 +1,9 @@
 import io
 
 import pandas as pd
-import numpy as np
 
 
-SHORT_NAME_TABLE_CONTENT = """
+_SHORT_NAME_TABLE_CONTENT = """
 short_name,discipline,parameterCategory,parameterNumber
 ACPCP,0,1,10
 ALBDO,0,19,1
@@ -69,8 +68,8 @@ VWSH,0,2,25
 """
 
 
-def get_short_name_table():
-    f = io.StringIO(SHORT_NAME_TABLE_CONTENT)
+def _get_short_name_table() -> pd.DateFrame:
+    f = io.StringIO(_SHORT_NAME_TABLE_CONTENT)
     df = pd.read_table(
         f,
         header=0,
@@ -79,4 +78,4 @@ def get_short_name_table():
     return df
 
 
-SHORT_NAME_TABLE = get_short_name_table()
+SHORT_NAME_TABLE = _get_short_name_table()

@@ -1,1 +1,1 @@
-from .short_name import get_short_name_table
+from .short_name import SHORT_NAME_TABLE
