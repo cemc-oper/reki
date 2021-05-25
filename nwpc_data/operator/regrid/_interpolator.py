@@ -1,4 +1,5 @@
 import abc
+from typing import Union
 
 import numpy as np
 import xarray as xr
@@ -10,7 +11,16 @@ class BaseInterpolator(abc.ABC):
             self,
             data: xr.DataArray,
             target: xr.DataArray,
-    ) -> np.ndarray:
+    ) -> xr.DataArray:
+        pass
+
+    @abc.abstractmethod
+    def extract_point(
+            self,
+            data: xr.DataArray,
+            latitude: Union[int, float],
+            longitude: Union[int, float],
+    ) -> xr.DataArray:
         pass
 
 
