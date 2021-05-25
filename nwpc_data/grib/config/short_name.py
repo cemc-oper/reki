@@ -83,7 +83,7 @@ VWSH,0,2,25
 """
 
 
-def _get_short_name_table() -> pd.DateFrame:
+def _get_short_name_table() -> pd.DataFrame:
     f = io.StringIO(_SHORT_NAME_TABLE_CONTENT)
     df = pd.read_table(
         f,

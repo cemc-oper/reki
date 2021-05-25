@@ -79,7 +79,7 @@ def _check_level_value(
     # WARNING: This may be changed.
     if isinstance(level_type, Dict):
         if "typeOfFirstFixedSurface" in level_type and level_type["typeOfFirstFixedSurface"] == 100:
-            level_in_pa = _get_level_value("First")
+            level_in_pa = _get_level_value(message_id, "First")
             message_level = level_in_pa / 100.0
 
     if isinstance(level, int) or isinstance(level, float):
