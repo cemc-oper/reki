@@ -47,6 +47,7 @@ def extract_point(
         **kwargs
 ) -> xr.DataArray:
     """
+    Extract a point from 2D field with interpolation.
 
     Parameters
     ----------

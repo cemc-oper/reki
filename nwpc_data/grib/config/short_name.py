@@ -5,6 +5,8 @@ Collect these short names from the following systems:
 
 - GRAPES GFS
 - GRAPES MESO
+- GRAPES GEPS
+- GRAPES MEPS
 """
 
 import io
