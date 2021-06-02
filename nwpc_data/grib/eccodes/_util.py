@@ -13,6 +13,27 @@ def _check_message(
         level: Optional[Union[int, List[int], Dict]],
         **kwargs,
 ) -> bool:
+    """
+    Check whether GRIB message (`message_id`) fits conditions.
+
+    Currently, conditions are:
+        - parameter
+        - level_Type
+        - level
+        - other GRIB keys
+
+    Parameters
+    ----------
+    message_id
+    parameter
+    level_type
+    level
+    kwargs
+
+    Returns
+    -------
+
+    """
     if not _check_parameter(message_id, parameter):
         return False
     if not _check_level_type(message_id, level_type):
