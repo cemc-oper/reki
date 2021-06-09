@@ -61,7 +61,8 @@ def load_field_from_file(
         - If use a dict, message will be filtered by dict keys. Support custom calculate keys:
             - ``first_level``
             - ``second_level``
-        - If use `None`, all levels of level_type will be packed in the result field.
+        - If use `"all"`, all levels of level_type will be packed in the result field.
+        - If use `None`, only the first field will be returned.
 
     level_dim: str or None
         name of level dimension.
@@ -168,7 +169,7 @@ def load_field_from_file(
                 eccodes.codes_release(message_id)
                 continue
             messages.append(message_id)
-            if isinstance(level, typing.List) or level is None:
+            if isinstance(level, typing.List) or level == "all":
                 continue
             else:
                 break

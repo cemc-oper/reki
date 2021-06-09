@@ -232,7 +232,7 @@ def load_fields_from_file(
         level_type = fix_level_type(level_type)
         _fill_level_type(level_type, filter_by_keys, read_keys)
 
-    if level is not None:
+    if level is not None and level != "all":
         _fill_level_value(level, filter_by_keys, read_keys)
 
     backend_kwargs = {
