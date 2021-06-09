@@ -9,6 +9,7 @@ from tqdm import tqdm
 from nwpc_data.grib.eccodes._level import _fix_level
 from nwpc_data.grib.eccodes._util import _check_message
 from nwpc_data.grib.eccodes._xarray import create_data_array_from_message, get_level_coordinate_name
+from nwpc_data._util import _load_first_variable
 
 
 def load_field_from_file(
@@ -278,8 +279,3 @@ def load_field_from_files(
     data = _load_first_variable(data_set)
     data = data.transpose("time", "step", ...)
     return data
-
-
-def _load_first_variable(data_set: xr.Dataset) -> xr.DataArray:
-    first_variable_name = list(data_set.data_vars)[0]
-    return data_set[first_variable_name]

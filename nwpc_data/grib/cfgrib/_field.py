@@ -12,8 +12,8 @@ from ._util import (
     _fill_level_type,
     _fill_level_value,
     _fill_index_path,
-    _load_first_variable,
 )
+from nwpc_data._util import _load_first_variable
 
 
 def load_field_from_file(

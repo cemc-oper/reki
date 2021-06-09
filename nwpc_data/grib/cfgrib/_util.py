@@ -77,8 +77,3 @@ def _fill_index_path(
         if not with_index:
             backend_kwargs["indexpath"] = ""
     return backend_kwargs
-
-
-def _load_first_variable(data_set: xr.Dataset) -> xr.DataArray:
-    first_variable_name = list(data_set.data_vars)[0]
-    return data_set[first_variable_name]

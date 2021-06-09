@@ -4,6 +4,8 @@ from typing import Union, Dict, Optional
 
 import xarray as xr
 
+from nwpc_data._util import _load_first_variable
+
 
 def load_field_from_file(
         file_path: str or Path,
@@ -44,8 +46,3 @@ def load_field_from_file(
         }]
 
     return field
-
-
-def _load_first_variable(data_set: xr.Dataset) -> xr.DataArray:
-    first_variable_name = list(data_set.data_vars)[0]
-    return data_set[first_variable_name]
