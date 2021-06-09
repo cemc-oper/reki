@@ -1,6 +1,6 @@
 # nwpc-data
 
-Load GRIB2 data using [eccodes-python](https://github.com/ecmwf/eccodes-python)
+Load GRIB2 data using [eccodes](https://github.com/ecmwf/eccodes-python)
 or [cfgrib](https://github.com/ecmwf/cfgrib).
 
 ## Installation
@@ -11,7 +11,7 @@ If you are using system python, such as apps/python/3.6.3/gnu on HPC CMA-PI,
 please use `--user` option to install on user directory.
 
 `nwpc-data` uses ecCodes to decode GRIB files
-(which is needed by [eccodes-python](https://github.com/ecmwf/eccodes-python) and [cfgrib](https://github.com/ecmwf/cfgrib)). 
+(which is needed by [eccodes](https://github.com/ecmwf/eccodes-python) and [cfgrib](https://github.com/ecmwf/cfgrib)). 
 Please install ecCodes through conda or other package source.
 
 ## Getting started
@@ -19,12 +19,12 @@ Please install ecCodes through conda or other package source.
 `nwpc-data` has several functions to help users to find one filed from a local GRIB 2 file.
 
 `load_message_from_file` from `nwpc_data.grib.eccodes` returns a GRIB handler.
-Users can use it to get attrs or values with functions from [eccodes-python](https://github.com/ecmwf/eccodes-python) .
+Users can use it to get attrs or values with functions from [eccodes](https://github.com/ecmwf/eccodes-python) .
 
 For example, load 850hPa temperature from GRAPES GFS and get values from the returned message.
 
 ```pycon
->>> from nwpc_data.grib.eccodes import load_message_from_file
+>>> from nwpc_data.format.grib.eccodes import load_message_from_file
 >>> t = load_message_from_file(
 ...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
 ...     parameter="t",
@@ -58,7 +58,7 @@ and converted into `xarray.DataArray` by `nwpc-data`.
 **WARNING**: This feature is under construction.
 
 ```pycon
->>> from nwpc_data.grib.eccodes import load_field_from_file
+>>> from nwpc_data.format.grib.eccodes import load_field_from_file
 >>> load_field_from_file(
 ...     file_path="/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
 ...     parameter="t",

@@ -3,7 +3,7 @@ import math
 
 import eccodes
 
-from nwpc_data.grib._parameter import _convert_parameter
+from nwpc_data.format.grib._parameter import _convert_parameter
 
 
 def _check_message(

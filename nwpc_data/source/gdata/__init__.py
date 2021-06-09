@@ -5,8 +5,8 @@ import pandas as pd
 import xarray as xr
 import requests
 
-from nwpc_data.grib.eccodes._bytes import create_message_from_bytes
-from nwpc_data.grib.eccodes._xarray import create_data_array_from_message
+from nwpc_data.format.grib.eccodes._bytes import create_message_from_bytes
+from nwpc_data.format.grib.eccodes._xarray import create_data_array_from_message
 
 from .transport import RawField, load_from_json
 

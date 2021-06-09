@@ -3,7 +3,7 @@ from typing import Dict, List, Union, Tuple
 import xarray as xr
 import numpy as np
 
-from nwpc_data.grib._parameter import _convert_parameter
+from nwpc_data.format.grib._parameter import _convert_parameter
 
 
 def _fill_parameter(

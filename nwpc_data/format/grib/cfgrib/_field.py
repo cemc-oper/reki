@@ -4,7 +4,7 @@ from pathlib import Path
 
 import xarray as xr
 
-from nwpc_data.grib._level import fix_level_type
+from nwpc_data.format.grib._level import fix_level_type
 
 from ._util import (
     _fill_parameter,

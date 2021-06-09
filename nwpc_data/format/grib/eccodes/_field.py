@@ -6,9 +6,9 @@ import eccodes
 import xarray as xr
 from tqdm import tqdm
 
-from nwpc_data.grib.eccodes._level import _fix_level
-from nwpc_data.grib.eccodes._util import _check_message
-from nwpc_data.grib.eccodes._xarray import create_data_array_from_message, get_level_coordinate_name
+from nwpc_data.format.grib.eccodes._level import _fix_level
+from nwpc_data.format.grib.eccodes._util import _check_message
+from nwpc_data.format.grib.eccodes._xarray import create_data_array_from_message, get_level_coordinate_name
 from nwpc_data._util import _load_first_variable
 
 
