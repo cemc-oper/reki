@@ -5,7 +5,7 @@ from pathlib import Path
 import eccodes
 # from tqdm import tqdm
 
-from nwpc_data.format.grib.eccodes._level import _fix_level
+from ._level import _fix_level
 from ._util import (
     _check_parameter,
     _check_level_type,
