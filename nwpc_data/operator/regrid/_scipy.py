@@ -43,7 +43,7 @@ class ScipyInterpnInterpolator(BaseInterpolator):
         target_values = interpn(
             (latitudes[::-1], longitudes),
             values[::-1, :],
-            (target_x, target_y),
+            (target_y, target_x),
             method=self.method,
             **self.kwargs
         )
@@ -84,16 +84,17 @@ class ScipyInterpnInterpolator(BaseInterpolator):
         target_values = interpn(
             (latitudes[::-1], longitudes),
             values[::-1, :],
-            (target_x, target_y),
+            (target_y, target_x),
             method=self.method,
             **self.kwargs
         )
 
         target_grid = xr.DataArray(
+            np.zeros((len(target_latitudes), len(target_longitudes))),  # for xarray v0.10.3
             coords=[
                 ("latitude", target_latitudes),
                 ("longitude", target_longitudes)
-            ]
+            ],
         )
 
         target_field = _create_data_array(
@@ -180,6 +181,7 @@ class ScipyRectBivariateSplineInterpolator(BaseInterpolator):
         )[::-1, :]
 
         target_grid = xr.DataArray(
+            np.zeros((len(target_latitudes), len(target_longitudes))),  # for xarray v0.10.3
             coords=[
                 ("latitude", target_latitudes),
                 ("longitude", target_longitudes)
