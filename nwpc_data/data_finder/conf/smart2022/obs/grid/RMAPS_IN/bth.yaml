@@ -9,4 +9,4 @@ file_name: 'Z_NAFP_C_BMS_*_P_RMAPS-RISE_1KM_BTH_{{ query_vars.parameter }}_{{ ti
 paths:
   - type: local
     level: archive
-    path: '/g1/u/nwpc_ep3/SMART2022/OBS/grid/RMAPS_IN/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}'
+    path: '/g11/nwpc_ep3/SMART2022/OBS/grid/RMAPS_IN/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}'
