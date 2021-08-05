@@ -380,6 +380,7 @@ class GradsCtlParser(object):
 
         parts = tokens[:1]
         for token in tokens[1:]:
-            parts.append(token_mapper[token](record))
+            m = token_mapper.get(token, lambda x: x)
+            parts.append(m(record))
 
         return Path("".join(parts))
