@@ -27,7 +27,7 @@ def load_field_from_file(
     ----------
     file_path
     parameter
-    level_type: str
+    level_type
         * pl / ml
         * index
         * single
@@ -44,6 +44,38 @@ def load_field_from_file(
     -------
     xr.DataArray
         Xarray DataArray if found, or None if not.
+
+    Examples
+    --------
+    Load GRAPES GFS GMF postvar data:
+
+    >>> from nwpc_data.data_finder import find_local_file
+    >>> from nwpc_data.format.grads import load_field_from_file
+    >>> postvar_file_path = find_local_file(
+    ...     "grapes_gfs_gmf/bin/postvar_ctl",
+    ...     start_time="2021080200",
+    ...     forecast_time="36h"
+    ... )
+    >>> field = load_field_from_file(
+    ...     postvar_file_path,
+    ...     parameter="t",
+    ...     level_type="pl",
+    ...     level=850
+    ... )
+
+    Load GRAPES TYM postvar data. Set ``forecast_time`` option because all data files of one cycle use one CTL file.
+
+    >>> postvar_file_path = find_local_file(
+    ...     "grapes_tym/bin/postvar_ctl",
+    ...     start_time="2021080200",
+    ... )
+    >>> field = load_field_from_file(
+    ...     postvar_file_path,
+    ...     parameter="t",
+    ...     level_type="pl",
+    ...     forecast_time="24h",
+    ...     level=850
+    ... )
     """
     if isinstance(forecast_time, str):
         forecast_time = pd.to_timedelta(forecast_time)

@@ -76,6 +76,7 @@ class GradsDataHandler(object):
         level_type
             multi or single
         valid_time
+        forecast_time
 
         Returns
         -------

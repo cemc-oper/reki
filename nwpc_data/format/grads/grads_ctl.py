@@ -368,11 +368,10 @@ class GradsCtlParser(object):
 
     @classmethod
     def get_data_file_path(cls, grads_ctl, record) -> Path:
-        dset = str(grads_ctl.dset)
-        tokens = dset.split("%")
-        if len(tokens) == 1:
+        if not grads_ctl.dset_template:
             return grads_ctl.dset
 
+        tokens = str(grads_ctl.dset).split("%")
         token_mapper = {
             "f3": lambda x: f"{int(x['forecast_time'] / pd.Timedelta(hours=1)):03d}",
             "n2": lambda x: f"{x['forecast_time'].seconds // 60 % 60:02d}",
