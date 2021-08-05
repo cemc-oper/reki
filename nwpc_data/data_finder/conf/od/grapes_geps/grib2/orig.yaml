@@ -14,3 +14,7 @@ paths:
   - type: local
     level: storage
     path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GEPS/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/grib2'
+
+  - type: local
+    level: storage
+    path: '{{ query_vars.storage_base }}/COMMONDATA/OPER/NWPC/GRAPES_GEPS/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/grib2'

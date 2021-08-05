@@ -93,7 +93,8 @@ def get_hour(forecast_time: pd.Timedelta) -> int:
 
 
 class QueryVars(object):
-    pass
+    def __init__(self):
+        self.storage_base = None
 
 
 class TimeVars(object):

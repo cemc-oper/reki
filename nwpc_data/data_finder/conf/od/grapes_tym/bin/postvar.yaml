@@ -14,3 +14,7 @@ paths:
   - type: local
     level: storage
     path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_TYM/Fcst-main/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+
+  - type: local
+    level: storage
+    path: '{{ query_vars.storage_base }}/GRAPES_TYM/Fcst-main/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'

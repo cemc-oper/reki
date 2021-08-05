@@ -34,3 +34,11 @@ paths:
   - type: local
     level: storage
     path: '/sstorage1/COMMONDATA/old/OPER_old/nwp/GMFS_GRIB2_GRAPES/ORIG/GRAPES_GFS_ORIG_{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+
+  - type: local
+    level: storage
+    path: '{{ query_vars.storage_base }}/GRAPES_GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/ORIG'
+
+  - type: local
+    level: storage
+    path: '{{ query_vars.storage_base }}/GRAPES_GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'

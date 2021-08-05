@@ -30,3 +30,11 @@ paths:
   - type: local
     level: storage
     path: '/sstorage1/COMMONDATA/old/OPER_old/nwp/GMFS_GRIB2_GRAPES/MODELVAR/GRAPES_GFS_MODELVAR_{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+
+  - type: local
+    level: storage
+    path: '{{ query_vars.storage_base }}/GRAPES_GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/MODELVAR'
+
+  - type: local
+    level: storage
+    path: '{{ query_vars.storage_base }}/GRAPES_GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
