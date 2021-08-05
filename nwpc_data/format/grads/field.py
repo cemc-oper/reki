@@ -6,7 +6,7 @@ import xarray as xr
 
 
 from .grads_ctl import GradsCtlParser
-from .grads_data_handler import GradsDataHandler
+from .grads_data_handler import GradsDataHandler, GradsRecordHandler
 
 
 def load_field_from_file(
@@ -15,9 +15,11 @@ def load_field_from_file(
         level_type: str = None,
         level: Union[int, float, List] = None,
         level_dim: Optional[str] = None,
+        latitude_direction: str = "degree_north",
         **kwargs
-):
+) -> Optional[xr.DataArray]:
     """
+    Load one field or fields of one parameter from GrADS binary file.
 
     Parameters
     ----------
@@ -30,11 +32,15 @@ def load_field_from_file(
         * None
     level
     level_dim
+    latitude_direction:
+        * degree_north
+        * degree_south
     kwargs
 
     Returns
     -------
-
+    xr.DataArray
+        Xarray DataArray if found, or None if not.
     """
     ctl_parser = GradsCtlParser()
     ctl_parser.parse(file_path)
@@ -42,6 +48,7 @@ def load_field_from_file(
 
     # level_type: pl, index, single
     grads_level_type = "multi"
+    level_dim_name = "level"
     if not isinstance(level, List):
         level = [level]
     if level_type == "single":
@@ -70,7 +77,8 @@ def load_field_from_file(
             record=record,
             parameter=parameter,
             level=cur_level,
-            level_dim_name=level_dim_name
+            level_dim_name=level_dim_name,
+            latitude_direction=latitude_direction,
         )
         xarray_records.append(xarray_record)
 
@@ -86,10 +94,11 @@ def load_field_from_file(
 
 
 def create_data_array_from_record(
-        record,
+        record: GradsRecordHandler,
         parameter,
         level,
         level_dim_name=None,
+        latitude_direction="degree_north",
 ) -> Optional[xr.DataArray]:
     grads_ctl = record.grads_ctl
 
@@ -101,12 +110,16 @@ def create_data_array_from_record(
     lons = grads_ctl.xdef["values"]
     lats = grads_ctl.ydef["values"]
 
+    if latitude_direction == "degree_north":
+        values = np.flip(values, 0)
+        lats = lats[::-1]
+
     coords = {}
     coords["latitude"] = xr.Variable(
         "latitude",
         lats,
         attrs={
-            "units": "degrees_south",
+            "units": latitude_direction,
             "standard_name": "latitude",
             "long_name": "latitude"
         },
@@ -120,13 +133,21 @@ def create_data_array_from_record(
             "long_name": "longitude"
         }
     )
+
     coords[level_dim_name] = level
+    coords["valid_time"] = record.record_info["valid_time"]
+
+    if grads_ctl.start_time is not None and grads_ctl.forecast_time is not None:
+        coords["start_time"] = grads_ctl.start_time
+        coords["forecast_time"] = grads_ctl.forecast_time
 
     # dims
     dims = ("latitude", "longitude")
 
     # attrs
-    data_attrs = {}
+    data_attrs = {
+        "description": record.record_info["description"]
+    }
 
     data = xr.DataArray(
         values,

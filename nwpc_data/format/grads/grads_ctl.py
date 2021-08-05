@@ -1,9 +1,10 @@
 import sys
-import datetime
 import re
 from pathlib import Path
 import logging
 from typing import Optional, Union
+
+import pandas as pd
 
 
 logger = logging.getLogger(__name__)
@@ -11,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 class GradsCtl(object):
     def __init__(self):
-        self.dset = ''
+        self.dset = None  # data file path
         self.title = ''
         self.options = list()
         self.data_endian = 'little'
@@ -22,6 +23,13 @@ class GradsCtl(object):
         self.start_time = None
         self.forecast_time = None
 
+        # dimension
+        self.xdef = None
+        self.ydef = None
+        self.zdef = None
+        self.tdef = None
+
+        self.vars = []
         self.record = []
 
 
@@ -79,21 +87,28 @@ class GradsCtlParser(object):
         ):
             logger.debug("guess start time and forecast time")
 
-            if ctl_file_name.startswith("post.ctl_"):
-                # check for grapes meso v4.0 which format is:
+            if ctl_file_name.startswith("post.ctl_") or ctl_file_name.startswith("model.ctl_"):
+                file_name = ctl_file_name[ctl_file_name.index("_")+1:]
+                # check for GRAPES MESO:
                 #   post.ctl_201408111202900
-                if re.match(r"post.ctl_[0-9]{15}", ctl_file_name):
-                    self.grads_ctl.start_time = datetime.datetime.strptime(ctl_file_name[9:19], "%Y%m%d%H")
-                    self.grads_ctl.forecast_time = datetime.timedelta(hours=int(ctl_file_name[19:22]))
-                # check for grapes gfs which format is
+                if re.match(r"[0-9]{15}", file_name):
+                    self.grads_ctl.start_time = pd.to_datetime(file_name[:10], format="%Y%m%d%H")
+                    self.grads_ctl.forecast_time = pd.Timedelta(hours=int(file_name[11:14]))
+                # check for GRAPES GFS:
                 #   post.ctl_2014081112_001
-                elif re.match(r"post.ctl_[0-9]{10}_[0-9]{3}", ctl_file_name):
-                    self.grads_ctl.start_time = datetime.datetime.strptime(ctl_file_name[9:19], "%Y%m%d%H")
-                    self.grads_ctl.forecast_time = datetime.timedelta(hours=int(ctl_file_name[21:24]))
+                elif re.match(r"[0-9]{10}_[0-9]{3}", file_name):
+                    self.grads_ctl.start_time = pd.to_datetime(file_name[:10], format="%Y%m%d%H")
+                    self.grads_ctl.forecast_time = pd.Timedelta(hours=int(file_name[12:]))
                 else:
                     logger.warning("We can't recognize ctl file name. ")
 
     def _parse_dset(self):
+        """
+        parse data file path:
+
+            dset ^postvar2021080200_024
+
+        """
         cur_line = self.ctl_file_lines[self.cur_no]
         dset = cur_line[4:].strip()
         if dset[0] == '^':
@@ -141,12 +156,15 @@ class GradsCtlParser(object):
         if dimension_type in dimension_parser_map:
             dimension_parser_map[dimension_type](dim_name, tokens)
         else:
-            raise NotImplemented('dimension_type is not supported: {dimension_type}'.format(
-                dimension_type=dimension_type
-            ))
+            raise NotImplemented(f'dimension_type is not supported: {dimension_type}')
 
     def _parse_linear_dimension(self, dim_name, tokens):
-        # x use linear mapping
+        """
+        Parse linear dimension
+
+            xdef 1440 linear    0.0000    0.2500
+
+        """
         if len(tokens) < 4:
             raise Exception("%s parser error" % dim_name)
         count = int(tokens[1])
@@ -162,6 +180,17 @@ class GradsCtlParser(object):
         })
 
     def _parse_levels_dimension(self, dim_name, tokens):
+        """
+        Parse levels dimension
+
+            zdef   27 levels
+                 1000.000
+                 925.0000
+                 850.0000
+                 700.0000
+                 ...
+
+        """
         levels = list()
         count = int(tokens[1])
         if len(tokens) > 2:
@@ -180,6 +209,12 @@ class GradsCtlParser(object):
         })
 
     def _parse_tdef(self):
+        """
+        Parse time dimension
+
+            tdef    1 linear 00z03AUG2021   360mn
+
+        """
         cur_line = self.ctl_file_lines[self.cur_no]
         parts = cur_line.strip().split()
         assert parts[2] == "linear"
@@ -203,45 +238,49 @@ class GradsCtlParser(object):
         }
 
     @classmethod
-    def _parse_start_time(cls, start_string):
-        # parse start time
-        # format:
-        #     hh:mmZddmmmyyyy
-        # where:
-        #     hh	=	hour (two digit integer)
-        #     mm	=	minute (two digit integer)
-        #     dd	=	day (one or two digit integer)
-        #     mmm	=	3-character month
-        #     yyyy	=	year (may be a two or four digit integer;
-        #                       2 digits implies a year between 1950 and 2049)
-        start_date = datetime.datetime.now()
+    def _parse_start_time(cls, start_string) -> pd.Timestamp:
+        """
+        parse start time
+        format:
+            hh:mmZddmmmyyyy
+        where:
+            hh	=	hour (two digit integer)
+            mm	=	minute (two digit integer)
+            dd	=	day (one or two digit integer)
+            mmm	=	3-character month
+            yyyy	=	year (may be a two or four digit integer;
+                              2 digits implies a year between 1950 and 2049)
+        """
+        start_date = pd.Timestamp.now()
         if start_string[3] == ':':
             raise NotImplemented('Not supported time with hh')
         elif len(start_string) == 12:
-            start_date = datetime.datetime.strptime(start_string.lower(), '%Hz%d%b%Y')
+            start_date = pd.to_datetime(start_string.lower(), format='%Hz%d%b%Y')
         else:
-            raise NotImplemented('start time not supported: {start_string}'.format(start_string=start_string))
+            raise NotImplemented(f'start time not supported: {start_string}')
         return start_date
 
     @classmethod
-    def _parse_increment_time(cls, increment_string):
-        # parse increment time
-        # format:
-        #     vvkk
-        # where:
-        #     vv	=	an integer number, 1 or 2 digits
-        #     kk	=	mn (minute)
-        #             hr (hour)
-        #             dy (day)
-        #             mo (month)
-        #             yr (year)
+    def _parse_increment_time(cls, increment_string) -> pd.Timedelta:
+        """
+        parse increment time
+        format:
+            vvkk
+        where:
+            vv	=	an integer number, 1 or 2 digits
+            kk	=	mn (minute)
+                    hr (hour)
+                    dy (day)
+                    mo (month)
+                    yr (year)
+        """
         vv = int(increment_string[:-2])
         kk = increment_string[-2:]
 
         kk_map = {
-            'mn': (lambda v: datetime.timedelta(minutes=v)),
-            'hr': (lambda v: datetime.timedelta(hours=v)),
-            'dy': (lambda v: datetime.timedelta(days=v))
+            'mn': (lambda v: pd.Timedelta(minutes=v)),
+            'hr': (lambda v: pd.Timedelta(hours=v)),
+            'dy': (lambda v: pd.Timedelta(days=v))
         }
         if kk in kk_map:
             return kk_map[kk](vv)
@@ -250,7 +289,7 @@ class GradsCtlParser(object):
 
     def _parse_vars(self):
         self._parse_variables()
-        self._parse_records()
+        self._generate_records()
 
     def _parse_variables(self):
         var_list = list()
@@ -281,33 +320,36 @@ class GradsCtlParser(object):
 
         self.grads_ctl.vars = var_list
 
-    def _parse_records(self):
+    def _generate_records(self):
         record_list = list()
         record_index = 0
-        for a_var_record in self.grads_ctl.vars:
-            if a_var_record['levels'] == 0:
-                record_list.append({
-                    'name': a_var_record['name'],
-                    'level_type': 'single',
-                    'level': 0,
-                    'level_index': 0,
-                    'units': a_var_record['units'],
-                    'description': a_var_record['description'],
-                    'record_index': record_index
-                })
-                record_index += 1
-            else:
-                for level_index in range(0, a_var_record["levels"]):
-                    a_level = self.grads_ctl.zdef["values"][level_index]
+        for valid_time in self.grads_ctl.tdef["values"]:
+            for a_var_record in self.grads_ctl.vars:
+                if a_var_record['levels'] == 0:
                     record_list.append({
                         'name': a_var_record['name'],
-                        'level_type': 'multi',
-                        'level': a_level,
-                        'level_index': level_index,
+                        'level_type': 'single',
+                        'level': 0,
+                        'level_index': 0,
+                        'valid_time': valid_time,
                         'units': a_var_record['units'],
                         'description': a_var_record['description'],
                         'record_index': record_index
                     })
                     record_index += 1
+                else:
+                    for level_index in range(0, a_var_record["levels"]):
+                        a_level = self.grads_ctl.zdef["values"][level_index]
+                        record_list.append({
+                            'name': a_var_record['name'],
+                            'level_type': 'multi',
+                            'level': a_level,
+                            'level_index': level_index,
+                            'units': a_var_record['units'],
+                            'valid_time': valid_time,
+                            'description': a_var_record['description'],
+                            'record_index': record_index
+                        })
+                        record_index += 1
 
         self.grads_ctl.record = record_list

@@ -8,7 +8,7 @@ class GradsDataHandler(object):
 
     Get record from GrADS binary data file.
     """
-    def __init__(self, a_grads_ctl: GradsCtl=None):
+    def __init__(self, a_grads_ctl: GradsCtl = None):
         if a_grads_ctl is None:
             a_grads_ctl = GradsCtl()
 
@@ -18,8 +18,15 @@ class GradsDataHandler(object):
         """
         get offset by record index
 
-        :param record_index: record index
-        :return: record offset
+        Parameters
+        ----------
+        record_index
+            record index
+
+        Returns
+        -------
+        int
+            record offset
         """
         if record_index >= len(self.grads_ctl.record):
             raise ValueError('record_index is too large.')
@@ -54,10 +61,18 @@ class GradsDataHandler(object):
         """
         find record index by field name, level value, level type.
 
-        :param name: field name, found name in vars section of ctl files.
-        :param level: level value
-        :param level_type: multi or single
-        :return: GradsRecordHandler or None
+        Parameters
+        ----------
+        name
+            field name, found name in vars section of ctl files.
+        level
+            level value
+        level_type
+            multi or single
+
+        Returns
+        -------
+        GradsRecordHandler or None
         """
         cur_i = 0
         if level_type == 'single':
@@ -83,9 +98,14 @@ class GradsDataHandler(object):
         """
         get record from variable and level index.
 
-        :param var_index:
-        :param level_index:
-        :return: GradsRecordHandler
+        Parameters
+        ----------
+        var_index
+        level_index
+
+        Returns
+        -------
+        GradsRecordHandler
         """
         if var_index >= len(self.grads_ctl.vars):
             raise ValueError("variable index is too large.")

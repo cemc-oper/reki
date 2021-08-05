@@ -1,5 +1,4 @@
-from pathlib import Path
-from typing import Union
+from typing import TextIO
 
 import numpy as np
 
@@ -21,7 +20,7 @@ class GradsRecordHandler(object):
 
         self.data = None
 
-    def load_data(self, data_file):
+    def load_data(self, data_file: TextIO) -> np.ndarray:
         if 'sequential' in self.grads_ctl.options:
             self.offset += 4
         x_count = self.grads_ctl.xdef['count']
