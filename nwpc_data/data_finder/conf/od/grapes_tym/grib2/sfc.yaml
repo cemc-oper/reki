@@ -13,4 +13,4 @@ paths:
 
   - type: local
     level: storage
-    path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_MESO_10KM/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+    path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_TYM/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
