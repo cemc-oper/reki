@@ -1,4 +1,4 @@
-from typing import TextIO
+from typing import BinaryIO
 
 import numpy as np
 
@@ -20,7 +20,7 @@ class GradsRecordHandler(object):
 
         self.data = None
 
-    def load_data(self, data_file: TextIO) -> np.ndarray:
+    def load_data(self, data_file: BinaryIO) -> np.ndarray:
         if 'sequential' in self.grads_ctl.options:
             self.offset += 4
         x_count = self.grads_ctl.xdef['count']

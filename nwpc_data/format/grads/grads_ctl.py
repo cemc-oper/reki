@@ -13,6 +13,8 @@ logger = logging.getLogger(__name__)
 class GradsCtl(object):
     def __init__(self):
         self.dset = None  # data file path
+        self.dset_template = False
+
         self.title = ''
         self.options = list()
         self.data_endian = 'little'
@@ -31,6 +33,9 @@ class GradsCtl(object):
 
         self.vars = []
         self.record = []
+
+    def get_data_file_path(self, record):
+        return GradsCtlParser.get_data_file_path(self, record)
 
 
 class GradsCtlParser(object):
@@ -110,12 +115,14 @@ class GradsCtlParser(object):
 
         """
         cur_line = self.ctl_file_lines[self.cur_no]
-        dset = cur_line[4:].strip()
-        if dset[0] == '^':
+        file_path = cur_line[4:].strip()
+        if "%" in file_path:
+            self.grads_ctl.dset_template = True
+        if file_path[0] == '^':
             file_dir = Path(self.ctl_file_path).parent
-            dset = Path(file_dir, dset[1:])
+            file_path = Path(file_dir, file_path[1:])
 
-        self.grads_ctl.dset = dset
+        self.grads_ctl.dset = file_path
 
     def _parse_options(self):
         cur_line = self.ctl_file_lines[self.cur_no]
@@ -323,7 +330,10 @@ class GradsCtlParser(object):
     def _generate_records(self):
         record_list = list()
         record_index = 0
-        for valid_time in self.grads_ctl.tdef["values"]:
+        for time_step_index, valid_time in enumerate(self.grads_ctl.tdef["values"]):
+            forecast_time = self.grads_ctl.tdef["step"] * time_step_index
+            if self.grads_ctl.dset_template:
+                record_index = 0
             for a_var_record in self.grads_ctl.vars:
                 if a_var_record['levels'] == 0:
                     record_list.append({
@@ -332,6 +342,7 @@ class GradsCtlParser(object):
                         'level': 0,
                         'level_index': 0,
                         'valid_time': valid_time,
+                        'forecast_time': forecast_time,
                         'units': a_var_record['units'],
                         'description': a_var_record['description'],
                         'record_index': record_index
@@ -347,9 +358,28 @@ class GradsCtlParser(object):
                             'level_index': level_index,
                             'units': a_var_record['units'],
                             'valid_time': valid_time,
+                            'forecast_time': forecast_time,
                             'description': a_var_record['description'],
                             'record_index': record_index
                         })
                         record_index += 1
 
         self.grads_ctl.record = record_list
+
+    @classmethod
+    def get_data_file_path(cls, grads_ctl, record) -> Path:
+        dset = str(grads_ctl.dset)
+        tokens = dset.split("%")
+        if len(tokens) == 1:
+            return grads_ctl.dset
+
+        token_mapper = {
+            "f3": lambda x: f"{int(x['forecast_time'] / pd.Timedelta(hours=1)):03d}",
+            "n2": lambda x: f"{x['forecast_time'].seconds // 60 % 60:02d}",
+        }
+
+        parts = tokens[:1]
+        for token in tokens[1:]:
+            parts.append(token_mapper[token](record))
+
+        return Path("".join(parts))

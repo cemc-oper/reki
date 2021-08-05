@@ -2,6 +2,7 @@ from typing import Union, Dict, List, Optional
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 import xarray as xr
 
 
@@ -16,6 +17,7 @@ def load_field_from_file(
         level: Union[int, float, List] = None,
         level_dim: Optional[str] = None,
         latitude_direction: str = "degree_north",
+        forecast_time: Union[str, pd.Timedelta] = None,
         **kwargs
 ) -> Optional[xr.DataArray]:
     """
@@ -32,9 +34,10 @@ def load_field_from_file(
         * None
     level
     level_dim
-    latitude_direction:
+    latitude_direction
         * degree_north
         * degree_south
+    forecast_time
     kwargs
 
     Returns
@@ -42,6 +45,9 @@ def load_field_from_file(
     xr.DataArray
         Xarray DataArray if found, or None if not.
     """
+    if isinstance(forecast_time, str):
+        forecast_time = pd.to_timedelta(forecast_time)
+
     ctl_parser = GradsCtlParser()
     ctl_parser.parse(file_path)
     grads_ctl = ctl_parser.grads_ctl
@@ -69,6 +75,7 @@ def load_field_from_file(
             name=parameter,
             level=cur_level,
             level_type=grads_level_type,
+            forecast_time=forecast_time,
         )
         if record is None:
             continue
@@ -103,7 +110,8 @@ def create_data_array_from_record(
     grads_ctl = record.grads_ctl
 
     # values
-    with open(grads_ctl.dset, "rb") as f:
+    file_path = grads_ctl.get_data_file_path(record.record_info)
+    with open(file_path, "rb") as f:
         values = record.load_data(f)
 
     # coords

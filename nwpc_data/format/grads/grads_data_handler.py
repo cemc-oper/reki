@@ -1,3 +1,6 @@
+import pandas as pd
+from typing import Optional
+
 from .grads_ctl import GradsCtl
 from .grads_record_handler import GradsRecordHandler
 
@@ -54,9 +57,12 @@ class GradsDataHandler(object):
         return record.offset
 
     def find_record(
-            self, name: str,
+            self,
+            name: str,
             level: int = 0,
             level_type: str = 'multi',
+            valid_time: Optional[pd.Timestamp] = None,
+            forecast_time: Optional[pd.Timedelta] = None,
     ):
         """
         find record index by field name, level value, level type.
@@ -69,6 +75,7 @@ class GradsDataHandler(object):
             level value
         level_type
             multi or single
+        valid_time
 
         Returns
         -------
@@ -82,13 +89,17 @@ class GradsDataHandler(object):
 
         while cur_i < len(self.grads_ctl.record):
             cur_record = self.grads_ctl.record[cur_i]
-            if cur_record['name'] == name \
-                    and cur_record['level_type'] == level_type \
-                    and cur_record['level'] == a_level:
+            if (
+                cur_record['name'] == name
+                and cur_record['level_type'] == level_type
+                and cur_record['level'] == a_level
+                and (valid_time is None or cur_record["valid_time"] == valid_time)
+                and (forecast_time is None or cur_record["forecast_time"] == forecast_time)
+            ):
                 break
             cur_i += 1
         if cur_i < len(self.grads_ctl.record):
-            offset = self.get_offset_by_record_index(cur_i)
+            offset = self.get_offset_by_record_index(cur_record["record_index"])
             record = GradsRecordHandler(self.grads_ctl, cur_i, offset)
             return record
         else:
