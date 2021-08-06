@@ -11,6 +11,7 @@ def find_file(
         data_level: Union[str, List],
         start_time: Union[datetime.datetime, pd.Timestamp],
         forecast_time: pd.Timedelta,
+        obs_time: pd.Timedelta = None,
         **kwargs
 ) -> Optional[Path]:
     query_vars = QueryVars()
@@ -21,6 +22,9 @@ def find_file(
         setattr(query_vars, key, kwargs[key])
 
     time_vars = TimeVars(start_time=start_time, forecast_time=forecast_time)
+    if obs_time is not None:
+        obs_time_vars = TimeVars(start_time=obs_time)
+        setattr(query_vars, "obs_time", obs_time_vars)
 
     parse_template = generate_template_parser(time_vars, query_vars)
     file_name = parse_template(config["file_name"])
@@ -98,7 +102,11 @@ class QueryVars(object):
 
 
 class TimeVars(object):
-    def __init__(self, start_time: datetime.datetime or pd.Timestamp, forecast_time: pd.Timedelta):
+    def __init__(
+            self,
+            start_time: datetime.datetime or pd.Timestamp,
+            forecast_time: pd.Timedelta = pd.Timedelta(hours=0)
+    ):
         self.Year = start_time.strftime("%Y")
         self.Month = start_time.strftime("%m")
         self.Day = start_time.strftime("%d")
