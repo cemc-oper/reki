@@ -4,7 +4,7 @@ query:
   type: obs
   name: rgwst
 
-file_name: 'rec_RSURF_{{ time_vars.Year4DV }}{{ time_vars.Month4DV }}{{ time_vars.Day4DV }}{{ time_vars.Hour4DV }}{{ query_vars.obs_time.Hour }}{{ query_vars.obs_time.Minute }}_g.dat'
+file_name: 'rec_RTEMP_{{ time_vars.Year4DV }}{{ time_vars.Month4DV }}{{ time_vars.Day4DV }}{{ time_vars.Hour4DV }}{{ query_vars.obs_time.Hour }}{{ query_vars.obs_time.Minute }}_g.dat'
 
 paths:
   - type: local

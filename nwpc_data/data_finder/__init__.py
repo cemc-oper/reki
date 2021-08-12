@@ -106,6 +106,8 @@ def find_local_file(
         start_time = pd.to_datetime(start_time, format="%Y%m%d%H")
     if isinstance(obs_time, str):
         obs_time = pd.to_datetime(obs_time)
+    elif obs_time is None:
+        obs_time = start_time
 
     config = load_config(config_file_path)
     file_path = find_file(
