@@ -19,12 +19,12 @@ def load_field_from_file(
 
     Parameters
     ----------
-    file_path: str
-    parameter: str or typing.Dict
-    level_type: str or typing.Dict
+    file_path
+    parameter
+    level_type
         level type, default is level.
-    level: int or None
-    kwargs: typing.Union[int, float] or None
+    level
+    **kwargs
         other parameters used by engine.
 
     Returns
