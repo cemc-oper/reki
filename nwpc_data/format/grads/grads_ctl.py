@@ -375,6 +375,7 @@ class GradsCtlParser(object):
         token_mapper = {
             "f3": lambda x: f"{int(x['forecast_time'] / pd.Timedelta(hours=1)):03d}",
             "n2": lambda x: f"{x['forecast_time'].seconds // 60 % 60:02d}",
+            "fhn": lambda x: f"{int(x['forecast_time'] / pd.Timedelta(hours=1)):02d}00"   # TODO: change
         }
 
         parts = tokens[:1]
