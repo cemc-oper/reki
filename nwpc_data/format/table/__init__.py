@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, List, Dict
 from pathlib import Path
 from io import StringIO
 
@@ -142,9 +142,7 @@ def _load_nwpc_obs_table(lines, config):
     return df
 
 
-def _load_nwpc_rtemp_data(lines, config):
-    line_no = 0
-    total_line_count = len(lines)
+def _load_nwpc_rtemp_data(lines: List[str], config: Dict) -> pd.DataFrame:
     dfs = []
     while len(lines) > 0:
         line = lines.pop(0)
