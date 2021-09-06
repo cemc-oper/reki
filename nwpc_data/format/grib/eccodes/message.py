@@ -20,6 +20,7 @@ def load_message_from_file(
         parameter: Union[str, Dict] = None,
         level_type: Union[str, Dict] = None,
         level: Union[int, float, Dict] = None,
+        count: int = None,
         **kwargs,
 ) -> Optional[int]:
     """
@@ -30,22 +31,23 @@ def load_message_from_file(
 
     Parameters
     ----------
-    file_path: str or Path
+    file_path
         GRIB 2 file path.
-    parameter: str or typing.Dict
+    parameter
         short name of the field or a dictionary including some GRIB keys:
 
         - discipline
         - parameterCategory
         - parameterNumber
 
-    level_type: str or typing.Dict
+    level_type
         level type.
-    level: int or float or typing.Dict
+    level
         level value.
-    kwargs: dict
+    kwargs
         other grib key used to filter.
-
+    count
+        grib message index in grib file, starting with 1
     Returns
     -------
     int or None
@@ -79,6 +81,9 @@ def load_message_from_file(
         235.68234375, 235.70234375]])
 
     """
+    if count is not None:
+        return _load_message_from_file_by_count(file_path, count)
+
     fixed_level_type, _ = _fix_level(level_type, None)
     with open(file_path, "rb") as f:
         while True:
@@ -88,11 +93,12 @@ def load_message_from_file(
             if not _check_message(message_id, parameter, fixed_level_type, level, **kwargs):
                 eccodes.codes_release(message_id)
                 continue
+            return message_id
 
-            # clone message
-            new_message_id = eccodes.codes_clone(message_id)
-            eccodes.codes_release(message_id)
-            return new_message_id
+            # # clone message
+            # new_message_id = eccodes.codes_clone(message_id)
+            # eccodes.codes_release(message_id)
+            # return new_message_id
         return None
 
 
@@ -170,3 +176,17 @@ def load_messages_from_file(
         if len(messages) == 0:
             return None
         return messages
+
+
+def _load_message_from_file_by_count(file_path, count):
+    current_index = 0
+    with open(file_path, "rb") as f:
+        while True:
+            message_id = eccodes.codes_grib_new_from_file(f)
+            if message_id is None:
+                return None
+            current_index += 1
+            if current_index == count:
+                return message_id
+            else:
+                eccodes.codes_release(message_id)
