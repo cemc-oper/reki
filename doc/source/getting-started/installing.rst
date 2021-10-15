@@ -2,6 +2,7 @@
 安装
 #########
 
+.. _depenencies:
 
 依赖库
 -------
@@ -12,6 +13,8 @@
 .. code-block:: bash
 
     conda install -c conda-forge eccodes
+
+.. _install_reki:
 
 安装 reki
 -----------
@@ -30,6 +33,8 @@
     pip install .
 
 如果使用系统安装的 Python 环境且没有管理员权限，例如在 CMA-PI 上使用 `apps/python/3.6.3/gnu` 环境，请在运行 ``pip`` 命令时添加 ``--user`` 参数将 Python 包安装到用户目录。
+
+.. _cma_pi:
 
 CMA-PI
 --------

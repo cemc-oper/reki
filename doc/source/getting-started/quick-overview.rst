@@ -12,6 +12,8 @@
     >>> import pandas as pd
     >>> import xarray as xr
 
+.. _data_finder:
+
 文件查找
 ===========
 
@@ -68,6 +70,7 @@
     ... )
     PosixPath('/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Obs-prep/2021101400/rec_RSING_20211013212300_g.dat')
 
+.. _grib:
 
 GRIB 2
 =======
@@ -76,6 +79,8 @@ GRIB 2
 
 * GRIB 消息：返回 ecCodes 使用的 GRIB Handler
 * GRIB 要素场：返回 ``xarray.DataArray``
+
+.. _grib_message:
 
 加载 GRIB 2 消息
 -----------------
@@ -149,6 +154,7 @@ GRIB 2
 
     >>> eccodes.codes_release(t850)
 
+.. _grib_field:
 
 加载 GRIB 2 要素场
 --------------------
@@ -289,6 +295,8 @@ GRIB 2
 
 返回数据中层次坐标名为 ``ml``，表示模式层。
 
+.. _grads:
+
 GrADS 格点二进制数据
 ====================
 
@@ -382,10 +390,14 @@ CTL 文件名只包含起报日期 (2021.09.26) 和起报时次 (00)。
     Attributes:
         description:  sea level pressure
 
+.. _other_formats:
+
 其他格式
 ============
 
 **reki** 还提供对 NetCDF、CSV 等格式数据的简单支持。
+
+.. _netcdf:
 
 NetCDF
 ----------
@@ -421,7 +433,7 @@ NetCDF
     Attributes:
         _Fillvalue:  -999.0
 
-
+.. _table:
 
 表格数据
 ----------------

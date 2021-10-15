@@ -3,15 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-欢迎来到 reki 文档!
+欢迎来到 reki 文档
 ================================
 
 **reki** (前称 **nwpc-data**) 是为 CMA 天气模式开发的数据访问 Python 开源工具库，提供检索要素场的便捷方法。
 
-reki 支持 GRIB、GrADS、NetCDF、CSV 等多种数据格式，支持中国气象局 CMA-PI 高性能计算机、二级存储等多种数据来源，可在 Windows、Linux 等多种环境中运行。
-reki 同时提供区域截取、插值等多种数据操作方法。
+reki 支持 GRIB、GrADS、NetCDF、CSV 等多种数据格式，对接中国气象局 CMA-PI 高性能计算机、二级存储等多种数据来源，可在 Windows、Linux 等环境中运行。
+reki 提供区域截取、插值等多种数据操作方法。
 
-用户指南
+指南
 ==========
 
 .. toctree::
