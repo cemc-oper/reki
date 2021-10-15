@@ -1,1 +1,1 @@
-recursive-include nwpc_data/data_finder/conf *
+recursive-include reki/data_finder/conf *

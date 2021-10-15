@@ -1,4 +1,6 @@
-# nwpc-data
+# reki
+
+A data tool for CEMC.
 
 Load GRIB2 data using [eccodes](https://github.com/ecmwf/eccodes-python)
 or [cfgrib](https://github.com/ecmwf/cfgrib).
@@ -7,24 +9,24 @@ or [cfgrib](https://github.com/ecmwf/cfgrib).
 
 Download the latest source code from GitHub and install using `pip`.
 
-If you are using system python, such as apps/python/3.6.3/gnu on HPC CMA-PI,
+If you are using system python, such as `apps/python/3.6.3/gnu` on HPC CMA-PI,
 please use `--user` option to install on user directory.
 
-`nwpc-data` uses ecCodes to decode GRIB files
+`reki` uses ecCodes to decode GRIB files
 (which is needed by [eccodes](https://github.com/ecmwf/eccodes-python) and [cfgrib](https://github.com/ecmwf/cfgrib)). 
 Please install ecCodes through conda or other package source.
 
 ## Getting started
 
-`nwpc-data` has several functions to help users to find one filed from a local GRIB 2 file.
+`reki` has several functions to help users to find one filed from a local GRIB 2 file.
 
-`load_message_from_file` from `nwpc_data.grib.eccodes` returns a GRIB handler.
+`load_message_from_file` from `reki.format.grib.eccodes` returns a GRIB handler.
 Users can use it to get attrs or values with functions from [eccodes](https://github.com/ecmwf/eccodes-python) .
 
 For example, load 850hPa temperature from GRAPES GFS and get values from the returned message.
 
 ```pycon
->>> from nwpc_data.format.grib.eccodes import load_message_from_file
+>>> from reki.format.grib.eccodes import load_message_from_file
 >>> t = load_message_from_file(
 ...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
 ...     parameter="t",
@@ -58,7 +60,7 @@ and converted into `xarray.DataArray` by `nwpc-data`.
 **WARNING**: This feature is under construction.
 
 ```pycon
->>> from nwpc_data.format.grib.eccodes import load_field_from_file
+>>> from reki.format.grib.eccodes import load_field_from_file
 >>> load_field_from_file(
 ...     file_path="/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
 ...     parameter="t",
@@ -122,7 +124,7 @@ Attributes:
 
 ## Engines
 
-`nwpc-data` loads GRIB2 file using `eccodes` by default and also supports `cfgrib`.
+`reki` loads GRIB2 file using `eccodes` by default and also supports `cfgrib`.
 
 ### cfgrib
 
@@ -242,6 +244,6 @@ See `example` directory for more examples.
 
 ## LICENSE
 
-Copyright &copy; 2020, developers at nwpc-oper.
+Copyright &copy; 2020-2021, developers at cemc-oper.
 
-`nwpc-data` is licensed under [GPL v3.0](LICENSE.md)
+`reki` is licensed under [GPL v3.0](LICENSE.md)
