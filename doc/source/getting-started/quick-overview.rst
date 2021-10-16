@@ -12,7 +12,7 @@
     >>> import pandas as pd
     >>> import xarray as xr
 
-.. _data_finder:
+.. _data_find:
 
 文件查找
 ===========
@@ -70,10 +70,16 @@
     ... )
     PosixPath('/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Obs-prep/2021101400/rec_RSING_20211013212300_g.dat')
 
+.. _data_load:
+
+数据加载
+=========
+
+
 .. _grib:
 
 GRIB 2
-=======
+--------
 
 **reki** 使用 ecCodes 解码 GRIB 数据，提供两套 API 接口用于从 GRIB 文件中提取要素场：
 
@@ -83,7 +89,7 @@ GRIB 2
 .. _grib_message:
 
 加载 GRIB 2 消息
------------------
+~~~~~~~~~~~~~~~~~~
 
 下面代码以 GRAPES GFS 系统的预报文件作为示例文件
 
@@ -157,7 +163,7 @@ GRIB 2
 .. _grib_field:
 
 加载 GRIB 2 要素场
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 **reki** 还提供对上述检索得到 GRIB 2 消息的封装，返回 ``xarray.DataArray`` 对象，类似 [cfgrib](https://github.com/ecmwf/cfgrib) 库。
 
@@ -298,7 +304,7 @@ GRIB 2
 .. _grads:
 
 GrADS 格点二进制数据
-====================
+---------------------
 
 **reki** 内置简单的 GrADS 格点二进制格式数据文件解析器。
 
@@ -393,14 +399,14 @@ CTL 文件名只包含起报日期 (2021.09.26) 和起报时次 (00)。
 .. _other_formats:
 
 其他格式
-============
+------------
 
 **reki** 还提供对 NetCDF、CSV 等格式数据的简单支持。
 
 .. _netcdf:
 
 NetCDF
-----------
+~~~~~~~~~
 
 **reki** 内部使用 xarray 提供的接口读取 NetCDF 文件。
 
@@ -436,7 +442,7 @@ NetCDF
 .. _table:
 
 表格数据
-----------------
+~~~~~~~~~
 
 **reki** 内部使用 ``pandas.read_table()`` 函数解析表格数据。
 
@@ -469,3 +475,267 @@ NetCDF
                 ...           ...     ...  ...      ...      ...                 ...
     N259     999999.00             0       0  ...      8.0      8.0 2021-08-03 23:00:00
     [8505 rows x 25 columns]
+
+
+.. _data_process:
+
+数据处理
+===========
+
+``reki.operator`` 包中集成多种用于数据操作的函数，函数名称参考 esmvalcore 库设计。
+
+.. _extract_region:
+
+裁剪区域
+---------
+
+查找 GRAPES TYM 系统的数据文件：
+
+.. code-block:: pycon
+
+    >>> data_path = find_local_file(
+    ...     "grapes_tym/grib2/orig",
+    ...     start_time="2021101400",
+    ...     forecast_time=f"72h"
+    ... )
+    >>> data_path
+    PosixPath('/g1/COMMONDATA/OPER/NWPC/GRAPES_TYM/Prod-grib/2021101400/ORIG/rmf.tcgra.2021101400072.grb2')
+
+加载总降水要素场：
+
+.. code-block:: pycon
+
+    >>> from reki.format.grib.eccodes import load_field_from_file
+    >>> field = load_field_from_file(
+    ...     data_path,
+    ...     parameter="APCP",
+    ... )
+    >>> field
+    <xarray.DataArray 'unknown' (latitude: 835, longitude: 1557)>
+    array([[2.691072e+00, 2.691680e+00, 2.578080e+00, ..., 4.035200e-01,
+            4.257920e-01, 4.250880e-01],
+           [2.688864e+00, 2.687904e+00, 2.576672e+00, ..., 1.083616e+00,
+            1.140576e+00, 4.247360e-01],
+           [2.628544e+00, 2.625728e+00, 2.523136e+00, ..., 1.409056e+00,
+            1.418176e+00, 8.219840e-01],
+           ...,
+           [2.752320e-01, 2.730880e-01, 2.048000e-03, ..., 4.160000e-03,
+            0.000000e+00, 0.000000e+00],
+           [6.873600e-02, 6.672000e-02, 5.440000e-04, ..., 1.344000e-03,
+            0.000000e+00, 0.000000e+00],
+           [6.883200e-02, 6.876800e-02, 5.120000e-04, ..., 2.880000e-04,
+            0.000000e+00, 0.000000e+00]])
+    Coordinates:
+        time        datetime64[ns] 2021-10-14
+        step        timedelta64[ns] 3 days
+        valid_time  datetime64[ns] 2021-10-17
+        surface     int64 0
+      * latitude    (latitude) float64 60.06 59.97 59.88 59.79 59.7 59.61 59.52 ...
+      * longitude   (longitude) float64 40.0 40.09 40.18 40.27 40.36 40.45 40.54 ...
+    Attributes:
+        GRIB_edition:             2
+        GRIB_centre:              babj
+        GRIB_subCentre:           0
+        GRIB_tablesVersion:       4
+        GRIB_localTablesVersion:  0
+        GRIB_dataType:            fc
+        GRIB_dataDate:            20211014
+        GRIB_dataTime:            0
+        GRIB_validityDate:        20211017
+        GRIB_validityTime:        0
+        GRIB_step:                72
+        GRIB_stepType:            accum
+        GRIB_stepUnits:           1
+        GRIB_stepRange:           0-72
+        GRIB_endStep:             72
+        long_name:                discipline=0 parmcat=1 parm=8
+
+抽取区域：
+
+.. code-block:: pycon
+
+    >>> from reki.operator import extract_region
+    >>> extract_region(
+    ...     field,
+    ...     start_longitude=103,
+    ...     end_longitude=126.875,
+    ...     start_latitude=47,
+    ...     end_latitude=35.125
+    ... )
+    <xarray.DataArray 'unknown' (latitude: 132, longitude: 266)>
+    array([[0.000000e+00, 3.200000e-05, 6.400000e-05, ..., 1.766176e+00,
+            1.687872e+00, 1.587904e+00],
+           [0.000000e+00, 3.200000e-05, 1.920000e-04, ..., 1.495584e+00,
+            1.446816e+00, 1.388576e+00],
+           [0.000000e+00, 0.000000e+00, 3.200000e-05, ..., 1.416800e+00,
+            1.425824e+00, 1.451200e+00],
+           ...,
+           [1.693475e+01, 1.831757e+01, 1.882371e+01, ..., 2.187318e+01,
+            2.305267e+01, 2.425610e+01],
+           [1.351926e+01, 1.441987e+01, 1.540243e+01, ..., 2.254189e+01,
+            2.355629e+01, 2.409763e+01],
+           [1.065578e+01, 1.181683e+01, 1.347645e+01, ..., 2.282579e+01,
+            2.337466e+01, 2.367184e+01]])
+    Coordinates:
+        time        datetime64[ns] 2021-10-14
+        step        timedelta64[ns] 3 days
+        valid_time  datetime64[ns] 2021-10-17
+        surface     int64 0
+      * latitude    (latitude) float64 46.92 46.83 46.74 46.65 46.56 46.47 46.38 ...
+      * longitude   (longitude) float64 103.0 103.1 103.2 103.3 103.4 103.5 ...
+    Attributes:
+        GRIB_edition:             2
+        GRIB_centre:              babj
+        GRIB_subCentre:           0
+        GRIB_tablesVersion:       4
+        GRIB_localTablesVersion:  0
+        GRIB_dataType:            fc
+        GRIB_dataDate:            20211014
+        GRIB_dataTime:            0
+        GRIB_validityDate:        20211017
+        GRIB_validityTime:        0
+        GRIB_step:                72
+        GRIB_stepType:            accum
+        GRIB_stepUnits:           1
+        GRIB_stepRange:           0-72
+        GRIB_endStep:             72
+        long_name:                discipline=0 parmcat=1 parm=8
+
+.. _extract_point:
+
+抽取数据点
+------------
+
+查找 GRAPES MESO 3KM 系统的数据文件：
+
+.. code-block:: pycon
+
+    >>> data_path = find_local_file(
+    ...     "grapes_meso_3km/grib2/orig",
+    ...     start_time="2021101400",
+    ...     forecast_time=f"6h"
+    ... )
+    >>> data_path
+    PosixPath('/g1/COMMONDATA/OPER/NWPC/GRAPES_MESO_3KM/Prod-grib/2021101400/ORIG/rmf.hgra.2021101400006.grb2')
+
+加载总云量要素场：
+
+.. code-block:: pycon
+
+    >>> from reki.format.grib.eccodes import load_field_from_file
+    >>> field = load_field_from_file(
+    ...     data_path,
+    ...     parameter="TCDC",
+    ... )
+
+提取特定点数据：
+
+.. code-block:: pycon
+
+    >>> from reki.operator.regrid import extract_point
+    >>> extract_point(
+    ...     field,
+    ...     39.9,
+    ...     116.3906,
+    ...     scheme="nearest",
+    ...     engine="scipy",
+    ... )
+    <xarray.DataArray (latitude: 1, longitude: 1)>
+    array([[100.]])
+    Coordinates:
+        time        datetime64[ns] 2021-10-14
+        step        timedelta64[ns] 06:00:00
+        valid_time  datetime64[ns] 2021-10-14T06:00:00
+        nominalTop  int64 0
+      * latitude    (latitude) float64 39.9
+      * longitude   (longitude) float64 116.4
+
+.. _interpolate_grid:
+
+插值
+-----
+
+查找 GRAPES GFS 系统的数据文件：
+
+.. code-block:: pycon
+
+    >>> data_path = find_local_file(
+    ...     "grapes_gfs_gmf/grib2/orig",
+    ...     start_time="2021101412",
+    ...     forecast_time="120h"
+    ... )
+    >>> data_path
+    PosixPath('/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2021101412/ORIG/gmf.gra.2021101412120.grb2')
+
+加载 2 米温度场：
+
+.. code-block:: pycon
+
+    >>> field = load_field_from_file(
+    ...     data_path,
+    ...     parameter="2t",
+    ... )
+
+构建目标网格：
+
+.. Note::
+    下面代码在 CMA-PI 的 apps/python/3.6.3/gnu 环境下运行，该环境安装的 Xarray 不支持默认 ``data`` 参数。高版本 Xarray 可以省去 ``data``。
+
+.. code-block:: pycon
+
+    >>> lats = np.arange(89.95, -90, -0.1)
+    >>> lons = np.arange(0, 360, 0.1)
+    >>> target_grid = xr.DataArray(
+    ...     data=np.zeros((len(lats), len(lons))),
+    ...     coords=[
+    ...         ("latitude", lats),
+    ...         ("longitude", lons)
+    ...     ]
+    ... )
+    >>> target_grid
+    <xarray.DataArray (latitude: 1800, longitude: 3600)>
+    array([[0., 0., 0., ..., 0., 0., 0.],
+           [0., 0., 0., ..., 0., 0., 0.],
+           [0., 0., 0., ..., 0., 0., 0.],
+           ...,
+           [0., 0., 0., ..., 0., 0., 0.],
+           [0., 0., 0., ..., 0., 0., 0.],
+           [0., 0., 0., ..., 0., 0., 0.]])
+    Coordinates:
+      * latitude   (latitude) float64 89.95 89.85 89.75 89.65 89.55 89.45 89.35 ...
+      * longitude  (longitude) float64 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 ...
+
+将要素场 ``field`` 插值到目标网格 ``target_grid``：
+
+.. Note::
+    ``scheme="rect_bivariate_spline"`` 使用 ``scipy.interpolate.RectBivariateSpline`` 插值，需要安装 scipy 库。
+
+.. code-block:: pycon
+
+    >>> from reki.operator.regrid import interpolate_grid
+    >>> interpolate_grid(
+    ...     field,
+    ...     target_grid,
+    ...     scheme="rect_bivariate_spline"
+    ... )
+    <xarray.DataArray (latitude: 1800, longitude: 3600)>
+    array([[250.285742, 250.280388, 250.270665, ..., 250.277346, 250.285742,
+            250.285742],
+           [250.266565, 250.268475, 250.260678, ..., 250.25966 , 250.271709,
+            250.271709],
+           [250.220353, 250.241045, 250.24047 , ..., 250.220512, 250.235493,
+            250.235493],
+           ...,
+           [228.673176, 229.045389, 229.242601, ..., 229.269594, 229.277293,
+            229.277293],
+           [228.531412, 228.908711, 229.104475, ..., 229.072642, 229.085329,
+            229.085329],
+           [228.485742, 228.85362 , 229.042281, ..., 228.990476, 229.005742,
+            229.005742]])
+    Coordinates:
+        time               datetime64[ns] 2021-10-14T12:00:00
+        step               timedelta64[ns] 5 days
+        valid_time         datetime64[ns] 2021-10-19T12:00:00
+        heightAboveGround  int64 2
+      * latitude           (latitude) float64 89.95 89.85 89.75 89.65 89.55 ...
+      * longitude          (longitude) float64 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 ...
