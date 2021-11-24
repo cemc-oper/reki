@@ -23,6 +23,9 @@ setup(
     long_description_content_type='text/markdown',
 
     url='https://github.com/nwpc-oper/reki',
+    project_urls={
+        "Documentation": 'https://reki.readthedocs.io',
+    },
 
     author='perillaroc',
     author_email='perillaroc@gmail.com',
@@ -39,7 +42,7 @@ setup(
         'Programming Language :: Python :: 3.9',
     ],
 
-    keywords='nwpc data grib2',
+    keywords='cemc data grib2',
 
     packages=find_packages(exclude=['docs', 'tests', 'example']),
 
