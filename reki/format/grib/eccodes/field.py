@@ -18,6 +18,7 @@ def load_field_from_file(
         level_type: Union[str, Dict] = None,
         level: Union[int, float, List, Dict] = None,
         level_dim: Optional[str] = None,
+        field_name: Optional[str] = None,
         show_progress: bool = False,
         **kwargs
 ) -> Optional[xr.DataArray]:
@@ -72,6 +73,9 @@ def load_field_from_file(
 
             - `None` or `pl` or `isobaricInhPa`: level_dim is a float number with unit hPa.
             - `isobaricInPa`: level_dim is a float number with unit Pa.
+
+    field_name:
+        name of field.
 
     show_progress: bool
         show progress bar.
@@ -149,6 +153,8 @@ def load_field_from_file(
     messages = []
 
     fixed_level_type, fixed_level_dim = _fix_level(level_type, level_dim)
+    if field_name is None and isinstance(parameter, str):
+        field_name = parameter
 
     if show_progress:
         with open(file_path, "rb") as f:
@@ -182,7 +188,11 @@ def load_field_from_file(
 
     if len(messages) == 1:
         message_id = messages[0]
-        data = create_data_array_from_message(message_id, level_dim_name=fixed_level_dim)
+        data = create_data_array_from_message(
+            message_id,
+            level_dim_name=fixed_level_dim,
+            field_name=field_name,
+        )
         eccodes.codes_release(message_id)
         return data
 
@@ -194,7 +204,11 @@ def load_field_from_file(
             )
 
         def creat_array(message):
-            array = create_data_array_from_message(message, level_dim_name=fixed_level_dim)
+            array = create_data_array_from_message(
+                message,
+                level_dim_name=fixed_level_dim,
+                field_name=field_name
+            )
             if show_progress:
                 pbar.update(1)
             return array

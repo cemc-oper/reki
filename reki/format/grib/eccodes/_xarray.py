@@ -11,6 +11,7 @@ import eccodes
 def create_data_array_from_message(
         message,
         level_dim_name: Optional[str] = None,
+        field_name: Optional[str] = None,
 ) -> xr.DataArray:
     """
     Create ``xarray.DataArray`` from one GRIB2 message.
@@ -147,7 +148,9 @@ def create_data_array_from_message(
         data_attrs["long_name"] = name
 
     # set name
-    if "shortName" in all_attrs:
+    if field_name is not None:
+        var_name = field_name
+    elif "shortName" in all_attrs and all_attrs["shortName"] != "unknown":
         var_name = all_attrs["shortName"]
     else:
         var_name = f"{all_attrs['discipline']}_{all_attrs['parameterCategory']}_{all_attrs['parameterNumber']}"
