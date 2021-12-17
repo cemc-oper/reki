@@ -20,14 +20,18 @@ def load_field_from_file(
 
     Parameters
     ----------
-    file_path: str
-    parameter: str or typing.Dict
-    level_type: str or typing.Dict
+    file_path:
+    parameter:
+    level_type:
         level type, pl, sfc, ml, or use ecCodes key `typeOfLevel`, or set ecCodes keys directly.
-    level: int or None
-    engine: str
-        GRIB decoding engine, `eccodes` for eccodes-python or `cfgrib` for cfgrib
-    kwargs: dict
+    level:
+    engine:
+        GRIB decoding engine
+
+        * `eccodes`: use eccodes
+        * `cfgrib`: use cfgrib
+
+    kwargs:
         other parameters used by engine.
 
     Returns
@@ -52,6 +56,7 @@ def load_field_from_file(
             parameter,
             fixed_level_type,
             level,
+            **kwargs
         )
     else:
         raise ValueError(f"engine {engine} is not supported")
