@@ -1,15 +1,27 @@
 # reki
 
-A data tool for CEMC.
+[![GitHub version](https://badge.fury.io/gh/nwpc-oper%2Freki.svg)](https://badge.fury.io/gh/nwpc-oper%2Freki)
+[![PyPI version](https://badge.fury.io/py/reki.svg)](https://badge.fury.io/py/reki)
+[![Documentation Status](https://readthedocs.org/projects/reki/badge/?version=latest)](https://reki.readthedocs.io/zh_CN/latest/?badge=latest)
+
+A data preparation tool for meteorological data in CEMC.
 
 Load GRIB2 data using [eccodes](https://github.com/ecmwf/eccodes-python)
 or [cfgrib](https://github.com/ecmwf/cfgrib).
 
+Chinese version document: https://reki.readthedocs.io/
+
 ## Installation
 
-Download the latest source code from GitHub and install using `pip`.
+Install from pip:
 
-If you are using system python, such as `apps/python/3.6.3/gnu` on HPC CMA-PI,
+```bash
+pip install reki
+```
+
+or download the latest source code from GitHub and install using `pip`.
+
+If you are using system python without root privilege (such as `apps/python/3.6.3/gnu` on CMA-PI HPC),
 please use `--user` option to install on user directory.
 
 `reki` uses ecCodes to decode GRIB files
@@ -137,6 +149,7 @@ Read 850hPa temperature from a GRAEPS GFS grib2 file using `shortName` key `t`.
 ( `shortName` is an ecCodes key. )
 
 ```pycon
+>>> from reki.format.grib import load_message_from_file
 >>> load_field_from_file(
 ...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
 ...     parameter="t",
@@ -240,7 +253,7 @@ Attributes:
 
 ## Examples
 
-See `example` directory for more examples.
+See [cemc-data-guide](https://github.com/perillaroc/cemc-data-guide) project for more examples.
 
 ## LICENSE
 
