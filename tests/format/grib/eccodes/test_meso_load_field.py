@@ -1,5 +1,4 @@
 import pytest
-import pandas as pd
 
 from reki.data_finder import find_local_file
 from reki.format.grib.eccodes import load_field_from_file
@@ -22,6 +21,9 @@ def file_path(system_name, start_time, forecast_time, storage_base):
 
 
 def test_load_with_short_name(file_path):
+    """
+    Use short name supported by ecCodes
+    """
     short_name = "t"
     field = load_field_from_file(
         file_path,
@@ -33,6 +35,9 @@ def test_load_with_short_name(file_path):
 
 
 def test_load_with_extended_name(file_path):
+    """
+    Use short name embedded by reki from wgrib2 and CEMC
+    """
     parameter = "TCOLW"
     field = load_field_from_file(
         file_path,
@@ -42,6 +47,13 @@ def test_load_with_extended_name(file_path):
 
 
 def test_load_with_numbers(file_path):
+    """
+    Use GRIB keys for parameter:
+
+    * discipline
+    * parameterCategory
+    * parameterNumber
+    """
     parameter = {
         "discipline": 0,
         "parameterCategory": 1,
@@ -56,3 +68,95 @@ def test_load_with_numbers(file_path):
         level=level
     )
     assert field is not None
+
+
+def test_load_10wind(file_path):
+    """
+    Use ``stepType`` for normal and statistics fields.
+    """
+    parameter = "10u"
+
+    # 10m U 风
+    step_type = "instant"
+    field_instant = load_field_from_file(
+        file_path,
+        parameter=parameter,
+        stepType=step_type
+    )
+    assert field_instant is not None
+
+    # 输出间隔内最大 10m U 风
+    step_type = "max"
+    field_max = load_field_from_file(
+        file_path,
+        parameter=parameter,
+        stepType=step_type
+    )
+    assert field_max is not None
+
+
+def test_load_ri(file_path):
+    """
+    Use different ``level_type`` for same parameter.
+
+    地表理查森数
+    边界层理查森数
+    """
+    parameter = "RI"
+    level_type = "surface"
+    field_surface = load_field_from_file(
+        file_path,
+        parameter=parameter,
+        level_type=level_type
+    )
+    assert field_surface is not None
+
+    level_type = {
+        "typeOfFirstFixedSurface": 166
+    }
+    field_166 = load_field_from_file(
+        file_path,
+        parameter=parameter,
+        level_type=level_type
+    )
+    assert field_166 is not None
+
+
+def test_load_with_two_levels(file_path):
+    """
+    Use ``first_level`` and ``second_level`` in ``level`` option.
+
+    土壤温度
+
+    * 0-10cm below ground
+    * 10-30cm below ground
+    """
+    parameter = "t"
+    level_type = "depthBelowLandLayer"
+    first_level = 0
+    second_level = 0.1
+
+    field_0_10 = load_field_from_file(
+        file_path,
+        parameter=parameter,
+        level_type=level_type,
+        level={
+            "first_level": first_level,
+            "second_level": second_level
+        }
+    )
+    assert field_0_10 is not None
+
+    first_level = 0.1
+    second_level = 0.3
+
+    field_10_30 = load_field_from_file(
+        file_path,
+        parameter=parameter,
+        level_type=level_type,
+        level={
+            "first_level": first_level,
+            "second_level": second_level
+        }
+    )
+    assert field_10_30 is not None
