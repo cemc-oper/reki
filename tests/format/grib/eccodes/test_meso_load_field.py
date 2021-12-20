@@ -20,6 +20,17 @@ def file_path(system_name, start_time, forecast_time, storage_base):
     return f
 
 
+@pytest.fixture
+def modelvar_file_path(system_name, start_time, forecast_time, storage_base):
+    f = find_local_file(
+        f"{system_name}/grib2/modelvar",
+        start_time=start_time,
+        forecast_time=forecast_time,
+        storage_base=storage_base
+    )
+    return f
+
+
 def test_load_with_short_name(file_path):
     """
     Use short name supported by ecCodes
@@ -160,3 +171,16 @@ def test_load_with_two_levels(file_path):
         }
     )
     assert field_10_30 is not None
+
+
+def test_load_modelvar_using_level_type(modelvar_file_path):
+    parameter = "t"
+    level = 10
+    level_type = "ml"
+    field = load_field_from_file(
+        modelvar_file_path,
+        parameter=parameter,
+        level_type=level_type,
+        level=level
+    )
+    assert field is not None
