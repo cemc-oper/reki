@@ -34,6 +34,7 @@ def create_data_array_from_message(
         'stepUnits',
         'stepRange',
         'endStep',
+        'count'
     ]
 
     parameter_keys = [
