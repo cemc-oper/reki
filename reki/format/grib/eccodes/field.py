@@ -47,6 +47,10 @@ def load_field_from_file(
             - "isobaricInPa"
             - "surface"
             - "heightAboveGround"
+            - "nominalTop"
+            - "atmosphere"
+            - "meanSea"
+            - "depthBelowLandLayer"
             - ...
           See https://apps.ecmwf.int/codes/grib/format/edition-independent/3/ for more values.
         - If `typeOfLevel` is not available, use dict to specify filter conditions.
