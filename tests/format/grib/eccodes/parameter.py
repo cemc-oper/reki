@@ -3,22 +3,6 @@ from reki.format.grib.eccodes import load_field_from_file
 from reki.data_finder import find_local_file
 
 
-@pytest.fixture
-def system_name():
-    return "grapes_gfs_gmf"
-
-
-@pytest.fixture
-def file_path(system_name, start_time, forecast_time, storage_base):
-    f = find_local_file(
-        f"{system_name}/grib2/orig",
-        start_time=start_time,
-        forecast_time=forecast_time,
-        storage_base=storage_base
-    )
-    return f
-
-
 def test_short_name(file_path):
     parameter = "t"
     level_type = "pl"

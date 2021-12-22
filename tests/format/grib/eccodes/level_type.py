@@ -1,34 +1,6 @@
 import pytest
 
 from reki.format.grib.eccodes import load_field_from_file
-from reki.data_finder import find_local_file
-
-
-@pytest.fixture
-def system_name():
-    return "grapes_gfs_gmf"
-
-
-@pytest.fixture
-def file_path(system_name, start_time, forecast_time, storage_base):
-    f = find_local_file(
-        f"{system_name}/grib2/orig",
-        start_time=start_time,
-        forecast_time=forecast_time,
-        storage_base=storage_base
-    )
-    return f
-
-
-@pytest.fixture
-def modelvar_file_path(system_name, start_time, forecast_time, storage_base):
-    f = find_local_file(
-        f"{system_name}/grib2/modelvar",
-        start_time=start_time,
-        forecast_time=forecast_time,
-        storage_base=storage_base
-    )
-    return f
 
 
 def test_embedded_level_name(file_path, modelvar_file_path):

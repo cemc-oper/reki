@@ -1,6 +1,8 @@
 import pytest
 import pandas as pd
 
+from reki.data_finder import find_local_file
+
 
 @pytest.fixture
 def storage_base():
@@ -15,3 +17,29 @@ def start_time():
 @pytest.fixture
 def forecast_time():
     return pd.to_timedelta("24h")
+
+@pytest.fixture
+def system_name():
+    return "grapes_gfs_gmf"
+
+
+@pytest.fixture
+def file_path(system_name, start_time, forecast_time, storage_base):
+    f = find_local_file(
+        f"{system_name}/grib2/orig",
+        start_time=start_time,
+        forecast_time=forecast_time,
+        storage_base=storage_base
+    )
+    return f
+
+
+@pytest.fixture
+def modelvar_file_path(system_name, start_time, forecast_time, storage_base):
+    f = find_local_file(
+        f"{system_name}/grib2/modelvar",
+        start_time=start_time,
+        forecast_time=forecast_time,
+        storage_base=storage_base
+    )
+    return f
