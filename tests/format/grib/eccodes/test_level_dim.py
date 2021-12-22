@@ -43,7 +43,7 @@ def test_ml(modelvar_file_path):
         assert field.coords[field_level_dim_name].values == field_level
 
 
-def test_sfc(file_path):
+def test_sfc(modelvar_file_path):
     test_cases = [
         ("gh", "ml", 10, None, "ml", 10),
         ("gh", "ml", 10, "ml", "ml", 10),
@@ -52,7 +52,7 @@ def test_sfc(file_path):
 
     for (parameter, level_type, level, level_dim, field_level_dim_name, field_level) in test_cases:
         field = load_field_from_file(
-            file_path,
+            modelvar_file_path,
             parameter=parameter,
             level_type=level_type,
             level=level,
