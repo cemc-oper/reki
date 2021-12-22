@@ -120,6 +120,8 @@ def _check_level_value(
             if second_level != float(required_second_level):
                 return False
         return _check_keys(message_id, **current_level_dict)
+    elif level == "all":
+        return True
     else:
         raise ValueError(f"level is not supported: {level}")
 

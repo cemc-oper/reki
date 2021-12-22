@@ -16,7 +16,7 @@ def load_field_from_file(
         file_path: Union[str, Path],
         parameter: Union[str, Dict] = None,
         level_type: Union[str, Dict] = None,
-        level: Union[int, float, List, Dict] = None,
+        level: Union[int, float, List, Dict, str] = None,
         level_dim: Optional[str] = None,
         field_name: Optional[str] = None,
         show_progress: bool = False,
