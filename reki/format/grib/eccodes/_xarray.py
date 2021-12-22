@@ -249,6 +249,7 @@ def get_level_from_attrs(
         value = math.pow(10, all_attrs["scaleFactorOfFirstFixedSurface"]) * all_attrs["scaledValueOfFirstFixedSurface"]
         return level_dim_name, value / 100.0
     elif isinstance(level_dim_name, str):
+        # TODO: add check for level_type="pl"
         return level_dim_name, all_attrs["level"]
     elif level_dim_name is None:
         if all_attrs["typeOfLevel"] not in ("undef", "unknown"):
