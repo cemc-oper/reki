@@ -32,6 +32,7 @@ def load_field_from_file(
     parameter: str or typing.Dict
         parameter name.
         Use GRIB key `shortName` or a dict of filter conditions such as:
+
             {
                 "discipline": 0,
                 "parameterCategory": 2,
@@ -80,6 +81,12 @@ def load_field_from_file(
 
     field_name:
         name of field.
+
+        * If ``None``, generate field name automatically.
+            * use ``parameter`` if it's a string
+            * use GRIB Key shortName if it's not `unknown`
+            * use GRIB Keys to combine a name: `discipline_parameterCategory_parameterNumber`
+        * If string, set the field's name with it.
 
     show_progress: bool
         show progress bar.
