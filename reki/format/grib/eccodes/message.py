@@ -47,7 +47,10 @@ def load_message_from_file(
     kwargs
         other grib key used to filter.
     count
-        grib message index in grib file, starting with 1
+        grib message index in grib file, starting with 1.
+
+        This option will make all others options ignored.
+
     Returns
     -------
     int or None
@@ -79,6 +82,7 @@ def load_message_from_file(
         235.72234375, 235.82234375],
        [235.66234375, 235.86234375, 235.82234375, ..., 235.85234375,
         235.68234375, 235.70234375]])
+    >>> eccodes.codes_release(t)
 
     """
     if count is not None:
