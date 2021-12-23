@@ -11,35 +11,30 @@ def test_embedded_level_name(file_path, modelvar_file_path):
     * surface
     * ml
     """
-    parameter = "t"
-    level = 850
-    level_type = "pl"
-    field = load_field_from_file(
-        file_path,
-        parameter=parameter,
-        level_type=level_type,
-        level=level
-    )
-    assert field is not None
+    test_cases = [
+        ("t", "pl", 850),
+        ("t", "sfc", None),
+    ]
+    for (parameter, level_type, level) in test_cases:
+        field = load_field_from_file(
+            file_path,
+            parameter=parameter,
+            level_type=level_type,
+            level=level
+        )
+        assert field is not None
 
-    level_type = "sfc"
-    field = load_field_from_file(
-        file_path,
-        parameter=parameter,
-        level_type=level_type,
-    )
-    assert field is not None
-
-    parameter = "u"
-    level = 10
-    level_type = "ml"
-    field = load_field_from_file(
-        modelvar_file_path,
-        parameter=parameter,
-        level_type=level_type,
-        level=level
-    )
-    assert field is not None
+    test_cases = [
+        ("u", "ml", 10)
+    ]
+    for (parameter, level_type, level) in test_cases:
+        field = load_field_from_file(
+            modelvar_file_path,
+            parameter=parameter,
+            level_type=level_type,
+            level=level
+        )
+        assert field is not None
 
 
 def test_type_of_level(file_path):
