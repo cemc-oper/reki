@@ -12,7 +12,7 @@ from .grads_data_handler import GradsDataHandler, GradsRecordHandler
 
 def load_field_from_file(
         file_path: Union[str, Path],
-        parameter: Union[str, Dict] = None,
+        parameter: str,
         level_type: str = None,
         level: Union[int, float, List] = None,
         level_dim: Optional[str] = None,
@@ -87,35 +87,46 @@ def load_field_from_file(
     # level_type: pl, index, single
     grads_level_type = "multi"
     level_dim_name = "level"
-    if not isinstance(level, List):
+
+    if not isinstance(level, List) and level is not None:
         level = [level]
+
     if level_type == "single":
-        level = np.zeros(len(level))
+        level = [0]
         grads_level_type = "single"
     elif level_type == "index":
         level = [grads_ctl.zdef["values"][cur_level] for cur_level in level]
     elif level_type in ("pl", "ml"):
         level_dim_name = level_type
+        if level is None:
+            level = grads_ctl.zdef["values"]
+    elif level_type is None:
+        grads_level_type = None
+        # level = None
+
     if level_dim is not None:
         level_dim_name = level_dim
 
     data_handler = GradsDataHandler(grads_ctl)
 
     xarray_records = []
-    for cur_level in level:
-        record = data_handler.find_record(
-            name=parameter,
-            level=cur_level,
+    for index, record in enumerate(grads_ctl.record):
+        if not check_record(
+            record,
+            parameter=parameter,
+            level=level,
             level_type=grads_level_type,
             forecast_time=forecast_time,
-        )
-        if record is None:
+        ):
             continue
 
+        offset = data_handler.get_offset_by_record_index(record["record_index"])
+        record_handler = GradsRecordHandler(grads_ctl, index, offset)
+
         xarray_record = create_data_array_from_record(
-            record=record,
+            record=record_handler,
             parameter=parameter,
-            level=cur_level,
+            level=record["level"],
             level_dim_name=level_dim_name,
             latitude_direction=latitude_direction,
         )
@@ -130,6 +141,37 @@ def load_field_from_file(
         data = xr.concat(xarray_records, level_dim_name)
 
     return data
+
+
+def check_record(
+        record: Dict,
+        parameter: str,
+        level_type: str = None,
+        level: Union[int, float, List] = None,
+        valid_time: pd.Timestamp = None,
+        forecast_time: pd.Timedelta = None
+) -> bool:
+    if parameter != record["name"]:
+        return False
+
+    if level_type is not None and level_type != record["level_type"]:
+        return False
+
+    if level is not None:
+        if isinstance(level, List):
+            if record["level"] not in level:
+                return False
+        else:
+            if level != record["level"]:
+                return False
+
+    if valid_time is not None and valid_time != record["valid_time"]:
+        return False
+
+    if forecast_time is not None and forecast_time != record["forecast_time"]:
+        return False
+
+    return True
 
 
 def create_data_array_from_record(

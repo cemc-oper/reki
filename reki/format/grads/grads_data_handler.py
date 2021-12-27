@@ -85,15 +85,17 @@ class GradsDataHandler(object):
         cur_i = 0
         if level_type == 'single':
             a_level = 0
-        else:
+        elif level is not None:
             a_level = float(level)
+        else:
+            a_level = level
 
         while cur_i < len(self.grads_ctl.record):
             cur_record = self.grads_ctl.record[cur_i]
             if (
                 cur_record['name'] == name
-                and cur_record['level_type'] == level_type
-                and cur_record['level'] == a_level
+                and (level_type is None or cur_record['level_type'] == level_type)
+                and (a_level is None or cur_record['level'] == a_level)
                 and (valid_time is None or cur_record["valid_time"] == valid_time)
                 and (forecast_time is None or cur_record["forecast_time"] == forecast_time)
             ):
