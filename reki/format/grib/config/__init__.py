@@ -1,1 +1,2 @@
 from .wgrib2_short_name import WGRIB2_SHORT_NAME_TABLE
+from .cemc_param_table import CEMC_PARAM_TABLE

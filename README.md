@@ -67,9 +67,7 @@ array([[249.19234375, 249.16234375, 249.16234375, ..., 249.15234375,
 
 `eccodes` engine also provides some functions to load array from GRIB2 file
 in which GRIB2 message is loaded by [eccodes-python](https://github.com/ecmwf/eccodes-python)
-and converted into `xarray.DataArray` by `nwpc-data`.
-
-**WARNING**: This feature is under construction.
+and converted into `xarray.DataArray` by `reki`.
 
 ```pycon
 >>> from reki.format.grib.eccodes import load_field_from_file

@@ -22,6 +22,22 @@ def test_parameter_string(file_path):
         assert field.name == expected_name
 
 
+def test_parameter_cemc_param_db(file_path):
+    test_cases = [
+        (dict(parameter="btv"), None, "btv"),
+        (dict(parameter="zs"), None, "zs"),
+    ]
+
+    for (filters, field_name, expected_name) in test_cases:
+        field = load_field_from_file(
+            file_path,
+            **filters,
+            field_name=field_name,
+        )
+        assert field is not None
+        assert field.name == expected_name
+
+
 def test_parameter_dict(file_path):
     test_cases = [
         (dict(
