@@ -1,6 +1,6 @@
 from typing import Union, Dict
 
-from reki.format.grib.config import SHORT_NAME_TABLE
+from reki.format.grib.config import WGRIB2_SHORT_NAME_TABLE
 
 
 def _convert_parameter(parameter: Union[str, Dict]) -> Union[str, Dict]:
@@ -16,10 +16,8 @@ def _convert_parameter(parameter: Union[str, Dict]) -> Union[str, Dict]:
 
     """
     if isinstance(parameter, str):
-        df = SHORT_NAME_TABLE[SHORT_NAME_TABLE["short_name"] == parameter]
-        if df.empty:
-            return parameter
-        else:
+        df = WGRIB2_SHORT_NAME_TABLE[WGRIB2_SHORT_NAME_TABLE["short_name"] == parameter]
+        if not df.empty:
             return df.iloc[0].drop("short_name").to_dict()
-    else:
-        return parameter
+
+    return parameter

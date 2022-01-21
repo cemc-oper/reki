@@ -1,1 +1,1 @@
-from .short_name import SHORT_NAME_TABLE
+from .wgrib2_short_name import WGRIB2_SHORT_NAME_TABLE

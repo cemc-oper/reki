@@ -14,7 +14,7 @@ import io
 import pandas as pd
 
 
-_SHORT_NAME_TABLE_CONTENT = """short_name,discipline,parameterCategory,parameterNumber
+_WGRIB2_SHORT_NAME_TABLE_CONTENT = """short_name,discipline,parameterCategory,parameterNumber
 ACPCP,0,1,10
 ALBDO,0,19,1
 APCP,0,1,8
@@ -85,8 +85,8 @@ VWSH,0,2,25
 """
 
 
-def _get_short_name_table() -> pd.DataFrame:
-    f = io.StringIO(_SHORT_NAME_TABLE_CONTENT)
+def _get_wgrib2_short_name_table() -> pd.DataFrame:
+    f = io.StringIO(_WGRIB2_SHORT_NAME_TABLE_CONTENT)
     df = pd.read_table(
         f,
         header=0,
@@ -95,4 +95,4 @@ def _get_short_name_table() -> pd.DataFrame:
     return df
 
 
-SHORT_NAME_TABLE = _get_short_name_table()
+WGRIB2_SHORT_NAME_TABLE = _get_wgrib2_short_name_table()
