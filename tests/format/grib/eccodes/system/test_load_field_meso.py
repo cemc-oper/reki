@@ -1,4 +1,7 @@
+from typing import Dict
+
 import pytest
+from dataclasses import dataclass, asdict
 
 from reki.data_finder import find_local_file
 from reki.format.grib.eccodes import load_field_from_file
@@ -184,3 +187,26 @@ def test_load_modelvar_using_level_type(modelvar_file_path):
         level=level
     )
     assert field is not None
+
+
+def test_load_modelvar_using_cemc_param_table(modelvar_file_path):
+    @dataclass
+    class QueryOption:
+        parameter: str
+        level_type: str
+        level: float
+
+    @dataclass
+    class TestCase:
+        query: QueryOption
+
+    test_cases = [
+        TestCase(QueryOption(parameter="pip", level_type="ml", level=30)),
+    ]
+
+    for test_case in test_cases:
+        field = load_field_from_file(
+            modelvar_file_path,
+            **asdict(test_case.query)
+        )
+        assert field is not None
