@@ -12,7 +12,7 @@ tsfc,K,Surface temperature,地面温度,0.0,0.0,0.0,surface,,1.0,,,,,True
 ts_tigge,K,Surface temperature,地面温度 (TIGGE),,,,,,,,,,,False
 thetaE,K,Potential temperature,位温,,,,,,,,,,,False
 thetaSe,K,Pseudo-equivalent potential temperature,假相当位温,0.0,0.0,3.0,,,,,,,,False
-tmax,K,Maximum of isobaric temperature,等压面最高温度,,,,,,,,,,,False
+tmax,K,Maximum of isobaric temperature,等压面最高温度,0.0,0.0,4.0,,,,,,,,False
 mx2t,K,Maximum of 2 meters high temperature,2米最高温度,0.0,0.0,4.0,heightAboveGround,2.0,103.0,2.0,,,max,False
 tmax2m,K,Maximum of 2 meters high temperature,2米最高温度,0.0,0.0,4.0,heightAboveGround,2.0,103.0,2.0,,,max,True
 tmin,K,Minimum of isobaric temperature,等压面最低温度,,,,,,,,,,,False
