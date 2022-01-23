@@ -1,3 +1,6 @@
+from dataclasses import dataclass, asdict
+from typing import Union, Dict, Optional, List
+
 import pytest
 import eccodes
 import numpy as np
@@ -5,38 +8,59 @@ import numpy as np
 from reki.format.grib.eccodes import load_message_from_file, load_messages_from_file
 
 
+@dataclass
+class QueryOption:
+    parameter: Union[str, dict]
+    level_type: Union[str, Dict]
+    level: Optional[Union[float, Dict, List]]
+
+
+@dataclass
+class TestCase:
+    query: QueryOption
+    expected_keys: Optional[Dict] = None
+
+
 def test_scalar(file_path, modelvar_file_path):
     test_cases = [
-        ("t", "pl", 1.5, dict(typeOfLevel="isobaricInhPa", level=1)),
-        ("t", "isobaricInhPa", 850, dict(typeOfLevel="isobaricInhPa", level=850)),
-        ("tmax", "heightAboveGround", 2, dict(typeOfLevel="heightAboveGround", level=2))
+        TestCase(
+            query=QueryOption(parameter="t", level_type="pl", level=1.5),
+            expected_keys=dict(typeOfLevel="isobaricInhPa", level=1)
+        ),
+        TestCase(
+            query=QueryOption(parameter="t", level_type="isobaricInhPa", level=850),
+            expected_keys=dict(typeOfLevel="isobaricInhPa", level=850)
+        ),
+        TestCase(
+            query=QueryOption(parameter="tmax", level_type="heightAboveGround", level=2),
+            expected_keys=dict(typeOfLevel="heightAboveGround", level=2)
+        )
     ]
 
-    for (parameter, level_type, level, expected_keys) in test_cases:
+    for test_case in test_cases:
         message = load_message_from_file(
             file_path,
-            parameter=parameter,
-            level_type=level_type,
-            level=level
+            **asdict(test_case.query)
         )
         assert message is not None
-        for key, expected_value in expected_keys.items():
+        for key, expected_value in test_case.expected_keys.items():
             assert eccodes.codes_get(message, key) == expected_value
 
         eccodes.codes_release(message)
 
     test_cases = [
-        ("u", {"typeOfFirstFixedSurface": 131}, 10, dict(typeOfFirstFixedSurface=131, level=10))
+        TestCase(
+            query=QueryOption(parameter="u", level_type={"typeOfFirstFixedSurface": 131}, level=10),
+            expected_keys=dict(typeOfFirstFixedSurface=131, level=10)
+        )
     ]
-    for (parameter, level_type, level, expected_keys) in test_cases:
+    for test_case in test_cases:
         message = load_message_from_file(
             modelvar_file_path,
-            parameter=parameter,
-            level_type=level_type,
-            level=level
+            **asdict(test_case.query)
         )
         assert message is not None
-        for key, expected_value in expected_keys.items():
+        for key, expected_value in test_case.expected_keys.items():
             assert eccodes.codes_get(message, key, ktype=int) == expected_value
 
         eccodes.codes_release(message)
@@ -44,20 +68,22 @@ def test_scalar(file_path, modelvar_file_path):
 
 def test_dict(file_path):
     test_cases = [
-        ("vwsh", "heightAboveGroundLayer", {"first_level": 1000, "second_level": 0},
-         dict(typeOfLevel="heightAboveGroundLayer", level=1000)),
-        ("t", "depthBelowLandLayer", {"first_level": 0.1, "second_level": 0.4},
-         dict(typeOfLevel="depthBelowLandLayer", level=0))
+        TestCase(
+            query=QueryOption(parameter="vwsh", level_type="heightAboveGroundLayer", level={"first_level": 1000, "second_level": 0}),
+            expected_keys=dict(typeOfLevel="heightAboveGroundLayer", level=1000)
+        ),
+        TestCase(
+            query=QueryOption(parameter="t", level_type="depthBelowLandLayer", level={"first_level": 0.1, "second_level": 0.4}),
+            expected_keys=dict(typeOfLevel="depthBelowLandLayer", level=0)
+        )
     ]
-    for (parameter, level_type, level, expected_keys) in test_cases:
+    for test_case in test_cases:
         message = load_message_from_file(
             file_path,
-            parameter=parameter,
-            level_type=level_type,
-            level=level
+            **asdict(test_case.query)
         )
         assert message is not None
-        for key, expected_value in expected_keys.items():
+        for key, expected_value in test_case.expected_keys.items():
             assert eccodes.codes_get(message, key) == expected_value
 
         eccodes.codes_release(message)
@@ -65,20 +91,18 @@ def test_dict(file_path):
 
 def test_multi_levels(file_path):
     test_cases = [
-        ("t", "pl", [850, 925, 1000]),
-        ("gh", "isobaricInhPa", [850, 925, 1000])
+        TestCase(query=QueryOption(parameter="t", level_type="pl", level=[850, 925, 1000])),
+        TestCase(query=QueryOption(parameter="gh", level_type="isobaricInhPa", level=[850, 925, 1000]))
     ]
-    for (parameter, level_type, level) in test_cases:
+    for test_case in test_cases:
         messages = load_messages_from_file(
             file_path,
-            parameter=parameter,
-            level_type=level_type,
-            level=level
+            **asdict(test_case.query)
         )
-        assert len(messages) == len(level)
+        assert len(messages) == len(test_case.query.level)
         assert np.array_equal(
             np.sort([eccodes.codes_get(message, "level", ktype=int) for message in messages]),
-            np.sort(level)
+            np.sort(test_case.query.level)
         )
 
         for message in messages:
@@ -133,19 +157,17 @@ def pl_levels():
 
 def test_all_levels(file_path, pl_levels):
     test_cases = [
-        ("t", "pl", pl_levels),
+        TestCase(query=QueryOption(parameter="t", level_type="pl", level=pl_levels)),
     ]
-    for (parameter, level_type, level) in test_cases:
+    for test_case in test_cases:
         messages = load_messages_from_file(
             file_path,
-            parameter=parameter,
-            level_type=level_type,
-            level=None,
+            **asdict(test_case.query)
         )
-        assert len(messages) == len(level)
+        assert len(messages) == len(test_case.query.level)
         assert np.array_equal(
             np.sort([eccodes.codes_get(message, "level", ktype=int) for message in messages]),
-            np.sort([single_level*100 if single_level < 1 else int(single_level) for single_level in level])
+            np.sort([single_level*100 if single_level < 1 else int(single_level) for single_level in test_case.query.level])
         )
 
         for message in messages:
@@ -154,18 +176,22 @@ def test_all_levels(file_path, pl_levels):
 
 def test_none_level(file_path):
     test_cases = [
-        ("t", "pl", dict(typeOfLevel="isobaricInhPa", level=1000)),
-        ("vwsh", "heightAboveGroundLayer", dict(typeOfLevel="heightAboveGroundLayer", level=1000))
+        TestCase(
+            query=QueryOption(parameter="t", level_type="pl", level=None),
+            expected_keys=dict(typeOfLevel="isobaricInhPa", level=1000),
+        ),
+        TestCase(
+            query=QueryOption(parameter="vwsh", level_type="heightAboveGroundLayer", level=None),
+            expected_keys=dict(typeOfLevel="heightAboveGroundLayer", level=1000)
+        )
     ]
-    for (parameter, level_type, expected_keys) in test_cases:
+    for test_case in test_cases:
         message = load_message_from_file(
             file_path,
-            parameter=parameter,
-            level_type=level_type,
-            level=None
+            **asdict(test_case.query)
         )
         assert message is not None
-        for key, expected_value in expected_keys.items():
+        for key, expected_value in test_case.expected_keys.items():
             assert eccodes.codes_get(message, key) == expected_value
 
         eccodes.codes_release(message)

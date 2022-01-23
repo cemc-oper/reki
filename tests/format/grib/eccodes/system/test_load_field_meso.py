@@ -7,6 +7,18 @@ from reki.data_finder import find_local_file
 from reki.format.grib.eccodes import load_field_from_file
 
 
+@dataclass
+class QueryOption:
+    parameter: str
+    level_type: str
+    level: float
+
+
+@dataclass
+class TestCase:
+    query: QueryOption
+
+
 @pytest.fixture
 def system_name():
     return "grapes_meso_3km"
@@ -190,16 +202,6 @@ def test_load_modelvar_using_level_type(modelvar_file_path):
 
 
 def test_load_modelvar_using_cemc_param_table(modelvar_file_path):
-    @dataclass
-    class QueryOption:
-        parameter: str
-        level_type: str
-        level: float
-
-    @dataclass
-    class TestCase:
-        query: QueryOption
-
     test_cases = [
         TestCase(QueryOption(parameter="pip", level_type="ml", level=30)),
     ]
