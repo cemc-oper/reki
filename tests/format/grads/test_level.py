@@ -1,68 +1,91 @@
+from dataclasses import dataclass, asdict
+from typing import Dict, List, Union, Optional
+
 import numpy as np
 import pytest
 
 from reki.format.grads import load_field_from_file
 
 
+@dataclass
+class QueryOption:
+    parameter: str
+    level_type: Optional[str]
+    level: Optional[Union[int, float, List]]
+
+
+@dataclass
+class TestCase:
+    query: QueryOption
+    expected_level_type: str
+    expected_level: Union[int, float, List]
+
+
 def test_number(file_path):
     test_cases = [
-        ("t", "pl", 850, "pl", 850),
-        ("h", "pl", 500.0, "pl", 500.0),
-        ("q2", "index", 0, "level", 1000),
-        ("u", "index", 1, "level", 925),
-        ("tsoil", "index", 2, "level", 850),
-        ("q2m", "single", 0, "level", 0)
+        TestCase(query=QueryOption("t", "pl", 850), expected_level_type="pl", expected_level=850),
+        TestCase(query=QueryOption("h", "pl", 500.0), expected_level_type="pl", expected_level=500.0),
+        TestCase(query=QueryOption("q2", "index", 0), expected_level_type="level", expected_level=1000),
+        TestCase(query=QueryOption("u", "index", 1), expected_level_type="level", expected_level=925),
+        TestCase(query=QueryOption("tsoil", "index", 2), expected_level_type="level", expected_level=850),
+        TestCase(query=QueryOption("q2m", "single", 0), expected_level_type="level", expected_level=0),
     ]
 
-    for (parameter, level_type, level, expected_level_name, expected_level) in test_cases:
+    for test_case in test_cases:
         field = load_field_from_file(
             file_path,
-            parameter=parameter,
-            level_type=level_type,
-            level=level,
+            **asdict(test_case.query)
         )
         assert field is not None
-        assert field.name == parameter
-        assert field.coords[expected_level_name] == expected_level
+        assert field.name == test_case.query.parameter
+        assert field.coords[test_case.expected_level_type] == test_case.expected_level
 
 
 def test_list(file_path, modelvar_file_path):
     test_cases = [
-        ("t", "pl", [1000, 850, 500], "pl", [1000, 850, 500]),
-        ("tsoil", "index", [0, 1, 2, 3], "level", [1000, 925, 850, 700])
+        TestCase(
+            query=QueryOption("t", "pl", [1000, 850, 500]),
+            expected_level_type="pl", expected_level=[1000, 850, 500]
+        ),
+        TestCase(
+            query=QueryOption("tsoil", "index", [0, 1, 2, 3]),
+            expected_level_type="level", expected_level=[1000, 925, 850, 700]
+        )
     ]
 
-    for (parameter, level_type, level, expected_level_name, expected_level) in test_cases:
+    for test_case in test_cases:
         field = load_field_from_file(
             file_path,
-            parameter=parameter,
-            level_type=level_type,
-            level=level,
+            **asdict(test_case.query)
         )
         assert field is not None
-        assert field.name == parameter
+        assert field.name == test_case.query.parameter
         assert np.array_equal(
-            np.sort(field.coords[expected_level_name].values),
-            np.sort(expected_level)
+            np.sort(field.coords[test_case.expected_level_type].values),
+            np.sort(test_case.expected_level)
         )
 
     test_cases = [
-        ("pip", "ml", [1, 20, 30, 50], "ml", [1, 20, 30, 50]),
-        ("qc", "index", [0, 1, 2, 3], "level", [1, 2, 3, 4])
+        TestCase(
+            query=QueryOption("pip", "ml", [1, 20, 30, 50]),
+            expected_level_type="ml", expected_level=[1, 20, 30, 50]
+        ),
+        TestCase(
+            query=QueryOption("qc", "index", [0, 1, 2, 3]),
+            expected_level_type="level", expected_level=[1, 2, 3, 4]
+        )
     ]
 
-    for (parameter, level_type, level, expected_level_name, expected_level) in test_cases:
+    for test_case in test_cases:
         field = load_field_from_file(
             modelvar_file_path,
-            parameter=parameter,
-            level_type=level_type,
-            level=level,
+            **asdict(test_case.query)
         )
         assert field is not None
-        assert field.name == parameter
+        assert field.name == test_case.query.parameter
         assert np.array_equal(
-            np.sort(field.coords[expected_level_name].values),
-            np.sort(expected_level)
+            np.sort(field.coords[test_case.expected_level_type].values),
+            np.sort(test_case.expected_level)
         )
 
 
@@ -101,36 +124,38 @@ def pl_levels():
 
 def test_none(file_path, pl_levels):
     test_cases = [
-        ("u10m", "single", None, "level", 0),
-        ("tiw", None, None, "level", 0)
+        TestCase(query=QueryOption("u10m", "single", None), expected_level_type="level", expected_level=0),
+        TestCase(query=QueryOption("tiw", None, None), expected_level_type="level", expected_level=0)
     ]
 
-    for (parameter, level_type, level, expected_level_name, expected_level) in test_cases:
+    for test_case in test_cases:
         field = load_field_from_file(
             file_path,
-            parameter=parameter,
-            level_type=level_type,
-            level=level,
+            **asdict(test_case.query)
         )
         assert field is not None
-        assert field.name == parameter
-        assert field.coords[expected_level_name] == expected_level
+        assert field.name == test_case.query.parameter
+        assert field.coords[test_case.expected_level_type] == test_case.expected_level
 
     test_cases = [
-        ("t", "pl", None, "pl", pl_levels),
-        ("tsoil", None, None, "level", [1000, 925, 850, 700]),
+        TestCase(
+            query=QueryOption("t", "pl", None),
+            expected_level_type="pl", expected_level=pl_levels
+        ),
+        TestCase(
+            query=QueryOption("tsoil", None, None),
+            expected_level_type="level", expected_level=[1000, 925, 850, 700]
+        ),
     ]
 
-    for (parameter, level_type, level, expected_level_name, expected_level) in test_cases:
+    for test_case in test_cases:
         field = load_field_from_file(
             file_path,
-            parameter=parameter,
-            level_type=level_type,
-            level=level,
+            **asdict(test_case.query)
         )
         assert field is not None
-        assert field.name == parameter
+        assert field.name == test_case.query.parameter
         assert np.array_equal(
-            np.sort(field.coords[expected_level_name].values),
-            np.sort(expected_level)
+            np.sort(field.coords[test_case.expected_level_type].values),
+            np.sort(test_case.expected_level)
         )
