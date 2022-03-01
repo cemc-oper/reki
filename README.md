@@ -255,6 +255,6 @@ See [cemc-data-guide](https://github.com/perillaroc/cemc-data-guide) project for
 
 ## LICENSE
 
-Copyright &copy; 2020-2021, developers at cemc-oper.
+Copyright &copy; 2020-2022, developers at cemc-oper.
 
-`reki` is licensed under [GPL v3.0](LICENSE.md)
+`reki` is licensed under [Apache License, Version 2.0](LICENSE)
