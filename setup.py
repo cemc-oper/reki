@@ -18,7 +18,7 @@ setup(
 
     version=version,
 
-    description='A data tool for CEMC.',
+    description='A data preparation tool for CEMC.',
     long_description=long_description,
     long_description_content_type='text/markdown',
 
@@ -30,12 +30,12 @@ setup(
     author='perillaroc',
     author_email='perillaroc@gmail.com',
 
-    license='GPLv3',
+    license='Apache License 2.0',
 
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+        'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
