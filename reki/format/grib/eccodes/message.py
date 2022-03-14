@@ -14,6 +14,8 @@ from ._util import (
     _check_message,
 )
 
+from reki.format.grib._parameter import _convert_parameter
+
 
 def load_message_from_file(
         file_path: Union[str, Path],
@@ -89,6 +91,9 @@ def load_message_from_file(
         return _load_message_from_file_by_count(file_path, count)
 
     fixed_level_type, _ = _fix_level(level_type, None)
+
+    parameter = _convert_parameter(parameter)
+
     with open(file_path, "rb") as f:
         while True:
             message_id = eccodes.codes_grib_new_from_file(f)
@@ -143,6 +148,8 @@ def load_messages_from_file(
         a list of message number or None if no message is found.
     """
     fixed_level_type, _ = _fix_level(level_type, None)
+
+    parameter = _convert_parameter(parameter)
 
     messages = []
 

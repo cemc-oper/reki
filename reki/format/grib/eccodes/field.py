@@ -10,6 +10,7 @@ from ._level import _fix_level
 from ._util import _check_message
 from ._xarray import create_data_array_from_message, get_level_coordinate_name
 from reki._util import _load_first_variable
+from reki.format.grib._parameter import _convert_parameter
 
 
 def load_field_from_file(
@@ -164,8 +165,11 @@ def load_field_from_file(
     messages = []
 
     fixed_level_type, fixed_level_dim = _fix_level(level_type, level_dim)
+
     if field_name is None and isinstance(parameter, str):
         field_name = parameter
+
+    parameter = _convert_parameter(parameter)
 
     if show_progress:
         with open(file_path, "rb") as f:

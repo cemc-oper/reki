@@ -4,6 +4,7 @@ from typing import List, Dict, Union, Optional
 import eccodes
 
 from reki.format.grib._level import fix_level_type
+from reki.format.grib._parameter import _convert_parameter
 from ._util import (
     _check_message,
 )
@@ -47,7 +48,11 @@ def load_bytes_from_file(
 
     """
     offset = 0
+
     fixed_level_type = fix_level_type(level_type)
+
+    parameter = _convert_parameter(parameter)
+
     with open(file_path, "rb") as f:
         while True:
             message_id = eccodes.codes_grib_new_from_file(f)

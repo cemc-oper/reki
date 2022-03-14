@@ -27,7 +27,7 @@ def check_message(
     -------
     bool
     """
-    parameter = _convert_parameter(parameter)
+    # parameter = _convert_parameter(parameter)
     level_type, _ = _fix_level(level_type, None)
 
     return _check_message(

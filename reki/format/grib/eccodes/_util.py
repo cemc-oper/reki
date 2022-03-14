@@ -48,7 +48,7 @@ def _check_message(
 def _check_parameter(message_id, parameter: Optional[Union[str, Dict]]) -> bool:
     if parameter is None:
         return True
-    parameter = _convert_parameter(parameter)
+    # parameter = _convert_parameter(parameter)
     if isinstance(parameter, str):
         short_name = eccodes.codes_get(message_id, "shortName")
         return short_name == parameter
