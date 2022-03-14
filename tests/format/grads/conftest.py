@@ -18,6 +18,7 @@ def start_time():
 def forecast_time():
     return pd.to_timedelta("24h")
 
+
 @pytest.fixture
 def system_name():
     return "grapes_gfs_gmf"
