@@ -3,7 +3,7 @@ from typing import Dict, List, Union, Tuple
 import xarray as xr
 import numpy as np
 
-from reki.format.grib._parameter import _convert_parameter
+from reki.format.grib.common import convert_parameter
 
 
 def _fill_parameter(
@@ -11,7 +11,7 @@ def _fill_parameter(
         filter_by_keys: Dict,
         read_keys: List
 ) -> Tuple[Dict, List]:
-    parameter = _convert_parameter(parameter)
+    parameter = convert_parameter(parameter)
 
     if isinstance(parameter, str):
         filter_by_keys["shortName"] = parameter

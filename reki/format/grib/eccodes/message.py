@@ -14,7 +14,7 @@ from ._util import (
     _check_message,
 )
 
-from reki.format.grib._parameter import _convert_parameter
+from reki.format.grib._parameter import convert_parameter
 
 
 def load_message_from_file(
@@ -36,11 +36,11 @@ def load_message_from_file(
     file_path
         GRIB 2 file path.
     parameter
-        short name of the field or a dictionary including some GRIB keys:
+        short name of the field, or a dict of GRIB keys:
 
-        - discipline
-        - parameterCategory
-        - parameterNumber
+        * discipline
+        * parameterCategory
+        * parameterNumber
 
     level_type
         level type.
@@ -55,7 +55,7 @@ def load_message_from_file(
 
     Returns
     -------
-    int or None
+    Union[int]
         GRIB handler (int) if found or None if not found.
 
     Examples
@@ -92,7 +92,7 @@ def load_message_from_file(
 
     fixed_level_type, _ = _fix_level(level_type, None)
 
-    parameter = _convert_parameter(parameter)
+    parameter = convert_parameter(parameter)
 
     with open(file_path, "rb") as f:
         while True:
@@ -149,7 +149,7 @@ def load_messages_from_file(
     """
     fixed_level_type, _ = _fix_level(level_type, None)
 
-    parameter = _convert_parameter(parameter)
+    parameter = convert_parameter(parameter)
 
     messages = []
 

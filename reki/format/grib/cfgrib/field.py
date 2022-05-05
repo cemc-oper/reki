@@ -4,7 +4,7 @@ from pathlib import Path
 
 import xarray as xr
 
-from reki.format.grib._level import fix_level_type
+from reki.format.grib.common import fix_level_type
 
 from ._util import (
     _fill_parameter,

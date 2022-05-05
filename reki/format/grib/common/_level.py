@@ -6,7 +6,7 @@ def fix_level_type(
         engine: str = "eccodes",
 ) -> Optional[Union[str, Dict]]:
     """
-    Convert level type into GRIB keys with values.
+    Convert level type into dict of GRIB keys.
 
     Notes
     -----
@@ -15,7 +15,7 @@ def fix_level_type(
     """
     if level_type is None:
         return level_type
-    if isinstance(level_type, dict):
+    if isinstance(level_type, Dict):
         return level_type
     if level_type == "pl":
         if engine == "cfgrib":

@@ -3,8 +3,6 @@ import math
 
 import eccodes
 
-from reki.format.grib._parameter import _convert_parameter
-
 
 def _check_message(
         message_id,
