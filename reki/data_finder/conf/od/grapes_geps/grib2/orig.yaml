@@ -9,7 +9,7 @@ file_name: "gef.gra.{{ '%.3d' | format(query_vars.number) }}.{{ time_vars.Year }
 paths:
   - type: local
     level: runtime
-    path: '/g2/nwp_qu/NWP_GEPS_DATA/GRAPES_GFS_2-1-2-2/GEPS/PRODS/GRIB2/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+    path: '/g2/nwp_qu/NWP_GEPS_DATA_3.1/GRAPES_GEPS3.1/GEPS/PRODS/GRIB2/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
 
   - type: local
     level: archive

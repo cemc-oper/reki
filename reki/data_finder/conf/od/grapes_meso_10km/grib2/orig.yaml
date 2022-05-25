@@ -8,10 +8,6 @@ file_name: 'rmf.gra.{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}
 
 paths:
   - type: local
-    level: archive
-    path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_MESO_10KM/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/ORIG'
-
-  - type: local
     level: storage
     path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_MESO_10KM/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/ORIG'
 

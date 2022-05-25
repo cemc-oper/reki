@@ -9,7 +9,7 @@ file_name: 'post.ctl_{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }
 paths:
   - type: local
     level: runtime
-    path: '/g2/nwp/GRAPES_GFS3.1/MODEL/data/NWP_GMFS/{{ time_vars.Hour }}/output'
+    path: '/g2/nwp/GRAPES_GFS3.2/MODEL/data/NWP_GMFS/{{ time_vars.Hour }}/output'
 
   - type: local
     level: archive
