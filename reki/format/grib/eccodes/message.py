@@ -14,7 +14,7 @@ from ._util import (
     _check_message,
 )
 
-from reki.format.grib._parameter import convert_parameter
+from reki.format.grib.common._parameter import convert_parameter
 
 
 def load_message_from_file(

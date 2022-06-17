@@ -3,8 +3,8 @@ from typing import List, Dict, Union, Optional
 
 import eccodes
 
-from reki.format.grib._level import fix_level_type
-from reki.format.grib._parameter import convert_parameter
+from reki.format.grib.common._level import fix_level_type
+from reki.format.grib.common._parameter import convert_parameter
 from ._util import (
     _check_message,
 )
