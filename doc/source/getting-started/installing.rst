@@ -1,8 +1,7 @@
-#########
 安装
 #########
 
-.. _depenencies:
+.. _dependencies:
 
 依赖库
 -------
@@ -19,6 +18,12 @@
 安装 reki
 -----------
 
+使用 pip 在线安装：
+
+.. code-block:: bash
+
+    python -m pip install reki
+
 从 Github 中下载最新的源代码：
 
 .. code-block:: bash
@@ -32,7 +37,7 @@
 
     pip install .
 
-如果使用系统安装的 Python 环境且没有管理员权限，例如在 CMA-PI 上使用 `apps/python/3.6.3/gnu` 环境，请在运行 ``pip`` 命令时添加 ``--user`` 参数将 Python 包安装到用户目录。
+如果使用系统安装的 Python 环境且没有管理员权限，例如在 CMA-PI 上使用 ``apps/python/3.6.3/gnu`` 环境，请在运行 ``pip`` 命令时添加 ``--user`` 参数将 Python 包安装到用户目录。
 
 .. _cma_pi:
 

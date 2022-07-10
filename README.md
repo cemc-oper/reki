@@ -9,7 +9,7 @@ A data preparation tool for meteorological data in CEMC.
 Load GRIB2 data using [eccodes](https://github.com/ecmwf/eccodes-python)
 or [cfgrib](https://github.com/ecmwf/cfgrib).
 
-Chinese version document: https://reki.readthedocs.io/
+中文文档 (Chinese documentation): https://reki.readthedocs.io/
 
 ## Installation
 
@@ -257,4 +257,4 @@ See [cemc-data-guide](https://github.com/perillaroc/cemc-data-guide) project for
 
 Copyright &copy; 2020-2022, developers at cemc-oper.
 
-`reki` is licensed under [Apache License, Version 2.0](LICENSE)
+`reki` is licensed under [Apache License, Version 2.0](./LICENSE)

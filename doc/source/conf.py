@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'reki'
-copyright = '2021, perillaroc'
+copyright = '2021-2022, developers at ceme-oper'
 author = 'perillaroc'
 
 
@@ -28,7 +28,9 @@ author = 'perillaroc'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx_rtd_theme',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.autodoc',
+    'sphinx_autodoc_typehints',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -53,15 +55,12 @@ exclude_patterns = []
 # a list of builtin themes.
 #
 # html_theme = 'alabaster'
-html_theme = "sphinx_rtd_theme"
+html_theme = "sphinx_book_theme"
 
 html_theme_options = {
-    # Toc options
-    'collapse_navigation': True,
-    'sticky_navigation': True,
-    'navigation_depth': 4,
-    'includehidden': False,
-    'titles_only': False
+    "repository_url": "https://github.com/nwpc-oper/reki",
+    "use_repository_button": True,
+    "home_page_in_toc": False,
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,

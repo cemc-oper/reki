@@ -11,25 +11,13 @@
 reki 支持 GRIB、GrADS、NetCDF、CSV 等多种数据格式，对接中国气象局 CMA-PI 高性能计算机、二级存储等多种数据来源，可在 Windows、Linux 等环境中运行。
 reki 提供区域截取、插值等多种数据操作方法。
 
-开始使用
-==========
-
 .. toctree::
    :maxdepth: 2
+   :caption: 用户
+   :hidden:
 
-   getting-started/index
-
-用户指南
-==========
-
-本章节提供 **reki** 库更详细的说明和示例，介绍 **reki** 库可以实现的常见功能。
-
-.. toctree::
-   :maxdepth: 2
-
-   usage/data_find
-   usage/data_load
-   usage/data_process
+   开始使用 <getting-started/index>
+   指南 <guide/index>
 
 
 索引和表格
