@@ -1,0 +1,12 @@
+query:
+  system: cma_gfs
+  stream: oper
+  type: grib2
+  name: orig
+
+file_name: "Z_NAFP_C_BABJ_{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}0000_P_NWPC-GRAPES-GFS-GLB-{{ time_vars.Forecast }}00.grib2"
+
+paths:
+  - type: cmadaas
+    level: archive
+    path: '/CMADAAS/DATA/NAFP/BABJ/CEMC/CMA-GFS/FD-PSL/{{ time_vars.Year }}/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}'

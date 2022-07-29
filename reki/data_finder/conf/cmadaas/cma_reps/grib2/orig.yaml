@@ -1,0 +1,12 @@
+query:
+  system: cma_geps
+  stream: eps
+  type: grib2
+  name: orig
+
+file_name: "Z_NAFP_C_BABJ_{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}0000_P_NWPC-GRAPES-REPS-CN-{{ time_vars.Forecast }}00-m{{ '%.3d' | format(query_vars.number) }}.grib2"
+
+paths:
+  - type: cmadaas
+    level: archive
+    path: '/CMADAAS/ORIG-DATA/NAFP/BABJ/CEMC/CMA-REPS/FD-PSL/{{ time_vars.Year }}/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}'
