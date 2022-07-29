@@ -23,6 +23,7 @@ def load_message_from_file(
         level_type: Union[str, Dict] = None,
         level: Union[int, float, Dict] = None,
         count: int = None,
+        look_parameter: bool = True,
         **kwargs,
 ) -> Optional[int]:
     """
@@ -92,7 +93,8 @@ def load_message_from_file(
 
     fixed_level_type, _ = _fix_level(level_type, None)
 
-    parameter = convert_parameter(parameter)
+    if look_parameter:
+        parameter = convert_parameter(parameter)
 
     with open(file_path, "rb") as f:
         while True:
