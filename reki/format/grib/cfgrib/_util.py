@@ -1,6 +1,5 @@
 from typing import Dict, List, Union, Tuple
 
-import xarray as xr
 import numpy as np
 
 from reki.format.grib.common import convert_parameter

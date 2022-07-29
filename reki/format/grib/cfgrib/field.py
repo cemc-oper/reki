@@ -1,4 +1,3 @@
-import typing
 from typing import Dict, Union, Optional
 from pathlib import Path
 
@@ -24,7 +23,7 @@ def load_field_from_file(
         with_index: Union[str, bool] = False,
 ) -> Optional[xr.DataArray]:
     """
-    Load **one** field from GRIB2 file using [ecmwf/cfgrib](https://github.com/ecmwf/cfgrib).
+    Load **one** field from GRIB2 file using `ecmwf/cfgrib <https://github.com/ecmwf/cfgrib>`_.
 
     This function loads the first data fitting searching conditions.
 
@@ -32,14 +31,17 @@ def load_field_from_file(
     ----------
     file_path: str or Path
         GRIB2 file path
-    parameter: str or typing.Dict
+    parameter: str or Dict
         parameter identifier. support two types:
-        - str: parameter name, see shortName key using grib_ls of ecCodes.
-        - typing.Dict: parameter keys, including:
-            - discipline
-            - parameterCategory
-            - parameterNumber
-    level_type: str or typing.Dict
+
+        * str: parameter name, see shortName key using grib_ls of ecCodes.
+        * Dict: parameter keys, including:
+
+            * discipline
+            * parameterCategory
+            * parameterNumber
+
+    level_type: str or Dict
         level type, see typeOfLevel key using grib_ls of ecCodes.
     level: int or float or None
         level value. If none, all levels will be loaded.
@@ -174,13 +176,13 @@ def load_fields_from_file(
         with_index: Union[str, bool] = False,
 ) -> Optional[xr.Dataset]:
     """
-    Load fields from GRIB2 file using [ecmwf/cfgrib](https://github.com/ecmwf/cfgrib).
+    Load fields from GRIB2 file using `ecmwf/cfgrib <https://github.com/ecmwf/cfgrib>`_.
 
     Parameters
     ----------
     file_path: str or Path
         GRIB2 data file path
-    parameter: str or typing.Dict
+    parameter: str or Dict
         see `load_message_from_file`
     level_type: str
         see `load_message_from_file`
@@ -229,7 +231,7 @@ def load_fields_from_file(
         _fill_parameter(parameter, filter_by_keys, read_keys)
 
     if level_type is not None:
-        level_type = fix_level_type(level_type)
+        level_type = fix_level_type(level_type, engine="cfgrib")
         _fill_level_type(level_type, filter_by_keys, read_keys)
 
     if level is not None and level != "all":
