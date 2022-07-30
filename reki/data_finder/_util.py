@@ -45,6 +45,33 @@ def find_file(
     return file_path
 
 
+def render_file_name(
+        config: dict,
+        start_time: Union[datetime.datetime, pd.Timestamp],
+        forecast_time: Union[pd.Timedelta, str],
+        obs_time: Optional[pd.Timedelta] = None,
+        **kwargs
+):
+    query_vars = QueryVars()
+
+    for key in config["query"]:
+        setattr(query_vars, key, config["query"][key])
+    for key in kwargs:
+        setattr(query_vars, key, kwargs[key])
+
+    time_vars = TimeVars(start_time=start_time, forecast_time=forecast_time)
+    if obs_time is not None:
+        obs_time_vars = TimeVars(start_time=obs_time)
+        setattr(query_vars, "obs_time", obs_time_vars)
+
+    parse_template = generate_template_parser(time_vars, query_vars)
+    if "file_name" in config:
+        file_name = parse_template(config["file_name"])
+    elif "file_names" in config:
+        file_name = parse_template(config["file_names"][0])
+    return file_name
+
+
 def find_files(
         config: dict,
         data_level: Union[str, List],
@@ -96,23 +123,27 @@ def get_hour(forecast_time: pd.Timedelta) -> int:
     return int(forecast_time.seconds/3600) + forecast_time.days * 24
 
 
-class QueryVars(object):
+class QueryVars:
     def __init__(self):
         self.storage_base = None
 
 
-class TimeVars(object):
+class TimeVars:
     def __init__(
             self,
-            start_time: datetime.datetime or pd.Timestamp,
-            forecast_time: pd.Timedelta = pd.Timedelta(hours=0)
+            start_time: Union[datetime.datetime, pd.Timestamp],
+            forecast_time: Union[pd.Timedelta, str] = pd.Timedelta(hours=0)
     ):
         self.Year = start_time.strftime("%Y")
         self.Month = start_time.strftime("%m")
         self.Day = start_time.strftime("%d")
         self.Hour = start_time.strftime("%H")
         self.Minute = start_time.strftime("%M")
-        self.Forecast = f"{get_hour(forecast_time):03}"
+
+        if isinstance(forecast_time, pd.Timedelta):
+            self.Forecast = f"{get_hour(forecast_time):03}"
+        else:
+            self.Forecast = forecast_time
 
         start_date_time_4dvar = start_time - datetime.timedelta(hours=3)
         self.Year4DV = start_date_time_4dvar.strftime("%Y")

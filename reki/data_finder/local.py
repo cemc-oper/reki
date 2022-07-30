@@ -7,7 +7,7 @@ import pandas as pd
 from reki.data_finder._config import (
     find_config, load_config, get_default_local_config_path,
 )
-from reki.data_finder._util import find_file, find_files
+from reki.data_finder._util import find_file, find_files, render_file_name
 
 
 def find_local_file(
@@ -119,6 +119,43 @@ def find_local_file(
         **kwargs
     )
     return file_path
+
+
+def get_local_file_name(
+        data_type: str,
+        start_time: Union[str, pd.Timestamp, datetime.datetime],
+        forecast_time: Union[str, pd.Timedelta] = pd.Timedelta(hours=1),
+        data_class: str = "od",
+        config_dir: Union[str, Path] = None,
+        obs_time: Union[str, pd.Timestamp] = None,
+        **kwargs,
+) -> str:
+    if config_dir is None:
+        config_dir = get_default_local_config_path()
+
+    config_file_path = find_config(config_dir, data_type, data_class)
+    if config_file_path is None:
+        raise ValueError(f"data type is not found: {data_type}")
+
+    # if isinstance(forecast_time, str):
+    #     forecast_time = pd.to_timedelta(forecast_time)
+
+    if isinstance(start_time, str):
+        start_time = pd.to_datetime(start_time, format="%Y%m%d%H")
+    if isinstance(obs_time, str):
+        obs_time = pd.to_datetime(obs_time)
+    elif obs_time is None:
+        obs_time = start_time
+
+    config = load_config(config_file_path)
+    file_name = render_file_name(
+        config,
+        start_time,
+        forecast_time,
+        obs_time=obs_time,
+        **kwargs
+    )
+    return file_name
 
 
 def find_local_files(
