@@ -55,7 +55,6 @@ setup(
         "pandas",
         "xarray",
         "eccodes",
-        "dask",
         "click",
         "tqdm",
     ],
