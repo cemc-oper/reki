@@ -79,6 +79,8 @@ def load_field_from_file(
     """
     if isinstance(forecast_time, str):
         forecast_time = pd.to_timedelta(forecast_time)
+    if isinstance(file_path, str):
+        file_path = Path(file_path)
 
     ctl_parser = GradsCtlParser()
     ctl_parser.parse(file_path)
