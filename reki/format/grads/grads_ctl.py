@@ -374,14 +374,23 @@ class GradsCtlParser(object):
 
         tokens = str(grads_ctl.dset).split("%")
         token_mapper = {
-            "f3": lambda x: f"{int(x['forecast_time'] / pd.Timedelta(hours=1)):03d}",
             "n2": lambda x: f"{x['forecast_time'].seconds // 60 % 60:02d}",
-            "fhn": lambda x: f"{int(x['forecast_time'] / pd.Timedelta(hours=1)):02d}00"   # TODO: change
+            "f2": lambda x: f"{int(x['forecast_time'] / pd.Timedelta(hours=1)):02d}",
+            "f3": lambda x: f"{int(x['forecast_time'] / pd.Timedelta(hours=1)):03d}",
+            "fn2": lambda x: f"{int(x['forecast_time'] / pd.Timedelta(minutes=1)):02d}",
+            "fhn": lambda x: f"{int(x['forecast_time'] / pd.Timedelta(hours=1)):02d}{int(x['forecast_time'].total_seconds() % (60*60) / 60):02d}"
         }
+
+        def parse_file_template_token(token: str) -> str:
+            for key in token_mapper:
+                if token.startswith(key):
+                    result = token_mapper[key](record) + token[len(key):]
+                    return result
+            return token
 
         parts = tokens[:1]
         for token in tokens[1:]:
-            m = token_mapper.get(token, lambda x: x)
-            parts.append(m(record))
+            parsed_part = parse_file_template_token(token)
+            parts.append(parsed_part)
 
         return Path("".join(parts))
