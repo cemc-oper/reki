@@ -7,16 +7,40 @@ import pandas as pd
 
 import eccodes
 
+from reki.format.grib.common import MISSING_VALUE
+
 
 def create_data_array_from_message(
         message,
         level_dim_name: Optional[str] = None,
         field_name: Optional[str] = None,
+        missing_value: Optional[float] = None,
+        fill_missing_value: Optional = np.nan,
 ) -> xr.DataArray:
     """
     Create ``xarray.DataArray`` from one GRIB2 message.
+
+    Parameters
+    ----------
+    message
+    level_dim_name
+    field_name
+    missing_value
+        set missingValue key in GRIB message before get array.
+        If set None, use MISSING_VALUE set in common module.
+        NOTE: ecCodes use 9999 as default missing value.
+    fill_missing_value
+        filled value to replace missing value point in array.
+        default is np.nan.
+        If set None, missing value will not be changed.
     """
+    if missing_value is None:
+        missing_value = MISSING_VALUE
+    eccodes.codes_set(message, "missingValue", missing_value)
+
     values = eccodes.codes_get_double_array(message, "values")
+    if fill_missing_value is not None:
+        np.place(values, values == missing_value, fill_missing_value)
 
     attr_keys = [
         'edition',
