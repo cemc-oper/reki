@@ -101,15 +101,33 @@ def interpolate_grid(
 
     eccodes.codes_set_double(message, 'longitudeOfFirstGridPointInDegrees', target_field.longitude.values[0])
     eccodes.codes_set_double(message, 'longitudeOfLastGridPointInDegrees', target_field.longitude.values[-1])
-    # eccodes.codes_set_double(message, 'iDirectionIncrementInDegrees', 0.28125)
+    eccodes.codes_set_double(message, 'iDirectionIncrementInDegrees', abs(target_field.longitude.values[0] - target_field.longitude.values[1]))
     eccodes.codes_set_long(message, 'Ni', len(target_field.longitude.values))
 
     eccodes.codes_set_double(message, 'latitudeOfFirstGridPointInDegrees', target_field.latitude.values[0])
     eccodes.codes_set_double(message, 'latitudeOfLastGridPointInDegrees', target_field.latitude.values[-1])
-    # eccodes.codes_set_double(message, 'jDirectionIncrementInDegrees', 0.28125)
+    eccodes.codes_set_double(message, 'jDirectionIncrementInDegrees', abs(target_field.latitude.values[0] - target_field.latitude.values[1]))
     eccodes.codes_set_long(message, 'Nj', len(target_field.latitude.values))
 
-    eccodes.codes_set_double_array(message, "values", target_field.values.flatten())
+    values = target_field.values.flatten()
+
+    MISSING = 1.0e36
+    eccodes.codes_set(message, 'missingValue', MISSING)
+    num_missing = 0
+    for i in range(len(values)):
+        if values[i] == MISSING:
+            num_missing += 1
+
+    if num_missing > 0:
+        eccodes.codes_set(message, 'bitmapPresent', 1)
+
+    eccodes.codes_set_double_array(message, "values", values)
+
+    if num_missing > 0:
+        num_data = eccodes.codes_get(message, 'numberOfDataPoints', int)
+        assert num_data == len(values)
+        assert eccodes.codes_get(message, 'numberOfCodedValues', int) == num_data - num_missing
+        assert eccodes.codes_get(message, 'numberOfMissing', int) == num_missing
 
     del field
     del target_field
