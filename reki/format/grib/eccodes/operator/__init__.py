@@ -7,6 +7,7 @@ import eccodes
 from reki.operator.area import extract_region as extract_region_field
 from reki.operator.regrid import interpolate_grid as interpolate_grid_field
 from reki.format.grib.eccodes._xarray import create_data_array_from_message
+from reki.format.grib.common import MISSING_VALUE
 
 
 def extract_region(
@@ -89,7 +90,12 @@ def interpolate_grid(
         ]
     )
 
-    field = create_data_array_from_message(message)
+    missing_value = MISSING_VALUE
+    field = create_data_array_from_message(
+        message,
+        missing_value=MISSING_VALUE,
+        fill_missing_value=np.nan,
+    )
 
     target_field = interpolate_grid_field(
         data=field,
@@ -111,16 +117,16 @@ def interpolate_grid(
 
     values = target_field.values.flatten()
 
-    MISSING = 1.0e36
-    eccodes.codes_set(message, 'missingValue', MISSING)
+    eccodes.codes_set(message, 'missingValue', missing_value)
     num_missing = 0
     for i in range(len(values)):
-        if values[i] == MISSING:
+        if values[i] == missing_value:
             num_missing += 1
 
     if num_missing > 0:
         eccodes.codes_set(message, 'bitmapPresent', 1)
 
+    values = np.nan_to_num(values, missing_value)
     eccodes.codes_set_double_array(message, "values", values)
 
     if num_missing > 0:
