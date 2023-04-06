@@ -31,7 +31,12 @@ def extract_region(
     Returns
     -------
     """
-    field = create_data_array_from_message(message)
+    missing_value = MISSING_VALUE
+    field = create_data_array_from_message(
+        message,
+        missing_value=missing_value,
+        fill_missing_value=np.nan,
+    )
     target_field = extract_region_field(
         field,
         start_longitude=start_longitude,
@@ -50,7 +55,19 @@ def extract_region(
     # eccodes.codes_set_double(message, 'jDirectionIncrementInDegrees', self.grid.lat_step)
     eccodes.codes_set_long(message, 'Nj', len(target_field.latitude.values))
 
-    eccodes.codes_set_double_array(message, "values", target_field.values.flatten())
+    values = target_field.values.flatten()
+
+    eccodes.codes_set(message, 'missingValue', missing_value)
+    num_missing = 0
+    for i in range(len(values)):
+        if values[i] == missing_value:
+            num_missing += 1
+
+    if num_missing > 0:
+        eccodes.codes_set(message, 'bitmapPresent', 1)
+
+    values = np.nan_to_num(values, missing_value)
+    eccodes.codes_set_double_array(message, "values", values)
 
     del field
     del target_field
