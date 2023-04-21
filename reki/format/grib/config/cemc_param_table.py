@@ -3,7 +3,7 @@ import io
 import pandas as pd
 
 
-_CEMC_PARAM_TABLE_CONTENT = """name,unit,description,description_cn,discipline,category,number,typeOfLevel,level,first_level_type,first_level,second_level_type,second_level,step_type,alias
+_CEMC_PARAM_TABLE_CONTENT = """name,unit,description,description_cn,discipline,category,number,typeOfLevel,level,first_level_type,first_level,second_level_type,second_level,stepType,alias
 ps,Pa,Surface pressure,地面气压,0.0,3.0,0.0,surface,,1.0,,,,,False
 psfc,Pa,Surface pressure,地面气压,0.0,3.0,0.0,surface,,1.0,,,,,True
 psl,Pa,Sea level pressure,海平面气压,0.0,3.0,1.0,meanSea,,101.0,,,,,False
@@ -51,7 +51,7 @@ mcc,%,Medium cloud cover,中云量,0.0,6.0,4.0,nominalTop,,8.0,,,,,False
 hcc,%,High cloud cover,高云量,0.0,6.0,5.0,nominalTop,,8.0,,,,,False
 bli,K,Best lifted index,最优抬升指数,0.0,7.0,1.0,surface,,,,,,,False
 albedo,%,Albedo,反射率,0.0,19.0,1.0,surface,,1.0,,,,,False
-st,K,Soil temperature,土壤温度,0.0,0.0,0.0,depthBelowLandLayer,,,,,,,False
+st,K,Soil temperature,土壤温度,0.0,0.0,0.0,depthBelowLandLayer,,106.0,,,,,False
 st(0-10),,,0-10cm土壤温度,0.0,0.0,0.0,depthBelowLandLayer,,106.0,0.0,106.0,0.1,,False
 st(10-40),,,10-40cm土壤温度,0.0,0.0,0.0,depthBelowLandLayer,,106.0,0.1,106.0,0.4,,False
 st(40-100),,,40-100cm土壤温度,0.0,0.0,0.0,depthBelowLandLayer,,106.0,0.4,106.0,1.0,,False
@@ -75,7 +75,7 @@ qflx,1e-1.g/(cm.hpa.s),Moisture flux,水汽通量,0.0,1.0,224.0,,,,,,,,False
 qdiv,1e-7.g/(cm2.hpa.s),Moisture flux divergence,水汽通量散度,0.0,1.0,225.0,,,,,,,,False
 qfxsfc,kg/(m2.s),Surface moisture flux,地表水汽通量,0.0,1.0,229.0,surface,,1.0,,,,,False
 qfx,kg/(m2.s),Surface moisture flux,地表水汽通量,0.0,1.0,229.0,surface,,1.0,,,,,True
-sw,m3/m3,Soil moisture,土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,,,,,,False
+sw,m3/m3,Soil moisture,土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,,,,,False
 sw(0-10),,,0-10cm土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,0.0,106.0,0.1,,False
 sw(10-40),,,10-40cm土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,0.1,106.0,0.3,,False
 sw(40-100),,,40-100cm土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,0.3,106.0,0.6,,False
