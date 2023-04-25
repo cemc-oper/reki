@@ -40,10 +40,10 @@ rainc,mm,Convective precipitation,对流性降水,0.0,1.0,10.0,surface,,1.0,,,,a
 sf,m,Snow melt  ,降雪,0.0,1.0,29.0,surface,,1.0,,,,accum,False
 snow,m,Snow melt  ,降雪,0.0,1.0,29.0,surface,,1.0,,,,accum,True
 sd,m,Snow depth  ,雪深,0.0,1.0,11.0,surface,,1.0,,,,,False
-tcc,%,Total cloud cover,总云量,0.0,6.0,1.0,nominalTop,,8.0,,,,,False
-lcc,%,Low cloud cover,低云量,0.0,6.0,3.0,nominalTop,,8.0,,,,,False
-mcc,%,Medium cloud cover,中云量,0.0,6.0,4.0,nominalTop,,8.0,,,,,False
-hcc,%,High cloud cover,高云量,0.0,6.0,5.0,nominalTop,,8.0,,,,,False
+tcc,%,Total cloud cover,总云量,0.0,6.0,1.0,entireAtmosphere,,,,,,,False
+lcc,%,Low cloud cover,低云量,0.0,6.0,3.0,entireAtmosphere,,,,,,,False
+mcc,%,Medium cloud cover,中云量,0.0,6.0,4.0,entireAtmosphere,,,,,,,False
+hcc,%,High cloud cover,高云量,0.0,6.0,5.0,entireAtmosphere,,,,,,,False
 bli,K,Best lifted index,最优抬升指数,0.0,7.0,1.0,surface,,,,,,,False
 albedo,%,Albedo,反射率,0.0,19.0,1.0,surface,,1.0,,,,,False
 st,K,Soil temperature,土壤温度,0.0,0.0,0.0,depthBelowLandLayer,,106.0,,,,,False
@@ -173,3 +173,7 @@ dcape,J/kg,Down convective available potential energy,下沉有效位能,0.0,7.0
 ssi,,Storm strength index,风暴强度指数,0.0,7.0,225.0,,,,,,,,False
 si,K,Showalter index,沙氏指数,0.0,7.0,13.0,surface,,1.0,,,,,False
 asi,,Atmospheric stability index,大气稳定度指数,0.0,7.0,226.0,,,,,,,,False
+gust,m/s,Wind speed (gust),,0.0,2.0,22.0,,,,,,,,False
+cldt,m,cloud top,,0.0,6.0,12.0,,,,,,,,False
+cldb,m,cloud base,,0.0,6.0,11.0,,,,,,,,False
+ceiling,m,ceiling,,0.0,6.0,13.0,,,,,,,,False
