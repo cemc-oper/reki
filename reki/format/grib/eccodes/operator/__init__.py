@@ -114,12 +114,18 @@ def interpolate_grid(
         fill_missing_value=np.nan,
     )
 
+    options = kwargs.copy()
+    original_fill_value = None
+    if "fill_value" in options:
+        original_fill_value = options["fill_value"]
+        options["fill_value"] = np.nan
+
     target_field = interpolate_grid_field(
         data=field,
         target=target_grid,
         scheme=scheme,
         engine=engine,
-        **kwargs
+        **options
     )
 
     eccodes.codes_set_double(message, 'longitudeOfFirstGridPointInDegrees', target_field.longitude.values[0])
@@ -133,6 +139,9 @@ def interpolate_grid(
     eccodes.codes_set_long(message, 'Nj', len(target_field.latitude.values))
 
     values = target_field.values.flatten()
+
+    if original_fill_value is not None:
+        np.place(values, np.isnan(values), missing_value)
 
     eccodes.codes_set(message, 'missingValue', missing_value)
     num_missing = 0
