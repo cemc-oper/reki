@@ -4,12 +4,12 @@ query:
   type: obs
   name: rgwst
 
-file_name: 'rec_RSURF_{{ time_vars.Year4DV }}{{ time_vars.Month4DV }}{{ time_vars.Day4DV }}{{ time_vars.Hour4DV }}{{ query_vars.obs_time.Hour }}{{ query_vars.obs_time.Minute }}_g.dat'
+file_name: 'rec_RGWST_{{ time_vars.Year4DV }}{{ time_vars.Month4DV }}{{ time_vars.Day4DV }}{{ time_vars.Hour4DV }}{{ query_vars.obs_time.Hour }}{{ query_vars.obs_time.Minute }}_g.dat'
 
 paths:
   - type: local
     level: archive
-    path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Obs-prep/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/ORIG'
+    path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Obs-prep/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
 
   - type: local
     level: storage
