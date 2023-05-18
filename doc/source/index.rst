@@ -19,10 +19,9 @@ reki 提供区域截取、插值等多种数据操作方法。
    开始使用 <getting-started/index>
    指南 <guide/index>
 
+.. toctree::
+   :maxdepth: 2
+   :caption: 开发
+   :hidden:
 
-索引和表格
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   API <develop/api/index>
