@@ -78,6 +78,9 @@ def extract_region(
     if num_missing > 0:
         eccodes.codes_set(message, 'bitmapPresent', 1)
 
+    # close constant field feature.
+    # eccodes.codes_set_long(message, "produceLargeConstantFields", 1)
+
     eccodes.codes_set_double_array(message, "values", values)
 
     del field
