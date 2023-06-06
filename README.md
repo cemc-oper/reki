@@ -4,7 +4,7 @@
 [![PyPI version](https://badge.fury.io/py/reki.svg)](https://badge.fury.io/py/reki)
 [![Documentation Status](https://readthedocs.org/projects/reki/badge/?version=latest)](https://reki.readthedocs.io/zh_CN/latest/?badge=latest)
 
-A data preparation tool for meteorological data in CEMC.
+A data preparation tool for meteorological data in CEMC/CMA.
 
 Load GRIB2 data using [eccodes](https://github.com/ecmwf/eccodes-python)
 or [cfgrib](https://github.com/ecmwf/cfgrib).
