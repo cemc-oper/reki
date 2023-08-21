@@ -167,7 +167,7 @@ def interpolate_grid(
         eccodes.codes_set(message, 'bitmapPresent', 1)
 
     values = np.nan_to_num(values, missing_value)
-    eccodes.codes_set_double_array(message, "values", values)
+    eccodes.codes_set_values(message, values)
 
     if num_missing > 0:
         num_data = eccodes.codes_get(message, 'numberOfDataPoints', int)

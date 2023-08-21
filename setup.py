@@ -18,11 +18,11 @@ setup(
 
     version=version,
 
-    description='A data preparation tool for CEMC.',
+    description='A data preparation tool for CEMC/CMA.',
     long_description=long_description,
     long_description_content_type='text/markdown',
 
-    url='https://github.com/nwpc-oper/reki',
+    url='https://github.com/cemc-oper/reki',
     project_urls={
         "Documentation": 'https://reki.readthedocs.io',
     },
@@ -36,10 +36,11 @@ setup(
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Apache Software License',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
     ],
 
     keywords='cemc data grib2',
