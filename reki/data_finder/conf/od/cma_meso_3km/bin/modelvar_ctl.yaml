@@ -1,0 +1,28 @@
+query:
+  system: cma_meso_3km
+  stream: oper
+  type: bin
+  name: modelvar_ctl
+
+file_name: 'model.ctl_{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}00'
+
+paths:
+  - type: local
+    level: runtime
+    path: '/g0/nwp/NWP_RMFS_DATA/cma_meso_3km/cold/{{ time_vars.Hour }}/fcst/grapes_model/run'
+
+  - type: local
+    level: runtime
+    path: '/g0/nwp/NWP_RMFS_DATA/cma_meso_3km/warm/{{ time_vars.Hour }}/fcst/grapes_model/run'
+
+  - type: local
+    level: archive
+    path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_MESO_3KM/Fcst-main/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+
+  - type: local
+    level: storage
+    path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_MESO_3KM/Fcst-main/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+
+  - type: local
+    level: storage
+    path: '{{ query_vars.storage_base }}/GRAPES_MESO_3KM/Fcst-main/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'

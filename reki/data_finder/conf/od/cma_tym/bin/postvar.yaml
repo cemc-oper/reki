@@ -1,0 +1,20 @@
+query:
+  system: cma_tym
+  stream: oper
+  type: bin
+  name: postvar
+
+file_name: 'postvar{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}00'
+
+paths:
+  - type: local
+    level: archive
+    path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_TYM/Fcst-main/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+
+  - type: local
+    level: storage
+    path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_TYM/Fcst-main/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+
+  - type: local
+    level: storage
+    path: '{{ query_vars.storage_base }}/GRAPES_TYM/Fcst-main/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'

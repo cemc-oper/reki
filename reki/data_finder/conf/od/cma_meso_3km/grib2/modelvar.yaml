@@ -1,0 +1,28 @@
+query:
+  system: cma_meso_3km
+  stream: oper
+  type: grib2
+  name: modelvar
+
+file_name: 'modelvar{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}.grb2'
+
+paths:
+  - type: local
+    level: runtime
+    path: '/g0/nwp_pd/NWP_GRAPES_MESO_3KM_POST_DATA/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/togrib2/output'
+
+  - type: local
+    level: runtime
+    path: '/g0/nwp_pd/NWP_GRAPES_MESO_3KM_POST_DATA/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}_cold/togrib2/output'
+
+  - type: local
+    level: archive
+    path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_MESO_3KM/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/MODELVAR'
+
+  - type: local
+    level: storage
+    path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_MESO_3KM/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/MODELVAR'
+
+  - type: local
+    level: storage
+    path: '{{ query_vars.storage_base }}/GRAPES_MESO_3KM/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/MODELVAR'

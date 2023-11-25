@@ -1,0 +1,24 @@
+query:
+  system: cma_gfs_gmf
+  stream: oper
+  type: bin
+  name: modelvar_ctl
+
+file_name: 'model.ctl_{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}_{{ time_vars.Forecast }}'
+
+paths:
+  - type: local
+    level: runtime
+    path: '/g0/nwp/CMA-GFS4.0_DATA/MODEL/NWP_GMFS/{{ time_vars.Hour }}/output'
+
+  - type: local
+    level: archive
+    path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Fcst-long/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+
+  - type: local
+    level: storage
+    path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Fcst-long/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+
+  - type: local
+    level: storage
+    path: '{{ query_vars.storage_base }}/GRAPES_GFS_GMF/Fcst-long/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'

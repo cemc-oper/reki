@@ -1,0 +1,16 @@
+query:
+  system: cma_meso_10km
+  stream: oper
+  type: bin
+  name: modelvar_ctl
+
+file_name: 'model.ctl_{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}00'
+
+paths:
+  - type: local
+    level: storage
+    path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_MESO_10KM/Fcst-main/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+
+  - type: local
+    level: storage
+    path: '{{ query_vars.storage_base }}/GRAPES_MESO_10KM/Fcst-main/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
