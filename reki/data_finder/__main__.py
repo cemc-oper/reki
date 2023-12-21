@@ -39,7 +39,7 @@ def cli():
 @cli.command("local", context_settings=dict(
     ignore_unknown_options=True,
 ))
-@click.option("--data-type", required=True, help="data type, such as grapes_gfs_gmf/grib2/orig")
+@click.option("--data-type", required=True, help="data type, such as cma_gfs_gmf/grib2/orig")
 @click.option("--data-level", default="archive,storage", help="data level, split by comma, such as archive, storage")
 @click.option("--data-class", default="od", help="data class, od or cm")
 @click.option("--config-dir", default=None, help="config directory")

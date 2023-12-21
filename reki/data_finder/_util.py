@@ -1,5 +1,5 @@
 import datetime
-from typing import List, Union, Optional, Iterable
+from typing import Dict, List, Union, Optional, Iterable, Callable
 from pathlib import Path
 
 import pandas as pd
@@ -7,13 +7,50 @@ from jinja2 import Template
 
 
 def find_file(
-        config: dict,
+        config: Dict,
         data_level: Union[str, List],
         start_time: Union[datetime.datetime, pd.Timestamp],
         forecast_time: pd.Timedelta,
-        obs_time: pd.Timedelta = None,
+        obs_time: Optional[pd.Timedelta] = None,
         **kwargs
 ) -> Optional[Path]:
+    """
+    Find a file according to config.
+
+    Parameters
+    ----------
+    config
+        data source config dictionary. An example of config file:
+
+        .. code-block:: yaml
+
+            query:
+              system: cma_gfs_gmf
+              stream: oper
+              type: grib2
+              name: modelvar
+
+            file_name: 'modelvar{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}.grb2'
+
+            paths:
+              - type: local
+                level: runtime
+                path: "/some/path/to/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/data/output/grib2_orig/"
+
+              - type: local
+                level: storage
+                path: '{{ query_vars.storage_base }}/GRAPES_GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/MODELVAR'
+
+    data_level
+    start_time
+    forecast_time
+    obs_time
+    kwargs
+
+    Returns
+    -------
+    Path if found, None otherwise
+    """
     query_vars = QueryVars()
 
     for key in config["query"]:
@@ -108,7 +145,19 @@ def find_files(
     return file_paths
 
 
-def check_data_level(data_level, required_level: Optional[Union[str, Iterable]]):
+def check_data_level(data_level, required_level: Optional[Union[str, Iterable]]) -> bool:
+    """
+    check whether data level is in required level(s).
+
+    Parameters
+    ----------
+    data_level
+    required_level
+
+    Returns
+    -------
+    bool
+    """
     if required_level is None:
         return True
     elif isinstance(required_level, str):
@@ -153,7 +202,7 @@ class TimeVars:
         self.Hour4DV = start_date_time_4dvar.strftime("%H")
 
 
-def generate_template_parser(time_vars, query_vars):
+def generate_template_parser(time_vars: Dict, query_vars: Dict) -> Callable:
 
     def parse_template(template_content):
         template = Template(template_content)

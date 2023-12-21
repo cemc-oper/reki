@@ -21,7 +21,8 @@ def find_local_file(
         obs_time: Union[str, pd.Timestamp] = None,
         **kwargs,
 ) -> Optional[Path]:
-    """Find local data path using config files in config dir.
+    """
+    Find local data path using config files in config dir.
 
     Parameters
     ----------
@@ -52,45 +53,55 @@ def find_local_file(
 
     Examples
     --------
-    Find an existing orig grib2 file of GRAPES GFS.
+    Find an existing orig grib2 file of CMA-GFS in CMA-PAI HPC.
 
     >>> find_local_file(
-    ...     "grapes_gfs_gmf/grib2/orig",
-    ...     start_time="2020032100",
+    ...     "cma_gfs_gmf/grib2/orig",
+    ...     start_time="2023122000",
     ...     forecast_time="3h",
     ... )
-    /g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020032021/ORIG/gmf.gra.2020032100003.grb2
+    PosixPath('/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2023122000/ORIG/gmf.gra.2023122000003.grb2')
 
-    Find a non-existing orig grib2 file of GRAPES GFS.
+    Find a non-existing orig grib2 file of CMA-GFS.
+
     >>> find_local_file(
-    ...     "grapes_gfs_gmf/grib2/orig",
+    ...     "cma_gfs_gmf/grib2/orig",
     ...     start_time="2020032100",
     ...     forecast_time="1h",
     ... )
     None
 
-    Find a grib2 file in storage for GRAPES MESO 3km.
+    Find a grib2 file in storage for CMA-MESO 3km.
+
     >>> find_local_file(
-    ...     "grapes_meso_3km/grib2/orig",
+    ...     "cma_meso_3km/grib2/orig",
     ...     start_time="2020032100",
     ...     forecast_time="1h",
     ...     data_level="storage",
     ... )
-    /sstorage1/COMMONDATA/OPER/NWPC/GRAPES_MESO_3KM/Prod-grib/2020032021/ORIG/rmf.hgra.2020032100001.grb2
+    PosixPath('/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_MESO_3KM/Prod-grib/2020032100/ORIG/rmf.hgra.2020032100001.grb2')
 
-    Find a grib2 file in storage for GRAPES GEPS.
+    Find a grib2 file in storage for CMA-GEPS.
+
     >>> find_local_file(
-    ...     "grapes_geps/grib2/orig",
-    ...     start_time="2020032100",
+    ...     "cma_geps/grib2/orig",
+    ...     start_time="2023032100",
     ...     forecast_time="3h",
     ...     data_level="storage",
     ...     number=1,
     ... )
-    /sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GEPS/Prod-grib/2020032100/grib2/gef.gra.001.2020032100003.grb2
+    PosixPath('/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GEPS/Prod-grib/2023032100/grib2/gef.gra.001.2023032100003.grb2')
 
-    Find GRAPES TYM postvar ctl file in Windows mount storage.
-    >>> find_local_file("grapes_tym/bin/postvar_ctl", start_time="2021080200", storage_base="Y:")
-    WindowsPath('Y:/GRAPES_TYM/Fcst-main/2021080200/post.ctl_2021080200')
+    Find postvar ctl file for CMA-TYM in Windows mount storage.
+
+    .. code-block:: pycon
+
+        >>> find_local_file(
+        ...     "cma_tym/bin/postvar_ctl",
+        ...     start_time="2021080200",
+        ...     storage_base="M:"
+        ... )
+        WindowsPath('M:/GRAPES_TYM/Fcst-main/2021080200/post.ctl_2021080200')
 
     """
     if config_dir is None:

@@ -14,7 +14,7 @@ Find an existing orig GRIB2 file of GRAPES GFS.
 ```pycon
 >>> from reki.data_finder import find_local_file
 >>> find_local_file(
-...     "grapes_gfs_gmf/grib2/orig",
+...     "cma_gfs_gmf/grib2/orig",
 ...     start_time="2020032100",
 ...     forecast_time="3h",
 ... )
@@ -25,7 +25,7 @@ Find a non-existing orig GRIB2 file of GRAPES GFS.
 
 ```pycon
 >>> find_local_file(
-...     "grapes_gfs_gmf/grib2/orig",
+...     "cma_gfs_gmf/grib2/orig",
 ...     start_time="2020032100",
 ...     forecast_time="1h",
 ... )
@@ -36,7 +36,7 @@ Find a grib2 file in storage for GRAPES MESO 3km.
 
 ```pycon
 >>> find_local_file(
-...     "grapes_meso_3km/grib2/orig",
+...     "cma_meso_3km/grib2/orig",
 ...     start_time="2020032100",
 ...     forecast_time="1h",
 ...     data_level="storage",
@@ -48,7 +48,7 @@ Find a grib2 file for member 1 of GRAPES GEPS using `number=1`.
 
 ```pycon
 >>> find_local_file(
-...     "grapes_geps/grib2/orig",
+...     "cma_geps/grib2/orig",
 ...     start_time="2020032100",
 ...     forecast_time="3h",
 ...     data_level="storage",
@@ -63,7 +63,7 @@ An example config file is as follows:
 
 ```yaml
 query:
-  system: grapes_gfs_gmf
+  system: cma_gfs_gmf
   stream: oper
   type: grib2
   name: orig
@@ -73,15 +73,19 @@ file_name: 'gmf.gra.{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}
 paths:
   - type: local
     level: runtime
-    path: '/g2/nwp_pd/NWP_PST_DATA/GMF_GRAPES_GFS_POST/togrib2/output_togrib2/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+    path: "/g0/nwp_pd/NWP_CMA_GFS_GMF_POST_DATA/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/data/output/grib2_orig/"
 
   - type: local
     level: archive
-    path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/{{ time_vars.Year4DV }}{{ time_vars.Month4DV }}{{ time_vars.Day4DV }}{{ time_vars.Hour4DV }}/ORIG'
+    path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/ORIG'
 
   - type: local
     level: storage
-    path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/{{ time_vars.Year4DV }}{{ time_vars.Month4DV }}{{ time_vars.Day4DV }}{{ time_vars.Hour4DV }}/ORIG'
+    path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/ORIG'
+
+  - type: local
+    level: storage
+    path: '{{ query_vars.storage_base }}/GRAPES_GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/ORIG'
 ```
 
 `file_name` and `path` in `paths` are Jinja2 templates using variable `time_vars`.
@@ -106,7 +110,7 @@ The following command:
 python -m reki.data_finder local \
     --start-time "2020010100" \
     --forecast-time "3h" \
-    --data-type="grapes_geps/grib2/orig" \
+    --data-type="cma_geps/grib2/orig" \
     --data-level="storage" \
     --number=1
 ```
@@ -121,8 +125,8 @@ If required file is not found, command will print `None`.
 
 ## Related projects
 
-Please visit [nwpc-oper/nwpc-data-client](https://github.com/nwpc-oper/nwpc-data-client) project.
+Please visit [cemc-oper/nwpc-data-client](https://github.com/cemc-oper/nwpc-data-client) project.
 
 ## License
 
-`data_finder` is part of [nwpc-oper/reki](https://github.com/nwpc-oper/reki) project.
+`data_finder` is part of [cemc-oper/reki](https://github.com/cemc-oper/reki) project.

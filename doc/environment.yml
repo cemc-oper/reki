@@ -1,13 +1,12 @@
-name: rtd39
+name: rtd311
 channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.9
+  - python=3.11
   - ipython
-  - sphinx[version='<5']
+  - sphinx
   - sphinx-book-theme
-  - sphinx-autodoc-typehints
   - pip
   - pip:
       - ..

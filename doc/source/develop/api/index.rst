@@ -6,4 +6,5 @@ API 文档
    :hidden:
    :maxdepth: 2
 
+   data_finder
    grib

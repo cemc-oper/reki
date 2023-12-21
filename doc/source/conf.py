@@ -18,8 +18,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'reki'
-copyright = '2021-2022, developers at ceme-oper'
-author = 'perillaroc'
+copyright = '2021-2023, CMA Earth System Modeling And Prediction Centre (CEMC/CMA)'
+author = 'developers at cemc-oper'
 
 
 # -- General configuration ---------------------------------------------------
@@ -30,7 +30,6 @@ author = 'perillaroc'
 extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.autodoc',
-    'sphinx_autodoc_typehints',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -58,7 +57,7 @@ exclude_patterns = []
 html_theme = "sphinx_book_theme"
 
 html_theme_options = {
-    "repository_url": "https://github.com/nwpc-oper/reki",
+    "repository_url": "https://github.com/cemc-oper/reki",
     "use_repository_button": True,
     "home_page_in_toc": False,
 }
