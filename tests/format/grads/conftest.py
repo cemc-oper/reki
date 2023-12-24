@@ -6,7 +6,7 @@ from reki.data_finder import find_local_file
 
 @pytest.fixture
 def storage_base():
-    return "M:"
+    return "/mnt/m/archive"
 
 
 @pytest.fixture
@@ -21,26 +21,24 @@ def forecast_time():
 
 @pytest.fixture
 def system_name():
-    return "grapes_gfs_gmf"
+    return "cma_meso_3km"
 
 
 @pytest.fixture
-def file_path(system_name, start_time, forecast_time, storage_base):
+def file_path(system_name, start_time, storage_base):
     f = find_local_file(
         f"{system_name}/bin/postvar_ctl",
         start_time=start_time,
-        forecast_time=forecast_time,
         storage_base=storage_base
     )
     return f
 
 
 @pytest.fixture
-def modelvar_file_path(system_name, start_time, forecast_time, storage_base):
+def modelvar_file_path(system_name, start_time, storage_base):
     f = find_local_file(
         f"{system_name}/bin/modelvar_ctl",
         start_time=start_time,
-        forecast_time=forecast_time,
         storage_base=storage_base
     )
     return f

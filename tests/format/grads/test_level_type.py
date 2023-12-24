@@ -18,15 +18,16 @@ class TestCase:
     expected_level: Union[int, float, List]
 
 
-def test_embedded_name(file_path, modelvar_file_path):
+def test_embedded_name(file_path, modelvar_file_path, forecast_time):
     test_cases = [
         TestCase(query=QueryOption("t", "pl", 250), expected_level_type="pl", expected_level=250),
-        TestCase(query=QueryOption("u", "pl", 0.5), expected_level_type="pl", expected_level=0.5)
+        TestCase(query=QueryOption("u", "pl", 10.0), expected_level_type="pl", expected_level=10.0)
     ]
 
     for test_case in test_cases:
         field = load_field_from_file(
             file_path,
+            forecast_time=forecast_time,
             **asdict(test_case.query)
         )
         assert field is not None
@@ -41,6 +42,7 @@ def test_embedded_name(file_path, modelvar_file_path):
     for test_case in test_cases:
         field = load_field_from_file(
             modelvar_file_path,
+            forecast_time=forecast_time,
             **asdict(test_case.query)
         )
         assert field is not None
@@ -48,17 +50,18 @@ def test_embedded_name(file_path, modelvar_file_path):
         assert field.coords[test_case.expected_level_type] == test_case.expected_level
 
 
-def test_index(file_path):
+def test_index(file_path, forecast_time):
     test_cases = [
-        TestCase(query=QueryOption("tsoil", "index", 0), expected_level_type="level", expected_level=1000),
-        TestCase(query=QueryOption("tsoil", "index", 1), expected_level_type="level", expected_level=925),
-        TestCase(query=QueryOption("tsoil", "index", 2), expected_level_type="level", expected_level=850),
-        TestCase(query=QueryOption("tsoil", "index", 3), expected_level_type="level", expected_level=700)
+        TestCase(query=QueryOption("mslb", "index", 0), expected_level_type="level", expected_level=1000),
+        TestCase(query=QueryOption("mslb", "index", 1), expected_level_type="level", expected_level=975),
+        TestCase(query=QueryOption("mslb", "index", 2), expected_level_type="level", expected_level=950),
+        TestCase(query=QueryOption("mslb", "index", 3), expected_level_type="level", expected_level=925)
     ]
 
     for test_case in test_cases:
         field = load_field_from_file(
             file_path,
+            forecast_time=forecast_time,
             **asdict(test_case.query)
         )
         assert field is not None
@@ -66,15 +69,16 @@ def test_index(file_path):
         assert field.coords[test_case.expected_level_type] == test_case.expected_level
 
 
-def test_single(file_path):
+def test_single(file_path, forecast_time):
     test_cases = [
-        TestCase(query=QueryOption("tcc", "single", None), expected_level_type="level", expected_level=0),
-        TestCase(query=QueryOption("t2mx", "single", None), expected_level_type="level", expected_level=0)
+        TestCase(query=QueryOption("glw", "single", None), expected_level_type="level", expected_level=0),
+        TestCase(query=QueryOption("ts", "single", None), expected_level_type="level", expected_level=0)
     ]
 
     for test_case in test_cases:
         field = load_field_from_file(
             file_path,
+            forecast_time=forecast_time,
             **asdict(test_case.query)
         )
         assert field is not None
@@ -82,15 +86,16 @@ def test_single(file_path):
         assert field.coords[test_case.expected_level_type] == test_case.expected_level
 
 
-def test_none(file_path):
+def test_none(file_path, forecast_time):
     test_cases = [
-        TestCase(query=QueryOption("tcc", None, None), expected_level_type="level", expected_level=0),
-        TestCase(query=QueryOption("t2mx", None, None), expected_level_type="level", expected_level=0)
+        TestCase(query=QueryOption("rainc", None, None), expected_level_type="level", expected_level=0),
+        TestCase(query=QueryOption("qfx", None, None), expected_level_type="level", expected_level=0)
     ]
 
     for test_case in test_cases:
         field = load_field_from_file(
             file_path,
+            forecast_time=forecast_time,
             **asdict(test_case.query)
         )
         assert field is not None

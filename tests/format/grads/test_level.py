@@ -21,19 +21,20 @@ class TestCase:
     expected_level: Union[int, float, List]
 
 
-def test_number(file_path):
+def test_number(file_path, forecast_time):
     test_cases = [
         TestCase(query=QueryOption("t", "pl", 850), expected_level_type="pl", expected_level=850),
         TestCase(query=QueryOption("h", "pl", 500.0), expected_level_type="pl", expected_level=500.0),
-        TestCase(query=QueryOption("q2", "index", 0), expected_level_type="level", expected_level=1000),
-        TestCase(query=QueryOption("u", "index", 1), expected_level_type="level", expected_level=925),
-        TestCase(query=QueryOption("tsoil", "index", 2), expected_level_type="level", expected_level=850),
+        TestCase(query=QueryOption("Qv", "index", 0), expected_level_type="level", expected_level=1000),
+        TestCase(query=QueryOption("u", "index", 1), expected_level_type="level", expected_level=975),
+        TestCase(query=QueryOption("tslb", "index", 2), expected_level_type="level", expected_level=950),
         TestCase(query=QueryOption("q2m", "single", 0), expected_level_type="level", expected_level=0),
     ]
 
     for test_case in test_cases:
         field = load_field_from_file(
             file_path,
+            forecast_time=forecast_time,
             **asdict(test_case.query)
         )
         assert field is not None
@@ -41,21 +42,22 @@ def test_number(file_path):
         assert field.coords[test_case.expected_level_type] == test_case.expected_level
 
 
-def test_list(file_path, modelvar_file_path):
+def test_list(file_path, modelvar_file_path, forecast_time):
     test_cases = [
         TestCase(
             query=QueryOption("t", "pl", [1000, 850, 500]),
             expected_level_type="pl", expected_level=[1000, 850, 500]
         ),
         TestCase(
-            query=QueryOption("tsoil", "index", [0, 1, 2, 3]),
-            expected_level_type="level", expected_level=[1000, 925, 850, 700]
+            query=QueryOption("tslb", "index", [0, 1, 2, 3]),
+            expected_level_type="level", expected_level=[1000, 975, 950, 925]
         )
     ]
 
     for test_case in test_cases:
         field = load_field_from_file(
             file_path,
+            forecast_time=forecast_time,
             **asdict(test_case.query)
         )
         assert field is not None
@@ -67,11 +69,11 @@ def test_list(file_path, modelvar_file_path):
 
     test_cases = [
         TestCase(
-            query=QueryOption("pip", "ml", [1, 20, 30, 50]),
+            query=QueryOption("pi", "ml", [1, 20, 30, 50]),
             expected_level_type="ml", expected_level=[1, 20, 30, 50]
         ),
         TestCase(
-            query=QueryOption("qc", "index", [0, 1, 2, 3]),
+            query=QueryOption("Qc", "index", [0, 1, 2, 3]),
             expected_level_type="level", expected_level=[1, 2, 3, 4]
         )
     ]
@@ -79,6 +81,7 @@ def test_list(file_path, modelvar_file_path):
     for test_case in test_cases:
         field = load_field_from_file(
             modelvar_file_path,
+            forecast_time=forecast_time,
             **asdict(test_case.query)
         )
         assert field is not None
@@ -92,45 +95,45 @@ def test_list(file_path, modelvar_file_path):
 @pytest.fixture
 def pl_levels():
     return [
-        1000,
-        925,
-        850,
-        700,
-        600,
-        500,
-        400,
-        300,
-        250,
-        200,
-        150,
-        100,
-        70,
-        50,
-        30,
-        20,
-        10,
-        7,
-        5,
-        3,
-        2,
-        1,
-        0.7,
-        0.5,
-        0.3,
-        0.2,
-        0.1
+        1000.0,
+        975.0,
+        950.0,
+        925.0,
+        900.0,
+        850.0,
+        800.0,
+        750.0,
+        700.0,
+        650.0,
+        600.0,
+        550.0,
+        500.0,
+        450.0,
+        400.0,
+        350.0,
+        300.0,
+        250.0,
+        200.0,
+        150.0,
+        100.0,
+        70.0,
+        50.0,
+        30.0,
+        20.0,
+        10.0,
     ]
 
 
-def test_none(file_path, pl_levels):
+def test_none(file_path, pl_levels, forecast_time):
     test_cases = [
         TestCase(query=QueryOption("u10m", "single", None), expected_level_type="level", expected_level=0),
-        TestCase(query=QueryOption("tiw", None, None), expected_level_type="level", expected_level=0)
+        TestCase(query=QueryOption("tmn", None, None), expected_level_type="level", expected_level=0)
     ]
 
     for test_case in test_cases:
         field = load_field_from_file(
             file_path,
+            forecast_time=forecast_time,
             **asdict(test_case.query)
         )
         assert field is not None
@@ -143,14 +146,15 @@ def test_none(file_path, pl_levels):
             expected_level_type="pl", expected_level=pl_levels
         ),
         TestCase(
-            query=QueryOption("tsoil", None, None),
-            expected_level_type="level", expected_level=[1000, 925, 850, 700]
+            query=QueryOption("tslb", None, None),
+            expected_level_type="level", expected_level=[1000, 975, 950, 925]
         ),
     ]
 
     for test_case in test_cases:
         field = load_field_from_file(
             file_path,
+            forecast_time=forecast_time,
             **asdict(test_case.query)
         )
         assert field is not None

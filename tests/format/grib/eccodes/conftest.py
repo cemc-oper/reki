@@ -6,7 +6,7 @@ from reki.data_finder import find_local_file
 
 @pytest.fixture
 def storage_base():
-    return "M:"
+    return "/mnt/m/archive"
 
 
 @pytest.fixture
@@ -21,7 +21,7 @@ def forecast_time():
 
 @pytest.fixture
 def system_name():
-    return "grapes_gfs_gmf"
+    return "cma_gfs_gmf"
 
 
 @pytest.fixture

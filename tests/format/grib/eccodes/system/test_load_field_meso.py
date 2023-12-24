@@ -21,7 +21,7 @@ class TestCase:
 
 @pytest.fixture
 def system_name():
-    return "grapes_meso_3km"
+    return "cma_meso_3km"
 
 
 @pytest.fixture

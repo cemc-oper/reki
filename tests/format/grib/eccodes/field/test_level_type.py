@@ -58,12 +58,14 @@ def test_type_of_level(file_path):
     test_cases = [
         TestCase(query=QueryOption(parameter="t", level_type="isobaricInhPa", level=850)),
         TestCase(query=QueryOption(parameter="t", level_type="isobaricInPa", level=50)),
-        TestCase(query=QueryOption(parameter="asnow", level_type="surface", level=None)),
+        TestCase(query=QueryOption(parameter="acpcp", level_type="surface", level=None)),
         TestCase(query=QueryOption(parameter="tmax", level_type="heightAboveGround", level=2)),
-        TestCase(query=QueryOption(parameter="lcc", level_type="nominalTop", level=None)),
-        TestCase(query=QueryOption(parameter="tciwv", level_type="atmosphere", level=None)),
+        TestCase(query=QueryOption(parameter="lcc", level_type="entireAtmosphere", level=None)),
+        TestCase(query=QueryOption(parameter="ulwrf", level_type="nominalTop", level=None)),
+        TestCase(query=QueryOption(parameter="pwat", level_type="atmosphere", level=None)),
         TestCase(query=QueryOption(parameter="prmsl", level_type="meanSea", level=None)),
-        TestCase(query=QueryOption(parameter="t", level_type="depthBelowLandLayer", level={"first_level": 0, "second_level": 0.1}))
+        TestCase(query=QueryOption(parameter="t", level_type="depthBelowLandLayer", level={"first_level": 0, "second_level": 0.1})),
+        TestCase(query=QueryOption(parameter="vwsh", level_type="heightAboveGroundLayer", level=1000))
     ]
 
     for test_case in test_cases:
