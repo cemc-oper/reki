@@ -4,7 +4,7 @@ query:
   type: bin
   name: modelvar_ctl
 
-file_name: 'model.ctl_{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}00'
+file_name: 'modelvar.ctl_{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}00'
 
 paths:
   - type: local
