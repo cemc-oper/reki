@@ -6,7 +6,7 @@ dependencies:
   - python=3.11
   - ipython
   - sphinx
-  - sphinx-book-theme
+  - sphinx-book-theme>=1
   - pip
   - pip:
       - ..
