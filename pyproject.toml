@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "reki"
+authors = [
+    {name="Wang Dapeng", email="perillaroc@gmail.com"}
+]
+description = "A data preparation tool for CEMC/CMA."
+readme = "README.md"
+keywords = ["data", "grib2", "cemc"]
+version = "2023.05.1"
+classifiers = [
+    "Development Status :: 4 - Beta",
+
+    "Intended Audience :: Developers",
+
+    'License :: OSI Approved :: Apache Software License',
+
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "pyyaml",
+    "jinja2",
+    "numpy",
+    "pandas",
+    "xarray",
+    "eccodes",
+    "click",
+    "tqdm",
+    'importlib-metadata; python_version<"3.8"',
+]
+
+[project.urls]
+Homepage = "https://github.com/cemc-oper/reki"
+Documentation = "https://reki.readthedocs.io"
+Repository = "https://github.com/cemc-oper/reki.git"
+
+[project.optional-dependencies]
+cfgrib = ["cfgrib"]
+gdata = ["protobuf", "requests"]
+test = ["pytest"]
+cov = ["pytest-cov", "codecov"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+exclude = ["tests*", "docs", "example"]
+namespaces = false
+
+[tool.setuptools]
+include-package-data = true
