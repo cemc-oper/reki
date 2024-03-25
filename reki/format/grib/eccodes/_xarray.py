@@ -93,6 +93,8 @@ def create_data_array_from_message(
         "typeOfSecondFixedSurface",
         "scaleFactorOfFirstFixedSurface",
         "scaledValueOfFirstFixedSurface",
+        "scaleFactorOfSecondFixedSurface",
+        "scaledValueOfSecondFixedSurface",
     ]
 
     all_keys = attr_keys + parameter_keys + grid_keys + level_keys
@@ -122,6 +124,7 @@ def create_data_array_from_message(
         endpoint=True
     )
 
+    # coords
     coords = {}
 
     # add time and step coordinate
@@ -158,6 +161,15 @@ def create_data_array_from_message(
             "long_name": "longitude"
         }
     )
+
+    #   check ENS
+    key_name = "perturbationNumber"
+    try:
+        value = eccodes.codes_get(message, key_name)
+    except:
+        value = None
+    if value is not None:
+        coords["number"] = value
 
     dims = ("latitude", "longitude")
 
