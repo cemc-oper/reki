@@ -28,7 +28,7 @@
 
 .. code-block:: bash
 
-    git clone https://github.com/nwpc-oper/reki
+    git clone https://github.com/cemc-oper/reki
     cd reki
 
 使用 ``pip`` 命令安装：

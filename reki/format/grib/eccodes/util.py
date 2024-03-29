@@ -2,7 +2,7 @@ from typing import Optional, Union, List, Dict
 
 from ._util import _check_message
 from ._level import _fix_level
-from reki.format.grib._parameter import convert_parameter
+from reki.format.grib.common import convert_parameter
 
 
 def check_message(
