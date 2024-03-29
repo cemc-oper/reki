@@ -7,18 +7,26 @@ query:
 file_name: 'ne_gmf.gra.{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}.grb2'
 
 paths:
-  - type: local
-    level: runtime
-    path: "/g0/nwp_pd/NWP_CMA_GFS_GMF_POST_DATA/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/data/output/grib2_ne/"
+  # CMA-PI
+#  - type: local
+#    level: runtime
+#    path: "/g0/nwp_pd/NWP_CMA_GFS_GMF_POST_DATA/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/data/output/grib2_ne/"
 
   - type: local
     level: archive
     path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/CMACAST'
 
+  # HPC2023
+  - type: local
+    level: archive
+    path: '/g3/COMMONDATA/OPER/CEMC/GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/CMACAST'
+
+  # CMA Storage
   - type: local
     level: storage
     path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/CMACAST'
 
+  # CEMC Storage
   - type: local
     level: storage
     path: '{{ query_vars.storage_base }}/GRAPES_GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/CMACAST'

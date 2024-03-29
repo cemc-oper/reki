@@ -7,18 +7,26 @@ query:
 file_name: 'modelvar{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}_{{ time_vars.Forecast }}'
 
 paths:
-  - type: local
-    level: runtime
-    path: '/g0/nwp/CMA-GFS4.0_DATA/MODEL/NWP_GMFS/{{ time_vars.Hour }}/output'
+  # CMA-PI
+#  - type: local
+#    level: runtime
+#    path: '/g0/nwp/CMA-GFS4.0_DATA/MODEL/NWP_GMFS/{{ time_vars.Hour }}/output'
 
   - type: local
     level: archive
     path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Fcst-long/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
 
+  # HPC2023
+  - type: local
+    level: archive
+    path: '/g3/COMMONDATA/OPER/CEMC/GFS_GMF/Fcst-long/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+
+  # CMA Storage
   - type: local
     level: storage
     path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Fcst-long/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
 
+  # CEMC Storage
   - type: local
     level: storage
     path: '{{ query_vars.storage_base }}/GRAPES_GFS_GMF/Fcst-long/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
