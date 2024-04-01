@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools >= 61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -10,6 +10,7 @@ authors = [
 description = "A data preparation tool for CEMC/CMA."
 readme = "README.md"
 keywords = ["data", "grib2", "cemc"]
+license = {file = "LICENSE"}
 version = "2023.05.1"
 classifiers = [
     "Development Status :: 4 - Beta",
