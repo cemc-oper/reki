@@ -12,6 +12,7 @@ def find_file(
         start_time: Union[datetime.datetime, pd.Timestamp],
         forecast_time: pd.Timedelta,
         obs_time: Optional[pd.Timedelta] = None,
+        debug: bool = False,
         **kwargs
 ) -> Optional[Path]:
     """
@@ -45,6 +46,8 @@ def find_file(
     start_time
     forecast_time
     obs_time
+    debug
+        show debug info
     kwargs
 
     Returns
@@ -65,6 +68,8 @@ def find_file(
 
     parse_template = generate_template_parser(time_vars, query_vars)
     file_name = parse_template(config["file_name"])
+    if debug:
+        print("file name:", file_name)
     file_path = None
     paths = config["paths"]
     for a_path_object in paths:
@@ -75,6 +80,8 @@ def find_file(
         path_template = a_path_object["path"]
         current_dir_path = parse_template(path_template)
         current_file_path = Path(current_dir_path, file_name)
+        if debug:
+            print("searching file path:", current_file_path)
         if current_file_path.is_file():
             file_path = current_file_path
             break

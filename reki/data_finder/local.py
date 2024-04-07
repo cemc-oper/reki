@@ -19,6 +19,7 @@ def find_local_file(
         data_class: str = "od",
         config_dir: Union[str, Path] = None,
         obs_time: Union[str, pd.Timestamp] = None,
+        debug: bool = False,
         **kwargs,
 ) -> Optional[Path]:
     """
@@ -43,6 +44,8 @@ def find_local_file(
         config root directory. If None, use embedded config files in `conf` directory.
     obs_time
         time for observation data.
+    debug
+        show debug info.
     **kwargs
         other options needed by path template. All of them will be added into `query_vars`.
 
@@ -127,6 +130,7 @@ def find_local_file(
         start_time,
         forecast_time,
         obs_time=obs_time,
+        debug=debug,
         **kwargs
     )
     return file_path
