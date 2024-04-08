@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools >= 61.0"]
+requires = ["setuptools>=64", "setuptools_scm>=8"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -11,7 +11,7 @@ description = "A data preparation tool for CEMC/CMA."
 readme = "README.md"
 keywords = ["data", "grib2", "cemc"]
 license = {file = "LICENSE"}
-version = "2023.05.1"
+dynamic = ["version"]
 classifiers = [
     "Development Status :: 4 - Beta",
 
@@ -28,7 +28,6 @@ dependencies = [
     "numpy",
     "pandas",
     "xarray",
-    "eccodes",
     "click",
     "tqdm",
     'importlib-metadata; python_version<"3.8"',
@@ -40,8 +39,8 @@ Documentation = "https://reki.readthedocs.io"
 Repository = "https://github.com/cemc-oper/reki.git"
 
 [project.optional-dependencies]
-cfgrib = ["cfgrib"]
-gdata = ["protobuf", "requests"]
+grib2 = ["cfgrib", "eccodes"]
+godas = ["protobuf", "requests"]
 test = ["pytest"]
 cov = ["pytest-cov", "codecov"]
 
@@ -52,3 +51,6 @@ namespaces = false
 
 [tool.setuptools]
 include-package-data = true
+
+[tool.setuptools_scm]
+version_file = "reki/_version.py"
