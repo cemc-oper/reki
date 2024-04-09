@@ -40,27 +40,27 @@ For example, load 850hPa temperature from GRAPES GFS and get values from the ret
 ```pycon
 >>> from reki.format.grib.eccodes import load_message_from_file
 >>> t = load_message_from_file(
-...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
+...     file_path="/g3/COMMONDATA/OPER/CEMC/GFS_GMF/Prod-grib/2024040800/ORIG/gmf.gra.2024040800024.grb2",
 ...     parameter="t",
 ...     level_type="isobaricInhPa",
 ...     level=850,
 ... )
 >>> data = eccodes.codes_get_double_array(t, "values")
->>> data = data.reshape([720, 1440])
+>>> data = data.reshape([1440, 2880])
 >>> data
-array([[249.19234375, 249.16234375, 249.16234375, ..., 249.15234375,
-    249.19234375, 249.14234375],
-   [249.45234375, 249.45234375, 249.42234375, ..., 249.45234375,
-    249.44234375, 249.44234375],
-   [249.69234375, 249.68234375, 249.68234375, ..., 249.70234375,
-    249.67234375, 249.68234375],
-   ...,
-   [235.33234375, 235.45234375, 235.62234375, ..., 235.47234375,
-    235.63234375, 235.48234375],
-   [235.78234375, 235.91234375, 235.64234375, ..., 235.80234375,
-    235.72234375, 235.82234375],
-   [235.66234375, 235.86234375, 235.82234375, ..., 235.85234375,
-    235.68234375, 235.70234375]])
+array([[252.51597656, 252.51597656, 252.51597656, ..., 252.51597656,
+        252.51597656, 252.50597656],
+       [252.45597656, 252.45597656, 252.45597656, ..., 252.45597656,
+        252.45597656, 252.45597656],
+       [252.35597656, 252.35597656, 252.36597656, ..., 252.35597656,
+        252.35597656, 252.35597656],
+       ...,
+       [234.68597656, 234.77597656, 234.77597656, ..., 234.19597656,
+        234.28597656, 234.45597656],
+       [234.20597656, 234.28597656, 234.61597656, ..., 234.55597656,
+        234.40597656, 234.28597656],
+       [234.24597656, 234.26597656, 234.28597656, ..., 234.26597656,
+        234.25597656, 234.24597656]])
 ```
 
 **NOTE**: Please release the handler using `eccodes.codes_release` manually.
@@ -72,64 +72,98 @@ and converted into `xarray.DataArray` by `reki`.
 ```pycon
 >>> from reki.format.grib.eccodes import load_field_from_file
 >>> load_field_from_file(
-...     file_path="/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
+...     file_path="/g3/COMMONDATA/OPER/CEMC/GFS_GMF/Prod-grib/2024040800/ORIG/gmf.gra.2024040800024.grb2",
 ...     parameter="t",
+...     level_type="pl",
+...     level=850,
+... )
+<xarray.DataArray 't' (latitude: 1440, longitude: 2880)> Size: 33MB
+array([[252.51597656, 252.51597656, 252.51597656, ..., 252.51597656,
+        252.51597656, 252.50597656],
+       [252.45597656, 252.45597656, 252.45597656, ..., 252.45597656,
+        252.45597656, 252.45597656],
+       [252.35597656, 252.35597656, 252.36597656, ..., 252.35597656,
+        252.35597656, 252.35597656],
+       ...,
+       [234.68597656, 234.77597656, 234.77597656, ..., 234.19597656,
+        234.28597656, 234.45597656],
+       [234.20597656, 234.28597656, 234.61597656, ..., 234.55597656,
+        234.40597656, 234.28597656],
+       [234.24597656, 234.26597656, 234.28597656, ..., 234.26597656,
+        234.25597656, 234.24597656]])
+Coordinates:
+    time        datetime64[ns] 8B 2024-04-08
+    step        timedelta64[ns] 8B 1 days
+    valid_time  datetime64[ns] 8B 2024-04-09
+    pl          float64 8B 850.0
+  * latitude    (latitude) float64 12kB 89.94 89.81 89.69 ... -89.81 -89.94
+  * longitude   (longitude) float64 23kB 0.0 0.125 0.25 ... 359.6 359.8 359.9
+Attributes: (12/17)
+    GRIB_edition:             2
+    GRIB_centre:              babj
+    GRIB_subCentre:           0
+    GRIB_tablesVersion:       4
+    GRIB_localTablesVersion:  0
+    GRIB_dataType:            fc
+    ...                       ...
+    GRIB_stepType:            instant
+    GRIB_stepUnits:           1
+    GRIB_stepRange:           24
+    GRIB_endStep:             24
+    GRIB_count:               109
+    long_name:                discipline=0 parmcat=0 parm=0
+```
+
+If the field doesn't have a `shortName`, use dict for `parameter`.
+
+Load a filed without shortName.
+
+```pycon
+>>> load_field_from_file(
+...     file_path="/g3/COMMONDATA/OPER/CEMC/GFS_GMF/Prod-grib/2024040800/ORIG/gmf.gra.2024040800024.grb2",
+...     parameter={
+...         "discipline": 0,
+...         "parameterCategory": 2,
+...         "parameterNumber": 225,
+...     },
 ...     level_type="isobaricInhPa",
 ...     level=850,
 ... )
-<xarray.DataArray 't' (latitude: 720, longitude: 1440)>
-array([[249.19234375, 249.16234375, 249.16234375, ..., 249.15234375,
-        249.19234375, 249.14234375],
-       [249.45234375, 249.45234375, 249.42234375, ..., 249.45234375,
-        249.44234375, 249.44234375],
-       [249.69234375, 249.68234375, 249.68234375, ..., 249.70234375,
-        249.67234375, 249.68234375],
+<xarray.DataArray '0_2_225' (latitude: 1440, longitude: 2880)> Size: 33MB
+array([[ 1.96391602e-11,  1.96391602e-11, -1.03608398e-11, ...,
+        -4.43608398e-11, -6.73608398e-11, -6.73608398e-11],
+       [ 1.36391602e-11,  1.36391602e-11, -8.36083984e-12, ...,
+        -3.03608398e-11, -3.83608398e-11, -3.83608398e-11],
+       [ 1.66391602e-11,  1.66391602e-11,  1.46391602e-11, ...,
+         9.63916016e-12,  1.56391602e-11,  1.56391602e-11],
        ...,
-       [235.33234375, 235.45234375, 235.62234375, ..., 235.47234375,
-        235.63234375, 235.48234375],
-       [235.78234375, 235.91234375, 235.64234375, ..., 235.80234375,
-        235.72234375, 235.82234375],
-       [235.66234375, 235.86234375, 235.82234375, ..., 235.85234375,
-        235.68234375, 235.70234375]])
+       [ 3.06391602e-11,  3.06391602e-11,  4.06391602e-11, ...,
+        -4.36083984e-12, -3.53608398e-11, -3.53608398e-11],
+       [ 6.56391602e-11,  6.56391602e-11,  6.26391602e-11, ...,
+        -2.23608398e-11,  2.63916016e-12,  2.63916016e-12],
+       [ 6.56391602e-11,  6.56391602e-11,  6.16391602e-11, ...,
+        -2.23608398e-11,  2.63916016e-12,  2.63916016e-12]])
 Coordinates:
-    time           datetime64[ns] 2020-03-18
-    step           timedelta64[ns] 4 days 09:00:00
-    valid_time     datetime64[ns] 2020-03-22T09:00:00
-    isobaricInhPa  int64 850
-  * latitude       (latitude) float64 89.88 89.62 89.38 ... -89.38 -89.62 -89.88
-  * longitude      (longitude) float64 0.0 0.25 0.5 0.75 ... 359.2 359.5 359.8
-Attributes:
-    GRIB_edition:                    2
-    GRIB_centre:                     babj
-    GRIB_subCentre:                  0
-    GRIB_tablesVersion:              4
-    GRIB_localTablesVersion:         1
-    GRIB_dataType:                   fc
-    GRIB_dataDate:                   20200318
-    GRIB_dataTime:                   0
-    GRIB_validityDate:               20200322
-    GRIB_validityTime:               900
-    GRIB_step:                       105
-    GRIB_stepType:                   instant
-    GRIB_stepUnits:                  1
-    GRIB_stepRange:                  105
-    GRIB_endStep:                    105
-    GRIB_name:                       Temperature
-    GRIB_shortName:                  t
-    GRIB_cfName:                     air_temperature
-    GRIB_discipline:                 0
-    GRIB_parameterCategory:          0
-    GRIB_parameterNumber:            0
-    GRIB_gridType:                   regular_ll
-    GRIB_gridDefinitionDescription:  Latitude/longitude 
-    GRIB_typeOfFirstFixedSurface:    pl
-    GRIB_typeOfLevel:                isobaricInhPa
-    GRIB_level:                      850
-    GRIB_numberOfPoints:             1036800
-    GRIB_missingValue:               9999
-    GRIB_units:                      K
-    long_name:                       Temperature
-    units:                           K
+    time           datetime64[ns] 8B 2024-04-08
+    step           timedelta64[ns] 8B 1 days
+    valid_time     datetime64[ns] 8B 2024-04-09
+    isobaricInhPa  int64 8B 850
+  * latitude       (latitude) float64 12kB 89.94 89.81 89.69 ... -89.81 -89.94
+  * longitude      (longitude) float64 23kB 0.0 0.125 0.25 ... 359.6 359.8 359.9
+Attributes: (12/17)
+    GRIB_edition:             2
+    GRIB_centre:              babj
+    GRIB_subCentre:           0
+    GRIB_tablesVersion:       4
+    GRIB_localTablesVersion:  1
+    GRIB_dataType:            fc
+    ...                       ...
+    GRIB_stepType:            instant
+    GRIB_stepUnits:           1
+    GRIB_stepRange:           24
+    GRIB_endStep:             24
+    GRIB_count:               826
+    long_name:                discipline=0 parmcat=2 parm=225
 ```
 
 ## Engines
@@ -147,106 +181,37 @@ Read 850hPa temperature from a GRAEPS GFS grib2 file using `shortName` key `t`.
 ( `shortName` is an ecCodes key. )
 
 ```pycon
->>> from reki.format.grib import load_message_from_file
+>>> from reki.format.grib import load_field_from_file
 >>> load_field_from_file(
-...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
+...     file_path="/g3/COMMONDATA/OPER/CEMC/GFS_GMF/Prod-grib/2024040800/ORIG/gmf.gra.2024040800024.grb2",
 ...     parameter="t",
 ...     level_type="isobaricInhPa",
 ...     level=850,
 ...     engine="cfgrib",
 ... )
-<xarray.DataArray 't' (latitude: 720, longitude: 1440)>
-[1036800 values with dtype=float32]
+<xarray.DataArray 't' (latitude: 1440, longitude: 2880)> Size: 17MB
+[4147200 values with dtype=float32]
 Coordinates:
-    time           datetime64[ns] ...
-    step           timedelta64[ns] ...
-    isobaricInhPa  int64 ...
-  * latitude       (latitude) float64 89.88 89.62 89.38 ... -89.38 -89.62 -89.88
-  * longitude      (longitude) float64 0.0 0.25 0.5 0.75 ... 359.2 359.5 359.8
-    valid_time     datetime64[ns] ...
-Attributes:
+    time           datetime64[ns] 8B ...
+    step           timedelta64[ns] 8B ...
+    isobaricInhPa  float64 8B ...
+  * latitude       (latitude) float64 12kB 89.94 89.81 89.69 ... -89.81 -89.94
+  * longitude      (longitude) float64 23kB 0.0 0.125 0.25 ... 359.6 359.8 359.9
+    valid_time     datetime64[ns] 8B ...
+Attributes: (12/32)
     GRIB_paramId:                             130
-    GRIB_shortName:                           t
-    GRIB_units:                               K
-    GRIB_name:                                Temperature
-    GRIB_cfName:                              air_temperature
-    GRIB_cfVarName:                           t
     GRIB_dataType:                            fc
-    GRIB_missingValue:                        9999
-    GRIB_numberOfPoints:                      1036800
+    GRIB_numberOfPoints:                      4147200
     GRIB_typeOfLevel:                         isobaricInhPa
-    GRIB_NV:                                  0
     GRIB_stepUnits:                           1
     GRIB_stepType:                            instant
-    GRIB_gridType:                            regular_ll
-    GRIB_gridDefinitionDescription:           Latitude/longitude
-    GRIB_Nx:                                  1440
-    GRIB_iDirectionIncrementInDegrees:        0.25
-    GRIB_iScansNegatively:                    0
-    GRIB_longitudeOfFirstGridPointInDegrees:  0.0
-    GRIB_longitudeOfLastGridPointInDegrees:   359.75
-    GRIB_Ny:                                  720
-    GRIB_jDirectionIncrementInDegrees:        0.25
-    GRIB_jPointsAreConsecutive:               0
-    GRIB_jScansPositively:                    0
-    GRIB_latitudeOfFirstGridPointInDegrees:   89.875
-    GRIB_latitudeOfLastGridPointInDegrees:    -89.875
+    ...                                       ...
+    GRIB_parameterNumber:                     0
+    GRIB_shortName:                           t
+    GRIB_units:                               K
     long_name:                                Temperature
     units:                                    K
     standard_name:                            air_temperature
-```
-
-If the field doesn't have a `shortName`, use `dict` for `parameter`.
-
-Load a filed without shortName.
-
-```pycon
->>> load_field_from_file(
-...     file_path="/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/2020031721/ORIG/gmf.gra.2020031800105.grb2",
-...     parameter={
-...         "discipline": 0,
-...         "parameterCategory": 2,
-...         "parameterNumber": 225,
-...     },
-...     level_type="isobaricInhPa",
-...     level=850,
-... )
-<xarray.DataArray 'paramId_0' (latitude: 720, longitude: 1440)>
-[1036800 values with dtype=float32]
-Coordinates:
-    time           datetime64[ns] ...
-    step           timedelta64[ns] ...
-    isobaricInhPa  int64 ...
-  * latitude       (latitude) float64 89.88 89.62 89.38 ... -89.38 -89.62 -89.88
-  * longitude      (longitude) float64 0.0 0.25 0.5 0.75 ... 359.2 359.5 359.8
-    valid_time     datetime64[ns] ...
-Attributes:
-    GRIB_paramId:                             0
-    GRIB_dataType:                            fc
-    GRIB_missingValue:                        9999
-    GRIB_numberOfPoints:                      1036800
-    GRIB_typeOfLevel:                         isobaricInhPa
-    GRIB_NV:                                  0
-    GRIB_stepUnits:                           1
-    GRIB_stepType:                            instant
-    GRIB_gridType:                            regular_ll
-    GRIB_gridDefinitionDescription:           Latitude/longitude
-    GRIB_Nx:                                  1440
-    GRIB_iDirectionIncrementInDegrees:        0.25
-    GRIB_iScansNegatively:                    0
-    GRIB_longitudeOfFirstGridPointInDegrees:  0.0
-    GRIB_longitudeOfLastGridPointInDegrees:   359.75
-    GRIB_Ny:                                  720
-    GRIB_jDirectionIncrementInDegrees:        0.25
-    GRIB_jPointsAreConsecutive:               0
-    GRIB_jScansPositively:                    0
-    GRIB_latitudeOfFirstGridPointInDegrees:   89.875
-    GRIB_latitudeOfLastGridPointInDegrees:    -89.875
-    GRIB_discipline:                          0
-    GRIB_parameterCategory:                   2
-    GRIB_parameterNumber:                     225
-    long_name:                                original GRIB paramId: 0
-    units:                                    1
 ```
 
 ## Examples
@@ -255,6 +220,6 @@ See [cemc-data-guide](https://github.com/perillaroc/cemc-data-guide) project for
 
 ## LICENSE
 
-Copyright &copy; 2020-2023, developers at cemc-oper.
+Copyright &copy; 2020-2024, developers at cemc-oper.
 
 `reki` is licensed under [Apache License, Version 2.0](./LICENSE)
