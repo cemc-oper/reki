@@ -1,4 +1,4 @@
-from typing import Union, Optional, Dict
+from typing import Union, Optional, Dict, Literal
 from pathlib import Path
 
 import xarray as xr
@@ -12,7 +12,7 @@ def load_field_from_file(
         parameter: Union[str, Dict],
         level_type: Optional[Union[str, Dict]] = None,
         level: Optional[int] = None,
-        engine: str = "eccodes",
+        engine: Literal["eccodes", "cfgrib"] = "eccodes",
         **kwargs
 ) -> Optional[xr.DataArray]:
     """
@@ -36,7 +36,7 @@ def load_field_from_file(
 
     Returns
     -------
-    Union[DataArray]
+    Optional[xr.DataArray]
         DataArray if found one field, or None if not.
     """
     fixed_level_type = fix_level_type(level_type, engine=engine)

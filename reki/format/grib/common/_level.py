@@ -1,9 +1,9 @@
-from typing import Optional, Union, Dict
+from typing import Optional, Union, Dict, Literal
 
 
 def fix_level_type(
         level_type: Optional[Union[str, Dict]],
-        engine: str = "eccodes",
+        engine: Literal["eccodes", "cfgrib"] = "eccodes",
 ) -> Optional[Union[str, Dict]]:
     """
     Convert level type into dict of GRIB key(s).
@@ -23,7 +23,7 @@ def fix_level_type(
     Parameters
     ----------
     level_type
-    engine : str
+    engine
         load engine:
 
         - cfgrib: use cfgrib to load message
