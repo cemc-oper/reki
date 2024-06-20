@@ -57,7 +57,7 @@ def create_data_array_from_message(
         'stepType',
         'stepUnits',
         'stepRange',
-        'endStep',
+        'endStep:int',
         'count'
     ]
 
@@ -100,10 +100,26 @@ def create_data_array_from_message(
     all_keys = attr_keys + parameter_keys + grid_keys + level_keys
 
     all_attrs = {}
+    key_type_mapper = {
+        "int": int,
+        "float": float,
+        "str": str,
+    }
     for key in all_keys:
-        try:
-            value = eccodes.codes_get(message, key)
-        except:
+        tokens = key.split(":")
+        if len(tokens) == 1:
+            try:
+                value = eccodes.codes_get(message, key)
+            except:
+                value = "undef"
+        elif len(tokens) == 2:
+            key_name = tokens[0]
+            key_type = key_type_mapper[tokens[1]]
+            try:
+                value = eccodes.codes_get(message, key_name, key_type)
+            except:
+                value = "undef"
+        else:
             value = "undef"
         all_attrs[key] = value
 
@@ -238,11 +254,11 @@ def get_time_from_attrs(all_attrs):
 
 def get_step_from_attrs(all_attrs):
     if all_attrs["stepUnits"] == 1:
-        forecast_hour = pd.Timedelta(hours=all_attrs["endStep"])
+        forecast_hour = pd.Timedelta(hours=all_attrs["endStep:int"])
     elif all_attrs["stepUnits"] == 0:
-        forecast_hour = pd.Timedelta(minutes=all_attrs["endStep"])
+        forecast_hour = pd.Timedelta(minutes=all_attrs["endStep:int"])
     elif all_attrs["stepUnits"] == 2:
-        forecast_hour = pd.Timedelta(days=all_attrs["endStep"])
+        forecast_hour = pd.Timedelta(days=all_attrs["endStep:int"])
     else:
         raise ValueError(f"stepUnits is not supported: {all_attrs['stepUnits']}")
     return "step", forecast_hour
