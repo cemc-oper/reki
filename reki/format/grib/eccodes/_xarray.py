@@ -9,6 +9,8 @@ import eccodes
 
 from reki.format.grib.common import MISSING_VALUE
 
+# from loguru import logger
+
 
 def create_data_array_from_message(
         message,
@@ -16,6 +18,7 @@ def create_data_array_from_message(
         field_name: Optional[str] = None,
         missing_value: Optional[float] = None,
         fill_missing_value: Optional = np.nan,
+        values: Optional[np.ndarray] = None,
 ) -> xr.DataArray:
     """
     Create ``xarray.DataArray`` from one GRIB2 message.
@@ -23,6 +26,7 @@ def create_data_array_from_message(
     Parameters
     ----------
     message
+        grib message id loaded by ecCodes python API.
     level_dim_name
     field_name
     missing_value
@@ -33,12 +37,19 @@ def create_data_array_from_message(
         filled value to replace missing value point in array.
         default is np.nan.
         If set None, missing value will not be changed.
+    values
+        message values. if None, function will decode values from message.
+        if set, function will use values instead of decode message.
     """
     if missing_value is None:
         missing_value = MISSING_VALUE
     eccodes.codes_set(message, "missingValue", missing_value)
 
-    values = eccodes.codes_get_double_array(message, "values")
+    if values is None:
+        # logger.info("decoding...")
+        values = eccodes.codes_get_double_array(message, "values")
+        # logger.info("decoding...done")
+
     if fill_missing_value is not None:
         np.place(values, values == missing_value, fill_missing_value)
 
