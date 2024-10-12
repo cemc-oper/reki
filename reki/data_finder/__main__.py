@@ -1,4 +1,5 @@
 import argparse
+from typing import Union
 
 import click
 import pandas as pd
@@ -40,8 +41,8 @@ def cli():
     ignore_unknown_options=True,
 ))
 @click.option("--data-type", required=True, help="data type, such as cma_gfs_gmf/grib2/orig")
-@click.option("--data-level", default="archive,storage", help="data level, split by comma, such as archive, storage")
-@click.option("--data-class", default="od", help="data class, od or cm")
+@click.option("--data-level", default="archive,storage", help="data level, split by comma, such as archive,storage")
+@click.option("--data-class", default="od", help="data class, such as od for operation data, or cm for common data.")
 @click.option("--config-dir", default=None, help="config directory")
 @click.option(
     "--help", "-h",
@@ -77,7 +78,7 @@ def find_local(ctx, data_type, data_level, data_class, config_dir, query_args):
         raise ValueError(f"stream type is not supported: {stream}")
 
 
-def find_oper_file(config: dict, data_level: str, query_args: tuple):
+def find_oper_file(config: dict, data_level: Union[str, list[str]], query_args: tuple):
     parser = create_oper_option_parser()
     args = parser.parse_args(query_args)
 
@@ -91,7 +92,7 @@ def find_oper_file(config: dict, data_level: str, query_args: tuple):
         print(file_path)
 
 
-def find_eps_file(config: dict, data_level: str, query_args: tuple):
+def find_eps_file(config: dict, data_level: Union[str, list[str]], query_args: tuple):
     parser = create_eps_option_parser()
     args = parser.parse_args(query_args)
 

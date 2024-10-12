@@ -1,4 +1,4 @@
-from typing import Union, Dict, List, Optional
+from typing import Union, Optional, Literal
 from pathlib import Path
 
 import numpy as np
@@ -14,9 +14,9 @@ def load_field_from_file(
         file_path: Union[str, Path],
         parameter: str,
         level_type: str = None,
-        level: Union[int, float, List] = None,
+        level: Union[int, float, list] = None,
         level_dim: Optional[str] = None,
-        latitude_direction: str = "degree_north",
+        latitude_direction: Literal["degree_north", "degree_south"] = "degree_north",
         forecast_time: Union[str, pd.Timedelta] = None,
         **kwargs
 ) -> Optional[xr.DataArray]:
@@ -90,7 +90,7 @@ def load_field_from_file(
     grads_level_type = "multi"
     level_dim_name = "level"
 
-    if not isinstance(level, List) and level is not None:
+    if not isinstance(level, list) and level is not None:
         level = [level]
 
     if level_type == "single":
@@ -146,10 +146,10 @@ def load_field_from_file(
 
 
 def check_record(
-        record: Dict,
+        record: dict,
         parameter: str,
         level_type: str = None,
-        level: Union[int, float, List] = None,
+        level: Union[int, float, list] = None,
         valid_time: pd.Timestamp = None,
         forecast_time: pd.Timedelta = None
 ) -> bool:
@@ -160,7 +160,7 @@ def check_record(
         return False
 
     if level is not None:
-        if isinstance(level, List):
+        if isinstance(level, list):
             if record["level"] not in level:
                 return False
         else:

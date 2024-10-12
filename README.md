@@ -1,8 +1,10 @@
 # reki
 
-[![GitHub version](https://badge.fury.io/gh/nwpc-oper%2Freki.svg)](https://badge.fury.io/gh/nwpc-oper%2Freki)
-[![PyPI version](https://badge.fury.io/py/reki.svg)](https://badge.fury.io/py/reki)
+![GitHub Release](https://img.shields.io/github/v/release/cemc-oper/reki)
+![PyPI - Version](https://img.shields.io/pypi/v/reki)
 [![Documentation Status](https://readthedocs.org/projects/reki/badge/?version=latest)](https://reki.readthedocs.io/zh_CN/latest/?badge=latest)
+![GitHub License](https://img.shields.io/github/license/cemc-oper/cedarkit-maps)
+![GitHub Action Workflow Status](https://github.com/cemc-oper/reki/actions/workflows/ci.yaml/badge.svg)
 
 A data preparation tool for meteorological data in CEMC/CMA.
 
@@ -20,9 +22,6 @@ pip install reki
 ```
 
 or download the latest source code from GitHub and install using `pip`.
-
-If you are using system python without root privilege (such as `apps/python/3.6.3/gnu` on CMA-PI HPC),
-please use `--user` option to install on user directory.
 
 `reki` uses ecCodes to decode GRIB files
 (which is needed by [eccodes](https://github.com/ecmwf/eccodes-python) and [cfgrib](https://github.com/ecmwf/cfgrib)). 

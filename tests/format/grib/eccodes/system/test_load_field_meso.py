@@ -1,5 +1,3 @@
-from typing import Dict
-
 import pytest
 from dataclasses import dataclass, asdict
 
@@ -96,7 +94,7 @@ def test_load_with_numbers(file_path):
     assert field is not None
 
 
-def test_load_10wind(file_path):
+def test_load_wind_10m(file_path):
     """
     Use ``stepType`` for normal and statistics fields.
     """
