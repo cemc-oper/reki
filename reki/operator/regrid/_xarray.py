@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, Literal
 
 import xarray as xr
 
@@ -8,7 +8,7 @@ from ._interpolator import BaseInterpolator
 class XarrayInterpolator(BaseInterpolator):
     def __init__(
             self,
-            method: str,
+            method: Literal["linear", "nearest"],
             **kwargs
     ):
         self.method = method

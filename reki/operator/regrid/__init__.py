@@ -1,4 +1,4 @@
-from typing import Dict, Union
+from typing import Union, Literal
 
 import xarray as xr
 
@@ -9,20 +9,27 @@ def interpolate_grid(
         data: xr.DataArray,
         target: xr.DataArray,
         scheme: str = "linear",
-        engine: str = "scipy",
-        **kwargs: Dict,
+        engine: Literal["scipy", "xarray"] = "xarray",
+        **kwargs
 ) -> xr.DataArray:
     """
+    Interpolate grid data into a target grid.
 
     Parameters
     ----------
-    data
-    target
-    scheme: str
+    data : xr.DataArray
+        intput data
+    target : xr.DataArray
+        target grid
+    scheme : str
         interpolate method.
-    engine: str
-        interpolate engine, `scipy` or `xarray`
+
+        * if ``engine="xarray"``, `linear` or `nearest`
+        * if ``engine="scipy"``, `linear`, `nearest`, `splinef2d` or `rect_bivariate_spline`
+    engine : str
+        interpolate engine, `xarray` or `scipy`
     kwargs
+        key-value parameters to be passed to interpolator with _get_interpolator function.
 
     Returns
     -------
@@ -40,10 +47,10 @@ def interpolate_grid(
 
 def extract_point(
         data: xr.DataArray,
-        latitude: Union[float, int],
-        longitude: Union[float, int],
+        latitude: Union[float, int, list[Union[float, int]]],
+        longitude: Union[float, int, list[Union[float, int]]],
         scheme: str = "linear",
-        engine: str = "xarray",
+        engine: Literal["scipy", "xarray"] = "xarray",
         **kwargs
 ) -> xr.DataArray:
     """
@@ -55,7 +62,12 @@ def extract_point(
     latitude
     longitude
     scheme
+        interpolate method.
+
+        * if ``engine="xarray"``, `linear` or `nearest`
+        * if ``engine="scipy"``, `linear`, `nearest`, `splinef2d` or `rect_bivariate_spline`
     engine
+        interpolate engine, `xarray` or `scipy`.
     kwargs
 
     Returns

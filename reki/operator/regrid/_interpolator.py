@@ -1,5 +1,5 @@
 import abc
-from typing import Union
+from typing import Union, Literal
 
 import numpy as np
 import xarray as xr
@@ -26,7 +26,7 @@ class BaseInterpolator(abc.ABC):
 
 def _get_interpolator(
         scheme: str,
-        engine: str,
+        engine: Literal["scipy", "xarray"],
         **kwargs
 ) -> BaseInterpolator:
     if engine == "scipy":

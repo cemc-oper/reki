@@ -1,4 +1,4 @@
-from typing import Union, List
+from typing import Union
 
 import numpy as np
 import xarray as xr
@@ -59,19 +59,19 @@ class ScipyInterpnInterpolator(BaseInterpolator):
     def extract_point(
             self,
             data: xr.DataArray,
-            latitude,
-            longitude,
+            latitude: Union[float, int, list[Union[float, int]]],
+            longitude: Union[float, int, list[Union[float, int]]],
     ) -> xr.DataArray:
         latitudes = data.latitude.values
         longitudes = data.longitude.values
 
         values = data.values
 
-        if isinstance(latitude, List):
+        if isinstance(latitude, list):
             target_latitudes = latitude
         else:
             target_latitudes = [latitude]
-        if isinstance(longitude, List):
+        if isinstance(longitude, list):
             target_longitudes = longitude
         else:
             target_longitudes = [longitude]
@@ -159,11 +159,11 @@ class ScipyRectBivariateSplineInterpolator(BaseInterpolator):
 
         values = data.values
 
-        if isinstance(latitude, List):
+        if isinstance(latitude, list):
             target_latitudes = latitude
         else:
             target_latitudes = [latitude]
-        if isinstance(longitude, List):
+        if isinstance(longitude, list):
             target_longitudes = longitude
         else:
             target_longitudes = [longitude]
