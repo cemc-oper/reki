@@ -135,10 +135,17 @@ class ScipyRectBivariateSplineInterpolator(BaseInterpolator):
             **self.kwargs
         )
 
-        target_values = rbs(
-            target_latitudes[::-1],
-            target_longitudes
-        )[::-1, :]
+        if target_latitudes[0] > target_latitudes[-1]:
+            target_values = rbs(
+                target_latitudes[::-1],
+                target_longitudes,
+            )[::-1, :]
+        else:
+            target_values = rbs(
+                target_latitudes,
+                target_longitudes,
+            )
+
 
         target_field =_create_data_array(
             data=data,
@@ -175,10 +182,16 @@ class ScipyRectBivariateSplineInterpolator(BaseInterpolator):
             **self.kwargs
         )
 
-        target_values = rbs(
-            target_latitudes[::-1],
-            target_longitudes
-        )[::-1, :]
+        if target_latitudes[0] > target_latitudes[-1]:
+            target_values = rbs(
+                target_latitudes[::-1],
+                target_longitudes,
+            )[::-1, :]
+        else:
+            target_values = rbs(
+                target_latitudes,
+                target_longitudes,
+            )
 
         target_grid = xr.DataArray(
             np.zeros((len(target_latitudes), len(target_longitudes))),  # for xarray v0.10.3
