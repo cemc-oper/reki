@@ -17,6 +17,7 @@ def load_field_from_file(
         level: Union[int, float, list] = None,
         level_dim: Optional[str] = None,
         latitude_direction: Literal["degree_north", "degree_south"] = "degree_north",
+        valid_time: Union[str, pd.Timestamp] = None,
         forecast_time: Union[str, pd.Timedelta] = None,
         **kwargs
 ) -> Optional[xr.DataArray]:
@@ -37,6 +38,7 @@ def load_field_from_file(
     latitude_direction
         * degree_north
         * degree_south
+    valid_time
     forecast_time
     kwargs
 
@@ -81,6 +83,8 @@ def load_field_from_file(
         forecast_time = pd.to_timedelta(forecast_time)
     if isinstance(file_path, str):
         file_path = Path(file_path)
+    if isinstance(valid_time, str):
+        valid_time = pd.to_datetime(valid_time)
 
     ctl_parser = GradsCtlParser()
     ctl_parser.parse(file_path)
@@ -118,6 +122,7 @@ def load_field_from_file(
             parameter=parameter,
             level=level,
             level_type=grads_level_type,
+            valid_time=valid_time,
             forecast_time=forecast_time,
         ):
             continue

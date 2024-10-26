@@ -198,6 +198,9 @@ class GradsCtlParser(object):
                  700.0000
                  ...
 
+            zdef 22 levels
+            1000 925 850 700 600 500 400 300 250 200 150 100 70 50 30 20 10 7 5 3 2 1
+
         """
         levels = list()
         count = int(tokens[1])
@@ -207,8 +210,10 @@ class GradsCtlParser(object):
         while i < count:
             self.cur_no += 1
             cur_line = self.ctl_file_lines[self.cur_no]
-            levels.append(float(cur_line))
-            i += 1
+            current_line_tokens = cur_line.split()
+            current_levels = [float(l) for l in current_line_tokens]
+            levels.extend(current_levels)
+            i += len(current_line_tokens)
 
         setattr(self.grads_ctl, dim_name, {
             'type': 'levels',
@@ -374,7 +379,16 @@ class GradsCtlParser(object):
 
         tokens = str(grads_ctl.dset).split("%")
         token_mapper = {
-            "n2": lambda x: f"{x['forecast_time'].seconds // 60 % 60:02d}",
+            "y2": lambda x: f"{x['valid_time'].year % 100:02d}",
+            "y4": lambda x: f"{x['valid_time'].year:04d}",
+            "m1": lambda x: f"{x['valid_time'].month}",
+            "m2": lambda x: f"{x['valid_time'].month:02d}",
+            "d1": lambda x: f"{x['valid_time'].day}",
+            "d2": lambda x: f"{x['valid_time'].day:02d}",
+            "h1": lambda x: f"{x['valid_time'].hour}",
+            "h2": lambda x: f"{x['valid_time'].hour:02d}",
+            "h3": lambda x: f"{x['valid_time'].hour:03d}",
+            "n2": lambda x: f"{x['forecast_time'].seconds // 60 % 60:02d}",  # TODO: check n2
             "f2": lambda x: f"{int(x['forecast_time'] / pd.Timedelta(hours=1)):02d}",
             "f3": lambda x: f"{int(x['forecast_time'] / pd.Timedelta(hours=1)):03d}",
             "fn2": lambda x: f"{int(x['forecast_time'] / pd.Timedelta(minutes=1)):02d}",
