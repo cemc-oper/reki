@@ -7,17 +7,21 @@ query:
 file_name: "mef.gra.{{ '%.3d' | format(query_vars.number) }}.{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}.grb2"
 
 paths:
-  # CMA-PI
-  - type: local
-    level: archive
-    path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_REPS/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/grib2'
-
   # CMA HPC2023
   - type: local
     level: archive
     path: '/g3/COMMONDATA/OPER/CEMC/REPS/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/grib2'
 
+  # CMA-PI
+  - type: local
+    level: archive
+    path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_REPS/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/grib2'
+
   # CMA Storage
+  - type: local
+    level: storage
+    path: '/sstorage/COMMONDATA/OPER/CEMC/REPS/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/grib2'
+
   - type: local
     level: storage
     path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_REPS/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/grib2'

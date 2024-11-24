@@ -12,7 +12,6 @@ paths:
     level: archive
     path: '/g3/COMMONDATA/OPER/CEMC/MESO_1KM/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/SFC'
 
-
   # CMA Storage
   - type: local
     level: storage

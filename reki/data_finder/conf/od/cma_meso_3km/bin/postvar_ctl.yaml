@@ -7,17 +7,21 @@ query:
 file_name: 'postvar.ctl_{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}00'
 
 paths:
-  # CMA-PI
-  - type: local
-    level: archive
-    path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_MESO_3KM/Fcst-main/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
-
   # HPC2023
   - type: local
     level: archive
     path: '/g3/COMMONDATA/OPER/CEMC/MESO_3KM/Fcst-main/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
 
+  # CMA-PI
+  - type: local
+    level: archive
+    path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_MESO_3KM/Fcst-main/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+
   # CMA Storage
+  - type: local
+    level: storage
+    path: '/sstorage/COMMONDATA/OPER/CEMC/MESO_3KM/Fcst-main/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+
   - type: local
     level: storage
     path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_MESO_3KM/Fcst-main/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
