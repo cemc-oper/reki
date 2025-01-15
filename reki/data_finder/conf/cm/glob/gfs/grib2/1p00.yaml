@@ -9,7 +9,7 @@ file_name: 'gfs.t{{ time_vars.Hour }}z.pgrb2.1p00.f{{ time_vars.Forecast }}'
 paths:
   - type: local
     level: archive
-    path: '/g1/COMMONDATA/glob/gfs/{{ time_vars.Year }}/gfs.{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+    path: '/g3/COMMONDATA/glob/gfs/{{ time_vars.Year }}/gfs.{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
 
   - type: local
     level: storage
