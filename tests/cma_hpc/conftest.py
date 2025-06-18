@@ -20,5 +20,9 @@ def forecast_time_24h() -> pd.Timedelta:
 
 
 @pytest.fixture
-def cma_gfs_data_dir():
+def cma_gfs_grib2_orig_dir():
     return "/g3/COMMONDATA/OPER/CEMC/GFS_GMF/Prod-grib/{start_time_label}/ORIG"
+
+@pytest.fixture
+def cma_gfs_grib2_modelvar_dir():
+    return "/g3/COMMONDATA/OPER/CEMC/GFS_GMF/Prod-grib/{start_time_label}/MODELVAR"

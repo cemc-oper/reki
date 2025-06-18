@@ -1,6 +1,8 @@
 from dataclasses import dataclass, asdict
 from typing import Union, Dict, Optional, List
 
+import pytest
+
 from reki.format.grib.eccodes import load_field_from_file
 
 
@@ -16,40 +18,42 @@ class TestCase:
     query: QueryOption
 
 
-def test_short_name(file_path):
-    test_cases = [
+@pytest.mark.parametrize(
+    "test_case",
+    [
         TestCase(query=QueryOption(parameter="t", level_type="pl", level=850))
     ]
-    for test_case in test_cases:
-        field = load_field_from_file(
-            file_path,
-            **asdict(test_case.query)
-        )
-        assert field is not None
+)
+def test_short_name(grib2_gfs_basic_file_path, test_case):
+    field = load_field_from_file(
+        grib2_gfs_basic_file_path,
+        **asdict(test_case.query)
+    )
+    assert field is not None
 
 
-def test_numbers(file_path):
+@pytest.mark.parametrize(
+    "test_case",
+    [
+        TestCase(query=QueryOption(parameter={
+            "discipline": 0,
+            "parameterCategory": 16,
+            "parameterNumber": 225,
+        }, level_type="pl", level=850))
+    ]
+)
+def test_numbers(grib2_gfs_basic_file_path, test_case):
     """
     雷达组合反射率
     """
-    test_cases = [
-        TestCase(
-            query=QueryOption(parameter={
-                "discipline": 0,
-                "parameterCategory": 16,
-                "parameterNumber": 225,
-            }, level_type="pl", level=850)
-        )
-    ]
-    for test_case in test_cases:
-        field = load_field_from_file(
-            file_path,
-            **asdict(test_case.query)
-        )
-        assert field is not None
+    field = load_field_from_file(
+        grib2_gfs_basic_file_path,
+        **asdict(test_case.query)
+    )
+    assert field is not None
 
 
-def test_embedded_short_name(file_path):
+def test_embedded_short_name(grib2_gfs_basic_file_path):
     test_cases = [
         TestCase(query=QueryOption(parameter="DEPR", level_type="pl", level=850)),
         TestCase(query=QueryOption(parameter={
@@ -63,7 +67,7 @@ def test_embedded_short_name(file_path):
 
     for test_case in test_cases:
         field = load_field_from_file(
-            file_path,
+            grib2_gfs_basic_file_path,
             **asdict(test_case.query)
         )
         assert field is not None

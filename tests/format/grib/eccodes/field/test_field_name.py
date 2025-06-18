@@ -7,9 +7,9 @@ from reki.format.grib.eccodes import load_field_from_file
 
 @dataclass
 class QueryOption:
-    parameter: Union[str, Dict] = None
-    level_type: str = None
-    level: float = None
+    parameter: Optional[Union[str, Dict]] = None
+    level_type: Optional[str] = None
+    level: Optional[float] = None
     field_name: Optional[str] = None
 
 
@@ -19,8 +19,9 @@ class TestCase:
     expected_field_name: str
 
 
-def test_parameter_string(file_path):
-    test_cases = [
+@pytest.mark.parametrize(
+    "test_case",
+    [
         TestCase(
             query=QueryOption(parameter="t", level_type="pl", level=850, field_name=None),
             expected_field_name="t"
@@ -38,18 +39,20 @@ def test_parameter_string(file_path):
             expected_field_name="other_field_name"
         )
     ]
+)
+def test_parameter_string(grib2_gfs_basic_file_path, test_case):
+    f = load_field_from_file(
+        grib2_gfs_basic_file_path,
+        **asdict(test_case.query)
+    )
+    assert f is not None
+    assert f.name == test_case.expected_field_name
 
-    for test_case in test_cases:
-        f = load_field_from_file(
-            file_path,
-            **asdict(test_case.query)
-        )
-        assert f is not None
-        assert f.name == test_case.expected_field_name
 
 
-def test_parameter_cemc_param_db(file_path):
-    test_cases = [
+@pytest.mark.parametrize(
+    "test_case",
+    [
         TestCase(
             query=QueryOption(parameter="btv", field_name=None),
             expected_field_name="btv"
@@ -59,18 +62,19 @@ def test_parameter_cemc_param_db(file_path):
             expected_field_name="zs",
         ),
     ]
+)
+def test_parameter_cemc_param_db(grib2_gfs_basic_file_path, test_case):
+    f = load_field_from_file(
+        grib2_gfs_basic_file_path,
+        **asdict(test_case.query)
+    )
+    assert f is not None
+    assert f.name == test_case.expected_field_name
 
-    for test_case in test_cases:
-        f = load_field_from_file(
-            file_path,
-            **asdict(test_case.query)
-        )
-        assert f is not None
-        assert f.name == test_case.expected_field_name
 
-
-def test_parameter_dict(file_path):
-    test_cases = [
+@pytest.mark.parametrize(
+    "test_case",
+    [
         TestCase(
             query=QueryOption(
                 parameter=dict(discipline=0, parameterCategory=2, parameterNumber=224),
@@ -111,7 +115,7 @@ def test_parameter_dict(file_path):
                 level_type="sfc",
                 field_name=None,
             ),
-            expected_field_name="ulwrf"
+            expected_field_name="sulwrf"
         ),
         TestCase(
             query=QueryOption(
@@ -122,11 +126,11 @@ def test_parameter_dict(file_path):
             expected_field_name="other_field_name"
         )
     ]
-
-    for test_case in test_cases:
-        f = load_field_from_file(
-            file_path,
-            **asdict(test_case.query),
-        )
-        assert f is not None
-        assert f.name == test_case.expected_field_name
+)
+def test_parameter_dict(grib2_gfs_basic_file_path, test_case):
+    f = load_field_from_file(
+        grib2_gfs_basic_file_path,
+        **asdict(test_case.query),
+    )
+    assert f is not None
+    assert f.name == test_case.expected_field_name

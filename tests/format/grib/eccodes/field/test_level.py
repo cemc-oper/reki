@@ -9,20 +9,21 @@ from reki.format.grib.eccodes import load_field_from_file
 
 @dataclass
 class QueryOption:
-    parameter: Union[str, Dict] = None
-    level_type: Union[str, Dict] = None
+    parameter: Optional[Union[str, Dict]] = None
+    level_type: Optional[Union[str, Dict]] = None
     level: Optional[Union[float, str, Dict, List[float]]] = None
 
 
 @dataclass
 class TestCase:
     query: QueryOption
-    expected_level_name: str = None
-    expected_level: float = None
+    expected_level_name: Optional[str] = None
+    expected_level: Optional[float] = None
 
 
-def test_scalar(file_path, modelvar_file_path):
-    test_cases = [
+@pytest.mark.parametrize(
+    "test_case",
+    [
         TestCase(
             query=QueryOption(parameter="t", level_type="pl", level=1.5),
             expected_level_name="pl",
@@ -39,34 +40,19 @@ def test_scalar(file_path, modelvar_file_path):
             expected_level=2
         ),
     ]
-
-    for test_case in test_cases:
-        field = load_field_from_file(
-            file_path,
-            **asdict(test_case.query)
-        )
-        assert field is not None
-        assert field.coords[test_case.expected_level_name] == test_case.expected_level
-
-    test_cases = [
-        TestCase(
-            query=QueryOption(
-                parameter="u", level_type={"typeOfFirstFixedSurface": 131}, level=10),
-            expected_level_name="level_131",
-            expected_level=10
-        )
-    ]
-    for test_case in test_cases:
-        field = load_field_from_file(
-            modelvar_file_path,
-            **asdict(test_case.query)
-        )
-        assert field is not None
-        assert field.coords[test_case.expected_level_name] == test_case.expected_level
+)
+def test_scalar(grib2_gfs_basic_file_path, test_case):
+    field = load_field_from_file(
+        grib2_gfs_basic_file_path,
+        **asdict(test_case.query)
+    )
+    assert field is not None
+    assert field.coords[test_case.expected_level_name] == test_case.expected_level
 
 
-def test_dict(file_path):
-    test_cases = [
+@pytest.mark.parametrize(
+    "test_case",
+    [
         TestCase(
             QueryOption(
                 parameter="vwsh",
@@ -82,16 +68,18 @@ def test_dict(file_path):
             ),
         )
     ]
-    for test_case in test_cases:
-        field = load_field_from_file(
-            file_path,
-            **asdict(test_case.query)
-        )
-        assert field is not None
+)
+def test_dict(grib2_gfs_basic_file_path, test_case):
+    field = load_field_from_file(
+        grib2_gfs_basic_file_path,
+        **asdict(test_case.query)
+    )
+    assert field is not None
 
 
-def test_multi_levels(file_path):
-    test_cases = [
+@pytest.mark.parametrize(
+    "test_case",
+    [
         TestCase(
             query=QueryOption(parameter="t", level_type="pl", level=[850, 925, 1000]),
         ),
@@ -99,16 +87,17 @@ def test_multi_levels(file_path):
             query=QueryOption(parameter="gh", level_type="isobaricInhPa", level=[850, 925, 1000]),
         )
     ]
-    for test_case in test_cases:
-        field = load_field_from_file(
-            file_path,
-            **asdict(test_case.query)
-        )
-        assert field is not None
-        assert np.array_equal(
-            np.sort(field.coords[test_case.query.level_type].values),
-            np.sort(test_case.query.level).astype(float)
-        )
+)
+def test_multi_levels(grib2_gfs_basic_file_path, test_case):
+    field = load_field_from_file(
+        grib2_gfs_basic_file_path,
+        **asdict(test_case.query)
+    )
+    assert field is not None
+    assert np.array_equal(
+        np.sort(field.coords[test_case.query.level_type].values),
+        np.sort(test_case.query.level).astype(float)
+    )
 
 
 @pytest.fixture
@@ -157,8 +146,9 @@ def pl_levels():
     ]
 
 
-def test_all_levels(file_path, pl_levels):
-    test_cases = [
+@pytest.mark.parametrize(
+    "test_case",
+    [
         TestCase(
             query=QueryOption(
                 parameter="t",
@@ -166,23 +156,24 @@ def test_all_levels(file_path, pl_levels):
                 level="all"
             ),
             expected_level_name="pl",
-            expected_level=pl_levels
         ),
     ]
-    for test_case in test_cases:
-        field = load_field_from_file(
-            file_path,
-            **asdict(test_case.query)
-        )
-        assert field is not None
-        assert np.array_equal(
-            np.sort(field.coords[test_case.expected_level_name].values),
-            np.sort(test_case.expected_level).astype(float)
-        )
+)
+def test_all_levels(grib2_gfs_basic_file_path, pl_levels, test_case):
+    field = load_field_from_file(
+        grib2_gfs_basic_file_path,
+        **asdict(test_case.query)
+    )
+    assert field is not None
+    assert np.array_equal(
+        np.sort(field.coords[test_case.expected_level_name].values),
+        np.sort(pl_levels).astype(float)
+    )
 
 
-def test_none_level(file_path):
-    test_cases = [
+@pytest.mark.parametrize(
+    "test_case",
+    [
         TestCase(
             query=QueryOption(parameter="t", level_type="pl", level=None),
             expected_level_name="pl",
@@ -194,10 +185,11 @@ def test_none_level(file_path):
             expected_level=1000
         )
     ]
-    for test_case in test_cases:
-        field = load_field_from_file(
-            file_path,
-            **asdict(test_case.query)
-        )
-        assert field is not None
-        assert field.coords[test_case.expected_level_name].values == test_case.expected_level
+)
+def test_none_level(grib2_gfs_basic_file_path, test_case):
+    field = load_field_from_file(
+        grib2_gfs_basic_file_path,
+        **asdict(test_case.query)
+    )
+    assert field is not None
+    assert field.coords[test_case.expected_level_name].values == test_case.expected_level

@@ -41,7 +41,7 @@ Repository = "https://github.com/cemc-oper/reki.git"
 [project.optional-dependencies]
 grib2 = ["cfgrib", "eccodes"]
 godas = ["protobuf", "requests"]
-test = ["pytest"]
+test = ["pytest", "requests"]
 cov = ["pytest-cov", "codecov"]
 
 [tool.setuptools.packages.find]
