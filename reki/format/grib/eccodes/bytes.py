@@ -5,9 +5,7 @@ import eccodes
 
 from reki.format.grib.common._level import fix_level_type
 from reki.format.grib.common._parameter import convert_parameter
-from ._util import (
-    _check_message,
-)
+from ._check import _check_message
 
 
 def load_bytes_from_file(

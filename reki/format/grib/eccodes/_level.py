@@ -20,7 +20,7 @@ def _fix_level(
         if level_dim is None:
             level_dim = level_type
         return {
-            "typeOfFirstFixedSurface": 100,
+            "typeOfFirstFixedSurface:int": 100,
         }, level_dim
     elif level_type == "sfc":
         if level_dim is None:
@@ -32,7 +32,7 @@ def _fix_level(
         if level_dim is None:
             level_dim = level_type
         return {
-            "typeOfFirstFixedSurface": 131,
+            "typeOfFirstFixedSurface:int": 131,
             # "typeOfSecondFixedSurface": 255,
         }, level_dim
     return level_type, level_dim

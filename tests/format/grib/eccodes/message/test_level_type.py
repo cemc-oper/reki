@@ -23,8 +23,14 @@ class TestCase:
 @pytest.mark.parametrize(
     "test_case",
     [
-    TestCase(query=QueryOption(parameter="t", level_type="pl", level=850)),
-        TestCase(query=QueryOption(parameter="t", level_type="sfc", level=None)),
+        TestCase(
+            query=QueryOption(parameter="t", level_type="pl", level=850),
+            expected_keys={"count": 109},
+        ),
+        TestCase(
+            query=QueryOption(parameter="t", level_type="sfc", level=None),
+            expected_keys={"count": 5}
+        ),
     ]
 )
 def test_embedded_level_name(grib2_gfs_basic_file_path, test_case):
@@ -40,23 +46,57 @@ def test_embedded_level_name(grib2_gfs_basic_file_path, test_case):
         **asdict(test_case.query)
     )
     assert message is not None
+    for key, expected_value in test_case.expected_keys.items():
+        assert eccodes.codes_get(message, key) == expected_value
     eccodes.codes_release(message)
 
 
 @pytest.mark.parametrize(
     "test_case",
     [
-        TestCase(query=QueryOption(parameter="t", level_type="isobaricInhPa", level=850)),
-        TestCase(query=QueryOption(parameter="t", level_type="isobaricInPa", level=50)),
-        TestCase(query=QueryOption(parameter="acpcp", level_type="surface", level=None)),
-        TestCase(query=QueryOption(parameter="tmax", level_type="heightAboveGround", level=2)),
-        TestCase(query=QueryOption(parameter="lcc", level_type="entireAtmosphere", level=None)),
-        TestCase(query=QueryOption(parameter="sulwrf", level_type="surface", level=None)),
-        TestCase(query=QueryOption(parameter="pwat", level_type="atmosphere", level=None)),
-        TestCase(query=QueryOption(parameter="prmsl", level_type="meanSea", level=None)),
-        TestCase(query=QueryOption(parameter="t", level_type="depthBelowLandLayer",
-                                   level={"first_level": 0, "second_level": 0.1})),
-        TestCase(query=QueryOption(parameter="vwsh", level_type="heightAboveGroundLayer", level=1000))
+        TestCase(
+            query=QueryOption(parameter="t", level_type="isobaricInhPa", level=850),
+            expected_keys={"count": 109}
+        ),
+        TestCase(
+            query=QueryOption(parameter="t", level_type="isobaricInPa", level=50),
+            expected_keys={"count": 141}
+        ),
+        TestCase(
+            query=QueryOption(parameter="acpcp", level_type="surface", level=None),
+            expected_keys={"count": 1},
+        ),
+        TestCase(
+            query=QueryOption(parameter="tmax", level_type="heightAboveGround", level=2),
+            expected_keys={"count": 40},
+        ),
+        TestCase(
+            query=QueryOption(parameter="lcc", level_type="entireAtmosphere", level=None),
+            expected_keys={"count": 29}
+        ),
+        TestCase(
+            query=QueryOption(parameter="sulwrf", level_type="surface", level=None),
+            expected_keys={"count": 10},
+        ),
+        TestCase(
+            query=QueryOption(parameter="pwat", level_type="atmosphere", level=None),
+            expected_keys={"count": 820},
+        ),
+        TestCase(
+            query=QueryOption(parameter="prmsl", level_type="meanSea", level=None),
+            expected_keys={"count": 45},
+        ),
+        TestCase(
+            query=QueryOption(
+                parameter="t", level_type="depthBelowLandLayer",
+                level={"first_level": 0, "second_level": 0.1}
+            ),
+            expected_keys={"count": 464},
+        ),
+        TestCase(
+            query=QueryOption(parameter="vwsh", level_type="heightAboveGroundLayer", level=3000),
+            expected_keys={"count": 782},
+        )
     ]
 )
 def test_type_of_level(grib2_gfs_basic_file_path, test_case):
@@ -64,5 +104,7 @@ def test_type_of_level(grib2_gfs_basic_file_path, test_case):
         grib2_gfs_basic_file_path,
         **asdict(test_case.query)
     )
+    for key, expected_value in test_case.expected_keys.items():
+        assert eccodes.codes_get(message, key) == expected_value
     assert message is not None
     eccodes.codes_release(message)

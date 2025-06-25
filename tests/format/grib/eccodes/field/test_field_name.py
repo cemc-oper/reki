@@ -16,6 +16,7 @@ class QueryOption:
 @dataclass
 class TestCase:
     query: QueryOption
+    expected_grib_key_count: int
     expected_field_name: str
 
 
@@ -24,19 +25,23 @@ class TestCase:
     [
         TestCase(
             query=QueryOption(parameter="t", level_type="pl", level=850, field_name=None),
-            expected_field_name="t"
+            expected_grib_key_count=109,
+            expected_field_name="t",
         ),
         TestCase(
             query=QueryOption(parameter="t", level_type="pl", level=850, field_name="other_field_name"),
-            expected_field_name="other_field_name"
+            expected_grib_key_count=109,
+            expected_field_name="other_field_name",
         ),
         TestCase(
             query=QueryOption(parameter="TMP", level_type="pl", level=850, field_name=None),
-            expected_field_name="TMP"
+            expected_grib_key_count=109,
+            expected_field_name="TMP",
         ),
         TestCase(
             query=QueryOption(parameter="TMP", level_type="pl", level=850, field_name="other_field_name"),
-            expected_field_name="other_field_name"
+            expected_grib_key_count=109,
+            expected_field_name="other_field_name",
         )
     ]
 )
@@ -47,6 +52,7 @@ def test_parameter_string(grib2_gfs_basic_file_path, test_case):
     )
     assert f is not None
     assert f.name == test_case.expected_field_name
+    assert f.attrs["GRIB_count"] == test_case.expected_grib_key_count
 
 
 
@@ -55,10 +61,12 @@ def test_parameter_string(grib2_gfs_basic_file_path, test_case):
     [
         TestCase(
             query=QueryOption(parameter="btv", field_name=None),
+            expected_grib_key_count=861,
             expected_field_name="btv"
         ),
         TestCase(
             query=QueryOption(parameter="zs", field_name=None),
+            expected_grib_key_count=23,
             expected_field_name="zs",
         ),
     ]
@@ -70,6 +78,7 @@ def test_parameter_cemc_param_db(grib2_gfs_basic_file_path, test_case):
     )
     assert f is not None
     assert f.name == test_case.expected_field_name
+    assert f.attrs["GRIB_count"] == test_case.expected_grib_key_count
 
 
 @pytest.mark.parametrize(
@@ -82,6 +91,7 @@ def test_parameter_cemc_param_db(grib2_gfs_basic_file_path, test_case):
                 level=850,
                 field_name=None,
             ),
+            expected_grib_key_count=599,
             expected_field_name="0_2_224"
         ),
         TestCase(
@@ -91,6 +101,7 @@ def test_parameter_cemc_param_db(grib2_gfs_basic_file_path, test_case):
                 level=850,
                 field_name="other_field_name"
             ),
+            expected_grib_key_count=599,
             expected_field_name="other_field_name"
         ),
         TestCase(
@@ -99,6 +110,7 @@ def test_parameter_cemc_param_db(grib2_gfs_basic_file_path, test_case):
                 level_type="sfc",
                 field_name=None
             ),
+            expected_grib_key_count=36,
             expected_field_name="0_2_227"
         ),
         TestCase(
@@ -107,6 +119,7 @@ def test_parameter_cemc_param_db(grib2_gfs_basic_file_path, test_case):
                 level_type="sfc",
                 field_name="other_field_name"
             ),
+            expected_grib_key_count=36,
             expected_field_name="other_field_name"
         ),
         TestCase(
@@ -115,7 +128,8 @@ def test_parameter_cemc_param_db(grib2_gfs_basic_file_path, test_case):
                 level_type="sfc",
                 field_name=None,
             ),
-            expected_field_name="sulwrf"
+            expected_grib_key_count=10,
+            expected_field_name="sulwrf",
         ),
         TestCase(
             query=QueryOption(
@@ -123,6 +137,7 @@ def test_parameter_cemc_param_db(grib2_gfs_basic_file_path, test_case):
                 level_type="sfc",
                 field_name="other_field_name",
             ),
+            expected_grib_key_count=10,
             expected_field_name="other_field_name"
         )
     ]
@@ -134,3 +149,4 @@ def test_parameter_dict(grib2_gfs_basic_file_path, test_case):
     )
     assert f is not None
     assert f.name == test_case.expected_field_name
+    assert f.attrs["GRIB_count"] == test_case.expected_grib_key_count

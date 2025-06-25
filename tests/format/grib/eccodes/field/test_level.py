@@ -17,6 +17,7 @@ class QueryOption:
 @dataclass
 class TestCase:
     query: QueryOption
+    expected_grib_key_count: Optional[Union[int, list]] = None
     expected_level_name: Optional[str] = None
     expected_level: Optional[float] = None
 
@@ -26,16 +27,19 @@ class TestCase:
     [
         TestCase(
             query=QueryOption(parameter="t", level_type="pl", level=1.5),
+            expected_grib_key_count=139,
             expected_level_name="pl",
-            expected_level=1.5
+            expected_level=1.5,
         ),
         TestCase(
             query=QueryOption(parameter="t", level_type="isobaricInhPa", level=850),
+            expected_grib_key_count=109,
             expected_level_name="isobaricInhPa",
             expected_level=850
         ),
         TestCase(
             query=QueryOption(parameter="TMAX", level_type="heightAboveGround", level=2),
+            expected_grib_key_count=40,
             expected_level_name="heightAboveGround",
             expected_level=2
         ),
@@ -48,6 +52,7 @@ def test_scalar(grib2_gfs_basic_file_path, test_case):
     )
     assert field is not None
     assert field.coords[test_case.expected_level_name] == test_case.expected_level
+    assert field.attrs["GRIB_count"] == test_case.expected_grib_key_count
 
 
 @pytest.mark.parametrize(
@@ -59,6 +64,7 @@ def test_scalar(grib2_gfs_basic_file_path, test_case):
                 level_type="heightAboveGroundLayer",
                 level=dict(first_level=1000, second_level=0)
             ),
+            expected_grib_key_count=781,
         ),
         TestCase(
             QueryOption(
@@ -66,6 +72,7 @@ def test_scalar(grib2_gfs_basic_file_path, test_case):
                 level_type="depthBelowLandLayer",
                 level=dict(first_level=0.1, second_level=0.4)
             ),
+            expected_grib_key_count=465,
         )
     ]
 )
@@ -75,6 +82,7 @@ def test_dict(grib2_gfs_basic_file_path, test_case):
         **asdict(test_case.query)
     )
     assert field is not None
+    assert field.attrs["GRIB_count"] == test_case.expected_grib_key_count
 
 
 @pytest.mark.parametrize(
@@ -176,13 +184,15 @@ def test_all_levels(grib2_gfs_basic_file_path, pl_levels, test_case):
     [
         TestCase(
             query=QueryOption(parameter="t", level_type="pl", level=None),
+            expected_grib_key_count=104,
             expected_level_name="pl",
-            expected_level=1000
+            expected_level=1000,
         ),
         TestCase(
             query=QueryOption(parameter="vwsh", level_type="heightAboveGroundLayer", level=None),
+            expected_grib_key_count=781,
             expected_level_name="heightAboveGroundLayer",
-            expected_level=1000
+            expected_level=1000,
         )
     ]
 )
@@ -193,3 +203,4 @@ def test_none_level(grib2_gfs_basic_file_path, test_case):
     )
     assert field is not None
     assert field.coords[test_case.expected_level_name].values == test_case.expected_level
+    assert field.attrs["GRIB_count"] == test_case.expected_grib_key_count

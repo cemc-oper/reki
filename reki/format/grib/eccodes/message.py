@@ -6,13 +6,7 @@ import eccodes
 # from tqdm import tqdm
 
 from ._level import _fix_level
-from ._util import (
-    _check_parameter,
-    _check_level_type,
-    _check_level_value,
-    _check_keys,
-    _check_message,
-)
+from ._check import _check_message
 
 from reki.format.grib.common._parameter import convert_parameter
 
@@ -168,16 +162,7 @@ def load_messages_from_file(
             if message_id is None:
                 break
             # pbar.update(1)
-            if not _check_parameter(message_id, parameter):
-                eccodes.codes_release(message_id)
-                continue
-            if not _check_level_type(message_id, fixed_level_type):
-                eccodes.codes_release(message_id)
-                continue
-            if not _check_level_value(message_id, level):
-                eccodes.codes_release(message_id)
-                continue
-            if not _check_keys(message_id, **kwargs):
+            if not _check_message(message_id, parameter, fixed_level_type, level, **kwargs):
                 eccodes.codes_release(message_id)
                 continue
 

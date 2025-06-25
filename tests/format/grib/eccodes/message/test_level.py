@@ -26,15 +26,15 @@ class TestCase:
     [
         TestCase(
             query=QueryOption(parameter="t", level_type="pl", level=1.5),
-            expected_keys=dict(typeOfLevel="isobaricInhPa", level=1)
+            expected_keys=dict(typeOfLevel="isobaricInhPa", level=1, count=139)
         ),
         TestCase(
             query=QueryOption(parameter="t", level_type="isobaricInhPa", level=850),
-            expected_keys=dict(typeOfLevel="isobaricInhPa", level=850)
+            expected_keys=dict(typeOfLevel="isobaricInhPa", level=850, count=109)
         ),
         TestCase(
             query=QueryOption(parameter="tmax", level_type="heightAboveGround", level=2),
-            expected_keys=dict(typeOfLevel="heightAboveGround", level=2)
+            expected_keys=dict(typeOfLevel="heightAboveGround", level=2, count=40)
         )
     ]
 )
@@ -53,13 +53,13 @@ def test_scalar(grib2_gfs_basic_file_path, test_case):
 @pytest.mark.parametrize(
     "test_case",
     [
-TestCase(
+        TestCase(
             query=QueryOption(parameter="vwsh", level_type="heightAboveGroundLayer", level={"first_level": 1000, "second_level": 0}),
-            expected_keys=dict(typeOfLevel="heightAboveGroundLayer", level=1000)
+            expected_keys=dict(typeOfLevel="heightAboveGroundLayer", level=1000, count=781),
         ),
         TestCase(
             query=QueryOption(parameter="t", level_type="depthBelowLandLayer", level={"first_level": 0.1, "second_level": 0.4}),
-            expected_keys=dict(typeOfLevel="depthBelowLandLayer", level=0)
+            expected_keys=dict(typeOfLevel="depthBelowLandLayer", level=0, count=465),
         )
     ]
 )
@@ -169,11 +169,11 @@ def test_all_levels(grib2_gfs_basic_file_path, pl_levels, test_case):
     [
         TestCase(
             query=QueryOption(parameter="t", level_type="pl", level=None),
-            expected_keys=dict(typeOfLevel="isobaricInhPa", level=1000),
+            expected_keys=dict(typeOfLevel="isobaricInhPa", level=1000, count=104),
         ),
         TestCase(
             query=QueryOption(parameter="vwsh", level_type="heightAboveGroundLayer", level=None),
-            expected_keys=dict(typeOfLevel="heightAboveGroundLayer", level=1000)
+            expected_keys=dict(typeOfLevel="heightAboveGroundLayer", level=1000, count=781)
         )
     ]
 )

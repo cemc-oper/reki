@@ -41,7 +41,7 @@ def fix_level_type(
             }
         else:
             return {
-                "typeOfFirstFixedSurface": 100,
+                "typeOfFirstFixedSurface:int": 100,
             }
     elif level_type == "sfc":
         return {
@@ -49,7 +49,7 @@ def fix_level_type(
         }
     elif level_type == "ml":
         return {
-            "typeOfFirstFixedSurface": 131,
+            "typeOfFirstFixedSurface:int": 131,
             # "typeOfSecondFixedSurface": 255,
         }
     return level_type

@@ -7,7 +7,7 @@ import xarray as xr
 from tqdm import tqdm
 
 from ._level import _fix_level
-from ._util import _check_message
+from ._check import _check_message
 from ._xarray import create_data_array_from_message, get_level_coordinate_name
 from reki._util import _load_first_variable
 from reki.format.grib.common._parameter import convert_parameter
