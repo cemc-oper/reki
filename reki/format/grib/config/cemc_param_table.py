@@ -107,7 +107,7 @@ shrmaxdir,degree,direction of maxium vertical wind shear,最大垂直风切变�
 shrmaxdir(0-600),,,0-600m最大垂直风切变的方向,0.0,2.0,238.0,heightAboveGroundLayer,600.0,103.0,600.0,103.0,0.0,,False
 srh,J/kg,Storm relative helicity,风暴螺旋度,0.0,7.0,8.0,,,,,,,,False
 srh(0-1000),,,0-1km垂直风暴螺旋度,0.0,7.0,8.0,heightAboveGroundLayer,1000.0,103.0,1000.0,103.0,0.0,,False
-srh(0-3000),,,0-3km垂直风暴螺旋度,0.0,7.0,8.0,heightAboveGroundLayer,3000.0,103.0,1000.0,103.0,0.0,,False
+srh(0-3000),,,0-3km垂直风暴螺旋度,0.0,7.0,8.0,heightAboveGroundLayer,3000.0,103.0,3000.0,103.0,0.0,,False
 uhmax,m2/s2,Updraught helicity,最大上升螺旋度,0.0,7.0,15.0,,,,,,,max,False
 uhmax(2000-5000),,,2-5km最大上升螺旋度,0.0,7.0,15.0,heightAboveGroundLayer,5000.0,103.0,5000.0,103.0,2000.0,max,False
 src,,Skin reservoir content  ,表面蓄水池含量,0.0,1.0,226.0,,,,,,,,False

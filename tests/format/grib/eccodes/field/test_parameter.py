@@ -9,8 +9,8 @@ from reki.format.grib.eccodes import load_field_from_file
 @dataclass
 class QueryOption:
     parameter: Union[str, dict]
-    level_type: Union[str, Dict]
-    level: Optional[Union[float, Dict]]
+    level_type: Optional[Union[str, Dict]] = None
+    level: Optional[Union[float, Dict]] = None
 
 
 @dataclass
@@ -87,3 +87,34 @@ def test_embedded_short_name(grib2_gfs_basic_file_path):
         fields.append(field)
 
     assert fields[0].attrs["GRIB_count"] == fields[1].attrs["GRIB_count"]
+
+
+
+@pytest.mark.parametrize(
+    "test_case",
+    [
+        TestCase(
+            query=QueryOption(parameter="t2m"),
+            expected_grib_key_count=25,
+        ),
+        TestCase(
+            query=QueryOption(parameter="q2m"),
+            expected_grib_key_count=24,
+        ),
+        TestCase(
+            query=QueryOption(parameter="st(10-40)"),
+            expected_grib_key_count=465,
+        ),
+        TestCase(
+            query=QueryOption(parameter="shr(0-3000)"),
+            expected_grib_key_count=782,
+        ),
+    ]
+)
+def test_cemc_name(grib2_gfs_basic_file_path, test_case):
+    field = load_field_from_file(
+        grib2_gfs_basic_file_path,
+        **asdict(test_case.query)
+    )
+    assert field is not None
+    assert field.attrs["GRIB_count"] == test_case.expected_grib_key_count

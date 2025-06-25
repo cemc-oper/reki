@@ -1,5 +1,7 @@
 from typing import Union, Dict
 
+import pandas as pd
+
 from reki.format.grib.config import WGRIB2_SHORT_NAME_TABLE, CEMC_PARAM_TABLE
 
 
@@ -59,10 +61,23 @@ def convert_parameter(parameter: Union[str, Dict]) -> Union[str, Dict]:
         param_df = CEMC_PARAM_TABLE[CEMC_PARAM_TABLE["name"] == parameter]
         if not param_df.empty:
             row = param_df.iloc[0]
-            return dict(
+            param_key = dict(
                 discipline=float(row["discipline"]),
                 parameterCategory=float(row["category"]),
                 parameterNumber=float(row["number"]),
             )
+
+            if not pd.isna(row["typeOfLevel"]):
+                param_key["typeOfLevel"] = row["typeOfLevel"]
+            if not pd.isna(row["level"]):
+                param_key["level"] = row["level"]
+            if not pd.isna(row["first_level"]):
+                param_key["first_level"] = float(row["first_level"])
+            if not pd.isna(row["second_level"]):
+                param_key["second_level"] = float(row["second_level"])
+            if not pd.isna(row["stepType"]):
+                param_key["stepType"] = row["stepType"]
+
+            return param_key
 
     return parameter
