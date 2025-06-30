@@ -39,7 +39,7 @@ def find_local_file(
     path_type
         path type, ["local", "storage", ...], for future usage.
     data_class
-        data class, ``od`` means operation systems.
+        data class, ``od`` means operational systems.
     config_dir
         config root directory. If None, use embedded config files in `conf` directory.
     obs_time
@@ -123,9 +123,10 @@ def find_local_file(
     elif obs_time is None:
         obs_time = start_time
 
-    config = load_config(config_file_path)
+    config_content = load_config(config_file_path)
+
     file_path = find_file(
-        config,
+        config_content,
         data_level,
         start_time,
         forecast_time,
@@ -196,6 +197,6 @@ def find_local_files(
     if isinstance(start_time, str):
         start_time = pd.to_datetime(start_time, format="%Y%m%d%H")
 
-    config = load_config(config_file_path)
-    file_path = find_files(config, data_level, start_time, forecast_time, glob, **kwargs)
+    config_content = load_config(config_file_path)
+    file_path = find_files(config_content, data_level, start_time, forecast_time, glob, **kwargs)
     return file_path

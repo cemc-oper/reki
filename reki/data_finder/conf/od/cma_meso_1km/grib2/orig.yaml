@@ -4,20 +4,22 @@ query:
   type: grib2
   name: orig
 
-file_name: 'rmf.hgra.{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}.grb2'
+{% set start_time_string = time_vars.year ~ time_vars.month ~ time_vars.day ~ time_vars.hour %}
+
+file_name: 'rmf.hgra.{{ start_time_string }}{{ time_vars.forecast_hour }}.grb2'
 
 paths:
   # HPC2023
   - type: local
     level: archive
-    path: '/g3/COMMONDATA/OPER/CEMC/MESO_1KM/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/ORIG'
+    path: '/g3/COMMONDATA/OPER/CEMC/MESO_1KM/Prod-grib/{{ start_time_string }}/ORIG'
 
   # CMA Storage
   - type: local
     level: storage
-    path: '/sstorage/COMMONDATA/OPER/CEMC/MESO_1KM/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/ORIG'
+    path: '/sstorage/COMMONDATA/OPER/CEMC/MESO_1KM/Prod-grib/{{ start_time_string }}/ORIG'
 
   # CEMC Storage
   - type: local
     level: storage
-    path: '{{ query_vars.storage_base }}/MESO_1KM/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/ORIG'
+    path: '{{ query_vars.storage_base }}/MESO_1KM/Prod-grib/{{ start_time_string }}/ORIG'

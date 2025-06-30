@@ -2,12 +2,13 @@ import datetime
 from typing import Dict, List, Union, Optional, Iterable, Callable
 from pathlib import Path
 
+import yaml
 import pandas as pd
 from jinja2 import Template
 
 
 def find_file(
-        config: Dict,
+        config_content: str,
         data_level: Union[str, List],
         start_time: Union[datetime.datetime, pd.Timestamp],
         forecast_time: pd.Timedelta,
@@ -20,16 +21,10 @@ def find_file(
 
     Parameters
     ----------
-    config
-        data source config dictionary. An example of config file:
+    config_content
+        config content string. An example of config file:
 
         .. code-block:: yaml
-
-            query:
-              system: cma_gfs_gmf
-              stream: oper
-              type: grib2
-              name: modelvar
 
             file_name: 'modelvar{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}.grb2'
 
@@ -56,8 +51,8 @@ def find_file(
     """
     query_vars = QueryVars()
 
-    for key in config["query"]:
-        setattr(query_vars, key, config["query"][key])
+    # for key in config["query"]:
+    #     setattr(query_vars, key, config["query"][key])
     for key in kwargs:
         setattr(query_vars, key, kwargs[key])
 
@@ -67,7 +62,11 @@ def find_file(
         setattr(query_vars, "obs_time", obs_time_vars)
 
     parse_template = generate_template_parser(time_vars, query_vars)
-    file_name = parse_template(config["file_name"])
+
+    parsed_config_content = parse_template(config_content)
+    config = yaml.safe_load(parsed_config_content)
+
+    file_name = config["file_name"]
     if debug:
         print("file name:", file_name)
     file_path = None
@@ -90,7 +89,7 @@ def find_file(
 
 
 def render_file_name(
-        config: dict,
+        config_content: str,
         start_time: Union[datetime.datetime, pd.Timestamp],
         forecast_time: Union[pd.Timedelta, str],
         obs_time: Optional[pd.Timedelta] = None,
@@ -98,10 +97,10 @@ def render_file_name(
 ):
     query_vars = QueryVars()
 
-    for key in config["query"]:
-        setattr(query_vars, key, config["query"][key])
-    for key in kwargs:
-        setattr(query_vars, key, kwargs[key])
+    # for key in config["query"]:
+    #     setattr(query_vars, key, config["query"][key])
+    # for key in kwargs:
+    #     setattr(query_vars, key, kwargs[key])
 
     time_vars = TimeVars(start_time=start_time, forecast_time=forecast_time)
     if obs_time is not None:
@@ -109,15 +108,18 @@ def render_file_name(
         setattr(query_vars, "obs_time", obs_time_vars)
 
     parse_template = generate_template_parser(time_vars, query_vars)
+    parsed_config_content = parse_template(config_content)
+    config = yaml.safe_load(parsed_config_content)
+
     if "file_name" in config:
-        file_name = parse_template(config["file_name"])
+        file_name = config["file_name"]
     elif "file_names" in config:
-        file_name = parse_template(config["file_names"][0])
+        file_name = config["file_names"][0]
     return file_name
 
 
 def find_files(
-        config: dict,
+        config_content: str,
         data_level: Union[str, List],
         start_time: Union[datetime.datetime, pd.Timestamp],
         forecast_time: pd.Timedelta,
@@ -126,14 +128,17 @@ def find_files(
 ) -> Optional[List[Path]]:
     query_vars = QueryVars()
 
-    for key in config["query"]:
-        setattr(query_vars, key, config["query"][key])
-    for key in kwargs:
-        setattr(query_vars, key, kwargs[key])
+    # for key in config["query"]:
+    #     setattr(query_vars, key, config["query"][key])
+    # for key in kwargs:
+    #     setattr(query_vars, key, kwargs[key])
 
     time_vars = TimeVars(start_time=start_time, forecast_time=forecast_time)
 
     parse_template = generate_template_parser(time_vars, query_vars)
+    parsed_config_content = parse_template(config_content)
+    config = yaml.safe_load(parsed_config_content)
+
     file_name = parse_template(config["file_name"])
     file_paths = []
     paths = config["paths"]
@@ -143,7 +148,7 @@ def find_files(
             continue
 
         path_template = a_path_object["path"]
-        current_dir_path = Path(parse_template(path_template))
+        current_dir_path = Path(path_template)
         current_files = current_dir_path.glob(file_name)
         file_paths.extend([f for f in current_files if f.is_file()])
 
@@ -175,10 +180,6 @@ def check_data_level(data_level, required_level: Optional[Union[str, Iterable]])
         raise ValueError(f"level is not supported {required_level}")
 
 
-def get_hour(forecast_time: pd.Timedelta) -> int:
-    return int(forecast_time.seconds/3600) + forecast_time.days * 24
-
-
 class QueryVars:
     def __init__(self):
         self.storage_base = None
@@ -188,31 +189,74 @@ class TimeVars:
     def __init__(
             self,
             start_time: Union[datetime.datetime, pd.Timestamp],
-            forecast_time: Union[pd.Timedelta, str] = pd.Timedelta(hours=0)
+            forecast_time: pd.Timedelta = pd.Timedelta(hours=0)
     ):
-        self.Year = start_time.strftime("%Y")
-        self.Month = start_time.strftime("%m")
-        self.Day = start_time.strftime("%d")
-        self.Hour = start_time.strftime("%H")
-        self.Minute = start_time.strftime("%M")
+        self.start_time = start_time
+        self.forecast_time = forecast_time
 
-        if isinstance(forecast_time, pd.Timedelta):
-            self.Forecast = f"{get_hour(forecast_time):03}"
-        else:
-            self.Forecast = forecast_time
+        self.year = start_time.strftime("%Y")
+        self.month = start_time.strftime("%m")
+        self.day = start_time.strftime("%d")
+        self.hour = start_time.strftime("%H")
+        self.minute = start_time.strftime("%M")
 
-        start_date_time_4dvar = start_time - datetime.timedelta(hours=3)
-        self.Year4DV = start_date_time_4dvar.strftime("%Y")
-        self.Month4DV = start_date_time_4dvar.strftime("%m")
-        self.Day4DV = start_date_time_4dvar.strftime("%d")
-        self.Minute4DV = start_time.strftime("%M")
-        self.Hour4DV = start_date_time_4dvar.strftime("%H")
+        self.forecast_hour = f"{get_forecast_hour(forecast_time):03}"
+        self.forecast_minute = f"{get_forecast_minute(forecast_time):02}"
 
 
 def generate_template_parser(time_vars: Dict, query_vars: Dict) -> Callable:
 
     def parse_template(template_content):
         template = Template(template_content)
-        return template.render(time_vars=time_vars, query_vars=query_vars)
+        return template.render(
+            time_vars=time_vars,
+            query_vars=query_vars,
+            get_year=get_year,
+            get_month=get_month,
+            get_day=get_day,
+            get_hour=get_hour,
+            get_minute=get_minute,
+            get_forecast_hour=get_forecast_hour,
+            get_forecast_minute=get_forecast_minute,
+            generate_start_time=generate_start_time,
+            generate_forecast_time=generate_forecast_time,
+        )
 
     return parse_template
+
+
+def get_year(start_time: pd.Timestamp) -> str:
+    return f"{start_time.year:04d}"
+
+
+def get_month(start_time: pd.Timestamp) -> str:
+    return f"{start_time.month:02d}"
+
+
+def get_day(start_time: pd.Timestamp) -> str:
+    return f"{start_time.day:02d}"
+
+
+def get_hour(start_time: pd.Timestamp) -> str:
+    return f"{start_time.hour:02d}"
+
+
+def get_minute(start_time: pd.Timestamp) -> str:
+    return f"{start_time.minute:02d}"
+
+
+def get_forecast_hour(forecast_time: pd.Timedelta) -> int:
+    return int(forecast_time.seconds/3600) + forecast_time.days * 24
+
+
+def get_forecast_minute(forecast_time: pd.Timedelta) -> int:
+    return forecast_time.components.minutes
+
+
+def generate_start_time(star_time: pd.Timestamp, hour: int):
+    return star_time + pd.Timedelta(hours=hour)
+
+
+def generate_forecast_time(forecast_time: pd.Timedelta, time_interval: str):
+    t = pd.to_timedelta(time_interval)
+    return forecast_time + t

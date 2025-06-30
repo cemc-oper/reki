@@ -4,37 +4,39 @@ query:
   type: grib2
   name: modelvar
 
-file_name: 'modelvar{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}{{ time_vars.Forecast }}.grb2'
+{% set start_time_string = time_vars.year ~ time_vars.month ~ time_vars.day ~ time_vars.hour %}
+
+file_name: 'modelvar{{ start_time_string }}{{ time_vars.forecast_hour }}.grb2'
 
 paths:
   # HPC2023
   - type: local
     level: archive
-    path: '/g3/COMMONDATA/OPER/CEMC/GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/MODELVAR'
+    path: '/g3/COMMONDATA/OPER/CEMC/GFS_GMF/Prod-grib/{{ start_time_string }}/MODELVAR'
 
   # CMA-PI
   - type: local
     level: archive
-    path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/MODELVAR'
+    path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/{{ start_time_string }}/MODELVAR'
 
   # CMA Storage
   - type: local
     level: storage
-    path: '/sstorage/COMMONDATA/OPER/CEMC/GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/MODELVAR'
+    path: '/sstorage/COMMONDATA/OPER/CEMC/GFS_GMF/Prod-grib/{{ start_time_string }}/MODELVAR'
 
   - type: local
     level: storage
-    path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/MODELVAR'
+    path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/{{ start_time_string }}/MODELVAR'
 
   - type: local
     level: storage
-    path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+    path: '/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GFS_GMF/Prod-grib/{{ start_time_string }}'
 
   # CEMC Storage
   - type: local
     level: storage
-    path: '{{ query_vars.storage_base }}/GRAPES_GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}/MODELVAR'
+    path: '{{ query_vars.storage_base }}/GRAPES_GFS_GMF/Prod-grib/{{ start_time_string }}/MODELVAR'
 
   - type: local
     level: storage
-    path: '{{ query_vars.storage_base }}/GRAPES_GFS_GMF/Prod-grib/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}'
+    path: '{{ query_vars.storage_base }}/GRAPES_GFS_GMF/Prod-grib/{{ start_time_string }}'

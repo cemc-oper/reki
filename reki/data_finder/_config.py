@@ -1,10 +1,12 @@
 from pathlib import Path
-from typing import Dict, Union, Optional
-
-import yaml
+from typing import Union, Optional
 
 
-def find_config(config_dir: Union[str, Path], data_type: str, data_class: str = "od") -> Optional[Path]:
+def find_config(
+        config_dir: Union[str, Path],
+        data_type: str,
+        data_class: str = "od"
+) -> Optional[Path]:
     """
     Find config YAML for some data type by combine ``config_dir``, ``data_type`` and ".yaml".
 
@@ -43,7 +45,7 @@ def find_config(config_dir: Union[str, Path], data_type: str, data_class: str = 
         return None
 
 
-def load_config(config_file_path: Union[str, Path]) -> Dict:
+def load_config(config_file_path: Union[str, Path]) -> str:
     """
     load config dict from config file.
 
@@ -53,12 +55,13 @@ def load_config(config_file_path: Union[str, Path]) -> Dict:
 
     Returns
     -------
-    Dict
-        config dict object.
+    str
+        config content
     """
     with open(config_file_path) as config_file:
-        config = yaml.safe_load(config_file)
-        return config
+        config_content = config_file.read()
+
+    return config_content
 
 
 def get_default_local_config_path() -> Path:
