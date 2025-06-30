@@ -59,7 +59,7 @@ def wis():
     ]
     with open(metadata_file_path, "w") as f:
         yaml.safe_dump(metadata, f, default_flow_style=False)
-    click.echo("writing metadata file...")
+    click.echo("writing metadata file...done")
 
     click.echo("downloading file...")
     download_file(url=file_url, file_path=file_path)

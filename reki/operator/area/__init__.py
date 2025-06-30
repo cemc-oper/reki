@@ -35,7 +35,7 @@ def extract_region(
             longitude=slice(start_longitude, end_longitude),
             latitude=slice(start_latitude, end_latitude)
         )
-    elif latitude_step is not None and latitude_step is not None:
+    elif longitude_step is not None and latitude_step is not None:
         orig_lat_step = data.latitude[1] - data.latitude[0]
         orig_lon_step = data.longitude[1] - data.longitude[0]
         return data.sel(
