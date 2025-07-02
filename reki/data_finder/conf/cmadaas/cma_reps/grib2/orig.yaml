@@ -4,9 +4,13 @@ query:
   type: grib2
   name: orig
 
-file_name: "Z_NAFP_C_BABJ_{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}{{ time_vars.Hour }}0000_P_NWPC-GRAPES-REPS-CN-{{ time_vars.Forecast }}00-m{{ '%.3d' | format(query_vars.number) }}.grib2"
+{% set start_time_string = time_vars.year ~ time_vars.month ~ time_vars.day ~ time_vars.hour %}
+{% set start_date_string = time_vars.year ~ time_vars.month ~ time_vars.day %}
+
+
+file_name: "Z_NAFP_C_BABJ_{{ start_time_string }}0000_P_NWPC-GRAPES-REPS-CN-{{ time_vars.forecast_hour }}00-m{{ '%.3d' | format(query_vars.number) }}.grib2"
 
 paths:
   - type: cmadaas
     level: archive
-    path: '/CMADAAS/ORIG-DATA/NAFP/BABJ/CEMC/CMA-REPS/FD-PSL/{{ time_vars.Year }}/{{ time_vars.Year }}{{ time_vars.Month }}{{ time_vars.Day }}'
+    path: '{{ query_vars.storage_base }}/ORIG-DATA/NAFP/CMA-REPS/{{ time_vars.year }}/{{ start_date_string }}'

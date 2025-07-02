@@ -15,6 +15,7 @@ def storage_base():
 @dataclass
 class Query:
     data_type: str
+    number: int = 0
 
 
 @dataclass
@@ -125,6 +126,104 @@ def test_cma_tym_grib2_orig(last_two_day, forecast_time_24h, storage_base, test_
         start_time=start_time,
         forecast_time=forecast_time,
         storage_base=storage_base,
+        debug=True,
+    )
+
+    assert data_path is not None
+    assert data_path == expected_data_path
+
+
+@pytest.mark.parametrize(
+    "test_case",
+    [
+        TestCase(
+            Query(data_type="cma_geps/grib2/orig", number=0),
+            expected_file_path_template="{storage_base}/DATA/NAFP/NMC/GRAPES-GEPS/{year}/{start_date_label}/"
+                                        "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-GEPS-GLB-{forecast_hour_label}00-m000.grib2"
+        ),
+        TestCase(
+            Query(data_type="cma_geps/grib2/orig", number=4),
+            expected_file_path_template="{storage_base}/DATA/NAFP/NMC/GRAPES-GEPS/{year}/{start_date_label}/"
+                                        "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-GEPS-GLB-{forecast_hour_label}00-m004.grib2"
+        ),
+        TestCase(
+            Query(data_type="cma_geps/grib2/orig", number=14),
+            expected_file_path_template="{storage_base}/DATA/NAFP/NMC/GRAPES-GEPS/{year}/{start_date_label}/"
+                                        "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-GEPS-GLB-{forecast_hour_label}00-m014.grib2"
+        ),
+    ]
+)
+def test_cma_geps_grib2_orig(last_two_day, forecast_time_24h, storage_base, test_case):
+    data_type = test_case.query.data_type
+    file_path = test_case.expected_file_path_template
+    start_time = last_two_day
+    forecast_time = forecast_time_24h
+    expected_data_path = Path(
+        fill_path(
+            file_path=file_path,
+            start_time=start_time,
+            forecast_time=forecast_time,
+            storage_base=storage_base,
+            number=test_case.query.number,
+        )
+    )
+
+    data_path = find_local_file(
+        data_class="cmadaas",
+        data_type=data_type,
+        start_time=start_time,
+        forecast_time=forecast_time,
+        storage_base=storage_base,
+        number=test_case.query.number,
+        debug=True,
+    )
+
+    assert data_path is not None
+    assert data_path == expected_data_path
+
+
+@pytest.mark.parametrize(
+    "test_case",
+    [
+        TestCase(
+            Query(data_type="cma_reps/grib2/orig", number=0),
+            expected_file_path_template="{storage_base}/ORIG-DATA/NAFP/CMA-REPS/{year}/{start_date_label}/"
+                                        "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-REPS-CN-{forecast_hour_label}00-m000.grib2"
+        ),
+        TestCase(
+            Query(data_type="cma_reps/grib2/orig", number=4),
+            expected_file_path_template="{storage_base}/ORIG-DATA/NAFP/CMA-REPS/{year}/{start_date_label}/"
+                                        "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-REPS-CN-{forecast_hour_label}00-m004.grib2"
+        ),
+        TestCase(
+            Query(data_type="cma_reps/grib2/orig", number=14),
+            expected_file_path_template="{storage_base}/ORIG-DATA/NAFP/CMA-REPS/{year}/{start_date_label}/"
+                                        "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-REPS-CN-{forecast_hour_label}00-m014.grib2"
+        ),
+    ]
+)
+def test_cma_reps_grib2_orig(last_two_day, forecast_time_24h, storage_base, test_case):
+    data_type = test_case.query.data_type
+    file_path = test_case.expected_file_path_template
+    start_time = last_two_day + pd.Timedelta(hours=6)
+    forecast_time = forecast_time_24h
+    expected_data_path = Path(
+        fill_path(
+            file_path=file_path,
+            start_time=start_time,
+            forecast_time=forecast_time,
+            storage_base=storage_base,
+            number=test_case.query.number,
+        )
+    )
+
+    data_path = find_local_file(
+        data_class="cmadaas",
+        data_type=data_type,
+        start_time=start_time,
+        forecast_time=forecast_time,
+        storage_base=storage_base,
+        number=test_case.query.number,
         debug=True,
     )
 
