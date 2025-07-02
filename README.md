@@ -34,7 +34,7 @@ Please install ecCodes through conda or other package source.
 `load_message_from_file` from `reki.format.grib.eccodes` returns a GRIB handler.
 Users can use it to get attrs or values with functions from [eccodes](https://github.com/ecmwf/eccodes-python) .
 
-For example, load 850hPa temperature from GRAPES GFS and get values from the returned message.
+For example, load 850hPa temperature from CMA-GFS and get values from the returned message.
 
 ```pycon
 >>> from reki.format.grib.eccodes import load_message_from_file
@@ -176,7 +176,7 @@ with option `engine="cfgrib"`.
 
 Please install cfgrib before using this engine.
 
-Read 850hPa temperature from a GRAEPS GFS grib2 file using `shortName` key `t`.
+Read 850hPa temperature from a CMA-GFS grib2 file using `shortName` key `t`.
 ( `shortName` is an ecCodes key. )
 
 ```pycon
@@ -219,6 +219,6 @@ See [cemc-data-guide](https://github.com/perillaroc/cemc-data-guide) project for
 
 ## LICENSE
 
-Copyright &copy; 2020-2024, developers at cemc-oper.
+Copyright &copy; 2020-2025, developers at cemc-oper.
 
 `reki` is licensed under [Apache License, Version 2.0](./LICENSE)
