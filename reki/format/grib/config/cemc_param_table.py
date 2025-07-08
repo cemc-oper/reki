@@ -77,9 +77,9 @@ qfxsfc,kg/(m2.s),Surface moisture flux,地表水汽通量,0.0,1.0,229.0,surface,
 qfx,kg/(m2.s),Surface moisture flux,地表水汽通量,0.0,1.0,229.0,surface,,1.0,,,,,True
 sw,m3/m3,Soil moisture,土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,,,,,False
 sw(0-10),,,0-10cm土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,0.0,106.0,0.1,,False
-sw(10-40),,,10-40cm土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,0.1,106.0,0.3,,False
-sw(40-100),,,40-100cm土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,0.3,106.0,0.6,,False
-sw(100-200),,,100-200cm土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,0.6,106.0,1.0,,False
+sw(10-40),,,10-40cm土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,0.1,106.0,0.4,,False
+sw(40-100),,,40-100cm土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,0.4,106.0,1.0,,False
+sw(100-200),,,100-200cm土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,1.0,106.0,2.0,,False
 wess,N/m2,West-east surface wind stress,东西向风应力,0.0,2.0,227.0,surface,,1.0,,,,,False
 nsss,N/m2,North-south surface wind stress,南北向风应力,0.0,2.0,228.0,surface,,1.0,,,,,False
 sweatidx,,Sweat index,强天气胁迫指数,0.0,7.0,5.0,surface,,1.0,,,,,False

@@ -72,9 +72,9 @@ qfxsfc,kg/(m2.s),Surface moisture flux,地表水汽通量,0.0,1.0,229.0,surface,
 qfx,kg/(m2.s),Surface moisture flux,地表水汽通量,0.0,1.0,229.0,surface,,1.0,,,,,True
 sw,m3/m3,Soil moisture,土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,,,,,False
 sw(0-10),,,0-10cm土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,0.0,106.0,0.1,,False
-sw(10-40),,,10-40cm土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,0.1,106.0,0.3,,False
-sw(40-100),,,40-100cm土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,0.3,106.0,0.6,,False
-sw(100-200),,,100-200cm土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,0.6,106.0,1.0,,False
+sw(10-40),,,10-40cm土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,0.1,106.0,0.4,,False
+sw(40-100),,,40-100cm土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,0.4,106.0,1.0,,False
+sw(100-200),,,100-200cm土壤湿度,0.0,1.0,0.0,depthBelowLandLayer,,106.0,1.0,106.0,2.0,,False
 wess,N/m2,West-east surface wind stress,东西向风应力,0.0,2.0,227.0,surface,,1.0,,,,,False
 nsss,N/m2,North-south surface wind stress,南北向风应力,0.0,2.0,228.0,surface,,1.0,,,,,False
 sweatidx,,Sweat index,强天气胁迫指数,0.0,7.0,5.0,surface,,1.0,,,,,False
@@ -102,7 +102,7 @@ shrmaxdir,degree,direction of maxium vertical wind shear,最大垂直风切变�
 shrmaxdir(0-600),,,0-600m最大垂直风切变的方向,0.0,2.0,238.0,heightAboveGroundLayer,600.0,103.0,600.0,103.0,0.0,,False
 srh,J/kg,Storm relative helicity,风暴螺旋度,0.0,7.0,8.0,,,,,,,,False
 srh(0-1000),,,0-1km垂直风暴螺旋度,0.0,7.0,8.0,heightAboveGroundLayer,1000.0,103.0,1000.0,103.0,0.0,,False
-srh(0-3000),,,0-3km垂直风暴螺旋度,0.0,7.0,8.0,heightAboveGroundLayer,3000.0,103.0,1000.0,103.0,0.0,,False
+srh(0-3000),,,0-3km垂直风暴螺旋度,0.0,7.0,8.0,heightAboveGroundLayer,3000.0,103.0,3000.0,103.0,0.0,,False
 uhmax,m2/s2,Updraught helicity,最大上升螺旋度,0.0,7.0,15.0,,,,,,,max,False
 uhmax(2000-5000),,,2-5km最大上升螺旋度,0.0,7.0,15.0,heightAboveGroundLayer,5000.0,103.0,5000.0,103.0,2000.0,max,False
 src,,Skin reservoir content  ,表面蓄水池含量,0.0,1.0,226.0,,,,,,,,False
