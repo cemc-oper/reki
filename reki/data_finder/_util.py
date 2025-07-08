@@ -139,7 +139,7 @@ def find_files(
     parsed_config_content = parse_template(config_content)
     config = yaml.safe_load(parsed_config_content)
 
-    file_name = parse_template(config["file_name"])
+    file_name = config["file_name"]
     file_paths = []
     paths = config["paths"]
     for a_path_object in paths:

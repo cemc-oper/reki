@@ -163,9 +163,9 @@ def get_local_file_name(
     elif obs_time is None:
         obs_time = start_time
 
-    config = load_config(config_file_path)
+    config_content = load_config(config_file_path)
     file_name = render_file_name(
-        config,
+        config_content,
         start_time,
         forecast_time,
         obs_time=obs_time,
