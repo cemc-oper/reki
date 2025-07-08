@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pytest
 import pandas as pd
 
@@ -31,3 +33,24 @@ def cma_gfs_grib2_orig_dir():
 @pytest.fixture
 def cma_gfs_grib2_modelvar_dir():
     return "/g3/COMMONDATA/OPER/CEMC/GFS_GMF/Prod-grib/{start_time_label}/MODELVAR"
+
+
+@pytest.fixture
+def meso_gfs_grib2_orig_dir():
+    return "/g3/COMMONDATA/OPER/CEMC/MESO_1KM/Prod-grib/{start_time_label}/ORIG"
+
+
+@pytest.fixture
+def meso_grib2_orig_file_path(meso_gfs_grib2_orig_dir, last_two_day, forecast_time_24h):
+    start_time_label = last_two_day.strftime("%Y%m%d%H")
+    forecast_hours = forecast_time_24h.total_seconds() / 3600
+    forecast_time_label = f"{int(forecast_hours):03d}"
+    return Path(
+        meso_gfs_grib2_orig_dir.format(
+            start_time_label=start_time_label,
+        ),
+        "rmf.hgra.{start_time_label}{forecast_time_label}.grb2".format(
+            start_time_label=start_time_label,
+            forecast_time_label=forecast_time_label,
+        ),
+    )

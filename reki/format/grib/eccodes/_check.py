@@ -43,7 +43,13 @@ def _check_message(
     level_value_conditions = get_level_value_conditions(level, level_type)
     conditions.update(level_value_conditions)
 
-    conditions.update(kwargs)
+    additional_conditions = {}
+    for key, expected_value in kwargs.items():
+        if ":" not in key:
+            key = get_key_with_type(key, expected_value)
+        additional_conditions[key] = expected_value
+
+    conditions.update(additional_conditions)
 
     return check_conditions(message_id, conditions)
 
@@ -131,10 +137,26 @@ def check_conditions(message_id, conditions: dict):
             return False
 
     for key, expected_value in current_condition_dict.items():
-        v = get_key_value_from_message(message_id, key)
+        try:
+            v = get_key_value_from_message(message_id, key)
+        except eccodes.KeyValueNotFoundError:
+            return False
         if not check_value(expected_value, v):
             return False
     return True
+
+
+def get_key_with_type(key: str, value: Union[str, int, float, list]) -> str:
+    if isinstance(value, str):
+        return key + ":str"
+    elif isinstance(value, int):
+        return key + ":int"
+    elif isinstance(value, float):
+        return key + ":float"
+    elif isinstance(value, list):
+        return get_key_with_type(key, value[0])
+    else:
+        raise ValueError(f"value is not supported: {value}")
 
 
 def get_level_value(message_id, name: str = "First"):
