@@ -215,7 +215,7 @@ Attributes: (12/32)
 
 ## Examples
 
-See [cemc-data-guide](https://github.com/perillaroc/cemc-data-guide) project for more examples.
+See [cemc-oper/data-notebook](https://github.com/cemc-oper/data-notebook) project for more examples.
 
 ## LICENSE
 
