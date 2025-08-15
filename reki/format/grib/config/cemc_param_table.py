@@ -148,7 +148,7 @@ rainpr,mm,Process precipitation,过程降水量,0.0,1.0,234.0,,,,,,,,False
 rainh,mm,Short time heavy precipitation,短时强降水,0.0,1.0,235.0,,,,,,,,False
 hail,mm,Hail,冰雹,0.0,1.0,236.0,,,,,,,,False
 raint,mm,Precipitation of typhoon,台风降水,0.0,1.0,237.0,,,,,,,,False
-light,,Lightning,闪电,0.0,1.0,238.0,,,,,,,,False
+light,,Lightning,雷电概率,0.0,1.0,238.0,,,,,,,,False
 htdn,,Number of high temperature days ,高温日数,0.0,0.0,226.0,,,,,,,,False
 ata,K,Average temperature anomaly,平均气温距平,0.0,0.0,227.0,,,,,,,,False
 tn,K,Minimum of air temperature for NMC medium-term prediction only,最低气温(仅限NMC使用),0.0,0.0,228.0,,,,,,,,False
@@ -174,14 +174,16 @@ wi,,Wind index,大风指数,0.0,2.0,236.0,surface,,1.0,,,,,False
 hi,,Hail index ,冰雹指数,0.0,1.0,239.0,surface,,1.0,,,,,False
 hib,m,Height of inversion base ,逆温层底高度,0.0,3.0,227.0,,,,,,,,False
 II,oC/hm,Inversion intensity,逆温强度,0.0,1.0,240.0,,,,,,,,False
-dcape,J/kg,Down convective available potential energy,下沉有效位能,0.0,7.0,224.0,,,,,,,,False
+dcape,J/kg,Down convective available potential energy,下沉对流有效位能,0.0,7.0,224.0,,,,,,,,False
 ssi,,Storm strength index,风暴强度指数,0.0,7.0,225.0,,,,,,,,False
 si,K,Showalter index,沙氏指数,0.0,7.0,13.0,surface,,1.0,,,,,False
 asi,,Atmospheric stability index,大气稳定度指数,0.0,7.0,226.0,,,,,,,,False
-gust,m/s,Wind speed (gust),,0.0,2.0,22.0,,,,,,,,False
-cldt,m,cloud top,,0.0,6.0,12.0,,,,,,,,False
-cldb,m,cloud base,,0.0,6.0,11.0,,,,,,,,False
-ceiling,m,ceiling,,0.0,6.0,13.0,,,,,,,,False
+gust,m/s,Wind speed (gust),阵风风速,0.0,2.0,22.0,,,,,,,,False
+cldt,m,cloud top,云顶高度,0.0,6.0,12.0,,,,,,,,False
+cldb,m,cloud base,云底高度,0.0,6.0,11.0,,,,,,,,False
+ceiling,m,ceiling,云幂高度,0.0,6.0,13.0,,,,,,,,False
+fogh,m,height of fog top,雾顶高度,0.0,19.0,224.0,surface,,1.0,,,,,False
+fogod,,fog optical,光学厚度,0.0,19.0,225.0,surface,,1.0,,,,,False
 """
 
 
