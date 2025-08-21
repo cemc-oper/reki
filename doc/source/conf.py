@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'reki'
-copyright = '2021-2023, CMA Earth System Modeling And Prediction Centre (CEMC/CMA)'
+copyright = '2021-2025, CMA Earth System Modeling And Prediction Centre (CEMC/CMA)'
 author = 'developers at cemc-oper'
 
 
