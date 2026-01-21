@@ -23,13 +23,16 @@ u,m/s,U-component of wind,东西风,0,2,2,,,,,,,,FALSE
 u10m,m/s,V-component of wind at 10 meters height,10米东西风,0,2,2,heightAboveGround,10,103,10,,,instant,FALSE
 u10mmax#1,m/s,Maximum of u10m during 1 hours,输出间隔内最大10米东西风,0,2,2,heightAboveGround,10,103,10,,,max,FALSE
 u10mmax#3,m/s,Maximum of u10m during 3 hours,3小时最大10米东西风,0,2,2,heightAboveGround,10,103,10,,,max,FALSE
+u10mmax,m/s,Maximum of u10m,最大10米东西风,0,2,2,heightAboveGround,10,103,10,,,max,FALSE
 v,m/s,V-component of wind,南北风,0,2,3,,,,,,,,FALSE
 v10m,m/s,V-component of wind at 10 meters height,10米南北风,0,2,3,heightAboveGround,10,103,10,,,instant,FALSE
 v10mmax#1,m/s,Maximim of v10m during 1 hours,输出间隔内10米南北风,0,2,3,heightAboveGround,10,103,10,,,max,FALSE
 v10mmax#3,m/s,Maximim of v10m during 3 hours,3小时最大10米南北风,0,2,3,heightAboveGround,10,103,10,,,max,FALSE
+v10mmax,m/s,Maximim of v10m,最大10米南北风,0,2,3,heightAboveGround,10,103,10,,,max,FALSE
 w,m/s,Vertical velocity (geometric),等高面垂直速度,0,2,9,,,100,,,,,FALSE
 wmax#1,m/s,Maximum of w during 1 hours,1小时等高面最大垂直速度,0,2,9,,,100,,,,max,FALSE
 wmax#3,m/s,Maximum of w during 3 hours,3小时等高面最大垂直速度,0,2,9,,,100,,,,max,FALSE
+wmax,m/s,Maximum of w,等高面最大垂直速度,0,2,9,,,100,,,,max,FALSE
 vor,s-1,Relative vorticity,涡度,0,2,12,,,,,,,,FALSE
 div,s-1,Relative divergence,散度,0,2,13,,,,,,,,FALSE
 q,kg/kg,Specific humidity,比湿,0,1,0,,,,,,,,FALSE
