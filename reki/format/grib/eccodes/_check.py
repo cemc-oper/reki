@@ -1,4 +1,4 @@
-from typing import Union, Dict, List, Optional
+from typing import Union, Optional, Literal, Type
 import math
 
 import eccodes
@@ -6,9 +6,9 @@ import eccodes
 
 def _check_message(
         message_id,
-        parameter: Optional[Union[str, Dict]],
-        level_type: Optional[Union[str, List[str]]],
-        level: Optional[Union[int, List[int], Dict]],
+        parameter: Optional[Union[str, dict]],
+        level_type: Optional[Union[str, list[str]]],
+        level: Optional[Union[int, list[int], dict]],
         **kwargs,
 ) -> bool:
     """
@@ -30,7 +30,7 @@ def _check_message(
 
     Returns
     -------
-
+    bool
     """
     conditions = dict()
 
@@ -46,7 +46,7 @@ def _check_message(
     additional_conditions = {}
     for key, expected_value in kwargs.items():
         if ":" not in key:
-            key = get_key_with_type(key, expected_value)
+            key = combine_key_name_with_type(key, expected_value)
         additional_conditions[key] = expected_value
 
     conditions.update(additional_conditions)
@@ -54,7 +54,9 @@ def _check_message(
     return check_conditions(message_id, conditions)
 
 
-def get_parameter_conditions(parameter: Optional[Union[str, Dict]]) -> dict[str, Union[int, float, str]]:
+def get_parameter_conditions(
+        parameter: Optional[Union[str, dict]]
+) -> dict[str, Union[int, float, str]]:
     if parameter is None:
         return dict()
     # parameter = _convert_parameter(parameter)
@@ -62,7 +64,7 @@ def get_parameter_conditions(parameter: Optional[Union[str, Dict]]) -> dict[str,
         return {
             "shortName": parameter
         }
-    elif isinstance(parameter, Dict):
+    elif isinstance(parameter, dict):
         return parameter
     else:
         raise ValueError(f"parameter is not supported: {parameter}")
@@ -88,8 +90,8 @@ def get_level_type_conditions(
 
 
 def get_level_value_conditions(
-        level: Optional[Union[int, float, List[int], Dict]],
-        level_type: Union[str, Dict] = None
+        level: Optional[Union[int, float, list[int], dict]],
+        level_type: Union[str, dict] = None
 ) -> dict[str, Union[int, float, str, list]]:
     if level is None:
         return dict()
@@ -98,11 +100,11 @@ def get_level_value_conditions(
         return {
             "level": level
         }
-    elif isinstance(level, List):
+    elif isinstance(level, list):
         return {
             "level": level
         }
-    elif isinstance(level, Dict):
+    elif isinstance(level, dict):
         return level
     elif level == "all":
         return dict()
@@ -124,7 +126,7 @@ def check_conditions(message_id, conditions: dict):
             return False
 
     if "level" in current_condition_dict:
-        message_level = get_key_value_from_message(message_id, "level", ktype=float)
+        message_level = get_grib_key_value(message_id, "level", ktype=float)
         # check for `pl` using unit hPa.
         # WARNING: This may be changed.
         if "typeOfFirstFixedSurface:int" in conditions and conditions["typeOfFirstFixedSurface:int"] == 100:
@@ -138,7 +140,7 @@ def check_conditions(message_id, conditions: dict):
 
     for key, expected_value in current_condition_dict.items():
         try:
-            v = get_key_value_from_message(message_id, key)
+            v = get_grib_key_value(message_id, key)
         except eccodes.KeyValueNotFoundError:
             return False
         if not check_value(expected_value, v):
@@ -146,7 +148,22 @@ def check_conditions(message_id, conditions: dict):
     return True
 
 
-def get_key_with_type(key: str, value: Union[str, int, float, list]) -> str:
+def combine_key_name_with_type(key: str, value: Union[str, int, float, list]) -> str:
+    """
+    combine key name with type according to value.
+
+    Parameters
+    ----------
+    key: str
+        key name
+    value: Union[str, int, float, list]
+        value
+
+    Returns
+    -------
+    str
+        key name with type
+    """
     if isinstance(value, str):
         return key + ":str"
     elif isinstance(value, int):
@@ -154,20 +171,40 @@ def get_key_with_type(key: str, value: Union[str, int, float, list]) -> str:
     elif isinstance(value, float):
         return key + ":float"
     elif isinstance(value, list):
-        return get_key_with_type(key, value[0])
+        return combine_key_name_with_type(key, value[0])
     else:
         raise ValueError(f"value is not supported: {value}")
 
 
-def get_level_value(message_id, name: str = "First"):
-    f = get_key_value_from_message(message_id, f"scaleFactorOf{name}FixedSurface:float")
-    v = get_key_value_from_message(message_id, f"scaledValueOf{name}FixedSurface:float")
+def get_level_value(message_id, name: Literal['First', 'Second'] = "First"):
+    f = get_grib_key_value(message_id, f"scaleFactorOf{name}FixedSurface:float")
+    v = get_grib_key_value(message_id, f"scaledValueOf{name}FixedSurface:float")
     level = math.pow(10, -1 * f) * v
     return level
 
 
-def get_key_value_from_message(message_id, key: str, ktype=None):
-    if ":" in key:
+def get_grib_key_value(
+        message_id,
+        key: str,
+        ktype: Optional[Type[int], Type[float], Type[str]] = None,
+) -> Union[str, int, float]:
+    """
+    Get value of GRIB key.
+
+    Parameters
+    ----------
+    message_id
+    key
+        key name, or key name and type, e.g. "level", "level:float"
+    ktype
+        key type, if set, type in key is ignored.
+
+    Returns
+    -------
+    Union[str, int, float]
+        value of GRIB key
+    """
+    if ":" in key and ktype is None:
         keys = key.split(":")
         key = keys[0]
         key_type = keys[1]
@@ -179,6 +216,7 @@ def get_key_value_from_message(message_id, key: str, ktype=None):
             ktype = float
         else:
             raise ValueError(f"key_type is not supported: {key_type}")
+
     return eccodes.codes_get(message_id, key, ktype=ktype)
 
 

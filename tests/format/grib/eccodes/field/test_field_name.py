@@ -92,7 +92,7 @@ def test_parameter_cemc_param_db(grib2_gfs_basic_file_path, test_case):
                 field_name=None,
             ),
             expected_grib_key_count=599,
-            expected_field_name="0_2_224"
+            expected_field_name="voradv"
         ),
         TestCase(
             query=QueryOption(
@@ -111,7 +111,7 @@ def test_parameter_cemc_param_db(grib2_gfs_basic_file_path, test_case):
                 field_name=None
             ),
             expected_grib_key_count=36,
-            expected_field_name="0_2_227"
+            expected_field_name="wess"
         ),
         TestCase(
             query=QueryOption(
@@ -129,7 +129,7 @@ def test_parameter_cemc_param_db(grib2_gfs_basic_file_path, test_case):
                 field_name=None,
             ),
             expected_grib_key_count=10,
-            expected_field_name="sulwrf",
+            expected_field_name="gulw",
         ),
         TestCase(
             query=QueryOption(
