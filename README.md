@@ -3,7 +3,7 @@
 ![GitHub Release](https://img.shields.io/github/v/release/cemc-oper/reki)
 ![PyPI - Version](https://img.shields.io/pypi/v/reki)
 [![Documentation Status](https://readthedocs.org/projects/reki/badge/?version=latest)](https://reki.readthedocs.io/zh_CN/latest/?badge=latest)
-![GitHub License](https://img.shields.io/github/license/cemc-oper/cedarkit-maps)
+![GitHub License](https://img.shields.io/github/license/cemc-oper/reki)
 ![GitHub Action Workflow Status](https://github.com/cemc-oper/reki/actions/workflows/ci.yaml/badge.svg)
 
 A data preparation tool for meteorological data in CEMC/CMA.
