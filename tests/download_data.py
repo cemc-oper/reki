@@ -1,123 +1,21 @@
+"""
+Download test data for reki using cedarkit-test-data.
+"""
 import shutil
 from pathlib import Path
-from urllib.parse import urlparse
 
-import yaml
-from tqdm import tqdm
-import requests
-import pandas as pd
 import click
+import pandas as pd
 
-gfs_base_url_template = "http://data.wis.cma.cn/DCPC_WMC_BJ/open/nwp/gmf_gra/t{start_hour_str}00/f0_f240_6h/"
-gfs_file_name_template = "Z_NAFP_C_BABJ_{start_time_str}0000_P_NWPC-GRAPES-GFS-GLB-{forecast_hour_str}00.grib2"
-
-gfs_base_path_template = "{storage_base}/DATA/NAFP/NMC/GRAPES-GFS-GLB/{start_year_str}/{start_date_str}/"
+from cedarkit_test_data.downloader import download_gfs_data
 
 
-@click.group()
-def cli():
-    pass
-
-
-@cli.command("wis")
-def wis():
-    click.echo("This tool is used to download test data for reki from Internet.")
-    start_time = pd.Timestamp.utcnow().floor(freq="D") - pd.Timedelta(days=1)
-
-    data_root_dir = Path(__file__).parent / "data"
-    data_root_dir.mkdir(exist_ok=True)
-
-    click.echo("creating gfs_basic directory...")
-    gfs_basic_dir = data_root_dir / "gfs_basic"
-    gfs_basic_dir.mkdir(exist_ok=True)
-    click.echo("creating gfs_basic directory...done")
-
-    click.echo("deleting everything in gfs_basic directory...")
-    clear_directory(gfs_basic_dir)
-    click.echo("deleting everything in gfs_basic directory...done")
-
-    forecast_time = pd.Timedelta(hours=24)
-    file_url = get_gfs_file_url(start_time, forecast_time)
-    click.echo(f"file to be copied: {file_url}")
-
-    parsed_url = urlparse(file_url)
-    path = parsed_url.path
-    file_name = path.rstrip('/').split('/')[-1]
-    file_path = gfs_basic_dir / file_name
-    click.echo(f"file is downloaded to: {file_path}")
-
-    click.echo("writing metadata file...")
-    metadata_file_path = gfs_basic_dir / "metadata.yaml"
-    metadata = [
-        {
-            "file_name": file_name,
-            "system": "cma_gfs",
-            "start_time": start_time.strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "forecast_time": forecast_time.isoformat(),
-            "source": "wis",
-        }
-    ]
-    with open(metadata_file_path, "w") as f:
-        yaml.safe_dump(metadata, f, default_flow_style=False)
-    click.echo("writing metadata file...done")
-
-    click.echo("downloading file...")
-    download_file(url=file_url, file_path=file_path)
-    click.echo("downloading file...done")
-
-
-@cli.command("music-dir")
-@click.option("--storage-base", required=True, help="storage base directory, such as M:")
-def music_dir(storage_base: str):
-    click.echo("This tool is used to copy test data from mounted directory by music-dir app.")
-    start_time = pd.Timestamp.utcnow().floor(freq="D") - pd.Timedelta(days=1)
-
-    data_root_dir = Path(__file__).parent / "data"
-    data_root_dir.mkdir(exist_ok=True)
-
-    click.echo("creating gfs_basic directory...")
-    gfs_basic_dir = data_root_dir / "gfs_basic"
-    gfs_basic_dir.mkdir(exist_ok=True)
-    click.echo("creating gfs_basic directory...done")
-
-    click.echo("deleting everything in gfs_basic directory...")
-    clear_directory(gfs_basic_dir)
-    click.echo("deleting everything in gfs_basic directory...done")
-
-    forecast_time = pd.Timedelta(hours=24)
-    source_file_path = get_gfs_file_path(start_time, forecast_time, storage_base=storage_base)
-    click.echo(f"file url to be downloaded: {source_file_path}")
-
-    file_name = source_file_path.name
-    file_path = gfs_basic_dir / file_name
-    click.echo(f"file is downloaded to: {file_path}")
-
-    click.echo("writing metadata file...")
-    metadata_file_path = gfs_basic_dir / "metadata.yaml"
-    metadata = [
-        {
-            "file_name": file_name,
-            "system": "cma_gfs",
-            "start_time": start_time.strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "forecast_time": forecast_time.isoformat(),
-            "source": "wis",
-        }
-    ]
-    with open(metadata_file_path, "w") as f:
-        yaml.safe_dump(metadata, f, default_flow_style=False)
-    click.echo("writing metadata file...")
-
-    click.echo("copying file...")
-    shutil.copy(source_file_path, file_path)
-    click.echo("copying file...done")
-
-
-def clear_directory(dir_path):
-    p = Path(dir_path)
-    if not p.is_dir():
+def clear_directory(dir_path: Path) -> None:
+    """Clear all contents in a directory."""
+    if not dir_path.is_dir():
         raise ValueError(f"{dir_path} is not a valid directory.")
 
-    for item in p.iterdir():
+    for item in dir_path.iterdir():
         try:
             if item.is_file() or item.is_symlink():
                 item.unlink()
@@ -127,54 +25,61 @@ def clear_directory(dir_path):
             print(f"error has found when deleting {item}: {e}")
 
 
-def get_gfs_file_url(start_time: pd.Timestamp, forecast_time: pd.Timedelta) -> str:
-    start_hour_str = start_time.strftime("%H")
-    start_time_str = start_time.strftime("%Y%m%d%H")
-    forecast_hour_str = f"{int(forecast_time / pd.Timedelta(hours=1)):03}"
+@click.group()
+def cli():
+    pass
 
-    file_url = gfs_base_url_template.format(
-        start_hour_str=start_hour_str,
-    ) + gfs_file_name_template.format(
-        start_time_str=start_time_str,
-        forecast_hour_str=forecast_hour_str
+
+@cli.command("wis")
+def wis():
+    """Download test data from CMA WIS service."""
+    click.echo("This tool is used to download test data for reki from Internet.")
+
+    data_root_dir = Path(__file__).parent / "data"
+    gfs_basic_dir = data_root_dir / "gfs_basic"
+
+    click.echo("creating gfs_basic directory...")
+    gfs_basic_dir.mkdir(parents=True, exist_ok=True)
+    click.echo("creating gfs_basic directory...done")
+
+    click.echo("deleting everything in gfs_basic directory...")
+    clear_directory(gfs_basic_dir)
+    click.echo("deleting everything in gfs_basic directory...done")
+
+    click.echo("downloading file...")
+    file_path = download_gfs_data(
+        output_dir=gfs_basic_dir,
+        source="wis",
     )
-
-    return file_url
-
-
-def download_file(url: str, file_path: Path):
-    file_name = file_path.name
-    response = requests.head(url)
-    total_size = int(response.headers.get('content-length', 0))
-
-    with requests.get(url, stream=True) as r, open(file_path, 'wb') as f, tqdm(
-        total=total_size, unit='B', unit_scale=True, desc=file_name
-    ) as progress_bar:
-        for chunk in r.iter_content(chunk_size=1024):
-            if chunk:
-                f.write(chunk)
-                progress_bar.update(len(chunk))
+    click.echo(f"file is downloaded to: {file_path}")
+    click.echo("downloading file...done")
 
 
-def get_gfs_file_path(start_time: pd.Timestamp, forecast_time: pd.Timedelta, storage_base: str) -> Path:
-    start_year_str = start_time.strftime("%Y")
-    start_date_str = start_time.strftime("%Y%m%d")
-    start_time_str = start_time.strftime("%Y%m%d%H")
-    forecast_hour_str = f"{int(forecast_time / pd.Timedelta(hours=1)):03}"
+@cli.command("music-dir")
+@click.option("--storage-base", required=True, help="storage base directory, such as M:")
+def music_dir(storage_base: str):
+    """Copy test data from mounted directory by music-dir app."""
+    click.echo("This tool is used to copy test data from mounted directory by music-dir app.")
 
-    file_path = Path(
-        gfs_base_path_template.format(
-            start_year_str=start_year_str,
-            start_date_str=start_date_str,
-            storage_base=storage_base,
-        ),
-        gfs_file_name_template.format(
-            start_time_str=start_time_str,
-            forecast_hour_str=forecast_hour_str
-        ),
+    data_root_dir = Path(__file__).parent / "data"
+    gfs_basic_dir = data_root_dir / "gfs_basic"
+
+    click.echo("creating gfs_basic directory...")
+    gfs_basic_dir.mkdir(parents=True, exist_ok=True)
+    click.echo("creating gfs_basic directory...done")
+
+    click.echo("deleting everything in gfs_basic directory...")
+    clear_directory(gfs_basic_dir)
+    click.echo("deleting everything in gfs_basic directory...done")
+
+    click.echo("copying file...")
+    file_path = download_gfs_data(
+        output_dir=gfs_basic_dir,
+        source="music-dir",
+        storage_base=storage_base,
     )
-
-    return file_path
+    click.echo(f"file is downloaded to: {file_path}")
+    click.echo("copying file...done")
 
 
 if __name__ == '__main__':

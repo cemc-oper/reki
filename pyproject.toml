@@ -30,6 +30,8 @@ dependencies = [
     "xarray",
     "click",
     "tqdm",
+    "cfgrib",
+    "eccodes",
     'importlib-metadata; python_version<"3.8"',
 ]
 
@@ -39,9 +41,8 @@ Documentation = "https://reki.readthedocs.io"
 Repository = "https://github.com/cemc-oper/reki.git"
 
 [project.optional-dependencies]
-grib = ["cfgrib", "eccodes"]
 godas = ["protobuf", "requests"]
-test = ["pytest", "requests"]
+test = ["pytest", "requests", "cedarkit-test-data"]
 cov = ["pytest-cov", "codecov"]
 
 [tool.setuptools.packages.find]
@@ -54,3 +55,6 @@ include-package-data = true
 
 [tool.setuptools_scm]
 version_file = "reki/_version.py"
+
+[tool.uv.sources]
+cedarkit-test-data = { path = "../cedarkit-test-data", editable = true }

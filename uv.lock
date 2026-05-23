@@ -17,6 +17,28 @@ wheels = [
 ]
 
 [[package]]
+name = "cedarkit-test-data"
+source = { editable = "../cedarkit-test-data" }
+dependencies = [
+    { name = "click" },
+    { name = "pandas" },
+    { name = "pyyaml" },
+    { name = "requests" },
+    { name = "tqdm" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "click", specifier = ">=8.0" },
+    { name = "pandas", specifier = ">=1.5" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.0" },
+    { name = "pyyaml", specifier = ">=6.0" },
+    { name = "requests", specifier = ">=2.28" },
+    { name = "tqdm", specifier = ">=4.64" },
+]
+provides-extras = ["dev"]
+
+[[package]]
 name = "certifi"
 version = "2026.5.20"
 source = { registry = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple/" }
@@ -478,7 +500,9 @@ wheels = [
 name = "reki"
 source = { editable = "." }
 dependencies = [
+    { name = "cfgrib" },
     { name = "click" },
+    { name = "eccodes" },
     { name = "jinja2" },
     { name = "numpy" },
     { name = "pandas" },
@@ -496,21 +520,19 @@ godas = [
     { name = "protobuf" },
     { name = "requests" },
 ]
-grib = [
-    { name = "cfgrib" },
-    { name = "eccodes" },
-]
 test = [
+    { name = "cedarkit-test-data" },
     { name = "pytest" },
     { name = "requests" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "cfgrib", marker = "extra == 'grib'" },
+    { name = "cedarkit-test-data", marker = "extra == 'test'", editable = "../cedarkit-test-data" },
+    { name = "cfgrib" },
     { name = "click" },
     { name = "codecov", marker = "extra == 'cov'" },
-    { name = "eccodes", marker = "extra == 'grib'" },
+    { name = "eccodes" },
     { name = "importlib-metadata", marker = "python_full_version < '3.8'" },
     { name = "jinja2" },
     { name = "numpy" },
@@ -524,7 +546,7 @@ requires-dist = [
     { name = "tqdm" },
     { name = "xarray" },
 ]
-provides-extras = ["grib", "godas", "test", "cov"]
+provides-extras = ["godas", "test", "cov"]
 
 [[package]]
 name = "requests"
