@@ -42,6 +42,8 @@ Repository = "https://github.com/cemc-oper/reki.git"
 
 [project.optional-dependencies]
 godas = ["protobuf", "requests"]
+
+[dependency-groups]
 test = ["pytest", "requests", "cedarkit-test-data"]
 cov = ["pytest-cov", "codecov"]
 

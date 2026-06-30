@@ -31,12 +31,13 @@ dependencies = [
 requires-dist = [
     { name = "click", specifier = ">=8.0" },
     { name = "pandas", specifier = ">=1.5" },
-    { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.0" },
     { name = "pyyaml", specifier = ">=6.0" },
     { name = "requests", specifier = ">=2.28" },
     { name = "tqdm", specifier = ">=4.64" },
 ]
-provides-extras = ["dev"]
+
+[package.metadata.requires-dev]
+test = [{ name = "pytest", specifier = ">=7.0" }]
 
 [[package]]
 name = "certifi"
@@ -512,13 +513,15 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
-cov = [
-    { name = "codecov" },
-    { name = "pytest-cov" },
-]
 godas = [
     { name = "protobuf" },
     { name = "requests" },
+]
+
+[package.dev-dependencies]
+cov = [
+    { name = "codecov" },
+    { name = "pytest-cov" },
 ]
 test = [
     { name = "cedarkit-test-data" },
@@ -528,25 +531,31 @@ test = [
 
 [package.metadata]
 requires-dist = [
-    { name = "cedarkit-test-data", marker = "extra == 'test'", editable = "../cedarkit-test-data" },
     { name = "cfgrib" },
     { name = "click" },
-    { name = "codecov", marker = "extra == 'cov'" },
     { name = "eccodes" },
     { name = "importlib-metadata", marker = "python_full_version < '3.8'" },
     { name = "jinja2" },
     { name = "numpy" },
     { name = "pandas" },
     { name = "protobuf", marker = "extra == 'godas'" },
-    { name = "pytest", marker = "extra == 'test'" },
-    { name = "pytest-cov", marker = "extra == 'cov'" },
     { name = "pyyaml" },
     { name = "requests", marker = "extra == 'godas'" },
-    { name = "requests", marker = "extra == 'test'" },
     { name = "tqdm" },
     { name = "xarray" },
 ]
-provides-extras = ["godas", "test", "cov"]
+provides-extras = ["godas"]
+
+[package.metadata.requires-dev]
+cov = [
+    { name = "codecov" },
+    { name = "pytest-cov" },
+]
+test = [
+    { name = "cedarkit-test-data", editable = "../cedarkit-test-data" },
+    { name = "pytest" },
+    { name = "requests" },
+]
 
 [[package]]
 name = "requests"
