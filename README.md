@@ -286,6 +286,6 @@ See [cemc-oper/data-notebook](https://github.com/cemc-oper/data-notebook) projec
 
 ## LICENSE
 
-Copyright &copy; 2020-2025, developers at cemc-oper.
+Copyright &copy; 2020-2025, developers at CMA Earth System Modeling And Prediction Centre.
 
 `reki` is licensed under [Apache License, Version 2.0](./LICENSE)
