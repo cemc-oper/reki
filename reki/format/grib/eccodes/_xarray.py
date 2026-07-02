@@ -250,7 +250,7 @@ def get_attrs_from_message(keys: list[str], message) -> dict[str, Union[str, int
     return all_attrs
 
 
-def attr_to_grib_parameter_key(attrs: dict) -> GribParameterKey:
+def attrs_to_grib_parameter_key(attrs: dict) -> GribParameterKey:
     discipline = attrs["discipline"]
     parameterCategory = attrs["parameterCategory"]
     parameterNumber = attrs["parameterNumber"]
@@ -296,10 +296,17 @@ def get_field_name(
     all_attrs
         Attributes from GRIB message.
     field_name
-
+        if field_name is set, use it as name.
     Returns
     -------
     dict
+        names, possible keys:
+
+        * long_name
+        * name
+        * cemc_name
+        * eccodes_name
+        * wgrib2_name
     """
     result = {}
 
@@ -316,7 +323,7 @@ def get_field_name(
     if "shortName" in all_attrs and all_attrs["shortName"] != "unknown":
         result["eccodes_name"] = all_attrs["shortName"]
 
-    grib_parameter_key = attr_to_grib_parameter_key(all_attrs)
+    grib_parameter_key = attrs_to_grib_parameter_key(all_attrs)
     wgrib2_name = find_wgrib2_name(grib_parameter_key)
     if wgrib2_name is not None:
         result["wgrib2_name"] = wgrib2_name
