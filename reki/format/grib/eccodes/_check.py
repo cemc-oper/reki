@@ -186,7 +186,7 @@ def get_level_value(message_id, name: Literal['First', 'Second'] = "First"):
 def get_grib_key_value(
         message_id,
         key: str,
-        ktype: Optional[Type[int], Type[float], Type[str]] = None,
+        ktype: Union[Type[int], Type[float], Type[str], None] = None,
 ) -> Union[str, int, float]:
     """
     Get value of GRIB key.
