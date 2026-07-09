@@ -12,17 +12,16 @@ paths:
   # CMA HPC2023
   - type: local
     level: archive
+    path: '/g3/COMMONDATA/OPER/CEMC/GEPS/Prod-grib/{{ start_time_string }}/grib2.0p25'
+
+  - type: local
+    level: archive
     path: '/g3/COMMONDATA/OPER/CEMC/GEPS/Prod-grib/{{ start_time_string }}/grib2'
 
   # CMA Storage
   - type: local
     level: storage
     path: '/sstorage/COMMONDATA/OPER/CEMC/GEPS/Prod-grib/{{ start_time_string}}/grib2'
-
-  # CMA-PI
-  - type: local
-    level: archive
-    path: '/g1/COMMONDATA/OPER/NWPC/GRAPES_GEPS/Prod-grib/{{ start_time_string }}/grib2'
 
   # CMA Storage
   - type: local
