@@ -9,7 +9,7 @@ from reki.data_finder import find_local_file
 
 @pytest.fixture
 def storage_base():
-    return "O:"
+    return "M:"
 
 
 @dataclass
@@ -42,9 +42,11 @@ def fill_path(file_path: str, start_time: pd.Timestamp, forecast_time: pd.Timede
     "test_case",
     [
         TestCase(
-            Query(data_type="cma_gfs/grib2/orig"),
-            expected_file_path_template="{storage_base}/DATA/NAFP/NMC/GRAPES-GFS-GLB/{year}/{start_date_label}/"
-                                        "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-GFS-GLB-{forecast_hour_label}00.grib2"
+            Query(data_type="cma_gfs_gmf/grib2/orig"),
+            expected_file_path_template=(
+                    "{storage_base}/DATA/NAFP/NMC/GRAPES-GFS-GLB/{year}/{start_date_label}/"
+                    "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-GFS-GLB-{forecast_hour_label}00.grib2"
+            ),
         ),
     ]
 )
@@ -73,9 +75,11 @@ def test_cma_gfs_grib2_orig(last_two_day, forecast_time_24h, storage_base, test_
     "test_case",
     [
         TestCase(
-            Query(data_type="cma_meso/grib2/orig"),
-            expected_file_path_template="{storage_base}/DATA/NAFP/CEMC/MESO_1KM/ORI/{year}/{start_date_label}/"
-                                        "Z_NAFP_C_BABJ_{start_time_label}0000_P_CEMC-CMA-MESO-1KM-ORIG-{forecast_hour_label}00.grb2"
+            Query(data_type="cma_meso_1km/grib2/orig"),
+            expected_file_path_template=(
+                    "{storage_base}/DATA/NAFP/CEMC/MESO_1KM/ORI/{year}/{start_date_label}/"
+                    "Z_NAFP_C_BABJ_{start_time_label}0000_P_CEMC-CMA-MESO-1KM-ORIG-{forecast_hour_label}00.grb2"
+            ),
         ),
     ]
 )
@@ -106,8 +110,10 @@ def test_cma_meso_1km_grib2_orig(last_two_day, forecast_time_24h, storage_base, 
     [
         TestCase(
             Query(data_type="cma_tym/grib2/orig"),
-            expected_file_path_template="{storage_base}/DATA/NAFP/NMC/GRAPES-TYM/{year}/{start_date_label}/"
-                                        "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-TYM-ACWP-{forecast_hour_label}00.grib2"
+            expected_file_path_template=(
+                    "{storage_base}/DATA/NAFP/NMC/GRAPES-TYM/{year}/{start_date_label}/"
+                    "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-TYM-ACWP-{forecast_hour_label}00.grib2"
+            )
         ),
     ]
 )
@@ -138,18 +144,24 @@ def test_cma_tym_grib2_orig(last_two_day, forecast_time_24h, storage_base, test_
     [
         TestCase(
             Query(data_type="cma_geps/grib2/orig", number=0),
-            expected_file_path_template="{storage_base}/DATA/NAFP/NMC/GRAPES-GEPS/{year}/{start_date_label}/"
-                                        "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-GEPS-GLB-{forecast_hour_label}00-m000.grib2"
+            expected_file_path_template=(
+                    "{storage_base}/DATA/NAFP/NMC/GRAPES-GEPS/{year}/{start_date_label}/"
+                    "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-GEPS-GLB-{forecast_hour_label}00-m000.grib2"
+            )
         ),
         TestCase(
             Query(data_type="cma_geps/grib2/orig", number=4),
-            expected_file_path_template="{storage_base}/DATA/NAFP/NMC/GRAPES-GEPS/{year}/{start_date_label}/"
-                                        "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-GEPS-GLB-{forecast_hour_label}00-m004.grib2"
+            expected_file_path_template=(
+                    "{storage_base}/DATA/NAFP/NMC/GRAPES-GEPS/{year}/{start_date_label}/"
+                    "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-GEPS-GLB-{forecast_hour_label}00-m004.grib2"
+            )
         ),
         TestCase(
             Query(data_type="cma_geps/grib2/orig", number=14),
-            expected_file_path_template="{storage_base}/DATA/NAFP/NMC/GRAPES-GEPS/{year}/{start_date_label}/"
-                                        "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-GEPS-GLB-{forecast_hour_label}00-m014.grib2"
+            expected_file_path_template=(
+                    "{storage_base}/DATA/NAFP/NMC/GRAPES-GEPS/{year}/{start_date_label}/"
+                    "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-GEPS-GLB-{forecast_hour_label}00-m014.grib2"
+            )
         ),
     ]
 )
@@ -187,8 +199,10 @@ def test_cma_geps_grib2_orig(last_two_day, forecast_time_24h, storage_base, test
     [
         TestCase(
             Query(data_type="cma_reps/grib2/orig", number=0),
-            expected_file_path_template="{storage_base}/ORIG-DATA/NAFP/CMA-REPS/{year}/{start_date_label}/"
-                                        "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-REPS-CN-{forecast_hour_label}00-m000.grib2"
+            expected_file_path_template=(
+                    "{storage_base}/ORIG-DATA/NAFP/CMA-REPS/{year}/{start_date_label}/"
+                    "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-REPS-CN-{forecast_hour_label}00-m000.grib2"
+            )
         ),
         TestCase(
             Query(data_type="cma_reps/grib2/orig", number=4),
@@ -197,8 +211,10 @@ def test_cma_geps_grib2_orig(last_two_day, forecast_time_24h, storage_base, test
         ),
         TestCase(
             Query(data_type="cma_reps/grib2/orig", number=14),
-            expected_file_path_template="{storage_base}/ORIG-DATA/NAFP/CMA-REPS/{year}/{start_date_label}/"
-                                        "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-REPS-CN-{forecast_hour_label}00-m014.grib2"
+            expected_file_path_template=(
+                    "{storage_base}/ORIG-DATA/NAFP/CMA-REPS/{year}/{start_date_label}/"
+                    "Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-REPS-CN-{forecast_hour_label}00-m014.grib2"
+            )
         ),
     ]
 )
