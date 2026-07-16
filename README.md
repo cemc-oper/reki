@@ -1,5 +1,6 @@
 # reki
 
+![Maturity-Emerging](https://img.shields.io/badge/Maturity-Emerging-A259FF)
 ![GitHub Release](https://img.shields.io/github/v/release/cemc-oper/reki)
 ![PyPI - Version](https://img.shields.io/pypi/v/reki)
 [![Documentation Status](https://readthedocs.org/projects/reki/badge/?version=latest)](https://reki.readthedocs.io/zh_CN/latest/?badge=latest)
@@ -31,7 +32,7 @@ Please install ecCodes through conda or other package source.
 
 ### Local file lookup
 
-The reki library includes built-in config files to locate data files in the CMA National Meteorological Supercomputing System 1 (CMA-HPC2023-SC1) shared file system (`/g3/COMMONDATA`).
+The reki library includes built-in config files to locate data files in CMA-HPC2023-SC1 shared file system (`/g3/COMMONDATA`).
 The codes below finds the GRIB2-ORIG file path for CMA-GFS:
 
 ```pycon
@@ -286,6 +287,6 @@ See [cemc-oper/data-notebook](https://github.com/cemc-oper/data-notebook) projec
 
 ## LICENSE
 
-Copyright &copy; 2020-2025, developers at CMA Earth System Modeling And Prediction Centre.
+Copyright &copy; 2020-2026, developers at CMA Earth System Modeling And Prediction Centre.
 
 `reki` is licensed under [Apache License, Version 2.0](./LICENSE)
