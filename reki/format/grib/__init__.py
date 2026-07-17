@@ -5,6 +5,7 @@ import xarray as xr
 
 from .cfgrib import load_fields_from_file
 from .common import fix_level_type
+from .eccodes import load_message_from_file, load_messages_from_file
 
 
 def load_field_from_file(

@@ -16,17 +16,13 @@ or [cfgrib](https://github.com/ecmwf/cfgrib).
 
 ## Installation
 
-Install from pip:
+Install the latest release from pip:
 
 ```bash
 pip install reki
 ```
 
 or download the latest source code from GitHub and install using `pip`.
-
-`reki` uses ecCodes to decode GRIB files
-(which is needed by [eccodes](https://github.com/ecmwf/eccodes-python) and [cfgrib](https://github.com/ecmwf/cfgrib)). 
-Please install ecCodes through conda or other package source.
 
 ## Getting started
 
@@ -83,7 +79,7 @@ Use **eccodes** to retrieve a field from a GRIB2 file and return an `xarray.Data
 This example loads the 850 hPa temperature field from a CMA-GFS GRIB2-ORIG data:
 
 ```pycon
->>> from reki.format.grib.eccodes import load_field_from_file
+>>> from reki.format.grib import load_field_from_file
 >>> field = load_field_from_file(
 ...     gfs_grib2_file_path,
 ...     parameter="t",
@@ -246,7 +242,7 @@ reki supports returning the raw GRIB message via the ecCodes Python API.
 For instance, loading the 850 hPa geopotential height field:
 
 ```pycon
->>> from reki.format.grib.eccodes import load_message_from_file
+>>> from reki.format.grib import load_message_from_file
 >>> message = load_message_from_file(
 ...     gfs_grib2_file_path,
 ...     parameter="gh",
