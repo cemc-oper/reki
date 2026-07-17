@@ -9,7 +9,7 @@ from reki.data_finder import find_local_file
 
 @pytest.fixture
 def storage_base():
-    return "M:"
+    return "/CMADAAS"
 
 
 @dataclass
