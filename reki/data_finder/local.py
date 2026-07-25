@@ -7,7 +7,8 @@ import pandas as pd
 from reki.data_finder._config import (
     find_config, load_config, get_default_local_config_path,
 )
-from reki.data_finder._util import find_file, find_files, render_file_name
+from reki.data_finder._util import find_files, render_file_name
+from reki.sources.local import LocalSource
 
 
 def find_local_file(
@@ -24,6 +25,10 @@ def find_local_file(
 ) -> Optional[Path]:
     """
     Find local data path using config files in config dir.
+
+    This is a compatibility wrapper: the resolution logic lives in
+    ``reki.sources.local.LocalSource``. The signature and the return
+    type (``Path`` or ``None`` when not found) are unchanged.
 
     Parameters
     ----------
@@ -74,67 +79,20 @@ def find_local_file(
     ... )
     None
 
-    Find a grib2 file in storage for CMA-MESO 3km.
-
-    >>> find_local_file(
-    ...     "cma_meso_3km/grib2/orig",
-    ...     start_time="2020032100",
-    ...     forecast_time="1h",
-    ...     data_level="storage",
-    ... )
-    PosixPath('/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_MESO_3KM/Prod-grib/2020032100/ORIG/rmf.hgra.2020032100001.grb2')
-
-    Find a grib2 file in storage for CMA-GEPS.
-
-    >>> find_local_file(
-    ...     "cma_geps/grib2/orig",
-    ...     start_time="2023032100",
-    ...     forecast_time="3h",
-    ...     data_level="storage",
-    ...     number=1,
-    ... )
-    PosixPath('/sstorage1/COMMONDATA/OPER/NWPC/GRAPES_GEPS/Prod-grib/2023032100/grib2/gef.gra.001.2023032100003.grb2')
-
-    Find postvar ctl file for CMA-TYM in Windows mount storage.
-
-    .. code-block:: pycon
-
-        >>> find_local_file(
-        ...     "cma_tym/bin/postvar_ctl",
-        ...     start_time="2021080200",
-        ...     storage_base="M:"
-        ... )
-        WindowsPath('M:/GRAPES_TYM/Fcst-main/2021080200/post.ctl_2021080200')
-
     """
-    if config_dir is None:
-        config_dir = get_default_local_config_path()
-
-    config_file_path = find_config(config_dir, data_type, data_class)
-    if config_file_path is None:
-        raise ValueError(f"data type is not found: {data_type}")
-
-    if isinstance(forecast_time, str):
-        forecast_time = pd.to_timedelta(forecast_time)
-    if isinstance(start_time, str):
-        start_time = pd.to_datetime(start_time, format="%Y%m%d%H")
-    if isinstance(obs_time, str):
-        obs_time = pd.to_datetime(obs_time)
-    elif obs_time is None:
-        obs_time = start_time
-
-    config_content = load_config(config_file_path)
-
-    file_path = find_file(
-        config_content,
-        data_level,
+    src = LocalSource(
+        data_type,
         start_time,
         forecast_time,
+        data_level=data_level,
+        path_type=path_type,
+        data_class=data_class,
+        config_dir=config_dir,
         obs_time=obs_time,
         debug=debug,
-        **kwargs
+        **kwargs,
     )
-    return file_path
+    return src.resolve_path()
 
 
 def get_local_file_name(

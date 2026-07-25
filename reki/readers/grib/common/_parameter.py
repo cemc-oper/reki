@@ -2,7 +2,7 @@ from typing import Union, Dict
 
 import pandas as pd
 
-from reki.format.grib.config import WGRIB2_SHORT_NAME_TABLE, CEMC_PARAM_TABLE
+from reki.readers.grib.config import WGRIB2_SHORT_NAME_TABLE, CEMC_PARAM_TABLE
 
 
 def convert_parameter(parameter: Union[str, Dict]) -> Union[str, Dict]:
@@ -26,7 +26,7 @@ def convert_parameter(parameter: Union[str, Dict]) -> Union[str, Dict]:
 
     Examples
     --------
-    >>> from reki.format.grib.common._parameter import convert_parameter
+    >>> from reki.readers.grib.common._parameter import convert_parameter
 
     Convert wgrib2 short names:
 

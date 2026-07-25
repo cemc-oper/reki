@@ -2,7 +2,7 @@ from typing import Dict, List, Union, Tuple
 
 import numpy as np
 
-from reki.format.grib.common import convert_parameter
+from reki.readers.grib.common import convert_parameter
 
 
 def _fill_parameter(

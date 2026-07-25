@@ -1,15 +1,8 @@
 import argparse
-from typing import Union
 
 import click
-import pandas as pd
 
-from ._config import (
-    get_default_local_config_path,
-    find_config,
-    load_config,
-)
-from ._util import find_file
+from reki.sources.local import LocalSource
 
 
 def main():
@@ -21,13 +14,10 @@ def print_local_help(ctx, param, value):
         return
     click.echo(ctx.get_help())
 
-    click.echo("\nDifferent steams use different additional options.\n")
+    click.echo("\nAdditional query options (number is only used by eps streams):\n")
 
-    oper_parser = create_oper_option_parser()
-    click.echo(oper_parser.format_help())
-
-    eps_parser = create_eps_option_parser()
-    click.echo(eps_parser.format_help())
+    parser = create_query_option_parser()
+    click.echo(parser.format_help())
 
     ctx.exit()
 
@@ -54,88 +44,46 @@ def cli():
 @click.argument('query_args', nargs=-1, type=click.UNPROCESSED)
 @click.pass_context
 def find_local(ctx, data_type, data_level, data_class, config_dir, query_args):
-    if config_dir is None:
-        config_dir = get_default_local_config_path()
-
-    config_file_path = find_config(config_dir, data_type, data_class)
-    if config_file_path is None:
-        raise ValueError(f"data type is not found: {data_type}")
+    """Find a local data file path (implemented by LocalSource)."""
+    parser = create_query_option_parser()
+    args = parser.parse_args(query_args)
 
     if data_level == "":
         data_level = None
     else:
         data_level = data_level.split(",")
 
-    config = load_config(config_file_path)
+    kwargs = {}
+    if args.number is not None:
+        kwargs["number"] = args.number
 
-    stream = config["query"]["stream"]
-
-    if stream in ("oper", "cm"):
-        find_oper_file(config, data_level, query_args)
-    elif stream == "eps":
-        find_eps_file(config, data_level, query_args)
-    else:
-        raise ValueError(f"stream type is not supported: {stream}")
-
-
-def find_oper_file(config: dict, data_level: Union[str, list[str]], query_args: tuple):
-    parser = create_oper_option_parser()
-    args = parser.parse_args(query_args)
-
-    forecast_time = pd.to_timedelta(args.forecast_time)
-    start_time = pd.to_datetime(args.start_time, format="%Y%m%d%H")
-
-    file_path = find_file(config, data_level, start_time, forecast_time)
+    src = LocalSource(
+        data_type,
+        args.start_time,
+        args.forecast_time,
+        data_level=data_level,
+        data_class=data_class,
+        config_dir=config_dir,
+        **kwargs,
+    )
+    file_path = src.resolve_path()
     if file_path is None:
         print("None")
     else:
         print(file_path)
 
 
-def find_eps_file(config: dict, data_level: Union[str, list[str]], query_args: tuple):
-    parser = create_eps_option_parser()
-    args = parser.parse_args(query_args)
-
-    forecast_time = pd.to_timedelta(args.forecast_time)
-    start_time = pd.to_datetime(args.start_time, format="%Y%m%d%H")
-
-    file_path = find_file(config, data_level, start_time, forecast_time, number=args.number)
-    if file_path is None:
-        print("None")
-    else:
-        print(file_path)
-
-
-def create_oper_option_parser():
+def create_query_option_parser():
     parser = argparse.ArgumentParser(
-        description='Additional options for stream oper.',
+        description='Additional query options.',
         usage=None,
         add_help=False
     )
     parser.add_argument(
         '--start-time',
         dest="start_time",
-        help='start time, such as YYYMMDDHH'
-    )
-    parser.add_argument(
-        '--forecast-time',
-        dest='forecast_time',
-        default="0h",
-        help='forecast time, such as 3h'
-    )
-    return parser
-
-
-def create_eps_option_parser():
-    parser = argparse.ArgumentParser(
-        description='Additional options for stream eps.',
-        usage=None,
-        add_help=False
-    )
-    parser.add_argument(
-        '--start-time',
-        dest="start_time",
-        help='start time, such as YYYMMDDHH'
+        required=True,
+        help='start time, such as YYYYMMDDHH'
     )
     parser.add_argument(
         '--forecast-time',
@@ -147,34 +95,9 @@ def create_eps_option_parser():
         '--number',
         dest='number',
         type=int,
-        help='member number')
+        default=None,
+        help='member number for eps streams')
     return parser
-
-
-# copy from argparse module
-def _format_help(parser: argparse.ArgumentParser):
-    """
-    Notes
-    -----
-    This is an experimental function. Do not use it.
-    """
-    formatter = parser._get_formatter()
-
-    # description
-    formatter.add_text(parser.description)
-
-    # positionals, optionals and user-defined groups
-    for action_group in parser._action_groups:
-        formatter.start_section(action_group.title)
-        formatter.add_text(action_group.description)
-        formatter.add_arguments(action_group._group_actions)
-        formatter.end_section()
-
-    # epilog
-    # formatter.add_text(parser.epilog)
-
-    # determine help from format above
-    return formatter.format_help()
 
 
 if __name__ == "__main__":

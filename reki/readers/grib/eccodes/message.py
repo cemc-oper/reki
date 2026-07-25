@@ -8,7 +8,7 @@ import eccodes
 from ._level import _fix_level
 from ._check import _check_message
 
-from reki.format.grib.common._parameter import convert_parameter
+from reki.readers.grib.common._parameter import convert_parameter
 
 
 def load_message_from_file(

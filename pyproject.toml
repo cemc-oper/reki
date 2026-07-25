@@ -40,6 +40,9 @@ Homepage = "https://github.com/cemc-oper/reki"
 Documentation = "https://reki.readthedocs.io"
 Repository = "https://github.com/cemc-oper/reki.git"
 
+[project.scripts]
+reki-finder = "reki.data_finder.__main__:main"
+
 [project.optional-dependencies]
 godas = ["protobuf", "requests"]
 

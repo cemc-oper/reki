@@ -1,4 +1,13 @@
-from ._level import fix_level_type
-from ._parameter import convert_parameter
+"""Compatibility layer: the implementation has moved to ``reki.readers.grib.common``."""
 
-MISSING_VALUE = 1.0e36
+from reki.readers.grib.common import (
+    fix_level_type,
+    convert_parameter,
+    MISSING_VALUE,
+)
+
+__all__ = [
+    "fix_level_type",
+    "convert_parameter",
+    "MISSING_VALUE",
+]

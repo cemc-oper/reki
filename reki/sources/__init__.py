@@ -104,8 +104,10 @@ def from_source(name: str, *args, lazily: bool = False, **kwargs) -> Source:
     For example, ``LocalSource`` mutates into ``FileSource`` once the
     data path is resolved.
 
-    The returned source provides conversion methods such as
-    ``to_xarray()`` / ``to_pandas()`` / ``to_numpy()``.
+    After the loop, ``to_data_object()`` converts the final source into
+    the unified data object: for data-bearing sources (e.g. ``file``)
+    this is the reader produced by the ``reki.readers`` dispatch; other
+    sources (e.g. ``memory``) simply return themselves.
 
     Parameters
     ----------
@@ -122,8 +124,8 @@ def from_source(name: str, *args, lazily: bool = False, **kwargs) -> Source:
 
     Returns
     -------
-    Source
-        the final source after the mutate fixed-point loop.
+    Source or Reader
+        the unified data object.
     """
     if lazily:
         raise NotImplementedError("lazily=True is not implemented yet")
@@ -134,4 +136,7 @@ def from_source(name: str, *args, lazily: bool = False, **kwargs) -> Source:
         prev = src
         src = src.mutate()
 
-    return src
+    data = src.to_data_object()
+    if data is None:
+        raise ValueError(f"Source {src} cannot be converted into a data object")
+    return data

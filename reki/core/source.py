@@ -44,3 +44,19 @@ class Source:
             a replacement source, or None.
         """
         return None
+
+    def to_data_object(self):
+        """Convert this source into the unified data object.
+
+        Called by ``from_source()`` after the mutate fixed-point loop
+        converges. Sources carrying parseable data (e.g. ``FileSource``)
+        override this to return the reader for their data; the default
+        implementation returns the source itself (e.g. ``MemorySource``
+        already provides the conversion methods).
+
+        Returns
+        -------
+        object
+            the unified data object (a reader or the source itself).
+        """
+        return self
