@@ -30,6 +30,7 @@ dependencies = [
     "xarray",
     "click",
     "tqdm",
+    "requests",
     "cfgrib",
     "eccodes",
     'importlib-metadata; python_version<"3.8"',
@@ -47,7 +48,7 @@ reki-finder = "reki.data_finder.__main__:main"
 godas = ["protobuf", "requests"]
 
 [dependency-groups]
-test = ["pytest", "requests", "cedarkit-test-data"]
+test = ["pytest", "cedarkit-test-data"]
 cov = ["pytest-cov", "codecov"]
 
 [tool.setuptools.packages.find]
