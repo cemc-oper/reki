@@ -46,9 +46,10 @@ reki-finder = "reki.data_finder.__main__:main"
 
 [project.optional-dependencies]
 godas = ["protobuf", "requests"]
+cmadaas = ["nuwe-cmadaas"]
 
 [dependency-groups]
-test = ["pytest", "cedarkit-test-data"]
+test = ["pytest", "cedarkit-test-data", "nuwe-cmadaas"]
 cov = ["pytest-cov", "codecov"]
 
 [tool.setuptools.packages.find]
@@ -64,3 +65,4 @@ version_file = "reki/_version.py"
 
 [tool.uv.sources]
 cedarkit-test-data = { path = "../cedarkit-test-data", editable = true }
+nuwe-cmadaas = { path = "../../source/nuwe-cmadaas-devel/repo/nuwe-cmadaas-python", editable = true }

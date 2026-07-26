@@ -145,4 +145,50 @@ def reader(source, path, **kwargs):
     return UnknownReader(source, path, **kwargs)
 
 
+def memory_reader(source, buf, **kwargs):
+    """Create a reader for an in-memory object.
+
+    Memory readers are factories exported as ``MEMORY_READER`` by reader
+    modules, with the signature::
+
+        MEMORY_READER(source, buf, **kwargs)
+
+    The source must name the reader explicitly via its ``reader``
+    attribute (a string or a callable); there is no auto-detection for
+    in-memory objects.
+
+    Parameters
+    ----------
+    source
+        the source the object comes from. Its ``reader`` attribute
+        selects the factory.
+    buf
+        the in-memory object to read.
+    **kwargs
+        extra keyword arguments passed to the reader factory.
+
+    Returns
+    -------
+    Reader
+        the reader created by the selected factory.
+    """
+    explicit = getattr(source, "reader", None)
+    if explicit is None:
+        raise ValueError(
+            "memory sources wrapping an arbitrary object must name "
+            "an explicit reader"
+        )
+    if callable(explicit):
+        return explicit(source, buf)
+    if isinstance(explicit, str):
+        name = explicit.replace("-", "_")
+        factories = _readers("memory_reader")
+        if name not in factories:
+            raise ValueError(f"Unknown memory reader: {explicit}")
+        return factories[name](source, buf, **kwargs)
+    raise TypeError(
+        f"reader must be a callable or a string, not {type(explicit)}"
+    )
+
+
 from .unknown import UnknownReader  # noqa: E402

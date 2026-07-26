@@ -14,22 +14,40 @@ class MemorySource(Source):
     ``pandas.DataFrame`` and ``numpy.ndarray``. The source mutates to
     itself and only provides conversions between these representations.
 
+    When an explicit ``reader`` is given, ``buf`` may be any object the
+    named memory reader knows how to handle (e.g. a CMADaaS response
+    object with ``reader="cmadaas"``); ``to_data_object()`` then
+    dispatches to that reader instead of returning the source itself.
+
     Parameters
     ----------
     buf
         the in-memory object to wrap.
+    reader
+        optional explicit memory reader: a reader name (e.g.
+        ``"cmadaas"``) or a callable.
     """
 
-    def __init__(self, buf, **kwargs):
+    def __init__(self, buf, reader=None, **kwargs):
         super().__init__(**kwargs)
-        if not isinstance(buf, (xr.DataArray, xr.Dataset, pd.DataFrame, np.ndarray)):
+        if reader is None and not isinstance(
+                buf, (xr.DataArray, xr.Dataset, pd.DataFrame, np.ndarray)
+        ):
             raise TypeError(
                 f"memory source does not support object of type {type(buf).__name__}"
             )
         self._buf = buf
+        self.reader = reader
 
     def mutate(self):
         return self
+
+    def to_data_object(self):
+        if self.reader is None:
+            return self
+        from reki.readers import memory_reader
+
+        return memory_reader(self, self._buf)
 
     def to_xarray(self, **kwargs):
         if isinstance(self._buf, (xr.DataArray, xr.Dataset)):

@@ -352,6 +352,34 @@ wheels = [
 ]
 
 [[package]]
+name = "nuwe-cmadaas"
+source = { editable = "../../source/nuwe-cmadaas-devel/repo/nuwe-cmadaas-python" }
+dependencies = [
+    { name = "numpy" },
+    { name = "pandas" },
+    { name = "protobuf" },
+    { name = "pyyaml" },
+    { name = "requests" },
+    { name = "xarray" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "click", marker = "extra == 'example'" },
+    { name = "codecov", marker = "extra == 'cov'" },
+    { name = "importlib-metadata", marker = "python_full_version < '3.8'" },
+    { name = "numpy" },
+    { name = "pandas" },
+    { name = "protobuf" },
+    { name = "pytest", marker = "extra == 'test'" },
+    { name = "pytest-cov", marker = "extra == 'cov'" },
+    { name = "pyyaml" },
+    { name = "requests" },
+    { name = "xarray" },
+]
+provides-extras = ["test", "cov", "example"]
+
+[[package]]
 name = "packaging"
 version = "26.2"
 source = { registry = "https://pypi.org/simple" }
@@ -516,6 +544,9 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
+cmadaas = [
+    { name = "nuwe-cmadaas" },
+]
 godas = [
     { name = "protobuf" },
     { name = "requests" },
@@ -528,6 +559,7 @@ cov = [
 ]
 test = [
     { name = "cedarkit-test-data" },
+    { name = "nuwe-cmadaas" },
     { name = "pytest" },
 ]
 
@@ -539,6 +571,7 @@ requires-dist = [
     { name = "importlib-metadata", marker = "python_full_version < '3.8'" },
     { name = "jinja2" },
     { name = "numpy" },
+    { name = "nuwe-cmadaas", marker = "extra == 'cmadaas'", editable = "../../source/nuwe-cmadaas-devel/repo/nuwe-cmadaas-python" },
     { name = "pandas" },
     { name = "protobuf", marker = "extra == 'godas'" },
     { name = "pyyaml" },
@@ -547,7 +580,7 @@ requires-dist = [
     { name = "tqdm" },
     { name = "xarray" },
 ]
-provides-extras = ["godas"]
+provides-extras = ["godas", "cmadaas"]
 
 [package.metadata.requires-dev]
 cov = [
@@ -556,6 +589,7 @@ cov = [
 ]
 test = [
     { name = "cedarkit-test-data", editable = "../cedarkit-test-data" },
+    { name = "nuwe-cmadaas", editable = "../../source/nuwe-cmadaas-devel/repo/nuwe-cmadaas-python" },
     { name = "pytest" },
 ]
 
