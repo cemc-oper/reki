@@ -17,11 +17,26 @@ def gfs_basic_dir(data_base_dir) -> Path:
 
 @pytest.fixture
 def grib2_gfs_basic_file_path(gfs_basic_dir) -> Path:
+    """Locate the GFS test file, fetching it through the ``test`` source.
+
+    The fetch always goes through the ``test`` source (provided by the
+    cedarkit-test-data plugin). When the data was downloaded before, the
+    recorded start/forecast time makes the source resolve to the existing
+    file, so no network access happens; otherwise the file is downloaded.
+    """
+    from reki.sources import get_source
+
+    kwargs = {}
     metadata_file = gfs_basic_dir / "metadata.yaml"
-    with open(metadata_file, "r") as f:
-        metadata = yaml.safe_load(f)
-    first_file_metadata = metadata[0]
-    return gfs_basic_dir / first_file_metadata["file_name"]
+    if metadata_file.exists():
+        with open(metadata_file, "r") as f:
+            metadata = yaml.safe_load(f)
+        first_file_metadata = metadata[0]
+        kwargs["start_time"] = pd.Timestamp(first_file_metadata["start_time"])
+        kwargs["forecast_time"] = pd.Timedelta(first_file_metadata["forecast_time"])
+
+    source = get_source("test", "gfs", output_dir=gfs_basic_dir, **kwargs)
+    return Path(source.mutate().path)
 
 
 @pytest.fixture

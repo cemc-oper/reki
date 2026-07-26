@@ -1,13 +1,18 @@
 """
-Download test data for reki using cedarkit-test-data.
+Download test data for reki through the ``test`` source of cedarkit-test-data.
 """
 import shutil
 from pathlib import Path
 
 import click
-import pandas as pd
 
-from cedarkit_test_data.downloader import download_gfs_data
+from reki.sources import get_source
+
+
+def download_test_data(gfs_basic_dir: Path, **kwargs) -> Path:
+    """Fetch the GFS test file into ``gfs_basic_dir`` via the ``test`` source."""
+    source = get_source("test", "gfs", output_dir=gfs_basic_dir, **kwargs)
+    return Path(source.mutate().path)
 
 
 def clear_directory(dir_path: Path) -> None:
@@ -47,10 +52,7 @@ def wis():
     click.echo("deleting everything in gfs_basic directory...done")
 
     click.echo("downloading file...")
-    file_path = download_gfs_data(
-        output_dir=gfs_basic_dir,
-        source="wis",
-    )
+    file_path = download_test_data(gfs_basic_dir, source="wis")
     click.echo(f"file is downloaded to: {file_path}")
     click.echo("downloading file...done")
 
@@ -73,10 +75,8 @@ def music_dir(storage_base: str):
     click.echo("deleting everything in gfs_basic directory...done")
 
     click.echo("copying file...")
-    file_path = download_gfs_data(
-        output_dir=gfs_basic_dir,
-        source="music-dir",
-        storage_base=storage_base,
+    file_path = download_test_data(
+        gfs_basic_dir, source="music-dir", storage_base=storage_base
     )
     click.echo(f"file is downloaded to: {file_path}")
     click.echo("copying file...done")
