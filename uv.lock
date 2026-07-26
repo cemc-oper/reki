@@ -547,10 +547,6 @@ dependencies = [
 cmadaas = [
     { name = "nuwe-cmadaas" },
 ]
-godas = [
-    { name = "protobuf" },
-    { name = "requests" },
-]
 
 [package.dev-dependencies]
 cov = [
@@ -573,14 +569,12 @@ requires-dist = [
     { name = "numpy" },
     { name = "nuwe-cmadaas", marker = "extra == 'cmadaas'", editable = "../../source/nuwe-cmadaas-devel/repo/nuwe-cmadaas-python" },
     { name = "pandas" },
-    { name = "protobuf", marker = "extra == 'godas'" },
     { name = "pyyaml" },
     { name = "requests" },
-    { name = "requests", marker = "extra == 'godas'" },
     { name = "tqdm" },
     { name = "xarray" },
 ]
-provides-extras = ["godas", "cmadaas"]
+provides-extras = ["cmadaas"]
 
 [package.metadata.requires-dev]
 cov = [

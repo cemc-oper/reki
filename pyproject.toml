@@ -45,7 +45,6 @@ Repository = "https://github.com/cemc-oper/reki.git"
 reki-finder = "reki.data_finder.__main__:main"
 
 [project.optional-dependencies]
-godas = ["protobuf", "requests"]
 cmadaas = ["nuwe-cmadaas"]
 
 [dependency-groups]
