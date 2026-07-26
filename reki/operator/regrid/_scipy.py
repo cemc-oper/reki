@@ -9,7 +9,8 @@ from scipy.interpolate import (
 
 from ._interpolator import (
     BaseInterpolator,
-    _create_data_array
+    _create_data_array,
+    _grid_arrays_descending,
 )
 
 
@@ -27,10 +28,7 @@ class ScipyInterpnInterpolator(BaseInterpolator):
             data: xr.DataArray,
             target: xr.DataArray,
     ) -> xr.DataArray:
-        latitudes = data.latitude.values
-        longitudes = data.longitude.values
-
-        values = data.values
+        latitudes, longitudes, values = _grid_arrays_descending(data)
 
         target_latitudes = target.latitude.values
         target_longitudes = target.longitude.values
@@ -62,10 +60,7 @@ class ScipyInterpnInterpolator(BaseInterpolator):
             latitude: Union[float, int, list[Union[float, int]]],
             longitude: Union[float, int, list[Union[float, int]]],
     ) -> xr.DataArray:
-        latitudes = data.latitude.values
-        longitudes = data.longitude.values
-
-        values = data.values
+        latitudes, longitudes, values = _grid_arrays_descending(data)
 
         if isinstance(latitude, list):
             target_latitudes = latitude
@@ -120,10 +115,7 @@ class ScipyRectBivariateSplineInterpolator(BaseInterpolator):
             data: xr.DataArray,
             target: xr.DataArray,
     ) -> xr.DataArray:
-        latitudes = data.latitude.values
-        longitudes = data.longitude.values
-
-        values = data.values
+        latitudes, longitudes, values = _grid_arrays_descending(data)
 
         target_latitudes = target.latitude.values
         target_longitudes = target.longitude.values
@@ -161,10 +153,7 @@ class ScipyRectBivariateSplineInterpolator(BaseInterpolator):
             latitude,
             longitude,
     ) -> xr.DataArray:
-        latitudes = data.latitude.values
-        longitudes = data.longitude.values
-
-        values = data.values
+        latitudes, longitudes, values = _grid_arrays_descending(data)
 
         if isinstance(latitude, list):
             target_latitudes = latitude

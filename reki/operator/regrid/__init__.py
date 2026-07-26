@@ -2,6 +2,7 @@ from typing import Union, Literal
 
 import xarray as xr
 
+from .._dispatch import as_data_array
 from ._interpolator import _get_interpolator
 
 
@@ -35,6 +36,8 @@ def interpolate_grid(
     -------
     xr.DataArray
     """
+    as_data_array(data, arg_name="data")
+    as_data_array(target, arg_name="target")
     interpolator = _get_interpolator(scheme, engine, **kwargs)
 
     target_field = interpolator.interpolate_grid(
@@ -74,6 +77,7 @@ def extract_point(
     -------
     xr.DataArray
     """
+    as_data_array(data, arg_name="data")
     interpolator = _get_interpolator(scheme, engine, **kwargs)
     value = interpolator.extract_point(data, latitude=latitude, longitude=longitude)
     return value

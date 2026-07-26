@@ -44,6 +44,35 @@ def _get_interpolator(
         raise ValueError(f"engine {engine} is not supported")
 
 
+def _grid_arrays_descending(
+        data: xr.DataArray,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Return ``(latitudes, longitudes, values)`` with descending latitude.
+
+    The scipy engine implementations assume descending latitude (the
+    usual GRIB grid order). Data with ascending latitude — e.g. GrADS or
+    NetCDF fields — is flipped on entry so the interpolators work with
+    either grid orientation.
+
+    Parameters
+    ----------
+    data : xr.DataArray
+        2D gridded field with ``latitude``/``longitude`` coordinates.
+
+    Returns
+    -------
+    tuple of np.ndarray
+        latitudes (descending), longitudes, values aligned with latitudes.
+    """
+    latitudes = data.latitude.values
+    longitudes = data.longitude.values
+    values = data.values
+    if latitudes[0] < latitudes[-1]:
+        latitudes = latitudes[::-1]
+        values = values[::-1, :]
+    return latitudes, longitudes, values
+
+
 def _create_data_array(
         data: xr.DataArray,
         target: xr.DataArray,
