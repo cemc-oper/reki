@@ -11,6 +11,13 @@ class Source:
 
     name = None
 
+    #: True for sources whose ``mutate()`` performs remote I/O (a
+    #: download or a service request). ``from_source()`` defers the
+    #: mutate loop and ``to_data_object()`` of such sources to first
+    #: use by returning a lazy proxy, so calling ``from_source()``
+    #: alone never fires a remote request.
+    remote = False
+
     def __init__(self, **kwargs):
         self._kwargs = kwargs
 

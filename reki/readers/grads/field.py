@@ -8,6 +8,7 @@ import xarray as xr
 
 from .grads_ctl import GradsCtlParser
 from .grads_data_handler import GradsDataHandler, GradsRecordHandler
+from ._lazy import lazy_record_values, concat_lazy_arrays
 
 
 def load_field_from_file(
@@ -19,6 +20,7 @@ def load_field_from_file(
         latitude_direction: Literal["degree_north", "degree_south"] = "degree_north",
         valid_time: Union[str, pd.Timestamp] = None,
         forecast_time: Union[str, pd.Timedelta] = None,
+        lazy: bool = False,
         **kwargs
 ) -> Optional[xr.DataArray]:
     """
@@ -45,6 +47,10 @@ def load_field_from_file(
         * degree_south
     valid_time
     forecast_time
+    lazy
+        if True, record values are memory-mapped and read from disk on
+        demand (``isel`` / ``sel`` stay lazy, ``.values`` reads).
+        Default False keeps the current immediate-reading behavior.
     kwargs
 
     Returns
@@ -278,6 +284,7 @@ def load_field_from_file(
             level=record["level"],
             level_dim_name=level_dim_name,
             latitude_direction=latitude_direction,
+            lazy=lazy,
         )
         xarray_records.append(xarray_record)
 
@@ -287,6 +294,13 @@ def load_field_from_file(
     elif record_count == 1:
         return xarray_records[0]
     else:
+        if lazy:
+            # ``xr.concat`` would materialize lazy arrays, so stack the
+            # record offsets into one lazy array instead: only the
+            # records selected on the level dimension are read.
+            data = concat_lazy_arrays(xarray_records, level_dim_name)
+            if data is not None:
+                return data
         data = xr.concat(xarray_records, level_dim_name)
 
     return data
@@ -329,20 +343,29 @@ def create_data_array_from_record(
         level,
         level_dim_name=None,
         latitude_direction="degree_north",
+        lazy: bool = False,
 ) -> Optional[xr.DataArray]:
     grads_ctl = record.grads_ctl
 
     # values
-    file_path = grads_ctl.get_data_file_path(record.record_info)
-    with open(file_path, "rb") as f:
-        values = record.load_data(f)
+    if lazy:
+        # memory-mapped record; the net axis-0 flip (ctl ``yrev``
+        # combined with ``latitude_direction``) is applied as a view
+        # when the data is read
+        flip_y = grads_ctl.yrev != (latitude_direction == "degree_north")
+        values = lazy_record_values(record, flip_y)
+    else:
+        file_path = grads_ctl.get_data_file_path(record.record_info)
+        with open(file_path, "rb") as f:
+            values = record.load_data(f)
 
     # coords
     lons = grads_ctl.xdef["values"]
     lats = grads_ctl.ydef["values"]
 
     if latitude_direction == "degree_north":
-        values = np.flip(values, 0)
+        if not lazy:
+            values = np.flip(values, 0)
         lats = lats[::-1]
 
     coords = {}

@@ -197,8 +197,10 @@ class TestFromSourceUrl:
     ):
         mock_get.response = FakeResponse(grib_message_bytes)
 
+        # the url source is remote, so from_source() defers the
+        # download and reader dispatch to first use
         reader = reki.from_source(
             "url", MOCK_URL, download_dir=tmp_path, reader="grib",
-        )
+        )._ensure()
 
         assert isinstance(reader, GribReader)

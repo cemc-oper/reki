@@ -46,9 +46,10 @@ reki-finder = "reki.data_finder.__main__:main"
 
 [project.optional-dependencies]
 cmadaas = ["nuwe-cmadaas"]
+lazy = ["dask"]
 
 [dependency-groups]
-test = ["pytest", "cedarkit-test-data", "nuwe-cmadaas"]
+test = ["pytest", "scipy", "cedarkit-test-data", "nuwe-cmadaas"]
 cov = ["pytest-cov", "codecov"]
 
 [tool.setuptools.packages.find]

@@ -53,6 +53,9 @@ def test_from_source_unknown_name():
         reki.from_source("no-such-source")
 
 
-def test_from_source_lazily_not_implemented():
-    with pytest.raises(NotImplementedError):
-        reki.from_source("memory", np.arange(3), lazily=True)
+def test_from_source_lazily_returns_lazy_source():
+    from reki.sources import LazySource
+
+    src = reki.from_source("memory", np.arange(3), lazily=True)
+    assert isinstance(src, LazySource)
+    np.testing.assert_array_equal(src.to_numpy(), np.arange(3))

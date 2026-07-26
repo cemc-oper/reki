@@ -119,7 +119,8 @@ class GribReader(Reader):
         **kwargs
             extra GRIB keys used as filter conditions (eccodes engine),
             and engine options: ``level_dim``, ``field_name``,
-            ``show_progress`` (eccodes), ``with_index`` (cfgrib).
+            ``show_progress``, ``lazy`` (eccodes), ``with_index``
+            (cfgrib).
         """
         filters = dict(self._filters)
         for key, value in (
@@ -166,8 +167,20 @@ class GribReader(Reader):
         )
         return None if data is None else GribField(data)
 
-    def to_xarray(self, **kwargs):
+    def to_xarray(self, lazy: bool = False, **kwargs):
         """Execute the query and decode all matching fields.
+
+        Parameters
+        ----------
+        lazy
+            eccodes engine: defer values decoding to data access
+            (see ``load_field_from_file``). May also be given through
+            ``sel()`` as an engine option. The cfgrib engine reads
+            through its on-disk index on demand by nature and ignores
+            this option.
+        **kwargs
+            additional filter conditions (merged with those from
+            ``sel()``).
 
         Returns
         -------
@@ -189,7 +202,7 @@ class GribReader(Reader):
             return None if field is None else field.to_xarray()
 
         if self.engine == "eccodes":
-            return self._to_xarray_eccodes(filters)
+            return self._to_xarray_eccodes(filters, lazy=lazy)
         return self._to_xarray_cfgrib(filters)
 
     def __len__(self):
@@ -224,7 +237,7 @@ class GribReader(Reader):
         eccodes.codes_release(message)
         return GribField(data)
 
-    def _to_xarray_eccodes(self, filters: Dict):
+    def _to_xarray_eccodes(self, filters: Dict, lazy: bool = False):
         import eccodes
 
         from .eccodes import load_messages_from_file
@@ -241,12 +254,22 @@ class GribReader(Reader):
         field_name = filters.pop("field_name", None)
         filters.pop("show_progress", None)
         filters.pop("with_index", None)
+        lazy = filters.pop("lazy", lazy)
         # remaining keys are extra GRIB keys used as filter conditions
 
         if field_name is None and isinstance(parameter, str):
             field_name = parameter
 
         _, fixed_level_dim = _fix_level(level_type, level_dim)
+
+        if lazy:
+            arrays = self._scan_lazy_arrays(
+                parameter, level_type, level, fixed_level_dim, field_name,
+                filters,
+            )
+            if arrays is None:
+                return None
+            return _merge_arrays(arrays)
 
         messages = load_messages_from_file(
             self.path, parameter, level_type, level, **filters
@@ -269,6 +292,78 @@ class GribReader(Reader):
 
         return _merge_arrays(arrays)
 
+    def _scan_lazy_arrays(
+            self,
+            parameter,
+            level_type,
+            level,
+            fixed_level_dim,
+            field_name,
+            filters: Dict,
+    ) -> Optional[List[xr.DataArray]]:
+        """Scan with ``headers_only=True`` and build lazy arrays.
+
+        Mirrors ``load_messages_from_file`` but skips message data
+        sections and records message offsets, so values decoding is
+        deferred to data access.
+        """
+        import eccodes
+        import numpy as np
+
+        from .eccodes._check import _check_message
+        from .eccodes._lazy import lazy_values
+        from .eccodes._level import _fix_level
+        from .eccodes._xarray import create_data_array_from_message
+        from reki.readers.grib.common import MISSING_VALUE
+        from reki.readers.grib.common._parameter import convert_parameter
+
+        fixed_level_type, _ = _fix_level(level_type, None)
+        converted_parameter = convert_parameter(parameter)
+
+        messages = []
+        offsets = []
+        with open(self.path, "rb") as f:
+            while True:
+                offset = f.tell()
+                message = eccodes.codes_grib_new_from_file(f, headers_only=True)
+                if message is None:
+                    break
+                if not _check_message(
+                        message, converted_parameter, fixed_level_type, level,
+                        **filters,
+                ):
+                    eccodes.codes_release(message)
+                    continue
+                messages.append(message)
+                offsets.append(offset)
+
+        if not messages:
+            return None
+
+        try:
+            arrays = [
+                create_data_array_from_message(
+                    message,
+                    level_dim_name=fixed_level_dim,
+                    field_name=field_name,
+                    values=lazy_values(
+                        self.path,
+                        offset,
+                        (
+                            eccodes.codes_get(message, "Nj"),
+                            eccodes.codes_get(message, "Ni"),
+                        ),
+                        MISSING_VALUE,
+                        np.nan,
+                    ),
+                )
+                for message, offset in zip(messages, offsets)
+            ]
+        finally:
+            for message in messages:
+                eccodes.codes_release(message)
+        return arrays
+
     def _to_xarray_cfgrib(self, filters: Dict):
         import cfgrib
 
@@ -284,7 +379,7 @@ class GribReader(Reader):
         level_type = filters.pop("level_type", None)
         level = filters.pop("level", None)
         with_index = filters.pop("with_index", False)
-        for option in ("level_dim", "field_name", "show_progress"):
+        for option in ("level_dim", "field_name", "show_progress", "lazy"):
             filters.pop(option, None)
         # remaining keys are extra GRIB keys used as filter conditions
 
@@ -329,6 +424,8 @@ class GribReader(Reader):
 
 def _merge_arrays(arrays: List[xr.DataArray]):
     """Merge decoded fields following cfgrib/xarray conventions."""
+    from .eccodes._lazy import concat_lazy_arrays
+
     if not arrays:
         return None
     if len(arrays) == 1:
@@ -343,11 +440,18 @@ def _merge_arrays(arrays: List[xr.DataArray]):
         by_name: Dict[str, List[xr.DataArray]] = {}
         for array in group:
             by_name.setdefault(array.name, []).append(array)
-        variables = [
-            arrays_of_name[0] if len(arrays_of_name) == 1
-            else xr.concat(arrays_of_name, dim=level_name)
-            for arrays_of_name in by_name.values()
-        ]
+        variables = []
+        for arrays_of_name in by_name.values():
+            if len(arrays_of_name) == 1:
+                variables.append(arrays_of_name[0])
+                continue
+            # keep lazy GRIB arrays lazy: stack message offsets instead
+            # of materializing through xr.concat
+            stacked = concat_lazy_arrays(arrays_of_name, level_name)
+            if stacked is not None:
+                variables.append(stacked)
+            else:
+                variables.append(xr.concat(arrays_of_name, dim=level_name))
         datasets.append(xr.merge(variables))
 
     return datasets[0] if len(datasets) == 1 else datasets

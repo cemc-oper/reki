@@ -6,6 +6,6 @@ except PackageNotFoundError:
     # package is not installed
     pass
 
-from .sources import from_source, register, Source
+from .sources import from_source, from_source_lazily, register, Source
 
-__all__ = ["from_source", "register", "Source"]
+__all__ = ["from_source", "from_source_lazily", "register", "Source"]

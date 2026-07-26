@@ -3,13 +3,16 @@ from typing import Union, List, Dict, Optional
 from pathlib import Path
 
 import eccodes
+import numpy as np
 import xarray as xr
 from tqdm import tqdm
 
 from ._level import _fix_level
 from ._check import _check_message
+from ._lazy import lazy_values, concat_lazy_arrays
 from ._xarray import create_data_array_from_message, get_level_coordinate_name
 from reki._util import _load_first_variable
+from reki.readers.grib.common import MISSING_VALUE
 from reki.readers.grib.common._parameter import convert_parameter
 
 
@@ -21,6 +24,7 @@ def load_field_from_file(
         level_dim: Optional[str] = None,
         field_name: Optional[str] = None,
         show_progress: bool = False,
+        lazy: bool = False,
         **kwargs
 ) -> Optional[xr.DataArray]:
     """
@@ -98,6 +102,15 @@ def load_field_from_file(
     show_progress : bool
         show progress bar.
 
+    lazy : bool
+        if True, defer values decoding to data access: the file is
+        scanned with ``headers_only=True`` (message data sections are
+        skipped), coordinates and attributes are built immediately,
+        and the returned ``DataArray`` wraps a lazy backend array
+        holding only the file path and message offsets. ``isel`` /
+        ``sel`` stay lazy; ``.values`` triggers decoding. Default
+        False keeps the current immediate-decoding behavior.
+
     Returns
     -------
     DataArray or None:
@@ -171,6 +184,7 @@ def load_field_from_file(
 
     """
     messages = []
+    offsets = []
 
     fixed_level_type, fixed_level_dim = _fix_level(level_type, level_dim)
 
@@ -190,7 +204,8 @@ def load_field_from_file(
                 desc="Filtering",
             )
         while True:
-            message_id = eccodes.codes_grib_new_from_file(f)
+            offset = f.tell()
+            message_id = eccodes.codes_grib_new_from_file(f, headers_only=lazy)
             if message_id is None:
                 break
             if show_progress:
@@ -199,6 +214,7 @@ def load_field_from_file(
                 eccodes.codes_release(message_id)
                 continue
             messages.append(message_id)
+            offsets.append(offset)
             if isinstance(level, typing.List) or level == "all":
                 continue
             else:
@@ -211,10 +227,23 @@ def load_field_from_file(
 
     if len(messages) == 1:
         message_id = messages[0]
+        values = None
+        if lazy:
+            values = lazy_values(
+                file_path,
+                offsets[0],
+                (
+                    eccodes.codes_get(message_id, "Nj"),
+                    eccodes.codes_get(message_id, "Ni"),
+                ),
+                MISSING_VALUE,
+                np.nan,
+            )
         data = create_data_array_from_message(
             message_id,
             level_dim_name=fixed_level_dim,
             field_name=field_name,
+            values=values,
         )
         eccodes.codes_release(message_id)
         return data
@@ -226,17 +255,31 @@ def load_field_from_file(
                 desc="Decoding",
             )
 
-        def creat_array(message):
+        def creat_array(i_message):
+            i, message = i_message
+            values = None
+            if lazy:
+                values = lazy_values(
+                    file_path,
+                    offsets[i],
+                    (
+                        eccodes.codes_get(message, "Nj"),
+                        eccodes.codes_get(message, "Ni"),
+                    ),
+                    MISSING_VALUE,
+                    np.nan,
+                )
             array = create_data_array_from_message(
                 message,
                 level_dim_name=fixed_level_dim,
-                field_name=field_name
+                field_name=field_name,
+                values=values,
             )
             if show_progress:
                 pbar.update(1)
             return array
 
-        xarray_messages = [creat_array(message) for message in messages]
+        xarray_messages = [creat_array(m) for m in enumerate(messages)]
         for m in messages:
             eccodes.codes_release(m)
         if show_progress:
@@ -257,6 +300,14 @@ def load_field_from_file(
         if show_progress:
             print("Packing...")
 
+        if lazy:
+            # ``xr.concat`` would materialize lazy arrays, so stack the
+            # per-message offsets into one lazy array instead: only the
+            # messages selected on the level dimension are decoded.
+            data = concat_lazy_arrays(xarray_messages, level_dim_name)
+            if data is not None:
+                return data
+
         data = xr.concat(xarray_messages, level_dim_name)
         return data
 
@@ -270,6 +321,7 @@ def load_field_from_files(
         level: Optional[Union[int, float, List, Dict]],
         level_dim: Optional[str] = None,
         show_progress: bool = False,
+        lazy: bool = False,
         **kwargs
 ) -> Optional[xr.DataArray]:
     """
@@ -289,6 +341,8 @@ def load_field_from_files(
         level dimension name.
     show_progress: bool
         see ``load_field_from_file``
+    lazy: bool
+        see ``load_field_from_file``
 
     Returns
     -------
@@ -306,6 +360,7 @@ def load_field_from_files(
             level=level,
             level_dim=level_dim,
             show_progress=show_progress,
+            lazy=lazy,
             **kwargs
         )
         field_list.append(field)

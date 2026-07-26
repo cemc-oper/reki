@@ -24,14 +24,17 @@ def load_field_from_file(
         level type, default is level.
     level
     **kwargs
-        other parameters used by engine.
+        other parameters passed to ``xarray.open_dataset`` (e.g.
+        ``engine=``, ``chunks=``). The returned field is lazy by
+        nature: the backend reads from disk on demand, and ``chunks=``
+        is forwarded to dask when it is installed.
 
     Returns
     -------
     DataArray or None:
         DataArray if found one field, or None if not.
     """
-    ds = xr.open_dataset(file_path)
+    ds = xr.open_dataset(file_path, **kwargs)
     if parameter is None:
         field = _load_first_variable(ds)
     else:

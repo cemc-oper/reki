@@ -16,7 +16,15 @@ from importlib.metadata import entry_points
 
 from reki.core import Source
 
-__all__ = ["Source", "from_source", "get_source", "register", "SourceMaker"]
+__all__ = [
+    "Source",
+    "LazySource",
+    "from_source",
+    "from_source_lazily",
+    "get_source",
+    "register",
+    "SourceMaker",
+]
 
 #: entry point group used to discover sources from external packages.
 ENTRY_POINT_GROUP = "reki.sources"
@@ -95,6 +103,66 @@ class SourceMaker:
 get_source = SourceMaker()
 
 
+class LazySource:
+    """Proxy deferring the source pipeline to first attribute access.
+
+    Follows the ``earthkit.data.sources.lazy.LazySource`` pattern: the
+    wrapped factory (source construction, the ``mutate()`` fixed-point
+    loop and ``to_data_object()``) only runs when an attribute is
+    accessed for the first time; the result is cached and all
+    attribute access is forwarded to it.
+
+    Instances are created by :func:`from_source` with ``lazily=True``,
+    by :func:`from_source_lazily`, or by :func:`from_source` itself
+    for sources marked ``remote = True`` (whose pipeline performs
+    remote I/O).
+    """
+
+    def __init__(self, factory, description: str = ""):
+        object.__setattr__(self, "_factory", factory)
+        object.__setattr__(self, "_obj", None)
+        object.__setattr__(self, "_description", description)
+
+    def _ensure(self):
+        """Run the pipeline once and return the final data object."""
+        obj = object.__getattribute__(self, "_obj")
+        if obj is None:
+            obj = object.__getattribute__(self, "_factory")()
+            object.__setattr__(self, "_obj", obj)
+        return obj
+
+    def __getattr__(self, name: str):
+        if name.startswith("__"):
+            raise AttributeError(name)
+        return getattr(self._ensure(), name)
+
+    def __setattr__(self, name: str, value):
+        setattr(self._ensure(), name, value)
+
+    def __repr__(self):
+        if object.__getattribute__(self, "_obj") is None:
+            return f"LazySource({self._description}, pending)"
+        return repr(self._ensure())
+
+
+def _mutate_and_convert(src: Source):
+    """Run the mutate fixed-point loop and convert to the data object."""
+    prev = None
+    while src is not prev:
+        prev = src
+        src = src.mutate()
+
+    data = src.to_data_object()
+    if data is None:
+        raise ValueError(f"Source {src} cannot be converted into a data object")
+    return data
+
+
+def _build(name: str, args, kwargs):
+    """Construct a source and run the full pipeline."""
+    return _mutate_and_convert(get_source(name, *args, **kwargs))
+
+
 def from_source(name: str, *args, lazily: bool = False, **kwargs) -> Source:
     """Create a source by name and mutate it into the most concrete source.
 
@@ -109,6 +177,12 @@ def from_source(name: str, *args, lazily: bool = False, **kwargs) -> Source:
     this is the reader produced by the ``reki.readers`` dispatch; other
     sources (e.g. ``memory``) simply return themselves.
 
+    Sources marked ``remote = True`` (e.g. ``url``, ``cmadaas``)
+    perform remote I/O in their pipeline; for them ``from_source()``
+    returns a :class:`LazySource` proxy so that calling
+    ``from_source()`` alone never fires a remote request — the request
+    happens on first use (e.g. ``to_xarray()``).
+
     Parameters
     ----------
     name
@@ -117,26 +191,37 @@ def from_source(name: str, *args, lazily: bool = False, **kwargs) -> Source:
     *args
         positional arguments passed to the source class.
     lazily
-        if True, return a lazy proxy that builds the source on first
-        attribute access. Not implemented yet (Phase 7).
+        if True, return a :class:`LazySource` proxy that defers the
+        whole pipeline — including source construction — to first
+        attribute access.
     **kwargs
         keyword arguments passed to the source class.
 
     Returns
     -------
-    Source or Reader
-        the unified data object.
+    Source or Reader or LazySource
+        the unified data object, or a lazy proxy for it.
     """
     if lazily:
-        raise NotImplementedError("lazily=True is not implemented yet")
+        return from_source_lazily(name, *args, **kwargs)
 
-    prev = None
     src = get_source(name, *args, **kwargs)
-    while src is not prev:
-        prev = src
-        src = src.mutate()
+    if getattr(src, "remote", False):
+        return LazySource(
+            lambda: _mutate_and_convert(src),
+            description=repr(src),
+        )
+    return _mutate_and_convert(src)
 
-    data = src.to_data_object()
-    if data is None:
-        raise ValueError(f"Source {src} cannot be converted into a data object")
-    return data
+
+def from_source_lazily(name: str, *args, **kwargs) -> LazySource:
+    """Lazy variant of :func:`from_source`.
+
+    Returns a :class:`LazySource` proxy; source construction, the
+    mutate loop and the conversion to the data object all happen on
+    first attribute access, not before.
+    """
+    return LazySource(
+        lambda: _build(name, args, kwargs),
+        description=f"{name} source (lazily)",
+    )

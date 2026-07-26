@@ -81,10 +81,11 @@ class TestLowLevelMode:
             self, music_available, start_time
     ):
         params = {**_params(start_time), "dataCode": "NO_SUCH_DATA_CODE"}
+        # the request is deferred to first use (remote source)
         with pytest.raises(CMADAASError):
             reki.from_source(
                 "cmadaas", interface_id=INTERFACE_ID, params=params,
-            )
+            ).to_xarray()
 
 
 class TestHighLevelMode:

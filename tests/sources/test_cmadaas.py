@@ -208,8 +208,12 @@ class TestHighLevelMode:
             lambda **kw: MusicError(code=1001, message="no data"),
         )
 
+        # remote sources defer the request to first use, so the error
+        # surfaces on access, not at from_source() time
         with pytest.raises(CMADAASError) as exc_info:
-            reki.from_source("cmadaas", kind="model_grid", data_code="X")
+            reki.from_source(
+                "cmadaas", kind="model_grid", data_code="X",
+            ).to_xarray()
         assert exc_info.value.code == 1001
         assert "no data" in str(exc_info.value)
 
@@ -258,7 +262,7 @@ class TestHighLevelMode:
         reki.from_source(
             "cmadaas", kind="model_grid", data_code="X",
             config="conf.yaml", client=client,
-        )
+        ).to_xarray()
 
         assert received["config"] == "conf.yaml"
         assert received["client"] is client

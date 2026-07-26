@@ -104,6 +104,9 @@ class CmadaasSource(Source):
         ``data_code`` / ``parameter`` / ``start_time`` / ``level``).
     """
 
+    #: the MUSIC request is fired in ``mutate()``; defer it to first use.
+    remote = True
+
     def __init__(
             self,
             interface_id: str = None,

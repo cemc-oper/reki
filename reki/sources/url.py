@@ -72,6 +72,10 @@ class UrlSource(Source):
 
         reki.from_source("url", "https://example.com/data.grib2").to_xarray()
 
+    The download is remote I/O, so this source sets ``remote = True``:
+    ``from_source()`` returns a lazy proxy and the download only
+    happens on first use (e.g. ``to_xarray()``).
+
     Parameters
     ----------
     url
@@ -87,6 +91,8 @@ class UrlSource(Source):
         extra options forwarded to the reader (e.g. ``engine="cfgrib"``
         for the GRIB reader).
     """
+
+    remote = True
 
     def __init__(
             self,

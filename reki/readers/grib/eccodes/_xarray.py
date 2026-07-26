@@ -41,18 +41,25 @@ def create_data_array_from_message(
     values
         message values. if None, function will decode values from message.
         if set, function will use values instead of decode message.
+        A lazy backend array (e.g. ``LazilyIndexedArray`` wrapping
+        ``GribLazyArray``) may be given: it must already be shaped
+        ``(nj, ni)`` and handle missing value filling itself, so both
+        steps are skipped and decoding is deferred to data access.
     """
-    if missing_value is None:
-        missing_value = MISSING_VALUE
-    eccodes.codes_set(message, "missingValue", missing_value)
+    values_is_lazy = values is not None and not isinstance(values, np.ndarray)
 
-    if values is None:
-        # logger.info("decoding...")
-        values = eccodes.codes_get_double_array(message, "values")
-        # logger.info("decoding...done")
+    if not values_is_lazy:
+        if missing_value is None:
+            missing_value = MISSING_VALUE
+        eccodes.codes_set(message, "missingValue", missing_value)
 
-    if fill_missing_value is not None:
-        np.place(values, values == missing_value, fill_missing_value)
+        if values is None:
+            # logger.info("decoding...")
+            values = eccodes.codes_get_double_array(message, "values")
+            # logger.info("decoding...done")
+
+        if fill_missing_value is not None:
+            np.place(values, values == missing_value, fill_missing_value)
 
     attr_keys = [
         'edition',
@@ -122,7 +129,8 @@ def create_data_array_from_message(
     ni = all_attrs["Ni"]
     nj = all_attrs["Nj"]
 
-    values = values.reshape(nj, ni)
+    if not values_is_lazy:
+        values = values.reshape(nj, ni)
     lons = np.linspace(
         longitude_of_first_grid_point_in_degrees, longitude_of_last_grid_point_in_degrees, ni,
         endpoint=True
