@@ -2,7 +2,7 @@
 
 Caching is deliberately minimal for now: the target file is downloaded
 once and reused while it exists. A real cache (validation, eviction)
-is future work (see ``doc/reki-future-development.md`` §12.2).
+is future work.
 """
 
 import tempfile
