@@ -23,6 +23,12 @@ jobs:
       - name: Install reki
         run: |
             python -m pip install -e .
+      - name: Install test dependencies
+        run: |
+            python -m pip install --group test
+      - name: Run tests
+        run: |
+            python -m pytest tests -v --tb=short
       - name: Build
         run: |
             python -m build

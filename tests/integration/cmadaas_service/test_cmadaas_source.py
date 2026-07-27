@@ -1,4 +1,4 @@
-"""Desktop tests for the CMADaaS source against the real MUSIC service.
+"""Integration tests for the CMADaaS source against the real MUSIC service.
 
 These tests use the *remote* MUSIC retrieval path (the ``cmadaas``
 source), not the mounted-disk path (``local`` source with

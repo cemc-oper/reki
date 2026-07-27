@@ -52,6 +52,14 @@ lazy = ["dask"]
 test = ["pytest", "scipy", "cedarkit-test-data", "nuwe-cmadaas"]
 cov = ["pytest-cov", "codecov"]
 
+[tool.pytest.ini_options]
+markers = [
+    "needs_data: requires external test data (local cache or network download; skipped when neither is available)",
+    "cma_hpc: requires the CMA-HPC shared file system (/g3/COMMONDATA)",
+    "cmadaas_local: requires the mounted CMADaaS disk tree (/CMADAAS)",
+    "cmadaas_service: requires the CMADaaS MUSIC service and ~/.config/cedarkit.yaml",
+]
+
 [tool.setuptools.packages.find]
 where = ["."]
 exclude = ["tests*", "docs", "example"]

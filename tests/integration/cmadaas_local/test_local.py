@@ -1,7 +1,4 @@
-"""Tests for LocalSource (CMA HPC local path resolution).
-
-These tests use the CMADaaS mount (/CMADAAS) like tests/desktop.
-"""
+"""Tests for LocalSource against the mounted CMADaaS disk tree (/CMADAAS)."""
 
 import pandas as pd
 import pytest
