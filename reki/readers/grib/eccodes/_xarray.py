@@ -77,6 +77,8 @@ def create_data_array_from_message(
         'stepUnits',
         'stepRange',
         'endStep:int',
+        'indicatorOfUnitOfTimeRange:int',
+        'lengthOfTimeRange:int',
         'count',
         'discipline',
         'parameterCategory',
@@ -280,6 +282,8 @@ def attrs_to_grib_parameter_key(attrs: dict) -> GribParameterKey:
         if second_level_type == 100:
             second_level = second_level / 100
 
+    time_range_hours = _get_time_range_hours(attrs)
+
     return GribParameterKey(
         discipline=discipline,
         category=parameterCategory,
@@ -289,7 +293,36 @@ def attrs_to_grib_parameter_key(attrs: dict) -> GribParameterKey:
         second_level_type=second_level_type,
         second_level=second_level,
         stepType=attrs['stepType'],
+        time_range_hours=time_range_hours,
     )
+
+
+#: GRIB2 code table 4.4 (indicatorOfUnitOfTimeRange) -> factor in hours
+_TIME_RANGE_UNIT_HOURS = {
+    0: 1 / 60,  # minute
+    1: 1.0,  # hour
+    2: 24.0,  # day
+    10: 3.0,  # 3 hours
+    11: 6.0,  # 6 hours
+    12: 12.0,  # 12 hours
+    13: 1 / 3600,  # second
+}
+
+
+def _get_time_range_hours(attrs: dict) -> Optional[float]:
+    """
+    Normalize indicatorOfUnitOfTimeRange/lengthOfTimeRange to hours.
+
+    Returns None when the message carries no time range (e.g. instant fields).
+    """
+    unit = attrs.get('indicatorOfUnitOfTimeRange:int')
+    length = attrs.get('lengthOfTimeRange:int')
+    if not isinstance(unit, int) or not isinstance(length, int):
+        return None
+    factor = _TIME_RANGE_UNIT_HOURS.get(unit)
+    if factor is None:
+        return None
+    return factor * length
 
 
 def get_field_name(

@@ -1,0 +1,1769 @@
+# GRIB2 要素注册表。约束规范见同目录 param_registry_spec.md，请勿违反编号规则。
+# 本文件由 cemc-param-db 从要素数据库导出（python -m cemc_param_db export），请勿手工编辑。
+- key:
+    discipline: 0
+    category: 0
+    number: 0
+  name: t
+  wgrib2_name: TMP
+  unit: K
+  description: Temperature
+  description_cn: 温度
+  params:
+  - name: t2m
+    when:
+      first_level_type: 103
+      first_level: 2
+    typeOfLevel: heightAboveGround
+    level: 2
+    description: Temperature at 2 meters height
+    description_cn: 2米温度
+  - name: ts
+    aliases:
+    - tsfc
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+    description: Surface temperature
+    description_cn: 地面温度
+  - name: st
+    when:
+      first_level_type: 106
+    typeOfLevel: depthBelowLandLayer
+    description: Soil temperature
+    description_cn: 土壤温度
+  - name: st(0-10)
+    when:
+      first_level_type: 106
+      first_level: 0
+      second_level_type: 106
+      second_level: 0.1
+    typeOfLevel: depthBelowLandLayer
+    description_cn: 0-10cm土壤温度
+  - name: st(10-40)
+    when:
+      first_level_type: 106
+      first_level: 0.1
+      second_level_type: 106
+      second_level: 0.4
+    typeOfLevel: depthBelowLandLayer
+    description_cn: 10-40cm土壤温度
+  - name: st(40-100)
+    when:
+      first_level_type: 106
+      first_level: 0.4
+      second_level_type: 106
+      second_level: 1
+    typeOfLevel: depthBelowLandLayer
+    description_cn: 40-100cm土壤温度
+  - name: st(100-200)
+    when:
+      first_level_type: 106
+      first_level: 1
+      second_level_type: 106
+      second_level: 2
+    typeOfLevel: depthBelowLandLayer
+    description_cn: 100-200cm土壤温度
+- key:
+    discipline: 0
+    category: 0
+    number: 3
+  name: thetaSe
+  wgrib2_name: EPOT
+  unit: K
+  description: Pseudo-equivalent potential temperature
+  description_cn: 假相当位温
+- key:
+    discipline: 0
+    category: 0
+    number: 4
+  name: mx2t
+  wgrib2_name: TMAX
+  unit: K
+  description: Maximum of 2 meters high temperature
+  description_cn: 2米最高温度
+  typeOfLevel: heightAboveGround
+  level: 2
+  params:
+  - name: mx2t
+    aliases:
+    - tmax2m
+    when:
+      first_level_type: 103
+      first_level: 2
+      stepType: max
+    typeOfLevel: heightAboveGround
+    level: 2
+- key:
+    discipline: 0
+    category: 0
+    number: 5
+  name: mn2t
+  wgrib2_name: TMIN
+  unit: K
+  description: Minimum of 2 meters high temperature
+  description_cn: 2米最低温度
+  typeOfLevel: heightAboveGround
+  level: 2
+  params:
+  - name: mn2t
+    aliases:
+    - tmin2m
+    when:
+      first_level_type: 103
+      first_level: 2
+      stepType: min
+    typeOfLevel: heightAboveGround
+    level: 2
+- key:
+    discipline: 0
+    category: 0
+    number: 6
+  name: td
+  wgrib2_name: DPT
+  unit: K
+  description: Dew point
+  description_cn: 露点温度
+  params:
+  - name: td2m
+    when:
+      first_level_type: 103
+      first_level: 2
+    typeOfLevel: heightAboveGround
+    level: 2
+    description: 2 meters high Dew point
+    description_cn: 2米露点温度
+- key:
+    discipline: 0
+    category: 0
+    number: 7
+  name: ttd
+  wgrib2_name: DEPR
+  unit: K
+  description: Dew point depression
+  description_cn: 温度露点差
+- key:
+    discipline: 0
+    category: 0
+    number: 10
+  name: slhf
+  wgrib2_name: LHTFL
+  unit: ws/m2
+  description: Latent heat net flux
+  description_cn: 潜热辐射
+- key:
+    discipline: 0
+    category: 0
+    number: 17
+  name: SKINT
+  wgrib2_name: SKINT
+- key:
+    discipline: 0
+    category: 0
+    number: 24
+  name: hfx
+  unit: w/m2
+  description: Surface heat flux
+  description_cn: 地表热通量
+  typeOfLevel: surface
+  params:
+  - name: hfx
+    when:
+      first_level_type: 1
+      stepType: accum
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 0
+    number: 224
+  name: tadv
+  aliases:
+  - t_adv
+  unit: 1.e-6 k/s
+  description: Temperature advection
+  description_cn: 温度平流
+- key:
+    discipline: 0
+    category: 0
+    number: 225
+  name: saunaidx
+  description: Sauna index
+  description_cn: 桑拿指数
+- key:
+    discipline: 0
+    category: 0
+    number: 226
+  name: htdn
+  description: 'Number of high temperature days '
+  description_cn: 高温日数
+- key:
+    discipline: 0
+    category: 0
+    number: 227
+  name: ata
+  unit: K
+  description: Average temperature anomaly
+  description_cn: 平均气温距平
+- key:
+    discipline: 0
+    category: 0
+    number: 228
+  name: tn
+  unit: K
+  description: Minimum of air temperature for NMC medium-term prediction only
+  description_cn: 最低气温(仅限NMC使用)
+- key:
+    discipline: 0
+    category: 0
+    number: 229
+  name: thp
+  description: Perturbed potential temperature
+  description_cn: 位温扰动
+- key:
+    discipline: 0
+    category: 1
+    number: 0
+  name: q
+  wgrib2_name: SPFH
+  unit: kg/kg
+  description: Specific humidity
+  description_cn: 比湿
+  params:
+  - name: q2m
+    when:
+      first_level_type: 103
+      first_level: 2
+    typeOfLevel: heightAboveGround
+    level: 2
+    description: Specific humidity at 2 meters height
+    description_cn: 2米比湿
+  - name: sw
+    when:
+      first_level_type: 106
+    typeOfLevel: depthBelowLandLayer
+    unit: m3/m3
+    description: Soil moisture
+    description_cn: 土壤湿度
+  - name: sw(0-10)
+    when:
+      first_level_type: 106
+      first_level: 0
+      second_level_type: 106
+      second_level: 0.1
+    typeOfLevel: depthBelowLandLayer
+    description_cn: 0-10cm土壤湿度
+  - name: sw(10-40)
+    when:
+      first_level_type: 106
+      first_level: 0.1
+      second_level_type: 106
+      second_level: 0.4
+    typeOfLevel: depthBelowLandLayer
+    description_cn: 10-40cm土壤湿度
+  - name: sw(40-100)
+    when:
+      first_level_type: 106
+      first_level: 0.4
+      second_level_type: 106
+      second_level: 1
+    typeOfLevel: depthBelowLandLayer
+    description_cn: 40-100cm土壤湿度
+  - name: sw(100-200)
+    when:
+      first_level_type: 106
+      first_level: 1
+      second_level_type: 106
+      second_level: 2
+    typeOfLevel: depthBelowLandLayer
+    description_cn: 100-200cm土壤湿度
+- key:
+    discipline: 0
+    category: 1
+    number: 1
+  name: rh
+  wgrib2_name: RH
+  unit: '%'
+  description: Relative humidity
+  description_cn: 相对湿度
+  params:
+  - name: rh2m
+    when:
+      first_level_type: 103
+      first_level: 2
+    typeOfLevel: heightAboveGround
+    level: 2
+    description: Relative humidity at 2 meters height
+    description_cn: 2米相对湿度
+- key:
+    discipline: 0
+    category: 1
+    number: 3
+  name: pwat
+  wgrib2_name: PWAT
+  unit: kg/kg
+  description: Precipitable water
+  description_cn: 整层可降水量
+  typeOfLevel: atmosphere
+  params:
+  - name: pwat
+    when:
+      first_level_type: 10
+    typeOfLevel: atmosphere
+- key:
+    discipline: 0
+    category: 1
+    number: 8
+  name: rain
+  wgrib2_name: APCP
+  unit: mm
+  description: Total precipitation
+  description_cn: 总累计降水
+  typeOfLevel: surface
+  params:
+  - name: rain
+    when:
+      first_level_type: 1
+      stepType: accum
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 1
+    number: 9
+  name: rainnc
+  wgrib2_name: NCPCP
+  unit: mm
+  description: Large scale precipitation
+  description_cn: 大尺度降水
+  typeOfLevel: surface
+  params:
+  - name: rainnc
+    when:
+      first_level_type: 1
+      stepType: accum
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 1
+    number: 10
+  name: rainc
+  wgrib2_name: ACPCP
+  unit: mm
+  description: Convective precipitation
+  description_cn: 对流性降水
+  typeOfLevel: surface
+  params:
+  - name: rainc
+    when:
+      first_level_type: 1
+      stepType: accum
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 1
+    number: 11
+  name: sd
+  wgrib2_name: SNOD
+  unit: m
+  description: 'Snow depth  '
+  description_cn: 雪深
+  typeOfLevel: surface
+  params:
+  - name: sd
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 1
+    number: 19
+  name: precitype
+  wgrib2_name: PTYPE
+  description: Precipitation type
+  description_cn: 降水相态
+- key:
+    discipline: 0
+    category: 1
+    number: 22
+  name: qc
+  wgrib2_name: CLMR
+  unit: kg/kg
+  description: Cloud mixing ratio
+  description_cn: 云水混合比
+- key:
+    discipline: 0
+    category: 1
+    number: 23
+  name: qi
+  wgrib2_name: ICMR
+  unit: kg/kg
+  description: Ice mixing ratio
+  description_cn: 冰水混合比
+- key:
+    discipline: 0
+    category: 1
+    number: 24
+  name: qr
+  wgrib2_name: RWMR
+  unit: kg/kg
+  description: Rain mixing ratio
+  description_cn: 雨水混合比
+- key:
+    discipline: 0
+    category: 1
+    number: 25
+  name: qs
+  wgrib2_name: SNMR
+  unit: kg/kg
+  description: Snow mixing ratio
+  description_cn: 雪水混合比
+- key:
+    discipline: 0
+    category: 1
+    number: 29
+  name: sf
+  wgrib2_name: ASNOW
+  unit: m
+  description: 'Snow melt  '
+  description_cn: 降雪
+  typeOfLevel: surface
+  params:
+  - name: sf
+    aliases:
+    - snow
+    when:
+      first_level_type: 1
+      stepType: accum
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 1
+    number: 32
+  name: graupel
+  wgrib2_name: GRLE
+  unit: kg/kg
+  description: Graupel
+  description_cn: 霰
+- key:
+    discipline: 0
+    category: 1
+    number: 53
+  name: TSRWE
+  wgrib2_name: TSRWE
+- key:
+    discipline: 0
+    category: 1
+    number: 64
+  name: tvw
+  wgrib2_name: TCIWV
+  unit: kg/m2
+  description: Total column integrated water vapor
+  description_cn: 总柱状比湿
+  typeOfLevel: atmosphere
+  params:
+  - name: tvw
+    when:
+      first_level_type: 10
+    typeOfLevel: atmosphere
+- key:
+    discipline: 0
+    category: 1
+    number: 69
+  name: tcw
+  wgrib2_name: TCOLW
+  unit: kg/m2
+  description: Total column integrated cloud water
+  description_cn: 总柱状云水
+  typeOfLevel: atmosphere
+  params:
+  - name: tcw
+    when:
+      first_level_type: 10
+    typeOfLevel: atmosphere
+- key:
+    discipline: 0
+    category: 1
+    number: 70
+  name: tiw
+  wgrib2_name: TCOLI
+  unit: kg/m2
+  description: Total column integrated cloud ice
+  description_cn: 总柱状云冰
+  typeOfLevel: atmosphere
+  params:
+  - name: tiw
+    when:
+      first_level_type: 10
+    typeOfLevel: atmosphere
+- key:
+    discipline: 0
+    category: 1
+    number: 224
+  name: qflx
+  unit: 1e-1.g/(cm.hpa.s)
+  description: Moisture flux
+  description_cn: 水汽通量
+- key:
+    discipline: 0
+    category: 1
+    number: 225
+  name: qdiv
+  wgrib2_name: FRZR
+  unit: 1e-7.g/(cm2.hpa.s)
+  description: Moisture flux divergence
+  description_cn: 水汽通量散度
+- key:
+    discipline: 0
+    category: 1
+    number: 226
+  name: src
+  description: 'Skin reservoir content  '
+  description_cn: 表面蓄水池含量
+- key:
+    discipline: 0
+    category: 1
+    number: 227
+  name: ro
+  unit: m
+  description: Runoff
+  description_cn: 径流
+- key:
+    discipline: 0
+    category: 1
+    number: 228
+  name: pc
+  unit: Pa
+  description: Condensation layer pressure
+  description_cn: 抬升凝结高度
+  typeOfLevel: surface
+  params:
+  - name: pc
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 1
+    number: 229
+  name: qfxsfc
+  unit: kg/(m2.s)
+  description: Surface moisture flux
+  description_cn: 地表水汽通量
+  typeOfLevel: surface
+  params:
+  - name: qfxsfc
+    aliases:
+    - qfx
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 1
+    number: 230
+  name: qpe
+  unit: mm
+  description: Quantitive precipitation estimate
+  description_cn: 定量降水估计
+- key:
+    discipline: 0
+    category: 1
+    number: 231
+  name: rhmax
+  unit: '%'
+  description: 'Maximum of rh '
+  description_cn: 最大相对湿度
+  params:
+  - name: rhmax2m
+    when:
+      first_level_type: 103
+      first_level: 2
+    typeOfLevel: heightAboveGround
+    level: 2
+    description: Maximum of rh at 2 meters height
+    description_cn: 2米最大相对湿度
+- key:
+    discipline: 0
+    category: 1
+    number: 232
+  name: rhmin
+  unit: '%'
+  description: Minimum of rh
+  description_cn: 最小相对湿度
+  params:
+  - name: rhmin2m
+    when:
+      first_level_type: 103
+      first_level: 2
+    typeOfLevel: heightAboveGround
+    level: 2
+    description: Minimum of rh at 2 meters height
+    description_cn: 2米最小相对湿度
+- key:
+    discipline: 0
+    category: 1
+    number: 233
+  name: rainp
+  unit: '%'
+  description: Probability of precipitation
+  description_cn: 降水概率
+- key:
+    discipline: 0
+    category: 1
+    number: 234
+  name: rainpr
+  unit: mm
+  description: Process precipitation
+  description_cn: 过程降水量
+- key:
+    discipline: 0
+    category: 1
+    number: 235
+  name: rainh
+  unit: mm
+  description: Short time heavy precipitation
+  description_cn: 短时强降水
+- key:
+    discipline: 0
+    category: 1
+    number: 236
+  name: hail
+  unit: mm
+  description: Hail
+  description_cn: 冰雹
+- key:
+    discipline: 0
+    category: 1
+    number: 237
+  name: raint
+  unit: mm
+  description: Precipitation of typhoon
+  description_cn: 台风降水
+- key:
+    discipline: 0
+    category: 1
+    number: 238
+  name: light
+  description: Lightning
+  description_cn: 雷电概率
+- key:
+    discipline: 0
+    category: 1
+    number: 239
+  name: hi
+  wgrib2_name: HI
+  description: 'Hail index '
+  description_cn: 冰雹指数
+  typeOfLevel: surface
+  params:
+  - name: hi
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 1
+    number: 240
+  name: II
+  unit: oC/hm
+  description: Inversion intensity
+  description_cn: 逆温强度
+- key:
+    discipline: 0
+    category: 1
+    number: 241
+  name: rain5max
+  unit: mm
+  description: 5-minutes accumulated precipitation
+  description_cn: 5分钟最大降水
+  typeOfLevel: surface
+  params:
+  - name: rain5max
+    when:
+      first_level_type: 1
+      stepType: max
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 2
+    number: 2
+  name: u
+  wgrib2_name: UGRD
+  unit: m/s
+  description: U-component of wind
+  description_cn: 东西风
+  params:
+  - name: u10m
+    when:
+      first_level_type: 103
+      first_level: 10
+      stepType: instant
+    typeOfLevel: heightAboveGround
+    level: 10
+    description: V-component of wind at 10 meters height
+    description_cn: 10米东西风
+  - name: u10mmax#1
+    when:
+      first_level_type: 103
+      first_level: 10
+      stepType: max
+      time_range_hours: 1
+    typeOfLevel: heightAboveGround
+    level: 10
+    description: Maximum of u10m during 1 hours
+    description_cn: 输出间隔内最大10米东西风
+  - name: u10mmax#3
+    when:
+      first_level_type: 103
+      first_level: 10
+      stepType: max
+      time_range_hours: 3
+    typeOfLevel: heightAboveGround
+    level: 10
+    description: Maximum of u10m during 3 hours
+    description_cn: 3小时最大10米东西风
+  - name: u10mmax
+    when:
+      first_level_type: 103
+      first_level: 10
+      stepType: max
+    typeOfLevel: heightAboveGround
+    level: 10
+    description: Maximum of u10m
+    description_cn: 最大10米东西风
+- key:
+    discipline: 0
+    category: 2
+    number: 3
+  name: v
+  wgrib2_name: VGRD
+  unit: m/s
+  description: V-component of wind
+  description_cn: 南北风
+  params:
+  - name: v10m
+    when:
+      first_level_type: 103
+      first_level: 10
+      stepType: instant
+    typeOfLevel: heightAboveGround
+    level: 10
+    description: V-component of wind at 10 meters height
+    description_cn: 10米南北风
+  - name: v10mmax#1
+    when:
+      first_level_type: 103
+      first_level: 10
+      stepType: max
+      time_range_hours: 1
+    typeOfLevel: heightAboveGround
+    level: 10
+    description: Maximim of v10m during 1 hours
+    description_cn: 输出间隔内10米南北风
+  - name: v10mmax#3
+    when:
+      first_level_type: 103
+      first_level: 10
+      stepType: max
+      time_range_hours: 3
+    typeOfLevel: heightAboveGround
+    level: 10
+    description: Maximim of v10m during 3 hours
+    description_cn: 3小时最大10米南北风
+  - name: v10mmax
+    when:
+      first_level_type: 103
+      first_level: 10
+      stepType: max
+    typeOfLevel: heightAboveGround
+    level: 10
+    description: Maximim of v10m
+    description_cn: 最大10米南北风
+- key:
+    discipline: 0
+    category: 2
+    number: 9
+  name: w
+  wgrib2_name: DZDT
+  unit: m/s
+  description: Vertical velocity (geometric)
+  description_cn: 等高面垂直速度
+  params:
+  - name: w
+    when:
+      first_level_type: 100
+  - name: wmax#1
+    when:
+      first_level_type: 100
+      stepType: max
+      time_range_hours: 1
+    description: Maximum of w during 1 hours
+    description_cn: 1小时等高面最大垂直速度
+  - name: wmax#3
+    when:
+      first_level_type: 100
+      stepType: max
+      time_range_hours: 3
+    description: Maximum of w during 3 hours
+    description_cn: 3小时等高面最大垂直速度
+  - name: wmax
+    when:
+      first_level_type: 100
+      stepType: max
+    description: Maximum of w
+    description_cn: 等高面最大垂直速度
+- key:
+    discipline: 0
+    category: 2
+    number: 12
+  name: vor
+  wgrib2_name: RELV
+  unit: s-1
+  description: Relative vorticity
+  description_cn: 涡度
+- key:
+    discipline: 0
+    category: 2
+    number: 13
+  name: div
+  wgrib2_name: RELD
+  unit: s-1
+  description: Relative divergence
+  description_cn: 散度
+- key:
+    discipline: 0
+    category: 2
+    number: 22
+  name: gust
+  wgrib2_name: GUST
+  unit: m/s
+  description: Wind speed (gust)
+  description_cn: 阵风风速
+- key:
+    discipline: 0
+    category: 2
+    number: 25
+  name: shr
+  wgrib2_name: VWSH
+  unit: s-1
+  description: Vertical speed shear
+  description_cn: 垂直风切变
+  params:
+  - name: shr(0-1000)
+    when:
+      first_level_type: 103
+      first_level: 1000
+      second_level_type: 103
+      second_level: 0
+    typeOfLevel: heightAboveGroundLayer
+    level: 1000
+    description_cn: 0-1km垂直风切变
+  - name: shr(0-3000)
+    when:
+      first_level_type: 103
+      first_level: 3000
+      second_level_type: 103
+      second_level: 0
+    typeOfLevel: heightAboveGroundLayer
+    level: 3000
+    description_cn: 0-3km垂直风切变
+  - name: shr(0-6000)
+    when:
+      first_level_type: 103
+      first_level: 6000
+      second_level_type: 103
+      second_level: 0
+    typeOfLevel: heightAboveGroundLayer
+    level: 6000
+    description_cn: 0-6km垂直风切变
+- key:
+    discipline: 0
+    category: 2
+    number: 224
+  name: voradv
+  aliases:
+  - vor_adv
+  unit: 1.e-11/(s2)
+  description: Relative vorticity advection
+  description_cn: 涡度平流
+- key:
+    discipline: 0
+    category: 2
+    number: 225
+  name: mpv1
+  unit: 1e-6.k/(m2.s.kg)
+  description: Moist potential vorticity(vertical part)
+  description_cn: 湿位涡垂直分量
+- key:
+    discipline: 0
+    category: 2
+    number: 226
+  name: mpv2
+  unit: 1e-6.k/(m2.s.kg)
+  description: Moist potential vorticity(horizontal part)
+  description_cn: 湿位涡水平分量
+- key:
+    discipline: 0
+    category: 2
+    number: 227
+  name: wess
+  unit: N/m2
+  description: West-east surface wind stress
+  description_cn: 东西向风应力
+  typeOfLevel: surface
+  params:
+  - name: wess
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 2
+    number: 228
+  name: nsss
+  unit: N/m2
+  description: North-south surface wind stress
+  description_cn: 南北向风应力
+  typeOfLevel: surface
+  params:
+  - name: nsss
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 2
+    number: 229
+  name: thunwind
+  description: Thunderstorm wind
+  description_cn: 雷暴大风
+- key:
+    discipline: 0
+    category: 2
+    number: 230
+  name: seawave
+  unit: m
+  description: Sea wave
+  description_cn: 海浪
+- key:
+    discipline: 0
+    category: 2
+    number: 231
+  name: weph
+  description: Weather phenomenon
+  description_cn: 天气现象
+- key:
+    discipline: 0
+    category: 2
+    number: 232
+  name: haze
+  description: Haze
+  description_cn: 霾
+- key:
+    discipline: 0
+    category: 2
+    number: 233
+  name: apd
+  description: Condition of air pollution
+  description_cn: 空气污染条件
+- key:
+    discipline: 0
+    category: 2
+    number: 234
+  name: fog
+  description: Fog
+  description_cn: 雾
+- key:
+    discipline: 0
+    category: 2
+    number: 235
+  name: vi
+  unit: m2/s
+  description: Ventilation Index
+  description_cn: 通风系数
+- key:
+    discipline: 0
+    category: 2
+    number: 236
+  name: wi
+  description: Wind index
+  description_cn: 大风指数
+  typeOfLevel: surface
+  params:
+  - name: wi
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 2
+    number: 237
+  name: shrmax
+  unit: m/s
+  description: maximum vector of vertical wind shear
+  description_cn: 最大垂直风切变矢量
+  params:
+  - name: shrmax(0-600)
+    when:
+      first_level_type: 103
+      first_level: 600
+      second_level_type: 103
+      second_level: 0
+    typeOfLevel: heightAboveGroundLayer
+    level: 600
+    description_cn: 0-600m最大垂直风切变矢量
+- key:
+    discipline: 0
+    category: 2
+    number: 238
+  name: shrmaxdir
+  unit: degree
+  description: direction of maxium vertical wind shear
+  description_cn: 最大垂直风切变的方向
+  params:
+  - name: shrmaxdir(0-600)
+    when:
+      first_level_type: 103
+      first_level: 600
+      second_level_type: 103
+      second_level: 0
+    typeOfLevel: heightAboveGroundLayer
+    level: 600
+    description_cn: 0-600m最大垂直风切变的方向
+- key:
+    discipline: 0
+    category: 3
+    number: 0
+  name: ps
+  wgrib2_name: PRES
+  unit: Pa
+  description: Surface pressure
+  description_cn: 地面气压
+  typeOfLevel: surface
+  params:
+  - name: ps
+    aliases:
+    - psfc
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 3
+    number: 1
+  name: psl
+  wgrib2_name: PRMSL
+  unit: Pa
+  description: Sea level pressure
+  description_cn: 海平面气压
+  typeOfLevel: meanSea
+  params:
+  - name: psl
+    when:
+      first_level_type: 101
+    typeOfLevel: meanSea
+- key:
+    discipline: 0
+    category: 3
+    number: 5
+  name: h
+  wgrib2_name: HGT
+  unit: Gpm
+  description: Geopotential height
+  description_cn: 位势高度
+  params:
+  - name: h
+    when:
+      first_level_type: 100
+  - name: zs
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+    description: 'Terrain '
+    description_cn: 地形高度
+- key:
+    discipline: 0
+    category: 3
+    number: 18
+  name: pblh
+  wgrib2_name: HPBL
+  unit: m
+  description: Planet boundary layer height
+  description_cn: 边界层高度
+  typeOfLevel: surface
+  params:
+  - name: pblh
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 3
+    number: 26
+  name: pi
+  description: Exner pressure
+  description_cn: Exner气压
+- key:
+    discipline: 0
+    category: 3
+    number: 224
+  name: pip
+  description: Perturbed Exner pressure
+  description_cn: Exner气压扰动
+- key:
+    discipline: 0
+    category: 3
+    number: 225
+  name: ht0
+  unit: m
+  description: Height of 0 degree isothermal level
+  description_cn: 0度层高度
+  typeOfLevel: surface
+  params:
+  - name: ht0
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 3
+    number: 226
+  name: ht2
+  unit: m
+  description: Height of -20 degree isothermal level
+  description_cn: -20度层高度
+  typeOfLevel: surface
+  params:
+  - name: ht2
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 3
+    number: 227
+  name: hib
+  unit: m
+  description: 'Height of inversion base '
+  description_cn: 逆温层底高度
+- key:
+    discipline: 0
+    category: 3
+    number: 228
+  name: znt
+  unit: m
+  description: roughness length
+  description_cn: 粗糙度
+  typeOfLevel: surface
+  params:
+  - name: znt
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 4
+    number: 8
+  name: gusw
+  wgrib2_name: USWRF
+  unit: w/m2
+  description: Surface upward short-wave radiation flux(surface)
+  description_cn: 地面向上短波辐射通量
+  typeOfLevel: surface
+  params:
+  - name: gusw
+    aliases:
+    - gswu
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+  - name: tusw
+    when:
+      first_level_type: 8
+    typeOfLevel: nominalTop
+    description: Upward short-wave radiation flux(top of atmoshpere)
+    description_cn: 大气顶向上（外）短波辐射通量
+- key:
+    discipline: 0
+    category: 4
+    number: 9
+  name: gsw
+  aliases:
+  - ssr
+  wgrib2_name: NSWRF
+  unit: w/m2
+  description: Net short wave radiation flux
+  description_cn: 净短波辐射通量|净太阳辐射通量
+  params:
+  - name: tsw
+    when:
+      first_level_type: 8
+      stepType: accum
+    typeOfLevel: nominalTop
+    description: TOE net short wave radiation flux
+    description_cn: 大气顶净短波辐射通量
+- key:
+    discipline: 0
+    category: 4
+    number: 11
+  name: gswc
+  wgrib2_name: NSWRFCS
+  unit: w/m2
+  description: Net short wave radiation flux, clear sky
+  description_cn: 晴空地面净短波辐射通量
+  typeOfLevel: surface
+  params:
+  - name: gswc
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+  - name: tswc
+    when:
+      first_level_type: 8
+    typeOfLevel: nominalTop
+    description: TOE net short wave radiation flux, clear sky
+    description_cn: 晴空大气顶净短波辐射通量
+- key:
+    discipline: 0
+    category: 4
+    number: 53
+  name: guswc
+  wgrib2_name: USWRFCS
+  unit: w/m2 S
+  description: urface upward short-wave radiation flux, clear sky
+  description_cn: 地面晴空向上短波辐射通量
+  typeOfLevel: surface
+  params:
+  - name: guswc
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+  - name: tuswc
+    when:
+      first_level_type: 8
+    typeOfLevel: nominalTop
+    unit: w/m2
+    description: TOE upward short-wave radiation flux, clear sky
+    description_cn: 大气顶晴空向上短波辐射通量
+- key:
+    discipline: 0
+    category: 4
+    number: 227
+  name: btv
+  unit: K
+  description: Radiation bright temperature(vapor channel)
+  description_cn: 卫星水汽通道模拟亮温
+  typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 4
+    number: 228
+  name: bti
+  unit: K
+  description: Radiation bright temperature(infrared channel)
+  description_cn: 卫星红外通道模拟亮温
+  typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 5
+    number: 4
+  name: gulw
+  wgrib2_name: ULWRF
+  unit: w/m2
+  description: Surface upward long-wave radiation flux(surface)
+  description_cn: 地面向上长波辐射通量
+  typeOfLevel: surface
+  params:
+  - name: gulw
+    aliases:
+    - gslu
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+  - name: tulw
+    when:
+      first_level_type: 8
+    typeOfLevel: nominalTop
+    description: Upward long-wave radiation flux(top of atmoshpere)
+    description_cn: 大气顶向上（外）长波辐射通量
+- key:
+    discipline: 0
+    category: 5
+    number: 5
+  name: glw
+  aliases:
+  - str
+  wgrib2_name: NLWRF
+  unit: w/m2
+  description: Net long wave radiation flux
+  description_cn: 净长波辐射通量|净热辐射通量
+- key:
+    discipline: 0
+    category: 5
+    number: 8
+  name: gdlwc
+  wgrib2_name: DLWRFCS
+  unit: w/m2
+  description: Surface downward long-wave radiation flux, clear sky
+  description_cn: 地面晴空向下长波辐射通量
+  typeOfLevel: surface
+  params:
+  - name: gdlwc
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 5
+    number: 224
+  name: gulwc
+  unit: w/m2
+  description: Surface upward long-wave radiation flux, clear sky
+  description_cn: 地面晴空向上长波辐射通量
+  typeOfLevel: surface
+  params:
+  - name: gulwc
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+  - name: tulwc
+    when:
+      first_level_type: 8
+    typeOfLevel: nominalTop
+    description: TOE upward long-wave radiation flux, clear sky
+    description_cn: 大气顶晴空向上长波辐射通量
+- key:
+    discipline: 0
+    category: 6
+    number: 1
+  name: tcc
+  wgrib2_name: TCDC
+  unit: '%'
+  description: Total cloud cover
+  description_cn: 总云量
+  typeOfLevel: entireAtmosphere
+- key:
+    discipline: 0
+    category: 6
+    number: 3
+  name: lcc
+  wgrib2_name: LCDC
+  unit: '%'
+  description: Low cloud cover
+  description_cn: 低云量
+  typeOfLevel: entireAtmosphere
+- key:
+    discipline: 0
+    category: 6
+    number: 4
+  name: mcc
+  wgrib2_name: MCDC
+  unit: '%'
+  description: Medium cloud cover
+  description_cn: 中云量
+  typeOfLevel: entireAtmosphere
+- key:
+    discipline: 0
+    category: 6
+    number: 5
+  name: hcc
+  wgrib2_name: HCDC
+  unit: '%'
+  description: High cloud cover
+  description_cn: 高云量
+  typeOfLevel: entireAtmosphere
+- key:
+    discipline: 0
+    category: 6
+    number: 11
+  name: cldb
+  wgrib2_name: CDCB
+  unit: m
+  description: cloud base
+  description_cn: 云底高度
+- key:
+    discipline: 0
+    category: 6
+    number: 12
+  name: cldt
+  wgrib2_name: CDCTOP
+  unit: m
+  description: cloud top
+  description_cn: 云顶高度
+- key:
+    discipline: 0
+    category: 6
+    number: 13
+  name: ceiling
+  wgrib2_name: CEIL
+  unit: m
+  description: ceiling
+  description_cn: 云幂高度
+- key:
+    discipline: 0
+    category: 6
+    number: 22
+  name: cc
+  wgrib2_name: CDCC
+  unit: '%'
+  description: Cloud cover
+  description_cn: 云量
+- key:
+    discipline: 0
+    category: 7
+    number: 0
+  name: pli
+  wgrib2_name: PLI
+  unit: K
+  description: Parcel lifted index(to 500 hpa)
+  description_cn: 气块抬升指数
+  typeOfLevel: surface
+  params:
+  - name: pli
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 7
+    number: 1
+  name: bli
+  wgrib2_name: BLI
+  unit: K
+  description: Best lifted index
+  description_cn: 最优抬升指数
+  typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 7
+    number: 2
+  name: kidx
+  wgrib2_name: KX
+  unit: C
+  description: K index
+  description_cn: K指数
+  typeOfLevel: meanSea
+  params:
+  - name: kidx
+    aliases:
+    - ki
+    - k
+    when:
+      first_level_type: 101
+    typeOfLevel: meanSea
+- key:
+    discipline: 0
+    category: 7
+    number: 4
+  name: tti
+  wgrib2_name: TOTALX
+  unit: K
+  description: Total totals index
+  description_cn: 总指数
+  typeOfLevel: surface
+  params:
+  - name: tti
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 7
+    number: 5
+  name: sweatidx
+  wgrib2_name: SX
+  description: Sweat index
+  description_cn: 强天气胁迫指数
+  typeOfLevel: surface
+  params:
+  - name: sweatidx
+    aliases:
+    - sweat
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 7
+    number: 6
+  name: cape
+  wgrib2_name: CAPE
+  unit: J/kg
+  description: Convective available potential energy
+  description_cn: 对流有效位能
+  typeOfLevel: surface
+  params:
+  - name: cape
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 7
+    number: 7
+  name: cin
+  wgrib2_name: CIN
+  unit: J/kg
+  description: Convective inhibition
+  description_cn: 对流抑制能量
+  typeOfLevel: surface
+  params:
+  - name: cin
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 7
+    number: 8
+  name: srh
+  wgrib2_name: HLCY
+  unit: J/kg
+  description: Storm relative helicity
+  description_cn: 风暴螺旋度
+  params:
+  - name: srh(0-1000)
+    when:
+      first_level_type: 103
+      first_level: 1000
+      second_level_type: 103
+      second_level: 0
+    typeOfLevel: heightAboveGroundLayer
+    level: 1000
+    description_cn: 0-1km垂直风暴螺旋度
+  - name: srh(0-3000)
+    when:
+      first_level_type: 103
+      first_level: 3000
+      second_level_type: 103
+      second_level: 0
+    typeOfLevel: heightAboveGroundLayer
+    level: 3000
+    description_cn: 0-3km垂直风暴螺旋度
+- key:
+    discipline: 0
+    category: 7
+    number: 12
+  name: ri
+  wgrib2_name: RI
+  description: Richardson number
+  description_cn: 理查森数
+  params:
+  - name: risfc
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+    description: Richardson number of surface layer
+    description_cn: 近地面总体理查森数
+  - name: ripbl
+    when:
+      first_level_type: 166
+    description: Richardson number of PBL
+    description_cn: 边界层总体理查森数
+- key:
+    discipline: 0
+    category: 7
+    number: 13
+  name: si
+  wgrib2_name: SHWINX
+  unit: K
+  description: Showalter index
+  description_cn: 沙氏指数
+  typeOfLevel: surface
+  params:
+  - name: si
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 7
+    number: 15
+  name: uhmax
+  wgrib2_name: UPHL
+  unit: m2/s2
+  description: Updraught helicity
+  description_cn: 最大上升螺旋度
+  params:
+  - name: uhmax
+    when:
+      stepType: max
+  - name: uhmax(2000-5000)
+    when:
+      first_level_type: 103
+      first_level: 5000
+      second_level_type: 103
+      second_level: 2000
+      stepType: max
+    typeOfLevel: heightAboveGroundLayer
+    level: 5000
+    description_cn: 2-5km最大上升螺旋度
+- key:
+    discipline: 0
+    category: 7
+    number: 224
+  name: dcape
+  wgrib2_name: DCAPE
+  unit: J/kg
+  description: Down convective available potential energy
+  description_cn: 下沉对流有效位能
+- key:
+    discipline: 0
+    category: 7
+    number: 225
+  name: ssi
+  description: Storm strength index
+  description_cn: 风暴强度指数
+- key:
+    discipline: 0
+    category: 7
+    number: 226
+  name: asi
+  description: Atmospheric stability index
+  description_cn: 大气稳定度指数
+- key:
+    discipline: 0
+    category: 16
+    number: 3
+  name: echotop
+  wgrib2_name: RETOP
+  unit: m
+  description: radar echo top
+  description_cn: 雷达回波顶
+- key:
+    discipline: 0
+    category: 16
+    number: 224
+  name: cdbz
+  aliases:
+  - cr
+  - c_dbz
+  wgrib2_name: CR
+  unit: dbz
+  description: Composite radar reflectivity
+  description_cn: 雷达组合反射率
+  typeOfLevel: surface
+  params:
+  - name: cdbzmax
+    when:
+      stepType: max
+    typeOfLevel: surface
+  - name: cdbzmax#1
+    when:
+      stepType: max
+      time_range_hours: 1
+    typeOfLevel: surface
+    description: Maximum of cdbz during 1 hours
+    description_cn: 输出间隔内最大雷达组合反射率
+  - name: cdbzmax#3
+    aliases:
+    - cr#3
+    when:
+      stepType: max
+      time_range_hours: 3
+    typeOfLevel: surface
+    description: Maximum of cdbz during 3 hours
+    description_cn: 3小时最大雷达组合反射率
+- key:
+    discipline: 0
+    category: 16
+    number: 225
+  name: dbz
+  unit: dbz
+  description: Radar reflectivity
+  description_cn: 雷达反射率
+  params:
+  - name: dbzmax
+    when:
+      stepType: max
+  - name: dbzmax#3
+    when:
+      stepType: max
+      time_range_hours: 3
+    description: Maximum of dbz during 3 hours
+    description_cn: 3小时最大雷达反射率
+- key:
+    discipline: 0
+    category: 16
+    number: 226
+  name: dbzmaxh
+  unit: m
+  description: height of maximum of radar reflectivity
+  description_cn: 最大雷达回波的高度
+- key:
+    discipline: 0
+    category: 19
+    number: 0
+  name: vis
+  wgrib2_name: VIS
+  unit: m
+  description: Visibility
+  description_cn: 能见度
+  typeOfLevel: surface
+  params:
+  - name: vis
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 19
+    number: 1
+  name: albedo
+  wgrib2_name: ALBDO
+  unit: '%'
+  description: Albedo
+  description_cn: 反射率
+  typeOfLevel: surface
+  params:
+  - name: albedo
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 19
+    number: 224
+  name: fogh
+  unit: m
+  description: height of fog top
+  description_cn: 雾顶高度
+  typeOfLevel: surface
+  params:
+  - name: fogh
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 0
+    category: 19
+    number: 225
+  name: fogod
+  description: fog optical
+  description_cn: 光学厚度
+  typeOfLevel: surface
+  params:
+  - name: fogod
+    when:
+      first_level_type: 1
+    typeOfLevel: surface
+- key:
+    discipline: 2
+    category: 0
+    number: 2
+  name: TSOIL
+  wgrib2_name: TSOIL
+- key:
+    discipline: 2
+    category: 0
+    number: 22
+  name: SOIL_M
+  wgrib2_name: SOIL_M
+- key:
+    discipline: 2
+    category: 0
+    number: 24
+  name: sshf
+  wgrib2_name: HFLUX
+  unit: ws/m2
+  description: Sensible heat net flux
+  description_cn: 感热辐射

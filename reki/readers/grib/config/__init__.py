@@ -1,15 +1,79 @@
-from typing import Optional
+"""
+GRIB2 要素注册表查询接口。
+
+数据文件为同目录 ``param_registry.yaml``，约束规范见 ``param_registry_spec.md``。
+匹配语义（规范 §5）：
+
+1. 变体命中：``when`` 中每个键都等于实际值；缺省键 = 通配；实际值缺失不命中。
+2. 最具体匹配：命中变体中 ``when`` 键数最多者胜出，并列时 ``params`` 中靠后者胜出。
+3. 无变体命中时回退到条目级通用名 ``name``。
+4. ``wgrib2_name`` 层次无关，由 :func:`find_wgrib2_name` 单独返回。
+"""
+
 from dataclasses import dataclass
+from functools import cache
+from importlib.resources import files
+from typing import Optional, Union
 
-import pandas as pd
+import yaml
 
-from .wgrib2_short_name import WGRIB2_SHORT_NAME_TABLE
-from .cemc_param_table import CEMC_PARAM_TABLE
+#: ``when`` 条件键白名单（规范 §3.4）
+WHEN_KEYS = (
+    "first_level_type",
+    "first_level",
+    "second_level_type",
+    "second_level",
+    "stepType",
+    "time_range_hours",
+)
+
+
+@cache
+def get_param_registry() -> dict[tuple[int, int, int], dict]:
+    """
+    Load the GRIB2 parameter registry from ``param_registry.yaml``.
+
+    Returns
+    -------
+    dict
+        mapping ``(discipline, category, number)`` to the registry entry.
+    """
+    ref = files("reki.readers.grib.config").joinpath("param_registry.yaml")
+    with ref.open("r", encoding="utf-8") as f:
+        entries = yaml.safe_load(f)
+    return {
+        (entry["key"]["discipline"], entry["key"]["category"], entry["key"]["number"]): entry
+        for entry in entries
+    }
+
+
+@dataclass
+class GribParameterKey:
+    discipline: int
+    category: int
+    number: int
+    first_level_type: Optional[int] = None
+    first_level: Optional[float] = None
+    second_level_type: Optional[int] = None
+    second_level: Optional[float] = None
+    stepType: Optional[str] = None
+    time_range_hours: Optional[float] = None
+
+
+def check_value(expected_value, actual_value) -> bool:
+    if expected_value is None:
+        return True
+    if actual_value is None or actual_value == "undef":
+        return False
+    return expected_value == actual_value
 
 
 def find_short_name(discipline: int, category: int, number: int) -> Optional[str]:
     """
-    Get parameter's short name from WGRIB2 and CEMC param table.
+    Get parameter's generic name from the registry.
+
+    The generic name prefers the CEMC parameter name; parameters without a
+    CEMC name use the WGRIB2 short name.
 
     Parameters
     ----------
@@ -23,77 +87,80 @@ def find_short_name(discipline: int, category: int, number: int) -> Optional[str
     Returns
     -------
     Optional[str]
-        short name if found, or None if not.
+        generic name if found, or None if not.
     """
-    df = WGRIB2_SHORT_NAME_TABLE.query(
-        f'discipline=={discipline} & parameterCategory=={category} & parameterNumber=={number}'
-    )
-    if not df.empty:
-        return df.iloc[0]["short_name"]
-
-    param_df = CEMC_PARAM_TABLE.query(
-        f'discipline=={discipline} & category=={category} & number=={number}'
-    )
-    if not param_df.empty:
-        return param_df.iloc[0]["name"]
-
-    return None
-
-
-@dataclass
-class GribParameterKey:
-    discipline: int
-    category: int
-    number: int
-    first_level_type: Optional[int] = None
-    first_level: Optional[float] = None
-    second_level_type: Optional[int] = None
-    second_level: Optional[float] = None
-    stepType: Optional[str] = None
-
-
-def check_value(expected_value, actual_value) -> bool:
-    if expected_value is None or pd.isna(expected_value):
-        return True
-    if actual_value == "undef":
-        return False
-    return expected_value == actual_value
+    entry = get_param_registry().get((discipline, category, number))
+    if entry is None:
+        return None
+    return entry["name"]
 
 
 def find_wgrib2_name(param_key: GribParameterKey) -> Optional[str]:
-    df = WGRIB2_SHORT_NAME_TABLE.query(
-        f'discipline=={param_key.discipline} '
-        f'& parameterCategory=={param_key.category} '
-        f'& parameterNumber=={param_key.number}'
+    """
+    Get the WGRIB2 short name of a parameter, or None if not defined.
+    """
+    entry = get_param_registry().get(
+        (param_key.discipline, param_key.category, param_key.number)
     )
-    if not df.empty:
-        return df.iloc[0]["short_name"]
-    return None
+    if entry is None:
+        return None
+    return entry.get("wgrib2_name")
+
+
+def _variant_matches(when: dict, param_key: GribParameterKey) -> bool:
+    for name, expected in when.items():
+        if not check_value(expected, getattr(param_key, name)):
+            return False
+    return True
 
 
 def find_cemc_name(param_key: GribParameterKey) -> Optional[str]:
-    param_df = CEMC_PARAM_TABLE.query(
-        f'discipline=={param_key.discipline} '
-        f'& category=={param_key.category} '
-        f'& number=={param_key.number}'
+    """
+    Get the CEMC name of a parameter.
+
+    The most specific matching variant (most ``when`` keys) wins; ties are
+    resolved by the later variant in ``params``. When no variant matches,
+    falls back to the entry's generic name. Returns None for unknown
+    parameters.
+    """
+    entry = get_param_registry().get(
+        (param_key.discipline, param_key.category, param_key.number)
     )
-    param_df = param_df[~param_df['alias']]
-    if param_df.empty:
+    if entry is None:
         return None
 
-    selected_rows = []
-    for index, row in param_df.iterrows():
-        if not check_value(row['stepType'], param_key.stepType):
+    best_name = None
+    best_score = -1
+    for variant in entry.get("params", []):
+        when = variant["when"]
+        if len(when) < best_score:
             continue
-        if not check_value(row['first_level_type'], param_key.first_level_type):
-            continue
-        if not check_value(row['second_level_type'], param_key.second_level_type):
-            continue
-        if not check_value(row['first_level'], param_key.first_level):
-            continue
-        if not check_value(row['second_level'], param_key.second_level):
-            continue
+        if _variant_matches(when, param_key):
+            best_name = variant["name"]
+            best_score = len(when)
 
-        selected_rows.append(row)
+    if best_name is not None:
+        return best_name
+    return entry["name"]
 
-    return selected_rows[-1]["name"]
+
+def find_parameter_record(parameter: str) -> Optional[dict]:
+    """
+    Reverse lookup: find the registry record for a name.
+
+    Search order: ``wgrib2_name`` of every entry, then variant names and
+    aliases, then entry generic names. Returns a dict with the entry key
+    and the matched record (variant or entry), or None.
+    """
+    registry = get_param_registry()
+    for key, entry in registry.items():
+        if entry.get("wgrib2_name") == parameter:
+            return {"key": key, "record": entry, "source": "wgrib2"}
+    for key, entry in registry.items():
+        for variant in entry.get("params", []):
+            if variant["name"] == parameter or parameter in variant.get("aliases", []):
+                return {"key": key, "record": variant, "source": "cemc"}
+    for key, entry in registry.items():
+        if entry["name"] == parameter or parameter in entry.get("aliases", []):
+            return {"key": key, "record": entry, "source": "cemc"}
+    return None

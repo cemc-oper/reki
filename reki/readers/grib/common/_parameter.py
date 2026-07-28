@@ -1,20 +1,19 @@
 from typing import Union, Dict
 
-import pandas as pd
-
-from reki.readers.grib.config import WGRIB2_SHORT_NAME_TABLE, CEMC_PARAM_TABLE
+from reki.readers.grib.config import find_parameter_record
 
 
 def convert_parameter(parameter: Union[str, Dict]) -> Union[str, Dict]:
     """
-    Convert string parameter into GRIB keys according to short name tables.
-    If parmeter is found in tables, it will be replaced by GRIB key dict.
+    Convert string parameter into GRIB keys according to the parameter registry.
+    If parameter is found in the registry, it will be replaced by a GRIB key dict.
     Or if parameter is not found, return the string.
 
-    Currentlly reki has two short name tables (and search by order):
+    The registry is searched in the following order:
 
-    * WGRIB short name table
-    * CEMC param table
+    * WGRIB2 short names (``wgrib2_name``)
+    * CEMC variant names and aliases
+    * CEMC generic names (entry ``name``)
 
     Parameters
     ----------
@@ -38,9 +37,9 @@ def convert_parameter(parameter: Union[str, Dict]) -> Union[str, Dict]:
     Convert CEMC params:
 
     >>> convert_parameter("bli")
-    {'discipline': 0.0, 'parameterCategory': 7.0, 'parameterNumber': 1.0}
+    {'discipline': 0.0, 'parameterCategory': 7.0, 'parameterNumber': 1.0, 'typeOfLevel': 'surface'}
     >>> convert_parameter("t2m")
-    {'discipline': 0.0, 'parameterCategory': 0.0, 'parameterNumber': 0.0}
+    {'discipline': 0.0, 'parameterCategory': 0.0, 'parameterNumber': 0.0, 'typeOfLevel': 'heightAboveGround', 'level': 2, 'first_level': 2.0}
 
     Unknown parameter:
 
@@ -53,31 +52,40 @@ def convert_parameter(parameter: Union[str, Dict]) -> Union[str, Dict]:
     {'parameterCategory': 0, 'parameterNumber': 0}
 
     """
-    if isinstance(parameter, str):
-        df = WGRIB2_SHORT_NAME_TABLE[WGRIB2_SHORT_NAME_TABLE["short_name"] == parameter]
-        if not df.empty:
-            return df.iloc[0].drop("short_name").to_dict()
+    if not isinstance(parameter, str):
+        return parameter
 
-        param_df = CEMC_PARAM_TABLE[CEMC_PARAM_TABLE["name"] == parameter]
-        if not param_df.empty:
-            row = param_df.iloc[0]
-            param_key = dict(
-                discipline=float(row["discipline"]),
-                parameterCategory=float(row["category"]),
-                parameterNumber=float(row["number"]),
-            )
+    found = find_parameter_record(parameter)
+    if found is None:
+        return parameter
 
-            if not pd.isna(row["typeOfLevel"]):
-                param_key["typeOfLevel"] = row["typeOfLevel"]
-            if not pd.isna(row["level"]):
-                param_key["level"] = row["level"]
-            if not pd.isna(row["first_level"]):
-                param_key["first_level"] = float(row["first_level"])
-            if not pd.isna(row["second_level"]):
-                param_key["second_level"] = float(row["second_level"])
-            if not pd.isna(row["stepType"]):
-                param_key["stepType"] = row["stepType"]
+    discipline, category, number = found["key"]
+    if found["source"] == "wgrib2":
+        return {
+            "discipline": discipline,
+            "parameterCategory": category,
+            "parameterNumber": number,
+        }
 
-            return param_key
+    record = found["record"]
+    param_key = {
+        "discipline": float(discipline),
+        "parameterCategory": float(category),
+        "parameterNumber": float(number),
+    }
 
-    return parameter
+    # informational legacy fields, used as ecCodes/cfgrib filter keys
+    if record.get("typeOfLevel") is not None:
+        param_key["typeOfLevel"] = record["typeOfLevel"]
+    if record.get("level") is not None:
+        param_key["level"] = record["level"]
+
+    when = record.get("when", {})
+    if when.get("first_level") is not None:
+        param_key["first_level"] = float(when["first_level"])
+    if when.get("second_level") is not None:
+        param_key["second_level"] = float(when["second_level"])
+    if when.get("stepType") is not None:
+        param_key["stepType"] = when["stepType"]
+
+    return param_key

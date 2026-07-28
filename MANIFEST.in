@@ -1,1 +1,2 @@
 recursive-include reki/data_finder/conf *
+recursive-include reki/readers/grib/config *.yaml *.md

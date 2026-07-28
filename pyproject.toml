@@ -49,7 +49,7 @@ cmadaas = ["nuwe-cmadaas"]
 lazy = ["dask"]
 
 [dependency-groups]
-test = ["pytest", "scipy", "cedarkit-test-data", "nuwe-cmadaas"]
+test = ["pytest", "scipy", "cedarkit-test-data", "nuwe-cmadaas", "jsonschema"]
 cov = ["pytest-cov", "codecov"]
 
 [tool.pytest.ini_options]
