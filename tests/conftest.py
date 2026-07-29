@@ -42,8 +42,8 @@ def gfs_basic_dir(data_base_dir) -> Path:
 def grib2_gfs_basic_file_path(gfs_basic_dir) -> Path:
     """Locate the GFS test file, fetching it through the ``test`` source.
 
-    The fetch always goes through the ``test`` source (provided by the
-    cedarkit-test-data plugin). When the data was downloaded before, the
+    The fetch always goes through the built-in ``test`` source
+    (``reki.sources.test``). When the data was downloaded before, the
     recorded start/forecast time makes the source resolve to the existing
     file, so no network access happens; otherwise the file is downloaded.
     When there is no local copy and the download fails (e.g. no network),

@@ -43,13 +43,14 @@ Repository = "https://github.com/cemc-oper/reki.git"
 
 [project.scripts]
 reki-finder = "reki.data_finder.__main__:main"
+reki-test-data = "reki.sources.test:main"
 
 [project.optional-dependencies]
 cmadaas = ["nuwe-cmadaas"]
 lazy = ["dask"]
 
 [dependency-groups]
-test = ["pytest", "scipy", "cedarkit-test-data", "nuwe-cmadaas", "jsonschema"]
+test = ["pytest", "scipy", "nuwe-cmadaas", "jsonschema"]
 cov = ["pytest-cov", "codecov"]
 
 [tool.pytest.ini_options]
@@ -72,5 +73,4 @@ include-package-data = true
 version_file = "reki/_version.py"
 
 [tool.uv.sources]
-cedarkit-test-data = { path = "../cedarkit-test-data", editable = true }
 nuwe-cmadaas = { path = "../../source/nuwe-cmadaas-devel/repo/nuwe-cmadaas-python", editable = true }

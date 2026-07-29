@@ -1,5 +1,5 @@
 """
-Download test data for reki through the ``test`` source of cedarkit-test-data.
+Download test data for reki through the built-in ``test`` source.
 """
 import shutil
 from pathlib import Path
