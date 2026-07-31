@@ -59,3 +59,53 @@ def extract_region(
         )
     else:
         raise ValueError("longitude_step and latitude_step must be set together.")
+
+
+def sample_nearest(
+        data: xr.DataArray,
+        longitude_step: Union[float, int],
+        latitude_step: Optional[Union[float, int]] = None,
+) -> xr.DataArray:
+    """
+    Sample gridded data to a coarser step by nearest (stride) selection.
+
+    Each dimension is strided by ``round(target_step / data_step)``,
+    anchored at the first grid point, so the output grid is a subset of
+    the input grid and values are kept pointwise (no interpolation).
+    If the target step is not larger than the data step, the input is
+    returned unchanged.
+
+    Parameters
+    ----------
+    data
+        gridded data on a regular latitude/longitude grid.
+    longitude_step
+        target longitude step, unit degree.
+    latitude_step
+        target latitude step, unit degree. Defaults to
+        ``longitude_step``.
+
+    Returns
+    -------
+    xr.DataArray
+    """
+    as_data_array(data, arg_name="data")
+
+    if latitude_step is None:
+        latitude_step = longitude_step
+
+    latitudes = data.latitude.values
+    longitudes = data.longitude.values
+    data_lat_step = abs(latitudes[1] - latitudes[0])
+    data_lon_step = abs(longitudes[1] - longitudes[0])
+
+    lat_ratio = max(1, int(np.round(latitude_step / data_lat_step)))
+    lon_ratio = max(1, int(np.round(longitude_step / data_lon_step)))
+
+    if lat_ratio == 1 and lon_ratio == 1:
+        return data
+
+    return data.isel(
+        latitude=slice(None, None, lat_ratio),
+        longitude=slice(None, None, lon_ratio),
+    )

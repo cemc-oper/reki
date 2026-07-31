@@ -1,3 +1,3 @@
 from .regrid import interpolate_grid, extract_point
 
-from .area import extract_region
+from .area import extract_region, sample_nearest
