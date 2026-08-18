@@ -1,14 +1,34 @@
 """reki ``test`` source: fetch well-known test datasets through reki.
 
 Built-in source discovered by the directory scan of
-``reki/sources/{name}.py``; ``reki.from_source("test", "gfs", ...)``
+``reki/sources/{name}.py``; ``reki.from_source("test", "ecmwf_ifs", ...)``
 works out of the box. This is a test-support facility for reki's test
 suite and examples — it is not an operational data channel.
 
 The module is self-contained (following the ``url.py`` precedent):
-the fetch backends (WIS HTTP download / music-dir copy), the
-``download_gfs_data`` dispatcher and the ``reki-test-data`` command
-line interface all live here.
+the fetch backends (WIS HTTP download / music-dir copy / GitHub
+release download), the download dispatchers and the ``reki-test-data``
+command line interface all live here.
+
+Datasets (named ``<organization>_<model>``):
+
+``cma_gfs`` (legacy alias: ``"gfs"``)
+    CMA-GFS (GRAPES-GFS) global field, downloaded live from the CMA
+    WIS website (or copied from a mounted music-dir directory).
+    **Rolling** semantics: the run time rolls with the calendar and
+    files are full global fields (hundreds of MB). Fine for tests;
+    **not usable for documentation examples** — results are not
+    reproducible.
+
+``ecmwf_ifs``
+    Frozen subset of ECMWF IFS HRES 0.25° open data (CC-BY-4.0),
+    downloaded from a cedarkit-test-data GitHub release. **Frozen**
+    semantics: run date, forecast step, parameters and domain are
+    fixed in the release asset name; files are KB–MB in size.
+    Intended for documentation examples — reproducible and
+    offline-friendly. Use the ``domain`` parameter to select the
+    asset: ``"eastasia"`` (2t/2d/10u/10v/msl/tp over 0–60N, 60–150E)
+    or ``"global"`` (2t only, global field, for regrid/area demos).
 """
 
 import shutil
@@ -28,8 +48,17 @@ from reki.sources.url import download_file, file_name_from_url
 #: default directory for downloaded test data files.
 DEFAULT_DATA_DIR = Path(tempfile.gettempdir()) / "cedarkit-test-data"
 
-#: supported dataset names.
-DATASETS = ("gfs",)
+#: supported dataset names (``<organization>_<model>``; a future NCEP
+#: GFS dataset would be ``ncep_gfs``).
+DATASETS = ("cma_gfs", "ecmwf_ifs")
+
+#: legacy dataset names kept for backward compatibility.
+DATASET_ALIASES = {"gfs": "cma_gfs"}
+
+
+def normalize_dataset_name(dataset_name: str) -> str:
+    """Resolve a dataset alias to its canonical name."""
+    return DATASET_ALIASES.get(dataset_name, dataset_name)
 
 
 # ---------------------------------------------------------------------------
@@ -254,6 +283,77 @@ def download_gfs_data(
 
 
 # ---------------------------------------------------------------------------
+# ecmwf_ifs: frozen ECMWF IFS open-data assets from cedarkit-test-data releases
+# ---------------------------------------------------------------------------
+
+#: GitHub release that hosts the frozen assets. Updating the dataset =
+#: the test-data repo publishes a new tag + this constant is bumped in
+#: a reviewable PR. Old doc branches keep pointing at old tags forever.
+ECMWF_IFS_RELEASE_TAG = "v2026.8.0"
+ECMWF_IFS_BASE_URL = (
+    "https://github.com/cemc-oper/cedarkit-test-data"
+    f"/releases/download/{ECMWF_IFS_RELEASE_TAG}"
+)
+
+#: frozen assets per domain; run date/step are part of the file name.
+ECMWF_IFS_ASSETS = {
+    "eastasia": "ifs_eastasia_2026081800_f024.grib2",
+    "global": "ifs_global_2026081800_f024.grib2",
+}
+
+
+def download_ecmwf_ifs_data(
+    output_dir: Path,
+    domain: Literal["eastasia", "global"] = "eastasia",
+) -> Path:
+    """
+    Download a frozen ECMWF IFS test-data asset from GitHub releases.
+
+    Parameters
+    ----------
+    output_dir : Path
+        Output directory for downloaded data.
+    domain : str
+        Which frozen asset to fetch: ``"eastasia"`` (2t/2d/10u/10v/msl/tp,
+        0–60N, 60–150E, for read/plot examples) or ``"global"`` (2t only,
+        global field, for regrid/area operator examples).
+
+    Returns
+    -------
+    Path
+        Path to the downloaded file.
+    """
+    if domain not in ECMWF_IFS_ASSETS:
+        raise ValueError(
+            f"unknown ecmwf_ifs domain: {domain!r}, "
+            f"expected one of {tuple(ECMWF_IFS_ASSETS)}"
+        )
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    file_name = ECMWF_IFS_ASSETS[domain]
+    file_url = f"{ECMWF_IFS_BASE_URL}/{file_name}"
+    file_path = output_dir / file_name
+
+    download_file(file_url, file_path)
+
+    metadata = {
+        "file_name": file_name,
+        "system": "ecmwf_ifs",
+        "domain": domain,
+        "frozen": True,
+        "license": "CC-BY-4.0 (ECMWF IFS open data, modified)",
+        "source": "github-release",
+        "release_tag": ECMWF_IFS_RELEASE_TAG,
+    }
+    metadata_file_path = output_dir / "metadata.yaml"
+    with open(metadata_file_path, "w") as f:
+        yaml.safe_dump([metadata], f, default_flow_style=False)
+
+    return file_path
+
+
+# ---------------------------------------------------------------------------
 # reki source
 # ---------------------------------------------------------------------------
 
@@ -263,22 +363,30 @@ class TestSource(Source):
     Parameters
     ----------
     dataset_name
-        which dataset to fetch. Currently only ``"gfs"`` (a GRIB2 file
-        of CMA-GFS from the WIS website or a mounted music-dir
-        directory).
+        which dataset to fetch: ``"ecmwf_ifs"`` (frozen ECMWF IFS
+        subset from a GitHub release; documentation examples) or
+        ``"cma_gfs"`` (rolling CMA-GFS from the WIS website or a
+        mounted music-dir directory; tests only, not reproducible).
+        The legacy name ``"gfs"`` is accepted as an alias of
+        ``"cma_gfs"``.
+    domain
+        for ``"ecmwf_ifs"`` only: which frozen asset to fetch,
+        ``"eastasia"`` (default) or ``"global"``.
     output_dir
         directory the data file is downloaded to. Defaults to a
         per-user temp directory. Downloads are idempotent: an existing
         file is reused (see ``reki.sources.url.download_file``).
     source
-        fetch backend, ``"wis"`` (HTTP download) or ``"music-dir"``
-        (copy from a mounted directory, requires ``storage_base``).
+        for ``"cma_gfs"`` only: fetch backend, ``"wis"`` (HTTP
+        download) or ``"music-dir"`` (copy from a mounted directory,
+        requires ``storage_base``).
     storage_base
         storage base directory for ``source="music-dir"``.
     start_time
-        model start time. Defaults to yesterday 00Z.
+        for ``"cma_gfs"`` only: model start time. Defaults to
+        yesterday 00Z.
     forecast_time
-        forecast time. Defaults to 24 hours.
+        for ``"cma_gfs"`` only: forecast time. Defaults to 24 hours.
     """
 
     #: not a pytest test class despite the name.
@@ -291,6 +399,7 @@ class TestSource(Source):
             self,
             dataset_name: str = "gfs",
             output_dir: Optional[Union[str, Path]] = None,
+            domain: Literal["eastasia", "global"] = "eastasia",
             source: Literal["wis", "music-dir"] = "wis",
             storage_base: Optional[str] = None,
             start_time: Optional[pd.Timestamp] = None,
@@ -298,28 +407,37 @@ class TestSource(Source):
             **kwargs,
     ):
         super().__init__(**kwargs)
-        if dataset_name not in DATASETS:
+        canonical_name = normalize_dataset_name(dataset_name)
+        if canonical_name not in DATASETS:
             raise ValueError(
                 f"unknown test dataset: {dataset_name!r}, "
-                f"expected one of {DATASETS}"
+                f"expected one of {DATASETS} "
+                f"(aliases: {DATASET_ALIASES})"
             )
-        self.dataset_name = dataset_name
+        self.dataset_name = canonical_name
         self.output_dir = (
             Path(output_dir) if output_dir is not None else DEFAULT_DATA_DIR
         )
+        self.domain = domain
         self.fetch_source = source
         self.storage_base = storage_base
         self.start_time = start_time
         self.forecast_time = forecast_time
 
     def mutate(self) -> Source:
-        path = download_gfs_data(
-            output_dir=self.output_dir,
-            source=self.fetch_source,
-            start_time=self.start_time,
-            forecast_time=self.forecast_time,
-            storage_base=self.storage_base,
-        )
+        if self.dataset_name == "ecmwf_ifs":
+            path = download_ecmwf_ifs_data(
+                output_dir=self.output_dir,
+                domain=self.domain,
+            )
+        else:
+            path = download_gfs_data(
+                output_dir=self.output_dir,
+                source=self.fetch_source,
+                start_time=self.start_time,
+                forecast_time=self.forecast_time,
+                storage_base=self.storage_base,
+            )
         return get_source("file", path)
 
     def __repr__(self):
@@ -346,7 +464,7 @@ def download():
     pass
 
 
-@download.command("gfs")
+@download.command("cma_gfs")
 @click.option(
     "--source",
     type=click.Choice(["wis", "music-dir"]),
@@ -385,7 +503,15 @@ def download_gfs(
     start_time: str | None,
     forecast_time: str,
 ):
-    """Download GFS test data."""
+    """Download rolling CMA-GFS (GRAPES-GFS) test data.
+
+    Rolling semantics: the run time rolls with the calendar and files
+    are full global fields (hundreds of MB). For tests only — not
+    reproducible, do not use for documentation examples (use the
+    frozen ``ecmwf_ifs`` dataset instead).
+
+    ``gfs`` is a legacy alias of this command.
+    """
     if start_time:
         if len(start_time) == 10 and start_time.isdigit():
             start_ts = pd.Timestamp(start_time, tz="UTC")
@@ -395,6 +521,7 @@ def download_gfs(
         start_ts = pd.Timestamp.utcnow().floor(freq="D") - pd.Timedelta(days=1)
     forecast_td = pd.Timedelta(forecast_time)
 
+    click.echo(f"Dataset: cma_gfs (rolling)")
     click.echo(f"Source: {source}")
     click.echo(f"Start time: {start_ts.strftime('%Y-%m-%d %H:%M:%S')} UTC")
     click.echo(f"Forecast time: {forecast_time}")
@@ -409,6 +536,48 @@ def download_gfs(
             forecast_time=forecast_td,
             storage_base=storage_base,
         )
+        click.echo(f"Downloaded to: {file_path}")
+    except Exception as e:
+        click.echo(f"Error: {e}", err=True)
+        raise click.Abort()
+
+
+#: legacy alias of the ``cma_gfs`` command.
+download.add_command(download_gfs, name="gfs")
+
+
+@download.command("ecmwf_ifs")
+@click.option(
+    "--domain",
+    type=click.Choice(["eastasia", "global"]),
+    default="eastasia",
+    help=(
+        "Which frozen asset to fetch: eastasia (2t/2d/10u/10v/msl/tp, "
+        "0-60N, 60-150E; read/plot examples) or global (2t only, global "
+        "field; regrid/area operator examples)"
+    ),
+)
+@click.option(
+    "--output",
+    "-o",
+    type=click.Path(path_type=Path),
+    default=Path("."),
+    help="Output directory",
+)
+def download_ecmwf_ifs(domain: str, output: Path):
+    """Download frozen ECMWF IFS open-data (CC-BY-4.0) test data.
+
+    Frozen semantics: run date, forecast step, parameters and domain
+    are fixed in the release asset name; files are KB-MB in size.
+    Intended for documentation examples — reproducible.
+    """
+    click.echo(f"Dataset: ecmwf_ifs (frozen, release {ECMWF_IFS_RELEASE_TAG})")
+    click.echo(f"Domain: {domain}")
+    click.echo(f"Output directory: {output.absolute()}")
+    click.echo("Downloading...")
+
+    try:
+        file_path = download_ecmwf_ifs_data(output_dir=output, domain=domain)
         click.echo(f"Downloaded to: {file_path}")
     except Exception as e:
         click.echo(f"Error: {e}", err=True)

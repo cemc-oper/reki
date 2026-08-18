@@ -61,7 +61,7 @@ def grib2_gfs_basic_file_path(gfs_basic_dir) -> Path:
         kwargs["forecast_time"] = pd.Timedelta(first_file_metadata["forecast_time"])
 
     try:
-        source = get_source("test", "gfs", output_dir=gfs_basic_dir, **kwargs)
+        source = get_source("test", "cma_gfs", output_dir=gfs_basic_dir, **kwargs)
         return Path(source.mutate().path)
     except Exception as e:
         pytest.skip(f"test data not available (no local copy and download failed): {e}")

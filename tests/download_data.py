@@ -11,7 +11,7 @@ from reki.sources import get_source
 
 def download_test_data(gfs_basic_dir: Path, **kwargs) -> Path:
     """Fetch the GFS test file into ``gfs_basic_dir`` via the ``test`` source."""
-    source = get_source("test", "gfs", output_dir=gfs_basic_dir, **kwargs)
+    source = get_source("test", "cma_gfs", output_dir=gfs_basic_dir, **kwargs)
     return Path(source.mutate().path)
 
 

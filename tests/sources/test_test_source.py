@@ -40,6 +40,25 @@ def fake_download(monkeypatch, tmp_path):
     return calls
 
 
+@pytest.fixture
+def fake_ifs_download(monkeypatch, tmp_path):
+    """Replace download_ecmwf_ifs_data with a recorder (see fake_download)."""
+    grib_file = tmp_path / "fake_ifs.grib2"
+    grib_file.write_bytes(b"GRIB" + b"\x00" * 12)
+    calls = []
+
+    def fake_download_ecmwf_ifs_data(**kwargs):
+        calls.append(kwargs)
+        return grib_file
+
+    monkeypatch.setattr(
+        reki.sources.test,
+        "download_ecmwf_ifs_data",
+        fake_download_ecmwf_ifs_data,
+    )
+    return calls
+
+
 class TestValidation:
     def test_unknown_dataset_name(self):
         with pytest.raises(ValueError, match="unknown test dataset"):
@@ -48,6 +67,16 @@ class TestValidation:
     def test_default_output_dir(self):
         source = TestSource("gfs")
         assert source.output_dir == DEFAULT_DATA_DIR
+
+    def test_gfs_alias_normalizes_to_cma_gfs(self):
+        source = TestSource("gfs")
+        assert source.dataset_name == "cma_gfs"
+
+    def test_unknown_ifs_domain(self):
+        with pytest.raises(ValueError, match="unknown ecmwf_ifs domain"):
+            reki.sources.test.download_ecmwf_ifs_data(
+                output_dir=Path("/nonexistent"), domain="mars",
+            )
 
 
 class TestMutate:
@@ -81,6 +110,26 @@ class TestMutate:
             "forecast_time": forecast_time,
         }]
 
+    def test_mutate_ecmwf_ifs(self, fake_ifs_download, tmp_path):
+        source = TestSource("ecmwf_ifs", output_dir=tmp_path, domain="global")
+
+        mutated = source.mutate()
+
+        assert isinstance(mutated, FileSource)
+        assert mutated.path == str(tmp_path / "fake_ifs.grib2")
+        assert fake_ifs_download == [{
+            "output_dir": tmp_path,
+            "domain": "global",
+        }]
+
+    def test_gfs_alias_dispatches_to_gfs_backend(self, fake_download, tmp_path):
+        source = TestSource("gfs", output_dir=tmp_path)
+
+        mutated = source.mutate()
+
+        assert isinstance(mutated, FileSource)
+        assert len(fake_download) == 1
+
 
 class TestDiscovery:
     def test_discovered_by_name(self):
@@ -98,6 +147,15 @@ class TestDiscovery:
         from reki.sources import LazySource
 
         data = reki.from_source("test", "gfs", output_dir=tmp_path)
+
+        assert isinstance(data, LazySource)
+        assert isinstance(data._ensure(), GribReader)
+
+    def test_end_to_end_ecmwf_ifs(self, fake_ifs_download, tmp_path):
+        from reki.readers.grib.reader import GribReader
+        from reki.sources import LazySource
+
+        data = reki.from_source("test", "ecmwf_ifs", output_dir=tmp_path)
 
         assert isinstance(data, LazySource)
         assert isinstance(data._ensure(), GribReader)
