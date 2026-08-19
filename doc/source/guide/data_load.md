@@ -63,11 +63,75 @@ tp.attrs["GRIB_stepType"], tp.attrs["GRIB_stepRange"]
 `sel()` 还支持：
 
 - `count`：按消息在文件中的序号（从 1 开始）检索，设置后忽略其他条件
-- `**kwargs`：任意 GRIB 键作为筛选条件
+- `**kwargs`：任意 GRIB 键作为筛选条件（见下一小节）
 
 ```{code-cell} ipython3
 first_message = ds.sel(count=1).to_xarray()
 first_message.name
+```
+
+### 任意 GRIB 键作为筛选条件
+
+除 `parameter` / `level_type` / `level` 之外，`sel()` 接受任意
+GRIB 键作为关键字参数，可与其他条件组合使用。例如用 `stepType`
+区分瞬时场（`instant`）与累计场（`accum`）：
+
+```{code-cell} ipython3
+tp = ds.sel(
+    parameter="tp",
+    level_type="surface",
+    level=0,
+    stepType="accum",
+).to_xarray()
+tp.attrs["GRIB_stepType"], tp.attrs["GRIB_stepRange"]
+```
+
+:::{note}
+键的比较类型由值的 Python 类型自动推断（`str` → `:str`，
+`int` → `:int`，`float` → `:float`）。对层次类型编码等
+"字符串形式是别名"的 GRIB 键做数值比较时，需要在键名后显式加
+`:int` 后缀（如 `typeOfFirstFixedSurface:int=103`），
+详见 {doc}`/guide/grib_level` 中的说明。
+:::
+
+### ecCodes 消息级 API
+
+需要直接访问 GRIB 消息元信息时（例如查看单位、网格定义等未进入
+`xarray` 属性的 GRIB 键），可以使用
+`reki.readers.grib.eccodes.load_message_from_file()`：
+它返回匹配条件的**第一条**消息的 ecCodes 句柄（复制自原文件，
+文件已关闭），之后可用 `eccodes.codes_get()` 读取任意 GRIB 键。
+句柄用完后必须调用 `eccodes.codes_release()` 释放。
+
+先取得数据文件路径（`test` 数据源定型为本地文件后，
+其 `path` 属性即缓存文件路径）：
+
+```{code-cell} ipython3
+import eccodes
+
+from reki.readers.grib.eccodes import load_message_from_file
+
+file_path = ds.mutate().path
+gid = load_message_from_file(
+    file_path,
+    parameter="gh",
+    level_type="pl",
+    level=500,
+)
+```
+
+`load_message_from_file()` 的筛选参数与 `sel()` 相同
+（`parameter` / `level_type` / `level` / `count` / 任意 GRIB 键）：
+
+```{code-cell} ipython3
+print(
+    eccodes.codes_get(gid, "shortName"),
+    eccodes.codes_get(gid, "level"),
+    eccodes.codes_get(gid, "typeOfLevel"),
+    eccodes.codes_get(gid, "units"),
+)
+print("grid:", eccodes.codes_get(gid, "Ni"), "x", eccodes.codes_get(gid, "Nj"))
+eccodes.codes_release(gid)
 ```
 
 ### 从本地文件加载
