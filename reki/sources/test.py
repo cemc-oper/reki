@@ -27,7 +27,8 @@ Datasets (named ``<organization>_<model>``):
     fixed in the release asset name; files are KB–MB in size.
     Intended for documentation examples — reproducible and
     offline-friendly. Use the ``domain`` parameter to select the
-    asset: ``"eastasia"`` (2t/2d/10u/10v/msl/tp over 0–60N, 60–150E)
+    asset: ``"eastasia"`` (2t/2d/10u/10v/msl/tp plus gh/t at 500 hPa and
+    t/u/v at 850 hPa over 0–60N, 60–150E)
     or ``"global"`` (2t only, global field, for regrid/area demos).
 """
 
@@ -289,7 +290,7 @@ def download_gfs_data(
 #: GitHub release that hosts the frozen assets. Updating the dataset =
 #: the test-data repo publishes a new tag + this constant is bumped in
 #: a reviewable PR. Old doc branches keep pointing at old tags forever.
-ECMWF_IFS_RELEASE_TAG = "v2026.8.0"
+ECMWF_IFS_RELEASE_TAG = "v2026.8.1"
 ECMWF_IFS_BASE_URL = (
     "https://github.com/cemc-oper/cedarkit-test-data"
     f"/releases/download/{ECMWF_IFS_RELEASE_TAG}"
@@ -314,7 +315,8 @@ def download_ecmwf_ifs_data(
     output_dir : Path
         Output directory for downloaded data.
     domain : str
-        Which frozen asset to fetch: ``"eastasia"`` (2t/2d/10u/10v/msl/tp,
+        Which frozen asset to fetch: ``"eastasia"`` (2t/2d/10u/10v/msl/tp
+        plus gh/t at 500 hPa and t/u/v at 850 hPa,
         0–60N, 60–150E, for read/plot examples) or ``"global"`` (2t only,
         global field, for regrid/area operator examples).
 
@@ -554,7 +556,8 @@ download.add_command(download_gfs, name="gfs")
     type=click.Choice(["eastasia", "global"]),
     default="eastasia",
     help=(
-        "Which frozen asset to fetch: eastasia (2t/2d/10u/10v/msl/tp, "
+        "Which frozen asset to fetch: eastasia (2t/2d/10u/10v/msl/tp plus "
+        "gh/t at 500 hPa and t/u/v at 850 hPa, "
         "0-60N, 60-150E; read/plot examples) or global (2t only, global "
         "field; regrid/area operator examples)"
     ),

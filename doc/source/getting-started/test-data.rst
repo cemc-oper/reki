@@ -25,7 +25,9 @@ reki 目前提供两个数据集，语义不同，用途也不同：
        内容不随时间变化
      - ECMWF IFS 0.25° 裁剪子集（KB～MB 级），两个区域（domain）：
 
-       - ``eastasia``\ （默认）：2t/2d/10u/10v/msl/tp，0–60N, 60–150E
+       - ``eastasia``\ （默认）：2t/2d/10u/10v/msl/tp，
+         以及 500 hPa 的 gh/t、850 hPa 的 t/u/v 等压面要素；
+         0–60N, 60–150E
        - ``global``：仅 2t，全球场
      - **文档示例**、需要可复现结果的场景
    * - ``cma_gfs``
@@ -84,7 +86,7 @@ reki 目前提供两个数据集，语义不同，用途也不同：
     ds = from_source(
         "url",
         "https://github.com/cemc-oper/cedarkit-test-data/releases/"
-        "download/v2026.8.0/ifs_eastasia_2026081800_f024.grib2",
+        "download/v2026.8.1/ifs_eastasia_2026081800_f024.grib2",
     )
 
 数据署名
