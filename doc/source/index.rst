@@ -10,16 +10,13 @@ reki 能够非常方便地从 GRIB 等格式文件中加载要素场为常见的
 
 .. code-block:: py
 
-    from reki.format.grib import load_field_from_file
+    from reki import from_source
 
-    file_path = "/some/path/to/data.grib2"
-    field = load_field_from_file(
-        file_path=file_path,
-        parameter="t",
-        level_type="pl",
-        level=850,
-    )
+    ds = from_source("test", "ecmwf_ifs")
+    field = ds.sel(parameter="2t", level_type="heightAboveGround", level=2)
+    t2m = field.to_xarray()
 
+完整可执行示例见 :doc:`/getting-started/quick-overview`。
 
 .. toctree::
    :maxdepth: 2
