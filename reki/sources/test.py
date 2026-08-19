@@ -475,8 +475,9 @@ def download():
     "--output",
     "-o",
     type=click.Path(path_type=Path),
-    default=Path("."),
-    help="Output directory",
+    default=None,
+    help="Output directory (default: the shared test-data cache, "
+         "$TMPDIR/cedarkit-test-data)",
 )
 @click.option(
     "--storage-base",
@@ -498,7 +499,7 @@ def download():
 )
 def download_gfs(
     source: str,
-    output: Path,
+    output: Path | None,
     storage_base: str | None,
     start_time: str | None,
     forecast_time: str,
@@ -520,6 +521,7 @@ def download_gfs(
     else:
         start_ts = pd.Timestamp.utcnow().floor(freq="D") - pd.Timedelta(days=1)
     forecast_td = pd.Timedelta(forecast_time)
+    output = output if output is not None else DEFAULT_DATA_DIR
 
     click.echo(f"Dataset: cma_gfs (rolling)")
     click.echo(f"Source: {source}")
@@ -561,10 +563,11 @@ download.add_command(download_gfs, name="gfs")
     "--output",
     "-o",
     type=click.Path(path_type=Path),
-    default=Path("."),
-    help="Output directory",
+    default=None,
+    help="Output directory (default: the shared test-data cache, "
+         "$TMPDIR/cedarkit-test-data)",
 )
-def download_ecmwf_ifs(domain: str, output: Path):
+def download_ecmwf_ifs(domain: str, output: Path | None):
     """Download frozen ECMWF IFS open-data (CC-BY-4.0) test data.
 
     Frozen semantics: run date, forecast step, parameters and domain
@@ -573,6 +576,7 @@ def download_ecmwf_ifs(domain: str, output: Path):
     """
     click.echo(f"Dataset: ecmwf_ifs (frozen, release {ECMWF_IFS_RELEASE_TAG})")
     click.echo(f"Domain: {domain}")
+    output = output if output is not None else DEFAULT_DATA_DIR
     click.echo(f"Output directory: {output.absolute()}")
     click.echo("Downloading...")
 

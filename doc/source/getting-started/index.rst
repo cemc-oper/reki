@@ -7,4 +7,5 @@
     :hidden:
 
     installing
+    test-data
     quick-overview

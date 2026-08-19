@@ -30,7 +30,13 @@ author = 'developers at cemc-oper'
 extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.autodoc',
+    'myst_nb',
 ]
+
+# MyST Markdown notebooks: execute all notebooks at build time ("build as
+# validation"). Example notebooks are committed without outputs; the data
+# they use is pre-downloaded by ``make data`` / RTD ``pre_build``.
+nb_execution_mode = "force"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

@@ -10,7 +10,10 @@ formats:
 build:
   os: "ubuntu-22.04"
   tools:
-    python: "miniforge3-latest"
+    python: "3.12"
 
-conda:
-  environment: doc/environment.yml
+python:
+  install:
+    - requirements: doc/requirements.txt
+    - method: pip
+      path: .
