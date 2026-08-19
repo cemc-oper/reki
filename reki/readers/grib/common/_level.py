@@ -45,7 +45,7 @@ def fix_level_type(
             }
     elif level_type == "sfc":
         return {
-            "typeOfLevel": "sfc"
+            "typeOfLevel": "surface"
         }
     elif level_type == "ml":
         return {
