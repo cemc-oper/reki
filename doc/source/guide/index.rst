@@ -12,3 +12,6 @@
    grib_parameter
    grib_level
    data_process
+   legacy_find
+   legacy_finder_config
+   legacy_grib

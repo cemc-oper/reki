@@ -81,7 +81,7 @@ CMA-HPC 业务文件查找（``local`` 数据源）
 ``data_type`` 是配置文件的相对路径（不含后缀），内置配置覆盖
 CMA-GFS、CMA-MESO、CMA-GEPS 等业务系统的 GRIB2 产品及中间文件，
 也可以用 ``config_dir`` 参数指定自定义配置目录（配置文件格式见
-``reki/data_finder/conf/`` 目录中的示例）。
+:doc:`/guide/legacy_finder_config`，配置机制与旧 API 共用）。
 
 CMADAAS 挂载盘与 ``data_class``
 ---------------------------------
@@ -239,7 +239,9 @@ MUSIC 服务地址与账号默认从 ``~/.config/cedarkit.yaml`` 读取
 ==============
 
 reki 保留了完整的旧 API 兼容层（``reki.data_finder`` 与
-``reki.format`` 命名空间），旧代码无需修改即可继续运行。
+``reki.format`` 命名空间），旧代码无需修改即可继续运行。旧 API 的
+完整文档见 :doc:`/guide/legacy_find`、:doc:`/guide/legacy_finder_config`
+与 :doc:`/guide/legacy_grib`。
 下表给出旧 API 与新 API 的对应关系，新代码请使用右侧写法：
 
 .. list-table::
@@ -249,17 +251,23 @@ reki 保留了完整的旧 API 兼容层（``reki.data_finder`` 与
    * - 旧 API（兼容层）
      - 新 API
    * - ``reki.data_finder.find_local_file(data_type, ...)``
+       （见 :doc:`/guide/legacy_find`）
      - ``from_source("local", data_type, ...)``（见上文 ``local`` 数据源）
    * - ``reki.data_finder.get_local_file_name(data_type, ...)``
+       （见 :doc:`/guide/legacy_find`）
      - ``local`` 数据源的 ``resolve_path()`` 方法
    * - ``reki.format.grib.load_field_from_file(path, ...)``
+       （见 :doc:`/guide/legacy_grib`）
      - ``from_source("file", path).sel(...).to_xarray()``
        （见 :doc:`/guide/data_load`）
    * - ``reki.format.grib.load_fields_from_file(path, ...)``
+       （见 :doc:`/guide/legacy_grib`）
      - ``from_source("file", path).sel(...).to_xarray()``
        （多层次返回带层次维的 ``Dataset``，见 :doc:`/guide/grib_level`）
    * - ``reki.format.grib.load_message_from_file(path, ...)``
+       （见 :doc:`/guide/legacy_grib`）
      - ``reki.readers.grib.eccodes.load_message_from_file(path, ...)``
    * - ``reki.format.grib.config.get_param_registry()``
+       （见 :doc:`/guide/legacy_grib`）
      - ``reki.readers.grib.config.get_param_registry()``
        （见 :doc:`/guide/grib_parameter`）
