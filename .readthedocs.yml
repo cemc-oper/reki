@@ -3,14 +3,16 @@ version: 2
 sphinx:
   configuration: doc/source/conf.py
 
-formats:
-  - epub
-  - pdf
-
 build:
   os: "ubuntu-22.04"
   tools:
     python: "3.12"
+  jobs:
+    # Pre-download the frozen test datasets executed by the notebooks
+    # (same commands as `make -C doc data`; idempotent).
+    pre_build:
+      - reki-test-data download ecmwf_ifs
+      - reki-test-data download ecmwf_ifs --domain global
 
 python:
   install:
