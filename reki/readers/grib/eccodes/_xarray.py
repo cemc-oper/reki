@@ -133,13 +133,18 @@ def create_data_array_from_message(
 
     if not values_is_lazy:
         values = values.reshape(nj, ni)
-    lons = np.linspace(
-        longitude_of_first_grid_point_in_degrees, longitude_of_last_grid_point_in_degrees, ni,
-        endpoint=True
+    lons = _build_grid_axis(
+        longitude_of_first_grid_point_in_degrees,
+        longitude_of_last_grid_point_in_degrees,
+        ni,
+        all_attrs["iDirectionIncrementInDegrees"],
+        wrap=360.0,
     )
-    lats = np.linspace(
-        latitude_of_first_grid_point_in_degrees, latitude_of_last_grid_point_in_degrees, nj,
-        endpoint=True
+    lats = _build_grid_axis(
+        latitude_of_first_grid_point_in_degrees,
+        latitude_of_last_grid_point_in_degrees,
+        nj,
+        all_attrs["jDirectionIncrementInDegrees"],
     )
 
     # coords
@@ -216,6 +221,35 @@ def create_data_array_from_message(
     )
 
     return data
+
+
+def _build_grid_axis(
+        first: float,
+        last: float,
+        count: int,
+        increment: float,
+        wrap: Optional[float] = None,
+) -> np.ndarray:
+    """Build a regular coordinate axis from GRIB grid definition keys.
+
+    Returns ``linspace(first, last, count)`` when the declared last point
+    is consistent with the increment. Grids whose axis wraps around
+    (e.g. a global grid stored as ``first=180, last=179.75``, starting at
+    180°E ≡ 180°W and heading east across the prime meridian) are rebuilt
+    from the increment instead; with ``wrap=360.0`` the result is
+    normalized to [-180, 180) when that keeps the axis monotonic.
+    """
+    direction = 1.0 if last >= first else -1.0
+    expected_last = first + direction * (count - 1) * increment
+    if abs(last - expected_last) < increment * 0.01:
+        return np.linspace(first, last, count, endpoint=True)
+    values = first + np.arange(count) * increment
+    if wrap is not None:
+        half = wrap / 2.0
+        normalized = (values + half) % wrap - half
+        if np.all(np.diff(normalized) > 0):
+            return normalized
+    return values
 
 
 def get_attrs_from_message(keys: list[str], message) -> dict[str, Union[str, int, float]]:

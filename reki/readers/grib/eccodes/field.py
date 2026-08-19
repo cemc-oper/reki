@@ -52,15 +52,8 @@ def load_field_from_file(
 
         - Use "pl", "ml" or "sfc". They will be converted into dict.
         - Use GRIB key `typeOfLevel`, such as
-            - "isobaricInhPa"
-            - "isobaricInPa"
-            - "surface"
-            - "heightAboveGround"
-            - "nominalTop"
-            - "atmosphere"
-            - "meanSea"
-            - "depthBelowLandLayer"
-            - ...
+          "isobaricInhPa", "isobaricInPa", "surface", "heightAboveGround",
+          "nominalTop", "atmosphere", "meanSea", "depthBelowLandLayer", ...
           See https://apps.ecmwf.int/codes/grib/format/edition-independent/3/ for more values.
         - If `typeOfLevel` is not available, use dict to specify filter conditions.
           For example, to get one filed from GRAPES GFS modelvar GRIB2 file, use:
