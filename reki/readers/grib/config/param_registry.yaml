@@ -1,5 +1,5 @@
 # GRIB2 要素注册表。约束规范见同目录 param_registry_spec.md，请勿违反编号规则。
-# 本文件由 cemc-param-db 从要素数据库导出（python -m cemc_param_db export），请勿手工编辑。
+# 本文件由 cedarkit-param-db 从要素数据库导出（python -m cedarkit_param_db export），请勿手工编辑。
 - key:
     discipline: 0
     category: 0

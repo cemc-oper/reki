@@ -71,7 +71,7 @@ def test_parameter_string(grib2_gfs_basic_file_path, test_case):
         ),
     ]
 )
-def test_parameter_cemc_param_db(grib2_gfs_basic_file_path, test_case):
+def test_parameter_cedarkit_param_db(grib2_gfs_basic_file_path, test_case):
     f = load_field_from_file(
         grib2_gfs_basic_file_path,
         **asdict(test_case.query)
