@@ -47,6 +47,11 @@ def csv_file(tmp_path):
 
 
 class TestNetCDFReader:
+    def test_legacy_netcdf_entry_point_is_reader_entry_point(self):
+        from reki.format.netcdf import load_field_from_file as legacy
+        from reki.readers.netcdf import load_field_from_file as current
+
+        assert legacy is current
     @pytest.mark.parametrize(
         "magic", [b"\x89HDF\r\n\x1a\n" + b"\x00" * 56, b"CDF\x01" + b"\x00" * 60]
     )
@@ -84,6 +89,11 @@ class TestNetCDFReader:
 
 
 class TestGradsReader:
+    def test_legacy_grads_entry_point_is_reader_entry_point(self):
+        from reki.format.grads import load_field_from_file as legacy
+        from reki.readers.grads import load_field_from_file as current
+
+        assert legacy is current
     def test_dispatch_claims_ctl(self, grads_files):
         ctl_path, _ = grads_files
         r = reader(FakeSource(), ctl_path)
@@ -124,6 +134,12 @@ class TestGradsReader:
 
 
 class TestTableReader:
+    def test_legacy_table_entry_point_matches_reader(self, csv_file):
+        from reki.format.table import load_table_from_file as legacy
+        from reki.readers.table import load_table_from_file as current
+
+        pd.testing.assert_frame_equal(legacy(csv_file), current(csv_file))
+
     def test_dispatch_claims_text_table_in_deeper_pass(self, csv_file):
         r = reader(FakeSource(), csv_file)
         assert isinstance(r, TableReader)

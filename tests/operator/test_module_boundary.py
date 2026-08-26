@@ -42,6 +42,24 @@ def _operator_imports(module_path: Path) -> list[int]:
     return lines
 
 
+def _imports(module_path: Path, forbidden: tuple[str, ...]) -> list[tuple[int, str]]:
+    """Return ``(line, target)`` pairs for forbidden absolute imports."""
+    tree = ast.parse(module_path.read_text(encoding="utf-8"))
+    matches = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            names = (alias.name for alias in node.names)
+        elif isinstance(node, ast.ImportFrom) and node.level == 0:
+            names = (node.module or "",)
+        else:
+            continue
+        for name in names:
+            for target in forbidden:
+                if name == target or name.startswith(f"{target}."):
+                    matches.append((node.lineno, target))
+    return matches
+
+
 def test_sources_do_not_import_operator():
     offenders = []
     for path in (REKI_DIR / "sources").rglob("*.py"):
@@ -67,4 +85,39 @@ def test_readers_do_not_import_operator():
         "reki/readers must not depend on reki/operator (doc 11.5; "
         "only readers/grib/eccodes/operator is allowed, doc 7.3):\n"
         + "\n".join(offenders)
+    )
+
+
+def test_operator_does_not_import_sources():
+    offenders = []
+    for path in (REKI_DIR / "operator").rglob("*.py"):
+        for line, target in _imports(path, ("reki.sources",)):
+            offenders.append(f"{path.relative_to(REKI_DIR)}:{line} imports {target}")
+    assert not offenders, (
+        "reki/operator must not depend on reki/sources; operators consume "
+        "reader results only:\n" + "\n".join(offenders)
+    )
+
+
+def test_core_does_not_import_concrete_layers():
+    offenders = []
+    forbidden = ("reki.sources", "reki.readers", "reki.operator")
+    for path in (REKI_DIR / "core").rglob("*.py"):
+        for line, target in _imports(path, forbidden):
+            offenders.append(f"{path.relative_to(REKI_DIR)}:{line} imports {target}")
+    assert not offenders, (
+        "reki/core protocols must not depend on concrete sources, readers, "
+        "or operators:\n" + "\n".join(offenders)
+    )
+
+
+def test_reki_does_not_import_upper_packages():
+    offenders = []
+    forbidden = ("cedarkit.plots", "cedar_graph", "cemc_plots_kit", "cedarkit_param_db")
+    for path in REKI_DIR.rglob("*.py"):
+        for line, target in _imports(path, forbidden):
+            offenders.append(f"{path.relative_to(REKI_DIR)}:{line} imports {target}")
+    assert not offenders, (
+        "reki is the lowest runtime layer and must not import upper packages; "
+        "move the dependency upward:\n" + "\n".join(offenders)
     )
