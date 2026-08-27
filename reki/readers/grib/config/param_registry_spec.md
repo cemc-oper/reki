@@ -4,7 +4,7 @@
 本文档全部编号规则；`tests/` 中的校验测试按规则编号逐条实现，任何注册表修改必须
 通过校验方可合入。
 
-- 版本：v1.1
+- 版本：v2.0
 - 适用文件：`reki/readers/grib/config/param_registry.yaml`
 - 强制级别用语：**必须**（MUST，违反即校验失败）、**应当**（SHOULD，违反产生
   警告）、**可以**（MAY，可选项）。
@@ -14,11 +14,14 @@
 - v1.1：条目级增加可选 `aliases` 字段（被提升为通用名的行的别名）；变体级增加
   可选信息性字段 `typeOfLevel`/`level`（供反查生成 ecCodes 过滤键，不参与
   `when` 匹配，修订 M6）；M7 增加基名变体合成规则（M7b）。
+- v2.0：快照升级为带 `api_version`/`entries` 的文档；entry 和 variant 均发布
+  全局唯一的 `parameter_id`，并由 reki 的只读 resolver 解析为 `FieldQuery`。
 
 ## 1. 文件组织
 
 - **F1** 注册表由单一 YAML 文件承载，编码为 UTF-8。
-- **F2** 顶层结构为条目（entry）的列表。
+- **F2** v2 顶层结构为含 `api_version: reki.parameter-registry/v2` 与 `entries`
+  的文档对象；兼容 loader 可读取历史顶层列表，但不得再发布它。
 - **F3** 条目**应当**按 `(discipline, category, number)` 升序排列，以保证 diff 可读。
 - **F4** 文件中**不应**使用 YAML 锚点（`&`/`*`）、合并键（`<<`）与自定义标签，
 保持数据可被任何 YAML 解析器以 `safe_load` 读取。

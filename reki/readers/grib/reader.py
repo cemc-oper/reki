@@ -16,6 +16,7 @@ and the filter conditions. The file is scanned when ``first()`` or
 from typing import Dict, List, Optional, Union
 
 import os
+import pandas as pd
 import xarray as xr
 
 from reki.readers import Reader
@@ -247,6 +248,15 @@ class GribReader(Reader):
             if value is not None:
                 # Existing kernels expect lists, while the public query is immutable.
                 filters[key] = thaw(value)
+        # FieldQuery uses source-neutral names.  GRIB backends retain their
+        # native key spellings at this boundary only.
+        if "step_type" in filters:
+            filters["stepType"] = filters.pop("step_type")
+        if "time_range" in filters:
+            time_range = pd.Timedelta(filters.pop("time_range"))
+            filters["lengthOfTimeRange"] = time_range.total_seconds() / 3600
+        if "member" in filters:
+            filters["number"] = filters.pop("member")
         return filters
 
     def _source_summary(self):

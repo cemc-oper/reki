@@ -16,6 +16,7 @@
    data_find
    data_load
    grib_parameter
+   parameter_resolver
    grib_level
    data_process
    catalog
