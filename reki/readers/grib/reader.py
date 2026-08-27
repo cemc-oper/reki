@@ -262,7 +262,6 @@ class GribReader(Reader):
         import eccodes
         from .eccodes._check import _check_message
         from .eccodes._level import _fix_level
-        from .eccodes._xarray import create_data_array_from_message
         from reki.readers.grib.common._parameter import convert_parameter
 
         filters = self._filters_from_query()
@@ -283,7 +282,7 @@ class GribReader(Reader):
         if field_name is None and isinstance(parameter, str):
             field_name = parameter
         parameter = convert_parameter(parameter)
-        first = None
+        first_found = False
         with open(self.path, "rb") as handle:
             while True:
                 message = eccodes.codes_grib_new_from_file(handle, headers_only=True)
@@ -292,19 +291,24 @@ class GribReader(Reader):
                 if not _check_message(message, parameter, fixed_level_type, level, **filters):
                     eccodes.codes_release(message)
                     continue
-                if first is not None:
-                    eccodes.codes_release(first)
+                if first_found:
                     eccodes.codes_release(message)
                     raise MultipleFieldsMatchedError(self._query, self._source_summary(), 2)
-                first = message
-        if first is None:
+                first_found = True
+                eccodes.codes_release(message)
+        if not first_found:
             if required:
                 raise DataNotFoundError(self._query, self._source_summary(), 0)
             return None
-        try:
-            return GribField(create_data_array_from_message(first, level_dim_name=level_dim, field_name=field_name))
-        finally:
-            eccodes.codes_release(first)
+        # Header handles cannot safely decode values. Re-open only the known
+        # unique field after cardinality is proven, so a multiple match never
+        # pays a values-decoding cost.
+        from .eccodes import load_field_from_file
+        data = load_field_from_file(
+            self.path, parameter, level_type, level, level_dim=level_dim,
+            field_name=field_name, **filters,
+        )
+        return GribField(data)
 
     def _first_by_count(self, count: int) -> Optional[GribField]:
         if self.engine != "eccodes":
