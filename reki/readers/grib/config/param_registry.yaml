@@ -1,6 +1,9 @@
 # GRIB2 要素注册表。约束规范见同目录 param_registry_spec.md，请勿违反编号规则。
 # 本文件由 cedarkit-param-db 从要素数据库导出（python -m cedarkit_param_db export），请勿手工编辑。
-- key:
+api_version: reki.parameter-registry/v2
+entries:
+- parameter_id: cedarkit.t
+  key:
     discipline: 0
     category: 0
     number: 0
@@ -10,7 +13,8 @@
   description: Temperature
   description_cn: 温度
   params:
-  - name: t2m
+  - parameter_id: cedarkit.t2m
+    name: t2m
     when:
       first_level_type: 103
       first_level: 2
@@ -18,7 +22,8 @@
     level: 2
     description: Temperature at 2 meters height
     description_cn: 2米温度
-  - name: ts
+  - parameter_id: cedarkit.ts
+    name: ts
     aliases:
     - tsfc
     when:
@@ -26,13 +31,15 @@
     typeOfLevel: surface
     description: Surface temperature
     description_cn: 地面温度
-  - name: st
+  - parameter_id: cedarkit.st
+    name: st
     when:
       first_level_type: 106
     typeOfLevel: depthBelowLandLayer
     description: Soil temperature
     description_cn: 土壤温度
-  - name: st(0-10)
+  - parameter_id: cedarkit.st-0-10
+    name: st(0-10)
     when:
       first_level_type: 106
       first_level: 0
@@ -40,7 +47,8 @@
       second_level: 0.1
     typeOfLevel: depthBelowLandLayer
     description_cn: 0-10cm土壤温度
-  - name: st(10-40)
+  - parameter_id: cedarkit.st-10-40
+    name: st(10-40)
     when:
       first_level_type: 106
       first_level: 0.1
@@ -48,7 +56,8 @@
       second_level: 0.4
     typeOfLevel: depthBelowLandLayer
     description_cn: 10-40cm土壤温度
-  - name: st(40-100)
+  - parameter_id: cedarkit.st-40-100
+    name: st(40-100)
     when:
       first_level_type: 106
       first_level: 0.4
@@ -56,7 +65,8 @@
       second_level: 1
     typeOfLevel: depthBelowLandLayer
     description_cn: 40-100cm土壤温度
-  - name: st(100-200)
+  - parameter_id: cedarkit.st-100-200
+    name: st(100-200)
     when:
       first_level_type: 106
       first_level: 1
@@ -64,16 +74,20 @@
       second_level: 2
     typeOfLevel: depthBelowLandLayer
     description_cn: 100-200cm土壤温度
-- key:
+- parameter_id: cedarkit.theta-se
+  key:
     discipline: 0
     category: 0
     number: 3
   name: thetaSe
+  aliases:
+  - pte
   wgrib2_name: EPOT
   unit: K
   description: Pseudo-equivalent potential temperature
   description_cn: 假相当位温
-- key:
+- parameter_id: cedarkit.mx2t.any
+  key:
     discipline: 0
     category: 0
     number: 4
@@ -85,7 +99,8 @@
   typeOfLevel: heightAboveGround
   level: 2
   params:
-  - name: mx2t
+  - parameter_id: cedarkit.mx2t
+    name: mx2t
     aliases:
     - tmax2m
     when:
@@ -94,7 +109,8 @@
       stepType: max
     typeOfLevel: heightAboveGround
     level: 2
-- key:
+- parameter_id: cedarkit.mn2t.any
+  key:
     discipline: 0
     category: 0
     number: 5
@@ -106,7 +122,8 @@
   typeOfLevel: heightAboveGround
   level: 2
   params:
-  - name: mn2t
+  - parameter_id: cedarkit.mn2t
+    name: mn2t
     aliases:
     - tmin2m
     when:
@@ -115,17 +132,21 @@
       stepType: min
     typeOfLevel: heightAboveGround
     level: 2
-- key:
+- parameter_id: cedarkit.td
+  key:
     discipline: 0
     category: 0
     number: 6
   name: td
+  aliases:
+  - dpt
   wgrib2_name: DPT
   unit: K
   description: Dew point
   description_cn: 露点温度
   params:
-  - name: td2m
+  - parameter_id: cedarkit.td2m
+    name: td2m
     when:
       first_level_type: 103
       first_level: 2
@@ -133,7 +154,8 @@
     level: 2
     description: 2 meters high Dew point
     description_cn: 2米露点温度
-- key:
+- parameter_id: cedarkit.ttd
+  key:
     discipline: 0
     category: 0
     number: 7
@@ -142,7 +164,8 @@
   unit: K
   description: Dew point depression
   description_cn: 温度露点差
-- key:
+- parameter_id: cedarkit.slhf
+  key:
     discipline: 0
     category: 0
     number: 10
@@ -151,13 +174,15 @@
   unit: ws/m2
   description: Latent heat net flux
   description_cn: 潜热通量
-- key:
+- parameter_id: cedarkit.skint
+  key:
     discipline: 0
     category: 0
     number: 17
   name: SKINT
   wgrib2_name: SKINT
-- key:
+- parameter_id: cedarkit.hfx.any
+  key:
     discipline: 0
     category: 0
     number: 24
@@ -167,12 +192,14 @@
   description_cn: 地表热通量
   typeOfLevel: surface
   params:
-  - name: hfx
+  - parameter_id: cedarkit.hfx
+    name: hfx
     when:
       first_level_type: 1
       stepType: accum
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.tadv
+  key:
     discipline: 0
     category: 0
     number: 224
@@ -182,21 +209,24 @@
   unit: 1.e-6 k/s
   description: Temperature advection
   description_cn: 温度平流
-- key:
+- parameter_id: cedarkit.saunaidx
+  key:
     discipline: 0
     category: 0
     number: 225
   name: saunaidx
   description: Sauna index
   description_cn: 桑拿指数
-- key:
+- parameter_id: cedarkit.htdn
+  key:
     discipline: 0
     category: 0
     number: 226
   name: htdn
   description: 'Number of high temperature days '
   description_cn: 高温日数
-- key:
+- parameter_id: cedarkit.ata
+  key:
     discipline: 0
     category: 0
     number: 227
@@ -204,7 +234,8 @@
   unit: K
   description: Average temperature anomaly
   description_cn: 平均气温距平
-- key:
+- parameter_id: cedarkit.tn
+  key:
     discipline: 0
     category: 0
     number: 228
@@ -212,14 +243,16 @@
   unit: K
   description: Minimum of air temperature for NMC medium-term prediction only
   description_cn: 最低气温(仅限NMC使用)
-- key:
+- parameter_id: cedarkit.thp
+  key:
     discipline: 0
     category: 0
     number: 229
   name: thp
   description: Perturbed potential temperature
   description_cn: 位温扰动
-- key:
+- parameter_id: cedarkit.q
+  key:
     discipline: 0
     category: 1
     number: 0
@@ -229,7 +262,8 @@
   description: Specific humidity
   description_cn: 比湿
   params:
-  - name: q2m
+  - parameter_id: cedarkit.q2m
+    name: q2m
     when:
       first_level_type: 103
       first_level: 2
@@ -237,14 +271,16 @@
     level: 2
     description: Specific humidity at 2 meters height
     description_cn: 2米比湿
-  - name: sw
+  - parameter_id: cedarkit.sw
+    name: sw
     when:
       first_level_type: 106
     typeOfLevel: depthBelowLandLayer
     unit: m3/m3
     description: Soil moisture
     description_cn: 土壤湿度
-  - name: sw(0-10)
+  - parameter_id: cedarkit.sw-0-10
+    name: sw(0-10)
     when:
       first_level_type: 106
       first_level: 0
@@ -252,7 +288,8 @@
       second_level: 0.1
     typeOfLevel: depthBelowLandLayer
     description_cn: 0-10cm土壤湿度
-  - name: sw(10-40)
+  - parameter_id: cedarkit.sw-10-40
+    name: sw(10-40)
     when:
       first_level_type: 106
       first_level: 0.1
@@ -260,7 +297,8 @@
       second_level: 0.4
     typeOfLevel: depthBelowLandLayer
     description_cn: 10-40cm土壤湿度
-  - name: sw(40-100)
+  - parameter_id: cedarkit.sw-40-100
+    name: sw(40-100)
     when:
       first_level_type: 106
       first_level: 0.4
@@ -268,7 +306,8 @@
       second_level: 1
     typeOfLevel: depthBelowLandLayer
     description_cn: 40-100cm土壤湿度
-  - name: sw(100-200)
+  - parameter_id: cedarkit.sw-100-200
+    name: sw(100-200)
     when:
       first_level_type: 106
       first_level: 1
@@ -276,7 +315,8 @@
       second_level: 2
     typeOfLevel: depthBelowLandLayer
     description_cn: 100-200cm土壤湿度
-- key:
+- parameter_id: cedarkit.rh
+  key:
     discipline: 0
     category: 1
     number: 1
@@ -286,7 +326,8 @@
   description: Relative humidity
   description_cn: 相对湿度
   params:
-  - name: rh2m
+  - parameter_id: cedarkit.rh2m
+    name: rh2m
     when:
       first_level_type: 103
       first_level: 2
@@ -294,7 +335,8 @@
     level: 2
     description: Relative humidity at 2 meters height
     description_cn: 2米相对湿度
-- key:
+- parameter_id: cedarkit.pwat.any
+  key:
     discipline: 0
     category: 1
     number: 3
@@ -305,11 +347,13 @@
   description_cn: 整层可降水量
   typeOfLevel: atmosphere
   params:
-  - name: pwat
+  - parameter_id: cedarkit.pwat
+    name: pwat
     when:
       first_level_type: 10
     typeOfLevel: atmosphere
-- key:
+- parameter_id: cedarkit.rain.any
+  key:
     discipline: 0
     category: 1
     number: 8
@@ -320,12 +364,16 @@
   description_cn: 总累计降水
   typeOfLevel: surface
   params:
-  - name: rain
+  - parameter_id: cedarkit.rain
+    name: rain
+    aliases:
+    - apcp
     when:
       first_level_type: 1
       stepType: accum
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.rainnc.any
+  key:
     discipline: 0
     category: 1
     number: 9
@@ -336,12 +384,14 @@
   description_cn: 大尺度降水
   typeOfLevel: surface
   params:
-  - name: rainnc
+  - parameter_id: cedarkit.rainnc
+    name: rainnc
     when:
       first_level_type: 1
       stepType: accum
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.rainc.any
+  key:
     discipline: 0
     category: 1
     number: 10
@@ -352,12 +402,14 @@
   description_cn: 对流性降水
   typeOfLevel: surface
   params:
-  - name: rainc
+  - parameter_id: cedarkit.rainc
+    name: rainc
     when:
       first_level_type: 1
       stepType: accum
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.sd.any
+  key:
     discipline: 0
     category: 1
     number: 11
@@ -368,11 +420,13 @@
   description_cn: 雪深
   typeOfLevel: surface
   params:
-  - name: sd
+  - parameter_id: cedarkit.sd
+    name: sd
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.precitype
+  key:
     discipline: 0
     category: 1
     number: 19
@@ -380,7 +434,8 @@
   wgrib2_name: PTYPE
   description: Precipitation type
   description_cn: 降水相态
-- key:
+- parameter_id: cedarkit.qc
+  key:
     discipline: 0
     category: 1
     number: 22
@@ -391,7 +446,8 @@
   unit: kg/kg
   description: Cloud mixing ratio
   description_cn: 云水混合比
-- key:
+- parameter_id: cedarkit.qi
+  key:
     discipline: 0
     category: 1
     number: 23
@@ -400,7 +456,8 @@
   unit: kg/kg
   description: Ice mixing ratio
   description_cn: 冰水混合比
-- key:
+- parameter_id: cedarkit.qr
+  key:
     discipline: 0
     category: 1
     number: 24
@@ -409,7 +466,8 @@
   unit: kg/kg
   description: Rain mixing ratio
   description_cn: 雨水混合比
-- key:
+- parameter_id: cedarkit.qs
+  key:
     discipline: 0
     category: 1
     number: 25
@@ -418,7 +476,8 @@
   unit: kg/kg
   description: Snow mixing ratio
   description_cn: 雪水混合比
-- key:
+- parameter_id: cedarkit.sf.any
+  key:
     discipline: 0
     category: 1
     number: 29
@@ -429,14 +488,17 @@
   description_cn: 降雪
   typeOfLevel: surface
   params:
-  - name: sf
+  - parameter_id: cedarkit.sf
+    name: sf
     aliases:
     - snow
+    - asnow
     when:
       first_level_type: 1
       stepType: accum
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.graupel
+  key:
     discipline: 0
     category: 1
     number: 32
@@ -445,13 +507,15 @@
   unit: kg/kg
   description: Graupel
   description_cn: 霰
-- key:
+- parameter_id: cedarkit.tsrwe
+  key:
     discipline: 0
     category: 1
     number: 53
   name: TSRWE
   wgrib2_name: TSRWE
-- key:
+- parameter_id: cedarkit.tvw.any
+  key:
     discipline: 0
     category: 1
     number: 64
@@ -462,11 +526,13 @@
   description_cn: 总柱状水汽
   typeOfLevel: atmosphere
   params:
-  - name: tvw
+  - parameter_id: cedarkit.tvw
+    name: tvw
     when:
       first_level_type: 10
     typeOfLevel: atmosphere
-- key:
+- parameter_id: cedarkit.tcw.any
+  key:
     discipline: 0
     category: 1
     number: 69
@@ -477,11 +543,13 @@
   description_cn: 总柱状云水
   typeOfLevel: atmosphere
   params:
-  - name: tcw
+  - parameter_id: cedarkit.tcw
+    name: tcw
     when:
       first_level_type: 10
     typeOfLevel: atmosphere
-- key:
+- parameter_id: cedarkit.tiw.any
+  key:
     discipline: 0
     category: 1
     number: 70
@@ -492,11 +560,13 @@
   description_cn: 总柱状云冰
   typeOfLevel: atmosphere
   params:
-  - name: tiw
+  - parameter_id: cedarkit.tiw
+    name: tiw
     when:
       first_level_type: 10
     typeOfLevel: atmosphere
-- key:
+- parameter_id: cedarkit.qflx
+  key:
     discipline: 0
     category: 1
     number: 224
@@ -504,23 +574,28 @@
   unit: 1e-1.g/(cm.hpa.s)
   description: Moisture flux
   description_cn: 水汽通量
-- key:
+- parameter_id: cedarkit.qdiv
+  key:
     discipline: 0
     category: 1
     number: 225
   name: qdiv
+  aliases:
+  - qv_div
   wgrib2_name: FRZR
   unit: 1e-7.g/(cm2.hpa.s)
   description: Moisture flux divergence
   description_cn: 水汽通量散度
-- key:
+- parameter_id: cedarkit.src
+  key:
     discipline: 0
     category: 1
     number: 226
   name: src
   description: 'Skin reservoir content  '
   description_cn: 表面蓄水池含量
-- key:
+- parameter_id: cedarkit.ro
+  key:
     discipline: 0
     category: 1
     number: 227
@@ -528,7 +603,8 @@
   unit: m
   description: Runoff
   description_cn: 径流
-- key:
+- parameter_id: cedarkit.pc.any
+  key:
     discipline: 0
     category: 1
     number: 228
@@ -538,11 +614,13 @@
   description_cn: 抬升凝结高度处气压
   typeOfLevel: surface
   params:
-  - name: pc
+  - parameter_id: cedarkit.pc
+    name: pc
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.qfxsfc.any
+  key:
     discipline: 0
     category: 1
     number: 229
@@ -552,13 +630,15 @@
   description_cn: 地表水汽通量
   typeOfLevel: surface
   params:
-  - name: qfxsfc
+  - parameter_id: cedarkit.qfxsfc
+    name: qfxsfc
     aliases:
     - qfx
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.qpe
+  key:
     discipline: 0
     category: 1
     number: 230
@@ -566,7 +646,8 @@
   unit: mm
   description: Quantitive precipitation estimate
   description_cn: 定量降水估计
-- key:
+- parameter_id: cedarkit.rhmax
+  key:
     discipline: 0
     category: 1
     number: 231
@@ -575,7 +656,8 @@
   description: 'Maximum of rh '
   description_cn: 最大相对湿度
   params:
-  - name: rhmax2m
+  - parameter_id: cedarkit.rhmax2m
+    name: rhmax2m
     when:
       first_level_type: 103
       first_level: 2
@@ -583,7 +665,8 @@
     level: 2
     description: Maximum of rh at 2 meters height
     description_cn: 2米最大相对湿度
-- key:
+- parameter_id: cedarkit.rhmin
+  key:
     discipline: 0
     category: 1
     number: 232
@@ -592,7 +675,8 @@
   description: Minimum of rh
   description_cn: 最小相对湿度
   params:
-  - name: rhmin2m
+  - parameter_id: cedarkit.rhmin2m
+    name: rhmin2m
     when:
       first_level_type: 103
       first_level: 2
@@ -600,7 +684,8 @@
     level: 2
     description: Minimum of rh at 2 meters height
     description_cn: 2米最小相对湿度
-- key:
+- parameter_id: cedarkit.rainp
+  key:
     discipline: 0
     category: 1
     number: 233
@@ -608,7 +693,8 @@
   unit: '%'
   description: Probability of precipitation
   description_cn: 降水概率
-- key:
+- parameter_id: cedarkit.rainpr
+  key:
     discipline: 0
     category: 1
     number: 234
@@ -616,7 +702,8 @@
   unit: mm
   description: Process precipitation
   description_cn: 过程降水量
-- key:
+- parameter_id: cedarkit.rainh
+  key:
     discipline: 0
     category: 1
     number: 235
@@ -624,7 +711,8 @@
   unit: mm
   description: Short time heavy precipitation
   description_cn: 短时强降水
-- key:
+- parameter_id: cedarkit.hail
+  key:
     discipline: 0
     category: 1
     number: 236
@@ -632,7 +720,8 @@
   unit: mm
   description: Hail
   description_cn: 冰雹
-- key:
+- parameter_id: cedarkit.raint
+  key:
     discipline: 0
     category: 1
     number: 237
@@ -640,14 +729,16 @@
   unit: mm
   description: Precipitation of typhoon
   description_cn: 台风降水
-- key:
+- parameter_id: cedarkit.light
+  key:
     discipline: 0
     category: 1
     number: 238
   name: light
   description: Lightning
   description_cn: 雷电概率
-- key:
+- parameter_id: cedarkit.hi.any
+  key:
     discipline: 0
     category: 1
     number: 239
@@ -657,11 +748,13 @@
   description_cn: 冰雹指数
   typeOfLevel: surface
   params:
-  - name: hi
+  - parameter_id: cedarkit.hi
+    name: hi
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.ii
+  key:
     discipline: 0
     category: 1
     number: 240
@@ -669,7 +762,8 @@
   unit: oC/hm
   description: Inversion intensity
   description_cn: 逆温强度
-- key:
+- parameter_id: cedarkit.rain5max.any
+  key:
     discipline: 0
     category: 1
     number: 241
@@ -679,12 +773,14 @@
   description_cn: 5分钟最大降水
   typeOfLevel: surface
   params:
-  - name: rain5max
+  - parameter_id: cedarkit.rain5max
+    name: rain5max
     when:
       first_level_type: 1
       stepType: max
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.u
+  key:
     discipline: 0
     category: 2
     number: 2
@@ -694,7 +790,8 @@
   description: U-component of wind
   description_cn: 东西风
   params:
-  - name: u10m
+  - parameter_id: cedarkit.u10m
+    name: u10m
     when:
       first_level_type: 103
       first_level: 10
@@ -703,7 +800,8 @@
     level: 10
     description: V-component of wind at 10 meters height
     description_cn: 10米东西风
-  - name: u10mmax#1
+  - parameter_id: cedarkit.u10mmax-1
+    name: u10mmax#1
     when:
       first_level_type: 103
       first_level: 10
@@ -713,7 +811,8 @@
     level: 10
     description: Maximum of u10m during 1 hours
     description_cn: 输出间隔内最大10米东西风
-  - name: u10mmax#3
+  - parameter_id: cedarkit.u10mmax-3
+    name: u10mmax#3
     when:
       first_level_type: 103
       first_level: 10
@@ -723,7 +822,8 @@
     level: 10
     description: Maximum of u10m during 3 hours
     description_cn: 3小时最大10米东西风
-  - name: u10mmax
+  - parameter_id: cedarkit.u10mmax
+    name: u10mmax
     when:
       first_level_type: 103
       first_level: 10
@@ -732,7 +832,8 @@
     level: 10
     description: Maximum of u10m
     description_cn: 最大10米东西风
-- key:
+- parameter_id: cedarkit.v
+  key:
     discipline: 0
     category: 2
     number: 3
@@ -742,7 +843,8 @@
   description: V-component of wind
   description_cn: 南北风
   params:
-  - name: v10m
+  - parameter_id: cedarkit.v10m
+    name: v10m
     when:
       first_level_type: 103
       first_level: 10
@@ -751,7 +853,8 @@
     level: 10
     description: V-component of wind at 10 meters height
     description_cn: 10米南北风
-  - name: v10mmax#1
+  - parameter_id: cedarkit.v10mmax-1
+    name: v10mmax#1
     when:
       first_level_type: 103
       first_level: 10
@@ -761,7 +864,8 @@
     level: 10
     description: Maximim of v10m during 1 hours
     description_cn: 输出间隔内10米南北风
-  - name: v10mmax#3
+  - parameter_id: cedarkit.v10mmax-3
+    name: v10mmax#3
     when:
       first_level_type: 103
       first_level: 10
@@ -771,7 +875,8 @@
     level: 10
     description: Maximim of v10m during 3 hours
     description_cn: 3小时最大10米南北风
-  - name: v10mmax
+  - parameter_id: cedarkit.v10mmax
+    name: v10mmax
     when:
       first_level_type: 103
       first_level: 10
@@ -780,7 +885,8 @@
     level: 10
     description: Maximim of v10m
     description_cn: 最大10米南北风
-- key:
+- parameter_id: cedarkit.w.any
+  key:
     discipline: 0
     category: 2
     number: 9
@@ -790,30 +896,35 @@
   description: Vertical velocity (geometric)
   description_cn: 垂直速度
   params:
-  - name: w
+  - parameter_id: cedarkit.w
+    name: w
     when:
       first_level_type: 100
-  - name: wmax#1
+  - parameter_id: cedarkit.wmax-1
+    name: wmax#1
     when:
       first_level_type: 100
       stepType: max
       time_range_hours: 1
     description: Maximum of w during 1 hours
     description_cn: 1小时最大垂直速度
-  - name: wmax#3
+  - parameter_id: cedarkit.wmax-3
+    name: wmax#3
     when:
       first_level_type: 100
       stepType: max
       time_range_hours: 3
     description: Maximum of w during 3 hours
     description_cn: 3小时最大垂直速度
-  - name: wmax
+  - parameter_id: cedarkit.wmax
+    name: wmax
     when:
       first_level_type: 100
       stepType: max
     description: Maximum of w
     description_cn: 最大垂直速度
-- key:
+- parameter_id: cedarkit.vor
+  key:
     discipline: 0
     category: 2
     number: 12
@@ -822,7 +933,8 @@
   unit: s-1
   description: Relative vorticity
   description_cn: 涡度
-- key:
+- parameter_id: cedarkit.div
+  key:
     discipline: 0
     category: 2
     number: 13
@@ -831,7 +943,8 @@
   unit: s-1
   description: Relative divergence
   description_cn: 散度
-- key:
+- parameter_id: cedarkit.gust
+  key:
     discipline: 0
     category: 2
     number: 22
@@ -840,17 +953,21 @@
   unit: m/s
   description: Wind speed (gust)
   description_cn: 阵风风速
-- key:
+- parameter_id: cedarkit.shr
+  key:
     discipline: 0
     category: 2
     number: 25
   name: shr
+  aliases:
+  - vwsh
   wgrib2_name: VWSH
   unit: s-1
   description: Vertical speed shear
   description_cn: 垂直风切变
   params:
-  - name: shr(0-1000)
+  - parameter_id: cedarkit.shr-0-1000
+    name: shr(0-1000)
     when:
       first_level_type: 103
       first_level: 1000
@@ -859,7 +976,8 @@
     typeOfLevel: heightAboveGroundLayer
     level: 1000
     description_cn: 0-1km垂直风切变
-  - name: shr(0-3000)
+  - parameter_id: cedarkit.shr-0-3000
+    name: shr(0-3000)
     when:
       first_level_type: 103
       first_level: 3000
@@ -868,7 +986,8 @@
     typeOfLevel: heightAboveGroundLayer
     level: 3000
     description_cn: 0-3km垂直风切变
-  - name: shr(0-6000)
+  - parameter_id: cedarkit.shr-0-6000
+    name: shr(0-6000)
     when:
       first_level_type: 103
       first_level: 6000
@@ -877,7 +996,8 @@
     typeOfLevel: heightAboveGroundLayer
     level: 6000
     description_cn: 0-6km垂直风切变
-- key:
+- parameter_id: cedarkit.voradv
+  key:
     discipline: 0
     category: 2
     number: 224
@@ -887,7 +1007,8 @@
   unit: 1.e-11/(s2)
   description: Relative vorticity advection
   description_cn: 涡度平流
-- key:
+- parameter_id: cedarkit.mpv1
+  key:
     discipline: 0
     category: 2
     number: 225
@@ -895,7 +1016,8 @@
   unit: 1e-6.K.m2/(s.kg)
   description: Moist potential vorticity(vertical part)
   description_cn: 湿位涡垂直分量
-- key:
+- parameter_id: cedarkit.mpv2
+  key:
     discipline: 0
     category: 2
     number: 226
@@ -903,7 +1025,8 @@
   unit: 1e-6.k/(m2.s.kg)
   description: Moist potential vorticity(horizontal part)
   description_cn: 湿位涡水平分量
-- key:
+- parameter_id: cedarkit.wess.any
+  key:
     discipline: 0
     category: 2
     number: 227
@@ -913,11 +1036,13 @@
   description_cn: 东西向风应力
   typeOfLevel: surface
   params:
-  - name: wess
+  - parameter_id: cedarkit.wess
+    name: wess
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.nsss.any
+  key:
     discipline: 0
     category: 2
     number: 228
@@ -927,18 +1052,21 @@
   description_cn: 南北向风应力
   typeOfLevel: surface
   params:
-  - name: nsss
+  - parameter_id: cedarkit.nsss
+    name: nsss
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.thunwind
+  key:
     discipline: 0
     category: 2
     number: 229
   name: thunwind
   description: Thunderstorm wind
   description_cn: 雷暴大风
-- key:
+- parameter_id: cedarkit.seawave
+  key:
     discipline: 0
     category: 2
     number: 230
@@ -946,35 +1074,40 @@
   unit: m
   description: Sea wave
   description_cn: 海浪
-- key:
+- parameter_id: cedarkit.weph
+  key:
     discipline: 0
     category: 2
     number: 231
   name: weph
   description: Weather phenomenon
   description_cn: 天气现象
-- key:
+- parameter_id: cedarkit.haze
+  key:
     discipline: 0
     category: 2
     number: 232
   name: haze
   description: Haze
   description_cn: 霾
-- key:
+- parameter_id: cedarkit.apd
+  key:
     discipline: 0
     category: 2
     number: 233
   name: apd
   description: Condition of air pollution
   description_cn: 空气污染条件
-- key:
+- parameter_id: cedarkit.fog
+  key:
     discipline: 0
     category: 2
     number: 234
   name: fog
   description: Fog
   description_cn: 雾
-- key:
+- parameter_id: cedarkit.vi
+  key:
     discipline: 0
     category: 2
     number: 235
@@ -982,7 +1115,8 @@
   unit: m2/s
   description: Ventilation Index
   description_cn: 通风系数
-- key:
+- parameter_id: cedarkit.wi.any
+  key:
     discipline: 0
     category: 2
     number: 236
@@ -991,11 +1125,13 @@
   description_cn: 大风指数
   typeOfLevel: surface
   params:
-  - name: wi
+  - parameter_id: cedarkit.wi
+    name: wi
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.shrmax
+  key:
     discipline: 0
     category: 2
     number: 237
@@ -1004,7 +1140,8 @@
   description: maximum vector of vertical wind shear
   description_cn: 最大垂直风切变矢量
   params:
-  - name: shrmax(0-600)
+  - parameter_id: cedarkit.shrmax-0-600
+    name: shrmax(0-600)
     when:
       first_level_type: 103
       first_level: 600
@@ -1013,7 +1150,8 @@
     typeOfLevel: heightAboveGroundLayer
     level: 600
     description_cn: 0-600m最大垂直风切变矢量
-- key:
+- parameter_id: cedarkit.shrmaxdir
+  key:
     discipline: 0
     category: 2
     number: 238
@@ -1022,7 +1160,8 @@
   description: direction of maxium vertical wind shear
   description_cn: 最大垂直风切变的方向
   params:
-  - name: shrmaxdir(0-600)
+  - parameter_id: cedarkit.shrmaxdir-0-600
+    name: shrmaxdir(0-600)
     when:
       first_level_type: 103
       first_level: 600
@@ -1031,7 +1170,8 @@
     typeOfLevel: heightAboveGroundLayer
     level: 600
     description_cn: 0-600m最大垂直风切变的方向
-- key:
+- parameter_id: cedarkit.ps.any
+  key:
     discipline: 0
     category: 3
     number: 0
@@ -1042,13 +1182,15 @@
   description_cn: 地面气压
   typeOfLevel: surface
   params:
-  - name: ps
+  - parameter_id: cedarkit.ps
+    name: ps
     aliases:
     - psfc
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.psl.any
+  key:
     discipline: 0
     category: 3
     number: 1
@@ -1059,11 +1201,15 @@
   description_cn: 海平面气压
   typeOfLevel: meanSea
   params:
-  - name: psl
+  - parameter_id: cedarkit.psl
+    name: psl
+    aliases:
+    - mslp
     when:
       first_level_type: 101
     typeOfLevel: meanSea
-- key:
+- parameter_id: cedarkit.h.any
+  key:
     discipline: 0
     category: 3
     number: 5
@@ -1073,16 +1219,19 @@
   description: Geopotential height
   description_cn: 位势高度
   params:
-  - name: h
+  - parameter_id: cedarkit.h
+    name: h
     when:
       first_level_type: 100
-  - name: zs
+  - parameter_id: cedarkit.zs
+    name: zs
     when:
       first_level_type: 1
     typeOfLevel: surface
     description: 'Terrain '
     description_cn: 地形高度
-- key:
+- parameter_id: cedarkit.pblh.any
+  key:
     discipline: 0
     category: 3
     number: 18
@@ -1093,25 +1242,29 @@
   description_cn: 边界层高度
   typeOfLevel: surface
   params:
-  - name: pblh
+  - parameter_id: cedarkit.pblh
+    name: pblh
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.pi
+  key:
     discipline: 0
     category: 3
     number: 26
   name: pi
   description: Exner pressure
   description_cn: Exner气压
-- key:
+- parameter_id: cedarkit.pip
+  key:
     discipline: 0
     category: 3
     number: 224
   name: pip
   description: Perturbed Exner pressure
   description_cn: Exner气压扰动
-- key:
+- parameter_id: cedarkit.ht0.any
+  key:
     discipline: 0
     category: 3
     number: 225
@@ -1121,11 +1274,13 @@
   description_cn: 0度层高度
   typeOfLevel: surface
   params:
-  - name: ht0
+  - parameter_id: cedarkit.ht0
+    name: ht0
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.ht2.any
+  key:
     discipline: 0
     category: 3
     number: 226
@@ -1135,11 +1290,13 @@
   description_cn: -20度层高度
   typeOfLevel: surface
   params:
-  - name: ht2
+  - parameter_id: cedarkit.ht2
+    name: ht2
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.hib
+  key:
     discipline: 0
     category: 3
     number: 227
@@ -1147,7 +1304,8 @@
   unit: m
   description: 'Height of inversion base '
   description_cn: 逆温层底高度
-- key:
+- parameter_id: cedarkit.znt.any
+  key:
     discipline: 0
     category: 3
     number: 228
@@ -1157,11 +1315,13 @@
   description_cn: 粗糙度
   typeOfLevel: surface
   params:
-  - name: znt
+  - parameter_id: cedarkit.znt
+    name: znt
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.gusw.any
+  key:
     discipline: 0
     category: 4
     number: 8
@@ -1172,19 +1332,22 @@
   description_cn: 地面向上短波辐射通量
   typeOfLevel: surface
   params:
-  - name: gusw
+  - parameter_id: cedarkit.gusw
+    name: gusw
     aliases:
     - gswu
     when:
       first_level_type: 1
     typeOfLevel: surface
-  - name: tusw
+  - parameter_id: cedarkit.tusw
+    name: tusw
     when:
       first_level_type: 8
     typeOfLevel: nominalTop
     description: Upward short-wave radiation flux(top of atmoshpere)
     description_cn: 大气顶向上（外）短波辐射通量
-- key:
+- parameter_id: cedarkit.gsw
+  key:
     discipline: 0
     category: 4
     number: 9
@@ -1196,14 +1359,16 @@
   description: Net short wave radiation flux
   description_cn: 净短波辐射通量|净太阳辐射通量
   params:
-  - name: tsw
+  - parameter_id: cedarkit.tsw
+    name: tsw
     when:
       first_level_type: 8
       stepType: accum
     typeOfLevel: nominalTop
     description: TOE net short wave radiation flux
     description_cn: 大气顶净短波辐射通量
-- key:
+- parameter_id: cedarkit.gswc.any
+  key:
     discipline: 0
     category: 4
     number: 11
@@ -1214,17 +1379,20 @@
   description_cn: 晴空地面净短波辐射通量
   typeOfLevel: surface
   params:
-  - name: gswc
+  - parameter_id: cedarkit.gswc
+    name: gswc
     when:
       first_level_type: 1
     typeOfLevel: surface
-  - name: tswc
+  - parameter_id: cedarkit.tswc
+    name: tswc
     when:
       first_level_type: 8
     typeOfLevel: nominalTop
     description: TOE net short wave radiation flux, clear sky
     description_cn: 晴空大气顶净短波辐射通量
-- key:
+- parameter_id: cedarkit.guswc.any
+  key:
     discipline: 0
     category: 4
     number: 53
@@ -1235,18 +1403,21 @@
   description_cn: 地面晴空向上短波辐射通量
   typeOfLevel: surface
   params:
-  - name: guswc
+  - parameter_id: cedarkit.guswc
+    name: guswc
     when:
       first_level_type: 1
     typeOfLevel: surface
-  - name: tuswc
+  - parameter_id: cedarkit.tuswc
+    name: tuswc
     when:
       first_level_type: 8
     typeOfLevel: nominalTop
     unit: w/m2
     description: TOE upward short-wave radiation flux, clear sky
     description_cn: 大气顶晴空向上短波辐射通量
-- key:
+- parameter_id: cedarkit.btv
+  key:
     discipline: 0
     category: 4
     number: 227
@@ -1255,7 +1426,8 @@
   description: Radiation bright temperature(vapor channel)
   description_cn: 卫星水汽通道模拟亮温
   typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.bti
+  key:
     discipline: 0
     category: 4
     number: 228
@@ -1264,7 +1436,8 @@
   description: Radiation bright temperature(infrared channel)
   description_cn: 卫星红外通道模拟亮温
   typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.gulw.any
+  key:
     discipline: 0
     category: 5
     number: 4
@@ -1275,19 +1448,22 @@
   description_cn: 地面向上长波辐射通量
   typeOfLevel: surface
   params:
-  - name: gulw
+  - parameter_id: cedarkit.gulw
+    name: gulw
     aliases:
     - gslu
     when:
       first_level_type: 1
     typeOfLevel: surface
-  - name: tulw
+  - parameter_id: cedarkit.tulw
+    name: tulw
     when:
       first_level_type: 8
     typeOfLevel: nominalTop
     description: Upward long-wave radiation flux(top of atmoshpere)
     description_cn: 大气顶向上（外）长波辐射通量
-- key:
+- parameter_id: cedarkit.glw
+  key:
     discipline: 0
     category: 5
     number: 5
@@ -1298,7 +1474,8 @@
   unit: w/m2
   description: Net long wave radiation flux
   description_cn: 净长波辐射通量|净热辐射通量
-- key:
+- parameter_id: cedarkit.gdlwc.any
+  key:
     discipline: 0
     category: 5
     number: 8
@@ -1309,11 +1486,13 @@
   description_cn: 地面晴空向下长波辐射通量
   typeOfLevel: surface
   params:
-  - name: gdlwc
+  - parameter_id: cedarkit.gdlwc
+    name: gdlwc
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.gulwc.any
+  key:
     discipline: 0
     category: 5
     number: 224
@@ -1323,17 +1502,20 @@
   description_cn: 地面晴空向上长波辐射通量
   typeOfLevel: surface
   params:
-  - name: gulwc
+  - parameter_id: cedarkit.gulwc
+    name: gulwc
     when:
       first_level_type: 1
     typeOfLevel: surface
-  - name: tulwc
+  - parameter_id: cedarkit.tulwc
+    name: tulwc
     when:
       first_level_type: 8
     typeOfLevel: nominalTop
     description: TOE upward long-wave radiation flux, clear sky
     description_cn: 大气顶晴空向上长波辐射通量
-- key:
+- parameter_id: cedarkit.tcc
+  key:
     discipline: 0
     category: 6
     number: 1
@@ -1343,7 +1525,8 @@
   description: Total cloud cover
   description_cn: 总云量
   typeOfLevel: entireAtmosphere
-- key:
+- parameter_id: cedarkit.lcc
+  key:
     discipline: 0
     category: 6
     number: 3
@@ -1353,7 +1536,8 @@
   description: Low cloud cover
   description_cn: 低云量
   typeOfLevel: entireAtmosphere
-- key:
+- parameter_id: cedarkit.mcc
+  key:
     discipline: 0
     category: 6
     number: 4
@@ -1363,7 +1547,8 @@
   description: Medium cloud cover
   description_cn: 中云量
   typeOfLevel: entireAtmosphere
-- key:
+- parameter_id: cedarkit.hcc
+  key:
     discipline: 0
     category: 6
     number: 5
@@ -1373,7 +1558,8 @@
   description: High cloud cover
   description_cn: 高云量
   typeOfLevel: entireAtmosphere
-- key:
+- parameter_id: cedarkit.cldb
+  key:
     discipline: 0
     category: 6
     number: 11
@@ -1382,7 +1568,8 @@
   unit: m
   description: cloud base
   description_cn: 云底高度
-- key:
+- parameter_id: cedarkit.cldt
+  key:
     discipline: 0
     category: 6
     number: 12
@@ -1391,7 +1578,8 @@
   unit: m
   description: cloud top
   description_cn: 云顶高度
-- key:
+- parameter_id: cedarkit.ceiling
+  key:
     discipline: 0
     category: 6
     number: 13
@@ -1400,7 +1588,8 @@
   unit: m
   description: ceiling
   description_cn: 云幂高度
-- key:
+- parameter_id: cedarkit.cc
+  key:
     discipline: 0
     category: 6
     number: 22
@@ -1409,7 +1598,8 @@
   unit: '%'
   description: Cloud cover
   description_cn: 云量
-- key:
+- parameter_id: cedarkit.pli.any
+  key:
     discipline: 0
     category: 7
     number: 0
@@ -1420,11 +1610,13 @@
   description_cn: 气块抬升指数
   typeOfLevel: surface
   params:
-  - name: pli
+  - parameter_id: cedarkit.pli
+    name: pli
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.bli
+  key:
     discipline: 0
     category: 7
     number: 1
@@ -1434,7 +1626,8 @@
   description: Best lifted index
   description_cn: 最优抬升指数
   typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.kidx.any
+  key:
     discipline: 0
     category: 7
     number: 2
@@ -1445,14 +1638,16 @@
   description_cn: K指数
   typeOfLevel: meanSea
   params:
-  - name: kidx
+  - parameter_id: cedarkit.kidx
+    name: kidx
     aliases:
     - ki
     - k
     when:
       first_level_type: 101
     typeOfLevel: meanSea
-- key:
+- parameter_id: cedarkit.tti.any
+  key:
     discipline: 0
     category: 7
     number: 4
@@ -1463,11 +1658,13 @@
   description_cn: 总指数
   typeOfLevel: surface
   params:
-  - name: tti
+  - parameter_id: cedarkit.tti
+    name: tti
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.sweatidx.any
+  key:
     discipline: 0
     category: 7
     number: 5
@@ -1479,13 +1676,15 @@
   description_cn: 强天气胁迫指数
   typeOfLevel: surface
   params:
-  - name: sweatidx
+  - parameter_id: cedarkit.sweatidx
+    name: sweatidx
     aliases:
     - sweat
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.cape.any
+  key:
     discipline: 0
     category: 7
     number: 6
@@ -1496,11 +1695,13 @@
   description_cn: 对流有效位能
   typeOfLevel: surface
   params:
-  - name: cape
+  - parameter_id: cedarkit.cape
+    name: cape
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.cin.any
+  key:
     discipline: 0
     category: 7
     number: 7
@@ -1511,11 +1712,13 @@
   description_cn: 对流抑制能量
   typeOfLevel: surface
   params:
-  - name: cin
+  - parameter_id: cedarkit.cin
+    name: cin
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.srh
+  key:
     discipline: 0
     category: 7
     number: 8
@@ -1525,7 +1728,8 @@
   description: Storm relative helicity
   description_cn: 风暴螺旋度
   params:
-  - name: srh(0-1000)
+  - parameter_id: cedarkit.srh-0-1000
+    name: srh(0-1000)
     when:
       first_level_type: 103
       first_level: 1000
@@ -1534,7 +1738,8 @@
     typeOfLevel: heightAboveGroundLayer
     level: 1000
     description_cn: 0-1km垂直风暴螺旋度
-  - name: srh(0-3000)
+  - parameter_id: cedarkit.srh-0-3000
+    name: srh(0-3000)
     when:
       first_level_type: 103
       first_level: 3000
@@ -1543,7 +1748,8 @@
     typeOfLevel: heightAboveGroundLayer
     level: 3000
     description_cn: 0-3km垂直风暴螺旋度
-- key:
+- parameter_id: cedarkit.ri
+  key:
     discipline: 0
     category: 7
     number: 12
@@ -1552,18 +1758,21 @@
   description: Richardson number
   description_cn: 理查森数
   params:
-  - name: risfc
+  - parameter_id: cedarkit.risfc
+    name: risfc
     when:
       first_level_type: 1
     typeOfLevel: surface
     description: Richardson number of surface layer
     description_cn: 近地面总体理查森数
-  - name: ripbl
+  - parameter_id: cedarkit.ripbl
+    name: ripbl
     when:
       first_level_type: 166
     description: Richardson number of PBL
     description_cn: 边界层总体理查森数
-- key:
+- parameter_id: cedarkit.si.any
+  key:
     discipline: 0
     category: 7
     number: 13
@@ -1574,11 +1783,13 @@
   description_cn: 沙氏指数
   typeOfLevel: surface
   params:
-  - name: si
+  - parameter_id: cedarkit.si
+    name: si
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.uhmax.any
+  key:
     discipline: 0
     category: 7
     number: 15
@@ -1588,10 +1799,12 @@
   description: Updraught helicity
   description_cn: 最大上升螺旋度
   params:
-  - name: uhmax
+  - parameter_id: cedarkit.uhmax
+    name: uhmax
     when:
       stepType: max
-  - name: uhmax(2000-5000)
+  - parameter_id: cedarkit.uhmax-2000-5000
+    name: uhmax(2000-5000)
     when:
       first_level_type: 103
       first_level: 5000
@@ -1601,7 +1814,8 @@
     typeOfLevel: heightAboveGroundLayer
     level: 5000
     description_cn: 2-5km最大上升螺旋度
-- key:
+- parameter_id: cedarkit.dcape
+  key:
     discipline: 0
     category: 7
     number: 224
@@ -1610,21 +1824,24 @@
   unit: J/kg
   description: Down convective available potential energy
   description_cn: 下沉对流有效位能
-- key:
+- parameter_id: cedarkit.ssi
+  key:
     discipline: 0
     category: 7
     number: 225
   name: ssi
   description: Storm strength index
   description_cn: 风暴强度指数
-- key:
+- parameter_id: cedarkit.asi
+  key:
     discipline: 0
     category: 7
     number: 226
   name: asi
   description: Atmospheric stability index
   description_cn: 大气稳定度指数
-- key:
+- parameter_id: cedarkit.echotop
+  key:
     discipline: 0
     category: 16
     number: 3
@@ -1633,7 +1850,8 @@
   unit: m
   description: radar echo top
   description_cn: 雷达回波顶
-- key:
+- parameter_id: cedarkit.cdbz
+  key:
     discipline: 0
     category: 16
     number: 224
@@ -1647,18 +1865,21 @@
   description_cn: 雷达组合反射率
   typeOfLevel: surface
   params:
-  - name: cdbzmax
+  - parameter_id: cedarkit.cdbzmax
+    name: cdbzmax
     when:
       stepType: max
     typeOfLevel: surface
-  - name: cdbzmax#1
+  - parameter_id: cedarkit.cdbzmax-1
+    name: cdbzmax#1
     when:
       stepType: max
       time_range_hours: 1
     typeOfLevel: surface
     description: Maximum of cdbz during 1 hours
     description_cn: 输出间隔内最大雷达组合反射率
-  - name: cdbzmax#3
+  - parameter_id: cedarkit.cdbzmax-3
+    name: cdbzmax#3
     aliases:
     - cr#3
     when:
@@ -1667,7 +1888,8 @@
     typeOfLevel: surface
     description: Maximum of cdbz during 3 hours
     description_cn: 3小时最大雷达组合反射率
-- key:
+- parameter_id: cedarkit.dbz
+  key:
     discipline: 0
     category: 16
     number: 225
@@ -1676,16 +1898,19 @@
   description: Radar reflectivity
   description_cn: 雷达反射率
   params:
-  - name: dbzmax
+  - parameter_id: cedarkit.dbzmax
+    name: dbzmax
     when:
       stepType: max
-  - name: dbzmax#3
+  - parameter_id: cedarkit.dbzmax-3
+    name: dbzmax#3
     when:
       stepType: max
       time_range_hours: 3
     description: Maximum of dbz during 3 hours
     description_cn: 3小时最大雷达反射率
-- key:
+- parameter_id: cedarkit.dbzmaxh
+  key:
     discipline: 0
     category: 16
     number: 226
@@ -1693,7 +1918,8 @@
   unit: m
   description: height of maximum of radar reflectivity
   description_cn: 最大雷达回波的高度
-- key:
+- parameter_id: cedarkit.vis.any
+  key:
     discipline: 0
     category: 19
     number: 0
@@ -1704,11 +1930,13 @@
   description_cn: 能见度
   typeOfLevel: surface
   params:
-  - name: vis
+  - parameter_id: cedarkit.vis
+    name: vis
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.albedo.any
+  key:
     discipline: 0
     category: 19
     number: 1
@@ -1719,11 +1947,13 @@
   description_cn: 反照率
   typeOfLevel: surface
   params:
-  - name: albedo
+  - parameter_id: cedarkit.albedo
+    name: albedo
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.fogh.any
+  key:
     discipline: 0
     category: 19
     number: 224
@@ -1733,11 +1963,13 @@
   description_cn: 雾顶高度
   typeOfLevel: surface
   params:
-  - name: fogh
+  - parameter_id: cedarkit.fogh
+    name: fogh
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.fogod.any
+  key:
     discipline: 0
     category: 19
     number: 225
@@ -1746,23 +1978,27 @@
   description_cn: 光学厚度
   typeOfLevel: surface
   params:
-  - name: fogod
+  - parameter_id: cedarkit.fogod
+    name: fogod
     when:
       first_level_type: 1
     typeOfLevel: surface
-- key:
+- parameter_id: cedarkit.tsoil
+  key:
     discipline: 2
     category: 0
     number: 2
   name: TSOIL
   wgrib2_name: TSOIL
-- key:
+- parameter_id: cedarkit.soil-m
+  key:
     discipline: 2
     category: 0
     number: 22
   name: SOIL_M
   wgrib2_name: SOIL_M
-- key:
+- parameter_id: cedarkit.sshf
+  key:
     discipline: 2
     category: 0
     number: 24

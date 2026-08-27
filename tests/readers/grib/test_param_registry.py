@@ -1,6 +1,5 @@
 """
-Validation of ``reki/readers/grib/config/param_registry.yaml`` against the
-numbered rules of ``param_registry_spec.md`` (v1.1).
+Validation of the versioned parameter registry snapshot.
 
 - Structural rules (F/E/K/V/C1, C2 部分) are checked with the JSON Schema
   from spec appendix A (kept in sync manually).
@@ -32,14 +31,19 @@ STEP_TYPE_VALUES = {"instant", "accum", "max", "min", "avg"}
 
 NAME_PATTERN = re.compile(r"^\S+$")
 
-#: JSON Schema, mirror of param_registry_spec.md appendix A (v1.1)
+#: JSON Schema, mirror of parameter-registry v2.
 REGISTRY_SCHEMA = {
-    "type": "array",
-    "items": {
+    "type": "object",
+    "required": ["api_version", "entries"],
+    "additionalProperties": False,
+    "properties": {
+        "api_version": {"const": "reki.parameter-registry/v2"},
+        "entries": {"type": "array", "items": {
         "type": "object",
-        "required": ["key", "name"],
+        "required": ["parameter_id", "key", "name"],
         "additionalProperties": False,
         "properties": {
+            "parameter_id": {"type": "string", "pattern": r"^cedarkit\.[a-z0-9-]+(?:\.[a-z0-9-]+)*$"},
             "key": {
                 "type": "object",
                 "required": ["discipline", "category", "number"],
@@ -62,9 +66,10 @@ REGISTRY_SCHEMA = {
                 "type": "array",
                 "items": {
                     "type": "object",
-                    "required": ["name", "when"],
+                    "required": ["parameter_id", "name", "when"],
                     "additionalProperties": False,
                     "properties": {
+                        "parameter_id": {"type": "string", "pattern": r"^cedarkit\.[a-z0-9-]+(?:\.[a-z0-9-]+)*$"},
                         "name": {"type": "string", "pattern": r"^\S+$"},
                         "aliases": {"type": "array", "items": {"type": "string", "pattern": r"^\S+$"}},
                         "when": {
@@ -89,19 +94,25 @@ REGISTRY_SCHEMA = {
                 },
             },
         },
+        }},
     },
 }
 
 
-def _load_registry() -> list:
+def _load_registry() -> dict:
     ref = files("reki.readers.grib.config").joinpath("param_registry.yaml")
     with ref.open("r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 
 @pytest.fixture(scope="module")
-def registry() -> list:
+def registry_document() -> dict:
     return _load_registry()
+
+
+@pytest.fixture(scope="module")
+def registry(registry_document) -> list:
+    return registry_document["entries"]
 
 
 def _entry_label(entry: dict) -> str:
@@ -109,9 +120,15 @@ def _entry_label(entry: dict) -> str:
     return f"({key['discipline']}, {key['category']}, {key['number']}) {entry['name']}"
 
 
-def test_schema_structure(registry):
+def test_schema_structure(registry_document):
     """Spec appendix A: structural rules F/E/K/V and C1 (when 键白名单)."""
-    jsonschema.validate(registry, REGISTRY_SCHEMA)
+    jsonschema.validate(registry_document, REGISTRY_SCHEMA)
+
+
+def test_registry_parameter_ids_are_global_unique(registry):
+    ids = [entry["parameter_id"] for entry in registry]
+    ids.extend(variant["parameter_id"] for entry in registry for variant in entry.get("params", []))
+    assert len(ids) == len(set(ids))
 
 
 def test_registry_U1_unique_keys(registry):

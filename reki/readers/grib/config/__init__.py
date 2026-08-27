@@ -40,7 +40,10 @@ def get_param_registry() -> dict[tuple[int, int, int], dict]:
     """
     ref = files("reki.readers.grib.config").joinpath("param_registry.yaml")
     with ref.open("r", encoding="utf-8") as f:
-        entries = yaml.safe_load(f)
+        document = yaml.safe_load(f)
+    # T2-02 publishes the versioned v2 document.  Keep accepting the old
+    # top-level list until the T2-03 resolver removes this compatibility path.
+    entries = document["entries"] if isinstance(document, dict) else document
     return {
         (entry["key"]["discipline"], entry["key"]["category"], entry["key"]["number"]): entry
         for entry in entries

@@ -42,6 +42,7 @@ Documentation = "https://reki.readthedocs.io"
 Repository = "https://github.com/cemc-oper/reki.git"
 
 [project.scripts]
+reki = "reki.cli:cli"
 reki-finder = "reki.data_finder.__main__:main"
 reki-test-data = "reki.sources.test:main"
 

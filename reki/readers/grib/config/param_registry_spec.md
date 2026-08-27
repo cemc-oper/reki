@@ -21,7 +21,27 @@
 - **F2** 顶层结构为条目（entry）的列表。
 - **F3** 条目**应当**按 `(discipline, category, number)` 升序排列，以保证 diff 可读。
 - **F4** 文件中**不应**使用 YAML 锚点（`&`/`*`）、合并键（`<<`）与自定义标签，
-  保持数据可被任何 YAML 解析器以 `safe_load` 读取。
+保持数据可被任何 YAML 解析器以 `safe_load` 读取。
+
+## 快照文档版本（v2）
+
+当前发布格式为：
+
+```yaml
+api_version: reki.parameter-registry/v2
+entries:
+  - parameter_id: cedarkit.t
+    key: {discipline: 0, category: 0, number: 0}
+    name: t
+    params:
+      - parameter_id: cedarkit.t2m
+        name: t2m
+```
+
+`api_version`、`entries` 及 entry/variant 的 `parameter_id` 都是必填项。ID
+必须全局唯一，采用 `cedarkit.` 命名空间和小写 ASCII/数字/连字符组成的分段 ID，且不得根据 name、alias
+或导出顺序在运行时重算。旧的顶层 list 仅可由兼容 loader 读取，不能由 v2
+exporter 重新发布。
 
 ## 2. 数据模型
 

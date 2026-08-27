@@ -18,6 +18,7 @@
    grib_parameter
    grib_level
    data_process
+   catalog
 
 .. toctree::
    :maxdepth: 2
