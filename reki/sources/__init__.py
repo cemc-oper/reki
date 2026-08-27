@@ -14,7 +14,7 @@ import os
 from importlib import import_module
 from importlib.metadata import entry_points
 
-from reki.core import Source
+from reki.core import Source, SourceSpec
 
 __all__ = [
     "Source",
@@ -163,7 +163,18 @@ def _build(name: str, args, kwargs):
     return _mutate_and_convert(get_source(name, *args, **kwargs))
 
 
-def from_source(name: str, *args, lazily: bool = False, **kwargs) -> Source:
+def _source_arguments(name, args, kwargs):
+    """Resolve the public string/SourceSpec forms into one construction form."""
+    if not isinstance(name, SourceSpec):
+        return name, args, kwargs, str(name)
+    if args:
+        raise TypeError("SourceSpec cannot be combined with positional arguments")
+    merged = dict(name.kwargs)
+    merged.update(kwargs)
+    return name.name, name.args, merged, repr(name)
+
+
+def from_source(name: str | SourceSpec, *args, lazily: bool = False, **kwargs) -> Source:
     """Create a source by name and mutate it into the most concrete source.
 
     The source class is looked up by :data:`SourceMaker`, instantiated
@@ -202,26 +213,31 @@ def from_source(name: str, *args, lazily: bool = False, **kwargs) -> Source:
     Source or Reader or LazySource
         the unified data object, or a lazy proxy for it.
     """
+    is_spec = isinstance(name, SourceSpec)
+    name, args, kwargs, description = _source_arguments(name, args, kwargs)
     if lazily:
-        return from_source_lazily(name, *args, **kwargs)
+        # Preserve legacy support for in-memory arbitrary objects (arrays,
+        # file handles, ...); SourceSpec deliberately remains serializable.
+        return from_source_lazily(SourceSpec(name, args, kwargs) if is_spec else name, *(() if is_spec else args), **({} if is_spec else kwargs))
 
     src = get_source(name, *args, **kwargs)
     if getattr(src, "remote", False):
         return LazySource(
             lambda: _mutate_and_convert(src),
-            description=repr(src),
+            description=description,
         )
     return _mutate_and_convert(src)
 
 
-def from_source_lazily(name: str, *args, **kwargs) -> LazySource:
+def from_source_lazily(name: str | SourceSpec, *args, **kwargs) -> LazySource:
     """Lazy variant of :func:`from_source`.
 
     Returns a :class:`LazySource` proxy; source construction, the
     mutate loop and the conversion to the data object all happen on
     first attribute access, not before.
     """
+    name, args, kwargs, description = _source_arguments(name, args, kwargs)
     return LazySource(
         lambda: _build(name, args, kwargs),
-        description=f"{name} source (lazily)",
+        description=f"{description} source (lazily)",
     )

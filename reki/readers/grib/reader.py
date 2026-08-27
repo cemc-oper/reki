@@ -19,6 +19,9 @@ import os
 import xarray as xr
 
 from reki.readers import Reader
+from reki.core import FieldQuery, DataNotFoundError, MultipleFieldsMatchedError
+from reki.core.field_query import field_query_from_kwargs
+from reki.core.source_spec import redact
 
 from .common import fix_level_type
 
@@ -80,25 +83,23 @@ class GribReader(Reader):
         if engine not in ("eccodes", "cfgrib"):
             raise ValueError(f"engine {engine} is not supported")
         self.engine = engine
-        self._filters = dict(filters) if filters else {}
+        self._query = field_query_from_kwargs(filters or {})
 
     @property
     def filters(self) -> Dict:
         """The accumulated filter conditions (a copy)."""
-        return dict(self._filters)
+        return self._filters_from_query()
 
     def __repr__(self):
         return (
             f"GribReader({self.path!r}, engine={self.engine!r}, "
-            f"filters={self._filters!r})"
+            f"filters={redact(self.filters)!r})"
         )
 
     def sel(
             self,
-            parameter: Union[str, Dict] = None,
-            level_type: Union[str, Dict, List] = None,
-            level: Union[int, float, List, Dict, str] = None,
-            count: int = None,
+            query: FieldQuery = None,
+            /,
             **kwargs,
     ) -> "GribReader":
         """Return a new query object with more filter conditions (no I/O).
@@ -122,18 +123,14 @@ class GribReader(Reader):
             ``show_progress``, ``lazy`` (eccodes), ``with_index``
             (cfgrib).
         """
-        filters = dict(self._filters)
-        for key, value in (
-                ("parameter", parameter),
-                ("level_type", level_type),
-                ("level", level),
-                ("count", count),
-        ):
-            if value is not None:
-                filters[key] = value
-        filters.update(kwargs)
+        if query is not None and not isinstance(query, FieldQuery):
+            raise TypeError("the positional argument to sel() must be a FieldQuery")
+        if query is not None and kwargs:
+            raise TypeError("FieldQuery and keyword filters cannot be mixed")
+        query = query if query is not None else field_query_from_kwargs(kwargs)
+        query = self._query.merge(query)
         return GribReader(
-            self.source, self.path, engine=self.engine, filters=filters
+            self.source, self.path, engine=self.engine, filters=self._filters_from_query(query)
         )
 
     def first(self) -> Optional[GribField]:
@@ -148,7 +145,7 @@ class GribReader(Reader):
         GribField or None
             the first matching field (file order), or None if not found.
         """
-        filters = dict(self._filters)
+        filters = self._filters_from_query()
         count = filters.pop("count", None)
         if count is not None:
             return self._first_by_count(count)
@@ -166,6 +163,15 @@ class GribReader(Reader):
             self.path, parameter, level_type, level, **filters
         )
         return None if data is None else GribField(data)
+
+    def one(self) -> GribField:
+        """Return the unique match, raising if the query has zero or many."""
+        result = self._unique_field(required=True)
+        return result
+
+    def one_or_none(self) -> Optional[GribField]:
+        """Return the unique match, or ``None`` when there is no match."""
+        return self._unique_field(required=False)
 
     def to_xarray(self, lazy: bool = False, **kwargs):
         """Execute the query and decode all matching fields.
@@ -195,7 +201,7 @@ class GribReader(Reader):
             if the matches span multiple hypercubes (grouped by level
             type, following ``cfgrib.open_datasets``).
         """
-        filters = {**self._filters, **kwargs}
+        filters = {**self._filters_from_query(), **kwargs}
         count = filters.pop("count", None)
         if count is not None:
             field = self._first_by_count(count)
@@ -219,6 +225,86 @@ class GribReader(Reader):
 
     # ------------------------------------------------------------------
     # internals
+
+    def _filters_from_query(self, query=None) -> Dict:
+        def thaw(value):
+            if isinstance(value, dict) or hasattr(value, "items"):
+                return {k: thaw(v) for k, v in value.items()}
+            if isinstance(value, tuple):
+                return [thaw(v) for v in value]
+            return value
+        query = self._query if query is None else query
+        filters = thaw(query.extra)
+        for key in ("parameter", "level_type", "level", "step_type", "time_range", "member"):
+            value = getattr(query, key)
+            if value is not None:
+                # Existing kernels expect lists, while the public query is immutable.
+                filters[key] = thaw(value)
+        return filters
+
+    def _source_summary(self):
+        return f"GRIB source {os.path.basename(str(self.path))!r}"
+
+    def _unique_field(self, required: bool):
+        """Check cardinality from ecCodes headers and decode at most one field."""
+        if self.engine != "eccodes":
+            # cfgrib has no message iterator API.  Decode the first field for
+            # compatibility and use its datasets to detect obvious ambiguity.
+            value = self.to_xarray()
+            if value is None:
+                if required:
+                    raise DataNotFoundError(self._query, self._source_summary(), 0)
+                return None
+            if isinstance(value, (xr.Dataset, list)):
+                raise MultipleFieldsMatchedError(self._query, self._source_summary(), 2)
+            return GribField(value)
+
+        import eccodes
+        from .eccodes._check import _check_message
+        from .eccodes._level import _fix_level
+        from .eccodes._xarray import create_data_array_from_message
+        from reki.readers.grib.common._parameter import convert_parameter
+
+        filters = self._filters_from_query()
+        count = filters.pop("count", None)
+        if count is not None:
+            field = self._first_by_count(count)
+            if field is None and required:
+                raise DataNotFoundError(self._query, self._source_summary(), 0)
+            return field
+        parameter = filters.pop("parameter", None)
+        level_type = filters.pop("level_type", None)
+        level = filters.pop("level", None)
+        level_dim = filters.pop("level_dim", None)
+        field_name = filters.pop("field_name", None)
+        for option in ("level_dim", "field_name", "show_progress", "lazy", "with_index"):
+            filters.pop(option, None)
+        fixed_level_type, level_dim = _fix_level(level_type, level_dim)
+        if field_name is None and isinstance(parameter, str):
+            field_name = parameter
+        parameter = convert_parameter(parameter)
+        first = None
+        with open(self.path, "rb") as handle:
+            while True:
+                message = eccodes.codes_grib_new_from_file(handle, headers_only=True)
+                if message is None:
+                    break
+                if not _check_message(message, parameter, fixed_level_type, level, **filters):
+                    eccodes.codes_release(message)
+                    continue
+                if first is not None:
+                    eccodes.codes_release(first)
+                    eccodes.codes_release(message)
+                    raise MultipleFieldsMatchedError(self._query, self._source_summary(), 2)
+                first = message
+        if first is None:
+            if required:
+                raise DataNotFoundError(self._query, self._source_summary(), 0)
+            return None
+        try:
+            return GribField(create_data_array_from_message(first, level_dim_name=level_dim, field_name=field_name))
+        finally:
+            eccodes.codes_release(first)
 
     def _first_by_count(self, count: int) -> Optional[GribField]:
         if self.engine != "eccodes":
