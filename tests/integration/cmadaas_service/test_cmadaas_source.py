@@ -17,6 +17,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 import xarray as xr
+from nuwe_cmadaas.obs import retrieve_obs_station
 
 import reki
 from reki.sources.cmadaas import CMADAASError
@@ -47,26 +48,43 @@ def start_time() -> pd.Timestamp:
 
 
 @pytest.fixture(scope="module")
-def music_available(start_time):
-    """Skip the whole module when the MUSIC service is not usable."""
+def music_available():
+    """Probe MUSIC with the upstream meaningful station-time API.
+
+    A forecast grid request can legitimately return no rows for a particular
+    model cycle. It must not be used as the health check for MUSIC itself.
+    This mirrors nuwe-cmadaas-python's ``test_getSurfEleByTime`` example.
+    """
     if not Path("~/.config/cedarkit.yaml").expanduser().exists():
         pytest.skip("CMADaaS config ~/.config/cedarkit.yaml not found")
     try:
-        field = reki.from_source(
-            "cmadaas",
-            interface_id=INTERFACE_ID,
-            params=_params(start_time),
-        ).to_xarray()
-    except CMADAASError as e:
-        pytest.skip(f"MUSIC service or data not available: {e}")
+        today = pd.Timestamp.now().normalize()
+        table = retrieve_obs_station(
+            "SURF_CHN_MUL_HOR",
+            time=[today - pd.offsets.Day(), today],
+        )
     except Exception as e:  # connection errors, auth errors, ...
         pytest.skip(f"MUSIC service not reachable: {e}")
-    return field
+    if not isinstance(table, pd.DataFrame) or table.empty:
+        pytest.skip("MUSIC latest-observation probe returned no rows")
+
+
+@pytest.fixture(scope="module")
+def grid_field(music_available, start_time):
+    """Retrieve the operational grid independently from the service probe."""
+    try:
+        return reki.from_source(
+            "cmadaas", interface_id=INTERFACE_ID, params=_params(start_time),
+        ).to_xarray()
+    except CMADAASError as e:
+        pytest.skip(f"MUSIC forecast grid not available: {e}")
+    except Exception as e:
+        pytest.skip(f"MUSIC forecast grid request failed: {e}")
 
 
 class TestLowLevelMode:
-    def test_grid_array_2d(self, music_available):
-        field = music_available
+    def test_grid_array_2d(self, grid_field):
+        field = grid_field
         assert isinstance(field, xr.DataArray)
         assert field.sizes["latitude"] > 1
         assert field.sizes["longitude"] > 1
