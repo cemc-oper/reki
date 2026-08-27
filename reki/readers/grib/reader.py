@@ -159,9 +159,16 @@ class GribReader(Reader):
         else:
             from .cfgrib import load_field_from_file
 
-        data = load_field_from_file(
-            self.path, parameter, level_type, level, **filters
-        )
+        try:
+            data = load_field_from_file(
+                self.path, parameter, level_type, level, **filters
+            )
+        except IndexError:
+            # cfgrib's first-variable helper raises on an empty filtered
+            # Dataset.  The public first() contract has always been None.
+            if self.engine != "cfgrib":
+                raise
+            data = None
         return None if data is None else GribField(data)
 
     def one(self) -> GribField:
@@ -494,9 +501,16 @@ class GribReader(Reader):
 
         # cfgrib.open_datasets groups incompatible hypercubes into
         # separate datasets (xarray no longer provides open_datasets).
-        datasets = cfgrib.open_datasets(
-            self.path, backend_kwargs=backend_kwargs
-        )
+        try:
+            datasets = cfgrib.open_datasets(
+                self.path, backend_kwargs=backend_kwargs
+            )
+        except KeyError as error:
+            # cfgrib raises KeyError('paramId') for an empty filtered index.
+            # Normalize that engine detail to the public no-match contract.
+            if error.args != ("paramId",):
+                raise
+            return None
         # an empty filter result yields a single empty dataset
         datasets = [ds for ds in datasets if ds.data_vars or ds.dims]
         if not datasets:
