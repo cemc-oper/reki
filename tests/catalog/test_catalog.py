@@ -31,3 +31,10 @@ def test_unknown_fields_and_alias_conflicts_fail():
         load_catalog(builtin=False, plugins=False, user=False, explicit={"api_version": "reki.catalog/v1", "datasets": [], "extra": True})
     with pytest.raises(CatalogError, match="duplicate dataset alias"):
         load_catalog(builtin=False, plugins=False, user=False, explicit=document(dataset("one", ["same"]), dataset("two", ["same"])))
+
+
+def test_builtin_catalog_resolves_required_systems_without_io():
+    catalog = load_catalog(plugins=False, user=False)
+    assert catalog.resolve("CMA-MESO").record.dataset_id == "cma_meso_3km"
+    assert catalog.resolve("CMA-MESO-1KM").source.args == ("cma_meso_1km/grib2/orig",)
+    assert catalog.resolve("CMA-GFS").source.args == ("cma_gfs_gmf/grib2/orig",)

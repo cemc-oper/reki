@@ -39,3 +39,13 @@ reki catalog resolve MY-DATASET
 
 CLI output redacts sensitive source kwargs. It reports the winning layer and
 any record it replaced, but never constructs the source.
+
+The builtin catalog includes the operational local bindings for CMA-GFS,
+CMA-MESO-3KM, CMA-MESO-1KM, CMA-TYM, CMA-GEPS and CMA-REPS. Historical
+``CMA-MESO`` resolves to ``cma_meso_3km``; use ``CMA-MESO-1KM`` to select the
+one-kilometre dataset explicitly.
+
+For a task-provided directory and filename, use the ``file-pattern`` source.
+It accepts only ``{start_time_label}``, ``{forecast_hour}``, and
+``{forecast_hour_label}`` substitutions; expressions and filesystem checks
+are deliberately not performed during rendering.

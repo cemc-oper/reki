@@ -1,2 +1,52 @@
 api_version: reki.catalog/v1
-datasets: []
+datasets:
+  - id: cma_gfs_gmf
+    aliases: [CMA-GFS, cma_gfs]
+    source:
+      name: local
+      args: [cma_gfs_gmf/grib2/orig]
+    metadata:
+      display_name: CMA-GFS
+      legacy_data_dir: /g3/COMMONDATA/OPER/CEMC/GFS_GMF/Prod-grib/{start_time_label}/ORIG
+      legacy_file_name_template: gmf.gra.{start_time_label}{forecast_hour_label}.grb2
+  - id: cma_meso_3km
+    aliases: [CMA-MESO, CMA-MESO-3KM, cma_meso]
+    source:
+      name: local
+      args: [cma_meso_3km/grib2/orig]
+    metadata:
+      display_name: CMA-MESO-3KM
+      legacy_data_dir: /g3/COMMONDATA/OPER/CEMC/MESO_3KM/Prod-grib/{start_time_label}/ORIG
+      legacy_file_name_template: rmf.hgra.{start_time_label}{forecast_hour_label}.grb2
+  - id: cma_meso_1km
+    aliases: [CMA-MESO-1KM]
+    source:
+      name: local
+      args: [cma_meso_1km/grib2/orig]
+    metadata:
+      display_name: CMA-MESO-1KM
+      legacy_data_dir: /g3/COMMONDATA/OPER/CEMC/MESO_1KM/Prod-grib/{start_time_label}/ORIG
+      legacy_file_name_template: rmf.hgra.{start_time_label}{forecast_hour_label}.grb2
+  - id: cma_tym
+    aliases: [CMA-TYM]
+    source:
+      name: local
+      args: [cma_tym/grib2/orig]
+    metadata:
+      display_name: CMA-TYM
+      legacy_data_dir: /g3/COMMONDATA/OPER/CEMC/TYM/Prod-grib/{start_time_label}/ORIG
+      legacy_file_name_template: rmf.tcgra.{start_time_label}{forecast_hour_label}.grb2
+  - id: cma_geps
+    aliases: [CMA-GEPS]
+    source:
+      name: local
+      args: [cma_geps/grib2/orig]
+    metadata:
+      display_name: CMA-GEPS
+  - id: cma_reps
+    aliases: [CMA-REPS]
+    source:
+      name: local
+      args: [cma_reps/grib2/orig]
+    metadata:
+      display_name: CMA-REPS
