@@ -50,3 +50,17 @@ datasets:
       args: [cma_reps/grib2/orig]
     metadata:
       display_name: CMA-REPS
+  # Service bindings deliberately carry no credentials.  ``cmadaas`` is lazy,
+  # so catalog resolution and recipe loading stay offline; credentials are
+  # supplied by the runtime CMADaaS client configuration.
+  - id: cma_gfs_gmf_cmadaas
+    aliases: [CMA-GFS-CMADaaS]
+    source:
+      name: cmadaas
+      kwargs:
+        kind: model_grid
+        data_code: NAFP_FOR_FTM_HIGH_EC_GLB
+    metadata:
+      display_name: CMA-GFS CMADaaS
+      provider: cmadaas-remote
+      limitations: "Product availability and grid version are service dependent."

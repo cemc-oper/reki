@@ -38,3 +38,7 @@ def test_builtin_catalog_resolves_required_systems_without_io():
     assert catalog.resolve("CMA-MESO").record.dataset_id == "cma_meso_3km"
     assert catalog.resolve("CMA-MESO-1KM").source.args == ("cma_meso_1km/grib2/orig",)
     assert catalog.resolve("CMA-GFS").source.args == ("cma_gfs_gmf/grib2/orig",)
+    remote = catalog.resolve("CMA-GFS-CMADaaS")
+    assert remote.record.dataset_id == "cma_gfs_gmf_cmadaas"
+    assert remote.source.name == "cmadaas"
+    assert remote.source.kwargs["kind"] == "model_grid"
