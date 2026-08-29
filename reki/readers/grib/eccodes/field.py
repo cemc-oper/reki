@@ -14,6 +14,7 @@ from ._xarray import create_data_array_from_message, get_level_coordinate_name
 from reki._util import _load_first_variable
 from reki.readers.grib.common import MISSING_VALUE
 from reki.readers.grib.common._parameter import convert_parameter
+from ._scan import iter_headers
 
 
 def load_field_from_file(
@@ -190,28 +191,19 @@ def load_field_from_file(
         with open(file_path, "rb") as f:
             total_count = eccodes.codes_count_in_file(f)
 
-    with open(file_path, "rb") as f:
-        if show_progress:
-            pbar = tqdm(
-                total=total_count,
-                desc="Filtering",
-            )
-        while True:
-            offset = f.tell()
-            message_id = eccodes.codes_grib_new_from_file(f, headers_only=lazy)
-            if message_id is None:
-                break
+    if show_progress:
+        pbar = tqdm(total=total_count, desc="Filtering")
+    try:
+        for header in iter_headers(file_path, headers_only=lazy):
             if show_progress:
                 pbar.update(1)
-            if not _check_message(message_id, parameter, fixed_level_type, level, **kwargs):
-                eccodes.codes_release(message_id)
+            if not _check_message(header.handle, parameter, fixed_level_type, level, **kwargs):
                 continue
-            messages.append(message_id)
-            offsets.append(offset)
-            if isinstance(level, typing.List) or level == "all":
-                continue
-            else:
+            messages.append(header.detach())
+            offsets.append(header.offset)
+            if not (isinstance(level, typing.List) or level == "all"):
                 break
+    finally:
         if show_progress:
             pbar.close()
 

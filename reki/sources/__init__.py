@@ -15,6 +15,7 @@ from importlib import import_module
 from importlib.metadata import entry_points
 
 from reki.core import Source, SourceSpec
+from reki.diagnostics import record_io_event
 
 __all__ = [
     "Source",
@@ -160,6 +161,7 @@ def _mutate_and_convert(src: Source):
 
 def _build(name: str, args, kwargs):
     """Construct a source and run the full pipeline."""
+    record_io_event("source_resolve_count")
     return _mutate_and_convert(get_source(name, *args, **kwargs))
 
 
@@ -220,6 +222,7 @@ def from_source(name: str | SourceSpec, *args, lazily: bool = False, **kwargs) -
         # file handles, ...); SourceSpec deliberately remains serializable.
         return from_source_lazily(SourceSpec(name, args, kwargs) if is_spec else name, *(() if is_spec else args), **({} if is_spec else kwargs))
 
+    record_io_event("source_resolve_count")
     src = get_source(name, *args, **kwargs)
     if getattr(src, "remote", False):
         return LazySource(

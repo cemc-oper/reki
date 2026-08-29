@@ -276,9 +276,9 @@ class GribReader(Reader):
                 raise MultipleFieldsMatchedError(self._query, self._source_summary(), 2)
             return GribField(value)
 
-        import eccodes
         from .eccodes._check import _check_message
         from .eccodes._level import _fix_level
+        from .eccodes._scan import iter_headers
         from reki.readers.grib.common._parameter import convert_parameter
 
         filters = self._filters_from_query()
@@ -300,19 +300,12 @@ class GribReader(Reader):
             field_name = parameter
         parameter = convert_parameter(parameter)
         first_found = False
-        with open(self.path, "rb") as handle:
-            while True:
-                message = eccodes.codes_grib_new_from_file(handle, headers_only=True)
-                if message is None:
-                    break
-                if not _check_message(message, parameter, fixed_level_type, level, **filters):
-                    eccodes.codes_release(message)
+        for header in iter_headers(self.path, headers_only=True):
+                if not _check_message(header.handle, parameter, fixed_level_type, level, **filters):
                     continue
                 if first_found:
-                    eccodes.codes_release(message)
                     raise MultipleFieldsMatchedError(self._query, self._source_summary(), 2)
                 first_found = True
-                eccodes.codes_release(message)
         if not first_found:
             if required:
                 raise DataNotFoundError(self._query, self._source_summary(), 0)
@@ -421,6 +414,7 @@ class GribReader(Reader):
         from .eccodes._lazy import lazy_values
         from .eccodes._level import _fix_level
         from .eccodes._xarray import create_data_array_from_message
+        from .eccodes._scan import iter_headers
         from reki.readers.grib.common import MISSING_VALUE
         from reki.readers.grib.common._parameter import convert_parameter
 
@@ -429,20 +423,14 @@ class GribReader(Reader):
 
         messages = []
         offsets = []
-        with open(self.path, "rb") as f:
-            while True:
-                offset = f.tell()
-                message = eccodes.codes_grib_new_from_file(f, headers_only=True)
-                if message is None:
-                    break
-                if not _check_message(
-                        message, converted_parameter, fixed_level_type, level,
-                        **filters,
-                ):
-                    eccodes.codes_release(message)
-                    continue
-                messages.append(message)
-                offsets.append(offset)
+        for header in iter_headers(self.path, headers_only=True):
+            if not _check_message(
+                    header.handle, converted_parameter, fixed_level_type, level,
+                    **filters,
+            ):
+                continue
+            messages.append(header.detach())
+            offsets.append(header.offset)
 
         if not messages:
             return None

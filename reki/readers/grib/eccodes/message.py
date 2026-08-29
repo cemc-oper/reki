@@ -9,6 +9,8 @@ from ._level import _fix_level
 from ._check import _check_message
 
 from reki.readers.grib.common._parameter import convert_parameter
+from ._scan import iter_headers
+from ._decode import load_message_at_offset
 
 
 def load_message_from_file(
@@ -90,15 +92,10 @@ def load_message_from_file(
     if look_parameter:
         parameter = convert_parameter(parameter)
 
-    with open(file_path, "rb") as f:
-        while True:
-            message_id = eccodes.codes_grib_new_from_file(f)
-            if message_id is None:
-                return None
-            if not _check_message(message_id, parameter, fixed_level_type, level, **kwargs):
-                eccodes.codes_release(message_id)
-                continue
-            return message_id
+    for header in iter_headers(file_path, headers_only=False):
+        if not _check_message(header.handle, parameter, fixed_level_type, level, **kwargs):
+            continue
+        return header.detach()
 
             # # clone message
             # new_message_id = eccodes.codes_clone(message_id)
@@ -155,36 +152,16 @@ def load_messages_from_file(
     #     print(total_count)
     # print("count..done")
 
-    with open(file_path, "rb") as f:
-        # pbar = tqdm(total=total_count)
-        while True:
-            message_id = eccodes.codes_grib_new_from_file(f)
-            if message_id is None:
-                break
-            # pbar.update(1)
-            if not _check_message(message_id, parameter, fixed_level_type, level, **kwargs):
-                eccodes.codes_release(message_id)
-                continue
-
-            # clone message
-            new_message_id = eccodes.codes_clone(message_id)
-            eccodes.codes_release(message_id)
-            messages.append(new_message_id)
-        # pbar.close()
-        if len(messages) == 0:
-            return None
-        return messages
+    for header in iter_headers(file_path, headers_only=False):
+        if _check_message(header.handle, parameter, fixed_level_type, level, **kwargs):
+            messages.append(header.detach())
+    return messages or None
 
 
 def _load_message_from_file_by_count(file_path, count):
-    current_index = 0
-    with open(file_path, "rb") as f:
-        while True:
-            message_id = eccodes.codes_grib_new_from_file(f)
-            if message_id is None:
-                return None
-            current_index += 1
-            if current_index == count:
-                return message_id
-            else:
-                eccodes.codes_release(message_id)
+    if count < 1:
+        return None
+    for header in iter_headers(file_path, headers_only=False):
+        if header.ordinal + 1 == count:
+            return header.detach()
+    return None

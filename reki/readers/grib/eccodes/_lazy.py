@@ -19,7 +19,6 @@ import threading
 from pathlib import Path
 from typing import List, Optional, Tuple, Union
 
-import eccodes
 import numpy as np
 import xarray as xr
 from xarray.backends import BackendArray
@@ -28,6 +27,7 @@ from xarray.core.indexing import (
     LazilyIndexedArray,
     explicit_indexing_adapter,
 )
+from ._decode import decode_message_values as _decode_at_offset
 
 #: ecCodes is not thread-safe; serialize all decode calls.
 _DECODE_LOCK = threading.Lock()
@@ -48,23 +48,7 @@ def decode_message_values(
     are filled with ``fill_value`` (no filling when it is None).
     """
     with _DECODE_LOCK:
-        with open(path, "rb") as f:
-            f.seek(offset)
-            message = eccodes.codes_grib_new_from_file(f)
-            if message is None:
-                raise ValueError(
-                    f"no GRIB message found in {path} at offset {offset}"
-                )
-            try:
-                eccodes.codes_set(message, "missingValue", missing_value)
-                values = eccodes.codes_get_double_array(message, "values")
-            finally:
-                eccodes.codes_release(message)
-
-    values = values.reshape(shape)
-    if fill_value is not None:
-        np.place(values, values == missing_value, fill_value)
-    return values
+        return _decode_at_offset(path, offset, shape, missing_value, fill_value)
 
 
 class GribLazyArray(BackendArray):

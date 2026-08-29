@@ -7,6 +7,8 @@ import pandas as pd
 
 import eccodes
 
+from reki.diagnostics import record_io_event
+
 from reki.readers.grib.common import MISSING_VALUE
 from reki.readers.grib.config import GribParameterKey, find_wgrib2_name, find_cemc_name
 
@@ -55,6 +57,7 @@ def create_data_array_from_message(
 
         if values is None:
             # logger.info("decoding...")
+            record_io_event("value_decode_count")
             values = eccodes.codes_get_double_array(message, "values")
             # logger.info("decoding...done")
 
