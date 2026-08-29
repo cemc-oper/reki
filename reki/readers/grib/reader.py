@@ -263,6 +263,14 @@ class GribReader(Reader):
         GribField or None
             the first matching field (file order), or None if not found.
         """
+        # Keep the legacy early-stop scanner for the explicit no-index
+        # policy.  Every other ecCodes policy can serve cardinality from the
+        # metadata index and decode only the selected offset.  In particular,
+        # a warm index must not turn ten ``first()`` calls into ten full
+        # header scans.
+        if self.engine == "eccodes" and self.index_policy != "off" and not self._query.extra:
+            return self.all().first()
+
         filters = self._filters_from_query()
         count = filters.pop("count", None)
         if count is not None:
@@ -398,7 +406,8 @@ class GribReader(Reader):
                 if connection is not None:
                     rows = connection.execute(
                         "SELECT ordinal, offset, short_name, level_type, level_real, "
-                        "step_type, member, ni, nj, dtype, grid_type, extra_metadata_json "
+                        "step_type, member, ni, nj, dtype, grid_type, extra_metadata_json, "
+                        "discipline, parameter_category, parameter_number "
                         "FROM fields ORDER BY ordinal"
                     ).fetchall()
                     connection.close()
@@ -466,13 +475,21 @@ class GribReader(Reader):
         return self._field_reference(self._metadata_from_index_row(row))
 
     def _metadata_from_index_row(self, row):
-        ordinal, offset, parameter, level_type, level, step_type, member, ni, nj, dtype, grid_type, extra = row
+        (ordinal, offset, parameter, level_type, level, step_type, member, ni, nj,
+         dtype, grid_type, extra, discipline, parameter_category, parameter_number) = row
         import json
+        extra = json.loads(extra)
+        extra.update({
+            key: value for key, value in {
+                "discipline": discipline, "parameterCategory": parameter_category,
+                "parameterNumber": parameter_number, "parameter_match": "short_name",
+            }.items() if value is not None
+        })
         return FieldMetadata(ordinal, offset, parameter, _public_level_type(level_type), level,
                              step_type=step_type, member=member,
                              shape=(nj, ni) if ni is not None and nj is not None else None,
                              dtype=dtype, grid_type=grid_type,
-                             source=os.path.basename(str(self.path)), extra=json.loads(extra))
+                             source=os.path.basename(str(self.path)), extra=extra)
 
     def _field_reference(self, metadata):
         def loader(**kwargs):
@@ -526,6 +543,10 @@ class GribReader(Reader):
             if isinstance(value, (xr.Dataset, list)):
                 raise MultipleFieldsMatchedError(self._query, self._source_summary(), 2)
             return GribField(value)
+
+        if self.index_policy != "off" and not self._query.extra:
+            fields = self.all()
+            return fields.one() if required else fields.one_or_none()
 
         from .eccodes._check import _check_message
         from .eccodes._level import _fix_level

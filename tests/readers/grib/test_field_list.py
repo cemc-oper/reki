@@ -40,6 +40,24 @@ def test_all_off_keeps_metadata_scan_without_index(tmp_path):
     assert len(fields) == 2
 
 
+def test_hot_index_first_and_one_avoid_header_scans(tmp_path):
+    path = tmp_path / "fields.grib"
+    root = tmp_path / "index"
+    _write(path)
+    # Build once, then use a new reader to model independent queries.
+    GribReader(None, path, index_dir=root).all()
+    with collect_io_metrics() as metrics:
+        reader = GribReader(None, path, index_dir=root)
+        assert reader.sel(level=850).first().metadata.level == 850
+        # ``t`` resolves to the native discipline/category/number triplet;
+        # that projection must be present in indexed metadata as well.
+        assert reader.sel(parameter="t", level_type="pl", level=500).one().metadata.level == 500
+        snapshot = metrics.snapshot()
+    assert snapshot["index_hit_count"] == 2
+    assert snapshot["grib_header_scan_count"] == 0
+    assert snapshot["value_decode_count"] == 0
+
+
 def test_exploration_is_metadata_only_and_json_safe(tmp_path):
     path = tmp_path / "fields.grib"
     _write(path)
