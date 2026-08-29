@@ -13,6 +13,8 @@ and the filter conditions. The file is scanned when ``first()`` or
   the conventions of ``cfgrib.open_datasets``).
 """
 
+from collections.abc import Mapping
+from dataclasses import dataclass
 from typing import Dict, List, Optional, Union
 
 import os
@@ -20,6 +22,7 @@ import pandas as pd
 import xarray as xr
 
 from reki.readers import Reader
+from reki.readers.capabilities import ReaderCapabilities
 from reki.core import (
     FieldQuery, FieldMetadata, FieldList, DataNotFoundError,
     MultipleFieldsMatchedError,
@@ -35,6 +38,14 @@ GRIB_MAGIC = b"GRIB"
 _NON_LEVEL_COORDS = frozenset(
     {"time", "step", "valid_time", "latitude", "longitude", "number"}
 )
+
+
+def _coerce_query(query):
+    if isinstance(query, FieldQuery):
+        return query
+    if isinstance(query, Mapping):
+        return field_query_from_kwargs(query)
+    raise TypeError("each fetch_many query must be a FieldQuery or mapping")
 
 
 class GribField:
@@ -63,6 +74,15 @@ class GribField:
     def __repr__(self):
         name = self._data_array.name if self._data_array is not None else self.metadata.parameter
         return f"GribField({name!r})"
+
+
+@dataclass(frozen=True)
+class BatchQueryFailure:
+    """A per-position query error returned by ``fetch_many(errors='collect')``."""
+    position: int
+    query: FieldQuery
+    error: Exception
+    match_count: int | None
 
 
 class GribReader(Reader):
@@ -106,6 +126,13 @@ class GribReader(Reader):
     def filters(self) -> Dict:
         """The accumulated filter conditions (a copy)."""
         return self._filters_from_query()
+
+    @property
+    def capabilities(self):
+        return ReaderCapabilities(metadata=self.engine == "eccodes",
+                                  field_list=self.engine == "eccodes",
+                                  index=self.engine == "eccodes",
+                                  fetch_many=self.engine == "eccodes")
 
     def __repr__(self):
         return (
@@ -158,6 +185,71 @@ class GribReader(Reader):
             raise NotImplementedError("FieldList is currently available with engine='eccodes' only")
         fields = self._indexed_fields()
         return FieldList(fields, query=self._query, source_summary=self._source_summary())
+
+    def where(self, query=None, /, **kwargs):
+        """Return a metadata-only FieldList filtered without expression evaluation."""
+        return self.all().where(query, **kwargs)
+
+    def metadata(self, keys=None):
+        return self.all().metadata(keys)
+
+    def unique(self, key):
+        return self.all().unique(key)
+
+    def head(self, n=5):
+        return self.all().head(n)
+
+    def summary(self):
+        return self.all().summary()
+
+    def describe(self):
+        return self.all().describe()
+
+    def ls(self, keys=None, query=None, /, **kwargs):
+        return self.where(query, **kwargs).ls(keys)
+
+    def fetch_many(self, queries, *, cardinality="all", errors="raise"):
+        """Experimental batch metadata query.
+
+        All requests share one indexed lookup (or one ecCodes header pass),
+        while preserving input order and duplicate requests.
+        """
+        if self.engine != "eccodes":
+            self._unsupported("fetch_many")
+        queries = list(queries)
+        if errors not in {"raise", "collect"}:
+            raise ValueError("errors must be 'raise' or 'collect'")
+        if isinstance(cardinality, str):
+            cardinalities = [cardinality] * len(queries)
+        else:
+            cardinalities = list(cardinality)
+            if len(cardinalities) != len(queries):
+                raise ValueError("cardinality must have one value per query")
+        if set(cardinalities) - {"all", "first", "one", "one_or_none"}:
+            raise ValueError("cardinality must be all, first, one, or one_or_none")
+        normalized = [_coerce_query(query) for query in queries]
+        cache = {}
+        results = []
+        # v1 indexes only a fixed metadata subset.  Any arbitrary ecCodes
+        # key is evaluated against each header exactly once, rather than
+        # incorrectly comparing it with the public metadata projection.
+        scanned = self._batch_scan(normalized) if (self._query.extra or any(query.extra for query in normalized)) else None
+        fields = None if scanned is not None else self.all()
+        for position, (query, mode) in enumerate(zip(normalized, cardinalities)):
+            # FieldQuery intentionally permits mapping-valued conditions,
+            # which are not hashable.  Its bounded canonical repr is stable
+            # because construction freezes mappings and sequences.
+            key = (repr(query), mode)
+            try:
+                if key not in cache:
+                    selected = scanned[repr(query)] if scanned is not None else fields.where(query)
+                    cache[key] = getattr(selected, mode)()
+                results.append(cache[key])
+            except (DataNotFoundError, MultipleFieldsMatchedError) as error:
+                if errors == "raise":
+                    raise
+                results.append(BatchQueryFailure(position, query, error, error.match_count))
+        return results
 
     def first(self) -> Optional[GribField]:
         """Scan sequentially and return the first matching field.
@@ -332,6 +424,30 @@ class GribReader(Reader):
                 if count is not None:
                     break
         return fields
+
+    def _batch_scan(self, queries):
+        """Evaluate arbitrary-key batch queries in one header iteration."""
+        from .eccodes._scan import iter_headers
+
+        unique = {repr(query): query for query in queries}
+        matches = {key: [] for key in unique}
+        readers = {
+            key: self.sel(query) if query != self._query else self
+            for key, query in unique.items()
+        }
+        for header in iter_headers(self.path, headers_only=True):
+            metadata = None
+            for key, candidate in readers.items():
+                if candidate._header_matches(header.handle):
+                    if metadata is None:
+                        metadata = _metadata_from_message(
+                            header.handle, header.ordinal, header.offset, self.path,
+                        )
+                    matches[key].append(candidate._field_reference(metadata))
+        return {
+            key: FieldList(values, query=unique[key], source_summary=self._source_summary())
+            for key, values in matches.items()
+        }
 
     def _header_matches(self, message):
         from .eccodes._check import _check_message

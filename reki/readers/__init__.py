@@ -22,7 +22,9 @@ file, or ``None`` otherwise. Dispatch follows ``earthkit.data.readers``:
 import os
 from importlib import import_module
 
-__all__ = ["Reader", "reader", "UnknownReader"]
+from .capabilities import ReaderCapabilities
+
+__all__ = ["Reader", "ReaderCapabilities", "reader", "UnknownReader"]
 
 #: number of bytes read from the head of a file for magic detection.
 MAGIC_BYTES = 64
@@ -41,6 +43,36 @@ class Reader:
     def __init__(self, source, path, **kwargs):
         self.source = source
         self.path = str(path)
+
+    @property
+    def capabilities(self):
+        from .capabilities import ReaderCapabilities
+        return ReaderCapabilities()
+
+    def _unsupported(self, operation):
+        from reki.core.errors import UnsupportedOperationError
+        raise UnsupportedOperationError(self, operation)
+
+    def all(self):
+        self._unsupported("all")
+
+    def summary(self):
+        self._unsupported("summary")
+
+    def metadata(self, **kwargs):
+        self._unsupported("metadata")
+
+    def unique(self, key):
+        self._unsupported("unique")
+
+    def head(self, n=5):
+        self._unsupported("head")
+
+    def describe(self):
+        self._unsupported("describe")
+
+    def ls(self, **kwargs):
+        self._unsupported("ls")
 
     def mutate(self):
         """Give the reader a chance to replace itself after creation."""

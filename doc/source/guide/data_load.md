@@ -144,6 +144,31 @@ ds = from_source("file", "/path/to/data.grib2")
 field = ds.sel(parameter="t", level_type="isobaricInhPa", level=850).to_xarray()
 ```
 
+### 先探索元数据，再解码数据
+
+使用 ecCodes GRIB reader 时，`all()` 返回惰性字段集合；`summary()`、
+`metadata()`、`unique()`、`head()` 和 `ls()` 只读取消息头，不会加载网格
+values。可先用这些接口确认可用字段，再对选中的字段调用 `to_xarray()`。
+
+```python
+fields = ds.all()
+fields.summary()
+fields.ls(["parameter", "level_type", "level"])
+fields.where(parameter="t").unique("level")
+
+# experimental：多个条件共享一次元数据读取，结果保持输入顺序
+selected = ds.fetch_many(
+    [{"parameter": "t", "level_type": "pl", "level": 850},
+     {"parameter": "t", "level_type": "pl", "level": 500}],
+    cardinality="one",
+)
+data = selected[0].to_xarray()
+```
+
+`where()` 仅接受 `FieldQuery` 或显式的键值条件，不能执行 Python/SQL
+表达式。`reader.capabilities` 可用于在调用前检查格式是否支持元数据探索；
+目前完整探索和 `fetch_many()` 仅适用于 `engine="eccodes"` 的 GRIB。
+
 :::{note}
 **ecmwf_ifs 数据集包含修改后的 ECMWF IFS 开放数据**，© ECMWF，
 按 CC-BY-4.0 许可使用。完整署名见 {doc}`/getting-started/test-data`。

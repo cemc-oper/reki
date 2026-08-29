@@ -8,3 +8,12 @@ class DataNotFoundError(QueryError):
     pass
 class MultipleFieldsMatchedError(QueryError):
     pass
+
+
+class UnsupportedOperationError(NotImplementedError):
+    """A reader does not implement a requested optional capability."""
+
+    def __init__(self, reader, operation):
+        super().__init__(f"{type(reader).__name__} does not support {operation}()")
+        self.reader = type(reader).__name__
+        self.operation = operation
