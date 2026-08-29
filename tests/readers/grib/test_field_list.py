@@ -45,9 +45,9 @@ def test_hot_index_first_and_one_avoid_header_scans(tmp_path):
     root = tmp_path / "index"
     _write(path)
     # Build once, then use a new reader to model independent queries.
-    GribReader(None, path, index_dir=root).all()
+    GribReader(None, path, index_policy="auto", index_dir=root).all()
     with collect_io_metrics() as metrics:
-        reader = GribReader(None, path, index_dir=root)
+        reader = GribReader(None, path, index_policy="auto", index_dir=root)
         assert reader.sel(level=850).first().metadata.level == 850
         # ``t`` resolves to the native discipline/category/number triplet;
         # that projection must be present in indexed metadata as well.

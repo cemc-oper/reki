@@ -23,7 +23,7 @@ def _write(path, levels=(850, 500)):
 def _concurrent_open(source, root, queue):
     """Spawn-safe worker used to verify the on-disk advisory lock."""
     with collect_io_metrics() as metrics:
-        fields = GribReader(None, source, index_dir=root).all()
+        fields = GribReader(None, source, index_policy="auto", index_dir=root).all()
         queue.put((len(fields), metrics.snapshot().to_dict()))
 
 

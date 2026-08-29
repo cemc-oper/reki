@@ -93,6 +93,8 @@ def _index_options(command):
                            help="Rebuild the metadata index before reading.")(command)
     command = click.option("--read-only-index", is_flag=True,
                            help="Use an existing valid index without building one.")(command)
+    command = click.option("--use-index", is_flag=True,
+                           help="Read or build a metadata index.")(command)
     return click.option("--no-index", is_flag=True,
                         help="Do not read or write a metadata index.")(command)
 
@@ -121,17 +123,20 @@ def _output_options(command):
                         help="Emit stable JSON instead of a table.")(command)
 
 
-def _index_policy(no_index, read_only_index, refresh_index):
-    choices = sum((bool(option) for option in (no_index, read_only_index, refresh_index)))
+def _index_policy(use_index, no_index, read_only_index, refresh_index):
+    choices = sum((bool(option) for option in
+                   (use_index, no_index, read_only_index, refresh_index)))
     if choices > 1:
-        raise click.UsageError("--no-index, --read-only-index, and --refresh-index are mutually exclusive")
+        raise click.UsageError("--use-index, --no-index, --read-only-index, and --refresh-index are mutually exclusive")
+    if use_index:
+        return "auto"
     if no_index:
         return "off"
     if read_only_index:
         return "readonly"
     if refresh_index:
         return "refresh"
-    return "auto"
+    return "off"
 
 
 def _parse_extra(values):
@@ -170,8 +175,8 @@ def _query_from_options(parameter, level_type, level, step, step_type, time_rang
     return values
 
 
-def _open_reader(path, *, no_index, read_only_index, refresh_index, index_dir):
-    policy = _index_policy(no_index, read_only_index, refresh_index)
+def _open_reader(path, *, use_index, no_index, read_only_index, refresh_index, index_dir):
+    policy = _index_policy(use_index, no_index, read_only_index, refresh_index)
     try:
         return from_source("file", path, index_policy=policy, index_dir=index_dir)
     except FileNotFoundError as exc:
@@ -242,18 +247,18 @@ def _emit_index_metrics(metrics, verbose):
 @click.option("--json", "as_json", is_flag=True, help="Emit stable JSON.")
 @click.option("--verbose", is_flag=True, help="Report index counters on stderr.")
 @_index_options
-def inspect(path, as_json, verbose, no_index, read_only_index, refresh_index, index_dir):
+def inspect(path, as_json, verbose, use_index, no_index, read_only_index, refresh_index, index_dir):
     """Show metadata-only information about a local file."""
     with collect_io_metrics() as metrics:
-        reader = _open_reader(path, no_index=no_index, read_only_index=read_only_index,
+        reader = _open_reader(path, use_index=use_index, no_index=no_index, read_only_index=read_only_index,
                               refresh_index=refresh_index, index_dir=index_dir)
         _emit_inspect(reader, metrics, as_json)
         _emit_index_metrics(metrics, verbose)
 
 
 def _list_fields(path, parameter, level_type, level, step, step_type, time_range, member, extra,
-                 no_index, read_only_index, refresh_index, index_dir):
-    reader = _open_reader(path, no_index=no_index, read_only_index=read_only_index,
+                 use_index, no_index, read_only_index, refresh_index, index_dir):
+    reader = _open_reader(path, use_index=use_index, no_index=no_index, read_only_index=read_only_index,
                           refresh_index=refresh_index, index_dir=index_dir)
     try:
         if not reader.capabilities.field_list:
@@ -274,11 +279,11 @@ def _list_fields(path, parameter, level_type, level, step, step_type, time_range
 @_output_options
 @_index_options
 def ls(path, keys, parameter, level_type, level, step, step_type, time_range, member, extra,
-       limit, offset, as_json, verbose, no_index, read_only_index, refresh_index, index_dir):
+       limit, offset, as_json, verbose, use_index, no_index, read_only_index, refresh_index, index_dir):
     """List matching field metadata without decoding values."""
     with collect_io_metrics() as metrics:
         fields = _list_fields(path, parameter, level_type, level, step, step_type, time_range, member,
-                              extra, no_index, read_only_index, refresh_index, index_dir)
+                              extra, use_index, no_index, read_only_index, refresh_index, index_dir)
         _emit_metadata(fields, keys=_metadata_keys(keys), offset=offset, limit=limit, as_json=as_json)
         _emit_index_metrics(metrics, verbose)
 
@@ -290,11 +295,11 @@ def ls(path, keys, parameter, level_type, level, step, step_type, time_range, me
 @_output_options
 @_index_options
 def query(path, keys, parameter, level_type, level, step, step_type, time_range, member, extra,
-          limit, offset, as_json, verbose, no_index, read_only_index, refresh_index, index_dir):
+          limit, offset, as_json, verbose, use_index, no_index, read_only_index, refresh_index, index_dir):
     """Query a local file and print matching metadata only."""
     with collect_io_metrics() as metrics:
         fields = _list_fields(path, parameter, level_type, level, step, step_type, time_range, member,
-                              extra, no_index, read_only_index, refresh_index, index_dir)
+                              extra, use_index, no_index, read_only_index, refresh_index, index_dir)
         _emit_metadata(fields, keys=_metadata_keys(keys), offset=offset, limit=limit, as_json=as_json)
         _emit_index_metrics(metrics, verbose)
         if not fields:

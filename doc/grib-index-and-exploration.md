@@ -41,10 +41,11 @@ header pass for an unindexed batch. Its `cardinality` may be `all`, `first`,
 
 ## Index policy and lifecycle
 
-The default policy is `auto`. It reads a valid index and otherwise attempts
-one build before falling back to a direct scan. `off` never reads or writes an
-index; `readonly` only reads a valid one; `refresh` replaces the index and is
-strict if it cannot do so.
+The default policy is `off`, so existing reads scan directly and never create
+an index. Pass `index_policy="auto"` to opt in: it reads a valid index and
+otherwise attempts one build before falling back to a direct scan. `readonly`
+only reads a valid index; `refresh` replaces the index and is strict if it
+cannot do so.
 
 Index root precedence is the explicit `index_dir`, `REKI_INDEX_DIR`, then
 `$XDG_CACHE_HOME/reki/indexes` (or `~/.cache/reki/indexes`). The source data
@@ -73,11 +74,13 @@ reki ls forecast.grib2 --keys parameter,level_type,level,step --json
 reki query forecast.grib2 --parameter t --level-type pl --level 850 --json
 ```
 
-All three commands accept mutually exclusive `--no-index`,
-`--read-only-index`, and `--refresh-index`, plus `--index-dir`. `--limit` and
-`--offset` bound output. JSON is written only to stdout; `--verbose` writes
-index diagnostics to stderr. Zero matches is a successful query with an empty
-result; invalid options or keys and strict refresh failures exit with code 2.
+All three commands scan directly by default. Use `--use-index` to opt in to
+automatic index use/building; `--read-only-index` and `--refresh-index` also
+explicitly enable an index mode. These flags and `--no-index` are mutually
+exclusive. `--index-dir` selects the index location; `--limit` and `--offset`
+bound output. JSON is written only to stdout; `--verbose` writes index
+diagnostics to stderr. Zero matches is a successful query with an empty result;
+invalid options or keys and strict refresh failures exit with code 2.
 
 ## Reader capability matrix
 

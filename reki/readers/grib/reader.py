@@ -106,7 +106,7 @@ class GribReader(Reader):
             path,
             engine: str = "eccodes",
             filters: Optional[Dict] = None,
-            index_policy: str = "auto",
+            index_policy: str = "off",
             index_dir=None,
             index_lock_timeout: float = 30.0,
             **kwargs,

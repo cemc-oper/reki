@@ -54,8 +54,23 @@ def test_query_is_bounded_and_has_a_no_match_exit_code(tmp_path):
 
     duplicate = runner.invoke(cli, ["ls", str(path), "--keys", "level,level"])
     assert duplicate.exit_code == 2
-    conflict = runner.invoke(cli, ["inspect", str(path), "--no-index", "--refresh-index"])
+    conflict = runner.invoke(cli, ["inspect", str(path), "--use-index", "--refresh-index"])
     assert conflict.exit_code == 2
+
+
+def test_indexing_requires_an_explicit_cli_opt_in(tmp_path):
+    path = tmp_path / "fields.grib"
+    index_dir = tmp_path / "indexes"
+    _write(path)
+    runner = CliRunner()
+
+    default = runner.invoke(cli, ["inspect", str(path), "--index-dir", str(index_dir), "--json"])
+    assert default.exit_code == 0, default.output
+    assert not index_dir.exists()
+
+    enabled = runner.invoke(cli, ["inspect", str(path), "--use-index", "--index-dir", str(index_dir), "--json"])
+    assert enabled.exit_code == 0, enabled.output
+    assert list(index_dir.glob("*.sqlite"))
 
 
 def test_catalog_commands_remain_available():
