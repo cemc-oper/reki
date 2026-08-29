@@ -45,6 +45,12 @@ CMA-MESO-3KM, CMA-MESO-1KM, CMA-TYM, CMA-GEPS and CMA-REPS. Historical
 ``CMA-MESO`` resolves to ``cma_meso_3km``; use ``CMA-MESO-1KM`` to select the
 one-kilometre dataset explicitly.
 
+``CMA-GFS-CMADaaS`` is an optional remote CMADaaS binding.  Its catalog record
+contains neither credentials nor a network side effect: source construction is
+lazy and credentials belong in the runtime CMADaaS client configuration.  Live
+service availability and product/grid equivalence are environment-integration
+concerns, rather than catalog-resolution guarantees.
+
 For a task-provided directory and filename, use the ``file-pattern`` source.
 It accepts only ``{start_time_label}``, ``{forecast_hour}``, and
 ``{forecast_hour_label}`` substitutions; expressions and filesystem checks
