@@ -20,7 +20,10 @@ import pandas as pd
 import xarray as xr
 
 from reki.readers import Reader
-from reki.core import FieldQuery, DataNotFoundError, MultipleFieldsMatchedError
+from reki.core import (
+    FieldQuery, FieldMetadata, FieldList, DataNotFoundError,
+    MultipleFieldsMatchedError,
+)
 from reki.core.field_query import field_query_from_kwargs
 from reki.core.source_spec import redact
 
@@ -37,24 +40,29 @@ _NON_LEVEL_COORDS = frozenset(
 class GribField:
     """A single GRIB field decoded from a file."""
 
-    def __init__(self, data_array: xr.DataArray):
+    def __init__(self, data_array: xr.DataArray = None, *, metadata=None, loader=None):
         self._data_array = data_array
+        self.metadata = metadata
+        self._loader = loader
 
     def to_xarray(self, **kwargs) -> xr.DataArray:
+        if self._data_array is None:
+            self._data_array = self._loader(**kwargs)
         return self._data_array
 
     def to_pandas(self, **kwargs):
-        return self._data_array.to_pandas()
+        return self.to_xarray(**kwargs).to_pandas()
 
     def to_numpy(self, **kwargs):
-        return self._data_array.to_numpy()
+        return self.to_xarray(**kwargs).to_numpy()
 
     @property
     def values(self):
-        return self._data_array.values
+        return self.to_xarray().values
 
     def __repr__(self):
-        return f"GribField({self._data_array.name!r})"
+        name = self._data_array.name if self._data_array is not None else self.metadata.parameter
+        return f"GribField({name!r})"
 
 
 class GribReader(Reader):
@@ -78,12 +86,20 @@ class GribReader(Reader):
             path,
             engine: str = "eccodes",
             filters: Optional[Dict] = None,
+            index_policy: str = "auto",
+            index_dir=None,
+            index_lock_timeout: float = 30.0,
             **kwargs,
     ):
         super().__init__(source, path)
         if engine not in ("eccodes", "cfgrib"):
             raise ValueError(f"engine {engine} is not supported")
         self.engine = engine
+        if index_policy not in {"auto", "off", "readonly", "refresh"}:
+            raise ValueError("index_policy must be auto, off, readonly, or refresh")
+        self.index_policy = index_policy
+        self.index_dir = index_dir
+        self.index_lock_timeout = index_lock_timeout
         self._query = field_query_from_kwargs(filters or {})
 
     @property
@@ -94,7 +110,7 @@ class GribReader(Reader):
     def __repr__(self):
         return (
             f"GribReader({self.path!r}, engine={self.engine!r}, "
-            f"filters={redact(self.filters)!r})"
+            f"filters={redact(self.filters)!r}, index_policy={self.index_policy!r})"
         )
 
     def sel(
@@ -131,8 +147,17 @@ class GribReader(Reader):
         query = query if query is not None else field_query_from_kwargs(kwargs)
         query = self._query.merge(query)
         return GribReader(
-            self.source, self.path, engine=self.engine, filters=self._filters_from_query(query)
+            self.source, self.path, engine=self.engine, filters=self._filters_from_query(query),
+            index_policy=self.index_policy, index_dir=self.index_dir,
+            index_lock_timeout=self.index_lock_timeout,
         )
+
+    def all(self) -> FieldList:
+        """Return all matching fields as lazy references, without decoding values."""
+        if self.engine != "eccodes":
+            raise NotImplementedError("FieldList is currently available with engine='eccodes' only")
+        fields = self._indexed_fields()
+        return FieldList(fields, query=self._query, source_summary=self._source_summary())
 
     def first(self) -> Optional[GribField]:
         """Scan sequentially and return the first matching field.
@@ -261,6 +286,116 @@ class GribReader(Reader):
 
     def _source_summary(self):
         return f"GRIB source {os.path.basename(str(self.path))!r}"
+
+    def _indexed_fields(self):
+        """Read valid metadata index or make one scan fallback; no values decode."""
+        # v1 deliberately does not index arbitrary FieldQuery.extra keys.
+        # Verify them against headers rather than turning a valid match into an
+        # empty index result.
+        if self._query.extra:
+            return self._scan_fields()
+        rows = None
+        if self.index_policy != "off":
+            from .index import IndexStore, IndexBuildError
+            store = IndexStore(self.path, index_dir=self.index_dir,
+                               lock_timeout=self.index_lock_timeout)
+            try:
+                connection = (store.build(refresh=self.index_policy == "refresh")
+                              if self.index_policy in {"auto", "refresh"}
+                              else store.open_valid())
+                if connection is not None:
+                    rows = connection.execute(
+                        "SELECT ordinal, offset, short_name, level_type, level_real, "
+                        "step_type, member, ni, nj, dtype, grid_type, extra_metadata_json "
+                        "FROM fields ORDER BY ordinal"
+                    ).fetchall()
+                    connection.close()
+            except (IndexBuildError, OSError):
+                if self.index_policy == "refresh":
+                    raise
+        if rows is None:
+            return self._scan_fields()
+        return [self._field_from_index_row(row) for row in rows if self._matches_query(self._metadata_from_index_row(row))]
+
+    def _scan_fields(self):
+        from .eccodes._scan import iter_headers
+        fields = []
+        count = self._filters_from_query().get("count")
+        for header in iter_headers(self.path, headers_only=True):
+            metadata = _metadata_from_message(header.handle, header.ordinal, header.offset, self.path)
+            if count is not None:
+                matched = header.ordinal + 1 == count
+            else:
+                matched = self._header_matches(header.handle)
+            if matched:
+                fields.append(self._field_reference(metadata))
+                if count is not None:
+                    break
+        return fields
+
+    def _header_matches(self, message):
+        from .eccodes._check import _check_message
+        from .eccodes._level import _fix_level
+        from reki.readers.grib.common._parameter import convert_parameter
+        filters = self._filters_from_query()
+        parameter = convert_parameter(filters.pop("parameter", None))
+        level_type = filters.pop("level_type", None)
+        level = filters.pop("level", None)
+        for option in ("count", "level_dim", "field_name", "show_progress", "lazy", "with_index"):
+            filters.pop(option, None)
+        fixed_level_type, _ = _fix_level(level_type, None)
+        return _check_message(message, parameter, fixed_level_type, level, **filters)
+
+    def _field_from_index_row(self, row):
+        return self._field_reference(self._metadata_from_index_row(row))
+
+    def _metadata_from_index_row(self, row):
+        ordinal, offset, parameter, level_type, level, step_type, member, ni, nj, dtype, grid_type, extra = row
+        import json
+        return FieldMetadata(ordinal, offset, parameter, _public_level_type(level_type), level,
+                             step_type=step_type, member=member,
+                             shape=(nj, ni) if ni is not None and nj is not None else None,
+                             dtype=dtype, grid_type=grid_type,
+                             source=os.path.basename(str(self.path)), extra=json.loads(extra))
+
+    def _field_reference(self, metadata):
+        def loader(**kwargs):
+            from .eccodes._decode import load_message_at_offset
+            from .eccodes._xarray import create_data_array_from_message
+            import eccodes
+            message = load_message_at_offset(self.path, metadata.offset)
+            if message is None:
+                raise ValueError(f"no GRIB message at offset {metadata.offset}")
+            try:
+                return create_data_array_from_message(message, **kwargs)
+            finally:
+                eccodes.codes_release(message)
+        return GribField(metadata=metadata, loader=loader)
+
+    def _matches_query(self, metadata):
+        # Reuse FieldList's public selection semantics for indexed and scanned
+        # metadata.  Unknown extra keys deliberately do a header scan fallback.
+        query = self._query
+        parameter = query.parameter
+        if isinstance(parameter, str):
+            from reki.readers.grib.common._parameter import convert_parameter
+            parameter = convert_parameter(parameter)
+        if isinstance(parameter, dict):
+            if any(metadata.extra.get(key) != value for key, value in parameter.items()):
+                return False
+        elif parameter is not None and metadata.parameter != parameter:
+            return False
+        # Query aliases use source-neutral names, whereas an explicit native
+        # ecCodes name remains accepted too.
+        level_type = query.level_type
+        if isinstance(level_type, str) and level_type not in {
+                metadata.level_type, _native_level_type(metadata.level_type)}:
+            return False
+        from reki.core.field_list import _matches
+        return _matches(metadata, FieldQuery(
+            level=query.level, step_type=query.step_type,
+            time_range=query.time_range, member=query.member, extra=query.extra,
+        ))
 
     def _unique_field(self, required: bool):
         """Check cardinality from ecCodes headers and decode at most one field."""
@@ -564,6 +699,42 @@ def _level_coord_name(data: xr.DataArray) -> Optional[str]:
         if coord not in _NON_LEVEL_COORDS:
             return coord
     return None
+
+
+def _metadata_from_message(message, ordinal, offset, path):
+    """Extract the safe metadata subset needed before value decoding."""
+    import eccodes
+
+    def get(key, default=None):
+        try:
+            return eccodes.codes_get(message, key)
+        except (eccodes.KeyValueNotFoundError, eccodes.WrongTypeError):
+            return default
+
+    ni, nj = get("Ni"), get("Nj")
+    extras = {
+        "discipline": get("discipline"),
+        "parameterCategory": get("parameterCategory"),
+        "parameterNumber": get("parameterNumber"),
+        "parameter_match": "short_name",
+    }
+    return FieldMetadata(
+        index=ordinal, offset=offset, parameter=get("shortName"),
+        level_type=_public_level_type(get("typeOfLevel")), level=get("level"),
+        step_type=get("stepType"), member=get("number"),
+        shape=(nj, ni) if ni is not None and nj is not None else None,
+        dtype="float64", grid_type=get("gridType"),
+        source=os.path.basename(str(path)),
+        extra={key: value for key, value in extras.items() if value is not None},
+    )
+
+
+def _public_level_type(value):
+    return {"isobaricInhPa": "pl", "surface": "sfc"}.get(value, value)
+
+
+def _native_level_type(value):
+    return {"pl": "isobaricInhPa", "sfc": "surface"}.get(value, value)
 
 
 def READER(source, path, magic=None, deeper_check=False, **kwargs):

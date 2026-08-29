@@ -7,7 +7,7 @@ except PackageNotFoundError:
     pass
 
 from .sources import from_source, from_source_lazily, register, Source
-from .core import SourceSpec, FieldQuery, DataNotFoundError, MultipleFieldsMatchedError
+from .core import SourceSpec, FieldQuery, FieldMetadata, FieldList, DataNotFoundError, MultipleFieldsMatchedError
 from .core import normalize_data_array, validate_data_array
 from .catalog import load_catalog
 from .readers.grib.config import (
@@ -17,4 +17,4 @@ from .readers.grib.config import (
 )
 from . import operator
 
-__all__ = ["from_source", "from_source_lazily", "register", "Source", "SourceSpec", "FieldQuery", "DataNotFoundError", "MultipleFieldsMatchedError", "normalize_data_array", "validate_data_array", "load_catalog", "ParameterAmbiguityError", "ParameterConditionConflictError", "ParameterNotFoundError", "ParameterRecord", "ParameterResolutionError", "ResolvedParameter", "resolve_parameter", "operator"]
+__all__ = ["from_source", "from_source_lazily", "register", "Source", "SourceSpec", "FieldQuery", "FieldMetadata", "FieldList", "DataNotFoundError", "MultipleFieldsMatchedError", "normalize_data_array", "validate_data_array", "load_catalog", "ParameterAmbiguityError", "ParameterConditionConflictError", "ParameterNotFoundError", "ParameterRecord", "ParameterResolutionError", "ResolvedParameter", "resolve_parameter", "operator"]
