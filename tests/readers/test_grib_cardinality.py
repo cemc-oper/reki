@@ -57,7 +57,9 @@ def test_eccodes_multiple_match_stops_at_second_header_without_values_decode(tmp
 
     monkeypatch.setattr(eccodes, "codes_grib_new_from_file", header)
     monkeypatch.setattr(eccodes, "codes_get_double_array", values)
-    reader = GribReader(None, path).sel(parameter="t", level_type="pl")
+    # ``off`` retains the historical early-stop scan; the default ``auto``
+    # policy may build metadata once before serving cardinality from it.
+    reader = GribReader(None, path, index_policy="off").sel(parameter="t", level_type="pl")
     with pytest.raises(MultipleFieldsMatchedError):
         reader.one()
     assert calls == {"headers": 2, "values": 0}

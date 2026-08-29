@@ -184,7 +184,8 @@ class GribReader(Reader):
         if self.engine != "eccodes":
             raise NotImplementedError("FieldList is currently available with engine='eccodes' only")
         fields = self._indexed_fields()
-        return FieldList(fields, query=self._query, source_summary=self._source_summary())
+        return FieldList(fields, query=self._query, source_summary=self._source_summary(),
+                         merge=_merge_arrays)
 
     def where(self, query=None, /, **kwargs):
         """Return a metadata-only FieldList filtered without expression evaluation."""
@@ -454,7 +455,8 @@ class GribReader(Reader):
                         )
                     matches[key].append(candidate._field_reference(metadata))
         return {
-            key: FieldList(values, query=unique[key], source_summary=self._source_summary())
+            key: FieldList(values, query=unique[key], source_summary=self._source_summary(),
+                           merge=_merge_arrays)
             for key, values in matches.items()
         }
 

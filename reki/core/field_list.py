@@ -9,10 +9,11 @@ from .field_query import FieldQuery, field_query_from_kwargs
 
 
 class FieldList(Sequence):
-    def __init__(self, fields=(), *, query=None, source_summary="<unknown source>"):
+    def __init__(self, fields=(), *, query=None, source_summary="<unknown source>", merge=None):
         self._fields = tuple(fields)
         self._query = query or FieldQuery()
         self._source_summary = source_summary
+        self._merge = merge
 
     @classmethod
     def from_fields(cls, fields):
@@ -36,7 +37,7 @@ class FieldList(Sequence):
     def __getitem__(self, item):
         if isinstance(item, slice):
             return type(self)(self._fields[item], query=self._query,
-                              source_summary=self._source_summary)
+                              source_summary=self._source_summary, merge=self._merge)
         return self._fields[item]
 
     def all(self):
@@ -132,8 +133,15 @@ class FieldList(Sequence):
         return self.metadata(keys)
 
     def to_xarray(self, **kwargs):
-        from reki.readers.grib.reader import _merge_arrays
-        return _merge_arrays([field.to_xarray(**kwargs) for field in self])
+        arrays = [field.to_xarray(**kwargs) for field in self]
+        if self._merge is not None:
+            return self._merge(arrays)
+        if not arrays:
+            return None
+        if len(arrays) == 1:
+            return arrays[0]
+        import xarray as xr
+        return xr.merge(arrays)
 
     def __repr__(self):
         sources = len({field.metadata.source for field in self})
