@@ -17,6 +17,7 @@ from reki.core.source_spec import redact
 from reki.diagnostics import collect_io_metrics
 from reki import from_source
 from reki.core import UnsupportedOperationError
+from reki.cmadaas_inventory import cmadaas_inventory
 
 
 EXIT_NO_MATCH = 3
@@ -35,6 +36,9 @@ class ExplorationError(click.ClickException):
 @click.group()
 def cli():
     """Inspect reki configuration and local data files."""
+
+
+cli.add_command(cmadaas_inventory)
 
 
 def _catalog_options(command):
