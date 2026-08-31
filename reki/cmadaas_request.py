@@ -89,6 +89,26 @@ class CmadaasRequest:
             result["region"] = dict(self.region)
         return redact(result)
 
+    def dynamic_source_kwargs(self) -> dict[str, Any]:
+        """Return the public fields injected when constructing the source.
+
+        ``data_code`` remains the static DatasetCatalog binding.  The
+        parameter, level and time fields are deliberately kept separate so a
+        caller cannot accidentally persist them in a source-neutral plan.
+        """
+        result = {
+            "parameter": self.parameter,
+            "level_type": self.level_type,
+            "level": self.level,
+            "start_time": self.start_time,
+            "forecast_time": self.forecast_time,
+        }
+        if self.member is not None:
+            result["member"] = self.member
+        if self.region is not None:
+            result["region"] = dict(self.region)
+        return result
+
     def __repr__(self) -> str:
         return f"CmadaasRequest({self.to_dict()!r})"
 

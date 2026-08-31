@@ -18,6 +18,14 @@ def test_binding_is_pure_and_uses_entry_name_inherited_by_variant():
     assert request.level_type == "heightAboveGround"
     assert request.level == 2
     assert request.to_dict()["parameter_id"] == "cedarkit.t2m"
+    assert request.dynamic_source_kwargs() == {
+        "parameter": "TEM", "level_type": "heightAboveGround", "level": 2,
+        "start_time": pd.Timestamp("2026-01-01T00:00:00"),
+        "forecast_time": pd.Timedelta("6h"),
+    }
+    capability = reki.source_capability(source())
+    assert capability.direct_result is True
+    assert capability.metadata_only is False
 
     with pytest.raises(reki.CmadaasNameNotMappedError) as error:
         reki.bind_cmadaas_request(source(), parameter_id="cedarkit.td", query=reki.FieldQuery(),

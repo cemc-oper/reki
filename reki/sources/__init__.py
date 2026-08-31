@@ -23,6 +23,7 @@ __all__ = [
     "from_source",
     "from_source_lazily",
     "get_source",
+    "source_capability",
     "register",
     "SourceMaker",
 ]
@@ -102,6 +103,22 @@ class SourceMaker:
 
 
 get_source = SourceMaker()
+
+
+def source_capability(source_spec: SourceSpec):
+    """Return a source-declared dispatch capability without remote I/O.
+
+    Sources that require runtime bindings merely to be constructed (such as
+    ``local``) have no pre-binding descriptor and return ``None``.  The
+    provider then retains its established selectable-reader behavior.
+    """
+    if not isinstance(source_spec, SourceSpec):
+        raise TypeError("source_spec must be a SourceSpec")
+    try:
+        source = get_source(source_spec.name, *source_spec.args, **source_spec.kwargs)
+    except TypeError:
+        return None
+    return getattr(source, "capability", None)
 
 
 class LazySource:
