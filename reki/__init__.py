@@ -11,6 +11,7 @@ from .readers import ReaderCapabilities
 from .core import SourceSpec, FieldQuery, FieldMetadata, FieldList, DataNotFoundError, MultipleFieldsMatchedError, UnsupportedOperationError
 from .core import normalize_data_array, validate_data_array
 from .catalog import load_catalog
+from .cmadaas_request import CmadaasRequest, CmadaasRequestError, CmadaasNameNotMappedError, CmadaasRequestConflictError, bind_cmadaas_request
 from .readers.grib.config import (
     ParameterAmbiguityError, ParameterConditionConflictError,
     ParameterNotFoundError, ParameterRecord, ParameterResolutionError,
@@ -18,4 +19,4 @@ from .readers.grib.config import (
 )
 from . import operator
 
-__all__ = ["from_source", "from_source_lazily", "register", "Source", "SourceSpec", "FieldQuery", "FieldMetadata", "FieldList", "ReaderCapabilities", "DataNotFoundError", "MultipleFieldsMatchedError", "UnsupportedOperationError", "normalize_data_array", "validate_data_array", "load_catalog", "ParameterAmbiguityError", "ParameterConditionConflictError", "ParameterNotFoundError", "ParameterRecord", "ParameterResolutionError", "ResolvedParameter", "resolve_parameter", "operator"]
+__all__ = ["from_source", "from_source_lazily", "register", "Source", "SourceSpec", "FieldQuery", "FieldMetadata", "FieldList", "ReaderCapabilities", "DataNotFoundError", "MultipleFieldsMatchedError", "UnsupportedOperationError", "normalize_data_array", "validate_data_array", "load_catalog", "CmadaasRequest", "CmadaasRequestError", "CmadaasNameNotMappedError", "CmadaasRequestConflictError", "bind_cmadaas_request", "ParameterAmbiguityError", "ParameterConditionConflictError", "ParameterNotFoundError", "ParameterRecord", "ParameterResolutionError", "ResolvedParameter", "resolve_parameter", "operator"]

@@ -59,8 +59,15 @@ datasets:
       name: cmadaas
       kwargs:
         kind: model_grid
-        data_code: NAFP_FOR_FTM_HIGH_EC_GLB
+        # Candidate derived from the CMADaaS/NWPC product documentation.  It
+        # is intentionally marked provisional until T5-09 records a MUSIC
+        # fixed-cycle response; HIGH_EC described a different model.
+        data_code: NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB
     metadata:
       display_name: CMA-GFS CMADaaS
       provider: cmadaas-remote
       limitations: "Product availability and grid version are service dependent."
+      data_code_evidence:
+        status: provisional
+        source: nuwe-cmadaas CMA-GFS product naming reference
+        reviewed_on: '2026-08-31'

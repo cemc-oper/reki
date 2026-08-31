@@ -42,3 +42,5 @@ def test_builtin_catalog_resolves_required_systems_without_io():
     assert remote.record.dataset_id == "cma_gfs_gmf_cmadaas"
     assert remote.source.name == "cmadaas"
     assert remote.source.kwargs["kind"] == "model_grid"
+    assert remote.source.kwargs["data_code"] == "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB"
+    assert remote.record.metadata["data_code_evidence"]["status"] == "provisional"

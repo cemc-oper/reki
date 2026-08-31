@@ -18,6 +18,7 @@ data from a mounted disk on CMA HPC is a different path: use the
 """
 
 from importlib import import_module
+from dataclasses import dataclass
 from pathlib import Path
 
 from reki.core import Source
@@ -56,6 +57,17 @@ HIGH_LEVEL_KINDS = {
     "obs_upper_air": ("nuwe_cmadaas.obs", "retrieve_obs_upper_air"),
     "obs_file": ("nuwe_cmadaas.obs", "download_obs_file"),
 }
+
+
+@dataclass(frozen=True)
+class SourceCapability:
+    """Public source dispatch descriptor, independent of source class names."""
+    selectable: bool
+    direct_result: bool
+    metadata_only: bool
+
+
+CMADAAS_MODEL_GRID_CAPABILITY = SourceCapability(selectable=False, direct_result=True, metadata_only=False)
 
 
 def _import_module(name: str):
@@ -106,6 +118,10 @@ class CmadaasSource(Source):
 
     #: the MUSIC request is fired in ``mutate()``; defer it to first use.
     remote = True
+
+    @property
+    def capability(self) -> SourceCapability:
+        return CMADAAS_MODEL_GRID_CAPABILITY if self.kind == "model_grid" else SourceCapability(False, False, False)
 
     def __init__(
             self,
