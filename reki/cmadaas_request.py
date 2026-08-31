@@ -149,7 +149,12 @@ def bind_cmadaas_request(source_spec: SourceSpec, *, parameter_id: str, query: F
         code = resolve_external_name(parameter_id, "cmadaas").code
     except (ParameterExternalNameNotMappedError, ParameterNamespaceNotFoundError) as exc:
         raise CmadaasNameNotMappedError(parameter_id)
+    # The parameter resolver keeps a human-readable level type for local
+    # readers, while its GRIB fixed-surface code lives in ``extra``.  MUSIC
+    # model-grid requests require that numeric code (for example 103/2 for
+    # 2 m temperature), not ``heightAboveGround``.
+    level_type = query.extra.get("typeOfFirstFixedSurface", query.level_type)
     return CmadaasRequest(data_code=data_code, parameter_id=parameter_id, parameter=code,
-                          level_type=query.level_type, level=query.level,
+                          level_type=level_type, level=query.level,
                           start_time=start_time, forecast_time=forecast_time,
                           member=query.member if member is None else member, region=region)
