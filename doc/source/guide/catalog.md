@@ -45,6 +45,11 @@ CMA-REPS 的本地业务绑定。历史名称 ``CMA-MESO`` 会解析为
 ``CMA-GFS-CMADaaS`` 是可选的远程 CMADaaS 绑定。其目录记录既不包含凭证，也
 不会产生网络副作用：source 构造是惰性的，凭证应配置在运行时的 CMADaaS client 中。
 在线服务可用性以及产品/网格等价性属于环境集成问题，而不是目录解析所保证的内容。
+该内置绑定使用经产品参考和 MUSIC 服务验证的
+``NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB``。区域部署、试验产品和账号专属的 data code
+不应修改内置记录；请在用户或插件目录中提供同一 ID 的完整替代记录。目录按整条记录
+覆盖，因此替代记录必须重新声明 ``source``、别名和所需 metadata，且可通过
+``reki catalog resolve`` 查看其生效来源。
 
 对于任务提供的目录和文件名，请使用 ``file-pattern`` source。它只接受
 ``{start_time_label}``、``{forecast_hour}`` 和 ``{forecast_hour_label}``

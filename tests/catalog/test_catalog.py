@@ -26,6 +26,33 @@ def test_replacement_is_whole_record_and_diagnostic_is_preserved():
     assert catalog.resolve("demo").record.aliases == ("new",)
 
 
+def test_cmadaas_record_can_be_replaced_without_loading_the_client():
+    override = {
+        "id": "cma_gfs_gmf_cmadaas",
+        "aliases": ["PRIVATE-CMA-GFS-CMADaaS"],
+        "source": {
+            "name": "cmadaas",
+            "kwargs": {
+                "kind": "model_grid",
+                "data_code": "PRIVATE_PRODUCT_CODE",
+            },
+        },
+        "metadata": {"provider": "cmadaas-remote"},
+    }
+
+    catalog = load_catalog(plugins=False, user=False, explicit=document(override))
+    resolved = catalog.resolve("PRIVATE-CMA-GFS-CMADaaS")
+
+    assert resolved.origin == "explicit"
+    assert resolved.replaced_origins == ("builtin",)
+    assert resolved.source.kwargs == {
+        "kind": "model_grid",
+        "data_code": "PRIVATE_PRODUCT_CODE",
+    }
+    with pytest.raises(KeyError):
+        catalog.resolve("CMA-GFS-CMADaaS")
+
+
 def test_unknown_fields_and_alias_conflicts_fail():
     with pytest.raises(CatalogError, match="unknown catalog fields"):
         load_catalog(builtin=False, plugins=False, user=False, explicit={"api_version": "reki.catalog/v1", "datasets": [], "extra": True})
@@ -43,4 +70,6 @@ def test_builtin_catalog_resolves_required_systems_without_io():
     assert remote.source.name == "cmadaas"
     assert remote.source.kwargs["kind"] == "model_grid"
     assert remote.source.kwargs["data_code"] == "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB"
-    assert remote.record.metadata["data_code_evidence"]["status"] == "provisional"
+    evidence = remote.record.metadata["data_code_evidence"]
+    assert evidence["status"] == "confirmed"
+    assert evidence["reviewed_on"] == "2026-08-31"
