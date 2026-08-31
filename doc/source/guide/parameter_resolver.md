@@ -31,3 +31,21 @@ reki.resolve_parameter("cedarkit.u10mmax-3").query.time_range  # Timedelta('0 da
 `ParameterConditionConflictError`。解析不打开文件、不导入 ecCodes/cfgrib，
 也不做单位换算。`find_*()` 与 `convert_parameter()` 仍是兼容接口；后者对
 未知字符串仍原样返回，不适用于新主路径。
+
+## Namespaced external names
+
+Registry v3 keeps service naming separate from source-neutral `FieldQuery`.
+Use `resolve_external_name()` only when a provider needs an external code:
+
+```python
+name = reki.resolve_external_name("cedarkit.t2m", "cmadaas")
+assert name.code == "TEM"
+assert name.entry_parameter_id == "cedarkit.t"
+assert name.inherited is True
+```
+
+External codes such as `TEM` are not accepted as `resolve_parameter()` input.
+An unmapped parameter raises `ParameterExternalNameNotMappedError` with code
+`cmadaas_name_not_mapped`; an unknown namespace raises
+`ParameterNamespaceNotFoundError`.  Variants cannot override an entry external
+name, so levels and time statistics remain expressed by `FieldQuery`.

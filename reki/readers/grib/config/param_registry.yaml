@@ -1,6 +1,6 @@
 # GRIB2 要素注册表。约束规范见同目录 param_registry_spec.md，请勿违反编号规则。
 # 本文件由 cedarkit-param-db 从要素数据库导出（python -m cedarkit_param_db export），请勿手工编辑。
-api_version: reki.parameter-registry/v2
+api_version: reki.parameter-registry/v3
 entries:
 - parameter_id: cedarkit.t
   key:
@@ -8,6 +8,8 @@ entries:
     category: 0
     number: 0
   name: t
+  external_names:
+    cmadaas: TEM
   wgrib2_name: TMP
   unit: K
   description: Temperature
@@ -358,6 +360,8 @@ entries:
     category: 1
     number: 8
   name: rain
+  external_names:
+    cmadaas: PRE
   wgrib2_name: APCP
   unit: mm
   description: Total precipitation
@@ -785,6 +789,8 @@ entries:
     category: 2
     number: 2
   name: u
+  external_names:
+    cmadaas: WIU
   wgrib2_name: UGRD
   unit: m/s
   description: U-component of wind
@@ -838,6 +844,8 @@ entries:
     category: 2
     number: 3
   name: v
+  external_names:
+    cmadaas: WIV
   wgrib2_name: VGRD
   unit: m/s
   description: V-component of wind
@@ -1214,6 +1222,8 @@ entries:
     category: 3
     number: 5
   name: h
+  external_names:
+    cmadaas: GPH
   wgrib2_name: HGT
   unit: Gpm
   description: Geopotential height

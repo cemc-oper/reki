@@ -31,13 +31,13 @@ STEP_TYPE_VALUES = {"instant", "accum", "max", "min", "avg"}
 
 NAME_PATTERN = re.compile(r"^\S+$")
 
-#: JSON Schema, mirror of parameter-registry v2.
+#: JSON Schema, mirror of parameter-registry v3.
 REGISTRY_SCHEMA = {
     "type": "object",
     "required": ["api_version", "entries"],
     "additionalProperties": False,
     "properties": {
-        "api_version": {"const": "reki.parameter-registry/v2"},
+        "api_version": {"const": "reki.parameter-registry/v3"},
         "entries": {"type": "array", "items": {
         "type": "object",
         "required": ["parameter_id", "key", "name"],
@@ -56,6 +56,11 @@ REGISTRY_SCHEMA = {
             },
             "name": {"type": "string", "pattern": r"^\S+$"},
             "aliases": {"type": "array", "items": {"type": "string", "pattern": r"^\S+$"}},
+            "external_names": {
+                "type": "object",
+                "propertyNames": {"pattern": r"^[a-z][a-z0-9_-]*$"},
+                "additionalProperties": {"type": "string", "pattern": r"^[A-Z][A-Z0-9_]*$"},
+            },
             "wgrib2_name": {"type": "string", "pattern": r"^\S+$"},
             "unit": {"type": "string", "minLength": 1},
             "description": {"type": "string", "minLength": 1},

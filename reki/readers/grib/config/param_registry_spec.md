@@ -4,7 +4,7 @@
 本文档全部编号规则；`tests/` 中的校验测试按规则编号逐条实现，任何注册表修改必须
 通过校验方可合入。
 
-- 版本：v2.0
+- 版本：v3.0
 - 适用文件：`reki/readers/grib/config/param_registry.yaml`
 - 强制级别用语：**必须**（MUST，违反即校验失败）、**应当**（SHOULD，违反产生
   警告）、**可以**（MAY，可选项）。
@@ -16,26 +16,29 @@
   `when` 匹配，修订 M6）；M7 增加基名变体合成规则（M7b）。
 - v2.0：快照升级为带 `api_version`/`entries` 的文档；entry 和 variant 均发布
   全局唯一的 `parameter_id`，并由 reki 的只读 resolver 解析为 `FieldQuery`。
+- v3.0：基础 entry 可发布 `external_names` namespace→code mapping；variant 不存
+  mapping，而是由稳定的父 `parameter_id` 继承。
 
 ## 1. 文件组织
 
 - **F1** 注册表由单一 YAML 文件承载，编码为 UTF-8。
-- **F2** v2 顶层结构为含 `api_version: reki.parameter-registry/v2` 与 `entries`
-  的文档对象；兼容 loader 可读取历史顶层列表，但不得再发布它。
+- **F2** v3 顶层结构为含 `api_version: reki.parameter-registry/v3` 与 `entries`
+  的文档对象；兼容 loader 可读取 v2 及历史顶层列表，但不得再发布它们。
 - **F3** 条目**应当**按 `(discipline, category, number)` 升序排列，以保证 diff 可读。
 - **F4** 文件中**不应**使用 YAML 锚点（`&`/`*`）、合并键（`<<`）与自定义标签，
 保持数据可被任何 YAML 解析器以 `safe_load` 读取。
 
-## 快照文档版本（v2）
+## 快照文档版本（v3）
 
 当前发布格式为：
 
 ```yaml
-api_version: reki.parameter-registry/v2
+api_version: reki.parameter-registry/v3
 entries:
   - parameter_id: cedarkit.t
     key: {discipline: 0, category: 0, number: 0}
     name: t
+    external_names: {cmadaas: TEM}
     params:
       - parameter_id: cedarkit.t2m
         name: t2m
@@ -44,7 +47,8 @@ entries:
 `api_version`、`entries` 及 entry/variant 的 `parameter_id` 都是必填项。ID
 必须全局唯一，采用 `cedarkit.` 命名空间和小写 ASCII/数字/连字符组成的分段 ID，且不得根据 name、alias
 或导出顺序在运行时重算。旧的顶层 list 仅可由兼容 loader 读取，不能由 v2
-exporter 重新发布。
+exporter 重新发布。`external_names` 只允许 entry 级出现；它不参与
+`resolve_parameter()` 的反向名称匹配。
 
 ## 2. 数据模型
 
@@ -74,6 +78,7 @@ exporter 重新发布。
 | `key` | 必须 | map | 见 3.2 |
 | `name` | 必须 | str | **E1** 非空，不含空白字符 |
 | `aliases` | 可选 | list[str] | **E4** 通用名的别名（被提升行原有的别名），每个元素满足 E1 |
+| `external_names` | 可选 | map[str, str] | **E7** 外部 namespace 到大写 code；仅基础 entry，不能含 dataset 或服务配置 |
 | `wgrib2_name` | 可选 | str | **E2** 非空，**应当**为 WGRIB2 风格大写短名 |
 | `unit` | 可选 | str | **E3** 不需要时省略字段，**不得**写空字符串 |
 | `description` | 可选 | str | 同 E3 |
@@ -193,6 +198,10 @@ items:
     aliases:
       type: array
       items: {type: string, pattern: "^\\S+$"}
+    external_names:
+      type: object
+      propertyNames: {pattern: "^[a-z][a-z0-9_-]*$"}
+      additionalProperties: {type: string, pattern: "^[A-Z][A-Z0-9_]*$"}
     wgrib2_name:  {type: string, pattern: "^\\S+$"}
     unit:         {type: string, minLength: 1}
     description:      {type: string, minLength: 1}

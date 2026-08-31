@@ -15,7 +15,11 @@ import pandas as pd
 
 from reki.core import FieldQuery, SourceSpec
 from reki.core.source_spec import _freeze, redact
-from reki.readers.grib.config import resolve_parameter
+from reki.readers.grib.config import (
+    ParameterExternalNameNotMappedError,
+    ParameterNamespaceNotFoundError,
+    resolve_external_name,
+)
 
 
 class CmadaasRequestError(ValueError):
@@ -114,10 +118,9 @@ def bind_cmadaas_request(source_spec: SourceSpec, *, parameter_id: str, query: F
         raise CmadaasRequestConflictError({"member"})
     # v3 records expose a namespaced external-name mapping.  Keeping this
     # lookup here lets v2 remain readable while refusing unsafe guesses.
-    resolved = resolve_parameter(parameter_id)
-    names = getattr(resolved.record, "external_names_by_namespace", {})
-    code = names.get("cmadaas") if isinstance(names, Mapping) else None
-    if not code:
+    try:
+        code = resolve_external_name(parameter_id, "cmadaas").code
+    except (ParameterExternalNameNotMappedError, ParameterNamespaceNotFoundError) as exc:
         raise CmadaasNameNotMappedError(parameter_id)
     return CmadaasRequest(data_code=data_code, parameter_id=parameter_id, parameter=code,
                           level_type=query.level_type, level=query.level,

@@ -19,6 +19,7 @@ from reki.core.source_spec import _freeze
 
 WHEN_KEYS = ("first_level_type", "first_level", "second_level_type", "second_level", "stepType", "time_range_hours")
 _V2 = "reki.parameter-registry/v2"
+_V3 = "reki.parameter-registry/v3"
 
 
 class ParameterResolutionError(ValueError):
@@ -48,6 +49,20 @@ class ParameterConditionConflictError(ParameterResolutionError):
         super().__init__(parameter, f"parameter {parameter!r} fixes {condition}={expected!r}, not {actual!r}")
 
 
+class ParameterNamespaceNotFoundError(ParameterResolutionError):
+    code = "parameter_namespace_not_found"
+    def __init__(self, parameter: object, namespace: str):
+        self.namespace = namespace
+        super().__init__(parameter, f"unknown external-name namespace {namespace!r} for parameter {parameter!r}")
+
+
+class ParameterExternalNameNotMappedError(ParameterResolutionError):
+    code = "cmadaas_name_not_mapped"
+    def __init__(self, parameter: object, namespace: str):
+        self.namespace = namespace
+        super().__init__(parameter, f"external name is not mapped for parameter {parameter!r} in namespace {namespace!r}")
+
+
 @dataclass(frozen=True)
 class ParameterRecord:
     """Immutable entry or independently queryable variant from the snapshot."""
@@ -57,8 +72,9 @@ class ParameterRecord:
     grib_key: Mapping[str, int]
     conditions: Mapping[str, Any] = field(default_factory=dict)
     unit: str | None = None
-    external_names: tuple[str, ...] = ()
+    external_names: Mapping[str, str] = field(default_factory=dict)
     is_variant: bool = False
+    entry_parameter_id: str | None = None
     raw: Mapping[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     def __post_init__(self):
@@ -67,7 +83,16 @@ class ParameterRecord:
         if not isinstance(self.name, str) or not self.name:
             raise TypeError("parameter name must be a non-empty string")
         object.__setattr__(self, "aliases", tuple(self.aliases))
-        object.__setattr__(self, "external_names", tuple(self.external_names))
+        if not isinstance(self.external_names, Mapping):
+            raise TypeError("external_names must be a mapping")
+        if any(not isinstance(namespace, str) or not namespace or not isinstance(code, str) or not code
+               for namespace, code in self.external_names.items()):
+            raise TypeError("external_names must map non-empty namespace strings to non-empty codes")
+        object.__setattr__(self, "external_names", MappingProxyType(dict(self.external_names)))
+        entry_id = self.parameter_id if self.entry_parameter_id is None else self.entry_parameter_id
+        if entry_id is not None and not isinstance(entry_id, str):
+            raise TypeError("entry_parameter_id must be a string or None")
+        object.__setattr__(self, "entry_parameter_id", entry_id)
         object.__setattr__(self, "grib_key", MappingProxyType(dict(self.grib_key)))
         object.__setattr__(self, "conditions", MappingProxyType(dict(self.conditions)))
         object.__setattr__(self, "raw", _freeze(self.raw, "parameter record"))
@@ -78,6 +103,16 @@ class ResolvedParameter:
     record: ParameterRecord
     query: FieldQuery
     matched_by: str
+
+
+@dataclass(frozen=True)
+class ExternalNameResolution:
+    """An entry external name plus the concrete parameter that inherited it."""
+    namespace: str
+    code: str
+    parameter_id: str
+    entry_parameter_id: str
+    inherited: bool
 
 
 @dataclass(frozen=True)
@@ -116,19 +151,28 @@ def _record(entry: Mapping[str, Any], variant: Mapping[str, Any] | None = None) 
         elif variant is not None and key in entry:
             conditions[key] = entry[key]
     key = entry["key"]
+    if variant is not None and "external_names" in variant:
+        raise ValueError("variants may not override external_names")
+    external_names = entry.get("external_names", {})
+    if not isinstance(external_names, Mapping):
+        raise TypeError("entry external_names must be a mapping")
+    # v2's existing WGRIB2 field remains a compatibility external namespace.
+    if entry.get("wgrib2_name"):
+        external_names = {"wgrib2": entry["wgrib2_name"], **external_names}
     return ParameterRecord(
         source.get("parameter_id"), source["name"], tuple(source.get("aliases", ())),
         {"discipline": int(key["discipline"]), "parameterCategory": int(key["category"]), "parameterNumber": int(key["number"])},
         conditions, source.get("unit", entry.get("unit")),
-        (entry["wgrib2_name"],) if entry.get("wgrib2_name") else (), variant is not None, source,
+        external_names, variant is not None, entry.get("parameter_id"), source,
     )
 
 
 class ParameterIndex:
     """Validated immutable indexes built once from a snapshot document."""
     def __init__(self, entries: list[Mapping[str, Any]], *, api_version: str | None):
-        if api_version is not None and api_version != _V2:
+        if api_version is not None and api_version not in {_V2, _V3}:
             raise ValueError(f"unsupported parameter registry api_version: {api_version!r}")
+        _validate_snapshot_fields(entries, api_version)
         self.entries = tuple(entries)
         self.by_grib_key = MappingProxyType({
             (int(e["key"]["discipline"]), int(e["key"]["category"]), int(e["key"]["number"])): e for e in entries
@@ -146,7 +190,18 @@ class ParameterIndex:
         self.by_name = self._unique("name", ((r.name, r) for r in records), prefer_variant=True)
         self.by_alias = self._unique("alias", ((a, r) for r in records for a in r.aliases))
         # wgrib2 names identify a GRIB triple, not a particular variant.
-        self.by_external = self._unique("external name", ((a, r) for r in records if not r.is_variant for a in r.external_names))
+        self.by_external = self._unique("external name", ((r.external_names["wgrib2"], r) for r in records if not r.is_variant and "wgrib2" in r.external_names))
+        namespaced: dict[tuple[str, str], ParameterRecord] = {}
+        for record in records:
+            if record.is_variant:
+                continue
+            for namespace, code in record.external_names.items():
+                if namespace == "wgrib2":
+                    continue
+                prior = namespaced.setdefault((namespace, code), record)
+                if prior != record:
+                    raise ValueError(f"duplicate external name {namespace}:{code}")
+        self.by_namespaced_external = MappingProxyType(namespaced)
 
     @staticmethod
     def _unique(label: str, pairs, *, prefer_variant: bool = False):
@@ -177,6 +232,49 @@ class ParameterIndex:
             return None
         candidates = [(len(v.get("when", {})), pos, _record(entry, v)) for pos, v in enumerate(entry.get("params", ())) if _variant_matches(v.get("when", {}), param_key)]
         return max(candidates, default=(0, 0, _record(entry)), key=lambda x: (x[0], x[1]))[2]
+
+    def resolve_external_name(self, parameter: str, namespace: str) -> ExternalNameResolution:
+        if not isinstance(namespace, str) or not namespace:
+            raise TypeError("namespace must be a non-empty string")
+        record, _ = self.resolve_record(parameter)
+        if namespace == "wgrib2":
+            raise ParameterNamespaceNotFoundError(parameter, namespace)
+        code = record.external_names.get(namespace)
+        if code is None:
+            known = {name for item in self.records for name in item.external_names if name != "wgrib2"}
+            if namespace not in known:
+                raise ParameterNamespaceNotFoundError(parameter, namespace)
+            raise ParameterExternalNameNotMappedError(parameter, namespace)
+        if record.parameter_id is None or record.entry_parameter_id is None:
+            raise ParameterExternalNameNotMappedError(parameter, namespace)
+        return ExternalNameResolution(namespace, code, record.parameter_id,
+                                      record.entry_parameter_id, record.is_variant)
+
+
+def _validate_snapshot_fields(entries: list[Mapping[str, Any]], api_version: str | None) -> None:
+    """Keep v3 strict while preserving the documented v2/list compatibility."""
+    entry_fields = {"parameter_id", "key", "name", "aliases", "wgrib2_name", "unit",
+                    "description", "description_cn", "typeOfLevel", "level", "params"}
+    if api_version == _V3:
+        entry_fields.add("external_names")
+    variant_fields = {"parameter_id", "name", "aliases", "when", "typeOfLevel", "level",
+                      "unit", "description", "description_cn"}
+    for index, entry in enumerate(entries):
+        if not isinstance(entry, Mapping):
+            raise TypeError(f"entries[{index}] must be a mapping")
+        unknown = set(entry) - entry_fields
+        if unknown:
+            raise ValueError(f"entries[{index}] has unknown fields: {', '.join(sorted(unknown))}")
+        if api_version == _V3 and "parameter_id" not in entry:
+            raise ValueError(f"entries[{index}] requires parameter_id")
+        for variant_index, variant in enumerate(entry.get("params", ())):
+            if not isinstance(variant, Mapping):
+                raise TypeError(f"entries[{index}].params[{variant_index}] must be a mapping")
+            if "external_names" in variant:
+                raise ValueError("variants may not override external_names")
+            unknown = set(variant) - variant_fields
+            if unknown:
+                raise ValueError(f"entries[{index}].params[{variant_index}] has unknown fields: {', '.join(sorted(unknown))}")
 
 
 def _load_document(document: object) -> ParameterIndex:
@@ -263,4 +361,9 @@ def resolve_parameter(parameter: str, *, level_type=None, level=None, step_type=
     return ResolvedParameter(record, FieldQuery(**values, extra=fixed_extra), matched_by)
 
 
-__all__ = ["GribParameterKey", "ParameterAmbiguityError", "ParameterConditionConflictError", "ParameterIndex", "ParameterNotFoundError", "ParameterRecord", "ParameterResolutionError", "ResolvedParameter", "WHEN_KEYS", "check_value", "find_cemc_name", "find_parameter_record", "find_short_name", "find_wgrib2_name", "get_param_registry", "get_parameter_index", "resolve_parameter"]
+def resolve_external_name(parameter: str, namespace: str) -> ExternalNameResolution:
+    """Resolve an entry external code without making that code a reverse input."""
+    return get_parameter_index().resolve_external_name(parameter, namespace)
+
+
+__all__ = ["ExternalNameResolution", "GribParameterKey", "ParameterAmbiguityError", "ParameterConditionConflictError", "ParameterExternalNameNotMappedError", "ParameterIndex", "ParameterNamespaceNotFoundError", "ParameterNotFoundError", "ParameterRecord", "ParameterResolutionError", "ResolvedParameter", "WHEN_KEYS", "check_value", "find_cemc_name", "find_parameter_record", "find_short_name", "find_wgrib2_name", "get_param_registry", "get_parameter_index", "resolve_external_name", "resolve_parameter"]
