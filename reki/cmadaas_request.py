@@ -46,7 +46,14 @@ class CmadaasRequestConflictError(CmadaasRequestError):
 def _time(value: Any, label: str) -> pd.Timestamp | pd.Timedelta:
     if value is None:
         raise CmadaasRequestError(f"{label} is required")
-    duration = isinstance(value, pd.Timedelta) or (isinstance(value, str) and re.fullmatch(r"[+-]?\d+(?:\.\d+)?[A-Za-z]+", value))
+    duration = isinstance(value, pd.Timedelta) or (
+        isinstance(value, str) and (
+            re.fullmatch(r"[+-]?\d+(?:\.\d+)?[A-Za-z]+", value)
+            # PlotPlan serializes duration bindings as ISO-8601 so its stable
+            # JSON can be passed back to a provider without reinterpretation.
+            or re.fullmatch(r"[+-]?P(?:\d+D)?(?:T(?:\d+H)?(?:\d+M)?(?:\d+(?:\.\d+)?S)?)?", value)
+        )
+    )
     parsed = pd.Timedelta(value) if duration else pd.Timestamp(value)
     if pd.isna(parsed):
         raise CmadaasRequestError(f"{label} must be a valid time")
