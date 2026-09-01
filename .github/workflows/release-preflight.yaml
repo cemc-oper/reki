@@ -1,0 +1,118 @@
+name: release-preflight
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Existing release-candidate tag to validate (for example, v2026.9)
+        required: true
+        type: string
+      expected_version:
+        description: Expected Python package version without the v prefix (for example, 2026.9)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: tests (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install package and test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+          python -m pip install --group test
+      - name: Run test suite
+        run: python -m pytest tests -v --tb=short
+
+  package:
+    name: build and install artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+      - name: Validate tag and version
+        env:
+          EXPECTED_REF: ${{ inputs.ref }}
+          EXPECTED_VERSION: ${{ inputs.expected_version }}
+        run: |
+          test "$(git describe --exact-match --tags HEAD)" = "$EXPECTED_REF"
+          case "$EXPECTED_REF" in
+            "v$EXPECTED_VERSION") ;;
+            *) echo "tag must equal v<expected_version>" >&2; exit 1 ;;
+          esac
+      - name: Build distributions
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build
+      - name: Verify distribution metadata and install wheel
+        env:
+          EXPECTED_VERSION: ${{ inputs.expected_version }}
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          import os
+
+          wheel = next(Path('dist').glob('*.whl'))
+          with ZipFile(wheel) as archive:
+              metadata_name = next(name for name in archive.namelist() if name.endswith('.dist-info/METADATA'))
+              metadata = archive.read(metadata_name).decode()
+          fields = dict(
+              line.split(': ', 1)
+              for line in metadata.splitlines()
+              if line.startswith(('Name: ', 'Version: ', 'Requires-Python: '))
+          )
+          assert fields['Name'] == 'reki', fields
+          assert fields['Version'] == os.environ['EXPECTED_VERSION'], fields
+          assert fields['Requires-Python'] == '>=3.11', fields
+          print(fields)
+          PY
+          python -m venv /tmp/reki-release-preflight
+          /tmp/reki-release-preflight/bin/python -m pip install --upgrade pip
+          /tmp/reki-release-preflight/bin/python -m pip install dist/*.whl
+          /tmp/reki-release-preflight/bin/python -m pip check
+          /tmp/reki-release-preflight/bin/reki --help
+          /tmp/reki-release-preflight/bin/reki-finder --help
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reki-${{ inputs.expected_version }}-distributions
+          path: dist/
+          if-no-files-found: error
+
+  docs:
+    name: documentation (Python 3.12)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+      - name: Build documentation
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r doc/requirements.txt
+          python -m pip install .
+          make -C doc data
+          make -C doc html
