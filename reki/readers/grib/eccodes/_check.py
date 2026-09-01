@@ -45,7 +45,10 @@ def _check_message(
 
     additional_conditions = {}
     for key, expected_value in kwargs.items():
-        if ":" not in key:
+        # ``first_level`` and ``second_level`` are reki query aliases, not
+        # ecCodes keys.  ``check_conditions`` handles them before looking up
+        # ordinary GRIB keys, so they must retain their untyped names here.
+        if ":" not in key and key not in {"first_level", "second_level"}:
             key = combine_key_name_with_type(key, expected_value)
         additional_conditions[key] = expected_value
 
