@@ -54,7 +54,7 @@ datasets:
   # so catalog resolution and recipe loading stay offline; credentials are
   # supplied by the runtime CMADaaS client configuration.
   - id: cma_gfs_gmf_cmadaas
-    aliases: [CMA-GFS-CMADaaS]
+    aliases: [CMA-GFS-CMADaaS, CMA-GFS-FORECAST-CMADaaS]
     source:
       name: cmadaas
       kwargs:
@@ -64,10 +64,187 @@ datasets:
         # MUSIC request was also successful; HIGH_EC names a different model.
         data_code: NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB
     metadata:
-      display_name: CMA-GFS CMADaaS
+      display_name: CMA-GFS forecast CMADaaS
       provider: cmadaas-remote
+      product_type: deterministic_forecast
       limitations: "Product availability and grid version are service dependent."
       data_code_evidence:
         status: confirmed
-        source: nuwe-cmadaas CMA-GFS product reference; T5-09 MUSIC fixed-cycle request
+        source: doc/ref/cmadaas-cemc-data.md CMA-GFS forecast product table
+        reviewed_on: '2026-08-31'
+  - id: cma_gfs_gmf_analysis_cmadaas
+    aliases: [CMA-GFS-ANALYSIS-CMADaaS]
+    source:
+      name: cmadaas
+      kwargs:
+        kind: model_grid
+        data_code: NAFP_ANA_FTM_GRAPES_GFS_25KM_GLB
+    metadata:
+      display_name: CMA-GFS analysis CMADaaS
+      provider: cmadaas-remote
+      product_type: deterministic_analysis
+      limitations: "Product availability and grid version are service dependent."
+      data_code_evidence:
+        status: confirmed
+        source: doc/ref/cmadaas-cemc-data.md CMA-GFS analysis product table
+        reviewed_on: '2026-08-31'
+  - id: cma_meso_3km_analysis_cmadaas
+    aliases: [CMA-MESO-3KM-ANALYSIS-CMADaaS]
+    source:
+      name: cmadaas
+      kwargs:
+        kind: model_grid
+        data_code: NAFP_GRAPES_MESO_ANA_3KM
+    metadata:
+      display_name: CMA-MESO-3KM analysis CMADaaS
+      provider: cmadaas-remote
+      product_type: deterministic_analysis
+      limitations: "Product availability and grid version are service dependent."
+      data_code_evidence:
+        status: confirmed
+        source: doc/ref/cmadaas-cemc-data.md CMA-MESO-3KM analysis product table
+        reviewed_on: '2026-08-31'
+  - id: cma_meso_3km_forecast_cmadaas
+    aliases: [CMA-MESO-3KM-FORECAST-CMADaaS]
+    source:
+      name: cmadaas
+      kwargs:
+        kind: model_grid
+        data_code: NAFP_GRAPES_MESO_FOR_3KM
+    metadata:
+      display_name: CMA-MESO-3KM forecast CMADaaS
+      provider: cmadaas-remote
+      product_type: deterministic_forecast
+      limitations: "Product availability and grid version are service dependent."
+      data_code_evidence:
+        status: confirmed
+        source: doc/ref/cmadaas-cemc-data.md CMA-MESO-3KM forecast product table
+        reviewed_on: '2026-08-31'
+  - id: cma_meso_1km_analysis_cmadaas
+    aliases: [CMA-MESO-1KM-ANALYSIS-CMADaaS]
+    source:
+      name: cmadaas
+      kwargs:
+        kind: model_grid
+        data_code: NAFP_CEMC_MESO_ANA_1KM
+    metadata:
+      display_name: CMA-MESO-1KM analysis CMADaaS
+      provider: cmadaas-remote
+      product_type: deterministic_analysis
+      limitations: "Product availability and grid version are service dependent."
+      data_code_evidence:
+        status: confirmed
+        source: doc/ref/cmadaas-cemc-data.md CMA-MESO-1KM analysis product table
+        reviewed_on: '2026-08-31'
+  - id: cma_meso_1km_forecast_cmadaas
+    aliases: [CMA-MESO-1KM-FORECAST-CMADaaS]
+    source:
+      name: cmadaas
+      kwargs:
+        kind: model_grid
+        data_code: NAFP_CEMC_MESO_FOR_1KM
+    metadata:
+      display_name: CMA-MESO-1KM forecast CMADaaS
+      provider: cmadaas-remote
+      product_type: deterministic_forecast
+      limitations: "Product availability and grid version are service dependent."
+      data_code_evidence:
+        status: confirmed
+        source: doc/ref/cmadaas-cemc-data.md CMA-MESO-1KM forecast product table
+        reviewed_on: '2026-08-31'
+  - id: cma_tym_analysis_cmadaas
+    aliases: [CMA-TYM-ANALYSIS-CMADaaS]
+    source:
+      name: cmadaas
+      kwargs:
+        kind: model_grid
+        data_code: NAFP_ANA_CMA_TYM_0P09_ASI
+    metadata:
+      display_name: CMA-TYM analysis CMADaaS
+      provider: cmadaas-remote
+      product_type: deterministic_analysis
+      limitations: "Product availability and grid version are service dependent."
+      data_code_evidence:
+        status: confirmed
+        source: doc/ref/cmadaas-cemc-data.md CMA-TYM analysis product table
+        reviewed_on: '2026-08-31'
+  - id: cma_tym_forecast_cmadaas
+    aliases: [CMA-TYM-FORECAST-CMADaaS]
+    source:
+      name: cmadaas
+      kwargs:
+        kind: model_grid
+        data_code: NAFP_FOR_CMA_TYM_0P09_ASI
+    metadata:
+      display_name: CMA-TYM forecast CMADaaS
+      provider: cmadaas-remote
+      product_type: deterministic_forecast
+      limitations: "Product availability and grid version are service dependent."
+      data_code_evidence:
+        status: confirmed
+        source: doc/ref/cmadaas-cemc-data.md CMA-TYM forecast product table
+        reviewed_on: '2026-08-31'
+  - id: cma_geps_control_cmadaas
+    aliases: [CMA-GEPS-CONTROL-CMADaaS]
+    source:
+      name: cmadaas
+      kwargs:
+        kind: model_grid
+        data_code: NAFP_NWPC_CMAGEPS_GLB_HOR12_D0P5_CONTROL
+    metadata:
+      display_name: CMA-GEPS control forecast CMADaaS
+      provider: cmadaas-remote
+      product_type: ensemble_control_forecast
+      limitations: "Product availability and member handling are service dependent."
+      data_code_evidence:
+        status: confirmed
+        source: doc/ref/cmadaas-cemc-data.md CMA-GEPS control forecast product table
+        reviewed_on: '2026-08-31'
+  - id: cma_geps_perturbation_cmadaas
+    aliases: [CMA-GEPS-PERTURBATION-CMADaaS]
+    source:
+      name: cmadaas
+      kwargs:
+        kind: model_grid
+        data_code: NAFP_NWPC_CMAGEPS_GLB_HOR12_D0P5_DIS
+    metadata:
+      display_name: CMA-GEPS perturbation forecast CMADaaS
+      provider: cmadaas-remote
+      product_type: ensemble_perturbation_forecast
+      limitations: "Product availability and member handling are service dependent."
+      data_code_evidence:
+        status: confirmed
+        source: doc/ref/cmadaas-cemc-data.md CMA-GEPS perturbation forecast product table
+        reviewed_on: '2026-08-31'
+  - id: cma_reps_control_cmadaas
+    aliases: [CMA-REPS-CONTROL-CMADaaS]
+    source:
+      name: cmadaas
+      kwargs:
+        kind: model_grid
+        data_code: NAFP_GRAPESREPS_FOR_FTM_CHN
+    metadata:
+      display_name: CMA-REPS control forecast CMADaaS
+      provider: cmadaas-remote
+      product_type: ensemble_control_forecast
+      limitations: "Product availability and member handling are service dependent."
+      data_code_evidence:
+        status: confirmed
+        source: doc/ref/cmadaas-cemc-data.md CMA-REPS control forecast product table
+        reviewed_on: '2026-08-31'
+  - id: cma_reps_perturbation_cmadaas
+    aliases: [CMA-REPS-PERTURBATION-CMADaaS]
+    source:
+      name: cmadaas
+      kwargs:
+        kind: model_grid
+        data_code: NAFP_GRAPESREPS_FOR_FTM_DIS_CHN
+    metadata:
+      display_name: CMA-REPS perturbation forecast CMADaaS
+      provider: cmadaas-remote
+      product_type: ensemble_perturbation_forecast
+      limitations: "Product availability and member handling are service dependent."
+      data_code_evidence:
+        status: confirmed
+        source: doc/ref/cmadaas-cemc-data.md CMA-REPS perturbation forecast product table
         reviewed_on: '2026-08-31'

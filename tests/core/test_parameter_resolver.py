@@ -55,10 +55,43 @@ def test_namespaced_external_name_inherits_from_entry_without_reverse_input():
     with pytest.raises(reki.ParameterNotFoundError):
         reki.resolve_parameter("TEM")
     with pytest.raises(reki.ParameterExternalNameNotMappedError) as error:
-        reki.resolve_external_name("cedarkit.td", "cmadaas")
+        reki.resolve_external_name("cedarkit.apd", "cmadaas")
     assert error.value.code == "cmadaas_name_not_mapped"
     with pytest.raises(reki.ParameterNamespaceNotFoundError):
         reki.resolve_external_name("cedarkit.t", "unknown")
+
+
+@pytest.mark.parametrize(
+    ("parameter_id", "code"),
+    [
+        ("cedarkit.albedo.any", "ALBO"),
+        ("cedarkit.q", "SHU"),
+        ("cedarkit.rainc.any", "CPE"),
+        ("cedarkit.rainnc.any", "LPE"),
+        ("cedarkit.td", "DPT"),
+        ("cedarkit.wi.any", "WIDX"),
+    ],
+)
+def test_resolve_published_m06_cmadaas_external_names(parameter_id, code):
+    resolved = reki.resolve_external_name(parameter_id, "cmadaas")
+    assert resolved.code == code
+    assert resolved.entry_parameter_id == parameter_id
+    assert resolved.inherited is False
+
+
+@pytest.mark.parametrize(
+    ("parameter_id", "entry_parameter_id", "code"),
+    [
+        ("cedarkit.td2m", "cedarkit.td", "DPT"),
+        ("cedarkit.rainc", "cedarkit.rainc.any", "CPE"),
+        ("cedarkit.rainnc", "cedarkit.rainnc.any", "LPE"),
+    ],
+)
+def test_m06_cmadaas_external_names_are_inherited_by_variants(parameter_id, entry_parameter_id, code):
+    resolved = reki.resolve_external_name(parameter_id, "cmadaas")
+    assert resolved.code == code
+    assert resolved.entry_parameter_id == entry_parameter_id
+    assert resolved.inherited is True
 
 
 def test_resolve_rejects_unknown_and_fixed_condition_conflicts():

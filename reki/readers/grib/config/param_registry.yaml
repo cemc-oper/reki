@@ -84,6 +84,8 @@ entries:
   name: thetaSe
   aliases:
   - pte
+  external_names:
+    cmadaas: PPT
   wgrib2_name: EPOT
   unit: K
   description: Pseudo-equivalent potential temperature
@@ -142,6 +144,8 @@ entries:
   name: td
   aliases:
   - dpt
+  external_names:
+    cmadaas: DPT
   wgrib2_name: DPT
   unit: K
   description: Dew point
@@ -162,6 +166,8 @@ entries:
     category: 0
     number: 7
   name: ttd
+  external_names:
+    cmadaas: DPD
   wgrib2_name: DEPR
   unit: K
   description: Dew point depression
@@ -208,6 +214,8 @@ entries:
   name: tadv
   aliases:
   - t_adv
+  external_names:
+    cmadaas: TEAD
   unit: 1.e-6 k/s
   description: Temperature advection
   description_cn: 温度平流
@@ -259,6 +267,8 @@ entries:
     category: 1
     number: 0
   name: q
+  external_names:
+    cmadaas: SHU
   wgrib2_name: SPFH
   unit: kg/kg
   description: Specific humidity
@@ -323,6 +333,8 @@ entries:
     category: 1
     number: 1
   name: rh
+  external_names:
+    cmadaas: RHU
   wgrib2_name: RH
   unit: '%'
   description: Relative humidity
@@ -382,6 +394,8 @@ entries:
     category: 1
     number: 9
   name: rainnc
+  external_names:
+    cmadaas: LPE
   wgrib2_name: NCPCP
   unit: mm
   description: Large scale precipitation
@@ -400,6 +414,8 @@ entries:
     category: 1
     number: 10
   name: rainc
+  external_names:
+    cmadaas: CPE
   wgrib2_name: ACPCP
   unit: mm
   description: Convective precipitation
@@ -418,6 +434,8 @@ entries:
     category: 1
     number: 11
   name: sd
+  external_names:
+    cmadaas: SDE
   wgrib2_name: SNOD
   unit: m
   description: 'Snow depth  '
@@ -446,6 +464,8 @@ entries:
   name: qc
   aliases:
   - CLWMR
+  external_names:
+    cmadaas: CMRA
   wgrib2_name: CLMR
   unit: kg/kg
   description: Cloud mixing ratio
@@ -456,6 +476,8 @@ entries:
     category: 1
     number: 23
   name: qi
+  external_names:
+    cmadaas: IWMR
   wgrib2_name: ICMR
   unit: kg/kg
   description: Ice mixing ratio
@@ -466,6 +488,8 @@ entries:
     category: 1
     number: 24
   name: qr
+  external_names:
+    cmadaas: RMRA
   wgrib2_name: RWMR
   unit: kg/kg
   description: Rain mixing ratio
@@ -476,6 +500,8 @@ entries:
     category: 1
     number: 25
   name: qs
+  external_names:
+    cmadaas: SMRA
   wgrib2_name: SNMR
   unit: kg/kg
   description: Snow mixing ratio
@@ -486,6 +512,8 @@ entries:
     category: 1
     number: 29
   name: sf
+  external_names:
+    cmadaas: TOSN
   wgrib2_name: ASNOW
   unit: m
   description: 'Snow melt  '
@@ -507,6 +535,8 @@ entries:
     category: 1
     number: 32
   name: graupel
+  external_names:
+    cmadaas: GRSP
   wgrib2_name: GRLE
   unit: kg/kg
   description: Graupel
@@ -524,6 +554,8 @@ entries:
     category: 1
     number: 64
   name: tvw
+  external_names:
+    cmadaas: TIWV
   wgrib2_name: TCIWV
   unit: kg/m2
   description: Total column integrated water vapor
@@ -541,6 +573,8 @@ entries:
     category: 1
     number: 69
   name: tcw
+  external_names:
+    cmadaas: TCCW
   wgrib2_name: TCOLW
   unit: kg/m2
   description: Total column integrated cloud water
@@ -558,6 +592,8 @@ entries:
     category: 1
     number: 70
   name: tiw
+  external_names:
+    cmadaas: TCCI
   wgrib2_name: TCOLI
   unit: kg/m2
   description: Total column integrated cloud ice
@@ -575,6 +611,8 @@ entries:
     category: 1
     number: 224
   name: qflx
+  external_names:
+    cmadaas: MOFU
   unit: 1e-1.g/(cm.hpa.s)
   description: Moisture flux
   description_cn: 水汽通量
@@ -586,6 +624,8 @@ entries:
   name: qdiv
   aliases:
   - qv_div
+  external_names:
+    cmadaas: MFVO
   wgrib2_name: FRZR
   unit: 1e-7.g/(cm2.hpa.s)
   description: Moisture flux divergence
@@ -613,6 +653,8 @@ entries:
     category: 1
     number: 228
   name: pc
+  external_names:
+    cmadaas: PC
   unit: Pa
   description: Condensation layer pressure
   description_cn: 抬升凝结高度处气压
@@ -656,6 +698,8 @@ entries:
     category: 1
     number: 231
   name: rhmax
+  external_names:
+    cmadaas: RHMAX
   unit: '%'
   description: 'Maximum of rh '
   description_cn: 最大相对湿度
@@ -675,6 +719,8 @@ entries:
     category: 1
     number: 232
   name: rhmin
+  external_names:
+    cmadaas: RHMIN
   unit: '%'
   description: Minimum of rh
   description_cn: 最小相对湿度
@@ -747,6 +793,8 @@ entries:
     category: 1
     number: 239
   name: hi
+  external_names:
+    cmadaas: HIDX
   wgrib2_name: HI
   description: 'Hail index '
   description_cn: 冰雹指数
@@ -899,6 +947,8 @@ entries:
     category: 2
     number: 9
   name: w
+  external_names:
+    cmadaas: VVM
   wgrib2_name: DZDT
   unit: m/s
   description: Vertical velocity (geometric)
@@ -957,6 +1007,8 @@ entries:
     category: 2
     number: 22
   name: gust
+  external_names:
+    cmadaas: WSGU
   wgrib2_name: GUST
   unit: m/s
   description: Wind speed (gust)
@@ -1012,6 +1064,8 @@ entries:
   name: voradv
   aliases:
   - vor_adv
+  external_names:
+    cmadaas: VOAD
   unit: 1.e-11/(s2)
   description: Relative vorticity advection
   description_cn: 涡度平流
@@ -1129,6 +1183,8 @@ entries:
     category: 2
     number: 236
   name: wi
+  external_names:
+    cmadaas: WIDX
   description: Wind index
   description_cn: 大风指数
   typeOfLevel: surface
@@ -1203,6 +1259,8 @@ entries:
     category: 3
     number: 1
   name: psl
+  external_names:
+    cmadaas: SSP
   wgrib2_name: PRMSL
   unit: Pa
   description: Sea level pressure
@@ -1246,6 +1304,8 @@ entries:
     category: 3
     number: 18
   name: pblh
+  external_names:
+    cmadaas: PBLH
   wgrib2_name: HPBL
   unit: m
   description: Planet boundary layer height
@@ -1279,6 +1339,8 @@ entries:
     category: 3
     number: 225
   name: ht0
+  external_names:
+    cmadaas: HT0
   unit: m
   description: Height of 0 degree isothermal level
   description_cn: 0度层高度
@@ -1320,6 +1382,8 @@ entries:
     category: 3
     number: 228
   name: znt
+  external_names:
+    cmadaas: ZNT
   unit: m
   description: roughness length
   description_cn: 粗糙度
@@ -1530,6 +1594,8 @@ entries:
     category: 6
     number: 1
   name: tcc
+  external_names:
+    cmadaas: TCC
   wgrib2_name: TCDC
   unit: '%'
   description: Total cloud cover
@@ -1541,6 +1607,8 @@ entries:
     category: 6
     number: 3
   name: lcc
+  external_names:
+    cmadaas: LCC
   wgrib2_name: LCDC
   unit: '%'
   description: Low cloud cover
@@ -1552,6 +1620,8 @@ entries:
     category: 6
     number: 4
   name: mcc
+  external_names:
+    cmadaas: MCC
   wgrib2_name: MCDC
   unit: '%'
   description: Medium cloud cover
@@ -1563,6 +1633,8 @@ entries:
     category: 6
     number: 5
   name: hcc
+  external_names:
+    cmadaas: HCC
   wgrib2_name: HCDC
   unit: '%'
   description: High cloud cover
@@ -1604,6 +1676,8 @@ entries:
     category: 6
     number: 22
   name: cc
+  external_names:
+    cmadaas: CLCO
   wgrib2_name: CDCC
   unit: '%'
   description: Cloud cover
@@ -1614,6 +1688,8 @@ entries:
     category: 7
     number: 0
   name: pli
+  external_names:
+    cmadaas: PLI
   wgrib2_name: PLI
   unit: K
   description: Parcel lifted index(to 500 hpa)
@@ -1642,6 +1718,8 @@ entries:
     category: 7
     number: 2
   name: kidx
+  external_names:
+    cmadaas: KIDX
   wgrib2_name: KX
   unit: K
   description: K index
@@ -1681,6 +1759,8 @@ entries:
   name: sweatidx
   aliases:
   - SWEATX
+  external_names:
+    cmadaas: SWID
   wgrib2_name: SX
   description: Sweat index
   description_cn: 强天气胁迫指数
@@ -1699,6 +1779,8 @@ entries:
     category: 7
     number: 6
   name: cape
+  external_names:
+    cmadaas: CAPE
   wgrib2_name: CAPE
   unit: J/kg
   description: Convective available potential energy
@@ -1716,6 +1798,8 @@ entries:
     category: 7
     number: 7
   name: cin
+  external_names:
+    cmadaas: CIN
   wgrib2_name: CIN
   unit: J/kg
   description: Convective inhibition
@@ -1787,6 +1871,8 @@ entries:
     category: 7
     number: 13
   name: si
+  external_names:
+    cmadaas: SHID
   wgrib2_name: SHWINX
   unit: K
   description: Showalter index
@@ -1830,6 +1916,8 @@ entries:
     category: 7
     number: 224
   name: dcape
+  external_names:
+    cmadaas: DCAPE
   wgrib2_name: DCAPE
   unit: J/kg
   description: Down convective available potential energy
@@ -1869,6 +1957,8 @@ entries:
   aliases:
   - cr
   - c_dbz
+  external_names:
+    cmadaas: RACR
   wgrib2_name: CR
   unit: dbz
   description: Composite radar reflectivity
@@ -1904,6 +1994,8 @@ entries:
     category: 16
     number: 225
   name: dbz
+  external_names:
+    cmadaas: RAR
   unit: dbz
   description: Radar reflectivity
   description_cn: 雷达反射率
@@ -1934,6 +2026,8 @@ entries:
     category: 19
     number: 0
   name: vis
+  external_names:
+    cmadaas: VIS
   wgrib2_name: VIS
   unit: m
   description: Visibility
@@ -1951,6 +2045,8 @@ entries:
     category: 19
     number: 1
   name: albedo
+  external_names:
+    cmadaas: ALBO
   wgrib2_name: ALBDO
   unit: '%'
   description: Albedo
