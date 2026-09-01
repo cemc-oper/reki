@@ -10,7 +10,7 @@ def source(**kwargs):
     return reki.SourceSpec("cmadaas", kwargs=values)
 
 
-def test_binding_is_pure_and_uses_entry_name_inherited_by_variant():
+def test_binding_is_pure_and_uses_published_entry_names():
     request = reki.bind_cmadaas_request(source(), parameter_id="cedarkit.t2m",
                                         query=reki.resolve_parameter("cedarkit.t2m").query,
                                         start_time="2026-01-01T00:00:00", forecast_time=pd.Timedelta("6h"))
@@ -27,8 +27,14 @@ def test_binding_is_pure_and_uses_entry_name_inherited_by_variant():
     assert capability.direct_result is True
     assert capability.metadata_only is False
 
+    dew_point = reki.bind_cmadaas_request(
+        source(), parameter_id="cedarkit.td", query=reki.FieldQuery(),
+        start_time="2026-01-01T00:00:00", forecast_time=pd.Timedelta("6h"),
+    )
+    assert dew_point.parameter == "DPT"
+
     with pytest.raises(reki.CmadaasNameNotMappedError) as error:
-        reki.bind_cmadaas_request(source(), parameter_id="cedarkit.td", query=reki.FieldQuery(),
+        reki.bind_cmadaas_request(source(), parameter_id="cedarkit.apd", query=reki.FieldQuery(),
                                   start_time="2026-01-01T00:00:00", forecast_time=pd.Timedelta("6h"))
     assert error.value.code == "cmadaas_name_not_mapped"
     assert "DEMO" not in str(error.value)
