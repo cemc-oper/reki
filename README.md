@@ -3,286 +3,201 @@
 ![Maturity-Emerging](https://img.shields.io/badge/Maturity-Emerging-A259FF)
 ![GitHub Release](https://img.shields.io/github/v/release/cemc-oper/reki)
 ![PyPI - Version](https://img.shields.io/pypi/v/reki)
-[![Documentation Status](https://readthedocs.org/projects/reki/badge/?version=latest)](https://reki.readthedocs.io/zh_CN/latest/?badge=latest)
 ![GitHub License](https://img.shields.io/github/license/cemc-oper/reki)
 ![GitHub Action Workflow Status](https://github.com/cemc-oper/reki/actions/workflows/ci.yaml/badge.svg)
 
-A data preparation tool for meteorological data in CEMC/CMA.
+`reki` is a Python library for locating, reading, querying, and processing
+meteorological data. It provides a uniform source and query interface over
+GRIB2, NetCDF, GrADS, tables, and in-memory data. GRIB2 fields are decoded with
+ecCodes or cfgrib and returned as `xarray.DataArray` objects.
 
-Load GRIB2 data using [eccodes](https://github.com/ecmwf/eccodes-python)
-or [cfgrib](https://github.com/ecmwf/cfgrib).
+This README uses a CMADaaS-mounted GRIB directory as its real-data example.
+The mounted directory is a local file source; it is distinct from the CMADaaS
+remote service and does not require CMADaaS credentials.
 
-中文文档 (Chinese documentation): https://reki.readthedocs.io/
+## Features
+
+- Resolve operational file paths from versioned YAML templates.
+- Read GRIB2, NetCDF, GrADS, table, URL, memory, and local-file sources.
+- Select fields through a consistent query interface.
+- Resolve stable parameter identifiers and external parameter names.
+- Return decoded fields as `xarray.DataArray` objects for use with the Python
+  scientific ecosystem.
+- Provide common grid operations, including region extraction, point sampling,
+  and interpolation.
 
 ## Installation
 
-Install the latest release from pip:
+Python 3.11 or later is required.
 
 ```bash
 pip install reki
 ```
 
-or download the latest source code from GitHub and install using `pip`.
+For development in this workspace:
 
-## Getting started
-
-### Local file lookup
-
-The reki library includes built-in config files to locate data files in CMA-HPC2023-SC1 shared file system (`/g3/COMMONDATA`).
-The codes below finds the GRIB2-ORIG file path for CMA-GFS:
-
-```pycon
->>> from reki.data_finder import find_local_file
->>> gfs_grib2_file_path = find_local_file(
-...     "cma_gfs_gmf/grib2/orig",
-...     start_time="2025081900",
-...     forecast_time="24h",
-... )
->>> gfs_grib2_file_path
-PosixPath('/g3/COMMONDATA/OPER/CEMC/GFS_GMF/Prod-grib/2025081900/ORIG/gmf.gra.2025081900024.grb2')
+```bash
+cd repo/reki
+uv sync --group test
+pytest -m "not needs_data and not cma_hpc and not cmadaas_local and not cmadaas_service"
 ```
 
-The `find_local_file` function supports additional parameters for more specific file selection. 
-For instance, using number to indicate ensemble member:
+Reading GRIB2 data requires ecCodes. Install it with your system package
+manager or, for conda environments:
 
-```pycon
->>> geps_grib2_file_path = find_local_file(
-...     "cma_geps/grib2/orig",
-...     start_time="2025081900",
-...     forecast_time="24h",
-...     number=2,
-... )
->>> geps_grib2_file_path
-PosixPath('/g3/COMMONDATA/OPER/CEMC/GEPS/Prod-grib/2025081900/grib2/gef.gra.002.2025081900024.grb2')
+```bash
+conda install -c conda-forge eccodes
 ```
 
-reki also supports locating intermediate model output files. 
-The example below find path of the 240-hour model-level binary data file for CMA-GFS:
+## CMADaaS-mounted data source
 
-```pycon
->>> gfs_modelvar_file_path = find_local_file(
-...     "cma_gfs_gmf/bin/modelvar",
-...     start_time="2025081900",
-...     forecast_time="240h",
-... )
->>> gfs_modelvar_file_path
-PosixPath('/g3/COMMONDATA/OPER/CEMC/GFS_GMF/Fcst-long/2025081900/modelvar2025081900_240')
+reki includes local-path templates for CMADaaS-mounted GRIB data. Set
+`data_class="cmadaas"` and point `storage_base` at the mount root, commonly
+`/CMADAAS`. The templates then resolve the system-specific directory and file
+name from the start time and forecast time.
+
+The following data types currently have CMADaaS mount templates:
+
+| Data type | Product |
+| --- | --- |
+| `cma_gfs_gmf/grib2/orig` | CMA-GFS global forecast |
+| `cma_meso_3km/grib2/orig` | CMA-MESO 3 km forecast |
+| `cma_meso_1km/grib2/orig` | CMA-MESO 1 km forecast |
+| `cma_tym/grib2/orig` | CMA-TYM forecast |
+| `cma_geps/grib2/orig` | CMA-GEPS ensemble forecast |
+| `cma_reps/grib2/orig` | CMA-REPS ensemble forecast |
+
+## Quick start
+
+### Read a field directly from the mount
+
+Use `from_source("local", ...)` to resolve the file and open it in one step.
+The example reads CMA-GFS 2 m temperature from the CMADaaS mount:
+
+```python
+import reki
+
+reader = reki.from_source(
+    "local",
+    "cma_gfs_gmf/grib2/orig",
+    start_time="2025081900",
+    forecast_time="24h",
+    data_class="cmadaas",
+    storage_base="/CMADAAS",
+)
+
+t2m = reader.sel(
+    parameter="2t",
+    level_type="heightAboveGround",
+    level=2,
+).first().to_xarray()
+
+print(t2m.name, t2m.shape)
 ```
 
-Built-in configuration files are located in the `reki/data_finder/conf` directory.
+`sel()` narrows the field list without decoding the GRIB values. Calling
+`first()` selects the first matching field, and `to_xarray()` decodes it to an
+`xarray.DataArray`.
 
-### Reading GRIB2 files
+### Resolve the file path first
 
-#### Basic method
+When an application needs the path for logging, validation, or another GRIB
+tool, call `find_local_file()` directly:
 
-Use **eccodes** to retrieve a field from a GRIB2 file and return an `xarray.DataArray` object.
-This example loads the 850 hPa temperature field from a CMA-GFS GRIB2-ORIG data:
+```python
+from reki.data_finder import find_local_file
 
-```pycon
->>> from reki.format.grib import load_field_from_file
->>> field = load_field_from_file(
-...     gfs_grib2_file_path,
-...     parameter="t",
-...     level_type="pl",
-...     level=850,
-... )
->>> field
-<xarray.DataArray 't' (latitude: 1440, longitude: 2880)> Size: 33MB
-array([[270.49505859, 270.50505859, 270.50505859, ..., 270.49505859,
-        270.49505859, 270.49505859],
-       [270.69505859, 270.70505859, 270.71505859, ..., 270.70505859,
-        270.70505859, 270.69505859],
-       [270.84505859, 270.85505859, 270.85505859, ..., 270.84505859,
-        270.84505859, 270.84505859],
-       ...,
-       [247.60505859, 247.58505859, 247.74505859, ..., 247.62505859,
-        247.63505859, 247.61505859],
-       [247.26505859, 247.26505859, 247.25505859, ..., 247.25505859,
-        247.25505859, 247.25505859],
-       [246.84505859, 246.84505859, 246.84505859, ..., 246.85505859,
-        246.84505859, 246.84505859]], shape=(1440, 2880))
-Coordinates:
-    time        datetime64[ns] 8B 2025-08-19
-    step        timedelta64[ns] 8B 1 days
-    valid_time  datetime64[ns] 8B 2025-08-20
-    pl          float64 8B 850.0
-  * latitude    (latitude) float64 12kB 89.94 89.81 89.69 ... -89.81 -89.94
-  * longitude   (longitude) float64 23kB 0.0 0.125 0.25 ... 359.6 359.8 359.9
-Attributes: (12/17)
-    GRIB_edition:             2
-    GRIB_centre:              babj
-    GRIB_subCentre:           0
-    GRIB_tablesVersion:       4
-    GRIB_localTablesVersion:  0
-    GRIB_dataType:            fc
-    ...                       ...
-    GRIB_stepType:            instant
-    GRIB_stepUnits:           1
-    GRIB_stepRange:           24
-    GRIB_endStep:int:         24
-    GRIB_count:               109
-    long_name:                discipline=0 parmcat=0 parm=0
+path = find_local_file(
+    "cma_gfs_gmf/grib2/orig",
+    start_time="2025081900",
+    forecast_time="24h",
+    data_class="cmadaas",
+    storage_base="/CMADAAS",
+)
+
+print(path)
+# /CMADAAS/DATA/NAFP/NMC/GRAPES-GFS-GLB/2025/20250819/Z_NAFP_C_BABJ_20250819000000_P_NWPC-GRAPES-GFS-GLB-02400.grib2
 ```
 
-Quick plotting:
+For ensemble data, add the member number used by the template:
 
-```pycon
->>> (field - 273.15).plot()
+```python
+path = find_local_file(
+    "cma_geps/grib2/orig",
+    start_time="2025081900",
+    forecast_time="24h",
+    number=2,
+    data_class="cmadaas",
+    storage_base="/CMADAAS",
+)
 ```
 
-#### Level Type
+## Querying fields
 
-Load variables from model-level data. 
-The example below loads the u-component at model level 10 (`ml`) from CMA-GFS model-level GRIB2 data:
+Use GRIB keys in `sel()` to identify a field. The common keys are `parameter`,
+`level_type`, and `level`; additional GRIB keys can be supplied when a product
+needs more specific filtering.
 
-```pycon
->>> gfs_model_grib2_file_path = find_local_file(
-...     "cma_gfs_gmf/grib2/modelvar",
-...     start_time="2025081900",
-...     forecast_time="24h",
-... )
->>> gfs_model_grib2_file_path
-PosixPath('/g3/COMMONDATA/OPER/CEMC/GFS_GMF/Prod-grib/2025081900/MODELVAR/modelvar2025081900024.grb2')
->>> field = load_field_from_file(
-...     gfs_model_grib2_file_path,
-...     parameter="u",
-...     level_type="ml",
-...     level=10,
-... )
->>> field
-<xarray.DataArray 'u' (latitude: 1440, longitude: 2880)> Size: 33MB
-array([[ 9.09106934,  9.09106934,  9.10106934, ...,  9.09106934,
-         9.09106934,  9.09106934],
-       [ 8.00106934,  8.00106934,  8.00106934, ...,  8.01106934,
-         8.01106934,  8.01106934],
-       [ 7.97106934,  7.96106934,  7.96106934, ...,  7.97106934,
-         7.97106934,  7.97106934],
-       ...,
-       [11.00106934, 10.99106934, 10.98106934, ..., 11.04106934,
-        11.03106934, 11.01106934],
-       [11.73106934, 11.72106934, 11.71106934, ..., 11.77106934,
-        11.75106934, 11.74106934],
-       [14.21106934, 14.20106934, 14.19106934, ..., 14.24106934,
-        14.23106934, 14.22106934]], shape=(1440, 2880))
-Coordinates:
-    time        datetime64[ns] 8B 2025-08-19
-    step        timedelta64[ns] 8B 1 days
-    valid_time  datetime64[ns] 8B 2025-08-20
-    ml          int64 8B 10
-  * latitude    (latitude) float64 12kB 89.94 89.81 89.69 ... -89.81 -89.94
-  * longitude   (longitude) float64 23kB 0.0 0.125 0.25 ... 359.6 359.8 359.9
-Attributes: (12/17)
-    GRIB_edition:             2
-    GRIB_centre:              babj
-    GRIB_subCentre:           0
-    GRIB_tablesVersion:       4
-    GRIB_localTablesVersion:  0
-    GRIB_dataType:            fc
-    ...                       ...
-    GRIB_stepType:            instant
-    GRIB_stepUnits:           1
-    GRIB_stepRange:           24
-    GRIB_endStep:int:         24
-    GRIB_count:               187
-    long_name:                discipline=0 parmcat=2 parm=2
+```python
+temperature_850 = reader.sel(
+    parameter="t",
+    level_type="pl",
+    level=850,
+).first().to_xarray()
+
+reflectivity_850 = reader.sel(
+    parameter={
+        "discipline": 0,
+        "parameterCategory": 16,
+        "parameterNumber": 225,
+    },
+    level_type="pl",
+    level=850,
+).first().to_xarray()
 ```
 
-#### More filtering options
+Use `one()` instead of `first()` when exactly one match is required. It raises
+an error if the query is ambiguous, which is useful in production workflows.
 
-The `load_field_from_file` function also supports passing GRIB key parameters directly via a dictionary.
-The example below loads the radar reflectivity field at 850 hPa:
+## Working with xarray data
 
-```pycon
->>> field = load_field_from_file(
-...     gfs_grib2_file_path,
-...     parameter={
-...         "discipline": 0,
-...         "parameterCategory": 16,
-...         "parameterNumber": 225,
-...     },
-...     level_type="pl",
-...     level=850,
-... )
->>> field
-<xarray.DataArray '0_16_225' (latitude: 1440, longitude: 2880)> Size: 33MB
-array([[-7.12, -7.17, -7.24, ..., -7.03, -7.04, -7.06],
-       [-7.71, -7.64, -7.65, ..., -7.82, -7.8 , -7.78],
-       [-6.03, -6.07, -6.08, ..., -6.07, -6.08, -6.08],
-       ...,
-       [ 1.52,  1.37,  1.18, ...,  1.59,  1.22,  1.23],
-       [ 0.65,  0.68,  1.31, ...,  0.65,  0.67,  0.69],
-       [-0.22, -0.2 , -0.21, ..., -0.25, -0.24, -0.24]],
-      shape=(1440, 2880))
-Coordinates:
-    time        datetime64[ns] 8B 2025-08-19
-    step        timedelta64[ns] 8B 1 days
-    valid_time  datetime64[ns] 8B 2025-08-20
-    pl          float64 8B 850.0
-  * latitude    (latitude) float64 12kB 89.94 89.81 89.69 ... -89.81 -89.94
-  * longitude   (longitude) float64 23kB 0.0 0.125 0.25 ... 359.6 359.8 359.9
-Attributes: (12/17)
-    GRIB_edition:             2
-    GRIB_centre:              babj
-    GRIB_subCentre:           0
-    GRIB_tablesVersion:       4
-    GRIB_localTablesVersion:  1
-    GRIB_dataType:            fc
-    ...                       ...
-    GRIB_stepType:            instant
-    GRIB_stepUnits:           1
-    GRIB_stepRange:           24
-    GRIB_endStep:int:         24
-    GRIB_count:               790
-    long_name:                discipline=0 parmcat=16 parm=225
+The decoded result is a regular `xarray.DataArray`, including spatial and time
+coordinates. Standard xarray operations work directly:
+
+```python
+from reki.operator import extract_region
+
+east_asia_t2m = extract_region(
+    t2m,
+    start_longitude=105,
+    end_longitude=125,
+    start_latitude=25,
+    end_latitude=45,
+)
+
+mean_temperature = float(east_asia_t2m.mean())
 ```
 
-#### ecCodes interface
+## Source model
 
-reki supports returning the raw GRIB message via the ecCodes Python API.
-For instance, loading the 850 hPa geopotential height field:
+The public source flow is intentionally small:
 
-```pycon
->>> from reki.format.grib import load_message_from_file
->>> message = load_message_from_file(
-...     gfs_grib2_file_path,
-...     parameter="gh",
-...     level_type="pl",
-...     level=850,
-... )
->>> message
-94257262686816
->>> import eccodes
->>> values = eccodes.codes_get_double_array(message, "values")
->>> ni = eccodes.codes_get_long(message, "Ni")
->>> nj = eccodes.codes_get_long(message, "Nj")
->>> values.reshape(nj, ni)
-array([[1425.48203125, 1425.48203125, 1425.48203125, ..., 1425.48203125,
-        1425.48203125, 1425.48203125],
-       [1428.68203125, 1428.68203125, 1428.68203125, ..., 1428.68203125,
-        1428.68203125, 1428.68203125],
-       [1431.18203125, 1431.18203125, 1431.18203125, ..., 1431.18203125,
-        1431.18203125, 1431.18203125],
-       ...,
-       [1311.18203125, 1311.28203125, 1310.38203125, ..., 1311.08203125,
-        1311.08203125, 1311.08203125],
-       [1311.88203125, 1311.78203125, 1311.88203125, ..., 1311.88203125,
-        1311.88203125, 1311.88203125],
-       [1313.38203125, 1313.38203125, 1313.38203125, ..., 1313.28203125,
-        1313.38203125, 1313.38203125]], shape=(1440, 2880))
+```text
+source configuration → source → reader → field query → xarray.DataArray
 ```
 
-Finally, release the GRIB message object:
+- A **source** identifies where data comes from, such as a local mount, file,
+  URL, memory object, or remote service.
+- A **reader** understands the source format and exposes a field list.
+- A **field query** selects metadata without reading all field values.
+- `to_xarray()` decodes the selected field only when its values are needed.
 
-```pycon
->>> eccodes.codes_release(message)
-```
+This separation lets the same query-oriented application code work across
+different file locations and supported source types.
 
-## Examples
+## License
 
-See [cemc-oper/data-notebook](https://github.com/cemc-oper/data-notebook) project for more examples.
+Copyright &copy; 2020-2026, developers at CMA Earth System Modeling And
+Prediction Centre.
 
-## LICENSE
-
-Copyright &copy; 2020-2026, developers at CMA Earth System Modeling And Prediction Centre.
-
-`reki` is licensed under [Apache License, Version 2.0](./LICENSE)
+`reki` is licensed under the [Apache License 2.0](LICENSE).
