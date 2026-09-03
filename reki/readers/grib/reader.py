@@ -31,6 +31,7 @@ from reki.core.field_query import field_query_from_kwargs
 from reki.core.source_spec import redact
 
 from .common import fix_level_type
+from ._header_metadata import time_metadata_from_message
 
 GRIB_MAGIC = b"GRIB"
 
@@ -407,6 +408,7 @@ class GribReader(Reader):
                 if connection is not None:
                     rows = connection.execute(
                         "SELECT ordinal, offset, short_name, level_type, level_real, "
+                        "start_time_ns, step_ns, valid_time_ns, time_range_ns, "
                         "step_type, member, ni, nj, dtype, grid_type, extra_metadata_json, "
                         "discipline, parameter_category, parameter_number "
                         "FROM fields ORDER BY ordinal"
@@ -477,7 +479,9 @@ class GribReader(Reader):
         return self._field_reference(self._metadata_from_index_row(row))
 
     def _metadata_from_index_row(self, row):
-        (ordinal, offset, parameter, level_type, level, step_type, member, ni, nj,
+        (ordinal, offset, parameter, level_type, level,
+         start_time_ns, step_ns, valid_time_ns, time_range_ns,
+         step_type, member, ni, nj,
          dtype, grid_type, extra, discipline, parameter_category, parameter_number) = row
         import json
         extra = json.loads(extra)
@@ -488,7 +492,12 @@ class GribReader(Reader):
             }.items() if value is not None
         })
         return FieldMetadata(ordinal, offset, parameter, _public_level_type(level_type), level,
-                             step_type=step_type, member=member,
+                             start_time=(pd.Timestamp(start_time_ns) if start_time_ns is not None else None),
+                             step=(pd.Timedelta(step_ns, unit="ns") if step_ns is not None else None),
+                             valid_time=(pd.Timestamp(valid_time_ns) if valid_time_ns is not None else None),
+                             step_type=step_type,
+                             time_range=(pd.Timedelta(time_range_ns, unit="ns") if time_range_ns is not None else None),
+                             member=member,
                              shape=(nj, ni) if ni is not None and nj is not None else None,
                              dtype=dtype, grid_type=grid_type,
                              source=os.path.basename(str(self.path)), extra=extra)
@@ -851,6 +860,7 @@ def _metadata_from_message(message, ordinal, offset, path):
             return default
 
     ni, nj = get("Ni"), get("Nj")
+    time_metadata = time_metadata_from_message(message)
     extras = {
         "discipline": get("discipline"),
         "parameterCategory": get("parameterCategory"),
@@ -860,7 +870,9 @@ def _metadata_from_message(message, ordinal, offset, path):
     return FieldMetadata(
         index=ordinal, offset=offset, parameter=get("shortName"),
         level_type=_public_level_type(get("typeOfLevel")), level=get("level"),
-        step_type=get("stepType"), member=get("number"),
+        start_time=time_metadata["start_time"], step=time_metadata["step"],
+        valid_time=time_metadata["valid_time"], step_type=get("stepType"),
+        time_range=time_metadata["time_range"], member=get("number"),
         shape=(nj, ni) if ni is not None and nj is not None else None,
         dtype="float64", grid_type=get("gridType"),
         source=os.path.basename(str(path)),

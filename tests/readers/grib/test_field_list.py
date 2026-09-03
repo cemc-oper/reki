@@ -1,4 +1,5 @@
 import eccodes
+import pandas as pd
 import pytest
 
 from reki import DataNotFoundError, FieldList, FieldQuery
@@ -17,6 +18,25 @@ def _write(path):
                 eccodes.codes_write(message, output)
             finally:
                 eccodes.codes_release(message)
+
+
+def _write_timed_field(path):
+    """A 6--9 hour statistical product with an unambiguous valid time."""
+    with path.open("wb") as output:
+        message = eccodes.codes_grib_new_from_samples("GRIB2")
+        try:
+            eccodes.codes_set(message, "shortName", "t")
+            eccodes.codes_set(message, "typeOfLevel", "isobaricInhPa")
+            eccodes.codes_set(message, "level", 850)
+            eccodes.codes_set(message, "dataDate", 20240102)
+            eccodes.codes_set(message, "dataTime", 300)
+            eccodes.codes_set(message, "productDefinitionTemplateNumber", 8)
+            eccodes.codes_set(message, "indicatorOfUnitForTimeRange", 1)
+            eccodes.codes_set(message, "lengthOfTimeRange", 3)
+            eccodes.codes_set(message, "forecastTime", 6)
+            eccodes.codes_write(message, output)
+        finally:
+            eccodes.codes_release(message)
 
 
 def test_all_is_lazy_and_uses_index_then_field_offset(tmp_path):
@@ -77,6 +97,35 @@ def test_exploration_is_metadata_only_and_json_safe(tmp_path):
         assert metrics.snapshot()["value_decode_count"] == 0
     with pytest.raises(TypeError):
         reader.where("level == 850")
+
+
+def test_forecast_metadata_matches_between_scan_and_hot_index(tmp_path):
+    path = tmp_path / "timed.grib"
+    root = tmp_path / "index"
+    _write_timed_field(path)
+
+    with collect_io_metrics() as metrics:
+        scanned = GribReader(None, path, index_policy="off").all().one().metadata
+        assert metrics.snapshot()["value_decode_count"] == 0
+
+    # Build then reopen so the second access must project metadata from SQLite.
+    GribReader(None, path, index_policy="auto", index_dir=root).all()
+    with collect_io_metrics() as metrics:
+        indexed = GribReader(None, path, index_policy="auto", index_dir=root).all().one().metadata
+        assert metrics.snapshot()["grib_header_scan_count"] == 0
+        assert metrics.snapshot()["value_decode_count"] == 0
+
+    expected = {
+        "start_time": pd.Timestamp("2024-01-02 03:00:00"),
+        "step": pd.Timedelta(hours=9),
+        # The sample's explicit validity keys are authoritative; this also
+        # verifies that metadata follows the same ecCodes value as decoding.
+        "valid_time": pd.Timestamp("2024-01-02 03:00:00"),
+        "time_range": pd.Timedelta(hours=3),
+    }
+    assert {key: getattr(scanned, key) for key in expected} == expected
+    assert {key: getattr(indexed, key) for key in expected} == expected
+    assert GribReader(None, path, index_policy="off").ls(["step"]).iloc[0, 0] == pd.Timedelta(hours=9)
 
 
 def test_fetch_many_uses_one_metadata_scan_and_preserves_duplicates(tmp_path):

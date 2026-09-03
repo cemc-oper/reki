@@ -1,4 +1,4 @@
-"""SQLite schema v1, validation and atomic publication for GRIB metadata."""
+"""SQLite schema v2, validation and atomic publication for GRIB metadata."""
 
 from dataclasses import dataclass
 import hashlib
@@ -13,12 +13,13 @@ import eccodes
 
 from reki.diagnostics import record_io_event
 from ..eccodes._scan import iter_headers
+from .._header_metadata import time_metadata_from_message
 from .lock import target_lock
 
-INDEX_SCHEMA_VERSION = 1
-SCHEMA_ID = "reki-grib-index/1"
+INDEX_SCHEMA_VERSION = 2
+SCHEMA_ID = "reki-grib-index/2"
 QUERY_RULES_VERSION = "1"
-METADATA_KEYS_VERSION = "1"
+METADATA_KEYS_VERSION = "2"
 APPLICATION_ID = 0x524B4931
 
 
@@ -75,19 +76,26 @@ def _row(header):
     message = header.handle
     ni, nj = _get(message, "Ni"), _get(message, "Nj")
     level = _get(message, "level")
+    time_metadata = time_metadata_from_message(message)
+
+    def nanoseconds(key):
+        value = time_metadata[key]
+        return None if value is None else value.value
+
     return (header.ordinal, header.offset, header.message_length, _get(message, "edition", 2),
             _get(message, "discipline"), _get(message, "parameterCategory"),
             _get(message, "parameterNumber"), _get(message, "shortName"),
             _get(message, "typeOfLevel"), float(level) if isinstance(level, (int, float)) else None,
             None if isinstance(level, (int, float)) else str(level) if level is not None else None,
-            _get(message, "typeOfFirstFixedSurface"), None, None, None, None, None,
-            _get(message, "stepType"), None, _get(message, "number"), ni, nj,
+            _get(message, "typeOfFirstFixedSurface"), None, None,
+            nanoseconds("start_time"), nanoseconds("step"), nanoseconds("valid_time"),
+            _get(message, "stepType"), nanoseconds("time_range"), _get(message, "number"), ni, nj,
             json.dumps([nj, ni]) if ni is not None and nj is not None else None, "float64",
             _get(message, "gridType"), None, "{}")
 
 
 class IndexStore:
-    """Build/open a v1 index.  Reader wiring deliberately belongs to T3-04."""
+    """Build/open a v2 index.  Reader wiring deliberately belongs to T3-04."""
     def __init__(self, source_path, *, index_dir=None, lock_timeout=30.0):
         self.source_path = Path(source_path)
         self.index_dir = Path(index_dir) if index_dir is not None else default_index_dir()

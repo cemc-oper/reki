@@ -3,7 +3,7 @@ import multiprocessing
 import eccodes
 
 from reki.diagnostics import collect_io_metrics
-from reki.readers.grib.index import IndexStore, index_path_for
+from reki.readers.grib.index import INDEX_SCHEMA_VERSION, IndexStore, index_path_for
 from reki.readers.grib.reader import GribReader
 
 
@@ -34,6 +34,7 @@ def test_build_open_and_invalidate_without_touching_source(tmp_path):
     store = IndexStore(source, index_dir=root)
     connection = store.build()
     assert connection.execute("select count(*) from fields").fetchone()[0] == 2
+    assert connection.execute("select schema_version from index_meta").fetchone()[0] == INDEX_SCHEMA_VERSION == 2
     connection.close()
     assert store.path.parent == root
     assert store.path == index_path_for(source, root)
