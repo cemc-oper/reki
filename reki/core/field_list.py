@@ -172,7 +172,7 @@ _KNOWN_KEYS = frozenset(_DEFAULT_COLUMNS + ("offset", "time_range", "shape", "dt
 def _metadata_value(metadata, key):
     if key in metadata.extra:
         return metadata.extra[key]
-    return getattr(metadata, key)
+    return getattr(metadata, key, None)
 
 
 def _time_bound(metadata, key, function):
