@@ -13,13 +13,13 @@ import eccodes
 
 from reki.diagnostics import record_io_event
 from ..eccodes._scan import iter_headers
-from .._header_metadata import time_metadata_from_message
+from .._header_metadata import parameter_names_from_message, time_metadata_from_message
 from .lock import target_lock
 
 INDEX_SCHEMA_VERSION = 2
 SCHEMA_ID = "reki-grib-index/2"
 QUERY_RULES_VERSION = "1"
-METADATA_KEYS_VERSION = "2"
+METADATA_KEYS_VERSION = "3"
 APPLICATION_ID = 0x524B4931
 
 
@@ -77,6 +77,7 @@ def _row(header):
     ni, nj = _get(message, "Ni"), _get(message, "Nj")
     level = _get(message, "level")
     time_metadata = time_metadata_from_message(message)
+    parameter_names = parameter_names_from_message(message)
 
     def nanoseconds(key):
         value = time_metadata[key]
@@ -91,7 +92,7 @@ def _row(header):
             nanoseconds("start_time"), nanoseconds("step"), nanoseconds("valid_time"),
             _get(message, "stepType"), nanoseconds("time_range"), _get(message, "number"), ni, nj,
             json.dumps([nj, ni]) if ni is not None and nj is not None else None, "float64",
-            _get(message, "gridType"), None, "{}")
+            _get(message, "gridType"), None, json.dumps(parameter_names))
 
 
 class IndexStore:

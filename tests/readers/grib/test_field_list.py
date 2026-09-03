@@ -39,6 +39,25 @@ def _write_timed_field(path):
             eccodes.codes_release(message)
 
 
+def _write_soil_layer(path):
+    """Write the registry's ``st(0-10)`` fixed-surface combination."""
+    with path.open("wb") as output:
+        message = eccodes.codes_grib_new_from_samples("GRIB2")
+        try:
+            eccodes.codes_set(message, "discipline", 0)
+            eccodes.codes_set(message, "parameterCategory", 0)
+            eccodes.codes_set(message, "parameterNumber", 0)
+            eccodes.codes_set(message, "typeOfFirstFixedSurface", 106)
+            eccodes.codes_set(message, "scaleFactorOfFirstFixedSurface", 1)
+            eccodes.codes_set(message, "scaledValueOfFirstFixedSurface", 0)
+            eccodes.codes_set(message, "typeOfSecondFixedSurface", 106)
+            eccodes.codes_set(message, "scaleFactorOfSecondFixedSurface", 1)
+            eccodes.codes_set(message, "scaledValueOfSecondFixedSurface", 1)
+            eccodes.codes_write(message, output)
+        finally:
+            eccodes.codes_release(message)
+
+
 def test_all_is_lazy_and_uses_index_then_field_offset(tmp_path):
     path = tmp_path / "fields.grib"
     _write(path)
@@ -126,6 +145,23 @@ def test_forecast_metadata_matches_between_scan_and_hot_index(tmp_path):
     assert {key: getattr(scanned, key) for key in expected} == expected
     assert {key: getattr(indexed, key) for key in expected} == expected
     assert GribReader(None, path, index_policy="off").ls(["step"]).iloc[0, 0] == pd.Timedelta(hours=9)
+
+
+def test_cemc_name_uses_second_fixed_surface_in_scan_and_index(tmp_path):
+    path = tmp_path / "soil.grib"
+    root = tmp_path / "index"
+    _write_soil_layer(path)
+
+    scanned = GribReader(None, path, index_policy="off").all().one()
+    assert scanned.metadata.extra["cemc_name"] == "st(0-10)"
+    assert scanned.metadata.extra["wgrib2_name"] == "TMP"
+    assert scanned.to_xarray().name == scanned.metadata.extra["cemc_name"]
+
+    GribReader(None, path, index_policy="auto", index_dir=root).all()
+    indexed = GribReader(None, path, index_policy="auto", index_dir=root).all()
+    assert indexed.ls(["cemc_name", "wgrib2_name"]).to_dict("records") == [
+        {"cemc_name": "st(0-10)", "wgrib2_name": "TMP"},
+    ]
 
 
 def test_fetch_many_uses_one_metadata_scan_and_preserves_duplicates(tmp_path):

@@ -31,7 +31,7 @@ from reki.core.field_query import field_query_from_kwargs
 from reki.core.source_spec import redact
 
 from .common import fix_level_type
-from ._header_metadata import time_metadata_from_message
+from ._header_metadata import parameter_names_from_message, time_metadata_from_message
 
 GRIB_MAGIC = b"GRIB"
 
@@ -867,6 +867,7 @@ def _metadata_from_message(message, ordinal, offset, path):
         "parameterNumber": get("parameterNumber"),
         "parameter_match": "short_name",
     }
+    extras.update(parameter_names_from_message(message))
     return FieldMetadata(
         index=ordinal, offset=offset, parameter=get("shortName"),
         level_type=_public_level_type(get("typeOfLevel")), level=get("level"),

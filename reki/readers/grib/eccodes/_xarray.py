@@ -10,7 +10,8 @@ import eccodes
 from reki.diagnostics import record_io_event
 
 from reki.readers.grib.common import MISSING_VALUE
-from reki.readers.grib.config import GribParameterKey, find_wgrib2_name, find_cemc_name
+from reki.readers.grib.config import find_wgrib2_name, find_cemc_name
+from reki.readers.grib._parameter_metadata import attrs_to_grib_parameter_key
 
 # from loguru import logger
 
@@ -297,71 +298,6 @@ def get_attrs_from_message(keys: list[str], message) -> dict[str, Union[str, int
     return all_attrs
 
 
-def attrs_to_grib_parameter_key(attrs: dict) -> GribParameterKey:
-    discipline = attrs["discipline"]
-    parameterCategory = attrs["parameterCategory"]
-    parameterNumber = attrs["parameterNumber"]
-
-    first_level_type = attrs['typeOfFirstFixedSurface:int']
-    f = attrs['scaleFactorOfFirstFixedSurface']
-    v = attrs['scaledValueOfFirstFixedSurface']
-    first_level = math.pow(10, -1 * f) * v
-    if first_level_type == 100:
-        first_level = first_level / 100
-
-    second_level_type = None
-    second_level = None
-    if attrs['typeOfSecondFixedSurface:int'] != 255:
-        second_level_type = attrs['typeOfSecondFixedSurface:int']
-        f = attrs['scaleFactorOfSecondFixedSurface']
-        v = attrs['scaledValueOfSecondFixedSurface']
-        second_level = math.pow(10, -1 * f) * v
-        if second_level_type == 100:
-            second_level = second_level / 100
-
-    time_range_hours = _get_time_range_hours(attrs)
-
-    return GribParameterKey(
-        discipline=discipline,
-        category=parameterCategory,
-        number=parameterNumber,
-        first_level_type=first_level_type,
-        first_level=first_level,
-        second_level_type=second_level_type,
-        second_level=second_level,
-        stepType=attrs['stepType'],
-        time_range_hours=time_range_hours,
-    )
-
-
-#: GRIB2 code table 4.4 (indicatorOfUnitOfTimeRange) -> factor in hours
-_TIME_RANGE_UNIT_HOURS = {
-    0: 1 / 60,  # minute
-    1: 1.0,  # hour
-    2: 24.0,  # day
-    10: 3.0,  # 3 hours
-    11: 6.0,  # 6 hours
-    12: 12.0,  # 12 hours
-    13: 1 / 3600,  # second
-}
-
-
-def _get_time_range_hours(attrs: dict) -> Optional[float]:
-    """
-    Normalize indicatorOfUnitOfTimeRange/lengthOfTimeRange to hours.
-
-    Returns None when the message carries no time range (e.g. instant fields).
-    """
-    unit = attrs.get('indicatorOfUnitOfTimeRange:int')
-    length = attrs.get('lengthOfTimeRange:int')
-    if not isinstance(unit, int) or not isinstance(length, int):
-        return None
-    factor = _TIME_RANGE_UNIT_HOURS.get(unit)
-    if factor is None:
-        return None
-    return factor * length
-
-
 def get_field_name(
         all_attrs: dict[str, Union[str, int, float]],
         field_name: Optional[str] = None,
@@ -402,11 +338,11 @@ def get_field_name(
         result["eccodes_name"] = all_attrs["shortName"]
 
     grib_parameter_key = attrs_to_grib_parameter_key(all_attrs)
-    wgrib2_name = find_wgrib2_name(grib_parameter_key)
+    wgrib2_name = find_wgrib2_name(grib_parameter_key) if grib_parameter_key is not None else None
     if wgrib2_name is not None:
         result["wgrib2_name"] = wgrib2_name
 
-    cemc_name = find_cemc_name(grib_parameter_key)
+    cemc_name = find_cemc_name(grib_parameter_key) if grib_parameter_key is not None else None
     if cemc_name is not None:
         result["cemc_name"] = cemc_name
 

@@ -6,6 +6,9 @@ from typing import Any
 
 import pandas as pd
 
+from ._parameter_metadata import attrs_to_grib_parameter_key
+from .config import find_cemc_name, find_wgrib2_name
+
 
 # GRIB2 code table 4.4.  Calendar-based units are deliberately excluded:
 # neither an exact ``Timedelta`` nor a reliable fixed number of nanoseconds
@@ -80,3 +83,37 @@ def time_metadata_from_message(message) -> dict[str, pd.Timestamp | pd.Timedelta
             get("lengthOfTimeRange"), get("indicatorOfUnitOfTimeRange"),
         ),
     }
+
+
+def parameter_names_from_message(message) -> dict[str, str]:
+    """Resolve registry names from the complete fixed-surface GRIB metadata."""
+    import eccodes
+
+    def get(key, value_type=None):
+        try:
+            return eccodes.codes_get(message, key, value_type) if value_type else eccodes.codes_get(message, key)
+        except (eccodes.KeyValueNotFoundError, eccodes.WrongTypeError):
+            return None
+
+    attrs = {
+        "discipline": get("discipline"),
+        "parameterCategory": get("parameterCategory"),
+        "parameterNumber": get("parameterNumber"),
+        "typeOfFirstFixedSurface:int": get("typeOfFirstFixedSurface", int),
+        "scaleFactorOfFirstFixedSurface": get("scaleFactorOfFirstFixedSurface"),
+        "scaledValueOfFirstFixedSurface": get("scaledValueOfFirstFixedSurface"),
+        "typeOfSecondFixedSurface:int": get("typeOfSecondFixedSurface", int),
+        "scaleFactorOfSecondFixedSurface": get("scaleFactorOfSecondFixedSurface"),
+        "scaledValueOfSecondFixedSurface": get("scaledValueOfSecondFixedSurface"),
+        "stepType": get("stepType"),
+        "indicatorOfUnitOfTimeRange:int": get("indicatorOfUnitOfTimeRange", int),
+        "lengthOfTimeRange:int": get("lengthOfTimeRange", int),
+    }
+    parameter_key = attrs_to_grib_parameter_key(attrs)
+    if parameter_key is None:
+        return {}
+    names = {
+        "wgrib2_name": find_wgrib2_name(parameter_key),
+        "cemc_name": find_cemc_name(parameter_key),
+    }
+    return {key: value for key, value in names.items() if value is not None}
