@@ -157,7 +157,7 @@ CMADaaS MUSIC 服务（``cmadaas`` 数据源）
     ``local`` 数据源 + ``data_class="cmadaas"``）。
 
 ``cmadaas`` 数据源封装了 `nuwe-cmadaas
-<https://github.com/nwpc-oper/nuwe-cmadaas-python>`_ 客户端，
+<https://github.com/perillaroc/nuwe-cmadaas-python>`_ 客户端，
 通过 CMADaaS MUSIC 服务检索数据。使用前需安装额外依赖：
 
 .. code-block:: bash

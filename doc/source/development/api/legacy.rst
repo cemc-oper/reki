@@ -35,5 +35,18 @@ reStructuredText 规则，因此完整签名以源码和 :doc:`public-api-invent
 .. automodule:: reki.format.table
    :members:
 
+``NWPC_OBS_CONFIG`` 是旧观测表格读取器使用的兼容配置映射。它保留在
+``reki.format.table`` 中，新的读取流程应优先采用 :doc:`readers`。
+
 .. automodule:: reki.format.grib.config
    :members:
+
+.. autofunction:: reki.format.grib.config.check_value
+
+.. autofunction:: reki.format.grib.config.get_param_registry
+
+.. autofunction:: reki.format.grib.config.find_short_name
+
+.. autofunction:: reki.format.grib.config.find_wgrib2_name
+
+.. autofunction:: reki.format.grib.config.find_cemc_name

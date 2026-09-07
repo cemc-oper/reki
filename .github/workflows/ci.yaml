@@ -1,6 +1,6 @@
 name: ci-build
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -12,26 +12,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
         with:
+          version: "latest"
           python-version: ${{ matrix.python }}
-      - name: Install dependencies
-        run: |
-            python -m pip install --upgrade pip
-            python -m pip install build
-      - name: Install reki
-        run: |
-            python -m pip install -e .
-      - name: Install test dependencies
-        run: |
-            python -m pip install --group test
+      - name: Sync test environment
+        run: uv sync --group test
       - name: Run tests
-        run: |
-            python -m pytest tests -v --tb=short
+        run: uv run pytest tests -v --tb=short
       - name: Build
-        run: |
-            python -m build
+        run: uv build
 
   docs:
 
@@ -39,18 +30,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
         with:
+          version: "latest"
           python-version: "3.12"
       - name: Install dependencies
         run: |
-            python -m pip install --upgrade pip
-            python -m pip install -r doc/requirements.txt
-            python -m pip install .
+            uv venv
+            uv pip install -r doc/requirements.txt
+            uv pip install .
       - name: Download test data
+        run: uv run --no-sync make -C doc data
+      - name: Build and check docs
         run: |
-            make -C doc data
-      - name: Build docs
-        run: |
-            make -C doc html
+            uv run --no-sync make -C doc clean html SPHINXOPTS="-W --keep-going"
+            uv run --no-sync make -C doc api-check
+            uv run --no-sync make -C doc spelling
+            uv run --no-sync make -C doc linkcheck SPHINXOPTS="-W --keep-going"

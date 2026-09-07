@@ -12,6 +12,20 @@ GRIB reader、参数 registry/resolver 和消息级辅助函数。持久 index �
    :members:
    :member-order: bysource
 
+.. autodata:: reki.readers.grib.config.WHEN_KEYS
+
+.. autofunction:: reki.readers.grib.config.check_value
+
+.. autofunction:: reki.readers.grib.config.find_cemc_name
+
+.. autofunction:: reki.readers.grib.config.find_short_name
+
+.. autofunction:: reki.readers.grib.config.find_wgrib2_name
+
+.. autofunction:: reki.readers.grib.config.get_param_registry
+
+.. autofunction:: reki.readers.grib.config.get_parameter_index
+
 .. automodule:: reki.readers.grib.eccodes
    :members:
    :member-order: bysource

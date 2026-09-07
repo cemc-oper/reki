@@ -9,6 +9,8 @@
    :member-order: bysource
    :exclude-members: Source
 
+.. autodata:: reki.sources.get_source
+
 内置 source
 ------------
 

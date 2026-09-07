@@ -6,3 +6,5 @@
 .. automodule:: reki.core
    :members:
    :member-order: bysource
+
+.. autofunction:: reki.core.validate_data_array

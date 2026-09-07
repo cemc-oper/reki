@@ -7,3 +7,5 @@
    :members:
    :member-order: bysource
    :no-index:
+
+.. autofunction:: reki.validate_data_array
