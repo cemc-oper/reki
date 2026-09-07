@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # 参数 ID 与 FieldQuery
 
 `reki.resolve_parameter()` 将由 parameter-db 导出的只读快照中的稳定

@@ -16,12 +16,12 @@ reki 能够非常方便地从 GRIB 等格式文件中加载要素场为常见的
     field = ds.sel(parameter="2t", level_type="heightAboveGround", level=2)
     t2m = field.to_xarray()
 
-完整可执行示例见 :doc:`/getting-started/quick-overview`。
+完整可执行示例见 :doc:`/quick-start/first-workflow`。
 
 .. toctree::
    :maxdepth: 1
    :hidden:
 
-   快速开始 <getting-started/index>
+   快速开始 <quick-start/index>
    指南 <guide/index>
-   开发 <develop/api/index>
+   开发 <development/index>
