@@ -56,8 +56,8 @@ def find_local_file(
 
     Returns
     -------
-    Path or None
-        file path if found or None if not.
+    pathlib.Path or None
+        Existing local file, otherwise ``None``.
 
     Examples
     --------

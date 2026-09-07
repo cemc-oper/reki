@@ -47,7 +47,8 @@ def find_file(
 
     Returns
     -------
-    Path if found, None otherwise
+    pathlib.Path or None
+        Existing local file, otherwise ``None``.
     """
     query_vars = QueryVars()
 
