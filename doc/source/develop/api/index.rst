@@ -1,10 +1,6 @@
-API 文档
-==================================
+:orphan:
 
-.. toctree::
-   :hidden:
-   :maxdepth: 2
+旧 API 文档入口
+====================
 
-   source
-   data_finder
-   grib
+此 URL 为兼容入口。新的公开 API 参考位于 :doc:`/development/api/index`。

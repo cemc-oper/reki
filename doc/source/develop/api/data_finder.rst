@@ -1,15 +1,6 @@
-数据查找
-==================================
+:orphan:
 
-.. py:currentmodule:: reki.data_finder
+旧数据查找页面
+==============
 
-.. autofunction:: find_local_file
-
-
-内部函数
-----------
-
-.. autofunction:: reki.data_finder._util.find_file
-
-
-.. autofunction:: reki.data_finder._config.find_config
+此 URL 为兼容入口。兼容 API 参考位于 :doc:`/development/api/legacy`。

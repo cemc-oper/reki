@@ -1,11 +1,13 @@
 # 开发
 
-开发文档面向集成者、扩展作者和维护者。当前 API 参考仍在迁移中；T4 将按
-{doc}`api/public-api-inventory` 的公开边界完成重组。
+开发文档面向集成者、扩展作者和维护者。API 参考以
+{doc}`api/public-api-inventory` 的公开边界为准；架构页解释实现职责和扩展点。
 
 ```{toctree}
 :maxdepth: 1
 
-api/public-api-inventory
-API 参考（迁移中） </develop/api/index>
+api/index
+architecture/index
+extending/index
+contributing
 ```
