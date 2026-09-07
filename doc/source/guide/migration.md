@@ -12,6 +12,52 @@
 | `reki.format.table.*` | `from_source("file", path).to_pandas()` | 表格不承诺 xarray 输出。 |
 | ecCodes message 操作 | `to_xarray()` 后的 `reki.operator` | message 和 DataArray 的资源与坐标语义不同。 |
 
+## GRIB 读取：完整代码对照
+
+旧入口直接接收文件路径，且调用方通常同时承担参数、层次与返回值的解释。它只应存在于
+维护兼容代码的场景：
+
+```python
+from reki.format.grib import load_field_from_file
+
+legacy_field = load_field_from_file("/data/forecast.grib2", parameter="2t")
+```
+
+新入口把来源、查询和数值转换拆开。每一步都可单独记录和测试；`first()` 的空结果必须
+显式处理，避免把“不存在的字段”误报为解码故障：
+
+```python
+from reki import from_source
+
+reader = from_source("file", "/data/forecast.grib2")
+field = reader.sel(
+    parameter="2t", level_type="heightAboveGround", level=2,
+).first()
+if field is None:
+    raise LookupError("未找到 2 米温度；请检查参数、层次和时效")
+data = field.to_xarray()
+```
+
+## 处理：message 操作迁移到带坐标的数组
+
+旧的 ecCodes message 操作围绕原始 GRIB message；新工作流在 `DataArray` 上操作，因此
+区域范围、坐标名和输出维度可见并可由 xarray 检查：
+
+```python
+from reki.operator import extract_region
+
+east_asia = extract_region(
+    data,
+    start_longitude=105,
+    end_longitude=125,
+    start_latitude=25,
+    end_latitude=45,
+)
+```
+
+迁移测试应至少断言：同一来源与查询条件得到预期字段、输出包含 `latitude`/`longitude`，
+以及空查询、文件缺失和不满足坐标契约时产生明确异常。
+
 ## 内容覆盖矩阵
 
 | 概念 | 用户页面 | 实现/API 页面 |

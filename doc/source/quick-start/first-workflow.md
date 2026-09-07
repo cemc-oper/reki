@@ -53,6 +53,17 @@ t2m
 t2m.dims, t2m.name
 ```
 
+`DataArray` 保留 reader 提供的坐标和属性。先检查范围与坐标名称，能避免把层次、预报
+时效或经纬度方向理解错：
+
+```{code-cell} ipython3
+{
+    "shape": t2m.shape,
+    "latitude_range": (float(t2m.latitude.min()), float(t2m.latitude.max())),
+    "longitude_range": (float(t2m.longitude.min()), float(t2m.longitude.max())),
+}
+```
+
 ## 处理结果
 
 将东亚的一部分区域裁剪出来：
@@ -66,6 +77,14 @@ east_asia = extract_region(
     end_latitude=45,
 )
 east_asia.shape
+```
+
+当查询没有匹配字段时，`first()` 返回 `None`。在自动化任务中应在解码前显式处理它：
+
+```{code-cell} ipython3
+missing = source.sel(parameter="not-a-grib-parameter").first()
+if missing is None:
+    print("没有匹配字段：请先用 loading/exploring-data 查看可用参数和层次。")
 ```
 
 此工作流没有需要调用者关闭的公开文件句柄；reki 在按需解码时管理文件访问。若你自行
