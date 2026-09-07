@@ -19,16 +19,9 @@ reki 能够非常方便地从 GRIB 等格式文件中加载要素场为常见的
 完整可执行示例见 :doc:`/getting-started/quick-overview`。
 
 .. toctree::
-   :maxdepth: 2
-   :caption: 用户
+   :maxdepth: 1
    :hidden:
 
-   开始使用 <getting-started/index>
+   快速开始 <getting-started/index>
    指南 <guide/index>
-
-.. toctree::
-   :maxdepth: 2
-   :caption: 开发
-   :hidden:
-
-   API <develop/api/index>
+   开发 <develop/api/index>
