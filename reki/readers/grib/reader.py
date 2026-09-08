@@ -830,13 +830,21 @@ def _merge_arrays(arrays: List[xr.DataArray]):
             if len(arrays_of_name) == 1:
                 variables.append(arrays_of_name[0])
                 continue
+            # A selected ensemble step has one scalar ``number`` coordinate
+            # per field.  Prefer it over the (identical) vertical level so
+            # the public xarray result exposes a real member dimension.
+            numbers = [array.coords.get("number") for array in arrays_of_name]
+            member_values = [None if number is None else number.item() for number in numbers]
+            dim_name = level_name
+            if all(value is not None for value in member_values) and len(set(member_values)) == len(member_values):
+                dim_name = "number"
             # keep lazy GRIB arrays lazy: stack message offsets instead
             # of materializing through xr.concat
-            stacked = concat_lazy_arrays(arrays_of_name, level_name)
+            stacked = concat_lazy_arrays(arrays_of_name, dim_name)
             if stacked is not None:
                 variables.append(stacked)
             else:
-                variables.append(xr.concat(arrays_of_name, dim=level_name))
+                variables.append(xr.concat(arrays_of_name, dim=dim_name))
         datasets.append(xr.merge(variables))
 
     return datasets[0] if len(datasets) == 1 else datasets
