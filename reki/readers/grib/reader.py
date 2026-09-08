@@ -845,7 +845,16 @@ def _merge_arrays(arrays: List[xr.DataArray]):
                 variables.append(stacked)
             else:
                 variables.append(xr.concat(arrays_of_name, dim=dim_name))
-        datasets.append(xr.merge(variables))
+        dataset = xr.merge(variables)
+        bounds = _layer_bounds(group, level_name)
+        if bounds is not None:
+            bounds_name = f"{level_name}_bounds"
+            dataset = dataset.assign_coords({
+                bounds_name: ((level_name, "bounds"), bounds),
+            })
+            dataset[level_name].attrs["bounds"] = bounds_name
+            dataset[bounds_name].attrs["units"] = "m"
+        datasets.append(dataset)
 
     return datasets[0] if len(datasets) == 1 else datasets
 
@@ -855,6 +864,23 @@ def _level_coord_name(data: xr.DataArray) -> Optional[str]:
         if coord not in _NON_LEVEL_COORDS:
             return coord
     return None
+
+
+def _layer_bounds(arrays: List[xr.DataArray], level_name: Optional[str]):
+    """Return GRIB layer bounds in merged-level order, when available."""
+    if level_name is None:
+        return None
+    values = []
+    for array in arrays:
+        top = array.attrs.get("GRIB_topLevel")
+        bottom = array.attrs.get("GRIB_bottomLevel")
+        if top is None or bottom is None:
+            return None
+        values.append((array.coords[level_name].item(), top, bottom))
+    levels = [value[0] for value in values]
+    if len(set(levels)) != len(levels):
+        return None
+    return [[top, bottom] for _, top, bottom in sorted(values)]
 
 
 def _metadata_from_message(message, ordinal, offset, path):
@@ -874,6 +900,8 @@ def _metadata_from_message(message, ordinal, offset, path):
         "parameterCategory": get("parameterCategory"),
         "parameterNumber": get("parameterNumber"),
         "parameter_match": "short_name",
+        "layer_top": get("topLevel"),
+        "layer_bottom": get("bottomLevel"),
     }
     extras.update(parameter_names_from_message(message))
     return FieldMetadata(

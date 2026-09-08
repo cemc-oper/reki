@@ -122,6 +122,8 @@ def create_data_array_from_message(
         "scaledValueOfFirstFixedSurface",
         "scaleFactorOfSecondFixedSurface",
         "scaledValueOfSecondFixedSurface",
+        "topLevel",
+        "bottomLevel",
     ]
 
     all_keys = attr_keys + parameter_keys + grid_keys + level_keys
@@ -200,7 +202,11 @@ def create_data_array_from_message(
 
     dims = ("latitude", "longitude")
 
-    data_attrs = {f"GRIB_{key}": all_attrs[key] for key in attr_keys if all_attrs[key] not in ("undef", "unknown")}
+    data_attrs = {
+        f"GRIB_{key}": all_attrs[key]
+        for key in attr_keys + ["topLevel", "bottomLevel"]
+        if all_attrs[key] not in ("undef", "unknown")
+    }
 
     # name
     names = get_field_name(all_attrs, field_name=field_name)

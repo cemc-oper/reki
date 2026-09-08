@@ -19,7 +19,7 @@ from .lock import target_lock
 INDEX_SCHEMA_VERSION = 2
 SCHEMA_ID = "reki-grib-index/2"
 QUERY_RULES_VERSION = "1"
-METADATA_KEYS_VERSION = "3"
+METADATA_KEYS_VERSION = "4"
 APPLICATION_ID = 0x524B4931
 
 
@@ -77,7 +77,13 @@ def _row(header):
     ni, nj = _get(message, "Ni"), _get(message, "Nj")
     level = _get(message, "level")
     time_metadata = time_metadata_from_message(message)
-    parameter_names = parameter_names_from_message(message)
+    extra_metadata = parameter_names_from_message(message)
+    extra_metadata.update({
+        key: value for key, value in {
+            "layer_top": _get(message, "topLevel"),
+            "layer_bottom": _get(message, "bottomLevel"),
+        }.items() if value is not None
+    })
 
     def nanoseconds(key):
         value = time_metadata[key]
@@ -92,7 +98,7 @@ def _row(header):
             nanoseconds("start_time"), nanoseconds("step"), nanoseconds("valid_time"),
             _get(message, "stepType"), nanoseconds("time_range"), _get(message, "number"), ni, nj,
             json.dumps([nj, ni]) if ni is not None and nj is not None else None, "float64",
-            _get(message, "gridType"), None, json.dumps(parameter_names))
+            _get(message, "gridType"), None, json.dumps(extra_metadata))
 
 
 class IndexStore:
