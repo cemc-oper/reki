@@ -23,12 +23,15 @@ reki 目前提供两个数据集，语义不同，用途也不同：
    * - ``ecmwf_ifs``
      - **冻结**：起报时次、预报时效、要素与区域固定在文件名中，
        内容不随时间变化
-     - ECMWF IFS 0.25° 裁剪子集（KB～MB 级），两个区域（domain）：
+     - ECMWF IFS 0.25° 裁剪子集（KB～MB 级），由稳定 variant 选择：
 
-       - ``eastasia``\ （默认）：2t/2d/10u/10v/msl/tp，
+       - ``core``\ （默认）：2t/2d/10u/10v/msl/tp，
          以及 500 hPa 的 gh/t、850 hPa 的 t/u/v 等压面要素；
          0–60N, 60–150E
        - ``global``：仅 2t，全球场
+       - ``time``：2t 的 0/6/12/24 h 时效与 tp 累计时段
+       - ``ensemble``：2t 的两个 ENS 扰动成员
+       - ``layers``：两个土壤温度层
      - **文档示例**、需要可复现结果的场景
    * - ``cma_gfs``
      - **滚动**：起报时次随日期滚动，每次获取的文件不同
@@ -47,8 +50,11 @@ reki 目前提供两个数据集，语义不同，用途也不同：
     # 冻结数据集（文档示例用），默认 eastasia 区域
     reki-test-data download ecmwf_ifs
 
-    # 全球区域（regrid/area 等算子示例用）
+    # 全球区域（旧 domain 写法继续兼容）
     reki-test-data download ecmwf_ifs --domain global
+
+    # 新 variant：time、ensemble、layers、global 或 core
+    reki-test-data download ecmwf_ifs --variant ensemble
 
     # 滚动数据集（仅测试用；gfs 为别名）
     reki-test-data download cma_gfs
@@ -71,6 +77,12 @@ reki 目前提供两个数据集，语义不同，用途也不同：
     field = ds.sel(parameter="2t", level_type="heightAboveGround", level=2)
     da = field.to_xarray()
 
+    ensemble = from_source("test", "ecmwf_ifs", variant="ensemble")
+
+未指定参数时等价于 ``variant="core"``。``domain="eastasia"`` 和
+``domain="global"`` 分别是 ``core``、``global`` 的兼容别名；指定
+``variant`` 时不可再给出指向不同资产的 ``domain``。
+
 进阶：直接引用发布地址
 ----------------------
 
@@ -86,7 +98,7 @@ reki 目前提供两个数据集，语义不同，用途也不同：
     ds = from_source(
         "url",
         "https://github.com/cemc-oper/cedarkit-test-data/releases/"
-        "download/v2026.8.1/ifs_eastasia_2026081800_f024.grib2",
+        "download/v2026.9.0/ifs_eastasia_2026090712_f024.grib2",
     )
 
 数据署名

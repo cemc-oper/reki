@@ -26,12 +26,14 @@ Datasets (named ``<organization>_<model>``):
     semantics: run date, forecast step, parameters and domain are
     fixed in the release asset name; files are KB–MB in size.
     Intended for documentation examples — reproducible and
-    offline-friendly. Use the ``domain`` parameter to select the
-    asset: ``"eastasia"`` (2t/2d/10u/10v/msl/tp plus gh/t at 500 hPa and
-    t/u/v at 850 hPa over 0–60N, 60–150E)
-    or ``"global"`` (2t only, global field, for regrid/area demos).
+    offline-friendly. Use ``variant`` to select ``core``, ``time``,
+    ``ensemble``, ``layers``, or ``global``. The legacy
+    ``domain="global"`` spelling remains an alias for
+    ``variant="global"``.
 """
 
+import hashlib
+import json
 import shutil
 import tempfile
 from abc import ABC, abstractmethod
@@ -40,6 +42,7 @@ from typing import Any, Literal, Optional, Union
 
 import click
 import pandas as pd
+import requests
 import yaml
 
 from reki.core import Source
@@ -290,22 +293,95 @@ def download_gfs_data(
 #: GitHub release that hosts the frozen assets. Updating the dataset =
 #: the test-data repo publishes a new tag + this constant is bumped in
 #: a reviewable PR. Old doc branches keep pointing at old tags forever.
-ECMWF_IFS_RELEASE_TAG = "v2026.8.1"
+ECMWF_IFS_RELEASE_TAG = "v2026.9.0"
 ECMWF_IFS_BASE_URL = (
     "https://github.com/cemc-oper/cedarkit-test-data"
     f"/releases/download/{ECMWF_IFS_RELEASE_TAG}"
 )
+ECMWF_IFS_MANIFEST_URL = f"{ECMWF_IFS_BASE_URL}/manifest.json"
+ECMWF_IFS_MANIFEST_SHA256 = (
+    "e539da3c02400b04ebba030483c4585c711f6ef99a2430ab581d32b896a904b1"
+)
 
-#: frozen assets per domain; run date/step are part of the file name.
-ECMWF_IFS_ASSETS = {
-    "eastasia": "ifs_eastasia_2026081800_f024.grib2",
-    "global": "ifs_global_2026081800_f024.grib2",
-}
+#: Stable variant names published by the frozen release manifest.
+ECMWF_IFS_VARIANTS = ("core", "time", "ensemble", "layers", "global")
+
+#: Legacy domain selectors retained for one compatibility release cycle.
+ECMWF_IFS_DOMAINS = {"eastasia": "core", "global": "global"}
+
+
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1 << 20), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _manifest_cache_path(output_dir: Path) -> Path:
+    return output_dir / f"ecmwf_ifs-{ECMWF_IFS_RELEASE_TAG}-manifest.json"
+
+
+def _read_ifs_manifest(output_dir: Path) -> dict[str, Any]:
+    """Read the frozen manifest, falling back to its offline cache."""
+    cache_path = _manifest_cache_path(output_dir)
+    if cache_path.exists():
+        raw_manifest = cache_path.read_bytes()
+    else:
+        response = requests.get(ECMWF_IFS_MANIFEST_URL, timeout=30)
+        response.raise_for_status()
+        raw_manifest = response.content
+        actual_manifest_sha256 = hashlib.sha256(raw_manifest).hexdigest()
+        if actual_manifest_sha256 != ECMWF_IFS_MANIFEST_SHA256:
+            raise ValueError(
+                "ECMWF IFS manifest checksum does not match the pinned release: "
+                f"expected {ECMWF_IFS_MANIFEST_SHA256}, got {actual_manifest_sha256}"
+            )
+        temporary = cache_path.with_name(cache_path.name + ".part")
+        temporary.write_bytes(raw_manifest)
+        temporary.replace(cache_path)
+    actual_manifest_sha256 = hashlib.sha256(raw_manifest).hexdigest()
+    if actual_manifest_sha256 != ECMWF_IFS_MANIFEST_SHA256:
+        raise ValueError(
+            "cached ECMWF IFS manifest checksum does not match the pinned release: "
+            f"expected {ECMWF_IFS_MANIFEST_SHA256}, got {actual_manifest_sha256}"
+        )
+    manifest = json.loads(raw_manifest)
+    if manifest.get("dataset_version") != ECMWF_IFS_RELEASE_TAG:
+        raise ValueError(
+            "ECMWF IFS manifest dataset_version does not match the pinned "
+            f"release: {manifest.get('dataset_version')!r}"
+        )
+    if not isinstance(manifest.get("assets"), dict):
+        raise ValueError("ECMWF IFS manifest has no assets mapping")
+    return manifest
+
+
+def _resolve_ifs_variant(domain: str | None, variant: str | None) -> str:
+    """Resolve legacy domain selection and reject conflicting selectors."""
+    if domain is not None and domain not in ECMWF_IFS_DOMAINS:
+        raise ValueError(
+            f"unknown ecmwf_ifs domain: {domain!r}, "
+            f"expected one of {tuple(ECMWF_IFS_DOMAINS)}"
+        )
+    if variant is not None and variant not in ECMWF_IFS_VARIANTS:
+        raise ValueError(
+            f"unknown ecmwf_ifs variant: {variant!r}, "
+            f"expected one of {ECMWF_IFS_VARIANTS}"
+        )
+    domain_variant = ECMWF_IFS_DOMAINS.get(domain) if domain else None
+    if variant is not None and domain_variant is not None and variant != domain_variant:
+        raise ValueError(
+            f"ecmwf_ifs variant={variant!r} conflicts with domain={domain!r}; "
+            f"domain={domain!r} selects variant={domain_variant!r}"
+        )
+    return variant or domain_variant or "core"
 
 
 def download_ecmwf_ifs_data(
     output_dir: Path,
-    domain: Literal["eastasia", "global"] = "eastasia",
+    domain: Literal["eastasia", "global"] | None = None,
+    variant: Literal["core", "time", "ensemble", "layers", "global"] | None = None,
 ) -> Path:
     """
     Download a frozen ECMWF IFS test-data asset from GitHub releases.
@@ -314,39 +390,56 @@ def download_ecmwf_ifs_data(
     ----------
     output_dir : Path
         Output directory for downloaded data.
-    domain : str
-        Which frozen asset to fetch: ``"eastasia"`` (2t/2d/10u/10v/msl/tp
-        plus gh/t at 500 hPa and t/u/v at 850 hPa,
-        0–60N, 60–150E, for read/plot examples) or ``"global"`` (2t only,
-        global field, for regrid/area operator examples).
+    domain : str, optional
+        Legacy selector: ``"eastasia"`` maps to ``"core"`` and ``"global"``
+        maps to ``"global"``. It may only be combined with its matching
+        ``variant``.
+    variant : str, optional
+        Frozen release asset: ``"core"`` (the default), ``"time"``,
+        ``"ensemble"``, ``"layers"``, or ``"global"``.
 
     Returns
     -------
     Path
         Path to the downloaded file.
     """
-    if domain not in ECMWF_IFS_ASSETS:
-        raise ValueError(
-            f"unknown ecmwf_ifs domain: {domain!r}, "
-            f"expected one of {tuple(ECMWF_IFS_ASSETS)}"
-        )
-
+    resolved_variant = _resolve_ifs_variant(domain, variant)
     output_dir.mkdir(parents=True, exist_ok=True)
-
-    file_name = ECMWF_IFS_ASSETS[domain]
+    manifest = _read_ifs_manifest(output_dir)
+    try:
+        asset = manifest["assets"][resolved_variant]
+        file_name = asset["file"]
+        expected_sha256 = asset["sha256"]
+    except (KeyError, TypeError) as error:
+        raise ValueError(
+            f"ECMWF IFS manifest does not define a valid {resolved_variant!r} asset"
+        ) from error
+    if not isinstance(file_name, str) or not isinstance(expected_sha256, str):
+        raise ValueError(f"ECMWF IFS manifest has invalid identity for {resolved_variant!r}")
     file_url = f"{ECMWF_IFS_BASE_URL}/{file_name}"
     file_path = output_dir / file_name
-
-    download_file(file_url, file_path)
+    if file_path.exists() and _sha256(file_path) != expected_sha256:
+        file_path.unlink()
+    if not file_path.exists():
+        download_file(file_url, file_path)
+    actual_sha256 = _sha256(file_path)
+    if actual_sha256 != expected_sha256:
+        file_path.unlink(missing_ok=True)
+        raise ValueError(
+            f"checksum mismatch for {file_name}: expected {expected_sha256}, "
+            f"got {actual_sha256}"
+        )
 
     metadata = {
         "file_name": file_name,
         "system": "ecmwf_ifs",
+        "variant": resolved_variant,
         "domain": domain,
         "frozen": True,
         "license": "CC-BY-4.0 (ECMWF IFS open data, modified)",
         "source": "github-release",
         "release_tag": ECMWF_IFS_RELEASE_TAG,
+        "checksum": {"algorithm": "sha256", "value": expected_sha256},
     }
     metadata_file_path = output_dir / "metadata.yaml"
     with open(metadata_file_path, "w") as f:
@@ -372,8 +465,12 @@ class TestSource(Source):
         The legacy name ``"gfs"`` is accepted as an alias of
         ``"cma_gfs"``.
     domain
-        for ``"ecmwf_ifs"`` only: which frozen asset to fetch,
-        ``"eastasia"`` (default) or ``"global"``.
+        for ``"ecmwf_ifs"`` only: legacy selector; ``"eastasia"`` maps to
+        ``"core"`` and ``"global"`` maps to ``"global"``.
+    variant
+        for ``"ecmwf_ifs"`` only: ``"core"`` (default), ``"time"``,
+        ``"ensemble"``, ``"layers"``, or ``"global"``. If ``domain`` is
+        also given, both selectors must map to the same variant.
     output_dir
         directory the data file is downloaded to. Defaults to a
         per-user temp directory. Downloads are idempotent: an existing
@@ -401,7 +498,8 @@ class TestSource(Source):
             self,
             dataset_name: str = "gfs",
             output_dir: Optional[Union[str, Path]] = None,
-            domain: Literal["eastasia", "global"] = "eastasia",
+            domain: Literal["eastasia", "global"] | None = None,
+            variant: Literal["core", "time", "ensemble", "layers", "global"] | None = None,
             source: Literal["wis", "music-dir"] = "wis",
             storage_base: Optional[str] = None,
             start_time: Optional[pd.Timestamp] = None,
@@ -421,6 +519,7 @@ class TestSource(Source):
             Path(output_dir) if output_dir is not None else DEFAULT_DATA_DIR
         )
         self.domain = domain
+        self.variant = variant
         self.fetch_source = source
         self.storage_base = storage_base
         self.start_time = start_time
@@ -431,6 +530,7 @@ class TestSource(Source):
             path = download_ecmwf_ifs_data(
                 output_dir=self.output_dir,
                 domain=self.domain,
+                variant=self.variant,
             )
         else:
             path = download_gfs_data(
@@ -554,13 +654,17 @@ download.add_command(download_gfs, name="gfs")
 @click.option(
     "--domain",
     type=click.Choice(["eastasia", "global"]),
-    default="eastasia",
+    default=None,
     help=(
-        "Which frozen asset to fetch: eastasia (2t/2d/10u/10v/msl/tp plus "
-        "gh/t at 500 hPa and t/u/v at 850 hPa, "
-        "0-60N, 60-150E; read/plot examples) or global (2t only, global "
-        "field; regrid/area operator examples)"
+        "Legacy selector: eastasia maps to core and global maps to global. "
+        "It cannot conflict with --variant."
     ),
+)
+@click.option(
+    "--variant",
+    type=click.Choice(ECMWF_IFS_VARIANTS),
+    default=None,
+    help="Frozen asset variant: core (default), time, ensemble, layers, or global.",
 )
 @click.option(
     "--output",
@@ -570,7 +674,9 @@ download.add_command(download_gfs, name="gfs")
     help="Output directory (default: the shared test-data cache, "
          "$TMPDIR/cedarkit-test-data)",
 )
-def download_ecmwf_ifs(domain: str, output: Path | None):
+def download_ecmwf_ifs(
+    domain: str | None, variant: str | None, output: Path | None,
+):
     """Download frozen ECMWF IFS open-data (CC-BY-4.0) test data.
 
     Frozen semantics: run date, forecast step, parameters and domain
@@ -578,13 +684,21 @@ def download_ecmwf_ifs(domain: str, output: Path | None):
     Intended for documentation examples — reproducible.
     """
     click.echo(f"Dataset: ecmwf_ifs (frozen, release {ECMWF_IFS_RELEASE_TAG})")
-    click.echo(f"Domain: {domain}")
+    try:
+        resolved_variant = _resolve_ifs_variant(domain, variant)
+    except ValueError as error:
+        raise click.UsageError(str(error)) from error
+    click.echo(f"Variant: {resolved_variant}")
+    if domain is not None:
+        click.echo(f"Domain (legacy alias): {domain}")
     output = output if output is not None else DEFAULT_DATA_DIR
     click.echo(f"Output directory: {output.absolute()}")
     click.echo("Downloading...")
 
     try:
-        file_path = download_ecmwf_ifs_data(output_dir=output, domain=domain)
+        file_path = download_ecmwf_ifs_data(
+            output_dir=output, domain=domain, variant=variant,
+        )
         click.echo(f"Downloaded to: {file_path}")
     except Exception as e:
         click.echo(f"Error: {e}", err=True)
