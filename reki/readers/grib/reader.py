@@ -836,7 +836,15 @@ def _merge_arrays(arrays: List[xr.DataArray]):
             numbers = [array.coords.get("number") for array in arrays_of_name]
             member_values = [None if number is None else number.item() for number in numbers]
             dim_name = level_name
-            if all(value is not None for value in member_values) and len(set(member_values)) == len(member_values):
+            numbered_members = [value for value in member_values if value is not None]
+            if numbered_members and len(set(numbered_members)) == len(numbered_members):
+                # ECMWF's deterministic ensemble control has no native GRIB
+                # ``number`` key. Reserve public member number 0 for it when
+                # merging it with perturbed members into an xarray result.
+                arrays_of_name = [
+                    array.assign_coords(number=0) if value is None else array
+                    for array, value in zip(arrays_of_name, member_values)
+                ]
                 dim_name = "number"
             # keep lazy GRIB arrays lazy: stack message offsets instead
             # of materializing through xr.concat

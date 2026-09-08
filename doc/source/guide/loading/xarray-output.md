@@ -57,7 +57,8 @@ time_data = from_source("test", "ecmwf_ifs", variant="time").sel(
 time_data.step.values.astype("timedelta64[h]").astype(int).tolist(), "valid_time" in time_data.coords
 ```
 
-集合 variant 只包含真实扰动成员 1/2。固定一个 step 后，输出使用 `number` 成员维：
+集合 variant 包含控制预报和真实扰动成员 1–20。固定一个 step 后，输出使用 `number`
+成员维；为统一 xarray 输出，原生没有 GRIB `number` key 的控制预报表示为 `number=0`：
 
 ```{code-cell} ipython3
 ensemble_data = from_source("test", "ecmwf_ifs", variant="ensemble").sel(

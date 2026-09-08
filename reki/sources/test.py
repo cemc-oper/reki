@@ -296,14 +296,14 @@ def download_gfs_data(
 #: GitHub release that hosts the frozen assets. Updating the dataset =
 #: the test-data repo publishes a new tag + this constant is bumped in
 #: a reviewable PR. Old doc branches keep pointing at old tags forever.
-ECMWF_IFS_RELEASE_TAG = "v2026.9.0"
+ECMWF_IFS_RELEASE_TAG = "v2026.9.1"
 ECMWF_IFS_BASE_URL = (
     "https://github.com/cemc-oper/cedarkit-test-data"
     f"/releases/download/{ECMWF_IFS_RELEASE_TAG}"
 )
 ECMWF_IFS_MANIFEST_URL = f"{ECMWF_IFS_BASE_URL}/manifest.json"
 ECMWF_IFS_MANIFEST_SHA256 = (
-    "e539da3c02400b04ebba030483c4585c711f6ef99a2430ab581d32b896a904b1"
+    "e8fb7b00c2e6a368815d8a10b4d7c1d11a6c7d2777dd7663fbf6b5dbe9cab5a1"
 )
 
 #: Stable variant names published by the frozen release manifest.

@@ -225,7 +225,7 @@ class TestEcmwfIfsDownload:
         assert len(download_calls) == 1
         metadata = yaml.safe_load((tmp_path / "metadata.yaml").read_text())[0]
         assert metadata["variant"] == "layers"
-        assert metadata["release_tag"] == "v2026.9.0"
+        assert metadata["release_tag"] == reki.sources.test.ECMWF_IFS_RELEASE_TAG
         assert metadata["checksum"]["algorithm"] == "sha256"
 
     def test_cache_hit_is_offline_and_checksum_verified(self, fake_release, tmp_path):

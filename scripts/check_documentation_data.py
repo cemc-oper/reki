@@ -9,6 +9,7 @@ import json
 from pathlib import Path
 
 import reki
+from reki.sources.test import ECMWF_IFS_RELEASE_TAG
 
 
 REQUIRED_VARIANTS = ("core", "time", "ensemble", "layers", "global")
@@ -27,10 +28,10 @@ def reader(path: Path, **kwargs):
 
 
 def load_assets(cache_dir: Path) -> dict[str, Path]:
-    manifests = sorted(cache_dir.glob("ecmwf_ifs-v*-manifest.json"))
-    if len(manifests) != 1:
-        raise ValueError("expected exactly one cached ecmwf_ifs release manifest")
-    manifest = json.loads(manifests[0].read_text(encoding="utf-8"))
+    manifest_path = cache_dir / f"ecmwf_ifs-{ECMWF_IFS_RELEASE_TAG}-manifest.json"
+    if not manifest_path.is_file():
+        raise ValueError(f"cached ecmwf_ifs manifest is missing: {manifest_path}")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     assets = manifest.get("assets")
     if not isinstance(assets, dict):
         raise ValueError("manifest has no assets mapping")
@@ -66,7 +67,7 @@ def assert_documentation_contract(paths: dict[str, Path], index_dir: Path) -> No
     ensemble_data = ensemble.sel(
         parameter="2t", level_type="heightAboveGround", level=2, step=24,
     ).to_xarray()
-    assert list(ensemble_data.number.values) == [1, 2]
+    assert list(ensemble_data.number.values) == list(range(21))
 
     layers = reader(paths["layers"], index_policy="off")
     layer_data = layers.sel(parameter="sot", level_type="soilLayer", level=[1, 2]).to_xarray()
