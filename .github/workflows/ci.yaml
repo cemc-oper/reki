@@ -40,11 +40,5 @@ jobs:
             uv venv
             uv pip install -r doc/requirements.txt
             uv pip install .
-      - name: Download test data
-        run: uv run --no-sync make -C doc data
       - name: Build and check docs
-        run: |
-            uv run --no-sync make -C doc clean html SPHINXOPTS="-W --keep-going"
-            uv run --no-sync make -C doc api-check
-            uv run --no-sync make -C doc spelling
-            uv run --no-sync make -C doc linkcheck SPHINXOPTS="-W --keep-going"
+        run: uv run --no-sync make -C doc check SPHINXOPTS="-W --keep-going"

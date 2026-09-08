@@ -13,6 +13,8 @@ DOC_CACHE_DIR = $(CURDIR)/.cache
 DOC_DATA_DIR  = $(DOC_CACHE_DIR)/test-data
 DOC_INDEX_DIR = $(DOC_CACHE_DIR)/indexes
 DOC_DATA_CHECK = ../scripts/check_documentation_data.py
+DOC_EXAMPLE_CHECK = ../scripts/check_documentation_examples.py
+DOC_EXAMPLES_DIR = $(CURDIR)/examples
 
 # Put it first so that "make" without argument is like "make help".
 help:
@@ -31,6 +33,9 @@ data:
 data-check:
 	REKI_INDEX_DIR="$(DOC_INDEX_DIR)" $(PYTHON) "$(DOC_DATA_CHECK)" --cache-dir "$(DOC_DATA_DIR)" --index-dir "$(DOC_INDEX_DIR)" --doc-dir "$(CURDIR)"
 
+examples-check:
+	REKI_INDEX_DIR="$(DOC_INDEX_DIR)" $(PYTHON) "$(DOC_EXAMPLE_CHECK)" --examples-dir "$(DOC_EXAMPLES_DIR)" --data-dir "$(DOC_DATA_DIR)"
+
 # The API check reads supported ``__all__`` declarations and verifies that each
 # symbol is both inventoried and rendered on its assigned API reference page.
 api-check:
@@ -39,9 +44,9 @@ api-check:
 spelling:
 	codespell $(SOURCEDIR)
 
-check: data data-check html api-check spelling
+check: data data-check examples-check html api-check spelling linkcheck
 
-.PHONY: help data data-check api-check spelling check Makefile
+.PHONY: help data data-check examples-check api-check spelling check Makefile
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
