@@ -173,19 +173,18 @@ t_multi
 表达。reki 提供 `first_level` / `second_level` 两个内置键，
 按层次值公式计算后比较，可放入 `level` 的字典形式中：
 
-```python
-# CMA-GFS 0.1–0.4 m 土壤温度层（typeOfLevel=depthBelowLandLayer）
-field = ds.sel(
-    parameter="t",
-    level_type="depthBelowLandLayer",
-    level={"first_level": 0.1, "second_level": 0.4},
+```{code-cell} ipython3
+# 冻结 layers variant：soilLayer 1/2 的原生上下边界分别为 0–1/1–2 m。
+layers = from_source("test", "ecmwf_ifs", variant="layers")
+soil_temperature = layers.sel(
+    parameter="sot", level_type="soilLayer", level=[1, 2],
 ).to_xarray()
+soil_temperature.soilLayer_bounds.values.tolist()
 ```
 
-:::{note}
-上述双层次示例需要 CMA 模式 GRIB2 数据（CMA-HPC / CMADaaS 环境），
-不参与执行。ecmwf_ifs 数据集只包含单层次要素。
-:::
+上述输出为 ``[[0, 1], [1, 2]]``（m）。`soilLayer` 是公开层编号，
+`soilLayer_bounds` 则保留每层的 `[top, bottom]` 边界；两者均来自 GRIB header，
+而非由示例推断。
 
 对单层次要素，`level` 的字典形式同样可用（此时只有
 `first_level` 有意义）：

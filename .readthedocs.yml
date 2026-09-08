@@ -8,11 +8,10 @@ build:
   tools:
     python: "3.12"
   jobs:
-    # Pre-download the frozen test datasets executed by the notebooks
-    # (same commands as `make -C doc data`; idempotent).
+    # Pre-download frozen fixtures into the repository-local cache used by
+    # executed notebooks (same policy as `make -C doc data`).
     pre_build:
-      - reki-test-data download ecmwf_ifs
-      - reki-test-data download ecmwf_ifs --domain global
+      - make -C doc data
 
 python:
   install:

@@ -34,6 +34,7 @@ Datasets (named ``<organization>_<model>``):
 
 import hashlib
 import json
+import os
 import shutil
 import tempfile
 from abc import ABC, abstractmethod
@@ -50,7 +51,9 @@ from reki.sources import get_source
 from reki.sources.url import download_file, file_name_from_url
 
 #: default directory for downloaded test data files.
-DEFAULT_DATA_DIR = Path(tempfile.gettempdir()) / "cedarkit-test-data"
+DEFAULT_DATA_DIR = Path(
+    os.environ.get("REKI_TEST_DATA_DIR", str(Path(tempfile.gettempdir()) / "cedarkit-test-data"))
+)
 
 #: supported dataset names (``<organization>_<model>``; a future NCEP
 #: GFS dataset would be ``ncep_gfs``).

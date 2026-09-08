@@ -1,5 +1,15 @@
 """Sphinx configuration for reki documentation."""
 
+import os
+from pathlib import Path
+
+
+_DOC_CACHE = Path(__file__).resolve().parents[1] / ".cache"
+# Executed notebooks must reuse the repository-local cache prepared by
+# ``make -C doc data`` and never create user-level test-data or GRIB indexes.
+os.environ.setdefault("REKI_TEST_DATA_DIR", str(_DOC_CACHE / "test-data"))
+os.environ.setdefault("REKI_INDEX_DIR", str(_DOC_CACHE / "indexes"))
+
 project = "reki"
 copyright = "2021-2025, CMA Earth System Modeling And Prediction Centre (CEMC/CMA)"
 author = "developers at cemc-oper"

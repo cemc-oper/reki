@@ -45,5 +45,26 @@ zonal_mean = data.mean("latitude")
 zonal_mean.dims, zonal_mean.shape
 ```
 
+## 多时效与集合坐标
+
+`time` variant 为同一起报提供多个预报时效；`step` 和 `valid_time` 都是可观察坐标，
+不应由数组位置推断：
+
+```{code-cell} ipython3
+time_data = from_source("test", "ecmwf_ifs", variant="time").sel(
+    parameter="2t", level_type="heightAboveGround", level=2, step=[0, 6, 12, 24],
+).to_xarray()
+time_data.step.values.astype("timedelta64[h]").astype(int).tolist(), "valid_time" in time_data.coords
+```
+
+集合 variant 只包含真实扰动成员 1/2。固定一个 step 后，输出使用 `number` 成员维：
+
+```{code-cell} ipython3
+ensemble_data = from_source("test", "ecmwf_ifs", variant="ensemble").sel(
+    parameter="2t", level_type="heightAboveGround", level=2, step=24,
+).to_xarray()
+ensemble_data.number.values.tolist()
+```
+
 若只需要原始数值，可显式使用 `to_numpy()`；这样会丢失坐标和属性，适合传给只接受数组
 的库，而不适合作为后续空间处理的默认输入。
