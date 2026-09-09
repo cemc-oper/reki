@@ -64,15 +64,18 @@ markers = [
 ]
 
 [tool.setuptools.packages.find]
-where = ["."]
+where = ["src"]
 exclude = ["tests*", "docs", "example"]
 namespaces = false
+
+[tool.setuptools.package-dir]
+"" = "src"
 
 [tool.setuptools]
 include-package-data = true
 
 [tool.setuptools_scm]
-version_file = "reki/_version.py"
+version_file = "src/reki/_version.py"
 
 [tool.uv.sources]
 nuwe-cmadaas = { path = "../../source/nuwe-cmadaas-devel/repo/nuwe-cmadaas-python", editable = true }

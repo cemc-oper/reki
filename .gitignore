@@ -163,7 +163,7 @@ cython_debug/
 
 # version
 
-reki/_version.py
+src/reki/_version.py
 
 # test
 
