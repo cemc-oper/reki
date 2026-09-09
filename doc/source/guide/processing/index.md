@@ -7,5 +7,7 @@
 :maxdepth: 1
 
 new-api
+subset-and-sample
+regrid
 legacy-api
 ```

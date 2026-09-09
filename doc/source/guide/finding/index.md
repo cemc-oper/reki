@@ -7,6 +7,10 @@ catalog。旧 `data_finder` 入口仍可用于维护现有业务配置。
 :maxdepth: 1
 
 new-api
+local-files
+catalogs-and-patterns
+remote-sources
+troubleshooting
 source-options
 legacy-api
 ```
