@@ -18,9 +18,9 @@ kernelspec:
 本页属于**旧 API（兼容层）**文档，介绍 `reki.format.grib` 命名空间下的
 接口。这些接口保持可用，旧代码无需修改；新代码请使用新 API
 （`from_source()` / `sel()` / `to_xarray()`），见
-{doc}`/guide/data_load`、{doc}`/guide/grib_parameter`、
-{doc}`/guide/grib_level`。新旧接口的对应关系见
-{ref}`data_find_legacy_mapping`。
+{doc}`/guide/grib/index`、{doc}`/guide/grib/parameters`、
+{doc}`/guide/grib/levels`。新旧接口的对应关系见
+{doc}`/guide/migration`。
 :::
 
 `reki.format.grib.load_field_from_file()` 从 GRIB 文件中加载**单个**
@@ -34,7 +34,7 @@ kernelspec:
 - `**kwargs`：任意 GRIB 键作为附加筛选条件
 
 本页示例使用内置 `test` 数据源的 **ecmwf_ifs** 冻结数据集
-（说明见 {doc}`/getting-started/test-data`）。下面的代码单元仅用
+（说明见 {doc}`/quick-start/test-data`）。下面的代码单元仅用
 新 API 取得缓存文件路径，本页其余代码均为旧 API 写法，
 除标注外均可执行：
 
@@ -68,7 +68,7 @@ float(field.mean())
 
 `parameter` 支持三类字符串名称（ecCodes `shortName`、WGRIB2 要素名、
 CEMC 要素名）和字典形式的 GRIB 键。名称解析顺序与背景介绍见新 API 文档
-{doc}`/guide/grib_parameter`，本页只给出旧 API 的写法示例。
+{doc}`/guide/grib/parameters`，本页只给出旧 API 的写法示例。
 
 ### ecCodes shortName
 
@@ -168,7 +168,7 @@ bool((t500_dict == t500_str).all())
 ## 层次（level_type / level）
 
 层次键的背景（产品模板 4.0/4.8、双固定面、层次值计算公式）见新 API
-文档 {doc}`/guide/grib_level`，本页只给出旧 API 的写法示例。
+文档 {doc}`/guide/grib/levels`，本页只给出旧 API 的写法示例。
 
 ### typeOfLevel 字符串
 
@@ -355,5 +355,5 @@ eccodes.codes_release(message)
 
 :::{note}
 **ecmwf_ifs 数据集包含修改后的 ECMWF IFS 开放数据**，© ECMWF，
-按 CC-BY-4.0 许可使用。完整署名见 {doc}`/getting-started/test-data`。
+按 CC-BY-4.0 许可使用。完整署名见 {doc}`/quick-start/test-data`。
 :::

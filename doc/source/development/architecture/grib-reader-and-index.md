@@ -10,4 +10,5 @@ GRIB file → header scan → metadata / index hit → query match → lazy deco
 
 index 的扩展边界是内部模块，不能作为稳定 public API。失败模式包括只读 index 缺失、
 文件改变、锁超时和 decoder 不兼容；调用者应选择明确 index policy。公开 reader 与参数
-接口见 {doc}`../api/grib`，用户行为见 {doc}`/guide/loading/grib`。
+接口见 {doc}`../api/grib`；用户行为见 {doc}`/guide/grib/index`，反复 metadata 查询的
+index 策略见 {doc}`/guide/grib/indexes`。本文只解释 scan/index 实现与失效边界。

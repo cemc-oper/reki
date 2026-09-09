@@ -1,13 +1,8 @@
 :orphan:
 
-开始使用
-==========
+兼容入口：开始使用
+==================
 
-本章节为用户提供快速指南，新用户可以通过本指南快速上手 **reki** 库。
-
-.. toctree::
-    :hidden:
-
-    installing
-    test-data
-    quick-overview
+此 URL 为兼容入口。新的快速开始位于 :doc:`/quick-start/index`：先完成
+:doc:`/quick-start/installation` 与 :doc:`/quick-start/test-data`，再运行
+:doc:`/quick-start/first-workflow`。

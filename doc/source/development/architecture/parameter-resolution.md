@@ -10,3 +10,4 @@ name / ID / namespace → registry index → record → condition merge → Reso
 
 新增 registry 数据必须经 SQLite 导出流程，不能手改生成注册表。常见失败是外部名称未映射、
 重复别名和与记录冲突的层次条件。API：{doc}`../api/grib`。
+用户层的规范参数、外部名称与异常处理见 {doc}`/guide/grib/parameters`；本文不重复该教程。

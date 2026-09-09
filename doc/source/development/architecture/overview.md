@@ -11,3 +11,6 @@ SourceSpec / from_source → Source mutate → reader dispatch → FieldList / F
 扩展 source 或 reader 前先阅读 {doc}`source-reader-pipeline`；处理层不能反向依赖
 GRIB 私有实现。常见失败是把远程 I/O 放在 source 构造函数中，导致惰性边界失效。
 相应公开类型见 {doc}`../api/sources`、{doc}`../api/readers` 和 {doc}`../api/core`。
+从用户视角验证该边界时，先运行 {doc}`/quick-start/first-workflow`，再按
+{doc}`/guide/finding/index`、{doc}`/guide/grib/index` 和 {doc}`/guide/processing/index`
+进入具体任务；这些页面不依赖架构私有模块。

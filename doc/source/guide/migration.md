@@ -62,21 +62,34 @@ east_asia = extract_region(
 
 | 概念 | 用户页面 | 实现/API 页面 |
 | --- | --- | --- |
-| source、catalog、远程惰性 | {doc}`finding/new-api`、{doc}`finding/source-options` | `development/api/sources.md`、架构 source pipeline（T4） |
-| 查询、metadata、字段列表 | {doc}`loading/new-api`、{doc}`loading/exploring-data` | `development/architecture/query-model.md`（T4） |
-| xarray 输出与输入契约 | {doc}`loading/xarray-output`、{doc}`processing/new-api` | `development/architecture/xarray-contract.md`（T4） |
-| GRIB 参数、层次与 index | {doc}`loading/grib` | `development/api/grib.md`、GRIB 架构页（T4） |
-| 兼容入口 | 各分区 `legacy-api` 页面 | `development/api/legacy.md`（T4） |
+| source、catalog、远程惰性 | {doc}`finding/index` | {doc}`/development/api/sources`、{doc}`/development/architecture/source-reader-pipeline` |
+| 查询、metadata、字段列表 | {doc}`grib/open-and-inspect`、{doc}`grib/select-fields` | {doc}`/development/architecture/query-model` |
+| xarray 输出与输入契约 | {doc}`grib/xarray-output`、{doc}`processing/index` | {doc}`/development/architecture/xarray-contract` |
+| GRIB 参数、层次与 index | {doc}`grib/index` | {doc}`/development/api/grib`、{doc}`/development/architecture/grib-reader-and-index` |
+| 兼容入口 | 各分区 `legacy-api` 页面 | {doc}`/development/api/legacy` |
 
 ## 旧链接映射
 
 现有 URL 继续作为兼容页保留，避免外部深链接立即失效；新内容应链接到下表的目标页。
 
-| 旧页面 | 新页面 |
-| --- | --- |
-| `getting-started/*` | `quick-start/*` |
-| `guide/data_find`、`guide/catalog` | `guide/finding/*` |
-| `guide/data_load`、`guide/grib_parameter`、`guide/grib_level`、`guide/parameter_resolver` | `guide/loading/*` |
-| `guide/data_process` | `guide/processing/new-api` |
-| `guide/legacy_find`、`guide/legacy_finder_config` | `guide/finding/legacy-api` |
-| `guide/legacy_grib` | `guide/loading/legacy-api`、`guide/processing/legacy-api` |
+| 旧 URL | 唯一正文 / 推荐目标 | 保留方式 |
+| --- | --- | --- |
+| `getting-started/index` | {doc}`/quick-start/index` | 兼容页 |
+| `getting-started/installing` | {doc}`/quick-start/installation` | 兼容页 |
+| `getting-started/test-data` | {doc}`/quick-start/test-data` | 兼容页 |
+| `getting-started/quick-overview` | {doc}`/quick-start/first-workflow` | 兼容页 |
+| `guide/data_find` | {doc}`finding/index` | 兼容页 |
+| `guide/catalog` | {doc}`finding/catalogs-and-patterns` | 兼容页 |
+| `guide/data_load` | {doc}`grib/index` 与 {doc}`loading/index` | 兼容页 |
+| `guide/data_process` | {doc}`processing/index` | 兼容页 |
+| `guide/loading/exploring-data` | {doc}`grib/open-and-inspect` | 兼容页 |
+| `guide/loading/new-api` | {doc}`grib/select-fields` | 兼容页 |
+| `guide/loading/xarray-output` | {doc}`grib/xarray-output` | 兼容页 |
+| `guide/loading/grib` | {doc}`grib/index` | 兼容页 |
+| `guide/grib_parameter`、`guide/parameter_resolver` | {doc}`grib/parameters` | 兼容页 |
+| `guide/grib_level` | {doc}`grib/levels` | 兼容页 |
+| `guide/legacy_find`、`guide/legacy_finder_config` | 旧 `data_finder` 正文 | 兼容 API 的唯一正文；从 {doc}`finding/legacy-api` 进入 |
+| `guide/legacy_grib` | 旧 `reki.format.grib` 正文 | 兼容 API 的唯一正文；从 {doc}`loading/legacy-api` 与 {doc}`processing/legacy-api` 进入 |
+
+兼容页只解释迁移目的并链接唯一正文，不复制参数、数据版本、示例或实现细节。任何新增用户
+教程都必须链接上表中的目标页；只有旧 API 维护说明继续在 `legacy_*` 页面保留正文。

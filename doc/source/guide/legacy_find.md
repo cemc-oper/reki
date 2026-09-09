@@ -17,8 +17,8 @@ kernelspec:
 :::{important}
 本页属于**旧 API（兼容层）**文档，介绍 `reki.data_finder` 命名空间下的
 接口。这些接口保持可用，旧代码无需修改；新代码请使用 `local` 数据源
-（见 {ref}`data_find_local`）。新旧接口的对应关系见
-{ref}`data_find_legacy_mapping`。
+（见 {doc}`/guide/finding/local-files`）。新旧接口的对应关系见
+{doc}`/guide/migration`。
 :::
 
 `reki.data_finder.find_local_file()` 按内置 YAML 配置文件，在多种存储

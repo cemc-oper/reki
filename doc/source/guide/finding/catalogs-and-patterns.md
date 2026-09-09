@@ -39,3 +39,21 @@ reader = from_source(resolved.source)
 
 不要把 `/etc`、挂载目录或组织内产品名写入可共享 notebook。若只需要按固定布局查找本地
 文件，优先使用 {doc}`local-files` 的 `file-pattern`，它无需 catalog 配置。
+
+## Catalog 的覆盖边界
+
+Catalog 将稳定数据集 ID 绑定到可序列化 `SourceSpec`。加载、列出和 `resolve()` 只处理
+配置：不会导入 reader、扫描路径或访问网络。层级按 builtin、plugin、user 合并；高优先级
+层替换整条记录而不是拼接其中的 kwargs，因此替代记录必须重新声明 source、别名和 metadata。
+
+```python
+from reki import load_catalog
+
+catalog = load_catalog(user=False, plugins=False)
+resolved = catalog.resolve("my_dataset")
+source_spec = resolved.source
+```
+
+`reki catalog list/show/resolve` 可用于检查生效记录及来源；CLI 会脱敏 source kwargs。
+用户目录、插件目录、完整 schema 与扩展方式属于 {doc}`/development/api/catalog` 和
+{doc}`/development/architecture/catalog-and-plugins` 的范围。

@@ -13,3 +13,5 @@ name → register / entry point / builtin → Source → mutate fixed point
 扩展点是 source class、entry point 和 reader 的 `READER` factory；不要在探测阶段解码
 值或发起远程请求。未知文件必须返回 `UnknownReader`，而不是误认格式。API：
 {doc}`../api/sources`、{doc}`../api/readers`。
+用户层的 source 选择、远程 I/O 边界和安全日志约定见 {doc}`/guide/finding/index`；该页是
+行为说明的唯一用户正文，本文只描述调度实现。

@@ -34,7 +34,7 @@ type(source).__name__, type(same_source).__name__
 捕获异常时同样不要记录 token、password 或完整服务配置。
 
 数据集 catalog 的加载、覆盖顺序和 `SourceSpec` 解析见 {doc}`source-options`；选择
-字段和实际加载见 {doc}`/guide/loading/new-api`。
+字段和实际加载见 {doc}`/guide/grib/select-fields`。
 
 ## 延后远程或昂贵的构建
 

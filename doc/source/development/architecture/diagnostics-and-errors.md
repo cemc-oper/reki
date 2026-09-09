@@ -10,3 +10,5 @@ with collect_io_metrics() → reader events → IOMetricsSnapshot → applicatio
 异常应保留具体语义：查询没有结果、多个结果、能力不支持、参数未映射和 catalog 错误均
 不应压成普通 `ValueError`。日志和异常消息必须经 redact，不能输出 credential。API：
 {doc}`../api/diagnostics`、{doc}`../api/core` 和 {doc}`../api/cmadaas`。
+用户的 GRIB 诊断顺序与应保留的信息见 {doc}`/guide/grib/troubleshooting`；source/认证
+故障的安全排查见 {doc}`/guide/finding/troubleshooting`。

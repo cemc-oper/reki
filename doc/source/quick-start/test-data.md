@@ -29,4 +29,4 @@ uv run reki-test-data download ecmwf_ifs --variant layers
 与指向不同文件的 `variant` 组合使用。
 
 下载默认写入共享临时缓存；已存在的文件会跳过，下载一次后可离线使用。详细的数据集
-范围、版本语义和 CC-BY-4.0 署名见 {doc}`/getting-started/test-data`。
+范围、版本语义和 CC-BY-4.0 署名见本页下文。

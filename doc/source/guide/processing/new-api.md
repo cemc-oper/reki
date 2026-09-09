@@ -60,4 +60,4 @@ xarray 或 SciPy 引擎，步长只选择已有格点。
 
 `interpolate_grid()` 的目标应是带经纬度坐标的 `DataArray`。缺测值、边界外目标和返回
 维度遵循底层 xarray/SciPy 插值能力；需要稳定行为时应显式选择方法并在业务数据上验证。
-通用输出坐标约定见 {doc}`/guide/loading/xarray-output`。
+通用输出坐标约定见 {doc}`/guide/grib/xarray-output`。

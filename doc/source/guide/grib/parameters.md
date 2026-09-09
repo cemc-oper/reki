@@ -30,4 +30,23 @@ assert geopotential_height.metadata.parameter == "gh"
 ```
 
 自定义中心参数或有歧义的别名请使用稳定的数字 GRIB 键，并参阅
-{doc}`/guide/grib_parameter` 的完整映射说明。
+{doc}`metadata-and-native-keys` 交叉验证。不要用展示名称或单位猜测参数：相同 shortName
+在不同 discipline/category/number 或附加条件下可能表达不同记录。
+
+## 参数 ID、外部名称与条件
+
+`resolve_parameter()` 将稳定 parameter ID、规范名、alias 或已注册的外部名称解析为不可变
+查询条件。`resolve_external_name()` 则按显式 namespace 查询一个规范参数对应的外部代码。
+未知、歧义、命名空间不存在和调用条件与记录冲突，分别会报告明确的参数解析异常，而不会
+回退到模糊匹配。
+
+```python
+from reki import resolve_parameter
+
+resolved = resolve_parameter("HGT", level_type="isobaricInhPa", level=500)
+query = resolved.query
+```
+
+字典形式的 `parameter` 是原生 GRIB 键条件，适合未注册的中心参数；它不是跨格式的用户
+契约。完整签名、支持 namespace 和异常类型见 {doc}`/development/api/grib`，实现中的条件
+合并规则见 {doc}`/development/architecture/parameter-resolution`。

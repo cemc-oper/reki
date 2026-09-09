@@ -17,7 +17,7 @@ kernelspec:
 :::{important}
 本页属于**旧 API（兼容层）**文档，但配置文件机制**新旧 API 共用**：
 `reki.data_finder` 的查找函数与新 API 的 `local` 数据源
-（见 {ref}`data_find_local`）使用同一套配置文件，自定义配置目录时
+（见 {doc}`/guide/finding/local-files`）使用同一套配置文件，自定义配置目录时
 （`config_dir` 参数）本页内容对两者均适用。
 :::
 
