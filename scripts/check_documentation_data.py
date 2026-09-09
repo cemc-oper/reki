@@ -62,6 +62,11 @@ def assert_documentation_contract(paths: dict[str, Path], index_dir: Path) -> No
     ).to_xarray()
     assert list(time_data.step.values.astype("timedelta64[h]").astype(int)) == [0, 6, 12, 24]
     assert "valid_time" in time_data.coords
+    accumulated = time.sel(
+        parameter="tp", level_type="surface", level=0, step=24,
+    ).all().one()
+    assert accumulated.metadata.step_type == "accum"
+    assert accumulated.metadata.time_range.total_seconds() == 24 * 60 * 60
 
     ensemble = reader(paths["ensemble"], index_policy="off")
     ensemble_data = ensemble.sel(

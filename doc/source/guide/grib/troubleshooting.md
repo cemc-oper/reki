@@ -1,3 +1,9 @@
+---
+jupytext:
+  text_representation: {extension: .md, format_name: myst}
+kernelspec: {display_name: Python 3, language: python, name: python3}
+---
+
 # 排错
 
 先以 metadata 证实文件内容和查询基数，再解码值。大多数“读不到数据”问题来自参数、层次、

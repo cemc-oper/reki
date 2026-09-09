@@ -15,7 +15,7 @@ from reki import from_source
 reader = from_source("test", "ecmwf_ifs")
 rows = reader.ls(["parameter", "level_type", "level", "step"])
 assert set(rows["parameter"]) >= {"2t", "t", "gh"}
-assert set(rows["level_type"]) >= {"heightAboveGround", "isobaricInhPa"}
+assert set(rows["level_type"]) >= {"heightAboveGround", "pl"}
 ```
 
 `sel()` 的标准条件（如 `parameter`、`level_type`、`step` 和 `member`）应优先使用。

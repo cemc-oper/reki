@@ -15,8 +15,8 @@ from reki import from_source
 reader = from_source("test", "ecmwf_ifs")
 fields = reader.fetch_many(
     [
-        {"parameter": "t", "level_type": "isobaricInhPa", "level": 850},
-        {"parameter": "t", "level_type": "isobaricInhPa", "level": 500},
+        {"parameter": "t", "level_type": "pl", "level": 850},
+        {"parameter": "t", "level_type": "pl", "level": 500},
     ],
     cardinality="one",
 )

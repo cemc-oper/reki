@@ -27,6 +27,8 @@ precipitation = reader.sel(parameter="tp", level_type="surface", level=0, step=2
 metadata = precipitation.metadata
 assert metadata.step.total_seconds() / 3600 == 24
 assert metadata.parameter == "tp"
+assert metadata.step_type == "accum"
+assert metadata.time_range.total_seconds() / 3600 == 24
 ```
 
 需要带标签数组时，请继续阅读 {doc}`xarray-output`。
