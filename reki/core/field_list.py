@@ -63,7 +63,7 @@ class FieldList(Sequence):
             raise TypeError("FieldQuery and keyword filters cannot be mixed")
         query = self._query.merge(query or field_query_from_kwargs(kwargs))
         return type(self)((field for field in self if _matches(field.metadata, query)),
-                          query=query, source_summary=self._source_summary)
+                          query=query, source_summary=self._source_summary, merge=self._merge)
 
     def where(self, query=None, /, **kwargs):
         """Safely filter metadata using a :class:`FieldQuery` or key values."""
@@ -161,7 +161,21 @@ def _matches(metadata, query):
         expected = getattr(query, key)
         if expected is not None and actual not in (expected if isinstance(expected, tuple) else (expected,)):
             return False
-    return all(metadata.extra.get(key) == value for key, value in query.extra.items())
+    for key, expected in query.extra.items():
+        # ``step`` is accepted as a convenient GRIB query condition but is
+        # represented in public metadata as a Timedelta, rather than an
+        # implementation-specific extra key.  Preserve it when refining an
+        # already selected FieldList.
+        if key == "step":
+            actual = metadata.step
+            values = expected if isinstance(expected, tuple) else (expected,)
+            if actual is None or not any(
+                    actual == (pd.Timedelta(hours=value) if isinstance(value, (int, float)) else pd.Timedelta(value))
+                    for value in values):
+                return False
+        elif metadata.extra.get(key) != expected:
+            return False
+    return True
 
 
 _DEFAULT_COLUMNS = ("index", "parameter", "level_type", "level", "start_time",

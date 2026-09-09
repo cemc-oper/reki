@@ -147,6 +147,18 @@ def test_forecast_metadata_matches_between_scan_and_hot_index(tmp_path):
     assert GribReader(None, path, index_policy="off").ls(["step"]).iloc[0, 0] == pd.Timedelta(hours=9)
 
 
+def test_refining_a_step_query_preserves_public_fieldlist_merge(tmp_path):
+    path = tmp_path / "timed.grib"
+    _write_timed_field(path)
+
+    fields = GribReader(None, path, index_policy="off").sel(step=9).all()
+    selected = fields.sel(level=850)
+
+    assert len(selected) == 1
+    assert selected.one().metadata.step == pd.Timedelta(hours=9)
+    assert selected.to_xarray().name == "t"
+
+
 def test_cemc_name_uses_second_fixed_surface_in_scan_and_index(tmp_path):
     path = tmp_path / "soil.grib"
     root = tmp_path / "index"

@@ -174,8 +174,18 @@ class GribReader(Reader):
             raise TypeError("FieldQuery and keyword filters cannot be mixed")
         query = query if query is not None else field_query_from_kwargs(kwargs)
         query = self._query.merge(query)
+        # Keep the public query representation while constructing a derived
+        # reader.  ``_filters_from_query`` is the backend boundary and maps
+        # aliases such as ``member`` and ``time_range`` to native GRIB keys;
+        # feeding that mapping back through ``field_query_from_kwargs`` would
+        # turn those aliases into ``extra`` keys on a chained ``sel()``.
+        filters = dict(query.extra)
+        for key in ("parameter", "level_type", "level", "step_type", "time_range", "member"):
+            value = getattr(query, key)
+            if value is not None:
+                filters[key] = value
         return GribReader(
-            self.source, self.path, engine=self.engine, filters=self._filters_from_query(query),
+            self.source, self.path, engine=self.engine, filters=filters,
             index_policy=self.index_policy, index_dir=self.index_dir,
             index_lock_timeout=self.index_lock_timeout,
         )
@@ -912,12 +922,17 @@ def _metadata_from_message(message, ordinal, offset, path):
         "layer_bottom": get("bottomLevel"),
     }
     extras.update(parameter_names_from_message(message))
+    # ECMWF IFS writes the ENS control as an ``oper/fc`` message without a
+    # native ``number`` key.  Expose it as member 0 so metadata and xarray
+    # use the same public control/member convention.
+    native_member = get("number")
+    member = 0 if native_member is None and get("dataType") == "fc" else native_member
     return FieldMetadata(
         index=ordinal, offset=offset, parameter=get("shortName"),
         level_type=_public_level_type(get("typeOfLevel")), level=get("level"),
         start_time=time_metadata["start_time"], step=time_metadata["step"],
         valid_time=time_metadata["valid_time"], step_type=get("stepType"),
-        time_range=time_metadata["time_range"], member=get("number"),
+        time_range=time_metadata["time_range"], member=member,
         shape=(nj, ni) if ni is not None and nj is not None else None,
         dtype="float64", grid_type=get("gridType"),
         source=os.path.basename(str(path)),
