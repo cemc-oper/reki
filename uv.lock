@@ -859,8 +859,7 @@ wheels = [
 
 [[package]]
 name = "nuwe-cmadaas"
-version = "0.3.1"
-source = { registry = "https://pypi.org/simple" }
+source = { editable = "../../source/nuwe-cmadaas-devel/repo/nuwe-cmadaas-python" }
 dependencies = [
     { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
     { name = "numpy", version = "2.5.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
@@ -870,10 +869,22 @@ dependencies = [
     { name = "requests" },
     { name = "xarray" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/dd/1e/2abb440c5528c4bfe0bc042a09f96f59b170646ee9fe722598b4b4c28d5e/nuwe_cmadaas-0.3.1.tar.gz", hash = "sha256:7d3dcd7627e56dc7da0a778b0c4c961666611b51ce36a260cfc31f262a99a6af", size = 91224, upload-time = "2026-07-27T02:49:19.044Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a2/4d/192b78c0eaa85d006f50bb9eed13c969652da97bfaa2ea770642bd18df44/nuwe_cmadaas-0.3.1-py3-none-any.whl", hash = "sha256:7ce9433a3495232f5c7bbba66efeda928c1d840befe5e34f2f9b3b0e0ad74ca3", size = 37253, upload-time = "2026-07-27T02:49:17.721Z" },
+
+[package.metadata]
+requires-dist = [
+    { name = "click", marker = "extra == 'example'" },
+    { name = "codecov", marker = "extra == 'cov'" },
+    { name = "importlib-metadata", marker = "python_full_version < '3.8'" },
+    { name = "numpy" },
+    { name = "pandas" },
+    { name = "protobuf" },
+    { name = "pytest", marker = "extra == 'test'" },
+    { name = "pytest-cov", marker = "extra == 'cov'" },
+    { name = "pyyaml" },
+    { name = "requests" },
+    { name = "xarray" },
 ]
+provides-extras = ["test", "cov", "example"]
 
 [[package]]
 name = "packaging"
@@ -1154,7 +1165,7 @@ requires-dist = [
     { name = "importlib-metadata", marker = "python_full_version < '3.8'" },
     { name = "jinja2" },
     { name = "numpy" },
-    { name = "nuwe-cmadaas", marker = "extra == 'cmadaas'" },
+    { name = "nuwe-cmadaas", marker = "extra == 'cmadaas'", editable = "../../source/nuwe-cmadaas-devel/repo/nuwe-cmadaas-python" },
     { name = "pandas" },
     { name = "pyyaml" },
     { name = "requests" },
@@ -1170,7 +1181,7 @@ cov = [
 ]
 test = [
     { name = "jsonschema" },
-    { name = "nuwe-cmadaas" },
+    { name = "nuwe-cmadaas", editable = "../../source/nuwe-cmadaas-devel/repo/nuwe-cmadaas-python" },
     { name = "pytest" },
     { name = "scipy" },
 ]

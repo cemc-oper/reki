@@ -1,2 +1,3 @@
+recursive-include src/reki/catalog/builtin *.yaml
 recursive-include src/reki/data_finder/conf *
 recursive-include src/reki/readers/grib/config *.yaml *.md
