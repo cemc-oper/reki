@@ -3,3 +3,5 @@ pydata-sphinx-theme>=0.15
 myst-nb>=1.1
 ipykernel>=6.29
 codespell>=2.4
+# Required by executable examples that use xarray interpolation.
+scipy
