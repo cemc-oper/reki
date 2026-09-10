@@ -22,7 +22,12 @@ jobs:
         # not in this standalone GitHub checkout. Use published metadata in CI.
         run: uv sync --group test --no-sources
       - name: Run tests
-        run: uv run --no-sources pytest tests -v --tb=short
+        # The regular data-backed tests use the rolling CMA-GFS WIS source.
+        # Frozen real-data coverage is provided by the docs job below through
+        # cedarkit-test-data's ecmwf_ifs assets.
+        run: >-
+          uv run --no-sources pytest tests -v --tb=short
+          -m "not needs_data and not cma_hpc and not cmadaas_local and not cmadaas_service"
       - name: Build
         run: uv build --no-sources
 
