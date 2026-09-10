@@ -18,11 +18,13 @@ jobs:
           version: "latest"
           python-version: ${{ matrix.python }}
       - name: Sync test environment
-        run: uv sync --group test
+        # The local sources are available in the development workspace, but
+        # not in this standalone GitHub checkout. Use published metadata in CI.
+        run: uv sync --group test --no-sources
       - name: Run tests
-        run: uv run pytest tests -v --tb=short
+        run: uv run --no-sources pytest tests -v --tb=short
       - name: Build
-        run: uv build
+        run: uv build --no-sources
 
   docs:
 
