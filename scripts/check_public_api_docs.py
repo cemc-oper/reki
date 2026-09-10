@@ -60,6 +60,7 @@ def main() -> int:
     args = parser.parse_args()
 
     repo = Path(__file__).resolve().parents[1]
+    source_root = repo / "src"
     inventory = args.inventory.read_text(encoding="utf-8")
     failures = []
     pages: dict[str, str] = {}
@@ -68,7 +69,7 @@ def main() -> int:
         page = args.html_root / "development" / "api" / page_name
         if page_name not in pages:
             pages[page_name] = page.read_text(encoding="utf-8")
-        for symbol in exported_names(repo / relative_path):
+        for symbol in exported_names(source_root / relative_path):
             marker = f"`{symbol}`"
             if marker not in inventory:
                 failures.append(f"{relative_path}: {symbol} is missing from the public API inventory")
