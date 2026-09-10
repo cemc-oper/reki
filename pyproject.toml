@@ -34,6 +34,10 @@ dependencies = [
     "requests",
     "cfgrib",
     "eccodes",
+    # Keep the binary library in the runtime dependencies while reki promises
+    # turnkey GRIB support. Move this to an optional extra if system/Conda
+    # ecCodes becomes a supported alternative deployment model.
+    "eccodeslib; platform_system != \"Windows\"",
     'importlib-metadata; python_version<"3.8"',
 ]
 
