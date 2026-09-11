@@ -1,30 +1,24 @@
 # reki
 
-![Maturity-Emerging](https://img.shields.io/badge/Maturity-Emerging-A259FF)
-![GitHub Release](https://img.shields.io/github/v/release/cemc-oper/reki)
-![PyPI - Version](https://img.shields.io/pypi/v/reki)
-![GitHub License](https://img.shields.io/github/license/cemc-oper/reki)
-![GitHub Action Workflow Status](https://github.com/cemc-oper/reki/actions/workflows/ci.yaml/badge.svg)
+[![Maturity-Emerging](https://img.shields.io/badge/Maturity-Emerging-A259FF)](https://github.com/cemc-oper/reki)
+[![GitHub Release](https://img.shields.io/github/v/release/cemc-oper/reki)](https://github.com/cemc-oper/reki/releases)
+[![PyPI - Version](https://img.shields.io/pypi/v/reki)](https://pypi.org/project/reki/)
+[![GitHub License](https://img.shields.io/github/license/cemc-oper/reki)](https://github.com/cemc-oper/reki/blob/main/LICENSE)
+[![GitHub Action Workflow Status](https://github.com/cemc-oper/reki/actions/workflows/ci.yaml/badge.svg)](https://github.com/cemc-oper/reki/actions/workflows/ci.yaml)
 
-`reki` is a Python library for locating, reading, querying, and processing
-meteorological data. It provides a uniform source and query interface over
-GRIB2, NetCDF, GrADS, tables, and in-memory data. GRIB2 fields are decoded with
-ecCodes or cfgrib and returned as `xarray.DataArray` objects.
-
-This README uses a CMADaaS-mounted GRIB directory as its real-data example.
-The mounted directory is a local file source; it is distinct from the CMADaaS
-remote service and does not require CMADaaS credentials.
+`reki` is a Python library for locating, reading, querying, and processing meteorological data. 
+It provides a uniform source and query interface over GRIB2 data.
+GRIB2 fields are decoded with ecCodes and returned as `xarray.DataArray` objects.
+Support for other data formats, including NetCDF, GrADS, tabular data, and in-memory data, is currently under development
 
 ## Features
 
 - Resolve operational file paths from versioned YAML templates.
-- Read GRIB2, NetCDF, GrADS, table, URL, memory, and local-file sources.
+- Read GRIB2 from local-file and URL sources.
 - Select fields through a consistent query interface.
 - Resolve stable parameter identifiers and external parameter names.
-- Return decoded fields as `xarray.DataArray` objects for use with the Python
-  scientific ecosystem.
-- Provide common grid operations, including region extraction, point sampling,
-  and interpolation.
+- Return decoded fields as `xarray.DataArray` objects for use with the Python scientific ecosystem.
+- Provide common grid operations, including region extraction, point sampling, and interpolation.
 
 ## Installation
 
@@ -34,38 +28,36 @@ Python 3.11 or later is required.
 pip install reki
 ```
 
-For development in this workspace:
+Reading GRIB2 data requires ecCodes. 
+Install it with your system package manager or install with pip/conda:
 
 ```bash
-cd repo/reki
-uv sync --group test
-pytest -m "not needs_data and not cma_hpc and not cmadaas_local and not cmadaas_service"
-```
-
-Reading GRIB2 data requires ecCodes. Install it with your system package
-manager or, for conda environments:
-
-```bash
+# use pip
+pip install eccodeslib
+# or using conda/mamba
 conda install -c conda-forge eccodes
 ```
 
 ## CMADaaS-mounted data source
 
-reki includes local-path templates for CMADaaS-mounted GRIB data. Set
-`data_class="cmadaas"` and point `storage_base` at the mount root, commonly
-`/CMADAAS`. The templates then resolve the system-specific directory and file
-name from the start time and forecast time.
+> [!note]
+> This README uses a CMADaaS-mounted directory as its real-data example.
+> Please run CMADaaS app before running any code.
+
+reki includes local-path templates for CMADaaS-mounted GRIB data. 
+Set `data_class="cmadaas"` and point `storage_base` at the mount root, commonly `/CMADAAS`.
+The templates then resolve the system-specific directory and file name from the start time and forecast time.
 
 The following data types currently have CMADaaS mount templates:
 
 | Data type | Product |
 | --- | --- |
-| `cma_gfs_gmf/grib2/orig` | CMA-GFS global forecast |
-| `cma_meso_3km/grib2/orig` | CMA-MESO 3 km forecast |
-| `cma_meso_1km/grib2/orig` | CMA-MESO 1 km forecast |
-| `cma_tym/grib2/orig` | CMA-TYM forecast |
-| `cma_geps/grib2/orig` | CMA-GEPS ensemble forecast |
-| `cma_reps/grib2/orig` | CMA-REPS ensemble forecast |
+| `cma_gfs_gmf/grib2/orig` | CMA-GFS |
+| `cma_meso_3km/grib2/orig` | CMA-MESO 3km (V5.1)|
+| `cma_meso_1km/grib2/orig` | CMA-MESO 1km (V6.1)|
+| `cma_tym/grib2/orig` | CMA-TYM |
+| `cma_geps/grib2/orig` | CMA-GEPS |
+| `cma_reps/grib2/orig` | CMA-REPS |
 
 ## Quick start
 
@@ -80,14 +72,14 @@ import reki
 reader = reki.from_source(
     "local",
     "cma_gfs_gmf/grib2/orig",
-    start_time="2025081900",
+    start_time="2026090112",
     forecast_time="24h",
     data_class="cmadaas",
     storage_base="/CMADAAS",
 )
 
 t2m = reader.sel(
-    parameter="2t",
+    parameter="t2m",
     level_type="heightAboveGround",
     level=2,
 ).first().to_xarray()
@@ -95,48 +87,50 @@ t2m = reader.sel(
 print(t2m.name, t2m.shape)
 ```
 
-`sel()` narrows the field list without decoding the GRIB values. Calling
-`first()` selects the first matching field, and `to_xarray()` decodes it to an
-`xarray.DataArray`.
+`sel()` narrows the field list without decoding the GRIB values. 
+Calling `first()` selects the first matching field, and `to_xarray()` decodes it to an `xarray.DataArray`.
 
 ### Resolve the file path first
 
-When an application needs the path for logging, validation, or another GRIB
-tool, call `find_local_file()` directly:
+When an application needs the path for logging, validation, or another GRIB tool, use `path` to get file path from local reader:
 
 ```python
 from reki.data_finder import find_local_file
 
-path = find_local_file(
-    "cma_gfs_gmf/grib2/orig",
-    start_time="2025081900",
+file_path = reki.from_source(
+    "local",
+    "cma_meso_3km/grib2/orig",
+    start_time="2026090112",
     forecast_time="24h",
     data_class="cmadaas",
     storage_base="/CMADAAS",
-)
+).path
 
-print(path)
-# /CMADAAS/DATA/NAFP/NMC/GRAPES-GFS-GLB/2025/20250819/Z_NAFP_C_BABJ_20250819000000_P_NWPC-GRAPES-GFS-GLB-02400.grib2
+print(file_path)
+# /CMADAAS/DATA/NAFP/GRAPES/RAFS/2026/20260901/Z_NAFP_C_BABJ_20260901120000_P_NWPC-GRAPES-3KM-ORIG-02400.grb2 
 ```
 
-For ensemble data, add the member number used by the template:
+For ensemble data, add the member `number` used by the template:
 
 ```python
-path = find_local_file(
+file_path = reki.from_source(
+    "local",
     "cma_geps/grib2/orig",
     start_time="2025081900",
     forecast_time="24h",
     number=2,
     data_class="cmadaas",
     storage_base="/CMADAAS",
-)
+).path
+print(file_path)
+# /CMADAAS/DATA/NAFP/NMC/GRAPES-GEPS/2025/20250819/Z_NAFP_C_BABJ_20250819000000_P_NWPC-GRAPES-GEPS-GLB-02400-m002.grib2
 ```
 
 ## Querying fields
 
-Use GRIB keys in `sel()` to identify a field. The common keys are `parameter`,
-`level_type`, and `level`; additional GRIB keys can be supplied when a product
-needs more specific filtering.
+Use GRIB keys in `sel()` to identify a field. 
+The common keys are `parameter`, `level_type`, and `level`; 
+additional GRIB keys can be supplied when a product needs more specific filtering.
 
 ```python
 temperature_850 = reader.sel(
@@ -156,13 +150,13 @@ reflectivity_850 = reader.sel(
 ).first().to_xarray()
 ```
 
-Use `one()` instead of `first()` when exactly one match is required. It raises
-an error if the query is ambiguous, which is useful in production workflows.
+Use `one()` instead of `first()` when exactly one match is required. 
+It raises an error if the query is ambiguous, which is useful in production workflows.
 
 ## Working with xarray data
 
-The decoded result is a regular `xarray.DataArray`, including spatial and time
-coordinates. Standard xarray operations work directly:
+The decoded result is a regular `xarray.DataArray`, including spatial and time coordinates. 
+Standard xarray operations work directly:
 
 ```python
 from reki.operator import extract_region
@@ -186,18 +180,15 @@ The public source flow is intentionally small:
 source configuration → source → reader → field query → xarray.DataArray
 ```
 
-- A **source** identifies where data comes from, such as a local mount, file,
-  URL, memory object, or remote service.
+- A **source** identifies where data comes from, such as a local mount, file, URL, memory object, or remote service.
 - A **reader** understands the source format and exposes a field list.
 - A **field query** selects metadata without reading all field values.
 - `to_xarray()` decodes the selected field only when its values are needed.
 
-This separation lets the same query-oriented application code work across
-different file locations and supported source types.
+This separation lets the same query-oriented application code work across different file locations and supported source types.
 
 ## License
 
-Copyright &copy; 2020-2026, developers at CMA Earth System Modeling And
-Prediction Centre.
+Copyright &copy; 2020-2026, developers at CMA Earth System Modeling And Prediction Centre.
 
 `reki` is licensed under the [Apache License 2.0](LICENSE).
