@@ -112,7 +112,7 @@ jobs:
       - name: Build documentation
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -r doc/requirements.txt
+          python -m pip install --group docs
           python -m pip install .
           make -C doc data
           make -C doc html

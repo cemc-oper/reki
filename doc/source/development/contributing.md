@@ -4,7 +4,7 @@
 先安装文档依赖，再进行严格构建。
 
 ```bash
-uv pip install -r doc/requirements.txt
+uv sync --no-default-groups --group docs
 UV_CACHE_DIR=/tmp/reki-uv-cache uv run --no-sync make -C doc clean html SPHINXOPTS='-W --keep-going'
 ```
 

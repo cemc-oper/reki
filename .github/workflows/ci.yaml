@@ -20,7 +20,7 @@ jobs:
       - name: Sync test environment
         # The local sources are available in the development workspace, but
         # not in this standalone GitHub checkout. Use published metadata in CI.
-        run: uv sync --group test --no-sources
+        run: uv sync --no-default-groups --group test --no-sources
       - name: Run tests
         # The regular data-backed tests use the rolling CMA-GFS WIS source.
         # Frozen real-data coverage is provided by the docs job below through
@@ -44,7 +44,7 @@ jobs:
           python-version: "3.12"
       - name: Install dependencies
         run: |
-            uv pip install -r doc/requirements.txt
-            uv pip install .
+          uv pip install --group docs
+          uv pip install --no-sources .
       - name: Build and check docs
         run: uv run --no-sync make -C doc check SPHINXOPTS="-W --keep-going"

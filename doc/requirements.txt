@@ -1,3 +1,6 @@
+# Kept for Read the Docs, whose configuration installs a requirements file.
+# The canonical local/CI declaration is the ``dependency-groups.docs`` group
+# in pyproject.toml; keep this list synchronized with that group.
 sphinx>=7.3
 pydata-sphinx-theme>=0.15
 myst-nb>=1.1
