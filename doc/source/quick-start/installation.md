@@ -1,11 +1,20 @@
 # 安装
 
-reki 支持 Python 3.11 及更高版本。推荐在项目的 uv 环境中安装；GRIB 支持随
-PyPI 的 `eccodes` wheel 一起安装，无需另行配置系统 ecCodes。
+reki 支持 Python 3.11 及更高版本。
+推荐在项目的 uv 环境中安装。
+GRIB 支持随 PyPI 的 `eccodes` wheel 一起安装，无需另行配置系统 ecCodes。
 
-## 基础安装
+## 使用 pip 安装
 
-在已有 uv 项目中添加 reki：
+使用 pip 安装：
+
+```bash
+pip install reki
+```
+
+## 使用 uv 安装
+
+推荐使用 uv 安装。在已有 uv 项目中添加 reki：
 
 ```bash
 uv add reki
@@ -27,6 +36,8 @@ uv pip install reki
 
 ```bash
 uv add "reki[cmadaas,lazy]"
+# or use pip
+pip install "reki[cmadaas, lazy]"
 ```
 
 首次运行前，请继续准备冻结测试数据，而不是使用 CMA 内网或滚动业务数据。

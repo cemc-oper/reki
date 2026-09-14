@@ -11,7 +11,7 @@ os.environ.setdefault("REKI_TEST_DATA_DIR", str(_DOC_CACHE / "test-data"))
 os.environ.setdefault("REKI_INDEX_DIR", str(_DOC_CACHE / "indexes"))
 
 project = "reki"
-copyright = "2021-2025, CMA Earth System Modeling And Prediction Centre (CEMC/CMA)"
+copyright = "2021-2026, CMA Earth System Modeling And Prediction Centre (CEMC/CMA)"
 author = "developers at cemc-oper"
 
 extensions = [
