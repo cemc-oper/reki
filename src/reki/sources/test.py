@@ -666,8 +666,17 @@ download.add_command(download_gfs, name="gfs")
 @click.option(
     "--variant",
     type=click.Choice(ECMWF_IFS_VARIANTS),
-    default=None,
-    help="Frozen asset variant: core (default), time, ensemble, layers, or global.",
+    multiple=True,
+    help=(
+        "Frozen asset variant; repeat for multiple variants. "
+        "Choices: core, time, ensemble, layers, global."
+    ),
+)
+@click.option(
+    "--all",
+    "download_all",
+    is_flag=True,
+    help="Download all frozen ecmwf_ifs variants.",
 )
 @click.option(
     "--output",
@@ -678,7 +687,10 @@ download.add_command(download_gfs, name="gfs")
          "$TMPDIR/cedarkit-test-data)",
 )
 def download_ecmwf_ifs(
-    domain: str | None, variant: str | None, output: Path | None,
+    domain: str | None,
+    variant: tuple[str, ...],
+    download_all: bool,
+    output: Path | None,
 ):
     """Download frozen ECMWF IFS open-data (CC-BY-4.0) test data.
 
@@ -687,11 +699,27 @@ def download_ecmwf_ifs(
     Intended for documentation examples — reproducible.
     """
     click.echo(f"Dataset: ecmwf_ifs (frozen, release {ECMWF_IFS_RELEASE_TAG})")
+    if download_all and (variant or domain is not None):
+        raise click.UsageError("--all cannot be combined with --variant or --domain")
+    if domain is not None and len(variant) > 1:
+        raise click.UsageError("--domain cannot be combined with multiple --variant options")
+
     try:
-        resolved_variant = _resolve_ifs_variant(domain, variant)
+        if download_all:
+            variants = ECMWF_IFS_VARIANTS
+        elif variant:
+            variants = tuple(
+                _resolve_ifs_variant(domain if len(variant) == 1 else None, item)
+                for item in variant
+            )
+        else:
+            variants = (_resolve_ifs_variant(domain, None),)
     except ValueError as error:
         raise click.UsageError(str(error)) from error
-    click.echo(f"Variant: {resolved_variant}")
+    if len(variants) == 1:
+        click.echo(f"Variant: {variants[0]}")
+    else:
+        click.echo(f"Variants: {', '.join(variants)}")
     if domain is not None:
         click.echo(f"Domain (legacy alias): {domain}")
     output = output if output is not None else DEFAULT_DATA_DIR
@@ -699,10 +727,25 @@ def download_ecmwf_ifs(
     click.echo("Downloading...")
 
     try:
-        file_path = download_ecmwf_ifs_data(
-            output_dir=output, domain=domain, variant=variant,
-        )
-        click.echo(f"Downloaded to: {file_path}")
+        metadata_entries = []
+        for selected_variant in variants:
+            file_path = download_ecmwf_ifs_data(
+                output_dir=output,
+                domain=domain if len(variants) == 1 else None,
+                variant=selected_variant,
+            )
+            click.echo(f"Downloaded to: {file_path}")
+
+            # The single-asset API writes metadata.yaml for compatibility.
+            # Preserve all entries when this CLI downloads a batch.
+            metadata_file_path = output / "metadata.yaml"
+            if metadata_file_path.exists():
+                metadata = yaml.safe_load(metadata_file_path.read_text())
+                if isinstance(metadata, list):
+                    metadata_entries.extend(metadata)
+        if len(variants) > 1 and metadata_entries:
+            with (output / "metadata.yaml").open("w") as stream:
+                yaml.safe_dump(metadata_entries, stream, default_flow_style=False)
     except Exception as e:
         click.echo(f"Error: {e}", err=True)
         raise click.Abort()

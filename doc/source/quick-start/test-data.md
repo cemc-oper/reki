@@ -10,18 +10,19 @@
 uv run reki-test-data download ecmwf_ifs
 ```
 
-区域处理示例还需要全球场时，额外下载（旧 `domain` 写法仍兼容）：
+区域处理示例还需要全球场时，额外下载：
 
 ```bash
-uv run reki-test-data download ecmwf_ifs --domain global
+uv run reki-test-data download ecmwf_ifs --variant global
 ```
 
 多时效、集合成员和土壤层示例按 variant 下载：
 
 ```bash
-uv run reki-test-data download ecmwf_ifs --variant time
-uv run reki-test-data download ecmwf_ifs --variant ensemble
-uv run reki-test-data download ecmwf_ifs --variant layers
+uv run reki-test-data download ecmwf_ifs \
+  --variant time --variant ensemble --variant layers
+# 或下载全部五个 variant：
+uv run reki-test-data download ecmwf_ifs --all
 ```
 
 未指定时等价于 `variant="core"`。`domain="eastasia"` 与 `domain="global"` 分别兼容映射到 `core` 和 `global`；

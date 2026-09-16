@@ -312,3 +312,52 @@ class TestEcmwfIfsDownload:
         assert result.exit_code == 0, result.output
         assert "Variant: ensemble" in result.output
         assert calls == [{"output_dir": tmp_path, "domain": None, "variant": "ensemble"}]
+
+    def test_cli_accepts_repeated_variants(self, monkeypatch, tmp_path):
+        calls = []
+
+        def fake_download(**kwargs):
+            calls.append(kwargs)
+            path = kwargs["output_dir"] / f"{kwargs['variant']}.grib2"
+            path.write_bytes(b"GRIB" + b"\\0" * 12)
+            return path
+
+        monkeypatch.setattr(reki.sources.test, "download_ecmwf_ifs_data", fake_download)
+        result = CliRunner().invoke(
+            reki.sources.test.main,
+            [
+                "download",
+                "ecmwf_ifs",
+                "--variant",
+                "core",
+                "--variant",
+                "layers",
+                "--output",
+                str(tmp_path),
+            ],
+        )
+
+        assert result.exit_code == 0, result.output
+        assert "Variants: core, layers" in result.output
+        assert calls == [
+            {"output_dir": tmp_path, "domain": None, "variant": "core"},
+            {"output_dir": tmp_path, "domain": None, "variant": "layers"},
+        ]
+
+    def test_cli_all_variants(self, monkeypatch, tmp_path):
+        calls = []
+
+        def fake_download(**kwargs):
+            calls.append(kwargs["variant"])
+            path = kwargs["output_dir"] / f"{kwargs['variant']}.grib2"
+            path.write_bytes(b"GRIB" + b"\\0" * 12)
+            return path
+
+        monkeypatch.setattr(reki.sources.test, "download_ecmwf_ifs_data", fake_download)
+        result = CliRunner().invoke(
+            reki.sources.test.main,
+            ["download", "ecmwf_ifs", "--all", "--output", str(tmp_path)],
+        )
+
+        assert result.exit_code == 0, result.output
+        assert calls == list(reki.sources.test.ECMWF_IFS_VARIANTS)

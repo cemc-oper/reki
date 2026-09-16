@@ -1326,11 +1326,38 @@ requires-dist = [
     { name = "protobuf" },
     { name = "pytest", marker = "extra == 'test'" },
     { name = "pytest-cov", marker = "extra == 'cov'" },
+    { name = "pytest-socket", marker = "extra == 'test'" },
     { name = "pyyaml" },
     { name = "requests" },
     { name = "xarray" },
 ]
 provides-extras = ["test", "cov", "example"]
+
+[package.metadata.requires-dev]
+cov = [
+    { name = "codecov" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "pytest-socket" },
+]
+dev = [
+    { name = "codecov" },
+    { name = "ipython" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "pytest-socket" },
+    { name = "sphinx", specifier = ">=7.3" },
+    { name = "sphinx-book-theme", specifier = ">=1.1" },
+]
+docs = [
+    { name = "ipython" },
+    { name = "sphinx", specifier = ">=7.3" },
+    { name = "sphinx-book-theme", specifier = ">=1.1" },
+]
+test = [
+    { name = "pytest" },
+    { name = "pytest-socket" },
+]
 
 [[package]]
 name = "packaging"
