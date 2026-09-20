@@ -52,7 +52,7 @@ reki 提供以下功能：
 
 .. note::
 
-   本文档仅使用公开的 ECMWF IFS 数据生成，由 `cemc-oper/cedarkit-test-data`_ 项目制作。
+   本文档仅使用公开的 ECMWF IFS 数据，由 `cemc-oper/cedarkit-test-data`_ 项目制作成小文件数据集。
 
    如果想查看 reki 使用 CEMC 业务系统数据的示例，请访问以下两个使用实际业务系统数据生成的文档：
 

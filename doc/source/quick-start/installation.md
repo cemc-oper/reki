@@ -2,6 +2,7 @@
 
 reki 支持 Python 3.11 及更高版本。
 推荐在项目的 uv 环境中安装。
+
 GRIB 支持随 PyPI 的 `eccodes` wheel 一起安装，无需另行配置系统 ecCodes。
 
 ## 使用 pip 安装
