@@ -36,7 +36,11 @@ dependencies = [
     # Keep the binary library in the runtime dependencies while reki promises
     # turnkey GRIB support. Move this to an optional extra if system/Conda
     # ecCodes becomes a supported alternative deployment model.
-    "eccodeslib; platform_system != \"Windows\"",
+    # ecCodes/eckit 2.49's private PROJ copy crashes alongside pyproj's wheel
+    # PROJ during interpreter shutdown (Cartopy imports pyproj in plot workers).
+    # Keep the tested 2.48/2.2 library pair until the upstream wheels coexist.
+    "eccodeslib<2.49; platform_system != \"Windows\"",
+    "eckitlib<2.3; platform_system != \"Windows\"",
     'importlib-metadata; python_version<"3.8"',
 ]
 
