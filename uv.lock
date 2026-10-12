@@ -84,6 +84,24 @@ wheels = [
 ]
 
 [[package]]
+name = "cedarkit-query"
+version = "0.1.0"
+source = { directory = "../cedarkit-query" }
+dependencies = [
+    { name = "jsonschema" },
+    { name = "pyyaml" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "jsonschema", specifier = ">=4.20" },
+    { name = "pyyaml", specifier = ">=6" },
+]
+
+[package.metadata.requires-dev]
+test = [{ name = "pytest", specifier = ">=8" }]
+
+[[package]]
 name = "certifi"
 version = "2026.7.22"
 source = { registry = "https://pypi.org/simple" }
@@ -1342,17 +1360,21 @@ cov = [
 ]
 dev = [
     { name = "codecov" },
+    { name = "ipykernel", specifier = ">=6.29" },
     { name = "ipython" },
+    { name = "myst-nb", specifier = ">=1.1" },
+    { name = "pydata-sphinx-theme", specifier = ">=0.15" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "pytest-socket" },
     { name = "sphinx", specifier = ">=7.3" },
-    { name = "sphinx-book-theme", specifier = ">=1.1" },
 ]
 docs = [
+    { name = "ipykernel", specifier = ">=6.29" },
     { name = "ipython" },
+    { name = "myst-nb", specifier = ">=1.1" },
+    { name = "pydata-sphinx-theme", specifier = ">=0.15" },
     { name = "sphinx", specifier = ">=7.3" },
-    { name = "sphinx-book-theme", specifier = ">=1.1" },
 ]
 test = [
     { name = "pytest" },
@@ -1765,6 +1787,7 @@ wheels = [
 name = "reki"
 source = { editable = "." }
 dependencies = [
+    { name = "cedarkit-query" },
     { name = "cfgrib" },
     { name = "click" },
     { name = "eccodes" },
@@ -1833,6 +1856,7 @@ test = [
 
 [package.metadata]
 requires-dist = [
+    { name = "cedarkit-query", directory = "../cedarkit-query" },
     { name = "cfgrib" },
     { name = "click" },
     { name = "dask", marker = "extra == 'lazy'" },

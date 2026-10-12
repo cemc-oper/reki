@@ -23,6 +23,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
+    "cedarkit-query>=0.1,<0.2",
     "pyyaml",
     "jinja2",
     "numpy",
@@ -107,4 +108,5 @@ include-package-data = false
 version_file = "src/reki/_version.py"
 
 [tool.uv.sources]
+cedarkit-query = { path = "../cedarkit-query" }
 nuwe-cmadaas = { path = "../../source/nuwe-cmadaas-devel/repo/nuwe-cmadaas-python", editable = true }
