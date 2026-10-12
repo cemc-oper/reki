@@ -10,6 +10,7 @@ import pandas as pd
 from cedarkit_query import Query, QueryError
 
 from .core.field_query import FieldQuery
+from .readers.grib.config import ParameterResolutionError, resolve_parameter
 
 
 _LEVEL_TYPES = {
@@ -112,12 +113,22 @@ def query_from_field_query(
         raise QueryError("invalid_query", "/query", "dataset and parameter_id are required")
     if not isinstance(field_query, FieldQuery):
         raise TypeError("field_query must be a FieldQuery")
-    if field_query.parameter is not None and field_query.parameter not in (parameter_id, native_parameter):
+    if isinstance(field_query.parameter, Mapping):
+        try:
+            registry_key = resolve_parameter(parameter_id).record.grib_key
+        except ParameterResolutionError as exc:
+            raise QueryError("unmapped_parameter", "/query/parameter", "stable parameter has no GRIB key mapping") from exc
+        if native_parameter is None or dict(field_query.parameter) != dict(registry_key):
+            raise QueryError("unsupported", "/field_query/parameter", "native GRIB key has no verified mapping")
+    elif field_query.parameter is not None and field_query.parameter not in (parameter_id, native_parameter):
         raise QueryError("unsupported", "/field_query/parameter", "native parameter has no verified mapping")
-    allowed_extra = {"step", "typeOfLevel", "typeOfFirstFixedSurface", "typeOfSecondFixedSurface"}
+    allowed_extra = {"step", "typeOfLevel", "typeOfFirstFixedSurface", "typeOfSecondFixedSurface",
+                     "first_level"}
     unknown = set(field_query.extra) - allowed_extra
     if unknown:
         raise QueryError("unsupported", "/field_query/extra", f"unmapped native keys: {', '.join(sorted(unknown))}")
+    if "first_level" in field_query.extra and field_query.extra["first_level"] != field_query.level:
+        raise QueryError("invalid_query", "/field_query/extra/first_level", "native level conflicts")
     lead, lead_seconds = _lead(lead_time)
     if "step" in field_query.extra:
         native_step = field_query.extra["step"]

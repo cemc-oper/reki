@@ -76,3 +76,25 @@ def test_numeric_lead_requires_explicit_unit():
     with pytest.raises(QueryError) as caught:
         query_from_field_query("example.grid", FieldQuery(), "cedarkit.t", START, 6)
     assert caught.value.path == "/query/lead_time"
+
+
+def test_registry_resolved_t2m_key_and_redundant_first_level_are_checked():
+    from reki.readers.grib.config import resolve_parameter
+
+    old = resolve_parameter("cedarkit.t2m").query
+    result = query_from_field_query("grid", old, "cedarkit.t2m", START,
+                                    timedelta(hours=24), native_parameter="2t")
+    assert result.vertical == {"type": "heightAboveGround", "unit": "m", "values": 2}
+    with pytest.raises(QueryError) as caught:
+        query_from_field_query("grid", old, "cedarkit.t2m", START, timedelta(hours=24))
+    assert caught.value.path == "/field_query/parameter"
+    with pytest.raises(QueryError) as caught:
+        query_from_field_query("grid", old, "cedarkit.unknown", START,
+                               timedelta(hours=24), native_parameter="2t")
+    assert caught.value.code == "unmapped_parameter"
+    wrong = FieldQuery(parameter=old.parameter, level_type=old.level_type, level=old.level,
+                       extra={"typeOfFirstFixedSurface": 103, "first_level": 3})
+    with pytest.raises(QueryError) as caught:
+        query_from_field_query("grid", wrong, "cedarkit.t2m", START,
+                               timedelta(hours=24), native_parameter="2t")
+    assert caught.value.path == "/field_query/extra/first_level"

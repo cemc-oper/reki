@@ -6,7 +6,7 @@ import json
 import hashlib
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Mapping
+from typing import Iterable, Mapping
 
 import pandas as pd
 import eccodes
@@ -182,6 +182,9 @@ def _matches(query: dict, metadata: FieldMetadata, native_parameter: str,
                 return False
             if metadata.level * 100 != vertical["values"]:
                 return False
+        elif vertical["type"] == "heightAboveGround":
+            if metadata.level_type != "heightAboveGround" or metadata.level != vertical["values"]:
+                return False
         else:
             raise QueryError("unsupported", "/query/vertical/type", "vertical type has no GRIB locator mapping")
     statistic = query.get("statistic")
@@ -202,7 +205,7 @@ def _matches(query: dict, metadata: FieldMetadata, native_parameter: str,
 def _check_query(query: dict) -> None:
     if "native_grid" in query or "coverage" in query:
         raise QueryError("unsupported", "/query", "native grid and coverage filtering need verified grid metadata")
-    if "vertical" in query and query["vertical"]["type"] not in {"surface", "isobaric"}:
+    if "vertical" in query and query["vertical"]["type"] not in {"surface", "isobaric", "heightAboveGround"}:
         raise QueryError("unsupported", "/query/vertical/type", "vertical type has no GRIB locator mapping")
     if "vertical" in query and "bounds" in query["vertical"]:
         raise QueryError("unsupported", "/query/vertical/bounds", "layer bounds need a verified mapping")
@@ -212,7 +215,8 @@ def locate_fields(plan: BindingPlan, *, native_parameters: Mapping[str, str] | N
                   member_roles: Mapping[str, str] | None = None,
                   local_config_dir: Path | None = None, index_dir: Path | None = None,
                   index_policy: str = "auto", missing: str = "error",
-                  hash_resources: bool = False) -> AvailabilityReport:
+                  hash_resources: bool = False,
+                  candidate_paths: Iterable[str | Path] | None = None) -> AvailabilityReport:
     """Locate finite field combinations without decoding values or visiting remote services."""
     if missing not in {"error", "partial"}:
         raise ValueError("missing must be 'error' or 'partial'")
@@ -225,6 +229,25 @@ def locate_fields(plan: BindingPlan, *, native_parameters: Mapping[str, str] | N
                                 {"kind": "cmadaas", "locator": plan.binding.data_code},
                                 "remote_unverified")) for request in requests)
         return AvailabilityReport("locate", items)
+    explicit_paths = None if candidate_paths is None else tuple(sorted({Path(path).resolve()
+                                                                       for path in candidate_paths}))
+    if explicit_paths is not None:
+        if not explicit_paths:
+            raise QueryError("not_found", "/resource/locator", "candidate collection is empty")
+        locator = plan.binding.to_dict()["locator"]
+        for request in requests:
+            query = request.query.to_dict()
+            if query.get("reference_time") is None or query.get("lead_time") is None:
+                raise QueryError("unsupported", "/query", "local path resolution requires reference_time and lead_time")
+            if locator["resolver"] == "file-pattern":
+                root = FilePatternSource(locator["root"], ".", start_time=query["reference_time"],
+                                         forecast_time=query["lead_time"]).resolve_path().resolve()
+            elif locator["resolver"] == "reki-local":
+                root = _path(plan, query, local_config_dir=local_config_dir).parent
+            else:
+                raise QueryError("unsupported", "/binding/locator/resolver", "unsupported local resolver")
+            if any(not path.is_relative_to(root) for path in explicit_paths):
+                raise QueryError("unsupported", "/resource/locator", "candidate path escapes configured root")
     cache: dict[Path, tuple[dict | None, tuple[FieldMetadata, ...]]] = {}
     items = []
     for request in requests:
@@ -233,8 +256,10 @@ def locate_fields(plan: BindingPlan, *, native_parameters: Mapping[str, str] | N
         parameter = query["parameter"]
         if native_parameters is None or parameter not in native_parameters:
             raise QueryError("unsupported", "/query/parameter", "native GRIB parameter needs an explicit mapping")
-        path = _path(plan, query, local_config_dir=local_config_dir)
-        if path not in cache:
+        paths = explicit_paths if explicit_paths is not None else (_path(plan, query, local_config_dir=local_config_dir),)
+        for path in paths:
+            if path in cache:
+                continue
             try:
                 before = _fingerprint(path, hash_contents=hash_resources)
             except QueryError as exc:
@@ -262,19 +287,26 @@ def locate_fields(plan: BindingPlan, *, native_parameters: Mapping[str, str] | N
                 if before != after:
                     raise QueryError("stale_reference", "/resource/fingerprint", "resource changed during scan")
                 cache[path] = (before, fields)
-        fingerprint, fields = cache[path]
         identity = {key: value for key, value in query.items()
                     if key not in {"api_version", "domain", "dataset"}}
-        if fingerprint is None:
-            item = LocatedItem(identity, "not_found", path=str(path))
+        matches = [(path, fingerprint, field) for path in paths
+                   for fingerprint, fields in (cache[path],) if fingerprint is not None
+                   for field in fields if _matches(query, field, native_parameters[parameter], member_roles)]
+        if len(matches) > 1:
+            raise QueryError("multiple_matches", "/query", "multiple GRIB fields match one expanded query")
+        absent_path = next((path for path in paths if cache[path][0] is None), None)
+        if explicit_paths is not None and absent_path is not None:
+            item = LocatedItem(identity, "not_found", path=str(absent_path))
+        elif matches:
+            path, fingerprint, field = matches[0]
+            item = LocatedItem(identity, "field_confirmed", _reference(plan, identity,
+                               _resource(path, fingerprint), "field_confirmed", field), str(path))
         else:
-            matches = [field for field in fields if _matches(query, field, native_parameters[parameter], member_roles)]
-            if len(matches) > 1:
-                raise QueryError("multiple_matches", "/query", "multiple GRIB fields match one expanded query")
-            status = "field_confirmed" if matches else "path_exists"
-            item = LocatedItem(identity, status, _reference(plan, identity,
-                               _resource(path, fingerprint), status, matches[0] if matches else None),
-                               str(path))
+            path = next((path for path in paths if cache[path][0] is not None), paths[0])
+            fingerprint, _ = cache[path]
+            item = (LocatedItem(identity, "not_found", path=str(path)) if fingerprint is None else
+                    LocatedItem(identity, "path_exists", _reference(plan, identity,
+                                _resource(path, fingerprint), "path_exists"), str(path)))
         if missing == "error" and item.verification in {"not_found", "path_exists"}:
             raise QueryError("not_found", "/query", "requested field was not confirmed",
                              {"verification": item.verification})

@@ -62,6 +62,24 @@ def test_expanded_locator_confirms_fields_without_decoding_values(assets, tmp_pa
     assert resource_identity(restored).startswith("sha256:")
 
 
+def test_explicit_candidates_share_collection_read_scope(assets):
+    plan = _plan(assets, member=1, source={"name": "file-pattern",
+                 "args": [str(assets / "baseline"), "absent.grib2"]})
+    candidate = assets / "baseline/f024_m1.grib2"
+    with collect_io_metrics() as metrics:
+        report = _locate(plan, candidate_paths=[candidate], index_policy="off")
+    assert report.status == "available"
+    assert report.items[0].path == str(candidate)
+    assert metrics.snapshot()["value_decode_count"] == 0
+    missing = _locate(plan, candidate_paths=[assets / "baseline/missing.grib2"],
+                      missing="partial", index_policy="off")
+    assert missing.status == "partial"
+    assert missing.items[0].verification == "not_found"
+    mixed = _locate(plan, candidate_paths=[candidate, assets / "baseline/missing.grib2"],
+                    missing="partial", index_policy="off")
+    assert mixed.status == "partial"
+
+
 def test_list_uses_metadata_only_and_retains_each_resource_path(assets, tmp_path):
     plan = _plan(assets, lead=["PT0S", "PT86400S"])
     with collect_io_metrics() as metrics:

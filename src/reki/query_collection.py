@@ -253,7 +253,8 @@ def _cube(fields: tuple[CollectionField, ...]) -> xr.DataArray:
 
     leads = sorted({pd.Timedelta(query["lead_time"]) for query in queries})
     vertical_type = next(iter(vertical_types))
-    levels = sorted({query["vertical"]["values"] for query in queries}) if vertical_type == "isobaric" else [None]
+    has_level = vertical_type in {"isobaric", "heightAboveGround"}
+    levels = sorted({query["vertical"]["values"] for query in queries}) if has_level else [None]
     members = sorted({(query["member"]["id"], query["member"]["role"])
                       for query in queries if "member" in query})
     if members and any("member" not in query for query in queries):
@@ -264,7 +265,7 @@ def _cube(fields: tuple[CollectionField, ...]) -> xr.DataArray:
     for field in fields:
         query = field.identity
         key = (pd.Timedelta(query["lead_time"]),
-               query["vertical"]["values"] if vertical_type == "isobaric" else None,
+               query["vertical"]["values"] if has_level else None,
                query.get("member", {}).get("id"))
         lookup[key] = field
     values = np.stack([lookup[(lead, level, member)].data.values
@@ -276,9 +277,10 @@ def _cube(fields: tuple[CollectionField, ...]) -> xr.DataArray:
                    "valid_time": ("lead_time", [pd.Timestamp(next(iter(starts))).tz_localize(None) + lead
                                                 for lead in leads]),
                    "latitude": first.coords["latitude"], "longitude": first.coords["longitude"]}
-    if vertical_type == "isobaric":
-        dimensions.append("isobaricInPa")
-        coordinates["isobaricInPa"] = levels
+    if has_level:
+        level_name = "isobaricInPa" if vertical_type == "isobaric" else "heightAboveGroundInM"
+        dimensions.append(level_name)
+        coordinates[level_name] = levels
     else:
         values = values[:, 0]
     if members[0][0] is not None:
@@ -286,7 +288,7 @@ def _cube(fields: tuple[CollectionField, ...]) -> xr.DataArray:
         coordinates["member"] = [member for member, _ in members]
         coordinates["member_role"] = ("member", [role for _, role in members])
     else:
-        values = values[:, :, 0] if vertical_type == "isobaric" else values[:, 0]
+        values = values[:, :, 0] if has_level else values[:, 0]
     dimensions.extend(first.dims)
     result = xr.DataArray(values, dims=dimensions, coords=coordinates,
                           name=next(iter(parameters)), attrs=dict(first.attrs))
