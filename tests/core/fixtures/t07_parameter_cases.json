@@ -1,0 +1,14 @@
+{
+  "registry_sha256": "795f046b87d439dcf0e26d94587c20d3a0276bebda277df1db1fd251d5bfaabf",
+  "catalog_sha256": "d48970947032da45a9f502b89ade235e38b2828084625160511e86bb11ddcbd7",
+  "mapping_inventory_sha256": "410ced3fefba0b4dafd6f0fe25a84865804749d5c88864338c6be0761b7b8a50",
+  "dataset": "cma_gfs_gmf_cmadaas",
+  "reference_time": "2026-08-30T00:00:00Z",
+  "lead_time": "PT24H",
+  "cases": [
+    {"parameter_id": "cedarkit.t", "code": "TEM", "statistic": {"kind": "instant"}, "grib_key": [0, 0, 0], "registry_unit": "K", "observed_grib_unit": "K", "compared_points": 289},
+    {"parameter_id": "cedarkit.h.any", "code": "GPH", "statistic": {"kind": "instant"}, "grib_key": [0, 3, 5], "registry_unit": "Gpm", "observed_grib_unit": "m", "compared_points": 289},
+    {"parameter_id": "cedarkit.rainc.any", "code": "CPE", "statistic": {"kind": "accum", "window": "PT24H"}, "grib_key": [0, 1, 10], "registry_unit": "mm", "observed_grib_unit": "kg m**-2", "compared_points": 289},
+    {"parameter_id": "cedarkit.rainnc.any", "code": "LPE", "statistic": {"kind": "accum", "window": "PT24H"}, "grib_key": [0, 1, 9], "registry_unit": "mm", "observed_grib_unit": "kg m**-2", "compared_points": 272}
+  ]
+}
