@@ -1,0 +1,1814 @@
+{
+  "baseline_files": [
+    "baseline/f000_m0.grib2",
+    "baseline/f000_m1.grib2",
+    "baseline/f000_m2.grib2",
+    "baseline/f006_m0.grib2",
+    "baseline/f006_m1.grib2",
+    "baseline/f006_m2.grib2",
+    "baseline/f012_m0.grib2",
+    "baseline/f012_m1.grib2",
+    "baseline/f012_m2.grib2",
+    "baseline/f018_m0.grib2",
+    "baseline/f018_m1.grib2",
+    "baseline/f018_m2.grib2",
+    "baseline/f024_m0.grib2",
+    "baseline/f024_m1.grib2",
+    "baseline/f024_m2.grib2",
+    "baseline/f030_m0.grib2",
+    "baseline/f030_m1.grib2",
+    "baseline/f030_m2.grib2",
+    "baseline/f036_m0.grib2",
+    "baseline/f036_m1.grib2",
+    "baseline/f036_m2.grib2",
+    "baseline/f042_m0.grib2",
+    "baseline/f042_m1.grib2",
+    "baseline/f042_m2.grib2",
+    "baseline/f048_m0.grib2",
+    "baseline/f048_m1.grib2",
+    "baseline/f048_m2.grib2",
+    "baseline/f054_m0.grib2",
+    "baseline/f054_m1.grib2",
+    "baseline/f054_m2.grib2",
+    "baseline/f060_m0.grib2",
+    "baseline/f060_m1.grib2",
+    "baseline/f060_m2.grib2",
+    "baseline/f066_m0.grib2",
+    "baseline/f066_m1.grib2",
+    "baseline/f066_m2.grib2",
+    "baseline/f072_m0.grib2",
+    "baseline/f072_m1.grib2",
+    "baseline/f072_m2.grib2"
+  ],
+  "eccodes_api_version": "2.48.2",
+  "files": [
+    {
+      "fields": [
+        {
+          "first_value": 250.0,
+          "last_value": 261.0,
+          "lead_hours": 0,
+          "level_hpa": 500,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 270.0,
+          "last_value": 281.0,
+          "lead_hours": 0,
+          "level_hpa": 850,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f000_m0.grib2",
+      "sha256": "8c83427cacd3327d73b2583a34a47aeb659daf994c4b1414e82c7b78fbb26849",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 310.0,
+          "last_value": 321.0,
+          "lead_hours": 0,
+          "level_hpa": 850,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 290.0,
+          "last_value": 301.0,
+          "lead_hours": 0,
+          "level_hpa": 500,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f000_m1.grib2",
+      "sha256": "5756d6e93bc6cbd9ffb0512ba9e57ce18bfb0dc2c46e8a8a178b9f1713ff23e9",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 330.0,
+          "last_value": 341.0,
+          "lead_hours": 0,
+          "level_hpa": 500,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 350.0,
+          "last_value": 361.0,
+          "lead_hours": 0,
+          "level_hpa": 850,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f000_m2.grib2",
+      "sha256": "284d24e492d8264973cade00b14faec63f7580e71141b299d6e79d3898e6dcf4",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 271.0,
+          "last_value": 282.0,
+          "lead_hours": 6,
+          "level_hpa": 850,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 251.0,
+          "last_value": 262.0,
+          "lead_hours": 6,
+          "level_hpa": 500,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f006_m0.grib2",
+      "sha256": "bf1edb0bfc7c9093a8df84d6e57dd4539788ff5426386b981bb502c9d808a3a3",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 291.0,
+          "last_value": 302.0,
+          "lead_hours": 6,
+          "level_hpa": 500,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 311.0,
+          "last_value": 322.0,
+          "lead_hours": 6,
+          "level_hpa": 850,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f006_m1.grib2",
+      "sha256": "c22ef8d8ecb0c6c85aafc01b3c234ee52f899ef3540b6c368e302be30330fecf",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 351.0,
+          "last_value": 362.0,
+          "lead_hours": 6,
+          "level_hpa": 850,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 331.0,
+          "last_value": 342.0,
+          "lead_hours": 6,
+          "level_hpa": 500,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f006_m2.grib2",
+      "sha256": "fca2796e26fa34b3bab49ef92b463d5e3cb8c5708494b790f6472681725e96d1",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 252.0,
+          "last_value": 263.0,
+          "lead_hours": 12,
+          "level_hpa": 500,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 272.0,
+          "last_value": 283.0,
+          "lead_hours": 12,
+          "level_hpa": 850,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f012_m0.grib2",
+      "sha256": "02770521da6950f2d9ba8889ec76e5a8fad7823b75d4c28470ba3f79216cd06e",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 312.0,
+          "last_value": 323.0,
+          "lead_hours": 12,
+          "level_hpa": 850,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 292.0,
+          "last_value": 303.0,
+          "lead_hours": 12,
+          "level_hpa": 500,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f012_m1.grib2",
+      "sha256": "113016ac19e31b5250fd3c0343415e64d10566f11c9d141611f2b02bcc12b185",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 332.0,
+          "last_value": 343.0,
+          "lead_hours": 12,
+          "level_hpa": 500,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 352.0,
+          "last_value": 363.0,
+          "lead_hours": 12,
+          "level_hpa": 850,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f012_m2.grib2",
+      "sha256": "9d9f8c5399ca3da8ac38c13f45675c9727207843fe7625a9e70ca0dbd7d9ddb1",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 273.0,
+          "last_value": 284.0,
+          "lead_hours": 18,
+          "level_hpa": 850,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 253.0,
+          "last_value": 264.0,
+          "lead_hours": 18,
+          "level_hpa": 500,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f018_m0.grib2",
+      "sha256": "b0aa8865d2de7fe27a5b244997e1022438ec25d3c0856d4ef609844d5824cd01",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 293.0,
+          "last_value": 304.0,
+          "lead_hours": 18,
+          "level_hpa": 500,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 313.0,
+          "last_value": 324.0,
+          "lead_hours": 18,
+          "level_hpa": 850,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f018_m1.grib2",
+      "sha256": "36f3f54c7a752a17ac9be1d578c20d2cc713577242afbbaff88e79770072c8bf",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 353.0,
+          "last_value": 364.0,
+          "lead_hours": 18,
+          "level_hpa": 850,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 333.0,
+          "last_value": 344.0,
+          "lead_hours": 18,
+          "level_hpa": 500,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f018_m2.grib2",
+      "sha256": "faf85c3cf5dc8f6c13517b7b2f38666c47b2a3ce4f58e7416457289df674b67c",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 254.0,
+          "last_value": 265.0,
+          "lead_hours": 24,
+          "level_hpa": 500,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 274.0,
+          "last_value": 285.0,
+          "lead_hours": 24,
+          "level_hpa": 850,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f024_m0.grib2",
+      "sha256": "26c122a6d8800b63cba7afcc76d66839920920f56bf07015653fa1c4f1b91fbd",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 314.0,
+          "last_value": 325.0,
+          "lead_hours": 24,
+          "level_hpa": 850,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 294.0,
+          "last_value": 305.0,
+          "lead_hours": 24,
+          "level_hpa": 500,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f024_m1.grib2",
+      "sha256": "a13160847eb4ee5439e04889db896316430284acafca4336e062fdf86a260023",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 334.0,
+          "last_value": 345.0,
+          "lead_hours": 24,
+          "level_hpa": 500,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 354.0,
+          "last_value": 365.0,
+          "lead_hours": 24,
+          "level_hpa": 850,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f024_m2.grib2",
+      "sha256": "7c7dd84e3a03b9131ad260bbbf92555b72e84b2d4c387feacdb8b24671d91096",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 275.0,
+          "last_value": 286.0,
+          "lead_hours": 30,
+          "level_hpa": 850,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 255.0,
+          "last_value": 266.0,
+          "lead_hours": 30,
+          "level_hpa": 500,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f030_m0.grib2",
+      "sha256": "ecf0b6042a91220b2130bd3835737490173e4d1e968d2542eccc210a5ab90df6",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 295.0,
+          "last_value": 306.0,
+          "lead_hours": 30,
+          "level_hpa": 500,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 315.0,
+          "last_value": 326.0,
+          "lead_hours": 30,
+          "level_hpa": 850,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f030_m1.grib2",
+      "sha256": "63487b5c6ad7cb4f4b289318166b5df5e1177a36fc2ca7659b02530eb954ea01",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 355.0,
+          "last_value": 366.0,
+          "lead_hours": 30,
+          "level_hpa": 850,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 335.0,
+          "last_value": 346.0,
+          "lead_hours": 30,
+          "level_hpa": 500,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f030_m2.grib2",
+      "sha256": "e1a3193971088c0c517cf3e4c6fd9697abd73557842069681d2a1a3920db0cd6",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 256.0,
+          "last_value": 267.0,
+          "lead_hours": 36,
+          "level_hpa": 500,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 276.0,
+          "last_value": 287.0,
+          "lead_hours": 36,
+          "level_hpa": 850,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f036_m0.grib2",
+      "sha256": "32231f965242a8c6243c4fe9fd905c8c57e427c52958164e88d602d3f4366fd7",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 316.0,
+          "last_value": 327.0,
+          "lead_hours": 36,
+          "level_hpa": 850,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 296.0,
+          "last_value": 307.0,
+          "lead_hours": 36,
+          "level_hpa": 500,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f036_m1.grib2",
+      "sha256": "a2e452f72608094ec70ee18739b584818e442009bc03b85249dfbe63bc6b5ea0",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 336.0,
+          "last_value": 347.0,
+          "lead_hours": 36,
+          "level_hpa": 500,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 356.0,
+          "last_value": 367.0,
+          "lead_hours": 36,
+          "level_hpa": 850,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f036_m2.grib2",
+      "sha256": "43e4127a7fee44a8b30cc800c3beef28ab49167aaa7769c150df4e31f5c1a396",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 277.0,
+          "last_value": 288.0,
+          "lead_hours": 42,
+          "level_hpa": 850,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 257.0,
+          "last_value": 268.0,
+          "lead_hours": 42,
+          "level_hpa": 500,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f042_m0.grib2",
+      "sha256": "e1b2c922abcb90522e4255f08895c7d541c172932b59cf8d542ade5bca877d63",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 297.0,
+          "last_value": 308.0,
+          "lead_hours": 42,
+          "level_hpa": 500,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 317.0,
+          "last_value": 328.0,
+          "lead_hours": 42,
+          "level_hpa": 850,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f042_m1.grib2",
+      "sha256": "604372c3cc3158448722afafa6d9b341a61f90595ef5dfee83f177aec18e1d2b",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 357.0,
+          "last_value": 368.0,
+          "lead_hours": 42,
+          "level_hpa": 850,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 337.0,
+          "last_value": 348.0,
+          "lead_hours": 42,
+          "level_hpa": 500,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f042_m2.grib2",
+      "sha256": "bd832944df4629c62823620bb8fa0084d564adcd0cc1cdcd7671e5866e65eca2",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 258.0,
+          "last_value": 269.0,
+          "lead_hours": 48,
+          "level_hpa": 500,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 278.0,
+          "last_value": 289.0,
+          "lead_hours": 48,
+          "level_hpa": 850,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f048_m0.grib2",
+      "sha256": "f036a67342c509bdb61c7f0b1647d99348712cfd8d5b9fbd0ac4aca36921f458",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 318.0,
+          "last_value": 329.0,
+          "lead_hours": 48,
+          "level_hpa": 850,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 298.0,
+          "last_value": 309.0,
+          "lead_hours": 48,
+          "level_hpa": 500,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f048_m1.grib2",
+      "sha256": "72e3b64e1cfac3bcc80429b5fe2677f7d84443b98071f0c745c9c20c1ffdc252",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 338.0,
+          "last_value": 349.0,
+          "lead_hours": 48,
+          "level_hpa": 500,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 358.0,
+          "last_value": 369.0,
+          "lead_hours": 48,
+          "level_hpa": 850,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f048_m2.grib2",
+      "sha256": "90f3c0949306be02a1bc62e83bfd07c6dcfa24a1a2ca0ffeb21dc3226ead1274",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 279.0,
+          "last_value": 290.0,
+          "lead_hours": 54,
+          "level_hpa": 850,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 259.0,
+          "last_value": 270.0,
+          "lead_hours": 54,
+          "level_hpa": 500,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f054_m0.grib2",
+      "sha256": "c005ea374bdbde21ae5f19d1f90f2a92654fd9401af612c35cc8c259fa24bc19",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 299.0,
+          "last_value": 310.0,
+          "lead_hours": 54,
+          "level_hpa": 500,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 319.0,
+          "last_value": 330.0,
+          "lead_hours": 54,
+          "level_hpa": 850,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f054_m1.grib2",
+      "sha256": "cf51c9ac0d515f79e4b5943f691bda16faa81b405b67c3ead88692aaebb10760",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 359.0,
+          "last_value": 370.0,
+          "lead_hours": 54,
+          "level_hpa": 850,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 339.0,
+          "last_value": 350.0,
+          "lead_hours": 54,
+          "level_hpa": 500,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f054_m2.grib2",
+      "sha256": "5e1aecfbcdd50cb10efe7e49a9dc0c44207d5cc0af349ab4138f06eb4d5b0c87",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 260.0,
+          "last_value": 271.0,
+          "lead_hours": 60,
+          "level_hpa": 500,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 280.0,
+          "last_value": 291.0,
+          "lead_hours": 60,
+          "level_hpa": 850,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f060_m0.grib2",
+      "sha256": "6c56731df8131b526fdcb84e293aeff53881f68dbf298dccd55f8ce04d85170a",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 320.0,
+          "last_value": 331.0,
+          "lead_hours": 60,
+          "level_hpa": 850,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 300.0,
+          "last_value": 311.0,
+          "lead_hours": 60,
+          "level_hpa": 500,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f060_m1.grib2",
+      "sha256": "41b090f4a6a2b7c540d7daf67c35127a6cb8db1b7aec490357d6b464406a6ff7",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 340.0,
+          "last_value": 351.0,
+          "lead_hours": 60,
+          "level_hpa": 500,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 360.0,
+          "last_value": 371.0,
+          "lead_hours": 60,
+          "level_hpa": 850,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f060_m2.grib2",
+      "sha256": "74b6e3072ec2cbd9d3ee71c6b90a37fe0eb5fb758adc575d9d084162332d8387",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 281.0,
+          "last_value": 292.0,
+          "lead_hours": 66,
+          "level_hpa": 850,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 261.0,
+          "last_value": 272.0,
+          "lead_hours": 66,
+          "level_hpa": 500,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f066_m0.grib2",
+      "sha256": "769d7debad879b4fe3f83fda9e4dfe571b6ae51fcd91723eab64e41faee85bd7",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 301.0,
+          "last_value": 312.0,
+          "lead_hours": 66,
+          "level_hpa": 500,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 321.0,
+          "last_value": 332.0,
+          "lead_hours": 66,
+          "level_hpa": 850,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f066_m1.grib2",
+      "sha256": "23b31c281f9f775e9e8bb696eb6ba8ddc0e764c2cee76c050eb7b96e5003ff4c",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 361.0,
+          "last_value": 372.0,
+          "lead_hours": 66,
+          "level_hpa": 850,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 341.0,
+          "last_value": 352.0,
+          "lead_hours": 66,
+          "level_hpa": 500,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f066_m2.grib2",
+      "sha256": "74e339abf34479349d02a579bcd383dae73d78ccd888fefdf13c82292034a080",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 262.0,
+          "last_value": 273.0,
+          "lead_hours": 72,
+          "level_hpa": 500,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 282.0,
+          "last_value": 293.0,
+          "lead_hours": 72,
+          "level_hpa": 850,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f072_m0.grib2",
+      "sha256": "94910ff79e37a752c0ca9baf5d41a236389e74b12651ab27d745766e05ed5231",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 322.0,
+          "last_value": 333.0,
+          "lead_hours": 72,
+          "level_hpa": 850,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 302.0,
+          "last_value": 313.0,
+          "lead_hours": 72,
+          "level_hpa": 500,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f072_m1.grib2",
+      "sha256": "a655d6e00b95c6b91dd113ec98ec37e93b103094177cb54f72e8b2320bfda30c",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 342.0,
+          "last_value": 353.0,
+          "lead_hours": 72,
+          "level_hpa": 500,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 362.0,
+          "last_value": 373.0,
+          "lead_hours": 72,
+          "level_hpa": 850,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "baseline/f072_m2.grib2",
+      "sha256": "8f0ef3ecf865f7882581ee54fba0be170e0d39327a69d33cbbd5d0d6e947ca2c",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 314.0,
+          "last_value": 325.0,
+          "lead_hours": 24,
+          "level_hpa": 850,
+          "member": {
+            "id": "1",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "cases/duplicate.grib2",
+      "sha256": "ee0e1b00ae43dec64d271e206eb829d295f6b16965c6686ce1e8f558e27d6d6d",
+      "size_bytes": 218
+    },
+    {
+      "fields": [
+        {
+          "first_value": 338.0,
+          "last_value": 349.0,
+          "lead_hours": 48,
+          "level_hpa": 500,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "cases/missing_replacement.grib2",
+      "sha256": "92fa49c3dc19569d95c0d094db98d82613d3ff10c2441a92c1456a67036ce2c2",
+      "size_bytes": 218
+    },
+    {
+      "fields": [
+        {
+          "first_value": 335.0,
+          "last_value": 349.0,
+          "lead_hours": 30,
+          "level_hpa": 500,
+          "member": {
+            "id": "2",
+            "role": "perturbation"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            5
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "cases/grid_conflict.grib2",
+      "sha256": "480dcfd527b660652796a3af3bd1392bfbe5a1c8a6d3ca7b9ebf29652c003c87",
+      "size_bytes": 227
+    },
+    {
+      "fields": [
+        {
+          "first_value": 100.0,
+          "last_value": 111.0,
+          "lead_hours": 36,
+          "level_hpa": 500,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "gh",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "gpm"
+        },
+        {
+          "first_value": 980.0,
+          "last_value": 991.0,
+          "lead_hours": 36,
+          "level_hpa": 500,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "z",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "m**2 s**-2"
+        }
+      ],
+      "path": "cases/unit_pair.grib2",
+      "sha256": "d774f11ad2be735c79c661b675d54c9b5d9ab6d05486d97b8b57f4d03d20129c",
+      "size_bytes": 436
+    },
+    {
+      "fields": [
+        {
+          "first_value": 267.0,
+          "last_value": 278.0,
+          "lead_hours": 42,
+          "level_hpa": 500,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        },
+        {
+          "first_value": 287.0,
+          "last_value": 298.0,
+          "lead_hours": 42,
+          "level_hpa": 850,
+          "member": {
+            "id": "0",
+            "role": "control"
+          },
+          "parameter": "t",
+          "shape": [
+            3,
+            4
+          ],
+          "units": "K"
+        }
+      ],
+      "path": "cases/resource_updated.grib2",
+      "sha256": "b01c1ba3998e83648ccf396fcf2c0f402aa875bff7138a3cd971c20b50782319",
+      "size_bytes": 436
+    }
+  ],
+  "grid": {
+    "ni": 4,
+    "nj": 3,
+    "north": 50,
+    "west": 100
+  },
+  "origin": "synthetic ecCodes sample; no operational model provenance",
+  "reference_time": "2026-08-30T00:00:00Z",
+  "sample": "regular_ll_pl_grib2",
+  "scenarios": {
+    "duplicate": {
+      "add": "cases/duplicate.grib2",
+      "duplicates": {
+        "lead_hours": 24,
+        "level_hpa": 850,
+        "member": {
+          "id": "1",
+          "role": "perturbation"
+        },
+        "parameter": "t"
+      }
+    },
+    "grid_conflict": {
+      "add": "cases/grid_conflict.grib2",
+      "conflicts_with": "baseline/f030_m2.grib2"
+    },
+    "missing": {
+      "missing": {
+        "lead_hours": 48,
+        "level_hpa": 850,
+        "member": {
+          "id": "2",
+          "role": "perturbation"
+        },
+        "parameter": "t"
+      },
+      "replace": "baseline/f048_m2.grib2",
+      "with": "cases/missing_replacement.grib2"
+    },
+    "resource_updated": {
+      "replace": "baseline/f042_m0.grib2",
+      "with": "cases/resource_updated.grib2"
+    },
+    "shuffled": {
+      "expected_fields": 78,
+      "files": [
+        "baseline/f072_m2.grib2",
+        "baseline/f072_m1.grib2",
+        "baseline/f072_m0.grib2",
+        "baseline/f066_m2.grib2",
+        "baseline/f066_m1.grib2",
+        "baseline/f066_m0.grib2",
+        "baseline/f060_m2.grib2",
+        "baseline/f060_m1.grib2",
+        "baseline/f060_m0.grib2",
+        "baseline/f054_m2.grib2",
+        "baseline/f054_m1.grib2",
+        "baseline/f054_m0.grib2",
+        "baseline/f048_m2.grib2",
+        "baseline/f048_m1.grib2",
+        "baseline/f048_m0.grib2",
+        "baseline/f042_m2.grib2",
+        "baseline/f042_m1.grib2",
+        "baseline/f042_m0.grib2",
+        "baseline/f036_m2.grib2",
+        "baseline/f036_m1.grib2",
+        "baseline/f036_m0.grib2",
+        "baseline/f030_m2.grib2",
+        "baseline/f030_m1.grib2",
+        "baseline/f030_m0.grib2",
+        "baseline/f024_m2.grib2",
+        "baseline/f024_m1.grib2",
+        "baseline/f024_m0.grib2",
+        "baseline/f018_m2.grib2",
+        "baseline/f018_m1.grib2",
+        "baseline/f018_m0.grib2",
+        "baseline/f012_m2.grib2",
+        "baseline/f012_m1.grib2",
+        "baseline/f012_m0.grib2",
+        "baseline/f006_m2.grib2",
+        "baseline/f006_m1.grib2",
+        "baseline/f006_m0.grib2",
+        "baseline/f000_m2.grib2",
+        "baseline/f000_m1.grib2",
+        "baseline/f000_m0.grib2"
+      ]
+    },
+    "unit_pair": {
+      "file": "cases/unit_pair.grib2",
+      "native_parameters": [
+        "gh",
+        "z"
+      ],
+      "units": [
+        "gpm",
+        "m**2 s**-2"
+      ]
+    }
+  },
+  "schema_version": 1
+}
