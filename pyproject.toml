@@ -29,6 +29,7 @@ dependencies = [
     "numpy",
     "pandas",
     "xarray",
+    "scipy",
     "click",
     "tqdm",
     "requests",

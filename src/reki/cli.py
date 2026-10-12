@@ -18,6 +18,7 @@ from reki.diagnostics import collect_io_metrics
 from reki import from_source
 from reki.core import UnsupportedOperationError
 from reki.cmadaas_inventory import cmadaas_inventory
+from reki.query_cli import request
 
 
 EXIT_NO_MATCH = 3
@@ -39,6 +40,7 @@ def cli():
 
 
 cli.add_command(cmadaas_inventory)
+cli.add_command(request)
 
 
 def _catalog_options(command):
