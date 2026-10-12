@@ -51,3 +51,26 @@ GRIB values。``reki-local`` 解析需要调用方提供
 .. automodule:: reki.query_locator
    :members:
    :member-order: bysource
+
+多文件 GRIB 读取
+---------------
+
+``read_grib_collection`` 消费受控 ``BindingPlan`` 与调用方明确给定的有限
+``candidate_paths``。file-pattern 绑定要求所有候选路径位于其解析后的根目录内。
+首版只组织单参数、单起报时次、单统计方式和同一层类型；稳定参数到原生 shortName、
+成员 ID 到角色的映射由调用方显式提供。候选文件顺序不影响结果；重复字段报
+``multiple_matches``，缺项默认报 ``not_found`` 并附期望身份列表。
+
+``missing="partial"`` 返回已读取的 ``fields``、缺失组合 ``missing`` 与缺失候选路径
+``missing_paths``，其中 ``data`` 为
+``None``，不会用零或 NaN 偷填完整立方体。完整结果的 ``data`` 是
+``xarray.DataArray``，按 ``lead_time``、可选 ``isobaricInPa``、可选 ``member``、
+原生纬经度排序。``member_role`` 和 ``valid_time`` 是坐标；GRIB 单位、网格类型
+及每个字段的 ``source_references`` 留在属性或结果对象中。相同形状但不同坐标、
+原生网格类型或单位的数据不能合并。读取前后均校验文件引用；需要防止相同文件
+元数据下的改写时使用 ``hash_resources=True``。集合读取会解码 values；
+元数据查询仍使用上面的 ``locate_fields`` / ``list_fields``。
+
+.. automodule:: reki.query_collection
+   :members:
+   :member-order: bysource
