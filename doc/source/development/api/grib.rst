@@ -74,3 +74,28 @@ GRIB values。``reki-local`` 解析需要调用方提供
 .. automodule:: reki.query_collection
    :members:
    :member-order: bysource
+
+批量读取与会话缓存
+------------------
+
+``CollectionSession`` 提供 ``read``、按输入顺序返回的 ``read_many``、
+``cache_info``、``clear``、``close`` 和上下文管理。``read_many`` 接受
+``CollectionRequest`` 序列；首个失败会向调用方抛出异常。会话只缓存原生
+GRIB metadata 和已解码的原生字段，不缓存公共查询结果或 transform 输出。
+因此查询、目录绑定、词汇快照或变换改变时会重新匹配和构造结果；同一资源
+的原生字段仍可安全复用。返回数组是独立副本，调用方修改或关闭会话不会改变
+已返回结果。会话不共享打开的文件句柄，也不管理 IndexStore 的磁盘索引。
+
+缓存键包含解析路径、文件 size/mtime_ns/device/inode 指纹、索引策略与目录；
+``hash_resources=True`` 还包含文件 SHA256。每次读取前后核对资源版本，
+变化时删除旧条目并重新定位/解码；默认 stat 指纹不能识别相同元数据的原地
+改写。LRU 容量由 ``max_resources``、``max_fields``（metadata 字段数量）与
+``max_bytes``（缓存值数组的 ``nbytes``）共同约束。超出容量的单个文件或字段
+可正常读取，但不留在缓存。``cache_info`` 报告当前容量、命中、未命中、淘汰
+和关闭状态；``clear`` 清空条目，保留会话累计计数；``close`` 后读取失败，
+已返回的数组仍有效。同步异常和取消会释放本次 ecCodes 消息；批量结果只在
+全部作业成功后返回。
+
+首版会话只支持本地绑定；未核验版本的天擎资源不进入此缓存。需要跨进程
+索引复用时使用已有 ``index_policy="auto"`` 和显式 ``index_dir``。同一会话
+不提供并发访问保证，由调用方管理其生命周期。

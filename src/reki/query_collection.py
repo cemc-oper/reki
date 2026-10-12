@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections import OrderedDict
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Mapping
@@ -16,10 +17,10 @@ from cedarkit_query import DataReference, QueryError
 from .catalog.query_binding import BindingPlan
 from .query_locator import (
     _check_query, _expanded, _fingerprint, _matches, _path, _reference, _resource,
-    verify_data_reference,
 )
 from .readers.grib.reader import GribReader
 from .readers.grib.eccodes._decode import load_message_at_offset
+from .readers.grib.eccodes._xarray import create_data_array_from_message
 from .sources.file_pattern import FilePatternSource
 
 
@@ -45,6 +46,172 @@ class CollectionResult:
     @property
     def complete(self) -> bool:
         return not self.missing and not self.missing_paths
+
+
+@dataclass(frozen=True)
+class CollectionRequest:
+    """One read job for :meth:`CollectionSession.read_many`."""
+
+    plan: BindingPlan
+    candidate_paths: tuple[str | Path, ...]
+    native_parameters: Mapping[str, str]
+    member_roles: Mapping[str, str] | None = None
+    missing: str = "error"
+    local_config_dir: Path | None = None
+
+
+@dataclass(frozen=True)
+class CollectionCacheInfo:
+    resources: int
+    metadata_fields: int
+    value_bytes: int
+    metadata_hits: int
+    metadata_misses: int
+    value_hits: int
+    value_misses: int
+    evictions: int
+    closed: bool
+
+
+@dataclass
+class _CachedResource:
+    fields: tuple
+    decoded: dict[int, xr.DataArray]
+    value_bytes: int = 0
+
+
+class CollectionSession:
+    """Bounded, caller-owned LRU of native GRIB metadata and decoded fields.
+
+    Query results and transforms are never cached. File fingerprints are checked
+    on every read; returned arrays are independent copies and survive close().
+    """
+
+    def __init__(self, *, max_resources: int = 32, max_fields: int = 4096,
+                 max_bytes: int = 128 << 20, index_dir: Path | None = None,
+                 index_policy: str = "auto", hash_resources: bool = False):
+        if min(max_resources, max_fields, max_bytes) <= 0:
+            raise ValueError("cache limits must be positive")
+        self.max_resources = max_resources
+        self.max_fields = max_fields
+        self.max_bytes = max_bytes
+        self.index_dir = index_dir
+        self.index_policy = index_policy
+        self.hash_resources = hash_resources
+        self._entries: OrderedDict[tuple, _CachedResource] = OrderedDict()
+        self._hits = [0, 0]
+        self._misses = [0, 0]
+        self._evictions = 0
+        self._closed = False
+
+    def _require_open(self) -> None:
+        if self._closed:
+            raise RuntimeError("collection session is closed")
+
+    def _key(self, path: Path, fingerprint: dict) -> tuple:
+        return (str(path), tuple(sorted(fingerprint.items())), self.index_policy,
+                str(self.index_dir.resolve()) if self.index_dir is not None else None)
+
+    def _trim(self) -> None:
+        def totals():
+            return (sum(len(entry.fields) for entry in self._entries.values()),
+                    sum(entry.value_bytes for entry in self._entries.values()))
+
+        fields, value_bytes = totals()
+        while self._entries and (len(self._entries) > self.max_resources or
+                                 fields > self.max_fields or value_bytes > self.max_bytes):
+            _, entry = self._entries.popitem(last=False)
+            fields -= len(entry.fields)
+            value_bytes -= entry.value_bytes
+            self._evictions += 1
+
+    def _fields(self, path: Path, fingerprint: dict) -> tuple | None:
+        self._require_open()
+        key = self._key(path, fingerprint)
+        entry = self._entries.get(key)
+        if entry is None:
+            self._misses[0] += 1
+            for old_key in tuple(self._entries):
+                if old_key[0] == str(path) and old_key != key:
+                    del self._entries[old_key]
+                    self._evictions += 1
+            return None
+        self._hits[0] += 1
+        self._entries.move_to_end(key)
+        return entry.fields
+
+    def _store_fields(self, path: Path, fingerprint: dict, fields: tuple) -> None:
+        self._require_open()
+        if len(fields) > self.max_fields:
+            return
+        key = self._key(path, fingerprint)
+        self._entries[key] = _CachedResource(fields, {})
+        self._entries.move_to_end(key)
+        self._trim()
+
+    def _value(self, path: Path, fingerprint: dict, offset: int) -> xr.DataArray | None:
+        self._require_open()
+        key = self._key(path, fingerprint)
+        entry = self._entries.get(key)
+        data = None if entry is None else entry.decoded.get(offset)
+        if data is None:
+            self._misses[1] += 1
+            return None
+        self._hits[1] += 1
+        self._entries.move_to_end(key)
+        return data.copy(deep=True)
+
+    def _store_value(self, path: Path, fingerprint: dict, offset: int, data: xr.DataArray) -> None:
+        self._require_open()
+        key = self._key(path, fingerprint)
+        entry = self._entries.get(key)
+        size = data.nbytes
+        if entry is None or size > self.max_bytes or offset in entry.decoded:
+            return
+        entry.decoded[offset] = data.copy(deep=True)
+        entry.value_bytes += size
+        self._entries.move_to_end(key)
+        self._trim()
+
+    def cache_info(self) -> CollectionCacheInfo:
+        return CollectionCacheInfo(len(self._entries),
+                                   sum(len(entry.fields) for entry in self._entries.values()),
+                                   sum(entry.value_bytes for entry in self._entries.values()),
+                                   self._hits[0], self._misses[0], self._hits[1], self._misses[1],
+                                   self._evictions, self._closed)
+
+    def clear(self) -> None:
+        self._require_open()
+        self._entries.clear()
+
+    def close(self) -> None:
+        self._entries.clear()
+        self._closed = True
+
+    def __enter__(self) -> CollectionSession:
+        self._require_open()
+        return self
+
+    def __exit__(self, exc_type, exc, traceback) -> None:
+        self.close()
+
+    def read(self, plan: BindingPlan, *, candidate_paths: Iterable[str | Path],
+             native_parameters: Mapping[str, str], member_roles: Mapping[str, str] | None = None,
+             missing: str = "error", local_config_dir: Path | None = None) -> CollectionResult:
+        self._require_open()
+        return read_grib_collection(plan, candidate_paths=candidate_paths,
+                                    native_parameters=native_parameters, member_roles=member_roles,
+                                    missing=missing, local_config_dir=local_config_dir,
+                                    index_dir=self.index_dir, index_policy=self.index_policy,
+                                    hash_resources=self.hash_resources, _session=self)
+
+    def read_many(self, requests: Iterable[CollectionRequest]) -> tuple[CollectionResult, ...]:
+        """Execute ordered jobs with shared raw-field reuse; first error raises."""
+        self._require_open()
+        return tuple(self.read(job.plan, candidate_paths=job.candidate_paths,
+                               native_parameters=job.native_parameters,
+                               member_roles=job.member_roles, missing=job.missing,
+                               local_config_dir=job.local_config_dir) for job in requests)
 
 
 def _identity(query: dict) -> dict:
@@ -127,12 +294,39 @@ def _cube(fields: tuple[CollectionField, ...]) -> xr.DataArray:
     return result
 
 
+def _decode(path: Path, offset: int) -> xr.DataArray:
+    message = load_message_at_offset(path, offset)
+    if message is None:
+        raise ValueError("GRIB field disappeared at its recorded offset")
+    try:
+        data = create_data_array_from_message(message)
+        data.attrs["units"] = eccodes.codes_get(message, "units")
+        data.attrs["GRIB_gridType"] = eccodes.codes_get(message, "gridType")
+        return data
+    finally:
+        eccodes.codes_release(message)
+
+
+def _check_versions(versions: Mapping[Path, dict], *, hash_resources: bool) -> None:
+    for path, fingerprint in versions.items():
+        try:
+            current = _fingerprint(path, hash_contents=hash_resources)
+        except QueryError as exc:
+            if exc.code == "not_found":
+                raise QueryError("stale_reference", "/resource/fingerprint",
+                                 "local resource disappeared during read") from exc
+            raise
+        if current != fingerprint:
+            raise QueryError("stale_reference", "/resource/fingerprint",
+                             "local resource changed during read")
+
+
 def read_grib_collection(
     plan: BindingPlan, *, candidate_paths: Iterable[str | Path],
     native_parameters: Mapping[str, str], member_roles: Mapping[str, str] | None = None,
     missing: str = "error", local_config_dir: Path | None = None,
     index_dir: Path | None = None, index_policy: str = "auto",
-    hash_resources: bool = False,
+    hash_resources: bool = False, _session: CollectionSession | None = None,
 ) -> CollectionResult:
     """Match fields by expanded query identity, then decode and organize them.
 
@@ -142,6 +336,8 @@ def read_grib_collection(
     """
     if missing not in {"error", "partial"}:
         raise ValueError("missing must be 'error' or 'partial'")
+    if _session is not None:
+        _session._require_open()
     if plan.binding.kind != "local":
         raise QueryError("unsupported", "/binding/kind", "collection read requires a local binding")
     requests = _expanded(plan, "read")
@@ -187,14 +383,18 @@ def read_grib_collection(
             absent_paths.append(str(path))
             continue
         try:
-            reader = GribReader(None, path, index_policy=index_policy, index_dir=index_dir)
-            fields = tuple(reader.all())
+            fields = None if _session is None else _session._fields(path, before)
+            if fields is None:
+                reader = GribReader(None, path, index_policy=index_policy, index_dir=index_dir)
+                fields = tuple(reader.all())
         except PermissionError as exc:
             raise QueryError("permission_denied", "/resource/locator", "cannot read local resource") from exc
         except (OSError, ValueError, eccodes.CodesInternalError) as exc:
             raise QueryError("provider_error", "/resource/locator", "cannot scan local GRIB headers") from exc
         if before != _fingerprint(path, hash_contents=hash_resources):
             raise QueryError("stale_reference", "/resource/fingerprint", "resource changed during scan")
+        if _session is not None and _session._key(path, before) not in _session._entries:
+            _session._store_fields(path, before, fields)
         candidates.extend((path, before, field) for field in fields)
 
     selected = []
@@ -214,28 +414,29 @@ def read_grib_collection(
         raise QueryError("not_found", "/query", "requested fields are missing",
                          {"missing": absent, "missing_paths": absent_paths})
 
+    versions = {path: fingerprint for _, path, fingerprint, _ in selected}
+    _check_versions(versions, hash_resources=hash_resources)
     decoded = []
+    pending_values = []
     for identity, path, fingerprint, field in selected:
         reference = _reference(plan, identity, _resource(path, fingerprint),
                                "field_confirmed", field.metadata)
-        verify_data_reference(reference)
         try:
-            data = field.to_xarray()
-            header = load_message_at_offset(path, field.metadata.offset, headers_only=True)
-            if header is None:
-                raise ValueError("GRIB field disappeared at its recorded offset")
-            try:
-                data.attrs["units"] = eccodes.codes_get(header, "units")
-                data.attrs["GRIB_gridType"] = eccodes.codes_get(header, "gridType")
-            finally:
-                eccodes.codes_release(header)
+            data = None if _session is None else _session._value(path, fingerprint, field.metadata.offset)
+            if data is None:
+                data = _decode(path, field.metadata.offset)
+                pending_values.append((path, fingerprint, field.metadata.offset, data))
         except (OSError, ValueError, eccodes.CodesInternalError) as exc:
+            _check_versions(versions, hash_resources=hash_resources)
             raise QueryError("provider_error", "/resource/locator", "cannot decode GRIB field") from exc
-        verify_data_reference(reference)
         decoded.append(CollectionField(identity, data, reference))
+    _check_versions(versions, hash_resources=hash_resources)
     result_fields = tuple(decoded)
     if result_fields:
         _validate_compatibility(result_fields)
     data = _cube(result_fields) if result_fields and not absent and not absent_paths else None
+    if _session is not None:
+        for path, fingerprint, offset, value in pending_values:
+            _session._store_value(path, fingerprint, offset, value)
     return CollectionResult(data, result_fields, tuple(_identity(query) for query in queries),
                             tuple(absent), tuple(absent_paths))
