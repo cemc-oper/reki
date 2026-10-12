@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "origin": "synthetic offline GridArray2D responses for the four T07/M-05 product codes; values and units do not claim service provenance",
+  "grid": {"latitudes": [39.0, 40.0], "longitudes": [115.0, 116.0, 117.0]},
+  "responses": {
+    "TEM": {"units": "K", "values": [[280.0, 281.0, 282.0], [283.0, 284.0, 285.0]]},
+    "GPH": {"units": "m", "values": [[100.0, 101.0, 102.0], [103.0, 104.0, 105.0]]},
+    "CPE": {"units": "kg m**-2", "values": [[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]]},
+    "LPE": {"units": "kg m**-2", "values": [[0.0, 0.5, 1.0], [1.5, 2.0, 2.5]]}
+  }
+}
