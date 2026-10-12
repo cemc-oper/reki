@@ -31,7 +31,23 @@ uv run --offline reki request --catalog /tmp/reki-t14/catalog.yaml --native-para
 
 本地 file-pattern 的 `list` 至少需要起报时间和时效以解析有限文件；只有 dataset 的请求会明确报 `unsupported`。远端 `list` 可仅给 dataset，但结果是 `unknown`，不会访问服务。
 
-要读取，请将同一 JSON 请求的 `action` 改为 `read`，并加入 `"options":{"output":{"format":"netcdf","path":"/tmp/reki-t14/field.nc"}}`，然后以相同目录/原生映射选项运行 `reki request ... read --input FILE`。CLI 从受控 file-pattern 绑定解析有限候选路径；成员分文件或其他候选集合可重复传 `--candidate PATH`。输出使用临时文件原子替换目标文件，响应中带 `artifact` 和逐字段 `references`。未完成组合若允许 `policy.missing="partial"`，返回 `partial` 和 `missing`，不创建伪完整产物。
+下面把定位请求转为可执行读取请求；NetCDF 只作为 CLI 结果文件，输入仍是 GRIB2：
+
+```bash
+uv run --offline python - <<'PY'
+import json
+from pathlib import Path
+
+root = Path("/tmp/reki-t14")
+request = json.loads((root / "locate.json").read_text())
+request["action"] = "read"
+request["options"] = {"output": {"format": "netcdf", "path": str(root / "field.nc")}}
+(root / "read.json").write_text(json.dumps(request))
+PY
+uv run --offline reki request --catalog /tmp/reki-t14/catalog.yaml --native-parameter cedarkit.t=t --member-role 1=perturbation read --input /tmp/reki-t14/read.json
+```
+
+CLI 从受控 file-pattern 绑定解析有限候选路径；成员分文件或其他候选集合可重复传 `--candidate PATH`。输出使用临时文件原子替换目标文件，响应中带 `artifact` 和逐字段 `references`。未完成组合若允许 `policy.missing="partial"`，返回 `partial` 和 `missing`，不创建伪完整产物。定位和读取的 Python 入口、缺项示例见 [公共查询指南](public-query.md)。
 
 ## 错误与边界
 
