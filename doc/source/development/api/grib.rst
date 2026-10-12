@@ -39,6 +39,8 @@ GRIB index 或头扫描执行 ``list_fields`` / ``locate_fields``；两者不解
 绑定只报告 ``remote_unverified``，不访问服务。调用方须显式提供稳定参数 ID 到
 原生 GRIB shortName 的映射；选择成员时还须提供 ID 到角色的映射。地面、等压面和
 单一离地高度可定位；其他未核验的层次、网格和 coverage 条件报 ``unsupported``。
+本地公共查询只读取 GRIB；NetCDF、GrADS、表格或其他非 GRIB 候选文件报
+``unsupported``，不会被视为无字段的 GRIB 文件。
 
 返回的 ``LocatedItem``、``DataReference`` 与 ``ListedField`` 含受控文件路径，不能直接用于公开
 日志。``verify_data_reference`` 可从 JSON/dict 回读引用，检查本地文件的

@@ -16,7 +16,7 @@ from cedarkit_query import DataReference, QueryError
 
 from .catalog.query_binding import BindingPlan
 from .query_locator import (
-    _check_query, _expanded, _fingerprint, _matches, _path, _reference, _resource,
+    _check_query, _expanded, _fingerprint, _matches, _path, _reference, _reject_non_grib, _resource,
 )
 from .readers.grib.reader import GribReader
 from .readers.grib.eccodes._decode import load_message_at_offset
@@ -389,9 +389,12 @@ def read_grib_collection(
             if fields is None:
                 reader = GribReader(None, path, index_policy=index_policy, index_dir=index_dir)
                 fields = tuple(reader.all())
+            if not fields:
+                _reject_non_grib(path)
         except PermissionError as exc:
             raise QueryError("permission_denied", "/resource/locator", "cannot read local resource") from exc
         except (OSError, ValueError, eccodes.CodesInternalError) as exc:
+            _reject_non_grib(path)
             raise QueryError("provider_error", "/resource/locator", "cannot scan local GRIB headers") from exc
         if before != _fingerprint(path, hash_contents=hash_resources):
             raise QueryError("stale_reference", "/resource/fingerprint", "resource changed during scan")

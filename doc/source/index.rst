@@ -9,6 +9,7 @@ reki 当前主要支持 GRIB2 格式数据，通过统一的 ``source → reader
 reki 提供以下功能：
 
 * 从 GRIB2 文件中加载要素场，支持按参数、层次、起报时间、预报时效和其他 GRIB 键进行筛选；
+* 通过各自的 reader 读取 NetCDF、GrADS 和表格文件；NWPC 观测表格保留兼容函数；
 * 支持探索 GRIB2 文件元数据；
 * 提供区域截取、站点采样和网格插值等功能；
 * 支持在中国气象局国家级气象超算平台 (CMA-HPC2023) 访问业务系统本地文件 (/g3/COMMONDATA)；
@@ -48,7 +49,9 @@ reki 提供以下功能：
 * :doc:`/development/index`：架构、扩展、贡献和 API 参考。
 
 
-当前 reki 仅提供 GRIB2 格式支持，其他格式正在开发中。
+公共 ``reki request`` 本地字段定位与集合读取目前只执行 GRIB；NetCDF、GrADS、
+表格和 NWPC 观测表格继续使用各自的 reader 或兼容函数。各格式的查询和输出能力
+见 :doc:`/guide/loading/index`。
 
 .. note::
 

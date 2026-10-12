@@ -148,6 +148,20 @@ def _fingerprint(path: Path, *, hash_contents: bool = False) -> dict:
     return result
 
 
+def _reject_non_grib(path: Path) -> None:
+    """Report a known format boundary when a GRIB header scan found no fields."""
+    try:
+        record_io_event("file_open_count")
+        with path.open("rb") as stream:
+            marker = stream.read(4)
+    except PermissionError as exc:
+        raise QueryError("permission_denied", "/resource/locator", "cannot inspect local resource") from exc
+    except OSError as exc:
+        raise QueryError("provider_error", "/resource/locator", "cannot inspect local resource") from exc
+    if marker != b"GRIB":
+        raise QueryError("unsupported", "/binding/reader", "public local grid requests require GRIB data")
+
+
 def _resource(path: Path, fingerprint: dict) -> dict:
     return {"kind": "local", "locator": str(path), "fingerprint": fingerprint}
 
@@ -271,11 +285,14 @@ def locate_fields(plan: BindingPlan, *, native_parameters: Mapping[str, str] | N
                 try:
                     fields = tuple(field.metadata for field in GribReader(
                         None, path, index_policy=index_policy, index_dir=index_dir).all())
+                    if not fields:
+                        _reject_non_grib(path)
                 except PermissionError as exc:
                     raise QueryError("permission_denied", "/resource/locator", "cannot read local resource") from exc
                 except OSError as exc:
                     raise QueryError("provider_error", "/resource/locator", "cannot scan local resource") from exc
                 except (eccodes.CodesInternalError, ValueError) as exc:
+                    _reject_non_grib(path)
                     raise QueryError("provider_error", "/resource/locator", "cannot parse local GRIB headers") from exc
                 try:
                     after = _fingerprint(path, hash_contents=hash_resources)
@@ -341,8 +358,10 @@ def list_fields(plan: BindingPlan, *, local_config_dir: Path | None = None,
     for path in sorted(paths):
         try:
             before = _fingerprint(path)
-            fields.extend(ListedField(str(path), before, field.metadata) for field in GribReader(
-                None, path, index_policy=index_policy, index_dir=index_dir).all())
+            native_fields = tuple(GribReader(None, path, index_policy=index_policy, index_dir=index_dir).all())
+            if not native_fields:
+                _reject_non_grib(path)
+            fields.extend(ListedField(str(path), before, field.metadata) for field in native_fields)
             if before != _fingerprint(path):
                 raise QueryError("stale_reference", "/resource/fingerprint", "resource changed during scan")
         except QueryError:
@@ -352,6 +371,7 @@ def list_fields(plan: BindingPlan, *, local_config_dir: Path | None = None,
         except OSError as exc:
             raise QueryError("provider_error", "/resource/locator", "cannot scan local resource") from exc
         except (eccodes.CodesInternalError, ValueError) as exc:
+            _reject_non_grib(path)
             raise QueryError("provider_error", "/resource/locator", "cannot parse local GRIB headers") from exc
     return AvailabilityReport("list", (), tuple(fields))
 

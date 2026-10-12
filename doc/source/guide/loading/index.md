@@ -1,7 +1,10 @@
 # 数据加载
 
-先用 `sel()` 或元数据探索锁定字段，再调用 `first()`、`all()` 或 `to_xarray()` 读取。
-通用查询和输出约定在本分区集中说明；格式页只说明各格式的特有能力和限制。
+GRIB reader 支持 `sel()`、`first()`、`all()` 和元数据探索；其他格式应按各自的
+reader 能力调用转换方法。NetCDF 直接使用 `to_xarray()`，表格主要使用
+`to_pandas()`，GrADS 可用 `sel()` 与 `to_xarray()`。公共 `reki request` 的本地
+字段定位和集合读取只支持 GRIB；将这些其他文件交给该入口会报 `unsupported`，
+不会返回未筛选的数据。
 
 ```{toctree}
 :maxdepth: 1

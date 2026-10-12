@@ -51,7 +51,7 @@ orphan: true
 | `GribReader`, `GribField`, `load_fields_from_file`, `fix_level_type`, `load_message_from_file`, `load_messages_from_file` | `reki.readers.grib` | 推荐 | `readers.md`、`grib.md` | `tests/readers/test_grib.py`、`test_grib_query.py`、`test_grib_lazy.py` |
 | `GradsReader`, `load_field_from_file` | `reki.readers.grads` | 推荐 | `readers.md` | `tests/format/grads/test_lazy.py` |
 | `NetCDFReader`, `load_field_from_file` | `reki.readers.netcdf` | 推荐 | `readers.md` | `tests/format/netcdf/test_lazy.py` |
-| `TableReader`, `load_table_from_file`, `load_nwpc_obs_from_file`, `NWPC_OBS_CONFIG` | `reki.readers.table` | 推荐 | `readers.md` | `tests/readers/test_other_readers.py` |
+| `TableReader`, `load_table_from_file`, `load_nwpc_obs_from_file`, `NWPC_OBS_CONFIG` | `reki.readers.table` | 推荐 | `readers.md` | `tests/readers/test_other_readers.py`、`tests/readers/test_query_compatibility.py` |
 | `CmadaasReader` | `reki.readers.cmadaas` | 待确认（未由 `reki.readers` 重导出） | `readers.md`、`cmadaas.md` | `tests/readers/test_cmadaas_reader.py` |
 | `ExternalNameResolution`, `GribParameterKey`, `ParameterAmbiguityError`, `ParameterConditionConflictError`, `ParameterExternalNameNotMappedError`, `ParameterIndex`, `ParameterNamespaceNotFoundError`, `ParameterNotFoundError`, `ParameterRecord`, `ParameterResolutionError`, `ResolvedParameter`, `WHEN_KEYS`, `check_value`, `find_cemc_name`, `find_parameter_record`, `find_short_name`, `find_wgrib2_name`, `get_param_registry`, `get_parameter_index`, `resolve_external_name`, `resolve_parameter` | `reki.readers.grib.config` | 推荐 | `development/api/grib.md` | `tests/core/test_parameter_resolver.py`、`tests/readers/grib/test_param_registry.py` |
 | `INDEX_SCHEMA_VERSION`, `IndexBuildError`, `IndexStore`, `SourceFingerprint`, `fingerprint_file`, `index_path_for` | `reki.readers.grib.index` | 内部实现（不生成长期 API 页） | `development/architecture/grib-reader-and-index.md` | `tests/readers/grib/test_index_store.py` |
@@ -78,7 +78,7 @@ orphan: true
 | `load_bytes_from_file`, `create_message_from_bytes`, `create_messages_from_bytes` | `reki.format.grib.eccodes.bytes` | 兼容 | `legacy.md` | `tests/format/grib/eccodes/` |
 | `extract_region`, `interpolate_grid` | `reki.format.grib.eccodes.operator` | 兼容 | `legacy.md` | `tests/operator/test_module_boundary.py` |
 | `load_field_from_file` | `reki.format.grads`、`reki.format.netcdf` | 兼容 | `legacy.md` | `tests/format/grads/test_lazy.py`、`tests/format/netcdf/test_lazy.py` |
-| `load_table_from_file`, `load_nwpc_obs_from_file`, `NWPC_OBS_CONFIG` | `reki.format.table` | 兼容 | `legacy.md` | `tests/readers/test_other_readers.py` |
+| `load_table_from_file`, `load_nwpc_obs_from_file`, `NWPC_OBS_CONFIG` | `reki.format.table` | 兼容 | `legacy.md` | `tests/readers/test_other_readers.py`、`tests/readers/test_query_compatibility.py` |
 | `GribParameterKey`, `check_value`, `get_param_registry`, `find_parameter_record`, `find_short_name`, `find_wgrib2_name`, `find_cemc_name` | `reki.format.grib.config` | 兼容 | `legacy.md` | `tests/readers/grib/test_param_registry.py` |
 
 ## CLI
