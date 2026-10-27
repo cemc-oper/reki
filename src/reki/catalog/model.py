@@ -1,85 +1,106 @@
-"""Immutable public models for DatasetCatalog v1."""
+"""Immutable configuration facts; public semantics belong to cedarkit_query."""
 
-from __future__ import annotations
-
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from types import MappingProxyType
-from typing import Mapping
+from collections.abc import Mapping
 
-from reki.core import SourceSpec
+from cedarkit_query import QueryError
 
 
-@dataclass(frozen=True)
-class DatasetRecord:
-    """One logical dataset and its source binding."""
+def freeze(value):
+    if isinstance(value, Mapping):
+        return MappingProxyType({k: freeze(v) for k, v in value.items()})
+    if isinstance(value, (list, tuple)):
+        return tuple(freeze(v) for v in value)
+    return value
 
-    dataset_id: str
-    source: SourceSpec
-    aliases: tuple[str, ...] = ()
-    metadata: Mapping[str, object] = field(default_factory=dict)
 
-    def __post_init__(self):
-        if not isinstance(self.dataset_id, str) or not self.dataset_id:
-            raise TypeError("dataset_id must be a non-empty string")
-        if not isinstance(self.source, SourceSpec):
-            raise TypeError("source must be a SourceSpec")
-        aliases = tuple(self.aliases)
-        if any(not isinstance(alias, str) or not alias for alias in aliases):
-            raise TypeError("aliases must contain non-empty strings")
-        if self.dataset_id in aliases or len(set(aliases)) != len(aliases):
-            raise ValueError("dataset aliases must be unique and cannot equal dataset_id")
-        object.__setattr__(self, "aliases", aliases)
-        object.__setattr__(self, "metadata", MappingProxyType(dict(self.metadata)))
+def thaw(value):
+    if isinstance(value, Mapping):
+        return {k: thaw(v) for k, v in value.items()}
+    if isinstance(value, tuple):
+        return [thaw(v) for v in value]
+    return value
 
 
 @dataclass(frozen=True)
-class ResolvedDataset:
-    """Resolved source and the winning catalog layer diagnostic."""
+class LoadedResource:
+    value: object
+    reference: Mapping
+    sha256: str
+    base_dir: object
 
-    record: DatasetRecord
-    source: SourceSpec
-    origin: str
-    replaced_origins: tuple[str, ...] = ()
+    def snapshot(self, role, *, backend=None):
+        data = self.value.to_dict()
+        return {
+            "role": role,
+            "id": data["id"],
+            "api_version": data["api_version"],
+            "version": data["version"],
+            "sha256": self.sha256,
+            "reference": thaw(self.reference),
+            **({"backend": backend} if backend else {}),
+        }
 
 
 @dataclass(frozen=True)
-class Catalog:
-    """An immutable merged catalog."""
+class SourceConfiguration:
+    """An I04 construction plan, with no data availability or capability claim."""
 
-    records: Mapping[str, DatasetRecord]
-    origins: Mapping[str, str]
-    replaced_origins: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
+    source: Mapping
+    resources: object
+    product: object
+    scope: object
+    execution_defaults: Mapping
+    member_roles: Mapping
+    cemc_member_roles: bool
+    definitions: tuple
+    origins: Mapping
+    layout: object = None
+    mapping_applicability: tuple = ()
 
-    def __post_init__(self):
-        object.__setattr__(self, "records", MappingProxyType(dict(self.records)))
-        object.__setattr__(self, "origins", MappingProxyType(dict(self.origins)))
-        object.__setattr__(self, "replaced_origins", MappingProxyType(
-            {key: tuple(value) for key, value in self.replaced_origins.items()}
-        ))
-        aliases = {}
-        for dataset_id, record in self.records.items():
-            for alias in record.aliases:
-                if alias in self.records and alias != dataset_id:
-                    raise ValueError(f"catalog alias {alias!r} conflicts with dataset id")
-                previous = aliases.setdefault(alias, dataset_id)
-                if previous != dataset_id:
-                    raise ValueError(f"catalog alias {alias!r} is ambiguous")
-        object.__setattr__(self, "_aliases", MappingProxyType(aliases))
-
-    def list(self) -> tuple[DatasetRecord, ...]:
-        return tuple(self.records[key] for key in sorted(self.records))
-
-    def show(self, dataset_id: str) -> ResolvedDataset:
-        return self.resolve(dataset_id)
-
-    def resolve(self, dataset_id: str) -> ResolvedDataset:
-        canonical_id = dataset_id if dataset_id in self.records else self._aliases.get(dataset_id)
-        if canonical_id is None:
-            raise KeyError(f"unknown dataset: {dataset_id}")
-        record = self.records[canonical_id]
-        return ResolvedDataset(
-            record=record,
-            source=SourceSpec(record.source.name, record.source.args, record.source.kwargs),
-            origin=self.origins[canonical_id],
-            replaced_origins=self.replaced_origins.get(canonical_id, ()),
+    @property
+    def source_binding(self):
+        if self.product is None:
+            return None
+        return next(
+            s
+            for s in self.product["sources"]
+            if s["id"] == self.origins["source_binding"]
         )
+
+    def member_role(self, member):
+        if type(member) is not int or member < 0:
+            raise QueryError(
+                "invalid_query", "/member", "non-negative integer required"
+            )
+        return self.member_roles.get(
+            str(member),
+            ("control" if member == 0 else "perturbation")
+            if self.cemc_member_roles
+            else None,
+        )
+
+    def report_context(self):
+        """Known facts only. Connection config/client never enter public reports."""
+        source = {"kind": self.source["kind"]}
+        if "dataset" in self.source:
+            source["dataset"] = self.source["dataset"]
+        if self.product is not None:
+            source.update(
+                product=self.product["id"], product_version=self.product["version"]
+            )
+            for binding in self.product["sources"]:
+                if binding["id"] == self.origins["source_binding"]:
+                    for key in ("data_code", "interface_contract"):
+                        if key in binding:
+                            source[key] = thaw(binding[key])
+        return {
+            **({"dataset": self.source["dataset"]} if "dataset" in self.source else {}),
+            "scope": self.scope.to_dict(),
+            "source": source,
+            "execution_defaults": thaw(self.execution_defaults),
+            "member_roles": thaw(self.member_roles),
+            "definitions": [thaw(d) for d in self.definitions],
+            "origins": thaw(self.origins),
+        }

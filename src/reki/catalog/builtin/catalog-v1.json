@@ -1,0 +1,137 @@
+{
+  "api_version": "cedarkit.catalog/v1",
+  "id": "reki.cemc-catalog",
+  "version": "1",
+  "datasets": [
+    {
+      "id": "cma_gfs_gmf",
+      "aliases": [
+        "CMA-GFS",
+        "cma_gfs"
+      ],
+      "products": []
+    },
+    {
+      "id": "cma_meso_3km",
+      "aliases": [
+        "CMA-MESO",
+        "CMA-MESO-3KM",
+        "cma_meso"
+      ],
+      "products": []
+    },
+    {
+      "id": "cma_meso_1km",
+      "aliases": [
+        "CMA-MESO-1KM"
+      ],
+      "products": []
+    },
+    {
+      "id": "cma_tym",
+      "aliases": [
+        "CMA-TYM"
+      ],
+      "products": []
+    },
+    {
+      "id": "cma_geps",
+      "aliases": [
+        "CMA-GEPS"
+      ],
+      "products": []
+    },
+    {
+      "id": "cma_reps",
+      "aliases": [
+        "CMA-REPS"
+      ],
+      "products": []
+    },
+    {
+      "id": "cma_gfs_gmf_cmadaas",
+      "aliases": [
+        "CMA-GFS-CMADaaS",
+        "CMA-GFS-FORECAST-CMADaaS"
+      ],
+      "products": []
+    },
+    {
+      "id": "cma_gfs_gmf_analysis_cmadaas",
+      "aliases": [
+        "CMA-GFS-ANALYSIS-CMADaaS"
+      ],
+      "products": []
+    },
+    {
+      "id": "cma_meso_3km_analysis_cmadaas",
+      "aliases": [
+        "CMA-MESO-3KM-ANALYSIS-CMADaaS"
+      ],
+      "products": []
+    },
+    {
+      "id": "cma_meso_3km_forecast_cmadaas",
+      "aliases": [
+        "CMA-MESO-3KM-FORECAST-CMADaaS"
+      ],
+      "products": []
+    },
+    {
+      "id": "cma_meso_1km_analysis_cmadaas",
+      "aliases": [
+        "CMA-MESO-1KM-ANALYSIS-CMADaaS"
+      ],
+      "products": []
+    },
+    {
+      "id": "cma_meso_1km_forecast_cmadaas",
+      "aliases": [
+        "CMA-MESO-1KM-FORECAST-CMADaaS"
+      ],
+      "products": []
+    },
+    {
+      "id": "cma_tym_analysis_cmadaas",
+      "aliases": [
+        "CMA-TYM-ANALYSIS-CMADaaS"
+      ],
+      "products": []
+    },
+    {
+      "id": "cma_tym_forecast_cmadaas",
+      "aliases": [
+        "CMA-TYM-FORECAST-CMADaaS"
+      ],
+      "products": []
+    },
+    {
+      "id": "cma_geps_control_cmadaas",
+      "aliases": [
+        "CMA-GEPS-CONTROL-CMADaaS"
+      ],
+      "products": []
+    },
+    {
+      "id": "cma_geps_perturbation_cmadaas",
+      "aliases": [
+        "CMA-GEPS-PERTURBATION-CMADaaS"
+      ],
+      "products": []
+    },
+    {
+      "id": "cma_reps_control_cmadaas",
+      "aliases": [
+        "CMA-REPS-CONTROL-CMADaaS"
+      ],
+      "products": []
+    },
+    {
+      "id": "cma_reps_perturbation_cmadaas",
+      "aliases": [
+        "CMA-REPS-PERTURBATION-CMADaaS"
+      ],
+      "products": []
+    }
+  ]
+}

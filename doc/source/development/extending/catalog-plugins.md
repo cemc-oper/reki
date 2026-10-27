@@ -1,39 +1,9 @@
-# 扩展 catalog 插件
+# 维护外部产品目录
 
-catalog 插件提供可验证的静态记录，并让系统在不 I/O 的情况下合并为 `ResolvedDataset`。
+阶段 1.1 I04 使用明确的本地 `cedarkit.catalog/v1` 资源。共用 CEMC 目录随 reki 提供；业务目录可在自己的配置仓库独立维护，通过 context.catalog.path 引用。旧 catalog entry point、用户目录自动搜索及多层合并已退出新加载器。
 
-```text
-plugin catalog → schema validation → precedence merge → dataset ID / alias resolution
-```
+外部目录与参数库、映射资源分别版本化。部署固定 path/builtin、精确内容 version 和字节 sha256。文件内默认映射的相对引用基于目录文件位置；参数和原生翻译规则留在各自资源，目录只登记产品身份／业务版本、合法配对范围、总体／方法及来源绑定。
 
-不要在插件导入时读取服务、环境变量或文件内容。为冲突覆盖、别名和无效 schema 编写测试；
-将运行时参数放在 source 构造而不是 catalog 解析。API：{doc}`../api/catalog`。
+使用 `load_catalog({"path": "/deployment/catalog.json", "version": "1", "sha256": digest})` 检查明确资源，使用 `plan_source_binding` 组合所选参数／映射及精确产品。坏引用、别名冲突、必要定义不足必须报错；不能将示例契约 ID、未知版本、空提供范围或未经核实的统计总体当成真实业务结论。
 
-## 最小插件层
-
-entry point 可以返回 YAML/字典对象或返回该对象的零参数 callable。记录必须采用
-`reki.catalog/v1`，并且 source 描述保持可序列化：
-
-```python
-def catalog_layer():
-    return {
-        "api_version": "reki.catalog/v1",
-        "datasets": [
-            {
-                "id": "demo-temperature",
-                "aliases": ["demo-t2m"],
-                "source": {"name": "test", "args": ["ecmwf_ifs"]},
-                "metadata": {"owner": "example-plugin"},
-            }
-        ],
-    }
-```
-
-```toml
-[project.entry-points."reki.catalogs"]
-demo = "my_reki_plugin.catalog:catalog_layer"
-```
-
-使用 `load_catalog(explicit=catalog_layer(), builtin=False, plugins=False, user=False)` 测试
-schema、别名解析和来源；另写冲突测试，确认同一 dataset ID 的替换是整条记录替换，且新
-别名不能夺取仍有效记录的别名。不要在 `catalog_layer()` 中读取环境变量、目录或远程服务。
+构造接口与静态检查边界见 {doc}`../architecture/catalog-and-plugins`；公开 API 见 {doc}`../api/catalog`。当前机制不负责文件扫描、服务调用或发布，I05／I06／I08 仍需同步接入。

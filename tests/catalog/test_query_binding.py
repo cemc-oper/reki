@@ -1,172 +1,395 @@
-"""T08 explicit catalog snapshots and source-neutral Binding plans."""
-
-import hashlib
 import json
-from pathlib import Path
+from copy import deepcopy
 
 import pytest
 
-from cedarkit_query import AliasSnapshot, Binding, QueryError, binding_identity, query_identity
-from reki.catalog import Catalog, CatalogError, load_catalog
-from reki.catalog.query_binding import CatalogSnapshot, builtin_catalog_snapshot, plan_source_binding
+from cedarkit_query import Query, QueryError, QueryExplanation, prepare_queries
+from reki.catalog import plan_source_binding
 
 
-def _query(dataset, parameter="cedarkit.t"):
-    return {"api_version": "cedarkit.query/v1", "domain": "grid", "dataset": dataset,
-            "parameter": parameter, "reference_time": "2026-08-30T00:00:00Z", "lead_time": "PT24H",
-            "vertical": {"type": "surface"}, "statistic": {"kind": "instant"}}
+def plan(resources, **kwargs):
+    options = {
+        "context": resources["context"],
+        "product": "orig",
+        "product_version": "test-1",
+    }
+    options.update(kwargs)
+    return plan_source_binding(resources["source"], **options)
 
 
-def _document(*entries):
-    return {"api_version": "reki.catalog/v1", "datasets": list(entries)}
+def test_exact_product_and_paired_provides_are_frozen(resources):
+    p = plan(resources)
+    assert p.source["dataset"] == "synthetic"
+    assert p.product["provides"] == ({"parameter": "test.t2m"},)
+    assert p.scope.to_dict() == {"step": "PT0S"}
+    assert p.execution_defaults == {"completeness": "required", "max_expansion": 25}
+    with pytest.raises(TypeError):
+        p.product["version"] = "other"
+    resources["source"]["path"] = "mutated"
+    assert p.source["path"].endswith("SYNTHETIC*.grb")
+    report = p.report_context()
+    QueryExplanation(
+        {
+            "effective_queries": [],
+            "context": report,
+            "steps": [],
+            "analysis": {
+                "expansion_count": None,
+                "expected_count": None,
+                "checks": [],
+                "translations": [],
+            },
+        }
+    )
+    report["definitions"].clear()
+    assert len(p.definitions) == 3
 
 
-def _snapshot(*entries, version="fixture-v1"):
-    return CatalogSnapshot(load_catalog(builtin=False, plugins=False, user=False,
-                                        explicit=_document(*entries)), version)
+def test_no_file_discovery_or_parameter_default_for_native_file(tmp_path, monkeypatch):
+    def forbidden(*args, **kwargs):
+        raise AssertionError("business discovery must wait for I05 execution")
+
+    monkeypatch.setattr(type(tmp_path), "glob", forbidden)
+    p = plan_source_binding(
+        {"kind": "file", "directory": str(tmp_path), "glob": ["b*.grb", "a*.grb"]}
+    )
+    assert p.source["glob"] == ("b*.grb", "a*.grb")
+    assert p.resources is None and p.product is None and p.scope == Query({})
+    assert p.member_role(0) is None
 
 
-def _entry(dataset="grid", aliases=(), source=None):
-    return {"id": dataset, "aliases": list(aliases),
-            "source": source or {"name": "cmadaas", "kwargs": {"kind": "model_grid", "data_code": "DATA"}}}
+@pytest.mark.parametrize(
+    "kwargs",
+    [
+        {"product": None},
+        {"product_version": None},
+        {"product_version": "unknown"},
+        {"product": "missing"},
+        {"source_id": "absent"},
+    ],
+)
+def test_missing_product_version_or_source_fails(resources, kwargs):
+    with pytest.raises(QueryError) as error:
+        plan(resources, **kwargs)
+    assert error.value.code == "invalid_config"
+    assert error.value.context["reason"] == "missing_context"
 
 
-def test_builtin_snapshot_hash_and_distinct_local_remote_datasets():
-    snapshot = builtin_catalog_snapshot()
-    expected = hashlib.sha256(Path(__file__).parents[2].joinpath(
-        "src/reki/catalog/builtin/catalog.yaml").read_bytes()).hexdigest()
-    assert snapshot.version == f"sha256:{expected}"
-    remote = plan_source_binding(_query("cma_gfs_gmf_cmadaas"), snapshot=snapshot)
-    assert remote.binding.kind == "cmadaas"
-    assert remote.binding.dataset == "cma_gfs_gmf_cmadaas"
-    assert remote.binding.data_code == "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB"
-    assert remote.binding.request_kind == "model_grid"
-    assert remote.binding.origin == "builtin"
-    local = plan_source_binding(_query("cma_gfs_gmf"), snapshot=snapshot, local_config_version="config-1")
-    assert local.binding.kind == "local"
-    assert local.binding.locator["resolver"] == "reki-local"
-    assert local.binding.locator["data_type"] == "cma_gfs_gmf/grib2/orig"
-    assert local.binding.dataset != remote.binding.dataset
-    assert local.query_id != remote.query_id
+def test_conflicting_scope_and_fixed_parameter(resources):
+    with pytest.raises(QueryError) as error:
+        plan(resources, context={**resources["context"], "scope": {"step": "PT6H"}})
+    assert error.value.code == "constraint_conflict"
+    p = plan(resources)
+    with pytest.raises(QueryError) as error:
+        prepare_queries(
+            [{"parameter": "t2m", "level_type": "height_above_ground", "level": 10}],
+            p.resources,
+        )
+    assert error.value.code == "constraint_conflict"
 
 
-def test_catalog_alias_requires_explicit_namespace_and_resolves_to_stable_id():
-    snapshot = builtin_catalog_snapshot()
-    stable = plan_source_binding(_query("cma_gfs_gmf_cmadaas"), snapshot=snapshot)
-    alias = plan_source_binding(_query({"namespace": "reki-catalog", "name": "CMA-GFS-CMADaaS"}),
-                                snapshot=snapshot)
-    assert stable.query == alias.query
-    assert stable.query_id == alias.query_id
-    assert stable.binding_id == alias.binding_id
-    with pytest.raises(QueryError) as caught:
-        plan_source_binding(_query("CMA-GFS-CMADaaS"), snapshot=snapshot)
-    assert (caught.value.code, caught.value.path) == ("unknown_dataset", "/query/dataset")
-    with pytest.raises(QueryError) as caught:
-        plan_source_binding(_query({"namespace": "reki-catalog", "name": "missing"}), snapshot=snapshot)
-    assert (caught.value.code, caught.value.path) == ("unknown_dataset", "/query/dataset")
+def test_mapping_override_replaces_without_reading_lower_layer(resources):
+    catalog = deepcopy(resources["catalog"])
+    catalog["datasets"][0]["mappings"]["grib2"] = {"path": "not-there.json"}
+    resources["write"]("catalog.json", catalog)
+    replacement = deepcopy(resources["mappings"])
+    replacement["id"] = "explicit.replacement"
+    path = resources["write"]("replacement.json", replacement)
+    p = plan(
+        resources,
+        context={**resources["context"], "mappings": {"grib2": {"path": path}}},
+    )
+    assert len(p.resources.mappings) == 1
+    assert p.resources.mappings[0]["id"] == "explicit.replacement"
+    assert p.origins["mappings.grib2"] == "context"
 
 
-def test_override_keeps_catalog_precedence_and_diagnostic():
-    replacement = _entry("cma_gfs_gmf_cmadaas", aliases=["PRIVATE-GFS"],
-                         source={"name": "cmadaas", "kwargs": {"kind": "model_grid", "data_code": "PRIVATE"}})
-    catalog = load_catalog(plugins=False, user=False, explicit=_document(replacement))
-    snapshot = CatalogSnapshot(catalog, "catalog-override-1")
-    plan = plan_source_binding(_query({"namespace": "reki-catalog", "name": "PRIVATE-GFS"}), snapshot=snapshot)
-    assert plan.binding.data_code == "PRIVATE"
-    assert plan.origin == "explicit"
-    assert plan.replaced_origins == ("builtin",)
-    with pytest.raises(QueryError) as caught:
-        plan_source_binding(_query({"namespace": "reki-catalog", "name": "CMA-GFS-CMADaaS"}), snapshot=snapshot)
-    assert caught.value.code == "unknown_dataset"
-
-
-def test_alias_conflicts_remain_catalog_errors():
-    with pytest.raises(CatalogError, match="duplicate dataset alias"):
-        load_catalog(builtin=False, plugins=False, user=False, explicit=_document(
-            _entry("a", aliases=["shared"]), _entry("b", aliases=["shared"])))
-    with pytest.raises(CatalogError, match="alias conflicts with active dataset"):
-        load_catalog(plugins=False, user=False, explicit=_document(
-            _entry("another", aliases=["CMA-GFS"])))
-
-
-def test_same_query_rebound_to_new_root_changes_binding_only():
-    first = _snapshot(_entry(source={"name": "file-pattern", "args": ["/mnt/old", "field.{forecast_hour_label}.grb2"]}),
-                      version="catalog-1")
-    second = _snapshot(_entry(source={"name": "file-pattern", "args": ["/mnt/new", "field.{forecast_hour_label}.grb2"]}),
-                       version="catalog-2")
-    old = plan_source_binding(_query("grid"), snapshot=first)
-    new = plan_source_binding(_query("grid"), snapshot=second)
-    assert old.query_id == new.query_id == query_identity(old.query)
-    assert old.binding_id != new.binding_id
-    assert old.binding_id == binding_identity(old.binding)
-    assert old.binding.locator["root"] == "/mnt/old"
-    assert new.binding.locator["root"] == "/mnt/new"
-    assert "root" not in json.dumps(old.to_display_dict())
-    assert "/mnt/old" not in json.dumps(old.to_display_dict())
+def test_replacement_does_not_excuse_absent_parameter(resources):
+    mappings = deepcopy(resources["mappings"])
+    mappings["mappings"][0]["parameter_id"] = "absent"
+    path = resources["write"]("bad.json", mappings)
     with pytest.raises(QueryError):
-        Binding(old.to_display_dict())
+        plan(
+            resources,
+            context={**resources["context"], "mappings": {"grib2": {"path": path}}},
+        )
 
 
-def test_remote_data_code_is_a_binding_property_not_a_parameter_alias():
-    first = _snapshot(_entry(), version="catalog-1")
-    second = _snapshot(_entry(source={"name": "cmadaas", "kwargs": {
-        "kind": "model_grid", "data_code": "OTHER_PRODUCT"}}), version="catalog-2")
-    old = plan_source_binding(_query("grid"), snapshot=first)
-    new = plan_source_binding(_query("grid"), snapshot=second)
-    assert old.query_id == new.query_id
-    assert old.binding_id != new.binding_id
-    assert old.query.parameter == new.query.parameter == "cedarkit.t"
-    assert "data_code" not in old.query.to_dict()
+def test_roles_override_per_member_and_execution_per_field(resources):
+    p = plan(
+        resources,
+        context={
+            **resources["context"],
+            "member_roles": {"0": "control"},
+            "execution": {"max_expansion": 10},
+        },
+    )
+    assert (
+        p.member_role(0) == "control"
+        and p.member_role(2) == "control"
+        and p.member_role(1) is None
+    )
+    assert p.execution_defaults == {"max_expansion": 10, "completeness": "required"}
+    assert p.origins["execution.completeness"] == "dataset"
 
 
-def test_parameter_alias_uses_only_explicit_vocabulary_snapshot():
-    snapshot = _snapshot(_entry())
-    stable = plan_source_binding(_query("grid"), snapshot=snapshot)
-    alias = _query("grid", {"namespace": "test-vocabulary", "name": "temperature"})
-    vocabulary = AliasSnapshot("vocab-1", {"test-vocabulary": {"temperature": "cedarkit.t"}})
-    resolved = plan_source_binding(alias, snapshot=snapshot, vocabulary_snapshot=vocabulary)
-    assert resolved.query_id == stable.query_id
-    with pytest.raises(QueryError) as caught:
-        plan_source_binding(alias, snapshot=snapshot)
-    assert (caught.value.code, caught.value.path) == ("unknown_parameter", "/query/parameter")
+def test_ambiguous_binding_requires_explicit_id(resources):
+    catalog = deepcopy(resources["catalog"])
+    catalog["datasets"][0]["products"][0]["sources"].append(
+        {"id": "other-files", "kind": "file"}
+    )
+    resources["write"]("catalog.json", catalog)
+    with pytest.raises(QueryError):
+        plan(resources)
+    assert (
+        plan(resources, source_id="other-files").origins["source_binding"]
+        == "other-files"
+    )
 
 
-def test_local_configuration_version_is_required_and_part_of_binding_identity():
-    snapshot = builtin_catalog_snapshot()
-    with pytest.raises(QueryError) as caught:
-        plan_source_binding(_query("cma_gfs_gmf"), snapshot=snapshot)
-    assert (caught.value.code, caught.value.path) == ("unsupported", "/binding/locator/config_version")
-    first = plan_source_binding(_query("cma_gfs_gmf"), snapshot=snapshot, local_config_version="config-1")
-    second = plan_source_binding(_query("cma_gfs_gmf"), snapshot=snapshot, local_config_version="config-2")
-    assert first.query_id == second.query_id
-    assert first.binding_id != second.binding_id
+def test_local_layout_order_and_root_are_kept_without_scan(resources):
+    source = {"kind": "local", "dataset": "alias", "root": "/SYNTHETIC"}
+    key = ("synthetic", "orig", "test-1", "local")
+    p = plan_source_binding(
+        source,
+        context=resources["context"],
+        product="orig",
+        product_version="test-1",
+        local_layouts={
+            key: ["primary/{start_time_label}/{forecast_hour}.grb", "secondary/f.grb"]
+        },
+    )
+    assert p.layout[0].startswith("primary/") and p.source["root"] == "/SYNTHETIC"
+    with pytest.raises(QueryError):
+        plan_source_binding(
+            source,
+            context=resources["context"],
+            product="orig",
+            product_version="test-1",
+        )
 
 
-@pytest.mark.parametrize("source", [
-    {"name": "memory"},
-    {"name": "cmadaas", "kwargs": {"kind": "model_grid", "data_code": "DATA", "token": "secret"}},
-    {"name": "cmadaas", "kwargs": {"kind": "other", "data_code": "DATA"}},
-    {"name": "local", "args": ["data/type"], "kwargs": {"config_dir": "/private"}},
-    {"name": "local", "args": ["../private"]},
-    {"name": "file-pattern", "args": ["/mnt/{unsafe}", "file.grb2"]},
-])
-def test_unmapped_source_arguments_or_templates_fail_closed(source):
-    snapshot = _snapshot(_entry(source=source))
-    with pytest.raises(QueryError) as caught:
-        plan_source_binding(_query("grid"), snapshot=snapshot, local_config_version="config-1")
-    assert caught.value.code == "unsupported"
-    assert "secret" not in str(caught.value)
-    assert "/private" not in str(caught.value)
+@pytest.mark.parametrize(
+    "template",
+    [
+        "../bad",
+        "/absolute",
+        "x/{unknown}",
+        "x/{forecast_hour!r}",
+        "x/{forecast_hour:02}",
+    ],
+)
+def test_bad_local_templates(resources, template):
+    with pytest.raises(QueryError):
+        plan_source_binding(
+            {"kind": "local", "dataset": "alias", "root": "/SYNTHETIC"},
+            context=resources["context"],
+            product="orig",
+            product_version="test-1",
+            local_layouts={("synthetic", "orig", "test-1", "local"): [template]},
+        )
 
 
-def test_display_redacts_user_origin_and_never_claims_availability():
-    original = _snapshot(_entry(source={"name": "file-pattern", "args": ["/secret/root", "f.grb2"]}))
-    snapshot = CatalogSnapshot(Catalog(original.catalog.records, {"grid": "user:/secret/catalog.yaml"}), "fixture-v1")
-    plan = plan_source_binding(_query("grid"), snapshot=snapshot)
-    display = plan.to_display_dict()
-    assert display["locator_redacted"] is True
-    assert display["origin"] == "user"
-    assert "availability" not in display and "resource" not in display
-    assert "/secret/root" not in json.dumps(display)
-    assert "/secret/catalog.yaml" not in json.dumps(display)
-    assert plan.binding.locator["root"] == "/secret/root"
+def test_cmadaas_exact_registry_and_credential_redaction(resources):
+    source = {
+        "kind": "cmadaas",
+        "dataset": "alias",
+        "config": "/secret/connection.yaml",
+    }
+    options = {
+        "context": resources["context"],
+        "product": "orig",
+        "product_version": "test-1",
+    }
+    with pytest.raises(QueryError, match="not registered"):
+        plan_source_binding(source, **options)
+    p = plan_source_binding(
+        source, **options, interface_contracts={("synthetic.grid", 1)}
+    )
+    assert p.product["sources"][2]["time_zone"] == "Asia/Shanghai"
+    report = p.report_context()
+    assert report["source"]["data_code"] == "SYNTHETIC"
+    assert "secret" not in json.dumps(report) and "config" not in report["source"]
+    with pytest.raises(QueryError, match="conflicts"):
+        plan_source_binding(source, **options, client=object())
+    source.pop("config")
+    with pytest.raises(QueryError, match="needs config"):
+        plan_source_binding(source, **options)
+    assert (
+        plan_source_binding(
+            source,
+            **options,
+            client=object(),
+            interface_contracts={("synthetic.grid", 1)},
+        ).source["kind"]
+        == "cmadaas"
+    )
+
+
+def test_missing_population_gets_shared_diagnostic(resources):
+    parameters = deepcopy(resources["parameters"])
+    parameters["parameters"].append(
+        {
+            "parameter_id": "test.prob",
+            "name": "prob",
+            "unit": "%",
+            "fixed_conditions": {
+                "statistics": {
+                    "over": "ensemble",
+                    "operation": "probability",
+                    "of": {"parameter_id": "test.t"},
+                    "population": {"ref": "all"},
+                    "event": {
+                        "operator": "ge",
+                        "threshold": {"value": 280, "unit": "K"},
+                    },
+                    "method": {
+                        "kind": "member_fraction",
+                        "denominator": "expected_members",
+                    },
+                }
+            },
+        }
+    )
+    resources["write"]("parameters.json", parameters)
+    catalog = deepcopy(resources["catalog"])
+    catalog["datasets"][0]["products"][0]["provides"] = [{"parameter": "test.prob"}]
+    resources["write"]("catalog.json", catalog)
+    with pytest.raises(QueryError, match="population"):
+        plan(resources)
+
+
+def test_ambiguous_parameter_names_are_not_guessed(resources):
+    parameters = deepcopy(resources["parameters"])
+    parameters["parameters"].extend(
+        [
+            {"parameter_id": "test.a", "name": "ambiguous", "unit": "K"},
+            {"parameter_id": "test.b", "name": "ambiguous", "unit": "K"},
+        ]
+    )
+    resources["write"]("parameters.json", parameters)
+    catalog = deepcopy(resources["catalog"])
+    catalog["datasets"][0]["products"][0]["provides"] = [{"parameter": "ambiguous"}]
+    resources["write"]("catalog.json", catalog)
+    with pytest.raises(QueryError) as error:
+        plan(resources)
+    assert error.value.context["reason"] == "ambiguous_parameter"
+
+
+def test_cemc_member_defaults_require_registered_dataset_identity(resources):
+    catalog = deepcopy(resources["catalog"])
+    catalog["datasets"][0]["id"] = "cma_geps"
+    resources["write"]("catalog.json", catalog)
+    mappings = deepcopy(resources["mappings"])
+    mappings["mappings"][0]["applies_to"]["dataset"] = "cma_geps"
+    resources["write"]("maps.json", mappings)
+    p = plan(resources)
+    assert p.source["dataset"] == "cma_geps"
+    assert p.member_role(0) == "perturbation"  # explicit dataset override
+    assert p.member_role(1) == "perturbation" and p.member_role(2) == "control"
+
+
+def test_source_invalid_combinations_are_shared_contract(resources):
+    for source in [
+        {"kind": "file", "path": "a", "directory": "b", "glob": "*"},
+        {"kind": "local", "root": "/a"},
+        {"kind": "cmadaas"},
+        {"kind": "file", "path": "a", "data_code": "override"},
+    ]:
+        with pytest.raises(QueryError):
+            plan_source_binding(source)
+
+
+def test_bad_explicit_resource_does_not_read_registered_default(resources):
+    with pytest.raises(QueryError, match="unknown builtin"):
+        plan_source_binding(
+            {"kind": "file", "path": "f"},
+            context={"catalog": {"builtin": "unknown"}},
+            defaults=resources["context"],
+        )
+
+
+def test_relative_request_context_and_catalog_mapping_bases(
+    resources, tmp_path, monkeypatch
+):
+    config = tmp_path / "config"
+    config.mkdir()
+    (config / "context.yaml").write_text(
+        "catalog: {path: ../catalog.json}\nparameter_registry: {path: ../parameters.json}\n"
+    )
+    from cedarkit_query import Request
+
+    request = Request.from_dict(
+        {
+            "api_version": "cedarkit.request/v1",
+            "source": resources["source"],
+            "context": "config/context.yaml",
+            "queries": [{}],
+        },
+        base_dir=tmp_path,
+    )
+    monkeypatch.chdir(config)
+    p = plan_source_binding(
+        request.source,
+        context=request.context,
+        product="orig",
+        product_version="test-1",
+    )
+    assert p.definitions[-1]["reference"]["path"] == str(tmp_path / "maps.json")
+
+
+def test_mapping_replacement_must_apply_to_exact_business_version(resources):
+    replacement = deepcopy(resources["mappings"])
+    replacement["mappings"][0]["applies_to"]["product_version"] = "other-version"
+    path = resources["write"]("wrong-product.json", replacement)
+    with pytest.raises(QueryError, match="no rows for the exact product"):
+        plan(
+            resources,
+            context={**resources["context"], "mappings": {"grib2": {"path": path}}},
+        )
+    p = plan(resources)
+    assert p.mapping_applicability[0]["product_context_matches"] is True
+    assert p.mapping_applicability[0]["translation_coverage"] == "pending_I06"
+
+
+def test_context_and_product_scopes_conjoin_without_replacing_or_defaulting(resources):
+    p = plan(
+        resources, context={**resources["context"], "scope": {"step": ["PT0H", "PT6H"]}}
+    )
+    assert p.scope.to_dict() == {"step": "PT0S"}
+    assert p.product["provides"] == ({"parameter": "test.t2m"},)
+    assert "step" not in resources["context"].get("scope", {})
+
+
+def test_fixed_member_role_uses_effective_overrides(resources):
+    parameters = deepcopy(resources["parameters"])
+    parameters["parameters"].append(
+        {
+            "parameter_id": "test.control",
+            "name": "control",
+            "unit": "K",
+            "fixed_conditions": {"member": 0, "member_role": "control"},
+        }
+    )
+    resources["write"]("parameters.json", parameters)
+    catalog = deepcopy(resources["catalog"])
+    catalog["datasets"][0]["products"][0]["provides"] = [{"parameter": "test.control"}]
+    resources["write"]("catalog.json", catalog)
+    with pytest.raises(QueryError) as error:
+        plan(resources)
+    assert error.value.code == "constraint_conflict"
+    p = plan(
+        resources, context={**resources["context"], "member_roles": {"0": "control"}}
+    )
+    assert p.member_role(0) == "control"
+
+
+def test_catalog_scope_is_a_bound_not_an_expanded_request(resources):
+    catalog = deepcopy(resources["catalog"])
+    catalog["datasets"][0]["products"][0]["scope"]["member"] = {
+        "range": {"start": 0, "end": 1000000000, "every": 1}
+    }
+    resources["write"]("catalog.json", catalog)
+    p = plan(resources)
+    assert p.scope.member["range"]["end"] == 1000000000
+    assert p.execution_defaults["max_expansion"] == 25

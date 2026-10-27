@@ -101,7 +101,7 @@ namespaces = false
 include-package-data = false
 
 [tool.setuptools.package-data]
-"reki.catalog" = ["builtin/catalog.yaml"]
+"reki.catalog" = ["builtin/catalog-v1.json"]
 "reki.data_finder" = ["README.md", "conf/**/*.yaml"]
 "reki.readers.grib.config" = ["*.yaml", "*.md"]
 

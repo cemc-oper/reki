@@ -27,33 +27,14 @@ assert array.values.tolist() == [0, 1, 2, 3]
 array
 ```
 
-`local` 把产品、起报时间、时效和成员交给部署的 catalog 解析。先加载自己的 catalog，
-再把得到的 `SourceSpec` 交给 `from_source()`；catalog 解析本身不会扫描业务文件：
+阶段 1.1 的目录格式为 `cedarkit.catalog/v1`，通过显式本地资源引用加载：
 
 ```python
-from reki import from_source, load_catalog
+from reki.catalog import load_catalog
 
-resolved = load_catalog(user_path="/etc/reki/catalog.yaml").resolve("my_ifs")
-reader = from_source(resolved.source)
+catalog = load_catalog({"path": "/deployment/catalog.json", "version": "1"})
 ```
 
-不要把 `/etc`、挂载目录或组织内产品名写入可共享 notebook。若只需要按固定布局查找本地
-文件，优先使用 {doc}`local-files` 的 `file-pattern`，它无需 catalog 配置。
+该例只加载配置，不扫描资料或调用服务。当前内置目录仅登记数据集身份／别名，没有可执行产品；真实业务版本、提供范围及来源绑定仍待证据补齐。`load_catalog()` 不再搜索插件或用户目录，也不返回旧 `ResolvedDataset`／`SourceSpec`。运行来源和 CLI 的同步消费由 I05／I08 承接，此处不提供尚未实现的执行示例。
 
-## Catalog 的覆盖边界
-
-Catalog 将稳定数据集 ID 绑定到可序列化 `SourceSpec`。加载、列出和 `resolve()` 只处理
-配置：不会导入 reader、扫描路径或访问网络。层级按 builtin、plugin、user 合并；高优先级
-层替换整条记录而不是拼接其中的 kwargs，因此替代记录必须重新声明 source、别名和 metadata。
-
-```python
-from reki import load_catalog
-
-catalog = load_catalog(user=False, plugins=False)
-resolved = catalog.resolve("my_dataset")
-source_spec = resolved.source
-```
-
-`reki catalog list/show/resolve` 可用于检查生效记录及来源；CLI 会脱敏 source kwargs。
-用户目录、插件目录、完整 schema 与扩展方式属于 {doc}`/development/api/catalog` 和
-{doc}`/development/architecture/catalog-and-plugins` 的范围。
+`file` 的字面文件列表、有序 glob 与 `local` 的根目录模板由来源配置负责；参数与产品目录不保存部署根路径或认证。构造／资源优先级和未完成边界见 {doc}`/development/architecture/catalog-and-plugins`，API 见 {doc}`/development/api/catalog`。
