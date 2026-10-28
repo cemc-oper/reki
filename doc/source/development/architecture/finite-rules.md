@@ -1,5 +1,20 @@
 # Finite rules and backend slices (I06)
 
+The fourth slice adds internal `translation.header_evidence` for explicitly
+referenced files: encoded-byte SHA-256, generation fingerprints, selected scalar
+headers and raw section 4 descriptors for templates 8/11. It never requests
+business value or coordinate arrays. Missing, undefined, multiple and getter-error
+states remain separate from a real zero. Repeated descriptors retain encoded
+order; no ranked ecCodes key syntax is used. File generations are verified around
+hashing and collection. The workspace evidence index records the 16 manifest
+files and 199 selected headers; this is neither a full message inventory nor
+new parameter/product coverage. Existing header facts, portal UI pagination,
+synthetic empty-grid examples and historical tests do not establish service
+absence, complete acquisition or product snapshot semantics. The bounded
+transport therefore retains its explicit empty-grid error and pending complete
+retrieval check. Legacy inventory output remains historical; its current
+`centre:int` fallback issue is recorded separately from this typed collector.
+
 I06 is **in progress**. This implementation provides finite rule functions, an
 explicit-file ecCodes backend, and an internal controlled single-grid service
 transport. Its tests use synthetic definitions, generated GRIB messages, a
