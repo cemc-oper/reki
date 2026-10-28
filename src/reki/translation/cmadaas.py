@@ -63,8 +63,8 @@ class CallRecord:
 
 def associate(contract, parameters, response, *, request_index):
     # response is the exact object returned by this immutable invocation, not attrs
-    # reconstructed from a downstream DataArray. Echoes are necessary but not alone
-    # sufficient: the registered contract must also guarantee this single-field form.
+    # reconstructed from a downstream DataArray. Either an actual raw invocation
+    # or this controlled wrapper echo is verified, under an explicit single-field contract.
     if not isinstance(response, Mapping):
         metadata_error(
             "missing_native_metadata",
@@ -88,19 +88,55 @@ def associate(contract, parameters, response, *, request_index):
             "response does not have the contracted single-grid shape",
             request_index=request_index,
         )
-    echo = response.get("request_parameters")
-    if not isinstance(echo, Mapping) or any(
-        type(echo.get(k)) is not type(v) or echo.get(k) != v
-        for k, v in parameters.items()
-    ):
-        metadata_error(
-            "inconsistent_native_metadata",
-            "response cannot be associated with the actual business request",
-            request_index=request_index,
-        )
+    validate_call_parameters(parameters)
+    invocation = response.get("invocation")
+    if invocation is not None:
+        from .nuwe_transport import NuweInvocation
+
+        if not isinstance(invocation, NuweInvocation) or (
+            invocation.interface_id != contract.interface_id
+            or invocation.method != contract.method
+            or invocation.response is not response.get("raw_response")
+            or dict(invocation.parameters) != dict(parameters)
+            or any(
+                type(invocation.parameters.get(k)) is not type(v)
+                for k, v in parameters.items()
+            )
+        ):
+            metadata_error(
+                "inconsistent_native_metadata",
+                "raw response is not bound to this exact client invocation",
+                request_index=request_index,
+            )
+    else:
+        echo = response.get("request_parameters")
+        if not isinstance(echo, Mapping) or any(
+            type(echo.get(k)) is not type(v) or echo.get(k) != v
+            for k, v in parameters.items()
+        ):
+            metadata_error(
+                "inconsistent_native_metadata",
+                "response cannot be associated with the actual business request",
+                request_index=request_index,
+            )
+    return CallRecord(request_index, contract, parameters, response, True)
+
+
+def validate_call_parameters(parameters):
     if any(
         k.lower()
-        in {"password", "pwd", "token", "user", "userid", "signature", "sign", "url"}
+        in {
+            "password",
+            "passwd",
+            "pwd",
+            "token",
+            "authorization",
+            "user",
+            "userid",
+            "signature",
+            "sign",
+            "url",
+        }
         for k in parameters
     ):
         raise QueryError(
@@ -108,7 +144,6 @@ def associate(contract, parameters, response, *, request_index):
             "/source",
             "authentication must stay outside business call records",
         )
-    return CallRecord(request_index, contract, parameters, response, True)
 
 
 def role(record, name, *, optional=False):

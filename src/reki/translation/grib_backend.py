@@ -74,7 +74,7 @@ INTEGER_KEYS = frozenset(
         "numberOfForecastsInEnsemble",
     }
 )
-STRING_KEYS = frozenset({"units", "gridType"})
+STRING_KEYS = frozenset({"units", "parameterUnits", "gridType"})
 NATIVE_KEYS = INTEGER_KEYS | STRING_KEYS
 
 
@@ -587,6 +587,29 @@ class GribScan:
                 "fixed_definition_mismatch",
                 "native field violates its mapped fixed definition",
             )
+        unit_rule = (
+            mapping["native"]
+            .get("translate", {})
+            .get("unit", {"rule": "common.value_unit"})
+        )
+        probability = native["productDefinitionTemplateNumber"] in {5, 9}
+        object_unit = native.get("parameterUnits") if probability else None
+        # ecCodes parameterUnits uses this SI spelling while units uses m s**-1.
+        # This finite spelling equivalence does not infer a parameter identity.
+        object_unit = {"m s-1": "m/s"}.get(object_unit, object_unit)
+        if probability and not unit_rule.get("config", {}).get("source_unit"):
+            raise QueryError(
+                "invalid_config",
+                "/mappings/native/translate/unit",
+                "probability field value unit needs explicit encoding evidence",
+                {"reason": "missing_context"},
+            )
+        if probability and object_unit in {None, "", "unknown", "~"}:
+            metadata_error(
+                "missing_native_metadata",
+                "probability threshold has no native parameter unit",
+                missing_fields=["parameterUnits"],
+            )
         stats = grib.statistics(
             native,
             fixed,
@@ -594,14 +617,12 @@ class GribScan:
             interval,
             resources=self.backend.configuration.resources,
             product=self.backend.configuration.product,
-        )
-        unit_rule = (
-            mapping["native"]
-            .get("translate", {})
-            .get("unit", {"rule": "common.value_unit"})
+            object_unit=object_unit,
         )
         requirement = value_unit(
-            native.get("units"),
+            # Probability template parameter units describe the event object;
+            # its packed field scale is a separate, explicitly declared fact.
+            None if probability else native.get("units"),
             parameter["unit"],
             thaw(unit_rule),
             quantity_kind=self.backend.quantity_kinds.get(parameter["parameter_id"]),
@@ -617,6 +638,18 @@ class GribScan:
             source_unit=requirement.source,
             unit=parameter["unit"],
             statistics=stats,
+            **(
+                {
+                    "probability_unit_basis": {
+                        "threshold_unit": object_unit,
+                        "threshold_origin": "native.parameterUnits",
+                        "field_unit": requirement.source,
+                        "field_origin": "mapping.common.value_unit.source_unit",
+                    }
+                }
+                if probability
+                else {}
+            ),
             vertical_definition=self.backend.vertical_definition
             or {"id": "WMO.GRIB2.fixed-surfaces"},
             **(

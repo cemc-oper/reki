@@ -169,7 +169,8 @@ prevents a successful return; if acquisition already failed, its original error
 is preserved with a generic cleanup note that does not expose cleanup payloads.
 Closing the source during value loading prevents the conversion from returning
 a Dataset. Controlled owned/external-client tests exercise ownership obligations;
-the actual CMADaaS client and transport integration still belong to I06.
+I06 now provides the actual nuwe client transport with offline protobuf tests;
+production interface association, completeness and snapshot evidence remain pending.
 
 `tests/selection/` uses explicitly SYNTHETIC independent expected sets, paired
 candidate plans, lazy values and disposable files. Passing it proves this core

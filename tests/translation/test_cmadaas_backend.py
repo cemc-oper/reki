@@ -43,13 +43,13 @@ class Transport:
 
 @pytest.fixture
 def source_factory(tmp_path):
-    def make(*, owns=False):
+    def make(*, owns=False, method="SYNTHETIC.method", transport_factory=None):
         ref = {"id": "SYNTHETIC.single-grid", "version": 1}
         contract = InterfaceContract(
             ref["id"],
             ref["version"],
             "SYNTHETIC.interface",
-            "SYNTHETIC.method",
+            method,
             {
                 "time": "time",
                 "step": "validTime",
@@ -174,7 +174,9 @@ def source_factory(tmp_path):
             ("catalog", catalog),
         ):
             (tmp_path / (name + ".json")).write_text(json.dumps(data))
-        client = Transport()
+        client = (
+            Transport() if transport_factory is None else transport_factory(contract)
+        )
         config = plan_source_binding(
             dict(kind="cmadaas", dataset="SYNTHETIC"),
             context=dict(
@@ -304,3 +306,198 @@ def test_absent_response_wrapper_is_metadata_failure(source_factory):
     assert exc.value.code == "metadata_interpretation_failed"
     assert exc.value.context["reason"] == "missing_native_metadata"
     assert exc.value.context["request_index"] == 0
+
+
+class OfflineHTTP:
+    """Exercise the real client/connection/protobuf path with no sockets."""
+
+    def __init__(self):
+        self.calls = []
+        self.content = None
+        self.failure = None
+        self.closes = 0
+
+    def get(self, url, **kwargs):
+        from types import SimpleNamespace
+        from urllib.parse import parse_qs, urlsplit
+        from nuwe_cmadaas.music import apiinterface_pb2 as pb
+
+        values = parse_qs(urlsplit(url).query)
+        # Store only explicitly selected business arguments, never signed URLs.
+        self.calls.append(
+            {
+                k: values[k][0]
+                for k in (
+                    "interfaceId",
+                    "method",
+                    "dataCode",
+                    "fcstEle",
+                    "time",
+                    "validTime",
+                    "levelType",
+                    "fcstLevel",
+                )
+            }
+        )
+        if self.failure:
+            raise self.failure("SYNTHETIC private transport detail")
+        if self.content is not None:
+            return SimpleNamespace(content=self.content, status_code=200)
+        msg = pb.RetGridArray2D()
+        msg.request.errorCode = 0
+        msg.request.rowCount = 2  # A grid dimension counter, not field count.
+        msg.request.colCount = 2
+        msg.latCount, msg.lonCount = 2, 2
+        msg.startLat, msg.endLat, msg.latStep = 50.0, 49.0, -1.0
+        msg.startLon, msg.endLon, msg.lonStep = 100.0, 101.0, 1.0
+        msg.lats.extend([50.0, 49.0])
+        msg.lons.extend([100.0, 101.0])
+        msg.units, msg.userEleName = "K", "SYNTHETIC_RETURN_NAME"
+        value = float(values["fcstLevel"][0])
+        msg.data.extend([value, value + 1, value + 2, value + 3])
+        return SimpleNamespace(content=msg.SerializeToString(), status_code=200)
+
+    def close(self):
+        self.closes += 1
+
+
+@pytest.fixture
+def nuwe_source(source_factory, monkeypatch):
+    import socket
+    from nuwe_cmadaas.music.client import CMADaaSClient
+    from reki.translation.nuwe_transport import NuweGridTransport
+
+    def no_socket(*args, **kwargs):
+        raise AssertionError("offline fixture attempted socket I/O")
+
+    monkeypatch.setattr(socket.socket, "connect", no_socket)
+    http = OfflineHTTP()
+    client = CMADaaSClient(
+        server_ip="synthetic.invalid",
+        server_port=8080,
+        server_id="SYNTHETIC",
+        user="SYNTHETIC_USER",
+        password="SYNTHETIC_PASSWORD",
+        connection_timeout=1,
+        read_timeout=2,
+        transport=http,
+        log_policy="summary",
+        max_retries=0,
+    )
+    source, transport = source_factory(
+        owns=True,
+        method="callAPI_to_gridArray2D",
+        transport_factory=lambda contract: NuweGridTransport(client, contract),
+    )
+    return source, transport, client, http
+
+
+def test_real_nuwe_client_offline_pipeline_keeps_raw_invocation_and_provenance(
+    nuwe_source,
+):
+    from nuwe_cmadaas.music.data import GridArray2D
+
+    source, transport, client, http = nuwe_source
+    selection = selected(source)
+    selection.explain()
+    assert not http.calls
+    fields = selection.all()
+    assert len(fields) == len(http.calls) == 2
+    record = fields[0].metadata["call_record"]
+    assert record.response["invocation"].response is record.response["raw_response"]
+    raw = record.response["raw_response"]
+    assert isinstance(raw, GridArray2D) and raw.request.row_count == 2
+    # The client copies these attrs from the request. They are not native facts.
+    assert raw.metadata["level"] == record.parameters["fcstLevel"]
+    assert record.response["metadata"] == {}
+    assert fields[0].metadata["fact_origins"]["time"]["step"] == "request_association"
+    ds = fields.to_xarray()
+    np.testing.assert_array_equal(ds.pressure, [1000, 850])
+    np.testing.assert_array_equal(
+        ds.t.values.reshape(2, 2, 2),
+        [[[1000, 1001], [1002, 1003]], [[850, 851], [852, 853]]],
+    )
+    assert all(
+        c["method"] == "callAPI_to_gridArray2D" and c["time"] == "20260101080000"
+        for c in http.calls
+    )
+    report = fields.report.to_json()
+    assert fields.report.context["origins"]["native_library"].startswith(
+        "nuwe-cmadaas@"
+    )
+    assert all(
+        s not in report
+        for s in (
+            "SYNTHETIC_PASSWORD",
+            "SYNTHETIC_USER",
+            "request_parameters",
+            "raw_response",
+        )
+    )
+    assert len(http.calls) == 2
+    source.close()
+    source.close()
+    assert transport._closed and http.closes == 0
+    assert client.transport is http
+    assert ds.t.values.flat[0] == 1000
+
+
+@pytest.mark.parametrize(
+    "content,code",
+    [
+        (
+            b'{"returnCode":-1004,"flag":"slb","returnMessage":"SYNTHETIC secret response"}',
+            "authentication_failed",
+        ),
+        (
+            b'{"returnCode":-42,"flag":"slb","returnMessage":"SYNTHETIC secret response"}',
+            "service_error",
+        ),
+        (b"not protobuf", "decode_failed"),
+        (b"", "metadata_interpretation_failed"),
+    ],
+)
+def test_real_nuwe_client_response_failures_never_become_absence(
+    nuwe_source, content, code
+):
+    source, transport, client, http = nuwe_source
+    http.content = content
+    with pytest.raises(SourceError) as exc:
+        selected(source).all()
+    assert exc.value.code == code
+    assert exc.value.context["request_index"] == 0
+    assert "SYNTHETIC secret response" not in json.dumps(exc.value.to_dict())
+    assert "report" not in exc.value.to_dict()
+    source.close()
+    assert http.closes == 0
+
+
+@pytest.mark.parametrize(
+    "failure,code", [("Timeout", "timeout"), ("ConnectionError", "io_error")]
+)
+def test_real_nuwe_client_transport_status_is_translated(nuwe_source, failure, code):
+    import requests
+
+    source, transport, client, http = nuwe_source
+    http.failure = getattr(requests, failure)
+    with pytest.raises(SourceError) as exc:
+        selected(source).all()
+    assert exc.value.code == code
+    assert exc.value.context["request_index"] == 0
+    assert "private transport detail" not in json.dumps(exc.value.to_dict())
+    source.close()
+
+
+def test_raw_invocation_cannot_be_replaced_by_another_response(nuwe_source):
+    from reki.translation import cmadaas
+    from nuwe_cmadaas.music.data import GridArray2D
+
+    source, transport, client, http = nuwe_source
+    fields = selected(source, levels=(850,)).all()
+    record = fields[0].metadata["call_record"]
+    changed = {**record.response, "raw_response": GridArray2D()}
+    with pytest.raises(SourceError) as exc:
+        cmadaas.associate(record.contract, record.parameters, changed, request_index=4)
+    assert exc.value.context["reason"] == "inconsistent_native_metadata"
+    assert exc.value.context["request_index"] == 4
+    source.close()

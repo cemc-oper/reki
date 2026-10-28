@@ -365,6 +365,9 @@ class CmadaasScan:
         self._iterator = None
         self.records = []  # Acquired response snapshots for this execution, not a source cache.
         self.checks = {}
+        origin = getattr(backend.transport, "origin", None)
+        if origin is not None:
+            self.context["origins"]["native_library"] = origin
 
     def __iter__(self):
         self._iterator = self._fields()
@@ -394,6 +397,13 @@ class CmadaasScan:
                     backend.contract.method,
                     dict(parameters),
                 )
+            except SourceError as exc:
+                raise SourceError(
+                    exc.code,
+                    exc.path,
+                    exc.message,
+                    {**thaw(exc.context), "request_index": request_index},
+                ) from exc
             except TimeoutError as exc:
                 raise SourceError(
                     "timeout",

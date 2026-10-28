@@ -2,8 +2,8 @@
 
 I06 is **in progress**. This implementation provides finite rule functions, an
 explicit-file ecCodes backend, and an internal controlled single-grid service
-transport. Its tests use synthetic definitions, generated GRIB messages and a
-fake service. They prove mechanisms, not CEMC product provision, real service
+transport. Its tests use synthetic definitions, generated GRIB messages, a
+fake service and the actual nuwe client with injected offline HTTP/protobuf responses. They prove mechanisms, not CEMC product provision, real service
 availability, Q17 coverage or Q20 acceptance. No production CMADaaS interface
 contract, parameter mapping or product binding is registered by this change.
 
@@ -24,8 +24,11 @@ Internally, `construct_source(configuration, backend)` uses the I05 interface.
 The controlled `CmadaasBackend` requires an exact `InterfaceContract` reference,
 a joint layer table, complete fixed statistics and an explicit transport. Its
 wrapper shape is deliberately not a claim that a raw MUSIC/nuwe response already
-has these properties. Connecting the actual client, proving each interface and
-registering production contracts remain I06 work. Owned transports close once;
+has these properties. `NuweGridTransport(client, contract)` now connects the actual
+`callAPI_to_gridArray2D` boundary using an explicitly supplied client. It preserves
+the raw response and an immutable invocation instead of reconstructing association
+from DataArray attrs. Proving each real interface and registering production
+contracts remain I06 work. Owned transports close once;
 external transports stay open. Existing string/SourceSpec callers remain on the
 legacy route pending I08.
 
@@ -57,6 +60,27 @@ Omitting Query statistics imposes no statistical restriction; it never means
 instantaneous by default. A fixed parameter definition may add its own explicit
 statistics.
 
+## Actual encoding verification in the second I06 slice
+
+All ten templates (0/8, 1/11, 2/12, 5/9, 6/10) now have actual ecCodes encoding,
+file scanning, fixed-statistic interpretation, independent expected identities,
+selection/reporting and numerical Dataset output tests. Each also has actual
+pressure-layer output and rejection of a different level. Interval templates
+separately check interval-end selection and reject relabelling a trailing
+accumulation as since-initialization. Equal raw member numbers with different
+native types remain distinct under an explicit synthetic joint mapping.
+These are bounded synthetic cases, not every valid form in a template or real
+product evidence. Master/local and grid restrictions above remain unchanged.
+
+Probability templates need two distinct unit facts. The native `parameterUnits`
+field supplies the event-object threshold unit; its exact text is retained. The
+finite spelling `m s-1` is normalized to `m/s`. The packed probability field's
+percentage/fraction scale requires an explicit `common.value_unit.source_unit`
+mapping declaration: the backend never infers it from the target unit. That
+declaration must have actual encoding evidence before becoming a business
+mapping. Tests independently encode signed wind thresholds and percent values,
+then check dimensionless fractional output. No new rule configuration is added.
+
 ## Acquisition, output and diagnostics
 
 The GRIB backend scans headers in stable file/message order, deduplicates physical
@@ -73,12 +97,24 @@ present. Other grid/scanning paths are explicit implementation gaps. Generated
 tests independently check values, metadata, delayed loading, stable order,
 truncation, resource closure and source generation changes.
 
-The controlled service wrapper verifies exact single-grid shape, integer record
+The original controlled wrapper verifies exact single-grid shape, integer record
 count, absence of truncation, and correspondence to the immutable actual business
-parameters. Response facts and verified request-association facts retain separate
+parameters. The actual nuwe adapter instead binds the exact raw `GridArray2D` to
+its invocation and contract; it does not require a fabricated server echo. Native
+`RequestInfo.row_count`/`col_count` are not treated as a number of returned fields. Response facts and verified request-association facts retain separate
 provenance; fixed definitions retain a third source. A request is never copied
 into an unidentified response. The exact response is attached internally to its
 `CallRecord`; public reports omit response arrays, full requests and authentication.
+The client copies some request values into metadata/attrs. These do not become
+response-derived time/layer/member facts; the adapter drops those attrs from the
+value array and rules retain `request_association` provenance. Errors are mapped
+from actual client request status without exposing server payloads or signed URLs.
+Empty grids have no proven field identity in this finite contract and fail
+explicitly; a business absence interpretation needs its own supported evidence.
+The underlying client/HTTP session remains caller-owned. Closing an owned adapter
+only closes that adapter. No production interface, pagination or snapshot proof
+is inferred from successful protobuf/grid decoding.
+
 Only identical requests within one terminal execution share acquisition. There
 is no result cache across executions. The returned service grid is materialized
 and copied within acquisition, the allowed eager service boundary.
