@@ -158,8 +158,11 @@ class FileSnapshot:
             )
 
     def load(self, loader):
-        """Adapters must return loaded arrays, with no live file-backed dependency."""
+        """Load array values inside the generation guard, without retaining a cache."""
         self.verify()
         result = loader()
+        load = getattr(result, "load", None)
+        if callable(load):
+            result = load()
         self.verify()
         return result

@@ -67,9 +67,9 @@ native rules, interface contracts and business evidence belong to I06/I03/I04.
 | Operation/value | Obligation |
 | --- | --- |
 | `backend.plan(queries, configuration) -> Plan` | Pure; no discovery, scan, connection or value I/O, including when called by `sel`/`explain`. One ordered translation item per effective Query, with locally contiguous paired branches and real basis references. Coverage is `passed` only with proof; otherwise `pending`. |
-| `Plan.expected` | One complete, independent finite identity set per Query, or `None`. Concrete normalized identities must satisfy the Query. Product applicability, legal combinations and completeness of this set need evidence; never reconstruct it from returned records. Unknown and empty have different meanings. |
+| `Plan.expected` | One complete, independent finite identity set per Query, or `None`. Canonical parameter definitions, units and known member roles are applied before identity deduplication. Concrete identities must satisfy the Query. Product applicability, legal combinations and completeness of this set need evidence; never reconstruct it from returned records. Unknown and empty have different meanings. A previously fixed set cannot be replaced during acquisition with the observed subset. |
 | `backend.start(plan) -> Scan` | Terminal-only acquisition. `Scan.plan` may refine pending facts before yielding references; coverage must then be proven. `Scan.context` can add only source `paths`, `fingerprints`, `version`, not overwrite resource definitions/scope/defaults or expose config/client/authentication. |
-| `Scan` iteration | Stable global source order, independent of Query/branch/concurrency order. Normal exhaustion certifies successful complete acquisition and required pagination. Truncation, target interpretation failure and service failure raise `SourceError`, never normal exhaustion. `Scan.close()` releases execution resources but leaves returned references valid for delayed loading. |
+| `Scan` iteration | Yield `FieldReference` and optional `BranchEvent` values in stable global source order, independent of Query/branch/concurrency order. Normal exhaustion certifies successful complete acquisition and required pagination. Truncation, target interpretation failure and service failure raise `SourceError`, never normal exhaustion. The core closes the iterator and then `Scan.close()`, releasing execution resources while leaving returned references valid for delayed loading. Shared resource cleanup must be idempotent. |
 | `FieldReference` | Concrete shared Query identity; reliable `record_id` tied to source generation and record position; canonical metadata, sufficient grid definition, lazy spatial `DataArray` loader, and snapshot-local `(query_index, branch_index)` links. Equal business identity or equal values alone do not establish equal records. |
 | Metadata | `parameter_id`, `parameter_name`, business `unit` and effective `fixed_conditions` must match the loaded registry. `source_unit` needs independent source evidence. Optional description, standard_name and statistics must be factual. Numeric vertical coordinates additionally require an explicit compatible `vertical_definition`. Affine conversion requires `quantity_kind=absolute_temperature`; temperature differences must not use an absolute-temperature offset. These are adapter facts, not new resource-schema fields. |
 | `backend.close()` | Close owned resources once; never close an injected external client. QuerySource owns the backend lifetime and all associated fields/selections. |
@@ -80,6 +80,41 @@ native metadata and decoder error classification remain the adapter's duty;
 arbitrary programming errors are not converted into missing fields. Branch scope
 and basis must reflect actual I04 applicability and the exact resources in the
 report; no business product/version is manufactured here.
+
+`BranchEvent(query_index, branch_index, "started" | "exhausted")` is internal
+progress, not a new public schema or report status. Emit `started` before a
+branch's acquisition and `exhausted` after its complete retrieval and the checking
+of previously yielded candidates. It explicitly covers empty branches and shared
+scans. A field reference also marks its associated branches as started; emitting
+fields after an explicit exhaustion is invalid. During normal `first` early exit,
+exhausted branches stay exhausted, active branches become `stopped_early`, and
+unstarted branches stay `not_started`. Only normally reaching the end of the
+entire Scan certifies all planned branches. Per-Query presence summaries use
+their own branches' exhaustion, retaining proven missing identities alongside
+other Queries' `selection_not_exhausted` reasons. No per-branch field counts are
+added. Failures never return a normal progress report.
+
+The pure internal `expected_from_domain(queries, domain, configuration,
+identity_fields=...)` helper consumes an independently declared complete finite
+domain and independently established applicable identity fields. It normalizes
+definitions, checks declared product provision and source scope, preserves
+pairing, derives known roles and deduplicates identities. `None` means unknown;
+an explicitly complete empty domain means known empty. Incomplete applicable
+identities remain unknown, and invalid later declarations are still checked.
+Domain cardinality is not the Query expansion limit. This helper does not prove
+the completeness of its input or infer applicable axes, product versions or a
+finite domain from parameter counts, broad `provides`, observations or sample
+files. I03/I04/I06 must supply that business proof before using it for products.
+The versioned `tests/selection/fixtures/independent-domain-v1.json` is deliberately
+SYNTHETIC; its paired product/domain declarations exercise I04 loading through
+the I05 report without running any native rule or business backend.
+
+Input errors retain their original input index; joint selection errors retain
+contributing origins across steps. Resource/configuration paths and document
+locations are not rebased under the last input Query. Backend errors can supply
+an effective `query_index` to associate the relevant original origins. Expansion
+is checked after intersection, while role contradictions are checked without
+enumerating unrelated dimensions or hiding behind an empty selection.
 
 The terminal-only `selection.files.discover_paths` helper preserves literal file
 list order, sorts normalized directory matches, and keeps registered local
@@ -92,6 +127,8 @@ around scanning/loading and include message position in record identity.
 This stat fingerprint detects generation changes, not cryptographic content
 equality; adapters must provide stronger source versions when their environment
 requires them. None of these helpers scans GRIB or activates a real layout.
+If the guarded loader returns a lazy object with `load()`, materialization occurs
+inside the generation guard before the final fingerprint check.
 
 ## Output, reports and lifetime
 
@@ -120,6 +157,12 @@ JSON snapshot in `cedarkit_query_report`. Completeness errors serialize a report
 object; ordinary QueryError/SourceError omit it. Closing a source is idempotent;
 old metadata/reports remain readable, but associated selection execution and
 field/collection conversion fail. Already returned memory Datasets remain usable.
+Iterator/scan cleanup also runs on early exit and failures. A cleanup failure
+prevents a successful return; if acquisition already failed, its original error
+is preserved with a generic cleanup note that does not expose cleanup payloads.
+Closing the source during value loading prevents the conversion from returning
+a Dataset. Controlled owned/external-client tests exercise ownership obligations;
+the actual CMADaaS client and transport integration still belong to I06.
 
 `tests/selection/` uses explicitly SYNTHETIC independent expected sets, paired
 candidate plans, lazy values and disposable files. Passing it proves this core

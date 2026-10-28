@@ -18,8 +18,17 @@ from cedarkit_query import (
     prepare_queries,
 )
 from reki.catalog import plan_source_binding
+from cedarkit_query.normalize import _contains, _count
 from reki.catalog.model import thaw
-from .backend import Plan, UnavailableBackend, plan_dict, is_concrete
+from .backend import (
+    Plan,
+    UnavailableBackend,
+    plan_dict,
+    is_concrete,
+    BranchEvent,
+    BranchProgress,
+    FieldReference,
+)
 
 
 def key(value):
@@ -56,6 +65,42 @@ def _policy(value, default):
     return value
 
 
+def _selection_error(exc, origins, *, query_index=None):
+    path = exc.path
+    context = thaw(exc.context)
+    query_fields = {
+        "parameter",
+        "level_type",
+        "level",
+        "level_unit",
+        "layer",
+        "time",
+        "step",
+        "valid_time",
+        "member",
+        "member_role",
+        "native",
+    }
+    field = path.split("/")[1] if "/" in path else None
+    if (
+        query_index is not None
+        and not context.get("document")
+        and not path.startswith(("/context", "/source"))
+        and (
+            exc.code in {"invalid_query", "constraint_conflict"}
+            or field in query_fields
+        )
+        and not path.startswith("/queries")
+    ):
+        path = f"/queries/{query_index}" + path
+    raise QueryError(
+        exc.code,
+        path,
+        exc.message,
+        {**context, "stage": context.get("stage", "selection"), "origins": origins},
+    ) from exc
+
+
 def _check_paths(configuration):
     source = configuration.source
     for name in ("path", "directory", "root", "config"):
@@ -86,13 +131,9 @@ def _check_paths(configuration):
                 ) from exc
 
 
-def _validated_plan(plan, branches, context):
+def _validated_plan(plan, branches, context, configuration):
     if not isinstance(plan, Plan) or len(plan.expected) != len(branches):
         raise QueryError("invalid_config", "", "invalid backend plan")
-    if [t["query_index"] for t in plan.translations] != list(range(len(branches))):
-        raise QueryError(
-            "invalid_config", "", "backend translations must follow query index order"
-        )
     # Use QueryReport for structural/link validation without fabricating origins steps.
     empty = dict(
         status="unchecked",
@@ -104,8 +145,13 @@ def _validated_plan(plan, branches, context):
     )
     translations = plan_dict(plan)
     for t in translations:
-        for b in t["branches"]:
-            b["execution"] = {"status": "not_started", "reason": "first_match_selected"}
+        if isinstance(t, dict) and isinstance(t.get("branches"), list):
+            for b in t["branches"]:
+                if isinstance(b, dict):
+                    b["execution"] = {
+                        "status": "not_started",
+                        "reason": "first_match_selected",
+                    }
     QueryReport(
         {
             "schema_version": 1,
@@ -118,14 +164,48 @@ def _validated_plan(plan, branches, context):
             "translations": translations,
         }
     )
+    if [t["query_index"] for t in plan.translations] != list(range(len(branches))):
+        raise QueryError(
+            "invalid_config", "", "backend translations must follow query index order"
+        )
+    for ti, translation in enumerate(plan.translations):
+        for bi, branch in enumerate(translation["branches"]):
+            scope = thaw(branch["scope"])
+            for name in ("dataset", "product", "product_version"):
+                known = context.get("source", {}).get(name)
+                values = scope.get(name)
+                if known is not None and values is not None:
+                    values = values if isinstance(values, list) else [values]
+                    if any(v != known for v in values):
+                        raise QueryError(
+                            "invalid_config",
+                            f"/translations/{ti}/branches/{bi}/scope/{name}",
+                            "candidate branch contradicts its fixed source identity",
+                        )
+            if "time" in scope and "time" in context.get("scope", {}):
+                try:
+                    constrain_query(
+                        {"time": scope["time"]}, {"time": context["scope"]["time"]}
+                    )
+                except QueryError as exc:
+                    raise QueryError(
+                        "invalid_config",
+                        f"/translations/{ti}/branches/{bi}/scope/time",
+                        "candidate branch expands its fixed source time scope",
+                    ) from exc
     expected = []
     for branch, rows in zip(branches, plan.expected):
         if rows is None:
             expected.append(None)
             continue
         unique = {}
-        for row in rows:
-            normalized = normalize_query(thaw(row))
+        for ei, row in enumerate(rows):
+            try:
+                normalized = _expected_identity(thaw(row), configuration)
+            except QueryError as exc:
+                raise QueryError(
+                    "invalid_config", f"/expected/{branch['index']}/{ei}", exc.message
+                ) from exc
             expanded = expand_queries([normalized])
             if len(expanded) != 1 or not is_concrete(normalized.to_dict()):
                 raise QueryError(
@@ -138,6 +218,36 @@ def _validated_plan(plan, branches, context):
             unique[key(normalized.to_dict())] = normalized.to_dict()
         expected.append(tuple(unique.values()))
     return Plan(tuple(plan_dict(plan)), tuple(expected))
+
+
+def _check_refinement(previous, current):
+    for old, new in zip(previous.expected, current.expected):
+        if old is not None and (
+            new is None or {key(q) for q in old} != {key(q) for q in new}
+        ):
+            raise QueryError(
+                "invalid_config",
+                "",
+                "execution cannot replace an already fixed independent expected set",
+            )
+
+
+def _close_scan(iterator, scan, failure):
+    cleanup_error = None
+    for resource in (iterator, scan) if iterator is not scan else (scan,):
+        close = getattr(resource, "close", None)
+        if close is not None:
+            try:
+                close()
+            except Exception as exc:
+                if cleanup_error is None:
+                    cleanup_error = exc
+    if cleanup_error is not None:
+        if failure is None:
+            raise cleanup_error
+        failure.add_note(
+            "Execution resource cleanup also failed; the original failure is preserved."
+        )
 
 
 class QuerySource:
@@ -228,11 +338,10 @@ class Selection:
         if not inputs:
             raise QueryError("invalid_query", "/queries", "Query list must be nonempty")
         config = self._owner.configuration
-        raw = []
-        qi = 0
-        try:
-            prepared, indexes = [], []
-            for qi, value in enumerate(inputs):
+        raw, prepared, indexes = [], [], []
+        si = len(self._inputs)
+        for qi, value in enumerate(inputs):
+            try:
                 q = value if isinstance(value, Query) else Query(value)
                 raw.append(q)
                 prepared_input = q
@@ -241,10 +350,7 @@ class Selection:
                     and _needs_vertical_type(q.to_dict())
                     and self._prepared
                 ):
-                    previous = self._branches()
-                    # Only a unique already-established type can bind a partial selector.
-                    # Do not import prior level values as fixed scope constraints.
-                    kinds = {b["query"].get("level_type") for b in previous}
+                    kinds = {b["query"].get("level_type") for b in self._branches()}
                     if len(kinds) == 1 and None not in kinds:
                         prepared_input = Query(
                             {"level_type": kinds.pop(), **q.to_dict()}
@@ -252,57 +358,88 @@ class Selection:
                 if "parameter" in q.to_dict() and config.resources is None:
                     raise QueryError(
                         "invalid_config",
-                        "/parameter",
+                        "/context/parameter_registry",
                         "business queries need a parameter registry",
                         {"reason": "missing_context"},
                     )
                 values = _prepare_input(prepared_input, config)
+                for normalized in values:
+                    _check_member_roles(normalized, config)
                 prepared.extend(values)
                 indexes.extend([qi] * len(values))
-            # Shared expansion applies configured member roles, without guessing applicability.
-            for pi, q in enumerate(prepared):
-                qi = indexes[pi]
-                expand_queries(
-                    [q],
-                    max_expansion=self._limit,
-                    member_roles=thaw(config.member_roles),
-                    cemc=config.cemc_member_roles,
+            except QueryError as exc:
+                _selection_error(
+                    exc, [dict(step_index=si, query_index=qi)], query_index=qi
                 )
-            selection = Selection(
-                self._owner,
-                self._inputs + (tuple(raw),),
-                self._prepared + (tuple(prepared),),
-                self._indexes + (tuple(indexes),),
+        selection = Selection(
+            self._owner,
+            self._inputs + (tuple(raw),),
+            self._prepared + (tuple(prepared),),
+            self._indexes + (tuple(indexes),),
+        )
+        try:
+            branches = selection._branches()
+            for branch in branches:
+                _check_member_roles(Query(branch["query"]), config)
+            expand_queries(
+                [b["query"] for b in branches],
+                max_expansion=self._limit,
+                member_roles=thaw(config.member_roles),
+                cemc=config.cemc_member_roles,
             )
-            selection._plan(selection._branches())
         except QueryError as exc:
-            # Preserve registered classification/count facts and add selection-local origins.
-            raise QueryError(
-                exc.code,
-                exc.path
-                if exc.path.startswith("/queries")
-                else f"/queries/{qi}" + exc.path,
-                exc.message,
-                {
-                    **thaw(exc.context),
-                    "stage": "selection",
-                    "origins": [
-                        {"step_index": len(self._inputs), "query_index": i}
-                        for i in [qi]
-                    ],
-                },
-            ) from exc
+            origins = {
+                (o["step_index"], o["query_index"])
+                for b in self._branches()
+                for o in b["origins"]
+            }
+            origins.update((si, i) for i in range(len(raw)))
+            _selection_error(
+                exc, [dict(step_index=s, query_index=q) for s, q in sorted(origins)]
+            )
+        # Plan/configuration errors retain their own schema/resource paths. They
+        # are not an error in whichever input happened to be processed last.
+        selection._plan(branches)
         return selection
 
     def _plan(self, branches):
         if not branches:
             return Plan((), ())
-        plan = self._owner._backend.plan(
-            tuple(Query(b["query"]) for b in branches), self._owner.configuration
-        )
-        return _validated_plan(
-            plan, branches, self._owner.configuration.report_context()
-        )
+        try:
+            plan = self._owner._backend.plan(
+                tuple(Query(b["query"]) for b in branches), self._owner.configuration
+            )
+            return _validated_plan(
+                plan,
+                branches,
+                self._owner.configuration.report_context(),
+                self._owner.configuration,
+            )
+        except QueryError as exc:
+            context = thaw(exc.context)
+            index = context.get("query_index")
+            involved = (
+                [branches[index]]
+                if type(index) is int and 0 <= index < len(branches)
+                else branches
+            )
+            origins = {
+                (o["step_index"], o["query_index"])
+                for b in involved
+                for o in b["origins"]
+            }
+            raise QueryError(
+                exc.code,
+                exc.path,
+                exc.message,
+                {
+                    **context,
+                    "stage": context.get("stage", "selection"),
+                    "origins": [
+                        dict(step_index=s, query_index=q) for s, q in sorted(origins)
+                    ],
+                },
+            ) from exc
 
     def explain(self):
         branches = self._branches()
@@ -435,13 +572,19 @@ class Selection:
         )
         branches = self._branches()
         plan = self._plan(branches)
-        refs, seen, visited, matched_queries = [], {}, set(), {}
-        exhausted = True
+        refs, seen, matched_queries = [], {}, {}
+        progress = BranchProgress(plan)
         context = self._owner.configuration.report_context()
         if branches:
             scan = self._owner._backend.start(plan)
+            iterator, failure = None, None
             try:
-                plan = _validated_plan(scan.plan, branches, context)
+                refined = _validated_plan(
+                    scan.plan, branches, context, self._owner.configuration
+                )
+                _check_refinement(plan, refined)
+                plan = refined
+                progress = BranchProgress(plan)
                 if any(t["coverage"]["status"] != "passed" for t in plan.translations):
                     raise QueryError(
                         "unsupported",
@@ -450,16 +593,20 @@ class Selection:
                         {"stage": "selection", "reason": "translation_unavailable"},
                     )
                 context = _execution_context(context, thaw(scan.context))
-                for ref in scan:
+                iterator = iter(scan)
+                for ref in iterator:
+                    if isinstance(ref, BranchEvent):
+                        progress.update(ref)
+                        continue
+                    if not isinstance(ref, FieldReference):
+                        raise QueryError(
+                            "invalid_config",
+                            "",
+                            "backend must yield a field reference or branch event",
+                        )
                     _validate_reference(ref, self._owner.configuration)
                     for qi, bi in ref.branches:
-                        if not 0 <= qi < len(branches) or not 0 <= bi < len(
-                            plan.translations[qi]["branches"]
-                        ):
-                            raise QueryError(
-                                "invalid_config", "", "invalid backend branch reference"
-                            )
-                        visited.add((qi, bi))
+                        progress.started((qi, bi))
                     if not ref.branches:
                         raise QueryError(
                             "invalid_config", "", "candidate lacks branch references"
@@ -511,23 +658,18 @@ class Selection:
                             },
                         )
                     if operation == "first" and policy == "available":
-                        exhausted = False
                         break
+                else:
+                    progress.finish()
+            except BaseException as exc:
+                failure = exc
+                raise
             finally:
-                scan.close()
+                _close_scan(iterator, scan, failure)
         translations = plan_dict(plan)
         for t in translations:
             for b in t["branches"]:
-                b["execution"] = (
-                    {"status": "exhausted"}
-                    if exhausted
-                    else {
-                        "status": "stopped_early"
-                        if (t["query_index"], b["index"]) in visited
-                        else "not_started",
-                        "reason": "first_match_selected",
-                    }
-                )
+                b["execution"] = progress.execution((t["query_index"], b["index"]))
         report = _report(
             branches,
             plan,
@@ -535,7 +677,7 @@ class Selection:
             policy,
             context,
             translations,
-            exhausted,
+            progress,
             matched_queries,
         )
         if policy == "required" and report.overall["status"] != "complete":
@@ -578,13 +720,14 @@ class Selection:
 
 
 def _report(
-    branches, plan, refs, policy, context, translations, exhausted, matched_queries
+    branches, plan, refs, policy, context, translations, progress, matched_queries
 ):
     summaries, missing_all, reasons_all = [], {}, []
     expected_all, satisfied_all = set(), set()
     unknown = False
     for b, expected in zip(branches, plan.expected):
         qi = b["index"]
+        exhausted = progress.query_exhausted(qi)
         actual = [r for r in refs if qi in matched_queries[r.record_id]]
         missing, reasons = [], []
         if expected is None:
@@ -754,6 +897,154 @@ def _prepare_input(query, configuration):
         if resources is not None
         else (constrain_query(query, scope),)
     )
+
+
+def expected_from_domain(queries, domain, configuration, *, identity_fields):
+    """Pure projection of an independently defined COMPLETE finite domain.
+
+    domain is None when provision is unknown, otherwise concrete declarations,
+    never observations or a parameter-table row count. identity_fields states
+    the product's applicable axes, supplied with independent applicability proof.
+    This helper cannot establish that business proof, infer omitted applicability
+    or compile a broad provides declaration into a complete product domain.
+    Domain cardinality is NOT the execution max_expansion limit.
+    """
+    if domain is None:
+        return tuple(None for _ in queries)
+    if not identity_fields:
+        raise QueryError(
+            "invalid_config",
+            "/expected_domain",
+            "explicit applicable identity fields required",
+        )
+    fields = {
+        "parameter",
+        "level_type",
+        "level",
+        "level_unit",
+        "layer",
+        "time",
+        "step",
+        "valid_time",
+        "member",
+        "member_role",
+        "native",
+    }
+    if isinstance(identity_fields, str) or not set(identity_fields) <= fields:
+        raise QueryError(
+            "invalid_config", "/expected_domain", "unknown applicable identity field"
+        )
+    rows = {}
+    incomplete = False
+    for index, value in enumerate(domain):
+        try:
+            values = (_expected_identity(value, configuration),)
+            for q in values:
+                row = q.to_dict()
+                if not is_concrete(row) or len(expand_queries([q])) != 1:
+                    raise QueryError(
+                        "invalid_config", "", "domain identities must be concrete"
+                    )
+                if not set(identity_fields) <= row.keys():
+                    incomplete = True
+                product = configuration.product
+                if product is not None and set(identity_fields) <= row.keys():
+                    if not matches(row, thaw(product["scope"])) or not any(
+                        matches(row, item.to_dict())
+                        for item in prepare_queries(
+                            thaw(product["provides"]), configuration.resources
+                        )
+                    ):
+                        raise QueryError(
+                            "invalid_config",
+                            "",
+                            "domain identity exceeds the declared product provision",
+                        )
+                if matches(row, configuration.scope):
+                    rows[key(row)] = row
+        except QueryError as exc:
+            raise QueryError(
+                "invalid_config",
+                f"/expected_domain/{index}",
+                exc.message,
+            ) from exc
+    if incomplete:
+        return tuple(None for _ in queries)
+    result = []
+    for query in queries:
+        query = normalize_query(query).to_dict()
+        if "member_role" in query and any(
+            "member" in row and "member_role" not in row for row in rows.values()
+        ):
+            result.append(None)
+        else:
+            result.append(tuple(row for row in rows.values() if matches(row, query)))
+    return tuple(result)
+
+
+def _expected_identity(value, configuration):
+    values = (
+        prepare_queries([value], configuration.resources)
+        if configuration.resources is not None
+        else (normalize_query(value),)
+    )
+    if len(values) != 1 or not is_concrete(values[0].to_dict()):
+        raise QueryError("invalid_config", "", "expected identities must be concrete")
+    row = values[0].to_dict()
+    if "parameter" in row and configuration.resources is None:
+        raise QueryError(
+            "invalid_config",
+            "/context/parameter_registry",
+            "expected parameter needs its registry",
+        )
+    if "member" in row:
+        role = configuration.member_role(row["member"])
+        if role is not None:
+            if "member_role" in row and row["member_role"] != role:
+                raise QueryError(
+                    "invalid_config",
+                    "",
+                    "expected member role contradicts configuration",
+                )
+            row["member_role"] = role
+    return normalize_query(row)
+
+
+def _check_member_roles(query, configuration):
+    """Validate explicit role contradictions without expanding other dimensions."""
+    row = query.to_dict()
+    if "member" not in row or "member_role" not in row:
+        return
+    selector, roles = row["member"], row["member_role"]
+    roles = set(roles if isinstance(roles, list) else [roles])
+    known = {int(k): v for k, v in configuration.member_roles.items()}
+    conflict = any(
+        _contains(selector, member, "number") and role not in roles
+        for member, role in known.items()
+    )
+    if configuration.cemc_member_roles:
+        if (
+            0 not in known
+            and _contains(selector, 0, "number")
+            and "control" not in roles
+        ):
+            conflict = True
+        # All member selectors are integral. Count a continuous integer range
+        # with the shared selector arithmetic, without enumerating its members.
+        countable = selector
+        if isinstance(selector, dict) and "every" not in selector["range"]:
+            countable = {"range": {**selector["range"], "every": 1}}
+        positives = _count(countable, "number") - int(_contains(selector, 0, "number"))
+        overrides = sum(m > 0 and _contains(selector, m, "number") for m in known)
+        if positives > overrides and "perturbation" not in roles:
+            conflict = True
+    if conflict:
+        raise QueryError(
+            "constraint_conflict",
+            "/member_role",
+            "member number conflicts with the effective role mapping",
+            {"reason": "fixed_condition_conflict"},
+        )
 
 
 def _validate_reference(ref, configuration):

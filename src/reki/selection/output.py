@@ -130,6 +130,7 @@ def _attrs(identity, meta):
 
 
 def _values(field, meta):
+    field._owner._ensure_open()
     source, target = meta.get("source_unit"), meta.get("unit")
     if not source or not target:
         _error(
@@ -153,6 +154,7 @@ def _values(field, meta):
     if set(array.dims) & {*_AXES, *_VERTICAL, "valid_time", "member_role"}:
         _error("unsupported", "backend values must contain spatial axes only")
     array = array.load().copy(deep=True)
+    field._owner._ensure_open()
     # Avoid xarray inheriting unreviewed per-record attrs or stale native names.
     grid_mapping = array.attrs.get("grid_mapping")
     if grid_mapping is not None and grid_mapping not in array.coords:
