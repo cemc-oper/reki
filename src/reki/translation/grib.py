@@ -141,6 +141,17 @@ def fixed_surfaces(meta, *, vertical_definition=None):
                 result["level_unit"] = first["unit"]
         return normalize_query(result).to_dict()
     second = endpoint("Second")
+    # The confirmed mixed named-boundary path keeps a layer, not a fabricated
+    # numeric height or the distinct code-10 entire-atmosphere level.
+    if {first["type"], second["type"]} == {"surface", "atmosphere_top"}:
+        return normalize_query(
+            {
+                "layer": {
+                    "bottom": {"type": "surface"},
+                    "top": {"type": "atmosphere_top"},
+                }
+            }
+        ).to_dict()
     if first["type"] != second["type"] or "value" not in first or "value" not in second:
         metadata_error(
             "unsupported_native_encoding",
@@ -191,7 +202,7 @@ def _stamp(meta, keys):
         ) from exc
 
 
-def _seconds(meta, unit_key, value_key):
+def _seconds(meta, unit_key, value_key, *, signed_start=False):
     unit = integer(meta, unit_key, maximum=255, reason="invalid_time_metadata")
     if unit not in UNITS:
         metadata_error(
@@ -205,7 +216,7 @@ def _seconds(meta, unit_key, value_key):
         minimum=-2147483647 if value_key == "forecastTime" else 0,
         reason="invalid_time_metadata",
     )
-    if value < 0:
+    if value < 0 and not signed_start:
         metadata_error(
             "unsupported_native_encoding",
             "negative forecast offsets need a separate finite path",
@@ -223,8 +234,12 @@ def time_fields(meta):
             "reference time meaning needs a confirmed product path",
         )
     origin = _stamp(meta, ["year", "month", "day", "hour", "minute", "second"])
-    start = time_seconds(origin) + _seconds(
-        meta, "indicatorOfUnitOfTimeRange", "forecastTime"
+    reference = time_seconds(origin)
+    start = reference + _seconds(
+        meta,
+        "indicatorOfUnitOfTimeRange",
+        "forecastTime",
+        signed_start=template in INTERVAL_TEMPLATES,
     )
     interval = None
     end = start
@@ -275,14 +290,59 @@ def time_fields(meta):
                 "encoded interval bounds and length disagree",
             )
         interval = {"start": time_text(start), "end": time_text(end)}
+    if end < reference:
+        metadata_error(
+            "unsupported_native_encoding",
+            "result before the reference time needs a separate canonical time path",
+        )
     result = normalize_query(
         {
             "time": origin,
-            "step": duration_text(end - time_seconds(origin)),
+            "step": duration_text(end - reference),
             "valid_time": time_text(end),
         }
     ).to_dict()
     return result, interval
+
+
+def source_value_unit(meta):
+    """Retain a native unit literal, excluding ecCodes' absence placeholders.
+
+    A usable literal alone establishes neither a quantity kind nor a target unit.
+    """
+    unit = meta.get("units")
+    return None if unit in {None, "", "unknown", "~"} else unit
+
+
+def grid_structure(meta):
+    """Validate the existing regular-ll structural slice without any arrays.
+
+    Encoded endpoints/increments remain evidence, not a new rounding tolerance.
+    Full coordinate-axis verification stays in the ecCodes backend.
+    """
+    from .common import required
+
+    if required(meta, "gridType") != "regular_ll":
+        metadata_error(
+            "unsupported_native_encoding",
+            "grid form needs a separately validated adapter",
+        )
+    for key in ("jPointsAreConsecutive", "alternativeRowScanning"):
+        if integer(meta, key, maximum=1):
+            metadata_error(
+                "unsupported_native_encoding",
+                "scanning form needs a separately validated adapter",
+            )
+    ni = integer(meta, "Ni", minimum=1)
+    nj = integer(meta, "Nj", minimum=1)
+    points = integer(meta, "numberOfDataPoints", minimum=1)
+    if points != ni * nj:
+        metadata_error(
+            "inconsistent_native_metadata",
+            "grid dimensions and point count disagree",
+            fields={"Ni": ni, "Nj": nj, "numberOfDataPoints": points},
+        )
+    return {"type": "regular_ll", "Ni": ni, "Nj": nj}
 
 
 def member(meta, configuration, *, numbering=None):

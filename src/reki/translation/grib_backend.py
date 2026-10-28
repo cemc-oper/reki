@@ -152,11 +152,11 @@ def check_filter(condition):
                 )
 
 
-def _metadata(handle):
+def _metadata(handle, *, keys=None):
     import eccodes
 
     result = {}
-    for key in NATIVE_KEYS | GRID_INTEGER_KEYS:
+    for key in NATIVE_KEYS | GRID_INTEGER_KEYS if keys is None else keys:
         try:
             if not eccodes.codes_is_defined(handle, key) or eccodes.codes_is_missing(
                 handle, key
@@ -589,15 +589,14 @@ class GribScan:
             yield BranchEvent(qi, b["index"], "exhausted")
 
     def _interpret(self, base, native, mapping, interval):
+        source_unit = grib.source_value_unit(native)
         if mapping is None:
-            unit = native.get("units")
-            unit = None if unit in {None, "", "unknown", "~"} else unit
             return {
                 **base,
                 "native": {"grib": {k: v for k, v in native.items() if v is not None}},
             }, dict(
-                source_unit=unit,
-                unit=unit,
+                source_unit=source_unit,
+                unit=source_unit,
                 vertical_definition=self.backend.vertical_definition
                 or {"id": "WMO.GRIB2.fixed-surfaces"},
             )
@@ -645,7 +644,7 @@ class GribScan:
         requirement = value_unit(
             # Probability template parameter units describe the event object;
             # its packed field scale is a separate, explicitly declared fact.
-            None if probability else native.get("units"),
+            None if probability else source_unit,
             parameter["unit"],
             thaw(unit_rule),
             quantity_kind=self.backend.quantity_kinds.get(parameter["parameter_id"]),
@@ -695,23 +694,21 @@ class GribScan:
 def _grid(handle):
     import eccodes
 
-    if (
-        eccodes.codes_get_string(handle, "gridType") != "regular_ll"
-        or eccodes.codes_get_long(handle, "jPointsAreConsecutive")
-        or eccodes.codes_get_long(handle, "alternativeRowScanning")
-    ):
-        metadata_error(
-            "unsupported_native_encoding",
-            "grid/scanning form needs a separately validated adapter",
+    grid = grib.grid_structure(
+        _metadata(
+            handle,
+            keys=(
+                "gridType",
+                "jPointsAreConsecutive",
+                "alternativeRowScanning",
+                "Ni",
+                "Nj",
+                "numberOfDataPoints",
+            ),
         )
-    ni, nj = eccodes.codes_get_long(handle, "Ni"), eccodes.codes_get_long(handle, "Nj")
-    points = eccodes.codes_get_long(handle, "numberOfDataPoints")
-    if ni <= 0 or nj <= 0 or points != ni * nj:
-        metadata_error(
-            "inconsistent_native_metadata",
-            "grid dimensions and point count disagree",
-            fields={"Ni": ni, "Nj": nj, "numberOfDataPoints": points},
-        )
+    )
+    ni, nj = grid["Ni"], grid["Nj"]
+    points = ni * nj
     lat = eccodes.codes_get_double_array(handle, "latitudes")
     lon = eccodes.codes_get_double_array(handle, "longitudes")
     if lat.size != points or lon.size != points:
@@ -725,12 +722,7 @@ def _grid(handle):
             "unsupported_native_encoding",
             "grid does not have independent regular latitude/longitude axes",
         )
-    grid = {
-        "type": "regular_ll",
-        "definition": eccodes.codes_get_string(handle, "md5GridSection"),
-        "Ni": ni,
-        "Nj": nj,
-    }
+    grid["definition"] = eccodes.codes_get_string(handle, "md5GridSection")
     return grid, lat[:, 0].copy(), lon[0].copy(), (nj, ni)
 
 

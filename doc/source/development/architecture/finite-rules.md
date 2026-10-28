@@ -1,5 +1,21 @@
 # Finite rules and backend slices (I06)
 
+The fifth slice checks saved header facts against conditional rule components,
+keeping profile registration, definition/context requirements and business
+validation separate. Ground-to-nominal-atmosphere-top fixed surfaces (codes 1/8)
+now retain a physically ordered layer of named endpoints in either encoded order;
+they do not become code 10 or numeric zero heights. Simple interval templates may
+start before their reference time when their signed forecast offset, explicit end
+and length agree and the result step remains nonnegative. Negative instantaneous
+results and intervals ending before the reference remain explicitly unsupported.
+Zero-length interval encodings remain intervals and need effective statistical
+definitions. GRIB unit placeholders `unknown` and `~` now follow the existing
+absent-response-unit path: a mapping may supply independently proven source_unit,
+otherwise interpretation fails for missing evidence. Scalar regular-grid structure
+checks are shared with the backend; they do not replace coordinate-axis validation
+or invent a tolerance for encoded endpoint/increment differences. These finite
+changes and controlled regressions do not close I06 or establish product mappings.
+
 The fourth slice adds internal `translation.header_evidence` for explicitly
 referenced files: encoded-byte SHA-256, generation fingerprints, selected scalar
 headers and raw section 4 descriptors for templates 8/11. It never requests

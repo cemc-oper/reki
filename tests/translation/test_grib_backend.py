@@ -358,6 +358,59 @@ def test_internal_definition_inputs_are_frozen(configured):
     assert source.sel(parameter="t").explain().analysis["expected_count"] == 1
 
 
+@pytest.mark.parametrize("first,second", [(1, 8), (8, 1)])
+def test_named_mixed_layer_survives_encoded_selection_and_output(
+    configured, first, second
+):
+    source, _, _ = configured(
+        [{"typeOfFirstFixedSurface": first, "typeOfSecondFixedSurface": second}]
+    )
+    layer = {"bottom": {"type": "surface"}, "top": {"type": "atmosphere_top"}}
+    fields = source.sel(parameter="t", layer=layer).all()
+    assert len(fields) == 1 and fields[0].identity.to_dict()["layer"] == layer
+    result = fields.to_xarray()
+    assert len(result.data_vars) == 1
+    variable = next(iter(result.data_vars.values()))
+    assert variable.attrs["cedarkit_parameter_id"] == "synthetic.t"
+    assert variable.attrs["units"] == "K"
+    assert result.sizes["latitude"] == result.sizes["longitude"] == 2
+
+
+@pytest.mark.parametrize("template", [8, 11])
+def test_encoded_signed_interval_start_has_nonnegative_result_step(
+    configured, template
+):
+    source, _, _ = configured(
+        [
+            {
+                "productDefinitionTemplateNumber": template,
+                "forecastTime": -1,
+                "numberOfTimeRange": 1,
+                "typeOfTimeIncrement": 2,
+                "indicatorOfUnitForTimeRange": 1,
+                "lengthOfTimeRange": 1,
+                "yearOfEndOfOverallTimeInterval": 2026,
+                "monthOfEndOfOverallTimeInterval": 1,
+                "dayOfEndOfOverallTimeInterval": 1,
+                "hourOfEndOfOverallTimeInterval": 0,
+                "minuteOfEndOfOverallTimeInterval": 0,
+                "secondOfEndOfOverallTimeInterval": 0,
+            }
+        ],
+        business=False,
+    )
+    fields = source.sel(
+        native={"grib": {"productDefinitionTemplateNumber": template}}
+    ).all()
+    assert len(fields) == 1
+    identity = fields[0].identity.to_dict()
+    assert identity["time"] == identity["valid_time"] == "2026-01-01T00:00:00Z"
+    assert (
+        identity["step"] == "PT0S" and identity["native"]["grib"]["forecastTime"] == -1
+    )
+    assert len(fields.to_xarray(rename="synthetic_interval").data_vars) == 1
+
+
 @pytest.mark.parametrize(
     "settings,reason",
     [
