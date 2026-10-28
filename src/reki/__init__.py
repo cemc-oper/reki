@@ -10,7 +10,14 @@ except PackageNotFoundError:
 from importlib import import_module
 
 _EXPORTS = {
-    "from_source": (".sources", "from_source"),
+    "from_source": (".selection.entrypoint", "from_source"),
+    "Query": ("cedarkit_query", "Query"),
+    "Request": ("cedarkit_query", "Request"),
+    "QueryError": ("cedarkit_query", "QueryError"),
+    "SourceError": ("cedarkit_query", "SourceError"),
+    "CompletenessError": ("cedarkit_query", "CompletenessError"),
+    "QueryReport": ("cedarkit_query", "QueryReport"),
+    "QueryExplanation": ("cedarkit_query", "QueryExplanation"),
     "from_source_lazily": (".sources", "from_source_lazily"),
     "register": (".sources", "register"),
     "source_capability": (".sources", "source_capability"),

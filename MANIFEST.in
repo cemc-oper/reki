@@ -1,4 +1,6 @@
 recursive-include src/reki/catalog/builtin *.yaml *.json
 recursive-include tests/catalog *.py
+recursive-include tests/selection *.py
+include doc/source/development/architecture/query-core.md
 recursive-include src/reki/data_finder/conf *
 recursive-include src/reki/readers/grib/config *.yaml *.md

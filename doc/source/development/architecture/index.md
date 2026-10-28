@@ -8,6 +8,7 @@
 overview
 source-reader-pipeline
 query-model
+query-core
 grib-reader-and-index
 parameter-resolution
 catalog-and-plugins
