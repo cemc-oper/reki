@@ -7,18 +7,16 @@ import eccodes
 import numpy as np
 
 from reki.diagnostics import record_io_event
-from ._scan import open_grib_file
+from reki.grib_io import load_message_at_offset
 
 
-def load_message_at_offset(path: str | Path, offset: int, *, headers_only=False):
-    with open_grib_file(path) as file_handle:
-        file_handle.seek(offset)
-        message = eccodes.codes_grib_new_from_file(file_handle, headers_only=headers_only)
-    return message
-
-
-def decode_message_values(path: str | Path, offset: int, shape, missing_value,
-                          fill_value: Optional[float] = np.nan):
+def decode_message_values(
+    path: str | Path,
+    offset: int,
+    shape,
+    missing_value,
+    fill_value: Optional[float] = np.nan,
+):
     """Decode exactly one message's values at a recorded byte offset."""
     message = load_message_at_offset(path, offset)
     if message is None:

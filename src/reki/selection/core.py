@@ -291,6 +291,10 @@ def from_source(source, *, context=None, client=None):
     using construct_source; no product/version is inferred by this entry point.
     """
     configuration = plan_source_binding(source, context=context, client=client)
+    if configuration.source["kind"] == "file":
+        from reki.translation.grib_backend import GribBackend
+
+        return construct_source(configuration, GribBackend(configuration))
     return construct_source(configuration)
 
 
@@ -573,6 +577,7 @@ class Selection:
         branches = self._branches()
         plan = self._plan(branches)
         refs, seen, matched_queries = [], {}, {}
+        execution_checks = {}
         progress = BranchProgress(plan)
         context = self._owner.configuration.report_context()
         if branches:
@@ -666,8 +671,25 @@ class Selection:
                 raise
             finally:
                 _close_scan(iterator, scan, failure)
+            execution_checks = getattr(scan, "checks", {})
         translations = plan_dict(plan)
         for t in translations:
+            for check in execution_checks.get(t["query_index"], ()):
+                existing = next(
+                    (c for c in t["checks"] if c["code"] == check["code"]), None
+                )
+                if existing is None or check["code"] not in {
+                    "context_resolved",
+                    "return_metadata_sufficient",
+                    "complete_retrieval_supported",
+                    "request_association_verified",
+                }:
+                    raise QueryError(
+                        "invalid_config",
+                        "",
+                        "backend returned an unplanned execution check",
+                    )
+                existing.update(thaw(check))
             for b in t["branches"]:
                 b["execution"] = progress.execution((t["query_index"], b["index"]))
         report = _report(
@@ -1098,16 +1120,28 @@ def _validate_reference(ref, configuration):
 
 def _execution_context(context, extra):
     # Acquired source facts may augment configuration, never overwrite definitions,
-    # scopes, versions, defaults or resource origins. No config/client/request body.
-    if set(extra) - {"source"} or set(extra.get("source", {})) - {
-        "paths",
-        "fingerprints",
-        "version",
-    }:
+    # scopes, versions or defaults. Reserved software origins may be appended;
+    # existing configuration provenance is never overwritten. No client/request body.
+    if (
+        set(extra) - {"source", "origins"}
+        or set(extra.get("origins", {})) - {"adapter", "native_library"}
+        or set(extra.get("source", {}))
+        - {
+            "paths",
+            "fingerprints",
+            "version",
+        }
+    ):
         raise QueryError(
             "invalid_config", "", "backend returned unsupported report context"
         )
+    for name, value in extra.get("origins", {}).items():
+        if name in context.get("origins", {}) and context["origins"][name] != value:
+            raise QueryError(
+                "invalid_config", "", "backend cannot replace configuration provenance"
+            )
     return {
         **context,
         "source": {**context.get("source", {}), **extra.get("source", {})},
+        "origins": {**context.get("origins", {}), **extra.get("origins", {})},
     }

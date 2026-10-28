@@ -9,6 +9,7 @@ overview
 source-reader-pipeline
 query-model
 query-core
+finite-rules
 grib-reader-and-index
 parameter-resolution
 catalog-and-plugins

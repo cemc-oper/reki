@@ -214,18 +214,20 @@ def test_source_failures_not_missing_or_early_stop(factory, q):
     assert backend.scan_closes == 3
 
 
-def test_unknown_backend_is_pending_never_business_missing(tmp_path):
+def test_finite_file_backend_does_not_turn_invalid_input_into_business_missing(
+    tmp_path,
+):
     file = tmp_path / "SYNTHETIC"
     file.write_bytes(b"x")
     with from_source({"kind": "file", "path": str(file)}) as source:
         selection = source.sel(native={"grib": {"discipline": 0}})
         assert (
             selection.explain().analysis["translations"][0]["coverage"]["status"]
-            == "pending"
+            == "passed"
         )
-        with pytest.raises(QueryError) as exc:
+        with pytest.raises(SourceError) as exc:
             selection.all()
-        assert exc.value.code == "unsupported"
+        assert exc.value.code == "decode_failed"
 
 
 def test_source_path_configuration_checked_without_discovery(tmp_path):

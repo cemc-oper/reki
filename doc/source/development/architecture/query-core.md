@@ -3,9 +3,10 @@
 I05 introduces the shared Query path for **source declarations**, using the exact
 `cedarkit_query.Query`, `Request`, errors, reports and explanations re-exported
 from `reki`. This is a controlled core implementation, not evidence that any CEMC
-product, business version, GRIB rule or CMADaaS interface is supported. I06 native
-adapters have not been started or registered in this delivery. I05 remains in
-progress until the relevant real backend slices have been integrated and verified.
+product, business version, GRIB rule or CMADaaS interface is supported. I06 now connects an ecCodes-only finite adapter for explicit file declarations and
+a controlled single-grid CMADaaS transport boundary. Business product bindings and
+production service contracts remain incomplete. I05 remains in progress until the
+relevant real product/backend slices have been integrated and verified.
 
 The existing string/SourceSpec source route is temporarily retained for I08
 consumers. It does not consume the new Query. The legacy CLI, query adapters and
@@ -30,20 +31,26 @@ request = Request.from_dict({
 with from_source(request.source, context=request.context) as source:
     selected = source.sel(request.queries)
     explanation = selected.explain()
-    assert explanation.analysis["translations"][0]["coverage"]["status"] == "pending"
+    assert explanation.analysis["translations"][0]["coverage"]["status"] == "passed"
+    assert explanation.analysis["translations"][0]["checks"][-1]["status"] == "pending"
 ```
 
-Until I06 supplies a backend, executing `selected.all()` raises the shared
-`QueryError(unsupported)` with `reason=translation_unavailable`; it never returns
-a successful empty business result. Dataset sources additionally need exact I04
-product/source facts; this core does not pick a version from filenames, dates or
-catalog order. The internal integration entry below accepts those resolved facts.
+The explicit-file adapter can now execute the supported finite GRIB2 paths. The
+example's passed coverage certifies an exhaustive candidate strategy, not file
+existence, template support, metadata validity or business completeness. Native
+metadata and value requirements are checked during acquisition/conversion, and
+an invalid stream raises SourceError instead of becoming a missing field.
+CMADaaS/local declarations still need exact I04 product/source facts and the
+appropriate adapter; no production service contract or product version is chosen
+from filenames, catalog order or dates. See {doc}`finite-rules` for current slices
+and explicit unsupported forms. The internal integration entry below accepts
+resolved product facts without adding product/version fields to public Request.
 
 For an integrated source, the public execution shape is:
 
 ```python
 options = {} if request.completeness is None else {"completeness": request.completeness}
-# Within the source's lifetime, after a real adapter is registered:
+# Within the source's lifetime, when the matching finite adapter is available:
 # fields = selected.all(**options)       # selection now executes
 # ds = fields.to_xarray(rename=None)     # values now load; returns xr.Dataset
 # report = fields.report                # presence facts; not value quality
@@ -68,7 +75,7 @@ native rules, interface contracts and business evidence belong to I06/I03/I04.
 | --- | --- |
 | `backend.plan(queries, configuration) -> Plan` | Pure; no discovery, scan, connection or value I/O, including when called by `sel`/`explain`. One ordered translation item per effective Query, with locally contiguous paired branches and real basis references. Coverage is `passed` only with proof; otherwise `pending`. |
 | `Plan.expected` | One complete, independent finite identity set per Query, or `None`. Canonical parameter definitions, units and known member roles are applied before identity deduplication. Concrete identities must satisfy the Query. Product applicability, legal combinations and completeness of this set need evidence; never reconstruct it from returned records. Unknown and empty have different meanings. A previously fixed set cannot be replaced during acquisition with the observed subset. |
-| `backend.start(plan) -> Scan` | Terminal-only acquisition. `Scan.plan` may refine pending facts before yielding references; coverage must then be proven. `Scan.context` can add only source `paths`, `fingerprints`, `version`, not overwrite resource definitions/scope/defaults or expose config/client/authentication. |
+| `backend.start(plan) -> Scan` | Terminal-only acquisition. `Scan.plan` may refine pending facts before yielding references; coverage must then be proven. `Scan.context` can add source `paths`, `fingerprints`, `version` and reserved `adapter`/`native_library` software origins. It cannot overwrite existing provenance, resource definitions/scope/defaults or expose config/client/authentication. `Scan.checks` may refine only already planned check codes using acquired facts; it cannot manufacture a new check or business coverage. |
 | `Scan` iteration | Yield `FieldReference` and optional `BranchEvent` values in stable global source order, independent of Query/branch/concurrency order. Normal exhaustion certifies successful complete acquisition and required pagination. Truncation, target interpretation failure and service failure raise `SourceError`, never normal exhaustion. The core closes the iterator and then `Scan.close()`, releasing execution resources while leaving returned references valid for delayed loading. Shared resource cleanup must be idempotent. |
 | `FieldReference` | Concrete shared Query identity; reliable `record_id` tied to source generation and record position; canonical metadata, sufficient grid definition, lazy spatial `DataArray` loader, and snapshot-local `(query_index, branch_index)` links. Equal business identity or equal values alone do not establish equal records. |
 | Metadata | `parameter_id`, `parameter_name`, business `unit` and effective `fixed_conditions` must match the loaded registry. `source_unit` needs independent source evidence. Optional description, standard_name and statistics must be factual. Numeric vertical coordinates additionally require an explicit compatible `vertical_definition`. Affine conversion requires `quantity_kind=absolute_temperature`; temperature differences must not use an absolute-temperature offset. These are adapter facts, not new resource-schema fields. |
