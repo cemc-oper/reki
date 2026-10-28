@@ -58,6 +58,7 @@ class SourceConfiguration:
     origins: Mapping
     layout: object = None
     mapping_applicability: tuple = ()
+    product_coverage: tuple = ()
 
     @property
     def source_binding(self):

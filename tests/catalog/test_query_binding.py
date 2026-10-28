@@ -342,7 +342,7 @@ def test_mapping_replacement_must_apply_to_exact_business_version(resources):
     replacement = deepcopy(resources["mappings"])
     replacement["mappings"][0]["applies_to"]["product_version"] = "other-version"
     path = resources["write"]("wrong-product.json", replacement)
-    with pytest.raises(QueryError, match="no rows for the exact product"):
+    with pytest.raises(QueryError, match="does not cover declared product"):
         plan(
             resources,
             context={**resources["context"], "mappings": {"grib2": {"path": path}}},
@@ -375,6 +375,9 @@ def test_fixed_member_role_uses_effective_overrides(resources):
     catalog = deepcopy(resources["catalog"])
     catalog["datasets"][0]["products"][0]["provides"] = [{"parameter": "test.control"}]
     resources["write"]("catalog.json", catalog)
+    mappings = deepcopy(resources["mappings"])
+    mappings["mappings"][0]["parameter_id"] = "test.control"
+    resources["write"]("maps.json", mappings)
     with pytest.raises(QueryError) as error:
         plan(resources)
     assert error.value.code == "constraint_conflict"
@@ -393,3 +396,36 @@ def test_catalog_scope_is_a_bound_not_an_expanded_request(resources):
     p = plan(resources)
     assert p.scope.member["range"]["end"] == 1000000000
     assert p.execution_defaults["max_expansion"] == 25
+
+
+def test_registered_layout_can_describe_existing_mount_and_member_declarations(
+    resources,
+):
+    key = ("synthetic", "orig", "test-1", "local")
+    template = "{year}/{date_label}/Z_{start_time_label}_{forecast_hour_label}_m{member_3digit}.grib2"
+    p = plan_source_binding(
+        {"kind": "local", "dataset": "alias", "root": "/SYNTHETIC"},
+        context=resources["context"],
+        product="orig",
+        product_version="test-1",
+        local_layouts={key: [template]},
+    )
+    assert p.layout == (template,)
+
+
+def test_explicit_replacement_cannot_ignore_mapping_time_or_when(resources):
+    mappings = deepcopy(resources["mappings"])
+    mappings["mappings"][0]["when"] = {"step": "PT6H"}
+    resources["write"]("maps.json", mappings)
+    with pytest.raises(QueryError) as error:
+        plan(resources)
+    assert error.value.context["provided_index"] == 0
+    assert error.value.context["static_status"] == "missing"
+
+
+def test_static_coverage_is_retained_without_claiming_translation(resources):
+    p = plan(resources)
+    assert p.product_coverage[0]["static_status"] == "covered"
+    assert p.product_coverage[0]["translation_coverage"] == "pending_I06"
+    with pytest.raises(TypeError):
+        p.product_coverage[0]["static_status"] = "passed"

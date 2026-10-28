@@ -5,6 +5,7 @@ from string import Formatter
 
 from cedarkit_query import (
     Query,
+    analyze_product_mappings,
     QueryError,
     Request,
     intersect_scopes,
@@ -76,7 +77,14 @@ def _layout(value):
         for _, field, spec, conversion in fields:
             if field is not None and (
                 field
-                not in {"start_time_label", "forecast_hour", "forecast_hour_label"}
+                not in {
+                    "start_time_label",
+                    "forecast_hour",
+                    "forecast_hour_label",
+                    "date_label",
+                    "year",
+                    "member_3digit",
+                }
                 or spec
                 or conversion
             ):
@@ -212,55 +220,43 @@ def plan_source_binding(
     selected = None
     layout = None
     applicability = []
+    product_coverage = ()
     scope = Query(ctx.get("scope", {}))
     if dataset is not None:
         selected = validate_product(resources, dataset["id"], product, product_version)
-        identity = {
-            "dataset": dataset["id"],
-            "product": product,
-            "product_version": product_version,
-        }
-        for resource in resources.mappings:
-            matching = []
-            for row in resource["mappings"]:
-                applicable = all(
-                    k not in row["applies_to"]
-                    or value
-                    in (
-                        (row["applies_to"][k],)
-                        if isinstance(row["applies_to"][k], str)
-                        else row["applies_to"][k]
-                    )
-                    for k, value in identity.items()
-                )
-                if applicable:
-                    matching.append(row["id"])
-                applicability.append(
-                    freeze(
-                        {
-                            "resource_id": resource["id"],
-                            "mapping_id": row["id"],
-                            "backend": row["backend"],
-                            "parameter_id": row["parameter_id"],
-                            "product_context_matches": applicable,
-                            "applies_to": row["applies_to"],
-                            "when": row["when"],
-                            "translation_coverage": "pending_I06",
-                        }
-                    )
-                )
-            if not matching:
-                _missing(
-                    "/context/mappings/" + resource["backend"],
-                    "selected mapping resource has no rows for the exact product context",
-                )
-        # Fixed product conditions constrain; they never become Query defaults.
+        # Configuration scopes are bounds; do not enumerate the product domain.
         scope = intersect_scopes(scope, selected["scope"])
         if scope is None:
             raise QueryError(
                 "constraint_conflict",
                 "/context/scope",
                 "context and product scopes are disjoint",
+            )
+        analysis = analyze_product_mappings(
+            resources, dataset["id"], product, product_version, scope=scope
+        )
+        applicability = analysis["rows"]
+        product_coverage = analysis["provides"]
+        failures = [
+            item
+            for item in product_coverage
+            if item["static_status"] in {"missing", "partial"}
+        ]
+        if failures:
+            first = failures[0]
+            raise QueryError(
+                "invalid_config",
+                "/context/mappings/" + first["backend"],
+                "selected mapping resource does not cover declared product choices",
+                {
+                    "reason": "missing_context",
+                    "resource_id": first["resource_id"],
+                    "parameter_id": first["parameter_id"],
+                    "provided_index": first["provided_index"],
+                    "static_status": first["static_status"],
+                    "coverage_reason": first["reason"],
+                    "uncovered_example": first["uncovered_example"],
+                },
             )
         bindings = [
             s
@@ -318,4 +314,5 @@ def plan_source_binding(
         freeze(origins),
         layout,
         tuple(applicability),
+        tuple(product_coverage),
     )
