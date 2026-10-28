@@ -110,9 +110,13 @@ def associate(contract, parameters, response, *, request_index):
             )
     else:
         echo = response.get("request_parameters")
-        if not isinstance(echo, Mapping) or any(
-            type(echo.get(k)) is not type(v) or echo.get(k) != v
-            for k, v in parameters.items()
+        if (
+            not isinstance(echo, Mapping)
+            or set(echo) != set(parameters)
+            or any(
+                type(echo.get(k)) is not type(v) or echo.get(k) != v
+                for k, v in parameters.items()
+            )
         ):
             metadata_error(
                 "inconsistent_native_metadata",

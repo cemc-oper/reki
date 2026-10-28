@@ -1,5 +1,20 @@
 # Finite rules and backend slices (I06)
 
+The sixth slice exercises 13 small synthetic regular-grid encodings against
+independently authored axes and output value pairing. In the checked ecCodes
+2.48.0/2.48.2 iterators, longitude spacing follows endpoints/count, while latitude
+uses the available encoded increment or derives it when missing; the final point
+is pinned to the encoded endpoint. These checks establish mechanisms, not the
+correctness of business coordinates or an endpoint acceptance tolerance. Nonfinite
+decoded coordinates now fail explicitly. Rectangle wire validation enforces the
+reviewed four-decimal-place and latitude-range declarations without rounding, and
+controlled request echoes must match the complete key/value/type snapshot.
+Three rectangle variants reach the actual client/protobuf boundary and associated
+role interpretation offline. Public Query backend rectangle execution remains
+open: the current source, catalog binding and contract reference have no numeric
+endpoint carrier. I02/I04/I06 must establish that ownership for a concrete product;
+no hidden defaults, arbitrary mapping keys or new public spatial fields are added.
+
 The fifth slice checks saved header facts against conditional rule components,
 keeping profile registration, definition/context requirements and business
 validation separate. Ground-to-nominal-atmosphere-top fixed surfaces (codes 1/8)

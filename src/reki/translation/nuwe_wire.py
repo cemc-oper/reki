@@ -159,3 +159,14 @@ def validate_parameters(profile, parameters):
                     "rectangle endpoint needs a finite scalar",
                     {"native_field": key},
                 ) from exc
+            number = Decimal(str(value))
+            if number.as_tuple().exponent < -4:
+                _invalid(
+                    "reviewed rectangle endpoint permits at most four decimal places; no rounding is applied",
+                    native_field=key,
+                )
+            if key in {"minLat", "maxLat"} and not -90 <= number <= 90:
+                _invalid(
+                    "rectangle latitude is outside the declared -90 to 90 degree range",
+                    native_field=key,
+                )

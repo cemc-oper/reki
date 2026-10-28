@@ -345,6 +345,11 @@ class OfflineHTTP:
                     "validTime",
                     "levelType",
                     "fcstLevel",
+                    "fcstMember",
+                    "minLat",
+                    "maxLat",
+                    "minLon",
+                    "maxLon",
                 )
                 if k in values
             }
@@ -569,6 +574,233 @@ def test_reviewed_wire_shapes_reach_actual_client_without_inventing_roles(
     adapter.close()
     source.close()
     assert http.closes == 0
+
+
+@pytest.mark.parametrize("variant", ["analysis", "forecast", "member"])
+def test_rectangle_native_request_to_associated_rule_facts_offline(
+    nuwe_source, variant
+):
+    from dataclasses import replace
+    from types import SimpleNamespace
+    from reki.translation import cmadaas
+    from reki.translation.common import value_unit
+    from reki.translation.nuwe_transport import NuweGridTransport
+
+    source, original, client, http = nuwe_source
+    roles = {"time": "time", "level_type": "levelType", "level": "fcstLevel"}
+    interface = "getNafpAnaEleGridInRectByTimeAndLevel"
+    params = {
+        "dataCode": "SYNTHETIC_DATA",
+        "fcstEle": "SYNTHETIC_T",
+        "time": "20260101080000",
+        "levelType": "100",
+        "fcstLevel": "850",
+        "minLat": "49.0000",
+        "maxLat": "50.0000",
+        "minLon": "100.0000",
+        "maxLon": "101.0000",
+    }
+    if variant != "analysis":
+        roles["step"] = "validTime"
+        params["validTime"] = "6"
+        interface = "getNafpEleGridInRectByTimeAndLevelAndValidtime"
+    if variant == "member":
+        roles["member"] = "fcstMember"
+        params["fcstMember"] = "01"
+        interface += "AndFcstMember"
+    contract = replace(original.contract, interface_id=interface, request_roles=roles)
+    adapter = NuweGridTransport(client, contract)
+    before = dict(params)
+    wrapper = adapter.request(interface, contract.method, params)
+    record = cmadaas.associate(contract, params, wrapper, request_index=7)
+    assert record.verified and record.request_index == 7
+    assert dict(record.parameters) == before == params
+    assert all(http.calls[0][key] == str(value) for key, value in before.items())
+    with pytest.raises(TypeError):
+        record.parameters["minLat"] = "0"
+    table = {
+        "id": "SYNTHETIC.layers",
+        "key_kind": "level_type_and_level",
+        "rows": [
+            {
+                "id": "SYNTHETIC.850",
+                "native": {"level_type": "100", "level": "850"},
+                "canonical": {"level_type": "pressure", "level": 850},
+            }
+        ],
+    }
+    vertical, basis = cmadaas.vertical_table(record, table)
+    assert vertical == {"level_type": "pressure", "level": 850, "level_unit": "hPa"}
+    assert basis["roles"] == {
+        "level_type": "request_association",
+        "level": "request_association",
+    }
+    identity, origins = cmadaas.time_fields(
+        record, "Asia/Shanghai", fixed_step="PT0H" if variant == "analysis" else None
+    )
+    assert identity["time"] == "2026-01-01T00:00:00Z"
+    assert identity["step"] == ("PT0S" if variant == "analysis" else "PT21600S")
+    assert origins["step"] == (
+        "definition" if variant == "analysis" else "request_association"
+    )
+    if variant == "member":
+        members, member_basis = cmadaas.member_field(
+            record,
+            SimpleNamespace(member_role=lambda _: "perturbation"),
+            {
+                "id": "SYNTHETIC.members",
+                "rows": [
+                    {
+                        "id": "SYNTHETIC.01",
+                        "native": {"code": "01"},
+                        "canonical": {"member": 9},
+                    }
+                ],
+            },
+        )
+        assert members == {"member": 9, "member_role": "perturbation"}
+        assert member_basis["rows"] == ["SYNTHETIC.01"]
+    requirement = value_unit(wrapper["unit"], "K")
+    assert requirement.source == requirement.target == "K"
+    np.testing.assert_array_equal(wrapper["data"].values, [[850, 851], [852, 853]])
+    assert adapter.retrieval_check["status"] == "pending"
+    changed = {**params, "minLat": "48.0000"}
+    with pytest.raises(SourceError) as exc:
+        cmadaas.associate(contract, changed, wrapper, request_index=8)
+    assert exc.value.context["reason"] == "inconsistent_native_metadata"
+    assert exc.value.context["request_index"] == 8
+    adapter.close()
+    adapter.close()
+    source.close()
+    assert http.closes == 0
+
+
+@pytest.mark.parametrize("field", ["minLat", "maxLat", "minLon", "maxLon"])
+@pytest.mark.parametrize("bad", ["49.00001", 49.00001, "NaN", True])
+def test_rectangle_endpoints_reject_unsupported_precision_or_type_before_http(
+    nuwe_source, field, bad
+):
+    from dataclasses import replace
+    from reki.translation.nuwe_transport import NuweGridTransport
+
+    source, original, client, http = nuwe_source
+    contract = replace(
+        original.contract, interface_id="getNafpEleGridInRectByTimeAndLevelAndValidtime"
+    )
+    adapter = NuweGridTransport(client, contract)
+    parameters = {
+        "dataCode": "SYNTHETIC_DATA",
+        "fcstEle": "SYNTHETIC_T",
+        "time": "20260101080000",
+        "levelType": "100",
+        "fcstLevel": "850",
+        "validTime": "6",
+        "minLat": "49",
+        "maxLat": "50",
+        "minLon": "100",
+        "maxLon": "101",
+        field: bad,
+    }
+    with pytest.raises(QueryError) as exc:
+        adapter.request(contract.interface_id, contract.method, parameters)
+    assert exc.value.code == "invalid_config"
+    assert exc.value.context["native_field"] == field
+    assert not http.calls
+    adapter.close()
+    source.close()
+
+
+@pytest.mark.parametrize("field,value", [("minLat", "-90.0001"), ("maxLat", "90.0001")])
+def test_rectangle_declared_latitude_limits_are_checked_without_rounding(
+    nuwe_source, field, value
+):
+    from reki.translation.nuwe_wire import GRID_WIRE_PROFILES, validate_parameters
+
+    source, _, _, http = nuwe_source
+    params = {
+        "dataCode": "SYNTHETIC_DATA",
+        "fcstEle": "SYNTHETIC_T",
+        "time": "20260101080000",
+        "levelType": "100",
+        "fcstLevel": "850",
+        "validTime": "6",
+        "minLat": "49",
+        "maxLat": "50",
+        "minLon": "100",
+        "maxLon": "101",
+        field: value,
+    }
+    with pytest.raises(QueryError) as exc:
+        validate_parameters(
+            GRID_WIRE_PROFILES["getNafpEleGridInRectByTimeAndLevelAndValidtime"], params
+        )
+    assert exc.value.context["native_field"] == field
+    assert not http.calls
+    source.close()
+
+
+def test_rectangle_query_backend_has_no_unversioned_endpoint_injection(
+    nuwe_source, source_factory
+):
+    from reki.translation.nuwe_transport import NuweGridTransport
+
+    source, _, client, http = nuwe_source
+    rectangular, adapter = source_factory(
+        owns=True,
+        method="callAPI_to_gridArray2D",
+        interface_id="getNafpEleGridInRectByTimeAndLevelAndValidtime",
+        raw_contract=True,
+        transport_factory=lambda contract: NuweGridTransport(client, contract),
+    )
+    with pytest.raises(QueryError) as exc:
+        selected(rectangular).explain()
+    assert exc.value.code == "invalid_config"
+    assert exc.value.context["reason"] == "missing_context"
+    assert set(exc.value.context["missing_fields"]) == {
+        "minLat",
+        "maxLat",
+        "minLon",
+        "maxLon",
+    }
+    assert not http.calls
+    rectangular.close()
+    source.close()
+
+
+@pytest.mark.parametrize("alteration", ["extra", "missing", "type"])
+def test_controlled_echo_must_match_the_complete_exact_request(nuwe_source, alteration):
+    from reki.translation import cmadaas
+
+    source, adapter, _, http = nuwe_source
+    params = {
+        "dataCode": "SYNTHETIC_DATA",
+        "fcstEle": "SYNTHETIC_T",
+        "time": "20260101080000",
+        "validTime": "6",
+        "levelType": "100",
+        "fcstLevel": "850",
+    }
+    echo = dict(params)
+    if alteration == "extra":
+        echo["minLat"] = "49"
+    elif alteration == "missing":
+        echo.pop("fcstLevel")
+    else:
+        echo["fcstLevel"] = 850
+    with pytest.raises(SourceError) as exc:
+        cmadaas.associate(
+            adapter.contract,
+            params,
+            {
+                "record_count": 1,
+                "response_kind": "RetGridArray2D",
+                "request_parameters": echo,
+            },
+            request_index=12,
+        )
+    assert exc.value.context["reason"] == "inconsistent_native_metadata"
+    assert exc.value.context["request_index"] == 12 and not http.calls
+    source.close()
 
 
 @pytest.mark.parametrize(

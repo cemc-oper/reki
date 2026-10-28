@@ -716,6 +716,11 @@ def _grid(handle):
             "inconsistent_native_metadata",
             "grid coordinates and point count disagree",
         )
+    if not np.isfinite(lat).all() or not np.isfinite(lon).all():
+        metadata_error(
+            "inconsistent_native_metadata",
+            "decoded grid coordinates must be finite",
+        )
     lat, lon = lat.reshape(nj, ni), lon.reshape(nj, ni)
     if not np.all(lat == lat[:, 0, None]) or not np.all(lon == lon[0, None, :]):
         metadata_error(
