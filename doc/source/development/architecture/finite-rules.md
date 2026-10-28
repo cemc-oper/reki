@@ -39,7 +39,10 @@ Other master/local versions and GRIB1 canonical interpretation remain unsupporte
 until separately implemented and verified. Built-in ecCodes samples in this
 round have this profile; their table version is not a CEMC business version.
 All candidate interpretation checks the raw centre/subcentre/table/template
-context. Unsupported native forms fail as such instead of appearing as missing
+context. Local table zero with a local-use parameter/category/discipline code is
+a known metadata inconsistency; a nonzero unregistered local table remains an
+unsupported encoding, not damaged data. No local-1 interpretation was inferred
+from old parameter names. Unsupported native forms fail as such instead of appearing as missing
 business fields or damaged messages.
 
 | Rule | Implemented finite path | Explicit boundary / required input |
@@ -93,7 +96,10 @@ legacy cfgrib callers and dependency is still joint I06/I08 work.
 The current output decoder supports regular latitude/longitude grids with
 row-consecutive, non-alternating scanning. It preserves horizontal direction,
 uses the native bitmap for missing values and treats actual all-NaN fields as
-present. Other grid/scanning paths are explicit implementation gaps. Generated
+present. The raw grid template, dimensions, point count, scanning flags and encoded
+coordinate/increment fields are retained in native metadata without expanding the
+accepted native Query selector keys. Positive dimensions, point count and coordinate
+array lengths are checked before reshape; inconsistencies raise SourceError. Other grid/scanning paths are explicit implementation gaps. Generated
 tests independently check values, metadata, delayed loading, stable order,
 truncation, resource closure and source generation changes.
 
@@ -127,6 +133,49 @@ encoding are distinct metadata reasons. Native stream/decode/transport failures
 raise SourceError. None becomes normal EOF, an empty field or a partial success.
 An independent complete expected domain may be supplied internally; it is never
 reconstructed from observations, a table or observed returned fields.
+
+## Field-level review and bounded wire requests in the third slice
+
+The reviewed M03/M06 inventory retains parameter/profile identities and derived
+vertical/time labels. It omits grid type/dimensions/scanning flags and most raw
+surface/time fields. The workspace audit records these absences, legacy fallback
+limitations and original sample references; no new raw business scan was performed.
+Historical observations do not prove that a grid or product is unsupported, nor
+supply a complete versioned business domain. Local-1 codes need their actual local
+definitions; the master/local profile restrictions above remain unchanged.
+
+`nuwe_wire.GRID_WIRE_PROFILES` now validates six explicitly reviewed native request
+shapes: analysis by time/layer, forecast by time/layer/step, and forecast member
+variants, each with or without rectangle endpoints. These are wire declarations,
+not published product/interface business bindings. Broad time-only, multiple-level
+and time-range interfaces need separate identity interpretation. Raw response-axis
+bindings are rejected because RetGridArray2D has no native time/layer/member axes;
+those facts require verified request association and product context.
+
+The bounded adapter requires a scalar layer even where the portal makes analysis
+fcstLevel optional. It validates complete role bindings, timestamp/calendar format,
+single values and declared validTime hours before HTTP, including during pure
+backend planning. It preserves native layer/member code text and does not infer
+canonical meaning, numbering, timezone or business versions. Filters, thinning,
+province selectors and fabricated pagination/snapshot options are outside this
+finite shape. Rectangle shapes have low-level adapter tests; the current Query
+backend does not emit rectangle endpoints, so their complete Query integration
+remains a separate implementation task when justified by product/source facts.
+
+The portal's file-info return label and client-return prose conflict; the current
+adapter accepts only its actual GridArray2D/protobuf implementation. Snapshot
+metadata time is not a business version. Portal limit labels (-1, zero, no-limit)
+and RequestInfo row/column counters do not prove a complete business return. No
+reviewed protobuf field establishes a product snapshot or revision; execution
+timestamps are not substituted for one. Empty-grid semantics remain unresolved.
+
+For the actual nuwe adapter, `complete_retrieval_supported` stays **pending** in
+both explanation and execution reports. Successfully acquiring and decoding the
+finite call set can establish request association and field presence while leaving
+product-level retrieval/snapshot evidence unverified. Owned/external lifecycle is
+unchanged. A nonempty all-NaN grid is an actual field; structurally short grids
+fail decoding. Neither is silently reclassified as normal absence. The original
+explicit synthetic transport keeps its own declared controlled contract.
 
 ## Verification and continuation
 

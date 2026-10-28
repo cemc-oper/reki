@@ -356,3 +356,71 @@ def test_internal_definition_inputs_are_frozen(configured):
     source, _, _ = configured(expected_domain=domain)
     domain.clear()
     assert source.sel(parameter="t").explain().analysis["expected_count"] == 1
+
+
+@pytest.mark.parametrize(
+    "settings,reason",
+    [
+        ({"parameterNumber": 224}, "inconsistent_native_metadata"),
+        (
+            {"parameterNumber": 224, "localTablesVersion": 1},
+            "unsupported_native_encoding",
+        ),
+        ({"parameterNumber": 255}, "missing_native_metadata"),
+        ({"Ni": 3}, "inconsistent_native_metadata"),
+        ({"Ni": 0}, "inconsistent_native_metadata"),
+        ({"jPointsAreConsecutive": 1}, "unsupported_native_encoding"),
+        ({"alternativeRowScanning": 1}, "unsupported_native_encoding"),
+    ],
+)
+def test_raw_profile_and_grid_boundaries_remain_structured(
+    configured, settings, reason
+):
+    source, _, _ = configured([settings], business=False)
+    with source, pytest.raises(SourceError) as exc:
+        source.sel(native={"grib": {"discipline": 0}}).all()
+    assert exc.value.code == "metadata_interpretation_failed"
+    assert exc.value.context["reason"] == reason
+
+
+@pytest.mark.parametrize(
+    "settings,lat,lon",
+    [
+        ({}, [50, 49], [100, 101]),
+        (
+            {
+                "iScansNegatively": 1,
+                "longitudeOfFirstGridPointInDegrees": 101,
+                "longitudeOfLastGridPointInDegrees": 100,
+            },
+            [50, 49],
+            [101, 100],
+        ),
+        (
+            {
+                "jScansPositively": 1,
+                "latitudeOfFirstGridPointInDegrees": 49,
+                "latitudeOfLastGridPointInDegrees": 50,
+            },
+            [49, 50],
+            [100, 101],
+        ),
+    ],
+)
+def test_supported_grid_records_raw_evidence_and_preserves_axes(
+    configured, settings, lat, lon
+):
+    source, _, _ = configured([settings])
+    with source:
+        field = source.sel(parameter="t").one()
+        raw = field.metadata["native_fields"]
+        assert raw["Ni"] == raw["Nj"] == 2
+        assert raw["numberOfDataPoints"] == 4
+        assert raw["gridDefinitionTemplateNumber"] == 0
+        assert raw["scanningMode"] >= 0
+        ds = field.to_xarray()
+        np.testing.assert_array_equal(ds.latitude, lat)
+        np.testing.assert_array_equal(ds.longitude, lon)
+        np.testing.assert_array_equal(
+            ds.t.values.reshape(2, 2), [[280, 281], [282, 283]]
+        )

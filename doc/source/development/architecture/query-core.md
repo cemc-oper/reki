@@ -178,3 +178,9 @@ mechanism, not Q17 product coverage or Q20 business acceptance. Real rules,
 snapshot/pagination/stable-order evidence, units and backend integration must be
 delivered by I06 and then verified with I05; cross-entry migration belongs to I08,
 business acceptance to I09 and package combinations to I10.
+
+The I06 field-level review now distinguishes wire acquisition from business
+retrieval proof. Actual nuwe reports retain a pending complete_retrieval_supported
+check after successful association; normal exhaustion of the explicit finite call
+list does not establish product provision or snapshot consistency. See
+{doc}`finite-rules` for the six bounded wire shapes and their remaining limits.

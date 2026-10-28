@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from cedarkit_query import QueryError, SourceError
 from reki.catalog.model import freeze
 from .common import metadata_error
+from .nuwe_wire import profile_for, validate_parameters
 
 
 @dataclass(frozen=True)
@@ -43,8 +44,21 @@ class NuweGridTransport:
                 "this adapter only implements callAPI_to_gridArray2D",
                 {"reason": "translation_unavailable"},
             )
+        self.profile = profile_for(contract)
         self.client, self.contract, self._closed = client, contract, False
+        self.retrieval_check = freeze(
+            {
+                "status": "pending",
+                "message": "Raw grid structure is known; product-level identity, full retrieval and snapshot evidence remain unverified",
+            }
+        )
         self.origin = "nuwe-cmadaas@" + version("nuwe-cmadaas")
+
+    def validate_parameters(self, parameters):
+        from .cmadaas import validate_call_parameters
+
+        validate_call_parameters(parameters)
+        validate_parameters(self.profile, parameters)
 
     def close(self):
         # CMADaaSClient creates no owned Session and has no close operation.
@@ -54,7 +68,6 @@ class NuweGridTransport:
     def request(self, interface, method, parameters):
         from nuwe_cmadaas.music.data import GridArray2D
         from nuwe_cmadaas.music import errors
-        from .cmadaas import validate_call_parameters
 
         if self._closed:
             raise SourceError("io_error", "", "service transport is closed")
@@ -64,7 +77,7 @@ class NuweGridTransport:
                 "/source/interface_contract",
                 "invocation differs from its exact contract",
             )
-        validate_call_parameters(parameters)
+        self.validate_parameters(parameters)
         snapshot = dict(parameters)
         actual = dict(snapshot)
         raw = self.client.callAPI_to_gridArray2D(interface, actual)

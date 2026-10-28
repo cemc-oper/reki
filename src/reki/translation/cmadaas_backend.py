@@ -281,6 +281,9 @@ class CmadaasBackend:
                                 role=role,
                             )
                         parameters[field] = value
+                    validator = getattr(self.transport, "validate_parameters", None)
+                    if validator is not None:
+                        validator(parameters)
                     branches.append(
                         dict(
                             index=len(branches),
@@ -329,8 +332,16 @@ class CmadaasBackend:
                         ),
                         dict(
                             code="complete_retrieval_supported",
-                            status="passed",
-                            message="Exact internally registered single-grid contract; no pagination expansion",
+                            **thaw(
+                                getattr(
+                                    self.transport,
+                                    "retrieval_check",
+                                    {
+                                        "status": "passed",
+                                        "message": "Exact internally registered single-grid contract; no pagination expansion",
+                                    },
+                                )
+                            ),
                         ),
                     ],
                 )

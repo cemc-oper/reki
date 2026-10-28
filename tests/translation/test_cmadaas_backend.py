@@ -43,12 +43,19 @@ class Transport:
 
 @pytest.fixture
 def source_factory(tmp_path):
-    def make(*, owns=False, method="SYNTHETIC.method", transport_factory=None):
+    def make(
+        *,
+        owns=False,
+        method="SYNTHETIC.method",
+        transport_factory=None,
+        interface_id="SYNTHETIC.interface",
+        raw_contract=False,
+    ):
         ref = {"id": "SYNTHETIC.single-grid", "version": 1}
         contract = InterfaceContract(
             ref["id"],
             ref["version"],
-            "SYNTHETIC.interface",
+            interface_id,
             method,
             {
                 "time": "time",
@@ -56,7 +63,9 @@ def source_factory(tmp_path):
                 "level_type": "levelType",
                 "level": "fcstLevel",
             },
-            {
+            {}
+            if raw_contract
+            else {
                 "time": "time",
                 "step": "validTime",
                 "level_type": "levelType",
@@ -337,6 +346,7 @@ class OfflineHTTP:
                     "levelType",
                     "fcstLevel",
                 )
+                if k in values
             }
         )
         if self.failure:
@@ -345,7 +355,7 @@ class OfflineHTTP:
             return SimpleNamespace(content=self.content, status_code=200)
         msg = pb.RetGridArray2D()
         msg.request.errorCode = 0
-        msg.request.rowCount = 2  # A grid dimension counter, not field count.
+        msg.request.rowCount = 2  # Synthetic counter; never treated as field count.
         msg.request.colCount = 2
         msg.latCount, msg.lonCount = 2, 2
         msg.startLat, msg.endLat, msg.latStep = 50.0, 49.0, -1.0
@@ -387,6 +397,8 @@ def nuwe_source(source_factory, monkeypatch):
     source, transport = source_factory(
         owns=True,
         method="callAPI_to_gridArray2D",
+        interface_id="getNafpEleGridByTimeAndLevelAndValidtime",
+        raw_contract=True,
         transport_factory=lambda contract: NuweGridTransport(client, contract),
     )
     return source, transport, client, http
@@ -500,4 +512,198 @@ def test_raw_invocation_cannot_be_replaced_by_another_response(nuwe_source):
         cmadaas.associate(record.contract, record.parameters, changed, request_index=4)
     assert exc.value.context["reason"] == "inconsistent_native_metadata"
     assert exc.value.context["request_index"] == 4
+    source.close()
+
+
+@pytest.mark.parametrize(
+    "interface,analysis,member,rectangle",
+    [
+        ("getNafpAnaEleGridByTimeAndLevel", True, False, False),
+        ("getNafpAnaEleGridInRectByTimeAndLevel", True, False, True),
+        ("getNafpEleGridByTimeAndLevelAndValidtime", False, False, False),
+        ("getNafpEleGridInRectByTimeAndLevelAndValidtime", False, False, True),
+        ("getNafpEleGridByTimeAndLevelAndValidtimeAndFcstMember", False, True, False),
+        (
+            "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+            False,
+            True,
+            True,
+        ),
+    ],
+)
+def test_reviewed_wire_shapes_reach_actual_client_without_inventing_roles(
+    nuwe_source, interface, analysis, member, rectangle
+):
+    from dataclasses import replace
+    from reki.translation.nuwe_transport import NuweGridTransport
+
+    source, original, client, http = nuwe_source
+    roles = {"time": "time", "level_type": "levelType", "level": "fcstLevel"}
+    params = {
+        "dataCode": "SYNTHETIC_DATA",
+        "fcstEle": "SYNTHETIC_T",
+        "time": "20260101080000",
+        "levelType": "100",
+        "fcstLevel": "850",
+    }
+    if not analysis:
+        roles["step"] = "validTime"
+        params["validTime"] = "6"
+    if member:
+        roles["member"] = "fcstMember"
+        params["fcstMember"] = "01"
+    if rectangle:
+        params.update(minLat="49", maxLat="50", minLon="100", maxLon="101")
+    contract = replace(original.contract, interface_id=interface, request_roles=roles)
+    adapter = NuweGridTransport(client, contract)
+    before = dict(params)
+    wrapper = adapter.request(interface, "callAPI_to_gridArray2D", params)
+    assert params == before == dict(wrapper["invocation"].parameters)
+    assert wrapper["metadata"] == {}
+    assert wrapper["data"].shape == (2, 2)
+    assert len(http.calls) == 1
+    if member:
+        assert wrapper["invocation"].parameters["fcstMember"] == "01"
+    if analysis:
+        assert "validTime" not in http.calls[0]
+    adapter.close()
+    source.close()
+    assert http.closes == 0
+
+
+@pytest.mark.parametrize(
+    "interface",
+    [
+        "getNafpEleGridByTime",
+        "getNafpEleGridInRectByTime",
+        "getNafpEleGridByTimeAndLevelsAndValidtime",
+        "getNafpEleGridInRectByTimeAndLevelAndValidtimeRange",
+    ],
+)
+def test_broad_and_multiple_identity_interfaces_are_not_scalar_grid_contracts(
+    nuwe_source, interface
+):
+    from dataclasses import replace
+    from reki.translation.nuwe_transport import NuweGridTransport
+
+    source, adapter, client, http = nuwe_source
+    with pytest.raises(QueryError) as exc:
+        NuweGridTransport(client, replace(adapter.contract, interface_id=interface))
+    assert exc.value.code == "unsupported"
+    assert not http.calls
+    source.close()
+
+
+@pytest.mark.parametrize(
+    "changes,drop",
+    [
+        ({}, "fcstLevel"),
+        ({}, "validTime"),
+        ({"fcstEle": "T,U"}, None),
+        ({"fcstLevel": "850,1000"}, None),
+        ({"validTime": "0,6"}, None),
+        ({"validTime": -1}, None),
+        ({"validTime": True}, None),
+        ({"time": "20260101"}, None),
+        ({"time": "20261301080000"}, None),
+        ({"zoomOut": 2}, None),
+        ({"eleValueRanges": "T:(0,)"}, None),
+        ({"pageNum": 1}, None),
+        ({"snapshot": "SYNTHETIC"}, None),
+    ],
+)
+def test_native_wire_inputs_are_bounded_before_any_http(nuwe_source, changes, drop):
+    source, adapter, client, http = nuwe_source
+    params = {
+        "dataCode": "SYNTHETIC_DATA",
+        "fcstEle": "SYNTHETIC_T",
+        "time": "20260101080000",
+        "levelType": "100",
+        "fcstLevel": "850",
+        "validTime": "6",
+    }
+    params.update(changes)
+    if drop:
+        params.pop(drop)
+    before = dict(params)
+    with pytest.raises(QueryError):
+        adapter.request(adapter.contract.interface_id, adapter.contract.method, params)
+    assert not http.calls and params == before
+    source.close()
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        {"response_roles": {"time": "time"}},
+        {
+            "request_roles": {
+                "time": "time",
+                "step": "validTime",
+                "level_type": "level_type",
+                "level": "fcstLevel",
+            }
+        },
+    ],
+)
+def test_raw_proto_cannot_claim_response_axes_or_arbitrary_request_bindings(
+    nuwe_source, change
+):
+    from dataclasses import replace
+    from reki.translation.nuwe_transport import NuweGridTransport
+
+    source, adapter, client, http = nuwe_source
+    with pytest.raises(QueryError) as exc:
+        NuweGridTransport(client, replace(adapter.contract, **change))
+    assert exc.value.code == "invalid_config"
+    assert not http.calls
+    source.close()
+
+
+def test_wire_and_call_success_do_not_prove_business_retrieval_or_snapshot(nuwe_source):
+    source, adapter, client, http = nuwe_source
+    selection = selected(source)
+    before = {
+        c["code"]: c["status"]
+        for c in selection.explain().analysis["translations"][0]["checks"]
+    }
+    assert before["complete_retrieval_supported"] == "pending"
+    assert not http.calls
+    fields = selection.all()
+    after = {c["code"]: c["status"] for c in fields.report.translations[0]["checks"]}
+    assert after["request_association_verified"] == "passed"
+    assert after["complete_retrieval_supported"] == "pending"
+    assert fields.report.overall["status"] == "unchecked"
+    source.close()
+
+
+@pytest.mark.parametrize(
+    "short", [False, True], ids=["nan-field-exists", "short-grid-fails"]
+)
+def test_raw_nan_and_incomplete_grid_have_different_presence_boundaries(
+    nuwe_source, short
+):
+    from nuwe_cmadaas.music import apiinterface_pb2 as pb
+
+    source, adapter, client, http = nuwe_source
+    message = pb.RetGridArray2D()
+    message.latCount, message.lonCount = 2, 2
+    message.startLat, message.endLat, message.latStep = 50, 49, -1
+    message.startLon, message.endLon, message.lonStep = 100, 101, 1
+    message.lats.extend([50, 49])
+    message.lons.extend([100, 101])
+    message.units = "K"
+    message.data.extend([1, 2, 3] if short else [float("nan")] * 4)
+    http.content = message.SerializeToString()
+    if short:
+        with pytest.raises(SourceError) as exc:
+            selected(source, levels=(850,)).all()
+        assert exc.value.code == "decode_failed"
+        assert exc.value.context["request_index"] == 0
+        assert "report" not in exc.value.to_dict()
+    else:
+        fields = selected(source, levels=(850,)).all()
+        assert len(fields) == fields.report.overall["field_count"] == 1
+        assert np.isnan(fields.to_xarray().t.values).all()
+        assert fields.report.overall["status"] == "unchecked"
     source.close()

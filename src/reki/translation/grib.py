@@ -32,6 +32,25 @@ SURFACES = {
 }
 
 
+def parameter_encoding(meta):
+    """Check known parameter-code structure; never interpret a local parameter."""
+    applicability(meta)
+    for key in ("discipline", "parameterCategory", "parameterNumber"):
+        if meta.get(key) == 255:
+            metadata_error(
+                "missing_native_metadata",
+                "parameter code is explicitly missing",
+                missing_fields=[key],
+            )
+        value = integer(meta, key, maximum=254)
+        if 192 <= value <= 254 and meta["localTablesVersion"] == 0:
+            metadata_error(
+                "inconsistent_native_metadata",
+                "local-use parameter code requires a local table",
+                fields={key: value, "localTablesVersion": 0},
+            )
+
+
 def applicability(meta):
     if integer(meta, "edition") != 2:
         metadata_error(

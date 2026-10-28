@@ -76,6 +76,29 @@ INTEGER_KEYS = frozenset(
 )
 STRING_KEYS = frozenset({"units", "parameterUnits", "gridType"})
 NATIVE_KEYS = INTEGER_KEYS | STRING_KEYS
+# Raw evidence only; these do not expand the accepted native Query selectors.
+GRID_INTEGER_KEYS = frozenset(
+    {
+        "gridDefinitionTemplateNumber",
+        "shapeOfTheEarth",
+        "Ni",
+        "Nj",
+        "numberOfDataPoints",
+        "scanningMode",
+        "iScansNegatively",
+        "jScansPositively",
+        "jPointsAreConsecutive",
+        "alternativeRowScanning",
+        "latitudeOfFirstGridPoint",
+        "latitudeOfLastGridPoint",
+        "longitudeOfFirstGridPoint",
+        "longitudeOfLastGridPoint",
+        "iDirectionIncrement",
+        "jDirectionIncrement",
+        "basicAngleOfTheInitialProductionDomain",
+        "subdivisionsOfBasicAngle",
+    }
+)
 
 
 def native_matches(metadata, condition):
@@ -133,7 +156,7 @@ def _metadata(handle):
     import eccodes
 
     result = {}
-    for key in NATIVE_KEYS:
+    for key in NATIVE_KEYS | GRID_INTEGER_KEYS:
         try:
             if not eccodes.codes_is_defined(handle, key) or eccodes.codes_is_missing(
                 handle, key
@@ -142,7 +165,7 @@ def _metadata(handle):
             else:
                 result[key] = (
                     eccodes.codes_get_long(handle, key)
-                    if key in INTEGER_KEYS
+                    if key in INTEGER_KEYS | GRID_INTEGER_KEYS
                     else eccodes.codes_get_string(handle, key)
                 )
         except eccodes.KeyValueNotFoundError:
@@ -449,7 +472,7 @@ class GribScan:
                         ]
                         if not selected:
                             continue
-                        grib.applicability(metadata)
+                        grib.parameter_encoding(metadata)
                         vertical = grib.fixed_surfaces(
                             metadata,
                             vertical_definition=self.backend.vertical_definition,
@@ -682,8 +705,21 @@ def _grid(handle):
             "grid/scanning form needs a separately validated adapter",
         )
     ni, nj = eccodes.codes_get_long(handle, "Ni"), eccodes.codes_get_long(handle, "Nj")
-    lat = eccodes.codes_get_double_array(handle, "latitudes").reshape(nj, ni)
-    lon = eccodes.codes_get_double_array(handle, "longitudes").reshape(nj, ni)
+    points = eccodes.codes_get_long(handle, "numberOfDataPoints")
+    if ni <= 0 or nj <= 0 or points != ni * nj:
+        metadata_error(
+            "inconsistent_native_metadata",
+            "grid dimensions and point count disagree",
+            fields={"Ni": ni, "Nj": nj, "numberOfDataPoints": points},
+        )
+    lat = eccodes.codes_get_double_array(handle, "latitudes")
+    lon = eccodes.codes_get_double_array(handle, "longitudes")
+    if lat.size != points or lon.size != points:
+        metadata_error(
+            "inconsistent_native_metadata",
+            "grid coordinates and point count disagree",
+        )
+    lat, lon = lat.reshape(nj, ni), lon.reshape(nj, ni)
     if not np.all(lat == lat[:, 0, None]) or not np.all(lon == lon[0, None, :]):
         metadata_error(
             "unsupported_native_encoding",
