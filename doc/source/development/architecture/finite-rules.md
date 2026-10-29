@@ -1,5 +1,19 @@
 # Finite rules and backend slices (I06)
 
+The seventh slice adds a bounded original-producer profile, backed by the
+preserved CEMC grib_util v12.6 include files and binary probes. Fourteen explicitly
+loaded mappings cover eight local parameters, volumetric soil water and four
+depth variants, and soil temperature at 10–40 cm. There are no default product
+bindings. A new reviewed database/export is kept separately from the original
+schema-3 database. Four original CDBZ/ZNT/HT0/ST messages agree with direct
+ecCodes for 16,620,771 finite values, masks and coordinates; this shares the
+decoder and is not independent business acceptance. The authoring bundle and
+limits are recorded in workspace I03 round-3 and I06 round-7 evidence.
+
+The native plan matcher now interprets frozen list/range selectors correctly,
+and common depth type/unit constraints match normalized layer endpoints.
+Equivalent scaled depth boundaries remain equivalent physical selections.
+
 The sixth slice exercises 13 small synthetic regular-grid encodings against
 independently authored axes and output value pairing. In the checked ecCodes
 2.48.0/2.48.2 iterators, longitude spacing follows endpoints/count, while latitude
@@ -50,8 +64,9 @@ I06 is **in progress**. This implementation provides finite rule functions, an
 explicit-file ecCodes backend, and an internal controlled single-grid service
 transport. Its tests use synthetic definitions, generated GRIB messages, a
 fake service and the actual nuwe client with injected offline HTTP/protobuf responses. They prove mechanisms, not CEMC product provision, real service
-availability, Q17 coverage or Q20 acceptance. No production CMADaaS interface
-contract, parameter mapping or product binding is registered by this change.
+availability, Q17 coverage or Q20 acceptance. No default production CMADaaS
+contract or product binding is installed. The seventh-slice parameter mappings
+are supplied only by the separately reviewed, explicitly loaded resource bundle.
 
 ## Entry and ownership boundaries
 
@@ -80,16 +95,29 @@ legacy route pending I08.
 
 ## Rule applicability
 
-The GRIB slice explicitly registers **edition 2, master table 4, local table 0**.
-Other master/local versions and GRIB1 canonical interpretation remain unsupported
-until separately implemented and verified. Built-in ecCodes samples in this
-round have this profile; their table version is not a CEMC business version.
+The general GRIB slice registers **edition 2, master table 4, local table 0**.
+The seventh slice also registers an exact **centre 38, subcentre 0, master 4,
+local 1, production status 0, template 0** profile for ten reviewed triples with
+fixed-surface restrictions. These are (0,16,224/225/226), (0,7,224), (0,19,224),
+(0,3,225/226/228), and the two soil encodings (0,0,0)/(0,1,0) with surfaces
+106/106. Reflectivity code 225 requires pressure; the other local parameters
+require surface and no second surface. Other master/local versions and GRIB1
+canonical interpretation remain unsupported until separately verified.
 All candidate interpretation checks the raw centre/subcentre/table/template
 context. Local table zero with a local-use parameter/category/discipline code is
 a known metadata inconsistency; a nonzero unregistered local table remains an
-unsupported encoding, not damaged data. No local-1 interpretation was inferred
-from old parameter names. Unsupported native forms fail as such instead of appearing as missing
+unsupported encoding, not damaged data. Local-1 interpretation uses original
+producer evidence rather than name lookup. Unsupported native forms fail as such instead of appearing as missing
 business fields or damaged messages.
+
+For that exact local-1 soil-water profile, original element 144 establishes
+`m3/m3`, although ecCodes derives a specific-humidity unit from the overloaded
+standard triple. The producer-derived source unit is used while the raw ecCodes
+literal and its provenance are retained in field metadata. A conflicting mapping
+unit fails. This exception does not apply to local-0 messages, other centres,
+statuses or templates. ST(10–40) additionally accepts its observed local-0
+encoding; its unit remains native K. Neither mapping is a product availability
+or version assertion. Ensemble and statistical local-1 templates remain pending.
 
 | Rule | Implemented finite path | Explicit boundary / required input |
 | --- | --- | --- |

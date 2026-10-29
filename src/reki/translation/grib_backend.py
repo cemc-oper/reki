@@ -22,7 +22,7 @@ from reki.selection.backend import Plan, FieldReference, BranchEvent
 from reki.selection.core import matches, expected_from_domain
 from reki.selection.files import FileSnapshot, discover_paths
 from reki.diagnostics import record_io_event
-from . import grib
+from . import grib, cemc_grib
 from .common import metadata_error, unsupported, value_unit, software_origin
 
 INTEGER_KEYS = frozenset(
@@ -32,6 +32,7 @@ INTEGER_KEYS = frozenset(
         "subCentre",
         "tablesVersion",
         "localTablesVersion",
+        "productionStatusOfProcessedData",
         "discipline",
         "parameterCategory",
         "parameterNumber",
@@ -105,7 +106,9 @@ def native_matches(metadata, condition):
     return all(
         k in metadata
         and metadata[k] is not None
-        and _contains(v, metadata[k], "number" if k in INTEGER_KEYS else "literal")
+        and _contains(
+            thaw(v), metadata[k], "number" if k in INTEGER_KEYS else "literal"
+        )
         for k, v in condition.items()
     )
 
@@ -141,7 +144,7 @@ def check_filter(condition):
             allowed = {
                 "edition": {2},
                 "tablesVersion": {4},
-                "localTablesVersion": {0},
+                "localTablesVersion": {0, 1},
             }.get(key, grib.TEMPLATES)
             count = _count(value, "number")
             if count is None:
@@ -421,7 +424,7 @@ class GribScan:
         import eccodes
 
         self.context["origins"] = {
-            "adapter": software_origin("grib.standard-finite-v1"),
+            "adapter": software_origin("grib.standard-and-cemc-v12.6-finite-v1"),
             "native_library": "eccodes=" + eccodes.codes_get_api_version(),
         }
         self._iterator = None
@@ -660,6 +663,18 @@ class GribScan:
             source_unit=requirement.source,
             unit=parameter["unit"],
             statistics=stats,
+            **(
+                {
+                    "source_unit_basis": {
+                        "profile": "CEMC.grib_util.v12.6.operational-instantaneous",
+                        "elementcode": 144,
+                        "source": "paraNum.h:541; producer soil-water encoding",
+                        "eccodes_derived_unit": native.get("units"),
+                    }
+                }
+                if cemc_grib.value_unit(native) is not None
+                else {}
+            ),
             **(
                 {
                     "probability_unit_basis": {

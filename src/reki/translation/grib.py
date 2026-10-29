@@ -16,6 +16,7 @@ from cedarkit_query.normalize import (
 )
 from reki.catalog.model import thaw
 from .common import metadata_error, integer, scaled
+from . import cemc_grib
 
 TEMPLATES = frozenset({0, 1, 2, 5, 6, 8, 9, 10, 11, 12})
 INTERVAL_TEMPLATES = frozenset({8, 9, 10, 11, 12})
@@ -61,10 +62,13 @@ def applicability(meta):
     integer(meta, "subCentre")
     integer(meta, "tablesVersion", maximum=254)
     integer(meta, "localTablesVersion", maximum=254)
-    if meta["tablesVersion"] != 4 or meta["localTablesVersion"] != 0:
+    if (meta["tablesVersion"], meta["localTablesVersion"]) != (
+        4,
+        0,
+    ) and not cemc_grib.applies(meta):
         metadata_error(
             "unsupported_native_encoding",
-            "this initial finite profile covers master table 4 with no local-table reinterpretation",
+            "encoding is outside the standard table-4/local-0 and reviewed CEMC v12.6 instantaneous profiles",
             fields={
                 "tablesVersion": meta["tablesVersion"],
                 "localTablesVersion": meta["localTablesVersion"],
@@ -310,7 +314,7 @@ def source_value_unit(meta):
 
     A usable literal alone establishes neither a quantity kind nor a target unit.
     """
-    unit = meta.get("units")
+    unit = cemc_grib.value_unit(meta) or meta.get("units")
     return None if unit in {None, "", "unknown", "~"} else unit
 
 

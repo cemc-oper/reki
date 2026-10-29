@@ -48,6 +48,11 @@ def matches(identity, query):
     query = normalize_query(raw).to_dict()
     for name, value in query.items():
         if name not in identity:
+            if name in {"level_type", "level_unit"} and "layer" in identity:
+                # A common vertical constraint applies to both layer endpoints.
+                # Normalized layers store types/units on those endpoints; the
+                # shared intersection below checks compatibility and ordering.
+                continue
             return False
         if name == "native":
             for backend, conditions in value.items():
