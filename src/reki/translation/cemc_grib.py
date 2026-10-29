@@ -2,7 +2,7 @@
 
 The original paraNum.h and setGrib2Section4Parameters define these codes.
 The complete writer sets centre 38, master table 4 and local table 1.
-This first slice covers operational deterministic instantaneous messages only.
+These slices cover operational deterministic instantaneous messages only.
 It supplies no default parameter IDs, product scope, members or statistics.
 See doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6 in the workspace.
 """
@@ -44,7 +44,12 @@ def applies(meta):
     first = SURFACES.get(code)
     return (
         all(type(v) is int for v in context + code)
-        and context == (2, 38, 0, 4, 1, 0, 0)
+        and (
+            context == (2, 38, 0, 4, 1, 0, 0)
+            # Original GFS soil messages also use local table 0. Only these
+            # exact soil encodings inherit the reviewed producer interpretation.
+            or (context == (2, 38, 0, 4, 0, 0, 0) and code in {(0, 0, 0), (0, 1, 0)})
+        )
         and first is not None
         and meta.get("typeOfFirstFixedSurface") == first
         and meta.get("typeOfSecondFixedSurface") == (106 if first == 106 else 255)

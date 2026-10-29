@@ -292,11 +292,11 @@ class QuerySource:
 def from_source(source, *, context=None, client=None):
     """Construct the new Query source without discovery, scans or service calls.
 
-    Business product selection/registered backend factories are supplied by I06,
-    using construct_source; no product/version is inferred by this entry point.
+    Registered builtin datasets carry explicit current-business bindings.
+    File discovery and native metadata checks remain terminal operations.
     """
     configuration = plan_source_binding(source, context=context, client=client)
-    if configuration.source["kind"] == "file":
+    if configuration.source["kind"] in {"file", "local"}:
         from reki.translation.grib_backend import GribBackend
 
         return construct_source(configuration, GribBackend(configuration))
@@ -896,9 +896,20 @@ def _needs_vertical_type(query):
 def _prepare_input(query, configuration):
     scope = configuration.scope.to_dict()
     resources = configuration.resources
+    parameter_ids = None
+    if configuration.product is not None:
+        parameter_ids = {
+            name
+            for provided in configuration.product["provides"]
+            for name in (
+                (provided["parameter"],)
+                if isinstance(provided.get("parameter"), str)
+                else provided.get("parameter", ())
+            )
+        }
     if "level_type" not in scope and _needs_vertical_type(scope):
         preliminary = (
-            prepare_queries([query], resources)
+            prepare_queries([query], resources, parameter_ids=parameter_ids)
             if resources is not None
             else (normalize_query(query),)
         )
@@ -914,13 +925,15 @@ def _prepare_input(query, configuration):
                 )
             bound = {"level_type": kind, **scope}
             result.extend(
-                prepare_queries([value], resources, scope=bound)
+                prepare_queries(
+                    [value], resources, scope=bound, parameter_ids=parameter_ids
+                )
                 if resources is not None
                 else (constrain_query(value, bound),)
             )
         return tuple(result)
     return (
-        prepare_queries([query], resources, scope=scope)
+        prepare_queries([query], resources, scope=scope, parameter_ids=parameter_ids)
         if resources is not None
         else (constrain_query(query, scope),)
     )

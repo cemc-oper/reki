@@ -15,6 +15,7 @@ from cedarkit_query import (
 
 from .loader import load_context, load_resource
 from .model import SourceConfiguration, freeze
+from .current import current_registration
 
 # Existing, explicitly identified CEMC datasets; never infer from a path/prefix.
 _CEMC = frozenset(
@@ -110,8 +111,8 @@ def plan_source_binding(
     """Freeze selected resources and exact product/source facts for later execution.
 
     defaults contains registered catalog/parameter_registry/mappings references,
-    not auto-discovered settings. Product/version must be explicit for a dataset.
-    No default parameter registry or mapping is published while I03 is incomplete.
+    not auto-discovered settings. Product/version must be explicit or registered
+    for the selected builtin dataset. Native files receive no business defaults.
     CMADaaS interface_contracts is an exact registry supplied by I06, never inferred.
     local_layouts keys are (dataset, product, business-version, source-binding-id).
     """
@@ -153,6 +154,26 @@ def plan_source_binding(
             _missing("/source/dataset", "dataset is absent from the selected catalog")
         dataset = candidates[0]
         source["dataset"] = dataset["id"]
+        registration = current_registration(catalog, dataset["id"])
+        if registration is not None:
+            if product is None:
+                product = registration["product"]
+            if product_version is None:
+                product_version = registration["product_version"]
+            default.setdefault("parameter_registry", registration["parameter_registry"])
+            if local_layouts is None:
+                local_layouts = {
+                    (
+                        dataset["id"],
+                        registration["product"],
+                        registration["product_version"],
+                        "cmadaas-disk",
+                    ): registration["local_layout"]
+                }
+            origins["product_selection"] = "builtin.current-business"
+            origins["provision_scope"] = (
+                "limited-supported-pairs; complete_product_coverage=false"
+            )
         if product is None or product_version is None:
             _missing(
                 "/source/dataset", "exact product and business version are required"

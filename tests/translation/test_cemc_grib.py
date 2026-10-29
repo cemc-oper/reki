@@ -115,7 +115,7 @@ def write_file(path, records):
                 eccodes.codes_release(handle)
 
 
-def configured(tmp_path, records, *, soil=False, source_unit=None):
+def configured(tmp_path, records, *, soil=False, source_unit=None, local=1):
     path = tmp_path / "controlled.grib2"
     write_file(path, records)
     name, unit = ("sw", "m3/m3") if soil else ("cdbz", "dbz")
@@ -143,6 +143,7 @@ def configured(tmp_path, records, *, soil=False, source_unit=None):
         if soil
         else profile()
     )
+    native["localTablesVersion"] = local
     m = {
         "api_version": "cedarkit.mappings/v1",
         "id": "controlled.maps",
@@ -199,14 +200,16 @@ def test_cdbz_public_query_and_value_unit_from_explicit_mapping(tmp_path):
 
 
 @pytest.mark.parametrize("factor,top,bottom", [(2, 10, 40), (1, 1, 4)])
+@pytest.mark.parametrize("local", [0, 1])
 def test_soil_water_reinterpretation_and_equivalent_layer_encodings(
-    tmp_path, factor, top, bottom
+    tmp_path, factor, top, bottom, local
 ):
     source = configured(
         tmp_path,
         [
             {
                 "parameterCategory": 1,
+                "localTablesVersion": local,
                 "parameterNumber": 0,
                 "typeOfFirstFixedSurface": 106,
                 "typeOfSecondFixedSurface": 106,
@@ -218,6 +221,7 @@ def test_soil_water_reinterpretation_and_equivalent_layer_encodings(
             }
         ],
         soil=True,
+        local=local,
     )
     try:
         field = source.sel(parameter="sw", layer=soil_layer(0.1, 0.4)).one()
@@ -243,16 +247,46 @@ def test_soil_unit_override_is_limited_to_reviewed_producer_profile():
         units="kg kg**-1",
     )
     assert grib.source_value_unit(native) == "m3/m3"
-    assert grib.source_value_unit({**native, "localTablesVersion": 0}) == "kg kg**-1"
+    assert grib.source_value_unit({**native, "localTablesVersion": 0}) == "m3/m3"
     assert grib.source_value_unit({**native, "centre": 98}) == "kg kg**-1"
 
 
-def test_mapping_cannot_claim_specific_humidity_for_reviewed_soil_water(tmp_path):
+@pytest.mark.parametrize(
+    "changes",
+    [
+        {"centre": 98},
+        {"subCentre": 1},
+        {"tablesVersion": 5},
+        {"localTablesVersion": 2},
+        {"productionStatusOfProcessedData": 4},
+        {"productDefinitionTemplateNumber": 1},
+        {"typeOfFirstFixedSurface": 100},
+        {"typeOfSecondFixedSurface": 255},
+        {"parameterNumber": 1},
+    ],
+)
+def test_local_zero_soil_override_rejects_other_contexts(changes):
+    native = profile(
+        localTablesVersion=0,
+        parameterCategory=1,
+        parameterNumber=0,
+        typeOfFirstFixedSurface=106,
+        typeOfSecondFixedSurface=106,
+        units="kg kg**-1",
+    )
+    assert grib.source_value_unit({**native, **changes}) == "kg kg**-1"
+
+
+@pytest.mark.parametrize("local", [0, 1])
+def test_mapping_cannot_claim_specific_humidity_for_reviewed_soil_water(
+    tmp_path, local
+):
     source = configured(
         tmp_path,
         [
             {
                 "parameterCategory": 1,
+                "localTablesVersion": local,
                 "parameterNumber": 0,
                 "typeOfFirstFixedSurface": 106,
                 "typeOfSecondFixedSurface": 106,
@@ -264,6 +298,7 @@ def test_mapping_cannot_claim_specific_humidity_for_reviewed_soil_water(tmp_path
         ],
         soil=True,
         source_unit="kg/kg",
+        local=local,
     )
     try:
         with pytest.raises(SourceError) as exc:

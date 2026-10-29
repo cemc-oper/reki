@@ -23,13 +23,23 @@ def test_configuration_import_does_not_load_readers_or_clients():
     assert result.returncode == 0, result.stderr
 
 
-def test_builtin_is_shared_model_with_no_unproven_products(monkeypatch, tmp_path):
+def test_builtin_is_shared_model_with_one_bounded_current_product(
+    monkeypatch, tmp_path
+):
     monkeypatch.setenv("REKI_CATALOG_PATH", str(tmp_path / "missing.yaml"))
     monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path))
     value = load_catalog()
     assert isinstance(value, Catalog)
     assert len(value.datasets) == 18
-    assert all(not dataset["products"] for dataset in value.datasets)
+    products = [
+        (dataset["id"], p["id"], p["version"])
+        for dataset in value.datasets
+        for p in dataset["products"]
+    ]
+    assert products == [
+        ("cma_gfs_gmf", "orig", "current"),
+        ("cma_meso_3km", "orig", "current"),
+    ]
 
 
 def test_whole_catalog_replacement_and_byte_provenance(resources):

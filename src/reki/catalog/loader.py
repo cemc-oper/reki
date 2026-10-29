@@ -9,9 +9,19 @@ from cedarkit_query import Context, QueryError, SourceError, load_value
 
 from .model import LoadedResource, freeze
 
-# This catalog intentionally publishes no product until versioned facts exist.
+# Resource defaults are activated only by an explicitly registered dataset.
 BUILTINS = MappingProxyType(
-    {"reki.catalog": Path(__file__).with_name("builtin") / "catalog-v1.json"}
+    {
+        "reki.catalog": Path(__file__).with_name("builtin") / "catalog-v1.json",
+        "reki.parameters.cma-gfs.current": Path(__file__).with_name("builtin")
+        / "current-gfs-parameters.json",
+        "reki.mappings.cma-gfs.current": Path(__file__).with_name("builtin")
+        / "current-gfs-mappings.json",
+        "reki.parameters.cma-meso-3km.current": Path(__file__).with_name("builtin")
+        / "current-meso3-parameters.json",
+        "reki.mappings.cma-meso-3km.current": Path(__file__).with_name("builtin")
+        / "current-meso3-mappings.json",
+    }
 )
 
 

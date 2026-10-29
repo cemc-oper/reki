@@ -253,6 +253,17 @@ explicit synthetic transport keeps its own declared controlled contract.
 
 ## Verification and continuation
 
+The second grib_util batch also recognizes the exact operational CEMC local-0
+soil encoding (centre 38, subcentre 0, master 4, status 0, PDT 0, both surfaces
+106). The original GFS soil-water messages use this context. Only this bounded
+soil-water interpretation overrides ecCodes' derived specific-humidity unit;
+the raw literal remains in native metadata. The other local-1 encodings retain
+their previous restrictions. Shared finite unit aliases accept the observed
+ecCodes wind and specific-humidity literals without conflating mass and volume
+water quantities. The opt-in second resource bundle and its exact file contexts
+are indexed in workspace I03 round-4, I06 round-8 and I04 round-4. These bounded
+files do not publish a business product version or complete provision domain.
+
 `tests/translation` records the controlled rule and backend checks.
 `tests/selection` and the selected catalog/source/reader regressions protect the
 I05 integration. The workspace I06 evidence directory records exact commands,
@@ -266,3 +277,12 @@ populations, versioned provision, MUSIC associations/completeness and service
 snapshots need concrete business/protocol evidence as well. I06 must distinguish
 these implementation tasks from I03/I04 definition work and I09 acceptance;
 passing this synthetic suite closes none of their original evidence gaps.
+
+## Current-business product binding
+
+The builtin catalog now registers bounded GFS and MESO 3 km orig/current products with
+packaged, byte-pinned parameter and mapping resources. The public local/file
+entry selects this registration only for the two explicitly registered builtin datasets. See
+[current-gfs.md](current-gfs.md) for supported pairs, locator behavior and
+completeness boundaries. Anonymous file behavior and the finite native profiles
+above remain unchanged.

@@ -15,6 +15,7 @@ from cedarkit_query import (
     expand_queries,
     validate_rule,
     constrain_query,
+    prepare_queries,
 )
 from cedarkit_query.normalize import _contains, _count
 from reki.catalog.model import thaw, freeze
@@ -228,8 +229,38 @@ class GribBackend:
 
     def plan(self, queries, configuration):
         translations = []
+        provided = (
+            prepare_queries(
+                thaw(configuration.product["provides"]),
+                configuration.resources,
+                scope=configuration.scope,
+            )
+            if configuration.origins.get("product_selection")
+            == "builtin.current-business"
+            else None
+        )
         for qi, query in enumerate(queries):
             q = query.to_dict()
+            if "parameter" in q and provided is not None:
+                # A replacement mapping cannot widen the published supported
+                # parameter/level/step pairs of this bounded current binding.
+                covered = False
+                for condition in provided:
+                    if condition.to_dict().get("parameter") != q["parameter"]:
+                        continue
+                    try:
+                        if constrain_query(query, condition).to_dict() == q:
+                            covered = True
+                    except QueryError as exc:
+                        if exc.code != "constraint_conflict":
+                            raise
+                if not covered:
+                    raise QueryError(
+                        "unsupported",
+                        "/queries",
+                        "query exceeds the current product's supported pairs",
+                        {"reason": "mapping_coverage_gap", "query_index": qi},
+                    )
             check_filter(q.get("native", {}).get("grib", {}))
             if {"member", "member_role"} & q.keys() and self.numbering is None:
                 unsupported(
