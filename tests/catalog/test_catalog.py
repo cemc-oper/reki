@@ -39,6 +39,8 @@ def test_builtin_is_shared_model_with_one_bounded_current_product(
     assert products == [
         ("cma_gfs_gmf", "orig", "current"),
         ("cma_meso_3km", "orig", "current"),
+        ("cma_meso_1km", "orig", "current"),
+        ("cma_tym", "orig", "current"),
     ]
 
 

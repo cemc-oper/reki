@@ -13,6 +13,8 @@ def current_registration(catalog, dataset):
     filename = {
         "cma_gfs_gmf": "current-gfs.json",
         "cma_meso_3km": "current-meso3.json",
+        "cma_meso_1km": "current-meso1.json",
+        "cma_tym": "current-tym.json",
     }.get(dataset)
     if catalog.reference.get("builtin") != "reki.catalog" or filename is None:
         return None

@@ -1,0 +1,332 @@
+{
+  "complete_product_coverage": false,
+  "dataset": "cma_tym",
+  "local_layout": [
+    "DATA/NAFP/NMC/GRAPES-TYM/{year}/{date_label}/Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-TYM-ACWP-{forecast_hour_label}00.grib2"
+  ],
+  "parameter_registry": {
+    "builtin": "reki.parameters.cma-tym.current",
+    "sha256": "6cf137d995e71ed5a8948c34a3b657e20e7050c3123266d4a63b2ce6eec014c3",
+    "version": "1"
+  },
+  "product": "orig",
+  "product_version": "current",
+  "supported_pairs": [
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.ps",
+      "step": "PT0S"
+    },
+    {
+      "level_type": "mean_sea_level",
+      "parameter": "cedarkit.psl",
+      "step": "PT0S"
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.q",
+      "step": "PT0S"
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.rh",
+      "step": "PT0S"
+    },
+    {
+      "layer": [
+        {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.3
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          }
+        },
+        {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.6
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.3
+          }
+        },
+        {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 1
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.6
+          }
+        }
+      ],
+      "parameter": "cedarkit.st",
+      "step": "PT0S"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.1
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0
+        }
+      },
+      "parameter": "cedarkit.st-0-10",
+      "step": "PT0S"
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.t",
+      "step": "PT0S"
+    },
+    {
+      "level": 2,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.t2m",
+      "step": "PT0S"
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.u",
+      "step": "PT0S"
+    },
+    {
+      "level": 10,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.u10m",
+      "step": "PT0S"
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.v",
+      "step": "PT0S"
+    },
+    {
+      "level": 10,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.v10m",
+      "step": "PT0S"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.ps",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level_type": "mean_sea_level",
+      "parameter": "cedarkit.psl",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.q",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.rh",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "layer": [
+        {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.3
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          }
+        },
+        {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.6
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.3
+          }
+        },
+        {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 1
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.6
+          }
+        }
+      ],
+      "parameter": "cedarkit.st",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.1
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0
+        }
+      },
+      "parameter": "cedarkit.st-0-10",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.t",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": 2,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.t2m",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.u",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": 10,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.u10m",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.v",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": 10,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.v10m",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    }
+  ],
+  "time_zone": "UTC",
+  "version_policy": "current business only; no official release number or complete-domain inference"
+}

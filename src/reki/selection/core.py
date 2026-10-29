@@ -462,11 +462,23 @@ class Selection:
             normalized = []
             for qi, q in enumerate(inputs):
                 data = q.to_dict()
-                kinds = {
-                    p.to_dict().get("level_type")
-                    for p, origin in zip(self._prepared[si], self._indexes[si])
-                    if origin == qi
-                }
+                kinds = set()
+                for p, origin in zip(self._prepared[si], self._indexes[si]):
+                    if origin != qi:
+                        continue
+                    prepared = p.to_dict()
+                    kind = prepared.get("level_type")
+                    if kind is None and "layer" in prepared:
+                        layers = prepared["layer"]
+                        layers = layers if isinstance(layers, list) else [layers]
+                        types = {
+                            endpoint["type"]
+                            for layer in layers
+                            for endpoint in layer.values()
+                        }
+                        if len(types) == 1:
+                            kind = types.pop()
+                    kinds.add(kind)
                 if (
                     "level_type" not in data
                     and _needs_vertical_type(data)

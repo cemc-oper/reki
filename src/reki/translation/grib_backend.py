@@ -34,6 +34,8 @@ INTEGER_KEYS = frozenset(
         "tablesVersion",
         "localTablesVersion",
         "productionStatusOfProcessedData",
+        "typeOfProcessedData",
+        "typeOfGeneratingProcess",
         "discipline",
         "parameterCategory",
         "parameterNumber",

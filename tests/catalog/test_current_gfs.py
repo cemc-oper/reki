@@ -404,3 +404,94 @@ def test_current_profiles_reject_historical_resource_versions(dataset):
         load_resource(
             {"builtin": f"reki.mappings.{name}.current", "version": "0"}, "mappings"
         )
+
+
+@pytest.mark.parametrize(
+    "dataset,subdir,basename",
+    [
+        ("CMA-MESO-1KM", "CEMC/MESO_1KM/ORI", "CEMC-CMA-MESO-1KM-ORIG"),
+        ("CMA-TYM", "NMC/GRAPES-TYM", "NWPC-GRAPES-TYM-ACWP"),
+    ],
+)
+@pytest.mark.parametrize("step", [0, 6, 24])
+def test_new_current_analysis_forecast_local_pairs(
+    tmp_path, dataset, subdir, basename, step
+):
+    suffix = "grb2" if dataset == "CMA-MESO-1KM" else "grib2"
+    path = (
+        tmp_path
+        / f"DATA/NAFP/{subdir}/2026/20261029/Z_NAFP_C_BABJ_20261029120000_P_{basename}-{step:03d}00.{suffix}"
+    )
+    phase = dict(
+        typeOfProcessedData=0 if step == 0 else 1,
+        typeOfGeneratingProcess=0 if step == 0 else 2,
+        significanceOfReferenceTime=0 if step == 0 else 1,
+    )
+    encoded(path, hour=12, forecastTime=step, **phase)
+    source = from_source({"kind": "local", "dataset": dataset, "root": str(tmp_path)})
+    try:
+        field = source.sel(
+            parameter="t2m", time="2026-10-29T20:00:00+08:00", step=f"PT{step}H"
+        ).one()
+        np.testing.assert_array_equal(
+            field.to_xarray().t2m.values.reshape(2, 2), [[280, 281], [282, 283]]
+        )
+        assert (
+            field.metadata["native_fields"]["typeOfProcessedData"]
+            == phase["typeOfProcessedData"]
+        )
+        with pytest.raises(CompletenessError):
+            source.sel(
+                parameter="t2m", time="2026-10-29T12:00:00Z", step=f"PT{step}H"
+            ).all(completeness="required")
+        with pytest.raises(QueryError):
+            source.sel(parameter="t", level_type="pressure", level=700, step="PT6H")
+        with pytest.raises(QueryError):
+            source.sel(parameter="t2m", step="PT3H")
+    finally:
+        source.close()
+
+
+@pytest.mark.parametrize("dataset", ["CMA-MESO-1KM", "CMA-TYM"])
+@pytest.mark.parametrize(
+    "step,processed,generating,reference",
+    [(0, 1, 2, 1), (6, 0, 0, 0), (6, 1, 0, 1), (0, 0, 2, 0)],
+)
+def test_new_binding_rejects_incorrect_processing_phase(
+    tmp_path, dataset, step, processed, generating, reference
+):
+    path = tmp_path / "wrong.grb2"
+    encoded(
+        path,
+        forecastTime=step,
+        typeOfProcessedData=processed,
+        typeOfGeneratingProcess=generating,
+        significanceOfReferenceTime=reference,
+    )
+    source = from_source({"kind": "file", "dataset": dataset, "path": str(path)})
+    try:
+        with pytest.raises(QueryError):
+            source.sel(parameter="t2m", step=f"PT{step}H").one()
+    finally:
+        source.close()
+
+
+def test_new_tym_layers_and_unbound_ensembles(tmp_path):
+    path = tmp_path / "unopened.grb2"
+    encoded(path)
+    tym = from_source({"kind": "file", "dataset": "CMA-TYM", "path": str(path)})
+    meso = from_source({"kind": "file", "dataset": "CMA-MESO-1KM", "path": str(path)})
+    try:
+        assert (
+            tym.sel(parameter="st", layer={"top": 0.3, "bottom": 0.6}, step="PT0H")
+            .explain()
+            .effective_queries
+        )
+        with pytest.raises(QueryError):
+            meso.sel(parameter="st").explain()
+    finally:
+        tym.close()
+        meso.close()
+    for dataset in ["CMA-GEPS", "CMA-REPS"]:
+        with pytest.raises(QueryError):
+            from_source({"kind": "file", "dataset": dataset, "path": str(path)})

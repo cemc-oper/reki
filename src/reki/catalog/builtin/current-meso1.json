@@ -1,0 +1,210 @@
+{
+  "complete_product_coverage": false,
+  "dataset": "cma_meso_1km",
+  "local_layout": [
+    "DATA/NAFP/CEMC/MESO_1KM/ORI/{year}/{date_label}/Z_NAFP_C_BABJ_{start_time_label}0000_P_CEMC-CMA-MESO-1KM-ORIG-{forecast_hour_label}00.grb2"
+  ],
+  "parameter_registry": {
+    "builtin": "reki.parameters.cma-meso-1km.current",
+    "sha256": "7f713e2fccf1a193de9f77d84fc4fad0590856644094a762bd6ef35dbdfb3f0e",
+    "version": "1"
+  },
+  "product": "orig",
+  "product_version": "current",
+  "supported_pairs": [
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.ps",
+      "step": "PT0S"
+    },
+    {
+      "level_type": "mean_sea_level",
+      "parameter": "cedarkit.psl",
+      "step": "PT0S"
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.q",
+      "step": "PT0S"
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.rh",
+      "step": "PT0S"
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.t",
+      "step": "PT0S"
+    },
+    {
+      "level": 2,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.t2m",
+      "step": "PT0S"
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.u",
+      "step": "PT0S"
+    },
+    {
+      "level": 10,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.u10m",
+      "step": "PT0S"
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.v",
+      "step": "PT0S"
+    },
+    {
+      "level": 10,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.v10m",
+      "step": "PT0S"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.ps",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level_type": "mean_sea_level",
+      "parameter": "cedarkit.psl",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.q",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.rh",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.t",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": 2,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.t2m",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.u",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": 10,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.u10m",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.v",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": 10,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.v10m",
+      "step": [
+        "PT21600S",
+        "PT86400S"
+      ]
+    }
+  ],
+  "time_zone": "UTC",
+  "version_policy": "current business only; no official release number or complete-domain inference"
+}

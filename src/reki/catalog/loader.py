@@ -21,6 +21,14 @@ BUILTINS = MappingProxyType(
         / "current-meso3-parameters.json",
         "reki.mappings.cma-meso-3km.current": Path(__file__).with_name("builtin")
         / "current-meso3-mappings.json",
+        "reki.parameters.cma-meso-1km.current": Path(__file__).with_name("builtin")
+        / "current-meso1-parameters.json",
+        "reki.mappings.cma-meso-1km.current": Path(__file__).with_name("builtin")
+        / "current-meso1-mappings.json",
+        "reki.parameters.cma-tym.current": Path(__file__).with_name("builtin")
+        / "current-tym-parameters.json",
+        "reki.mappings.cma-tym.current": Path(__file__).with_name("builtin")
+        / "current-tym-mappings.json",
     }
 )
 

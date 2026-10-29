@@ -1,11 +1,11 @@
 # Current-business CMA-GFS and CMA-MESO 3 km sources
 
-The builtin catalog registers `cma_gfs_gmf` and `cma_meso_3km`, both with
+The builtin catalog registers `cma_gfs_gmf`, `cma_meso_3km`, `cma_meso_1km` and `cma_tym`, all with
 `orig` / `current`, for bounded deterministic instantaneous subsets. `current`
 selects the current business interpretation; it does not assert an official
 producer release number or implement historical-version compatibility. The
-catalog content version is 3, GFS mappings version 2, MESO mappings version 1,
-and both parameter registries version 1. Their SHA pins remain exact. Reports
+catalog content version is 4, GFS mappings version 2, MESO mappings version 1,
+the new MESO1 and TYM mappings version 1, and all parameter registries version 1. Their SHA pins remain exact. Reports
 retain actual origins, message offsets and file fingerprints.
 
 ```python
@@ -74,3 +74,38 @@ Workspace I03 round-6 / I04 round-7 / I06 round-10 records original-file values,
 multifile coordinate assembly, deterministic resource replay and clean-wheel
 checks. Direct ecCodes comparisons establish decoder and query-chain
 consistency. Independent physical and complete-product acceptance remain open.
+
+
+## Current MESO 1 km analysis/forecast and TYM
+
+`CMA-MESO-1KM` and `CMA-TYM` now use their own exact current mapping and
+parameter resources. Both expose the existing ORIG product at hours 0, 6 and
+24. Zero-hour instantaneous messages must have processed-data/reference/
+generating-process flags 0/0/0 (analysis); positive hours require 1/1/2
+(forecast). These are separate native mapping rows, selected by explicit
+`step`, within the same real ORIG product. No new public query syntax or
+CMADaaS service binding is introduced.
+
+Both support T/U/V/Q/RH at 850 and 500 hPa, T2M, U10M/V10M, and PS/PSL.
+TYM additionally supports soil temperature at 0–.1, .1–.3, .3–.6 and .6–1 m;
+the latter three use generic `st` with explicit layers. MESO1 soil fields
+remain outside this finite binding because the selected current files supply
+no reviewed instantaneous candidates. This does not prove permanent absence.
+
+```python
+source = from_source({"kind": "local", "dataset": "CMA-MESO-1KM", "root": "/CMADAAS"})
+try:
+    analysis = source.sel(parameter="t2m", time="2026-10-29T12:00:00Z", step="PT0H").one().to_xarray()
+    forecast = source.sel(parameter="t", level_type="pressure", level=850,
+                          time="2026-10-29T12:00:00Z", step="PT6H").one().to_xarray()
+finally:
+    source.close()
+```
+
+Workspace I03 round-7 / I04 round-8 / I06 round-11 records the frozen latest
+MESO1 12Z and TYM 06Z original files, full-field checks and clean installation.
+MESO1 fields contain 37,587,511 points each; public `all` returns lazy references,
+so verification materializes complete individual fields to bound memory.
+GEPS/REPS remain without registered current products and are deferred to the
+next member-aware batch. Complete product domains and independent physical
+acceptance remain open for all current registrations.
