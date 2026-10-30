@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from pathlib import Path
 from string import Formatter
 import os
@@ -75,7 +76,13 @@ def discover_paths(configuration, queries=()):
 def _template_values(template, query):
     fields = {name for _, name, _, _ in Formatter().parse(template) if name is not None}
     values = {}
-    if fields & {"start_time_label", "date_label", "year"}:
+    if fields & {
+        "start_time_label",
+        "date_label",
+        "year",
+        "beijing_date_label",
+        "beijing_year",
+    }:
         time = query.get("time")
         if not isinstance(time, str):
             raise QueryError(
@@ -91,6 +98,13 @@ def _template_values(template, query):
             start_time_label=dt.strftime("%Y%m%d%H"),
             date_label=dt.strftime("%Y%m%d"),
             year=dt.strftime("%Y"),
+        )
+        # REPS is stored by the Beijing date of the UTC reference time.
+        # This affects directory rendering only; canonical time stays UTC.
+        local = dt.astimezone(ZoneInfo("Asia/Shanghai"))
+        values.update(
+            beijing_date_label=local.strftime("%Y%m%d"),
+            beijing_year=local.strftime("%Y"),
         )
     if fields & {"forecast_hour", "forecast_hour_label"}:
         step = query.get("step")

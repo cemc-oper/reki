@@ -1,0 +1,2385 @@
+{
+  "api_version": "cedarkit.mappings/v1",
+  "backend": "grib2",
+  "id": "cedarkit.grib2.cma-reps.current",
+  "mappings": [
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "psl.current.member.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 101,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "Pa"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.psl",
+      "when": {
+        "level_type": "mean_sea_level",
+        "member": 0,
+        "member_role": "control",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "psl.current.member.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 101,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "Pa"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.psl",
+      "when": {
+        "level_type": "mean_sea_level",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "psl.current.member.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 101,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "Pa"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.psl",
+      "when": {
+        "level_type": "mean_sea_level",
+        "member": 0,
+        "member_role": "control",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "psl.current.member.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 101,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "Pa"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.psl",
+      "when": {
+        "level_type": "mean_sea_level",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "rh.current.member.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rh",
+      "when": {
+        "level": [
+          500,
+          850
+        ],
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "member": 0,
+        "member_role": "control",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "rh.current.member.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rh",
+      "when": {
+        "level": [
+          500,
+          850
+        ],
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "rh.current.member.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rh",
+      "when": {
+        "level": [
+          500,
+          850
+        ],
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "member": 0,
+        "member_role": "control",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "rh.current.member.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rh",
+      "when": {
+        "level": [
+          500,
+          850
+        ],
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "t.current.member.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t",
+      "when": {
+        "level": [
+          500,
+          850
+        ],
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "member": 0,
+        "member_role": "control",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "t.current.member.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t",
+      "when": {
+        "level": [
+          500,
+          850
+        ],
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "t.current.member.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t",
+      "when": {
+        "level": [
+          500,
+          850
+        ],
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "member": 0,
+        "member_role": "control",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "t.current.member.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t",
+      "when": {
+        "level": [
+          500,
+          850
+        ],
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "t2m.current.member.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": 0,
+        "member_role": "control",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "t2m.current.member.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "t2m.current.member.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": 0,
+        "member_role": "control",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "t2m.current.member.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "u.current.member.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u",
+      "when": {
+        "level": [
+          500,
+          850
+        ],
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "member": 0,
+        "member_role": "control",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "u.current.member.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u",
+      "when": {
+        "level": [
+          500,
+          850
+        ],
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "u.current.member.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u",
+      "when": {
+        "level": [
+          500,
+          850
+        ],
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "member": 0,
+        "member_role": "control",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "u.current.member.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u",
+      "when": {
+        "level": [
+          500,
+          850
+        ],
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "u10m.current.member.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": 0,
+        "member_role": "control",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "u10m.current.member.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "u10m.current.member.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": 0,
+        "member_role": "control",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "u10m.current.member.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "v.current.member.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v",
+      "when": {
+        "level": [
+          500,
+          850
+        ],
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "member": 0,
+        "member_role": "control",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "v.current.member.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v",
+      "when": {
+        "level": [
+          500,
+          850
+        ],
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "v.current.member.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v",
+      "when": {
+        "level": [
+          500,
+          850
+        ],
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "member": 0,
+        "member_role": "control",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "v.current.member.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v",
+      "when": {
+        "level": [
+          500,
+          850
+        ],
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "v10m.current.member.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": 0,
+        "member_role": "control",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "v10m.current.member.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "v10m.current.member.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": 0,
+        "member_role": "control",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
+        "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
+      ],
+      "id": "v10m.current.member.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": "PT0S"
+      }
+    }
+  ],
+  "tables": [],
+  "version": "1"
+}

@@ -101,7 +101,7 @@ namespaces = false
 include-package-data = false
 
 [tool.setuptools.package-data]
-"reki.catalog" = ["builtin/catalog-v1.json", "builtin/current-gfs*.json", "builtin/current-meso3*.json", "builtin/current-meso1*.json", "builtin/current-tym*.json"]
+"reki.catalog" = ["builtin/catalog-v1.json", "builtin/current-gfs*.json", "builtin/current-meso3*.json", "builtin/current-meso1*.json", "builtin/current-tym*.json", "builtin/current-geps*.json", "builtin/current-reps*.json"]
 "reki.data_finder" = ["README.md", "conf/**/*.yaml"]
 "reki.readers.grib.config" = ["*.yaml", "*.md"]
 

@@ -476,7 +476,7 @@ def test_new_binding_rejects_incorrect_processing_phase(
         source.close()
 
 
-def test_new_tym_layers_and_unbound_ensembles(tmp_path):
+def test_new_tym_layers_and_meso1_soil_gap(tmp_path):
     path = tmp_path / "unopened.grb2"
     encoded(path)
     tym = from_source({"kind": "file", "dataset": "CMA-TYM", "path": str(path)})
@@ -492,6 +492,3 @@ def test_new_tym_layers_and_unbound_ensembles(tmp_path):
     finally:
         tym.close()
         meso.close()
-    for dataset in ["CMA-GEPS", "CMA-REPS"]:
-        with pytest.raises(QueryError):
-            from_source({"kind": "file", "dataset": dataset, "path": str(path)})

@@ -1,11 +1,12 @@
-# Current-business CMA-GFS and CMA-MESO 3 km sources
+# Current-business CEMC sources
 
-The builtin catalog registers `cma_gfs_gmf`, `cma_meso_3km`, `cma_meso_1km` and `cma_tym`, all with
-`orig` / `current`, for bounded deterministic instantaneous subsets. `current`
+The builtin catalog registers `cma_gfs_gmf`, `cma_meso_3km`, `cma_meso_1km`, `cma_tym`,
+`cma_geps` and `cma_reps`, all with `orig` / `current`, for bounded instantaneous
+subsets, including individual ensemble members for GEPS/REPS. `current`
 selects the current business interpretation; it does not assert an official
 producer release number or implement historical-version compatibility. The
-catalog content version is 4, GFS mappings version 2, MESO mappings version 1,
-the new MESO1 and TYM mappings version 1, and all parameter registries version 1. Their SHA pins remain exact. Reports
+catalog content version is 5, GFS mappings version 2, all other current mappings
+version 1, and all parameter registries version 1. Their SHA pins remain exact. Reports
 retain actual origins, message offsets and file fingerprints.
 
 ```python
@@ -106,6 +107,64 @@ Workspace I03 round-7 / I04 round-8 / I06 round-11 records the frozen latest
 MESO1 12Z and TYM 06Z original files, full-field checks and clean installation.
 MESO1 fields contain 37,587,511 points each; public `all` returns lazy references,
 so verification materializes complete individual fields to bound memory.
-GEPS/REPS remain without registered current products and are deferred to the
-next member-aware batch. Complete product domains and independent physical
+Complete product domains and independent physical
 acceptance remain open for all current registrations.
+
+## Current GEPS/REPS original members
+
+`CMA-GEPS` supports members 0–30, T/U/V/Q/RH at 850/500 hPa, T2M,
+U10M/V10M and PS/PSL. `CMA-REPS` supports members 0–14, T/U/V/RH at
+850/500 hPa, T2M, U10M/V10M and PSL. Both bindings support hours 0, 6 and
+24 only. REPS Q and PS have no suitable instantaneous candidates in the
+selected files and remain unregistered; this does not establish permanent
+absence. Formal ensemble statistics, probabilities and quantiles are separate
+products and are outside these member bindings.
+
+```python
+with from_source({"kind": "local", "dataset": "CMA-GEPS", "root": "/CMADAAS"}) as source:
+    members = source.sel(
+        parameter="t", level_type="pressure", level=[850, 500],
+        time="2026-10-29T12:00:00Z", step=["PT6H", "PT24H"], member=[0, 1, 2, 30],
+    ).all().to_xarray()
+
+with from_source({"kind": "local", "dataset": "CMA-REPS", "root": "/CMADAAS"}) as source:
+    control = source.sel(
+        parameter="t2m", time="2026-10-29T18:00:00Z", step="PT6H", member_role="control",
+    ).one().to_xarray()
+    all_members = source.sel(
+        parameter="t2m", time="2026-10-29T18:00:00Z", step="PT6H",
+    ).all().to_xarray()
+```
+
+Member selection uses a reviewed joint table of native ensemble kind and
+perturbation number. Member 0 is the control (kind 0); positive odd members
+use kind 3, and positive even members kind 2. The public role is perturbation
+for both signs; wrong kind/number combinations are not silently renumbered.
+Role-only selection narrows the finite default member domain, while an
+explicit contradictory number/role selection still fails. Dataset roles may
+be overridden through the existing context contract, but an override that
+contradicts native member attributes fails.
+
+These instantaneous member messages use PDT 1, generating-process type 4 and
+processed-data type 3/4 for control/perturbation. The reference-time flag is
+0 at hour 0 and 1 at hours 6/24; a zero-hour member field keeps its member
+identity. Native ensemble-size values are 31 for GEPS and 0 for REPS. REPS's
+zero is preserved as raw metadata and cannot establish a member population.
+
+GEPS directory dates and filename times are UTC. REPS directory dates use
+the Beijing date of the UTC reference time: the 2026-10-29 18Z cycle is in
+`ORIG-DATA/NAFP/CMA-REPS/2026/20261030/`, while its filename still contains
+`20261029180000`. This locator rule changes no canonical time or step. The
+old data-finder REPS YAML remains historical input; the current binding uses
+its own verified dataset identity and directory rule.
+
+Workspace I03 round-8 / I04 round-9 / I06 round-12 freezes GEPS 2026102912Z
+and REPS 2026102918Z, a 138-file member-header census and 362 distinct
+instantaneous messages in 62 files. The old DOCX statement REPS 00–15 is
+retained. The current finite binding uses the confirmed 0–14 target and
+observed current member inventory, and registers no member 15; applicability
+of the old statement remains an explicit historical evidence gap.
+
+There is no independently complete expected domain. `required` completeness
+continues to fail, and direct ecCodes comparison establishes same-decoder
+consistency only. External catalogs do not inherit these numbering tables.

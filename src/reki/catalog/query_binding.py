@@ -85,6 +85,8 @@ def _layout(value):
                     "date_label",
                     "year",
                     "member_3digit",
+                    "beijing_date_label",
+                    "beijing_year",
                 }
                 or spec
                 or conversion

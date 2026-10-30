@@ -1,0 +1,367 @@
+{
+  "complete_product_coverage": false,
+  "dataset": "cma_geps",
+  "directory_time_zone": "UTC",
+  "local_layout": [
+    "DATA/NAFP/NMC/GRAPES-GEPS/{year}/{date_label}/Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-GEPS-GLB-{forecast_hour_label}00-m{member_3digit}.grib2"
+  ],
+  "member_numbering": [
+    {
+      "member": 0,
+      "perturbationNumber": 0,
+      "typeOfEnsembleForecast": 0
+    },
+    {
+      "member": 1,
+      "perturbationNumber": 1,
+      "typeOfEnsembleForecast": 3
+    },
+    {
+      "member": 2,
+      "perturbationNumber": 2,
+      "typeOfEnsembleForecast": 2
+    },
+    {
+      "member": 3,
+      "perturbationNumber": 3,
+      "typeOfEnsembleForecast": 3
+    },
+    {
+      "member": 4,
+      "perturbationNumber": 4,
+      "typeOfEnsembleForecast": 2
+    },
+    {
+      "member": 5,
+      "perturbationNumber": 5,
+      "typeOfEnsembleForecast": 3
+    },
+    {
+      "member": 6,
+      "perturbationNumber": 6,
+      "typeOfEnsembleForecast": 2
+    },
+    {
+      "member": 7,
+      "perturbationNumber": 7,
+      "typeOfEnsembleForecast": 3
+    },
+    {
+      "member": 8,
+      "perturbationNumber": 8,
+      "typeOfEnsembleForecast": 2
+    },
+    {
+      "member": 9,
+      "perturbationNumber": 9,
+      "typeOfEnsembleForecast": 3
+    },
+    {
+      "member": 10,
+      "perturbationNumber": 10,
+      "typeOfEnsembleForecast": 2
+    },
+    {
+      "member": 11,
+      "perturbationNumber": 11,
+      "typeOfEnsembleForecast": 3
+    },
+    {
+      "member": 12,
+      "perturbationNumber": 12,
+      "typeOfEnsembleForecast": 2
+    },
+    {
+      "member": 13,
+      "perturbationNumber": 13,
+      "typeOfEnsembleForecast": 3
+    },
+    {
+      "member": 14,
+      "perturbationNumber": 14,
+      "typeOfEnsembleForecast": 2
+    },
+    {
+      "member": 15,
+      "perturbationNumber": 15,
+      "typeOfEnsembleForecast": 3
+    },
+    {
+      "member": 16,
+      "perturbationNumber": 16,
+      "typeOfEnsembleForecast": 2
+    },
+    {
+      "member": 17,
+      "perturbationNumber": 17,
+      "typeOfEnsembleForecast": 3
+    },
+    {
+      "member": 18,
+      "perturbationNumber": 18,
+      "typeOfEnsembleForecast": 2
+    },
+    {
+      "member": 19,
+      "perturbationNumber": 19,
+      "typeOfEnsembleForecast": 3
+    },
+    {
+      "member": 20,
+      "perturbationNumber": 20,
+      "typeOfEnsembleForecast": 2
+    },
+    {
+      "member": 21,
+      "perturbationNumber": 21,
+      "typeOfEnsembleForecast": 3
+    },
+    {
+      "member": 22,
+      "perturbationNumber": 22,
+      "typeOfEnsembleForecast": 2
+    },
+    {
+      "member": 23,
+      "perturbationNumber": 23,
+      "typeOfEnsembleForecast": 3
+    },
+    {
+      "member": 24,
+      "perturbationNumber": 24,
+      "typeOfEnsembleForecast": 2
+    },
+    {
+      "member": 25,
+      "perturbationNumber": 25,
+      "typeOfEnsembleForecast": 3
+    },
+    {
+      "member": 26,
+      "perturbationNumber": 26,
+      "typeOfEnsembleForecast": 2
+    },
+    {
+      "member": 27,
+      "perturbationNumber": 27,
+      "typeOfEnsembleForecast": 3
+    },
+    {
+      "member": 28,
+      "perturbationNumber": 28,
+      "typeOfEnsembleForecast": 2
+    },
+    {
+      "member": 29,
+      "perturbationNumber": 29,
+      "typeOfEnsembleForecast": 3
+    },
+    {
+      "member": 30,
+      "perturbationNumber": 30,
+      "typeOfEnsembleForecast": 2
+    }
+  ],
+  "parameter_registry": {
+    "builtin": "reki.parameters.cma-geps.current",
+    "sha256": "df0231b6f81943bc68f4421c147ef9e962cbb31f4028a02d398f2975d533b468",
+    "version": "1"
+  },
+  "product": "orig",
+  "product_version": "current",
+  "supported_pairs": [
+    {
+      "level_type": "surface",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.ps",
+      "step": [
+        "PT0S",
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level_type": "mean_sea_level",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.psl",
+      "step": [
+        "PT0S",
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.q",
+      "step": [
+        "PT0S",
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.rh",
+      "step": [
+        "PT0S",
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.t",
+      "step": [
+        "PT0S",
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": 2,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.t2m",
+      "step": [
+        "PT0S",
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.u",
+      "step": [
+        "PT0S",
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": 10,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.u10m",
+      "step": [
+        "PT0S",
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": [
+        500,
+        850
+      ],
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.v",
+      "step": [
+        "PT0S",
+        "PT21600S",
+        "PT86400S"
+      ]
+    },
+    {
+      "level": 10,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.v10m",
+      "step": [
+        "PT0S",
+        "PT21600S",
+        "PT86400S"
+      ]
+    }
+  ],
+  "time_zone": "UTC",
+  "version_policy": "current business only; no official release number or complete-domain inference"
+}

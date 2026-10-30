@@ -297,9 +297,15 @@ def from_source(source, *, context=None, client=None):
     """
     configuration = plan_source_binding(source, context=context, client=client)
     if configuration.source["kind"] in {"file", "local"}:
+        from reki.catalog.current import current_member_numbering
         from reki.translation.grib_backend import GribBackend
 
-        return construct_source(configuration, GribBackend(configuration))
+        return construct_source(
+            configuration,
+            GribBackend(
+                configuration, numbering=current_member_numbering(configuration)
+            ),
+        )
     return construct_source(configuration)
 
 
@@ -907,6 +913,34 @@ def _needs_vertical_type(query):
 
 def _prepare_input(query, configuration):
     scope = configuration.scope.to_dict()
+    raw = query.to_dict()
+    if (
+        "member_role" in raw
+        and "member" not in raw
+        and "member" in scope
+        and _count(scope["member"], "number") is not None
+    ):
+        # A product's default member domain is not an explicit user selection.
+        # Resolve a role-only query within that finite domain before checking
+        # explicit number/role contradictions. Never invent unknown roles.
+        members = expand_queries(
+            [{"member": scope["member"]}],
+            max_expansion=configuration.execution_defaults["max_expansion"],
+        )
+        roles = [configuration.member_role(m.to_dict()["member"]) for m in members]
+        if all(role is not None for role in roles):
+            selected = [
+                m.to_dict()["member"]
+                for m, role in zip(members, roles)
+                if _contains(raw["member_role"], role, "literal")
+            ]
+            if not selected:
+                raise QueryError(
+                    "constraint_conflict",
+                    "/member_role",
+                    "role is outside the source member domain",
+                )
+            scope["member"] = selected
     resources = configuration.resources
     parameter_ids = None
     if configuration.product is not None:

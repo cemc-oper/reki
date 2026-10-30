@@ -339,8 +339,21 @@ class GribBackend:
                     rows = expand_queries(
                         [query],
                         max_expansion=configuration.execution_defaults["max_expansion"],
+                        member_roles=thaw(configuration.member_roles),
+                        cemc=configuration.cemc_member_roles,
                     )
-                    proven = all(any(matches(row, c) for c in cover) for row in rows)
+                    identities = []
+                    for row in rows:
+                        identity = row.to_dict()
+                        if "member" in identity:
+                            role = configuration.member_role(identity["member"])
+                            if role is not None:
+                                identity.setdefault("member_role", role)
+                        identities.append(identity)
+                    proven = all(
+                        any(matches(identity, c) for c in cover)
+                        for identity in identities
+                    )
                 if not proven:
                     raise QueryError(
                         "unsupported",

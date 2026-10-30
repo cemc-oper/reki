@@ -29,6 +29,14 @@ BUILTINS = MappingProxyType(
         / "current-tym-parameters.json",
         "reki.mappings.cma-tym.current": Path(__file__).with_name("builtin")
         / "current-tym-mappings.json",
+        "reki.parameters.cma-geps.current": Path(__file__).with_name("builtin")
+        / "current-geps-parameters.json",
+        "reki.mappings.cma-geps.current": Path(__file__).with_name("builtin")
+        / "current-geps-mappings.json",
+        "reki.parameters.cma-reps.current": Path(__file__).with_name("builtin")
+        / "current-reps-parameters.json",
+        "reki.mappings.cma-reps.current": Path(__file__).with_name("builtin")
+        / "current-reps-mappings.json",
     }
 )
 

@@ -1197,14 +1197,451 @@
         "CMA-GEPS"
       ],
       "id": "cma_geps",
-      "products": []
+      "mappings": {
+        "grib2": {
+          "builtin": "reki.mappings.cma-geps.current",
+          "sha256": "db486a9e42d08a8144bce2a8cfd26f17294f90e594f674f3dba609008312d207",
+          "version": "1"
+        }
+      },
+      "products": [
+        {
+          "evidence": [
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;exact current member pairs",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;business declarations",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;member range and roles",
+            "policy:current only; complete_product_coverage=false"
+          ],
+          "id": "orig",
+          "methods": [],
+          "populations": [],
+          "provides": [
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.ps",
+              "step": [
+                "PT0S",
+                "PT21600S",
+                "PT86400S"
+              ]
+            },
+            {
+              "level_type": "mean_sea_level",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.psl",
+              "step": [
+                "PT0S",
+                "PT21600S",
+                "PT86400S"
+              ]
+            },
+            {
+              "level": [
+                500,
+                850
+              ],
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.q",
+              "step": [
+                "PT0S",
+                "PT21600S",
+                "PT86400S"
+              ]
+            },
+            {
+              "level": [
+                500,
+                850
+              ],
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.rh",
+              "step": [
+                "PT0S",
+                "PT21600S",
+                "PT86400S"
+              ]
+            },
+            {
+              "level": [
+                500,
+                850
+              ],
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.t",
+              "step": [
+                "PT0S",
+                "PT21600S",
+                "PT86400S"
+              ]
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.t2m",
+              "step": [
+                "PT0S",
+                "PT21600S",
+                "PT86400S"
+              ]
+            },
+            {
+              "level": [
+                500,
+                850
+              ],
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.u",
+              "step": [
+                "PT0S",
+                "PT21600S",
+                "PT86400S"
+              ]
+            },
+            {
+              "level": 10,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.u10m",
+              "step": [
+                "PT0S",
+                "PT21600S",
+                "PT86400S"
+              ]
+            },
+            {
+              "level": [
+                500,
+                850
+              ],
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.v",
+              "step": [
+                "PT0S",
+                "PT21600S",
+                "PT86400S"
+              ]
+            },
+            {
+              "level": 10,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.v10m",
+              "step": [
+                "PT0S",
+                "PT21600S",
+                "PT86400S"
+              ]
+            }
+          ],
+          "scope": {
+            "member": {
+              "range": {
+                "end": 30,
+                "every": 1,
+                "start": 0
+              }
+            },
+            "step": [
+              "PT0H",
+              "PT6H",
+              "PT24H"
+            ]
+          },
+          "sources": [
+            {
+              "id": "cmadaas-disk",
+              "kind": "local"
+            },
+            {
+              "id": "explicit-files",
+              "kind": "file"
+            }
+          ],
+          "version": "current"
+        }
+      ]
     },
     {
       "aliases": [
         "CMA-REPS"
       ],
       "id": "cma_reps",
-      "products": []
+      "mappings": {
+        "grib2": {
+          "builtin": "reki.mappings.cma-reps.current",
+          "sha256": "2bdeaa1d8b5f050da124cd26f9fec747b4764cfc589dd26354e9a006740e7e3b",
+          "version": "1"
+        }
+      },
+      "products": [
+        {
+          "evidence": [
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;exact current member pairs",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;business declarations",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;member range and roles",
+            "policy:current only; complete_product_coverage=false"
+          ],
+          "id": "orig",
+          "methods": [],
+          "populations": [],
+          "provides": [
+            {
+              "level_type": "mean_sea_level",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.psl",
+              "step": [
+                "PT0S",
+                "PT21600S",
+                "PT86400S"
+              ]
+            },
+            {
+              "level": [
+                500,
+                850
+              ],
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.rh",
+              "step": [
+                "PT0S",
+                "PT21600S",
+                "PT86400S"
+              ]
+            },
+            {
+              "level": [
+                500,
+                850
+              ],
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.t",
+              "step": [
+                "PT0S",
+                "PT21600S",
+                "PT86400S"
+              ]
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.t2m",
+              "step": [
+                "PT0S",
+                "PT21600S",
+                "PT86400S"
+              ]
+            },
+            {
+              "level": [
+                500,
+                850
+              ],
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.u",
+              "step": [
+                "PT0S",
+                "PT21600S",
+                "PT86400S"
+              ]
+            },
+            {
+              "level": 10,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.u10m",
+              "step": [
+                "PT0S",
+                "PT21600S",
+                "PT86400S"
+              ]
+            },
+            {
+              "level": [
+                500,
+                850
+              ],
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.v",
+              "step": [
+                "PT0S",
+                "PT21600S",
+                "PT86400S"
+              ]
+            },
+            {
+              "level": 10,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.v10m",
+              "step": [
+                "PT0S",
+                "PT21600S",
+                "PT86400S"
+              ]
+            }
+          ],
+          "scope": {
+            "member": {
+              "range": {
+                "end": 14,
+                "every": 1,
+                "start": 0
+              }
+            },
+            "step": [
+              "PT0H",
+              "PT6H",
+              "PT24H"
+            ]
+          },
+          "sources": [
+            {
+              "id": "cmadaas-disk",
+              "kind": "local"
+            },
+            {
+              "id": "explicit-files",
+              "kind": "file"
+            }
+          ],
+          "version": "current"
+        }
+      ]
     },
     {
       "aliases": [
@@ -1293,5 +1730,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "4"
+  "version": "5"
 }
