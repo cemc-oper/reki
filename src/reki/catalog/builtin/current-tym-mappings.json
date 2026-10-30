@@ -420,6 +420,357 @@
       },
       "backend": "grib2",
       "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-13/business-material.json#sha256=6824aff969bf2d0026281698025e87becc46f163912db44970f5a4d3dd9e0d08;DOCX table2 TYM three classes; MESO1 original model and business declarations linked in decisions; preserve unspecified service units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-13/time-unit-decisions.json#sha256=494d270174257d967594196cf94f42b585f4c7779df9df883bb535dd2f5ee4bf;unchanged reviewed since-initialization identity; separate native kg/m2 and target mm",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-16/native-evidence.json#sha256=e4128926a52defa28ffa54010445dfaba836cc60c80173c634016710fecba21b;tym; exact current PDT8 headers and original-message SHA; no numerical acceptance implied",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-16/verification-input.json#sha256=0707216ff57af046c1c70f3bd513b9dd704c0c47e3443573aaff9c68da017aaa;frozen MESO1 0/6/12h and TYM 0/6/24h contexts",
+        "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows"
+      ],
+      "id": "rain.since-initialization.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-13/business-material.json#sha256=6824aff969bf2d0026281698025e87becc46f163912db44970f5a4d3dd9e0d08;DOCX table2 TYM three classes; MESO1 original model and business declarations linked in decisions; preserve unspecified service units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-13/time-unit-decisions.json#sha256=494d270174257d967594196cf94f42b585f4c7779df9df883bb535dd2f5ee4bf;unchanged reviewed since-initialization identity; separate native kg/m2 and target mm",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-16/native-evidence.json#sha256=e4128926a52defa28ffa54010445dfaba836cc60c80173c634016710fecba21b;tym; exact current PDT8 headers and original-message SHA; no numerical acceptance implied",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-16/verification-input.json#sha256=0707216ff57af046c1c70f3bd513b9dd704c0c47e3443573aaff9c68da017aaa;frozen MESO1 0/6/12h and TYM 0/6/24h contexts",
+        "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows"
+      ],
+      "id": "rain.since-initialization.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-13/business-material.json#sha256=6824aff969bf2d0026281698025e87becc46f163912db44970f5a4d3dd9e0d08;DOCX table2 TYM three classes; MESO1 original model and business declarations linked in decisions; preserve unspecified service units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-13/time-unit-decisions.json#sha256=494d270174257d967594196cf94f42b585f4c7779df9df883bb535dd2f5ee4bf;unchanged reviewed since-initialization identity; separate native kg/m2 and target mm",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-16/native-evidence.json#sha256=e4128926a52defa28ffa54010445dfaba836cc60c80173c634016710fecba21b;tym; exact current PDT8 headers and original-message SHA; no numerical acceptance implied",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-16/verification-input.json#sha256=0707216ff57af046c1c70f3bd513b9dd704c0c47e3443573aaff9c68da017aaa;frozen MESO1 0/6/12h and TYM 0/6/24h contexts",
+        "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows"
+      ],
+      "id": "rainc.since-initialization.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 10,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-13/business-material.json#sha256=6824aff969bf2d0026281698025e87becc46f163912db44970f5a4d3dd9e0d08;DOCX table2 TYM three classes; MESO1 original model and business declarations linked in decisions; preserve unspecified service units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-13/time-unit-decisions.json#sha256=494d270174257d967594196cf94f42b585f4c7779df9df883bb535dd2f5ee4bf;unchanged reviewed since-initialization identity; separate native kg/m2 and target mm",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-16/native-evidence.json#sha256=e4128926a52defa28ffa54010445dfaba836cc60c80173c634016710fecba21b;tym; exact current PDT8 headers and original-message SHA; no numerical acceptance implied",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-16/verification-input.json#sha256=0707216ff57af046c1c70f3bd513b9dd704c0c47e3443573aaff9c68da017aaa;frozen MESO1 0/6/12h and TYM 0/6/24h contexts",
+        "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows"
+      ],
+      "id": "rainc.since-initialization.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 10,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-13/business-material.json#sha256=6824aff969bf2d0026281698025e87becc46f163912db44970f5a4d3dd9e0d08;DOCX table2 TYM three classes; MESO1 original model and business declarations linked in decisions; preserve unspecified service units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-13/time-unit-decisions.json#sha256=494d270174257d967594196cf94f42b585f4c7779df9df883bb535dd2f5ee4bf;unchanged reviewed since-initialization identity; separate native kg/m2 and target mm",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-16/native-evidence.json#sha256=e4128926a52defa28ffa54010445dfaba836cc60c80173c634016710fecba21b;tym; exact current PDT8 headers and original-message SHA; no numerical acceptance implied",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-16/verification-input.json#sha256=0707216ff57af046c1c70f3bd513b9dd704c0c47e3443573aaff9c68da017aaa;frozen MESO1 0/6/12h and TYM 0/6/24h contexts",
+        "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows"
+      ],
+      "id": "rainnc.since-initialization.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 9,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainnc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-13/business-material.json#sha256=6824aff969bf2d0026281698025e87becc46f163912db44970f5a4d3dd9e0d08;DOCX table2 TYM three classes; MESO1 original model and business declarations linked in decisions; preserve unspecified service units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-13/time-unit-decisions.json#sha256=494d270174257d967594196cf94f42b585f4c7779df9df883bb535dd2f5ee4bf;unchanged reviewed since-initialization identity; separate native kg/m2 and target mm",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-16/native-evidence.json#sha256=e4128926a52defa28ffa54010445dfaba836cc60c80173c634016710fecba21b;tym; exact current PDT8 headers and original-message SHA; no numerical acceptance implied",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-16/verification-input.json#sha256=0707216ff57af046c1c70f3bd513b9dd704c0c47e3443573aaff9c68da017aaa;frozen MESO1 0/6/12h and TYM 0/6/24h contexts",
+        "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows"
+      ],
+      "id": "rainnc.since-initialization.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 9,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainnc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/cedarkit-param-db/migrations/stage1.1-i03-grib-util-batch-2/file-mappings/mappings-00-grib2.json#sha256=2a1c30e3ba08084f2bb26d235e840f795d405ae422350d73556a2e68ccf7379d;reviewed encoding origin",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-6/current-version-policy.md#sha256=ad9dcfdca70c99d4c2df56c38d18f0098611a77d1b98a22d45499d0b9ff70152;user-authorized current-only business policy; no official V-number asserted",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table 1; pressure, height, unit and actual soil intervals",
@@ -1759,5 +2110,5 @@
     }
   ],
   "tables": [],
-  "version": "1"
+  "version": "2"
 }
