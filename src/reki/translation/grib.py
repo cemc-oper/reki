@@ -465,9 +465,15 @@ def statistics(
                 {"reason": "missing_context"},
             )
         normalize_statistics(time_stats, complete=True)
-        if stats["population"].get("ref") not in {
-            p["id"] for p in product["populations"]
-        }:
+        population = next(
+            (
+                p
+                for p in product["populations"]
+                if p["id"] == stats["population"].get("ref")
+            ),
+            None,
+        )
+        if population is None:
             raise QueryError(
                 "invalid_config",
                 "/statistics/population",
@@ -482,7 +488,10 @@ def statistics(
                 maximum=254,
                 reason="invalid_statistics_metadata",
             )
-            allowed = {0: "mean", 8: "minimum", 9: "maximum"}
+            # WMO code 4 only identifies spread. The concrete definition must
+            # separately establish standard deviation, weighting and ddof.
+            # Cluster deviations (2/3) are not this all-member path.
+            allowed = {0: "mean", 4: "standard_deviation", 8: "minimum", 9: "maximum"}
             if code not in allowed:
                 metadata_error(
                     "unsupported_native_encoding",
@@ -499,6 +508,32 @@ def statistics(
                     "fixed_definition_mismatch",
                     "unweighted native mean contradicts fixed weighting",
                 )
+            if meta.get("numberOfForecastsInEnsemble") not in (None, 255):
+                count = integer(
+                    meta,
+                    "numberOfForecastsInEnsemble",
+                    minimum=1,
+                    maximum=254,
+                    reason="invalid_statistics_metadata",
+                )
+                members = thaw(population["members"])
+                if isinstance(members, dict):
+                    r = members["range"]
+                    size = (r["end"] - r["start"]) // r["every"] + 1
+                else:
+                    size = len(members)
+                missing = population["missing"]
+                minimum = (
+                    size
+                    if missing["policy"] == "require_all"
+                    else missing["min_members"]
+                )
+                if not minimum <= count <= size:
+                    metadata_error(
+                        "fixed_definition_mismatch",
+                        "native forecast count conflicts with the declared population and missing policy",
+                        fields={"numberOfForecastsInEnsemble": count},
+                    )
         elif template in {6, 10}:
             quantile = (
                 integer(
