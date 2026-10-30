@@ -5,9 +5,10 @@ The builtin catalog registers `cma_gfs_gmf`, `cma_meso_3km`, `cma_meso_1km`, `cm
 subsets, including individual ensemble members for GEPS/REPS. `current`
 selects the current business interpretation; it does not assert an official
 producer release number or implement historical-version compatibility. The
-catalog content version is 6. GFS, GEPS and REPS mappings use version 2;
-other current mappings use version 1. GEPS/REPS parameter registries use
-version 2 and the other registries version 1. Their SHA pins remain exact. Reports
+catalog content version is 7. GFS mappings use version 3; MESO 3 km,
+GEPS and REPS mappings use version 2; other current mappings use version 1.
+GFS, MESO 3 km, GEPS and REPS parameter registries use version 2, and
+the other registries version 1. Their SHA pins remain exact. Reports
 retain actual origins, message offsets and file fingerprints.
 
 ```python
@@ -219,3 +220,44 @@ review remains 125 resolved / 96 needing evidence; six additional backend
 coverage obligations for the new variants are recorded separately. Complete
 provision, independent physical acceptance, snowfall conflicts and formal
 ensemble statistics/probability/quantile products remain open.
+
+## Current deterministic precipitation accumulations
+
+The current GFS binding also provides total (`rain` / `APCP`), convective
+(`rainc` / `ACPCP`) and large-scale (`rainnc` / `NCPCP`) precipitation at the
+surface for 0, 6 and 24 hours. The current MESO 3 km binding provides total
+precipitation at those same leads. MESO 3 km convective and large-scale
+precipitation have no added mapping: the selected current messages and business
+material do not establish those products. Existing instantaneous pairs remain.
+
+```python
+from reki import from_source
+
+with from_source({"kind": "local", "dataset": "CMA-GFS", "root": "/CMADAAS"}) as source:
+    rain = source.sel(
+        parameter=["APCP", "ACPCP", "NCPCP"],
+        time="2026-10-30T00:00:00Z",
+        step=["PT6H", "PT24H"],
+    ).all().to_xarray()
+```
+
+These PDT-8 fields reuse the reviewed `*.since-initialization` identities.
+`forecastTime=0` is the interval start, while the coded interval end establishes
+`step` and `valid_time`. A zero-hour field retains its zero-length accumulation;
+it does not become instantaneous. A trailing window remains a different
+identity, and no window is calculated by subtracting accumulations.
+
+Native `kg/m2` and target `mm` remain separate. The reviewed water-equivalent
+1:1 convention is activated only for these exact builtin identities. An ecCodes
+`units=unknown` placeholder uses the verified `parameterUnits` and mapping
+source-unit declaration; contradictory units fail. The DOCX GFS spelling `Mm`
+is retained as source evidence, not registered as a global unit alias. Target
+`mm` follows the original parameter declaration and reviewed definition.
+
+The new finite rows separate initial analysis metadata from positive-lead
+forecast metadata and reuse the existing time, statistics and unit rules.
+Multiple intervals, unsupported increments, inconsistent endpoints, fixed-period
+mismatches and unit conflicts keep their explicit diagnostics. These are
+existing deterministic products with additional finite pairs; complete product
+coverage, formal ensemble products and independent physical acceptance remain
+separate obligations.

@@ -220,6 +220,357 @@
       },
       "backend": "grib2",
       "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/business-material.json#sha256=9359459ba2fc6348fff05463a3adaa45a802b70deac6b0dc1584691075295349;DOCX table0 GFS three precipitation classes; table1 MESO3 total only; preserve literal units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/time-unit-decisions.json#sha256=eb47c4b26aca5a73c52644c11845d2bd79a177397af31e18cd55474b7ca54b85;unchanged reviewed since-initialization identity; separate native kg/m2 and target mm",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/native-evidence.json#sha256=fc283181c66d06fe56347f5e6d56d77251333f1bedd3cb7313d86aef7ce75a05;gfs; exact current PDT8 headers and original-message SHA; no numerical acceptance implied",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/verification-input.json#sha256=c8de8220304ea9a5e009c0fee90157a493dd057a280c7b99eee7b6efb1d4f4c9;frozen 0/6/24h native contexts",
+        "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows"
+      ],
+      "id": "rain.since-initialization.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/business-material.json#sha256=9359459ba2fc6348fff05463a3adaa45a802b70deac6b0dc1584691075295349;DOCX table0 GFS three precipitation classes; table1 MESO3 total only; preserve literal units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/time-unit-decisions.json#sha256=eb47c4b26aca5a73c52644c11845d2bd79a177397af31e18cd55474b7ca54b85;unchanged reviewed since-initialization identity; separate native kg/m2 and target mm",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/native-evidence.json#sha256=fc283181c66d06fe56347f5e6d56d77251333f1bedd3cb7313d86aef7ce75a05;gfs; exact current PDT8 headers and original-message SHA; no numerical acceptance implied",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/verification-input.json#sha256=c8de8220304ea9a5e009c0fee90157a493dd057a280c7b99eee7b6efb1d4f4c9;frozen 0/6/24h native contexts",
+        "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows"
+      ],
+      "id": "rain.since-initialization.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/business-material.json#sha256=9359459ba2fc6348fff05463a3adaa45a802b70deac6b0dc1584691075295349;DOCX table0 GFS three precipitation classes; table1 MESO3 total only; preserve literal units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/time-unit-decisions.json#sha256=eb47c4b26aca5a73c52644c11845d2bd79a177397af31e18cd55474b7ca54b85;unchanged reviewed since-initialization identity; separate native kg/m2 and target mm",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/native-evidence.json#sha256=fc283181c66d06fe56347f5e6d56d77251333f1bedd3cb7313d86aef7ce75a05;gfs; exact current PDT8 headers and original-message SHA; no numerical acceptance implied",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/verification-input.json#sha256=c8de8220304ea9a5e009c0fee90157a493dd057a280c7b99eee7b6efb1d4f4c9;frozen 0/6/24h native contexts",
+        "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows"
+      ],
+      "id": "rainc.since-initialization.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 10,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/business-material.json#sha256=9359459ba2fc6348fff05463a3adaa45a802b70deac6b0dc1584691075295349;DOCX table0 GFS three precipitation classes; table1 MESO3 total only; preserve literal units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/time-unit-decisions.json#sha256=eb47c4b26aca5a73c52644c11845d2bd79a177397af31e18cd55474b7ca54b85;unchanged reviewed since-initialization identity; separate native kg/m2 and target mm",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/native-evidence.json#sha256=fc283181c66d06fe56347f5e6d56d77251333f1bedd3cb7313d86aef7ce75a05;gfs; exact current PDT8 headers and original-message SHA; no numerical acceptance implied",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/verification-input.json#sha256=c8de8220304ea9a5e009c0fee90157a493dd057a280c7b99eee7b6efb1d4f4c9;frozen 0/6/24h native contexts",
+        "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows"
+      ],
+      "id": "rainc.since-initialization.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 10,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/business-material.json#sha256=9359459ba2fc6348fff05463a3adaa45a802b70deac6b0dc1584691075295349;DOCX table0 GFS three precipitation classes; table1 MESO3 total only; preserve literal units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/time-unit-decisions.json#sha256=eb47c4b26aca5a73c52644c11845d2bd79a177397af31e18cd55474b7ca54b85;unchanged reviewed since-initialization identity; separate native kg/m2 and target mm",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/native-evidence.json#sha256=fc283181c66d06fe56347f5e6d56d77251333f1bedd3cb7313d86aef7ce75a05;gfs; exact current PDT8 headers and original-message SHA; no numerical acceptance implied",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/verification-input.json#sha256=c8de8220304ea9a5e009c0fee90157a493dd057a280c7b99eee7b6efb1d4f4c9;frozen 0/6/24h native contexts",
+        "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows"
+      ],
+      "id": "rainnc.since-initialization.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 9,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainnc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/business-material.json#sha256=9359459ba2fc6348fff05463a3adaa45a802b70deac6b0dc1584691075295349;DOCX table0 GFS three precipitation classes; table1 MESO3 total only; preserve literal units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/time-unit-decisions.json#sha256=eb47c4b26aca5a73c52644c11845d2bd79a177397af31e18cd55474b7ca54b85;unchanged reviewed since-initialization identity; separate native kg/m2 and target mm",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/native-evidence.json#sha256=fc283181c66d06fe56347f5e6d56d77251333f1bedd3cb7313d86aef7ce75a05;gfs; exact current PDT8 headers and original-message SHA; no numerical acceptance implied",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/verification-input.json#sha256=c8de8220304ea9a5e009c0fee90157a493dd057a280c7b99eee7b6efb1d4f4c9;frozen 0/6/24h native contexts",
+        "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows"
+      ],
+      "id": "rainnc.since-initialization.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 9,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainnc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/cedarkit-param-db/migrations/stage1.1-i03-grib-util-batch-2/file-mappings/mappings-00-grib2.json#sha256=2a1c30e3ba08084f2bb26d235e840f795d405ae422350d73556a2e68ccf7379d;reviewed encoding origin",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-6/current-version-policy.md#sha256=ad9dcfdca70c99d4c2df56c38d18f0098611a77d1b98a22d45499d0b9ff70152;user-authorized current-only business policy; no official V-number asserted",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table 0; pressure, height, unit and actual soil intervals",
@@ -1036,5 +1387,5 @@
     }
   ],
   "tables": [],
-  "version": "2"
+  "version": "3"
 }

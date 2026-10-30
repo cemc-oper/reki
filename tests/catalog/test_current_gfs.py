@@ -163,7 +163,7 @@ def test_native_file_keeps_no_default_parameters_or_product(tmp_path):
 def test_current_resource_pin_rejects_tampering():
     ref = {
         "builtin": "reki.mappings.cma-gfs.current",
-        "version": "2",
+        "version": "3",
         "sha256": "0" * 64,
     }
     with pytest.raises(QueryError):

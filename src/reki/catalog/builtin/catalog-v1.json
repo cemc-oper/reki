@@ -10,8 +10,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-gfs.current",
-          "sha256": "781f756eb23c57d5ae791d197104a37c7ce3dcf273ec452b7e9cceeba5655840",
-          "version": "2"
+          "sha256": "cb1c1cafc744b7596d6ce7d70cbfd9e705c8bfe14220b75d44d416b505460448",
+          "version": "3"
         }
       },
       "products": [
@@ -19,7 +19,9 @@
           "evidence": [
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;supported paired scope; not complete business domain",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;business material",
-            "policy:current only; exact resource versions and SHA remain pinned; complete_product_coverage=false"
+            "policy:current only; exact resource versions and SHA remain pinned; complete_product_coverage=false",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/native-evidence.json#sha256=fc283181c66d06fe56347f5e6d56d77251333f1bedd3cb7313d86aef7ce75a05;current deterministic PDT8 precipitation",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/time-unit-decisions.json#sha256=eb47c4b26aca5a73c52644c11845d2bd79a177397af31e18cd55474b7ca54b85;actual since-initialization interval and finite water-equivalent convention"
           ],
           "id": "orig",
           "methods": [],
@@ -282,6 +284,33 @@
                 "PT172800S",
                 "PT259200S"
               ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.since-initialization",
+              "step": [
+                "PT0H",
+                "PT6H",
+                "PT24H"
+              ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rainc.since-initialization",
+              "step": [
+                "PT0H",
+                "PT6H",
+                "PT24H"
+              ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rainnc.since-initialization",
+              "step": [
+                "PT0H",
+                "PT6H",
+                "PT24H"
+              ]
             }
           ],
           "scope": {
@@ -318,8 +347,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-meso-3km.current",
-          "sha256": "9a53be71ade7ab34b09c8c0147ffbce2683b9879d095e72d6ff10acb08a605f6",
-          "version": "1"
+          "sha256": "f2084fb272917535454ddd3e500c6e6f7d3bcc4a8889fd86107fb3d8b95f0335",
+          "version": "2"
         }
       },
       "products": [
@@ -327,7 +356,9 @@
           "evidence": [
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;supported paired scope; not complete business domain",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;business material",
-            "policy:current only; exact resource versions and SHA remain pinned; complete_product_coverage=false"
+            "policy:current only; exact resource versions and SHA remain pinned; complete_product_coverage=false",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/native-evidence.json#sha256=fc283181c66d06fe56347f5e6d56d77251333f1bedd3cb7313d86aef7ce75a05;current deterministic PDT8 precipitation",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/time-unit-decisions.json#sha256=eb47c4b26aca5a73c52644c11845d2bd79a177397af31e18cd55474b7ca54b85;actual since-initialization interval and finite water-equivalent convention"
           ],
           "id": "orig",
           "methods": [],
@@ -569,6 +600,15 @@
                 "PT43200S",
                 "PT86400S",
                 "PT129600S"
+              ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.since-initialization",
+              "step": [
+                "PT0H",
+                "PT6H",
+                "PT24H"
               ]
             }
           ],
@@ -1814,5 +1854,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "6"
+  "version": "7"
 }

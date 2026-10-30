@@ -6,11 +6,14 @@
   ],
   "parameter_registry": {
     "builtin": "reki.parameters.cma-meso-3km.current",
-    "sha256": "8405fcda17db555401fe501677b45e78f4bf4552d8d40418d43bca793f120a3c",
-    "version": "1"
+    "sha256": "8f3e8ac4a1f90413d44a99086bb60d85c5f71dd2756b7a0c06d83fe373eeb17c",
+    "version": "2"
   },
   "product": "orig",
   "product_version": "current",
+  "quantity_kinds": {
+    "cedarkit.rain.since-initialization": "water_equivalent_precipitation"
+  },
   "supported_pairs": [
     {
       "level_type": "surface",
@@ -248,6 +251,15 @@
         "PT43200S",
         "PT86400S",
         "PT129600S"
+      ]
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.since-initialization",
+      "step": [
+        "PT0H",
+        "PT6H",
+        "PT24H"
       ]
     }
   ],
