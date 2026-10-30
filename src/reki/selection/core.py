@@ -297,13 +297,18 @@ def from_source(source, *, context=None, client=None):
     """
     configuration = plan_source_binding(source, context=context, client=client)
     if configuration.source["kind"] in {"file", "local"}:
-        from reki.catalog.current import current_member_numbering
+        from reki.catalog.current import (
+            current_member_numbering,
+            current_quantity_kinds,
+        )
         from reki.translation.grib_backend import GribBackend
 
         return construct_source(
             configuration,
             GribBackend(
-                configuration, numbering=current_member_numbering(configuration)
+                configuration,
+                numbering=current_member_numbering(configuration),
+                quantity_kinds=current_quantity_kinds(configuration),
             ),
         )
     return construct_source(configuration)

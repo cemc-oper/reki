@@ -164,11 +164,16 @@
   ],
   "parameter_registry": {
     "builtin": "reki.parameters.cma-geps.current",
-    "sha256": "df0231b6f81943bc68f4421c147ef9e962cbb31f4028a02d398f2975d533b468",
-    "version": "1"
+    "sha256": "73c293e71ff9123054b8eaf0b458e3464451156c214367e717adb0bae6a859dc",
+    "version": "2"
   },
   "product": "orig",
   "product_version": "current",
+  "quantity_kinds": {
+    "cedarkit.rain.since-initialization": "water_equivalent_precipitation",
+    "cedarkit.rainc.since-initialization": "water_equivalent_precipitation",
+    "cedarkit.rainnc.since-initialization": "water_equivalent_precipitation"
+  },
   "supported_pairs": [
     {
       "level_type": "surface",
@@ -359,6 +364,54 @@
         "PT0S",
         "PT21600S",
         "PT86400S"
+      ]
+    },
+    {
+      "level_type": "surface",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.rain.since-initialization",
+      "step": [
+        "PT0H",
+        "PT6H",
+        "PT24H"
+      ]
+    },
+    {
+      "level_type": "surface",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.rainc.since-initialization",
+      "step": [
+        "PT0H",
+        "PT6H",
+        "PT24H"
+      ]
+    },
+    {
+      "level_type": "surface",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.rainnc.since-initialization",
+      "step": [
+        "PT0H",
+        "PT6H",
+        "PT24H"
       ]
     }
   ],

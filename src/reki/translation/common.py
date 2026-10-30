@@ -107,6 +107,14 @@ def value_unit(response_unit, target_unit, rule=None, *, quantity_kind=None):
         )
     sd, sf, so = unit_info(source)
     td, tf, to = unit_info(target_unit)
+    # Water-equivalent precipitation has a specific mass-area/depth convention.
+    # It is not a global dimensional equivalence or a configurable multiplier.
+    if (
+        quantity_kind == "water_equivalent_precipitation"
+        and unit_name(source) == "kg/m2"
+        and unit_name(target_unit) == "mm"
+    ):
+        return UnitRequirement("kg/m2", "mm", Decimal(1), Decimal(0))
     if sd != td:
         unsupported(
             "source and business units are incompatible",

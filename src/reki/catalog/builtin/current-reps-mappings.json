@@ -295,6 +295,558 @@
       },
       "backend": "grib2",
       "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX accumulated precipitation declarations",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;complete new period variant and bounded water-equivalent unit convention",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
+        "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false"
+      ],
+      "id": "rain.since-initialization.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "member": 0,
+        "member_role": "control",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX accumulated precipitation declarations",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;complete new period variant and bounded water-equivalent unit convention",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
+        "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false"
+      ],
+      "id": "rain.since-initialization.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX accumulated precipitation declarations",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;complete new period variant and bounded water-equivalent unit convention",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
+        "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false"
+      ],
+      "id": "rain.since-initialization.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "member": 0,
+        "member_role": "control",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX accumulated precipitation declarations",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;complete new period variant and bounded water-equivalent unit convention",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
+        "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false"
+      ],
+      "id": "rain.since-initialization.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX accumulated precipitation declarations",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;complete new period variant and bounded water-equivalent unit convention",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
+        "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false"
+      ],
+      "id": "rainc.since-initialization.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 10,
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "member": 0,
+        "member_role": "control",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX accumulated precipitation declarations",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;complete new period variant and bounded water-equivalent unit convention",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
+        "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false"
+      ],
+      "id": "rainc.since-initialization.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 10,
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": [
+          "PT21600S",
+          "PT86400S"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX accumulated precipitation declarations",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;complete new period variant and bounded water-equivalent unit convention",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
+        "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false"
+      ],
+      "id": "rainc.since-initialization.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 10,
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "member": 0,
+        "member_role": "control",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX accumulated precipitation declarations",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;complete new period variant and bounded water-equivalent unit convention",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
+        "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false"
+      ],
+      "id": "rainc.since-initialization.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 10,
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
@@ -2381,5 +2933,5 @@
     }
   ],
   "tables": [],
-  "version": "1"
+  "version": "2"
 }

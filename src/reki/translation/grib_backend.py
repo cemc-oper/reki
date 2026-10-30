@@ -80,6 +80,15 @@ INTEGER_KEYS = frozenset(
 )
 STRING_KEYS = frozenset({"units", "parameterUnits", "gridType"})
 NATIVE_KEYS = INTEGER_KEYS | STRING_KEYS
+# Retain the remaining time-range descriptor fields as evidence, without
+# claiming a sampling algorithm or widening the finite native Query selectors.
+STATISTIC_EVIDENCE_KEYS = frozenset(
+    {
+        "indicatorOfUnitForTimeIncrement",
+        "timeIncrement",
+        "numberOfMissingInStatisticalProcess",
+    }
+)
 # Raw evidence only; these do not expand the accepted native Query selectors.
 GRID_INTEGER_KEYS = frozenset(
     {
@@ -162,7 +171,11 @@ def _metadata(handle, *, keys=None):
     import eccodes
 
     result = {}
-    for key in NATIVE_KEYS | GRID_INTEGER_KEYS if keys is None else keys:
+    for key in (
+        NATIVE_KEYS | GRID_INTEGER_KEYS | STATISTIC_EVIDENCE_KEYS
+        if keys is None
+        else keys
+    ):
         try:
             if not eccodes.codes_is_defined(handle, key) or eccodes.codes_is_missing(
                 handle, key
@@ -171,7 +184,7 @@ def _metadata(handle, *, keys=None):
             else:
                 result[key] = (
                     eccodes.codes_get_long(handle, key)
-                    if key in INTEGER_KEYS | GRID_INTEGER_KEYS
+                    if key in INTEGER_KEYS | GRID_INTEGER_KEYS | STATISTIC_EVIDENCE_KEYS
                     else eccodes.codes_get_string(handle, key)
                 )
         except eccodes.KeyValueNotFoundError:
@@ -652,6 +665,25 @@ class GribScan:
         parameter = self.backend.configuration.resources.parameter(
             mapping["parameter_id"]
         )
+        quantity_kind = self.backend.quantity_kinds.get(parameter["parameter_id"])
+        unit_origin = None
+        if quantity_kind == "water_equivalent_precipitation":
+            declared_native = native.get("parameterUnits")
+            if declared_native not in {None, "", "unknown", "~"}:
+                if source_unit is None:
+                    source_unit = declared_native
+                    unit_origin = (
+                        "native.parameterUnits; units is an ecCodes absence placeholder"
+                    )
+                else:
+                    value_unit(
+                        source_unit,
+                        source_unit,
+                        {
+                            "rule": "common.value_unit",
+                            "config": {"source_unit": declared_native},
+                        },
+                    )
         fixed = parameter["fixed_conditions"]
         if not matches(base, {k: v for k, v in fixed.items() if k != "statistics"}):
             metadata_error(
@@ -696,7 +728,7 @@ class GribScan:
             None if probability else source_unit,
             parameter["unit"],
             thaw(unit_rule),
-            quantity_kind=self.backend.quantity_kinds.get(parameter["parameter_id"]),
+            quantity_kind=quantity_kind,
         )
         return {
             **base,
@@ -709,6 +741,8 @@ class GribScan:
             source_unit=requirement.source,
             unit=parameter["unit"],
             statistics=stats,
+            **({"statistical_interval": interval} if interval is not None else {}),
+            **({"source_unit_basis": {"origin": unit_origin}} if unit_origin else {}),
             **(
                 {
                     "source_unit_basis": {

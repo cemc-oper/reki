@@ -6,12 +6,12 @@ import xarray as xr
 
 from cedarkit_query import QueryError
 from cedarkit_query.normalize import (
-    unit_info,
     unit_name,
     time_seconds,
     duration_seconds,
 )
 from reki.catalog.model import thaw
+from reki.translation.common import value_unit
 from .core import key
 
 _VERTICAL = (
@@ -136,18 +136,10 @@ def _values(field, meta):
         _error(
             "unsupported", "source and business value units require explicit evidence"
         )
-    sd, sf, so = unit_info(source)
-    td, tf, to = unit_info(target)
-    if sd != td:
-        _error(
-            "unsupported",
-            "incompatible value units",
-            source_unit=source,
-            target_unit=target,
-        )
-    # Affine temperature conversion needs explicit absolute-temperature semantics.
-    if so != to and meta.get("quantity_kind") != "absolute_temperature":
-        _error("unsupported", "affine conversion needs absolute-temperature evidence")
+    try:
+        conversion = value_unit(source, target, quantity_kind=meta.get("quantity_kind"))
+    except QueryError as exc:
+        _error(exc.code, exc.message, **dict(exc.context))
     array = field._reference.load()
     if not isinstance(array, xr.DataArray) or not array.dims:
         _error("unsupported", "backend must return a spatial DataArray")
@@ -163,8 +155,8 @@ def _values(field, meta):
         )
     attrs = {} if grid_mapping is None else {"grid_mapping": grid_mapping}
     array.attrs = {}
-    if (sf, so) != (tf, to):
-        array = array * float(sf / tf) + float((so - to) / tf)
+    if (conversion.scale, conversion.offset) != (1, 0):
+        array = array * float(conversion.scale) + float(conversion.offset)
     array.attrs = attrs
     return array
 

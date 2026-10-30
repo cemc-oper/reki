@@ -5,8 +5,9 @@ The builtin catalog registers `cma_gfs_gmf`, `cma_meso_3km`, `cma_meso_1km`, `cm
 subsets, including individual ensemble members for GEPS/REPS. `current`
 selects the current business interpretation; it does not assert an official
 producer release number or implement historical-version compatibility. The
-catalog content version is 5, GFS mappings version 2, all other current mappings
-version 1, and all parameter registries version 1. Their SHA pins remain exact. Reports
+catalog content version is 6. GFS, GEPS and REPS mappings use version 2;
+other current mappings use version 1. GEPS/REPS parameter registries use
+version 2 and the other registries version 1. Their SHA pins remain exact. Reports
 retain actual origins, message offsets and file fingerprints.
 
 ```python
@@ -168,3 +169,53 @@ of the old statement remains an explicit historical evidence gap.
 There is no independently complete expected domain. `required` completeness
 continues to fail, and direct ecCodes comparison establishes same-decoder
 consistency only. External catalogs do not inherit these numbering tables.
+
+
+## GEPS/REPS member precipitation accumulations
+
+The existing current products also expose original individual-member total
+precipitation (`rain`, alias `APCP`) and convective precipitation (`rainc`,
+alias `ACPCP`) at 0/6/24 hours. GEPS additionally exposes large-scale
+precipitation (`rainnc`, alias `NCPCP`). These are PDT-11 accumulations since
+initialization, not formal ensemble statistics or derived differences.
+
+```python
+with from_source({"kind": "local", "dataset": "CMA-REPS", "root": "/CMADAAS"}) as source:
+    ds = source.sel(
+        parameter="rain", time="2026-10-29T18:00:00Z",
+        step=["PT6H", "PT24H"], member=[0, 1, 2, 14],
+    ).all().to_xarray()
+```
+
+Three new definitions (`cedarkit.rain.since-initialization`,
+`cedarkit.rainc.since-initialization`, and
+`cedarkit.rainnc.since-initialization`) inherit the existing accumulation
+identities and fix the period explicitly. The existing broader definitions
+and stable IDs are preserved. Product-scoped names select the exact variants;
+the broader IDs are not silently narrowed to this period.
+
+The original start offset is zero, the encoded end is the result time, and
+one range descriptor with accumulation/type-of-increment 1/2 has length
+0/6/24 hours. The canonical step comes from the encoded end, rather than the
+raw `forecastTime=0`. A zero-hour message remains a zero-length initial
+accumulation, not an invented positive-duration trailing window. Field metadata
+retains `statistics`, `statistical_interval`, and the original descriptor keys.
+Multiple ranges, reanchored windows and conflicting end/length values are
+not relabelled as this period.
+
+Raw precipitation has units `kg/m2`; output uses the reviewed `mm` water-depth
+identity. Their 1:1 numerical relationship is the specific water-equivalent
+precipitation convention. Only the exact builtin product variants carry that
+quantity evidence. It is not a global unit alias or a free mapping coefficient;
+other mass/depth quantities and rates remain incompatible. Both source and
+target units remain in metadata. When ecCodes `units` is `unknown`, this finite
+path checks the standard `parameterUnits` and the declared mapping source unit;
+conflicting declarations fail.
+
+Workspace I03 round-9 / I04 round-10 / I06 round-13 retains the 169-row input,
+adds 20 mappings to the combined version-2 GEPS/REPS bundles (52/40 rows),
+and separately reviews the three new authored variants. The legacy migration
+review remains 125 resolved / 96 needing evidence; six additional backend
+coverage obligations for the new variants are recorded separately. Complete
+provision, independent physical acceptance, snowfall conflicts and formal
+ensemble statistics/probability/quantile products remain open.

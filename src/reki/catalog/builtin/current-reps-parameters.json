@@ -21,6 +21,83 @@
       "unit": "Pa"
     },
     {
+      "aliases": [
+        "apcp"
+      ],
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time"
+        }
+      },
+      "name": "rain",
+      "parameter_id": "cedarkit.rain",
+      "parent": "cedarkit.rain.any"
+    },
+    {
+      "description": "Total precipitation",
+      "description_cn": "总累计降水",
+      "name": "rain",
+      "parameter_id": "cedarkit.rain.any",
+      "unit": "mm"
+    },
+    {
+      "aliases": [
+        "APCP",
+        "rain-since-initialization"
+      ],
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "rain",
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "parent": "cedarkit.rain"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time"
+        }
+      },
+      "name": "rainc",
+      "parameter_id": "cedarkit.rainc",
+      "parent": "cedarkit.rainc.any"
+    },
+    {
+      "description": "Convective precipitation",
+      "description_cn": "对流性降水",
+      "name": "rainc",
+      "parameter_id": "cedarkit.rainc.any",
+      "unit": "mm"
+    },
+    {
+      "aliases": [
+        "ACPCP",
+        "rainc-since-initialization"
+      ],
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "rainc",
+      "parameter_id": "cedarkit.rainc.since-initialization",
+      "parent": "cedarkit.rainc"
+    },
+    {
       "description": "Relative humidity",
       "description_cn": "相对湿度",
       "name": "rh",
@@ -93,5 +170,5 @@
       "parent": "cedarkit.v"
     }
   ],
-  "version": "1"
+  "version": "2"
 }

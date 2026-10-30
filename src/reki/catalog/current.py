@@ -43,3 +43,14 @@ def current_member_numbering(configuration):
         (row["typeOfEnsembleForecast"], row["perturbationNumber"]): row["member"]
         for row in profile["member_numbering"]
     }
+
+
+def current_quantity_kinds(configuration):
+    """Only a reviewed builtin product can supply quantity-specific conversions."""
+    if configuration.origins.get("product_selection") != "builtin.current-business":
+        return {}
+    filename = _PROFILES.get(configuration.source.get("dataset"))
+    if filename is None:
+        return {}
+    profile = json.loads((Path(__file__).with_name("builtin") / filename).read_text())
+    return profile.get("quantity_kinds", {})
