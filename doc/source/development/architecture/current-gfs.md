@@ -5,8 +5,9 @@ The builtin catalog registers `cma_gfs_gmf`, `cma_meso_3km`, `cma_meso_1km`, `cm
 subsets, including individual ensemble members for GEPS/REPS. `current`
 selects the current business interpretation; it does not assert an official
 producer release number or implement historical-version compatibility. The
-catalog content version is 9. GFS mappings use version 4; all other current
-mappings use version 3. All six parameter registries use version 2. Their SHA pins remain exact. Reports
+catalog content version is 10. GFS mappings use version 5; all other current
+mappings use version 3. The GFS parameter registry uses version 3; the other five
+use version 2. Their SHA pins remain exact. Reports
 retain actual origins, message offsets and file fingerprints.
 
 ```python
@@ -314,7 +315,9 @@ The current finite precipitation pairs now include the following lead hours:
 | REPS | Total and convective, members 0–14 | 0, 6, 12, 24, 48, 72 |
 
 These additions use disjoint mapping rows; the original 205 rows remain
-unchanged. Parameter resources retain version 2 and identical bytes. Only the
+unchanged. That precipitation extension retained parameter resources at version 2
+with identical bytes; the radiation addition below revises only the GFS registry.
+Only the
 reviewed precipitation provides entries receive additional leads; the existing
 instantaneous and non-precipitation pairs retain their previous ranges. The
 MESO 1 km product scope still includes 24 hours for old instantaneous pairs,
@@ -363,3 +366,43 @@ bounds constrain its queries rather than requiring every provided product entry
 to fit the caller's scope. Direct ecCodes numeric
 comparisons are same-decoder consistency checks, not independent physical
 acceptance.
+
+## Finite directional clear-sky radiation energy
+
+GFS now supplies `guswc-since-initialization` and
+`gdlwc-since-initialization` at surface, at leads 0 and 6 hours. These are
+time-integrated upward short-wave and downward long-wave radiation under clear
+sky, in `J/m2`. Original `paraNum.h` cases 107/106 declare watt-seconds per area;
+the business table and original PDT8 messages corroborate this energy quantity.
+The single coded accumulation starts at the forecast reference and ends at the
+message's explicit interval endpoint. The reference, endpoint and coded duration
+are all checked by the existing time/statistics rules.
+
+```python
+with from_source({"kind": "local", "dataset": "CMA-GFS", "root": "/CMADAAS"}) as source:
+    energy = source.sel(
+        parameter=["guswc-since-initialization", "gdlwc-since-initialization"],
+        time="2026-10-30T12:00:00Z", step=["PT0H", "PT6H"],
+    ).all().to_xarray()
+```
+
+This example freezes a cycle at least 24 hours old. New validation batches
+prefer eligible 12UTC cycles and REPS06UTC, and check file fingerprints before
+and after reading. Cycle selection here is an evidence policy; it does not add
+an automatic rolling-cycle default to the API.
+
+Values retain their native signs and magnitudes. The checked GFS upward
+component contains negative values; its directional name does not assert that
+positive means upward. No sign reversal, duration scaling, mean-flux conversion,
+or accumulated-field subtraction is performed. `W/m2` and `J/m2` remain distinct;
+the shared unit aliases only normalize their observed SI spellings.
+
+The other five systems acquire no radiation bindings from this addition.
+HFX's actual `2/0/24` messages combine a flux unit with an accumulation code;
+the producer's physical processing and sign convention remain required evidence.
+Non-clear upward radiation has a similar unit conflict. Restoring the TUSWC
+authoring definition fixes its inherited energy unit and does not register a
+top-of-atmosphere product. Full provision domains and independent physical
+acceptance remain open; direct ecCodes comparisons are decoder consistency
+checks. Formal ensemble statistics, probability and quantiles remain outside
+this finite binding.

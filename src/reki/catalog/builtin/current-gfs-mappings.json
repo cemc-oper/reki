@@ -11,6 +11,234 @@
       },
       "backend": "grib2",
       "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table0 rows81/82/85: explicit upward/downward clear-sky direction, surface/top and W m-2 s; not a complete provider domain",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-18/verification-input.json#sha256=f3216092823406b6a404d14881321343dd81114b3a68058fe8ea3401272dfa8c;mature GFS original PDT8 surface messages; actual unit J m**-2, one accumulation interval anchored at reference; no time scaling",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;original-object-verified section4 category/number; full writer discipline must be considered separately",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;lines201/205 and longwave clear-sky declarations corroborate time-integrated units; no sign reversal",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case106 lines326-340 downward clear longwave and case107 lines341-355 upward clear shortwave; common ws/m2; same unit across surface/top"
+      ],
+      "id": "gdlwc.energy.since-initialization.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 5,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.gdlwc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": "PT21600S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table0 rows81/82/85: explicit upward/downward clear-sky direction, surface/top and W m-2 s; not a complete provider domain",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-18/verification-input.json#sha256=f3216092823406b6a404d14881321343dd81114b3a68058fe8ea3401272dfa8c;mature GFS original PDT8 surface messages; actual unit J m**-2, one accumulation interval anchored at reference; no time scaling",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;original-object-verified section4 category/number; full writer discipline must be considered separately",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;lines201/205 and longwave clear-sky declarations corroborate time-integrated units; no sign reversal",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case106 lines326-340 downward clear longwave and case107 lines341-355 upward clear shortwave; common ws/m2; same unit across surface/top"
+      ],
+      "id": "gdlwc.energy.since-initialization.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 5,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.gdlwc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table0 rows81/82/85: explicit upward/downward clear-sky direction, surface/top and W m-2 s; not a complete provider domain",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-18/verification-input.json#sha256=f3216092823406b6a404d14881321343dd81114b3a68058fe8ea3401272dfa8c;mature GFS original PDT8 surface messages; actual unit J m**-2, one accumulation interval anchored at reference; no time scaling",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;original-object-verified section4 category/number; full writer discipline must be considered separately",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;lines201/205 and longwave clear-sky declarations corroborate time-integrated units; no sign reversal",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case106 lines326-340 downward clear longwave and case107 lines341-355 upward clear shortwave; common ws/m2; same unit across surface/top"
+      ],
+      "id": "guswc.energy.since-initialization.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 4,
+          "parameterNumber": 53,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.guswc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": "PT21600S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table0 rows81/82/85: explicit upward/downward clear-sky direction, surface/top and W m-2 s; not a complete provider domain",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-18/verification-input.json#sha256=f3216092823406b6a404d14881321343dd81114b3a68058fe8ea3401272dfa8c;mature GFS original PDT8 surface messages; actual unit J m**-2, one accumulation interval anchored at reference; no time scaling",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;original-object-verified section4 category/number; full writer discipline must be considered separately",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;lines201/205 and longwave clear-sky declarations corroborate time-integrated units; no sign reversal",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case106 lines326-340 downward clear longwave and case107 lines341-355 upward clear shortwave; common ws/m2; same unit across surface/top"
+      ],
+      "id": "guswc.energy.since-initialization.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 4,
+          "parameterNumber": 53,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.guswc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": "PT0S"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/cedarkit-param-db/migrations/stage1.1-i03-grib-util-batch-2/file-mappings/mappings-00-grib2.json#sha256=2a1c30e3ba08084f2bb26d235e840f795d405ae422350d73556a2e68ccf7379d;reviewed encoding origin",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-6/current-version-policy.md#sha256=ad9dcfdca70c99d4c2df56c38d18f0098611a77d1b98a22d45499d0b9ff70152;user-authorized current-only business policy; no official V-number asserted",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table 0; pressure, height, unit and actual soil intervals",
@@ -1585,5 +1813,5 @@
     }
   ],
   "tables": [],
-  "version": "4"
+  "version": "5"
 }

@@ -6,8 +6,8 @@
   ],
   "parameter_registry": {
     "builtin": "reki.parameters.cma-gfs.current",
-    "sha256": "cc5711aa1e285922621f4e7ca4d5872e63d0f9cb0d37d34acd5ea080b8f79bc7",
-    "version": "2"
+    "sha256": "bd649504f9e4cde5b77f66a0c13f732efee73449daf6eda164224559c40dbdef",
+    "version": "3"
   },
   "product": "orig",
   "product_version": "current",
@@ -312,6 +312,22 @@
         "PT24H",
         "PT48H",
         "PT72H"
+      ]
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.guswc.since-initialization",
+      "step": [
+        "PT0H",
+        "PT6H"
+      ]
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.gdlwc.since-initialization",
+      "step": [
+        "PT0H",
+        "PT6H"
       ]
     }
   ],
