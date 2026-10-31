@@ -336,8 +336,12 @@
       "parameter": "cedarkit.rain.since-initialization",
       "step": [
         "PT0H",
+        "PT3H",
         "PT6H",
-        "PT24H"
+        "PT12H",
+        "PT24H",
+        "PT48H",
+        "PT72H"
       ]
     },
     {
@@ -345,8 +349,12 @@
       "parameter": "cedarkit.rainc.since-initialization",
       "step": [
         "PT0H",
+        "PT3H",
         "PT6H",
-        "PT24H"
+        "PT12H",
+        "PT24H",
+        "PT48H",
+        "PT72H"
       ]
     },
     {
@@ -354,8 +362,12 @@
       "parameter": "cedarkit.rainnc.since-initialization",
       "step": [
         "PT0H",
+        "PT3H",
         "PT6H",
-        "PT24H"
+        "PT12H",
+        "PT24H",
+        "PT48H",
+        "PT72H"
       ]
     }
   ],

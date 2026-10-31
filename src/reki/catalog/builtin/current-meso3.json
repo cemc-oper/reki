@@ -258,8 +258,12 @@
       "parameter": "cedarkit.rain.since-initialization",
       "step": [
         "PT0H",
+        "PT1H",
+        "PT3H",
         "PT6H",
-        "PT24H"
+        "PT12H",
+        "PT24H",
+        "PT36H"
       ]
     }
   ],

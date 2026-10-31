@@ -248,7 +248,7 @@ class GribBackend:
             prepare_queries(
                 thaw(configuration.product["provides"]),
                 configuration.resources,
-                scope=configuration.scope,
+                scope=thaw(configuration.product["scope"]),
             )
             if configuration.origins.get("product_selection")
             == "builtin.current-business"

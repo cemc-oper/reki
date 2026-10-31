@@ -14,6 +14,7 @@ from cedarkit_query import (
     constrain_query,
     expand_queries,
     intersect_queries,
+    intersect_scopes,
     normalize_query,
     prepare_queries,
 )
@@ -958,6 +959,45 @@ def _prepare_input(query, configuration):
                 else provided.get("parameter", ())
             )
         }
+    if (
+        configuration.origins.get("product_selection") == "builtin.current-business"
+        and "parameter" in raw
+        and "step" not in raw
+        and "step" in scope
+    ):
+        # Product scopes bound the union of all parameter leads. An omitted
+        # step must not acquire leads published only for another parameter.
+        # Only a single declared domain can refine this implicit bound;
+        # explicit selections and ambiguous provision keep their strict checks.
+        provided = prepare_queries(thaw(configuration.product["provides"]), resources)
+        result = []
+        for value in prepare_queries([query], resources, parameter_ids=parameter_ids):
+            domains = {
+                key({"step": condition.to_dict().get("step")}): condition.to_dict().get(
+                    "step"
+                )
+                for condition in provided
+                if condition.to_dict().get("parameter") == value.to_dict()["parameter"]
+            }
+            bound = scope
+            if len(domains) == 1 and next(iter(domains.values())) is not None:
+                intersection = intersect_scopes(
+                    scope, {"step": next(iter(domains.values()))}
+                )
+                if intersection is None:
+                    raise QueryError(
+                        "unsupported",
+                        "/step",
+                        "step bounds exclude this parameter's supported leads",
+                        {"reason": "mapping_coverage_gap"},
+                    )
+                bound = intersection.to_dict()
+            result.extend(_prepare_input_scope(value, resources, bound, parameter_ids))
+        return tuple(result)
+    return _prepare_input_scope(query, resources, scope, parameter_ids)
+
+
+def _prepare_input_scope(query, resources, scope, parameter_ids):
     if "level_type" not in scope and _needs_vertical_type(scope):
         preliminary = (
             prepare_queries([query], resources, parameter_ids=parameter_ids)

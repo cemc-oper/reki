@@ -27,7 +27,11 @@ def encoded(path, hour, number=8, values=None, minute_encoding=False, **override
     path.parent.mkdir(parents=True, exist_ok=True)
     handle = eccodes.codes_grib_new_from_samples("regular_ll_sfc_grib2")
     try:
-        end = datetime(2026, 10, 30, tzinfo=timezone.utc) + timedelta(hours=hour)
+        date = overrides.get("dataDate", 20261030)
+        time = overrides.get("dataTime", 0)
+        end = datetime.strptime(f"{date:08d}{time:04d}", "%Y%m%d%H%M").replace(
+            tzinfo=timezone.utc
+        ) + timedelta(hours=hour)
         native = dict(
             Ni=2,
             Nj=2,
@@ -57,7 +61,7 @@ def encoded(path, hour, number=8, values=None, minute_encoding=False, **override
             forecastTime=0,
         )
         native.update(overrides)
-        if native["productDefinitionTemplateNumber"] == 8:
+        if native["productDefinitionTemplateNumber"] in [8, 11]:
             descriptors = dict(
                 numberOfTimeRange=1,
                 typeOfTimeIncrement=2,
@@ -240,7 +244,7 @@ def test_current_precipitation_does_not_widen_definition_or_provision(tmp_path, 
         for query in [
             {
                 "parameter": "rain",
-                "step": "PT24H" if system == "CMA-MESO-1KM" else "PT12H",
+                "step": "PT24H" if system == "CMA-MESO-1KM" else "PT9H",
             },
             {"parameter": "cedarkit.rain"},
             {"parameter": "rain", "level_type": "pressure", "level": 850},
@@ -312,3 +316,392 @@ def test_meso1_precipitation_accepts_equivalent_coded_time_units(
             "start": "2026-10-30T00:00:00Z",
             "end": "2026-10-30T06:00:00Z",
         }
+
+
+LEAD_HOURS = {
+    "CMA-GFS": [3, 12, 48, 72],
+    "CMA-MESO-3KM": [1, 3, 12, 36],
+    "CMA-MESO-1KM": [1, 3],
+    "CMA-TYM": [3, 12, 48, 72],
+    "CMA-GEPS": [12, 48, 72],
+    "CMA-REPS": [12, 48, 72],
+}
+LEAD_CASES = [
+    (system, name, number, member)
+    for system, quantities in [
+        ("CMA-GFS", [("rain", 8), ("rainc", 10), ("rainnc", 9)]),
+        ("CMA-MESO-3KM", [("rain", 8)]),
+        ("CMA-MESO-1KM", [("rain", 8)]),
+        ("CMA-TYM", [("rain", 8), ("rainc", 10), ("rainnc", 9)]),
+        ("CMA-GEPS", [("rain", 8), ("rainc", 10), ("rainnc", 9)]),
+        ("CMA-REPS", [("rain", 8), ("rainc", 10)]),
+    ]
+    for name, number in quantities
+    for member in ([0, 1, 2] if system in ["CMA-GEPS", "CMA-REPS"] else [None])
+]
+
+
+def lead_path(root, system, hour, member=None, reference=None):
+    reference = reference or datetime(2026, 10, 30, 23, tzinfo=timezone.utc)
+    layout = {
+        "CMA-GFS": ("DATA/NAFP/NMC/GRAPES-GFS-GLB", "NWPC-GRAPES-GFS-GLB", "grib2"),
+        "CMA-MESO-3KM": ("DATA/NAFP/GRAPES/RAFS", "NWPC-GRAPES-3KM-ORIG", "grb2"),
+        "CMA-MESO-1KM": (
+            "DATA/NAFP/CEMC/MESO_1KM/ORI",
+            "CEMC-CMA-MESO-1KM-ORIG",
+            "grb2",
+        ),
+        "CMA-TYM": ("DATA/NAFP/NMC/GRAPES-TYM", "NWPC-GRAPES-TYM-ACWP", "grib2"),
+        "CMA-GEPS": ("DATA/NAFP/NMC/GRAPES-GEPS", "NWPC-GRAPES-GEPS-GLB", "grib2"),
+        "CMA-REPS": ("ORIG-DATA/NAFP/CMA-REPS", "NWPC-GRAPES-REPS-CN", "grib2"),
+    }
+    base, prefix, suffix = layout[system]
+    directory = reference + timedelta(hours=8) if system == "CMA-REPS" else reference
+    tail = f"-m{member:03}" if member is not None else ""
+    return (
+        root
+        / base
+        / directory.strftime("%Y/%Y%m%d")
+        / (
+            f"Z_NAFP_C_BABJ_{reference:%Y%m%d%H%M%S}_P_{prefix}-{hour:03}00{tail}.{suffix}"
+        )
+    )
+
+
+def encode_lead(path, system, hour, number=8, member=None, reference=None, **overrides):
+    reference = reference or datetime(2026, 10, 30, 23, tzinfo=timezone.utc)
+    native = {
+        "dataDate": int(reference.strftime("%Y%m%d")),
+        "dataTime": reference.hour * 100,
+    }
+    if member is not None:
+        native.update(
+            productDefinitionTemplateNumber=11,
+            typeOfProcessedData=3 if member == 0 else 4,
+            typeOfGeneratingProcess=4,
+            significanceOfReferenceTime=1,
+            typeOfEnsembleForecast=0 if member == 0 else 3 if member % 2 else 2,
+            perturbationNumber=member,
+            numberOfForecastsInEnsemble=0 if system == "CMA-REPS" else 31,
+        )
+    native.update(overrides)
+    encoded(path, hour, number, minute_encoding=system == "CMA-MESO-1KM", **native)
+
+
+@pytest.mark.parametrize("system,name,number,member", LEAD_CASES)
+def test_extended_precipitation_valid_time_query_keeps_interval_units_and_roles(
+    tmp_path, system, name, number, member
+):
+    hour = LEAD_HOURS[system][0]
+    path = lead_path(tmp_path, system, hour, member)
+    encode_lead(path, system, hour, number, member)
+    reference = datetime(2026, 10, 30, 23, tzinfo=timezone.utc)
+    q = {
+        "parameter": {"rain": "APCP", "rainc": "ACPCP", "rainnc": "NCPCP"}[name],
+        "time": reference.isoformat(),
+        "valid_time": (reference + timedelta(hours=hour)).isoformat(),
+    }
+    if member is not None:
+        q["member"] = member
+    with from_source(
+        {"kind": "local", "dataset": system, "root": str(tmp_path)}
+    ) as source:
+        field = source.sel(q).one()
+        identity = field.identity.to_dict()
+        meta = thaw(field.metadata)
+        assert identity["step"] == f"PT{hour * 3600}S"
+        assert meta["statistical_interval"] == {
+            "start": identity["time"],
+            "end": identity["valid_time"],
+        }
+        assert meta["source_unit"] == "kg/m2" and meta["unit"] == "mm"
+        assert meta["statistics"]["period"] == {"kind": "since_initialization"}
+        assert meta["native_fields"]["lengthOfTimeRange"] == hour * (
+            60 if system == "CMA-MESO-1KM" else 1
+        )
+        if member is None:
+            assert "member" not in identity
+        else:
+            assert identity["member"] == member
+            assert identity["member_role"] == (
+                "control" if member == 0 else "perturbation"
+            )
+            assert meta["native_fields"]["numberOfForecastsInEnsemble"] == (
+                0 if system == "CMA-REPS" else 31
+            )
+        ds = field.to_xarray()
+        assert ds[name].attrs["units"] == "mm"
+        np.testing.assert_array_equal(ds[name].values.reshape(-1), [1, 2, 3, 4])
+
+
+@pytest.mark.parametrize("system", LEAD_HOURS)
+def test_old_and_extended_precipitation_rows_compose_without_ambiguity(
+    tmp_path, system
+):
+    member = 0 if system in ["CMA-GEPS", "CMA-REPS"] else None
+    hours = sorted({6, LEAD_HOURS[system][0], LEAD_HOURS[system][-1]})
+    for hour in hours:
+        encode_lead(
+            lead_path(tmp_path, system, hour, member), system, hour, member=member
+        )
+    q = {
+        "parameter": "rain",
+        "time": "2026-10-30T23:00:00Z",
+        "step": [f"PT{h}H" for h in hours],
+    }
+    if member is not None:
+        q["member"] = member
+    with from_source(
+        {"kind": "local", "dataset": system, "root": str(tmp_path)}
+    ) as source:
+        fields = source.sel(q).all()
+        assert len(fields) == len(hours)
+        assert {f.identity.to_dict()["step"] for f in fields} == {
+            f"PT{h * 3600}S" for h in hours
+        }
+        ds = fields.to_xarray()
+        assert ds.sizes["step"] == len(hours)
+        assert set(np.unique(ds.rain.values)) == {1, 2, 3, 4}
+        with pytest.raises(CompletenessError):
+            source.sel(q).all(completeness="required")
+
+
+@pytest.mark.parametrize("system", LEAD_HOURS)
+def test_precipitation_scope_extension_does_not_extend_instantaneous_pairs(
+    tmp_path, system
+):
+    path = tmp_path / "unopened"
+    path.touch()
+    q = {"parameter": "t2m", "step": f"PT{LEAD_HOURS[system][0]}H"}
+    if system in ["CMA-GEPS", "CMA-REPS"]:
+        q["member"] = 0
+    with from_source({"kind": "file", "dataset": system, "path": str(path)}) as source:
+        with pytest.raises(QueryError):
+            source.sel(q).explain()
+
+
+@pytest.mark.parametrize("system", LEAD_HOURS)
+def test_extended_precipitation_rejects_reanchored_window(tmp_path, system):
+    hour = LEAD_HOURS[system][-1]
+    member = 0 if system in ["CMA-GEPS", "CMA-REPS"] else None
+    factor = 60 if system == "CMA-MESO-1KM" else 1
+    path = tmp_path / "window.grib2"
+    encode_lead(
+        path,
+        system,
+        hour,
+        member=member,
+        forecastTime=factor,
+        lengthOfTimeRange=(hour - 1) * factor,
+    )
+    q = {"parameter": "rain", "step": f"PT{hour}H"}
+    if member is not None:
+        q["member"] = member
+    with from_source({"kind": "file", "dataset": system, "path": str(path)}) as source:
+        with pytest.raises(SourceError) as error:
+            source.sel(q).one()
+        assert error.value.context["reason"] == "fixed_definition_mismatch"
+
+
+@pytest.mark.parametrize("system", ["CMA-GFS", "CMA-REPS"])
+def test_extended_precipitation_crosses_year_without_using_valid_date_directory(
+    tmp_path, system
+):
+    reference = datetime(2026, 12, 31, 23, tzinfo=timezone.utc)
+    member = 0 if system == "CMA-REPS" else None
+    path = lead_path(tmp_path, system, 72, member, reference)
+    encode_lead(path, system, 72, member=member, reference=reference)
+    q = {
+        "parameter": "rain",
+        "time": reference.isoformat(),
+        "valid_time": "2027-01-03T23:00:00Z",
+    }
+    if member is not None:
+        q["member"] = member
+    with from_source(
+        {"kind": "local", "dataset": system, "root": str(tmp_path)}
+    ) as source:
+        field = source.sel(q).one()
+        assert field.identity.to_dict()["valid_time"] == "2027-01-03T23:00:00Z"
+        np.testing.assert_array_equal(
+            field.to_xarray().rain.values.reshape(-1), [1, 2, 3, 4]
+        )
+
+
+@pytest.mark.parametrize("system", ["CMA-GFS", "CMA-GEPS"])
+def test_extended_precipitation_retains_unit_conflict_diagnostics(
+    tmp_path, monkeypatch, system
+):
+    from reki.translation import grib_backend
+
+    path = tmp_path / "bad-unit.grib2"
+    member = 0 if system == "CMA-GEPS" else None
+    encode_lead(path, system, 72, member=member)
+    original = grib_backend._metadata
+
+    def conflict(*args, **kwargs):
+        result = original(*args, **kwargs)
+        if result.get("parameterCategory") == 1 and result.get("parameterNumber") == 8:
+            result["units"] = "m"
+        return result
+
+    monkeypatch.setattr(grib_backend, "_metadata", conflict)
+    q = {"parameter": "rain", "step": "PT72H"}
+    if member is not None:
+        q["member"] = member
+    with from_source({"kind": "file", "dataset": system, "path": str(path)}) as source:
+        with pytest.raises(SourceError) as error:
+            source.sel(q).one()
+        assert error.value.context["reason"] == "inconsistent_native_metadata"
+
+
+@pytest.mark.parametrize("system", ["CMA-GFS", "CMA-GEPS"])
+def test_extended_precipitation_preserves_nontrivial_bitmap(tmp_path, system):
+    path = tmp_path / "bitmap.grib2"
+    member = 0 if system == "CMA-GEPS" else None
+    encode_lead(
+        path,
+        system,
+        72,
+        member=member,
+        values=[0, 9999, 1.25, 2.5],
+        bitmapPresent=1,
+        missingValue=9999,
+    )
+    q = {"parameter": "rain", "step": "PT72H"}
+    if member is not None:
+        q["member"] = member
+    with from_source({"kind": "file", "dataset": system, "path": str(path)}) as source:
+        ds = source.sel(q).one().to_xarray()
+        np.testing.assert_allclose(
+            ds.rain.values.reshape(2, 2),
+            [[0, np.nan], [1.25, 2.5]],
+            rtol=0,
+            atol=0,
+            equal_nan=True,
+        )
+
+
+@pytest.mark.parametrize(
+    "system,expected",
+    [
+        ("CMA-GFS", [0, 6, 12, 24, 48, 72]),
+        ("CMA-MESO-3KM", [0, 3, 6, 12, 24, 36]),
+        ("CMA-GEPS", [0, 6, 24]),
+        ("CMA-REPS", [0, 6, 24]),
+    ],
+)
+def test_omitted_steps_keep_each_builtin_parameters_declared_domain(
+    tmp_path, system, expected
+):
+    path = tmp_path / "unopened"
+    path.touch()
+    q = {"parameter": "t2m", "time": "2026-10-30T06:00:00Z"}
+    if system in ["CMA-GEPS", "CMA-REPS"]:
+        q["member"] = 0
+    with from_source({"kind": "file", "dataset": system, "path": str(path)}) as source:
+        queries = source.sel(q).explain().to_dict()["effective_queries"]
+        assert len(queries) == 1
+        assert queries[0]["query"]["step"] == [f"PT{h * 3600}S" for h in expected]
+
+
+def test_implicit_parameter_steps_intersect_context_bounds(tmp_path):
+    path = tmp_path / "unopened"
+    path.touch()
+    with from_source(
+        {"kind": "file", "dataset": "CMA-GFS", "path": str(path)},
+        context={"scope": {"step": ["PT3H", "PT6H"]}},
+    ) as source:
+        (query,) = (
+            source.sel(parameter="t2m", time="2026-10-30T06:00:00Z")
+            .explain()
+            .to_dict()["effective_queries"]
+        )
+        assert query["query"]["step"] == "PT21600S"
+        with pytest.raises(QueryError):
+            source.sel(
+                parameter="t2m", time="2026-10-30T06:00:00Z", step=["PT3H", "PT6H"]
+            )
+
+
+def test_omitted_steps_remain_parameter_specific_in_multi_parameter_queries(tmp_path):
+    path = tmp_path / "unopened"
+    path.touch()
+    with from_source(
+        {"kind": "file", "dataset": "CMA-GFS", "path": str(path)}
+    ) as source:
+        queries = (
+            source.sel(parameter=["t2m", "rain"], time="2026-10-30T06:00:00Z")
+            .explain()
+            .to_dict()["effective_queries"]
+        )
+        steps = {q["query"]["parameter"]: q["query"]["step"] for q in queries}
+        assert steps["cedarkit.t2m"] == [
+            f"PT{h * 3600}S" for h in [0, 6, 12, 24, 48, 72]
+        ]
+        assert steps["cedarkit.rain.since-initialization"] == [
+            f"PT{h * 3600}S" for h in [0, 3, 6, 12, 24, 48, 72]
+        ]
+
+
+@pytest.mark.parametrize(
+    "time_query", [{"step": ["PT3H", "PT6H"]}, {"valid_time": "2026-10-30T09:00:00Z"}]
+)
+def test_explicit_or_time_derived_steps_are_not_pruned_to_supported_subset(
+    tmp_path, time_query
+):
+    path = tmp_path / "unopened"
+    path.touch()
+    with from_source(
+        {"kind": "file", "dataset": "CMA-GFS", "path": str(path)}
+    ) as source:
+        with pytest.raises(QueryError):
+            source.sel(parameter="t2m", time="2026-10-30T06:00:00Z", **time_query)
+
+
+def test_external_catalog_does_not_inherit_builtin_implicit_step_policy(tmp_path):
+    import json
+    from reki.catalog import load_catalog, plan_source_binding, current
+    from reki.selection.core import construct_source
+    from reki.translation.grib_backend import GribBackend
+
+    catalog = load_catalog().to_dict()
+    path = tmp_path / "catalog.json"
+    path.write_text(json.dumps(catalog))
+    dataset = next(d for d in catalog["datasets"] if d["id"] == "cma_gfs_gmf")
+    from pathlib import Path
+
+    profile = json.loads(
+        (Path(current.__file__).with_name("builtin") / "current-gfs.json").read_text()
+    )
+    raw = tmp_path / "unopened"
+    raw.touch()
+    context = {
+        "catalog": {"path": str(path)},
+        "parameter_registry": profile["parameter_registry"],
+        "mappings": dataset["mappings"],
+    }
+    configuration = plan_source_binding(
+        {"kind": "file", "dataset": "CMA-GFS", "path": str(raw)},
+        context=context,
+        product="orig",
+        product_version="current",
+    )
+    with construct_source(configuration, GribBackend(configuration)) as source:
+        with pytest.raises(QueryError):
+            source.sel(parameter="t2m", time="2026-10-30T06:00:00Z").explain()
+
+
+def test_fluent_explicit_steps_refine_implicit_parameter_bounds(tmp_path):
+    path = tmp_path / "unopened"
+    path.touch()
+    with from_source(
+        {"kind": "file", "dataset": "CMA-GFS", "path": str(path)}
+    ) as source:
+        (query,) = (
+            source.sel(parameter="t2m", time="2026-10-30T06:00:00Z")
+            .sel(step="PT6H")
+            .explain()
+            .to_dict()["effective_queries"]
+        )
+        assert query["query"]["step"] == "PT21600S"
