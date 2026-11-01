@@ -10,8 +10,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-gfs.current",
-          "sha256": "42ab778d99f0f2a60a1f9aee85141083209a0b47666696874a1c31d45584ff95",
-          "version": "5"
+          "sha256": "63b9eecbc9303fd683fabd4870d406e160c0429b3ba85f60d96b91c1a2e4a176",
+          "version": "6"
         }
       },
       "products": [
@@ -24,7 +24,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/time-unit-decisions.json#sha256=eb47c4b26aca5a73c52644c11845d2bd79a177397af31e18cd55474b7ca54b85;actual since-initialization interval and finite water-equivalent convention",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;current finite precipitation lead extension",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-18/verification-input.json#sha256=f3216092823406b6a404d14881321343dd81114b3a68058fe8ea3401272dfa8c;finite mature12UTC GFS directional surface clear-sky energy; no inferred complete domain"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-18/verification-input.json#sha256=f3216092823406b6a404d14881321343dd81114b3a68058fe8ea3401272dfa8c;finite mature12UTC GFS directional surface clear-sky energy; no inferred complete domain",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-19/verification-input.json#sha256=9462e0d519fcf8e2fe44ca9cf3ce50bcb1883db8b29513b395ded6caeeca3170;finite12/24/48/72h GFS surface energy pairs, raw signed values; complete domain unknown"
           ],
           "id": "orig",
           "methods": [],
@@ -332,7 +333,11 @@
               "parameter": "cedarkit.guswc.since-initialization",
               "step": [
                 "PT0H",
-                "PT6H"
+                "PT6H",
+                "PT12H",
+                "PT24H",
+                "PT48H",
+                "PT72H"
               ]
             },
             {
@@ -340,7 +345,11 @@
               "parameter": "cedarkit.gdlwc.since-initialization",
               "step": [
                 "PT0H",
-                "PT6H"
+                "PT6H",
+                "PT12H",
+                "PT24H",
+                "PT48H",
+                "PT72H"
               ]
             }
           ],
@@ -1983,5 +1992,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "10"
+  "version": "11"
 }

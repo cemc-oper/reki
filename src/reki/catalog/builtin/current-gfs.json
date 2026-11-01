@@ -319,7 +319,11 @@
       "parameter": "cedarkit.guswc.since-initialization",
       "step": [
         "PT0H",
-        "PT6H"
+        "PT6H",
+        "PT12H",
+        "PT24H",
+        "PT48H",
+        "PT72H"
       ]
     },
     {
@@ -327,7 +331,11 @@
       "parameter": "cedarkit.gdlwc.since-initialization",
       "step": [
         "PT0H",
-        "PT6H"
+        "PT6H",
+        "PT12H",
+        "PT24H",
+        "PT48H",
+        "PT72H"
       ]
     }
   ],

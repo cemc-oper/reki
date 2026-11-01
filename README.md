@@ -90,6 +90,31 @@ print(t2m.name, t2m.shape)
 `sel()` narrows the field list without decoding the GRIB values. 
 Calling `first()` selects the first matching field, and `to_xarray()` decodes it to an `xarray.DataArray`.
 
+### Current finite GFS clear-sky energy products
+
+The current catalog also exposes surface clear-sky upward shortwave and downward
+longwave energy integrals through the public selection API. The reviewed leads
+are 0, 6, 12, 24, 48 and 72 hours; each interval starts at the forecast origin.
+For example, the validated 2026-10-30 12UTC cycle crosses both day and month
+boundaries:
+
+```python
+with reki.from_source(
+    {"kind": "local", "dataset": "CMA-GFS", "root": "/CMADAAS"}
+) as source:
+    energy = source.sel(
+        parameter=["guswc-since-initialization", "gdlwc-since-initialization"],
+        time="2026-10-30T12:00:00Z",
+        step=["PT12H", "PT24H", "PT48H", "PT72H"],
+    ).all().to_xarray()
+```
+
+The variables `guswc` and `gdlwc` retain the original signed values in J/m2.
+Direction names do not impose a positive-value convention. No duration scaling,
+mean flux or accumulation-difference windows are generated. This finite subset
+does not establish complete product coverage; other systems and top-of-atmosphere
+radiation are outside these bindings.
+
 ### Resolve the file path first
 
 When an application needs the path for logging, validation, or another GRIB tool, use `path` to get file path from local reader:

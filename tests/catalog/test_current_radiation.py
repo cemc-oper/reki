@@ -15,7 +15,7 @@ def encoded(path, name, hour=6, *, values=(0, 1.25, -2.5, 3), **overrides):
     path.parent.mkdir(parents=True, exist_ok=True)
     g = eccodes.codes_grib_new_from_samples("regular_ll_sfc_grib2")
     try:
-        end = datetime(2026, 10, 30, 6, tzinfo=timezone.utc) + timedelta(hours=hour)
+        end = datetime(2026, 10, 30, 12, tzinfo=timezone.utc) + timedelta(hours=hour)
         native = dict(
             Ni=2,
             Nj=2,
@@ -40,7 +40,7 @@ def encoded(path, name, hour=6, *, values=(0, 1.25, -2.5, 3), **overrides):
             typeOfFirstFixedSurface=1,
             typeOfSecondFixedSurface=255,
             dataDate=20261030,
-            dataTime=600,
+            dataTime=1200,
             indicatorOfUnitOfTimeRange=1,
             forecastTime=0,
             numberOfTimeRange=1,
@@ -66,7 +66,7 @@ def encoded(path, name, hour=6, *, values=(0, 1.25, -2.5, 3), **overrides):
 
 
 @pytest.mark.parametrize("name", ["guswc", "gdlwc"])
-@pytest.mark.parametrize("hour", [0, 6])
+@pytest.mark.parametrize("hour", [0, 6, 12, 24, 48, 72])
 def test_public_gfs_energy_values_are_not_scaled_by_duration_or_direction(
     tmp_path, name, hour
 ):
@@ -76,7 +76,11 @@ def test_public_gfs_energy_values_are_not_scaled_by_duration_or_direction(
         {"kind": "file", "dataset": "CMA-GFS", "path": str(path)}
     ) as source:
         field = source.sel(
-            parameter=name + "-since-initialization", step=f"PT{hour}H"
+            parameter=name + "-since-initialization",
+            time="2026-10-30T12:00:00Z",
+            valid_time=(
+                datetime(2026, 10, 30, 12, tzinfo=timezone.utc) + timedelta(hours=hour)
+            ).isoformat(),
         ).one()
         ds = field.to_xarray()
         np.testing.assert_array_equal(ds[name].values.reshape(-1), [0, 1.25, -2.5, 3])
@@ -87,7 +91,8 @@ def test_public_gfs_energy_values_are_not_scaled_by_duration_or_direction(
         assert meta["statistics"]["operation"] == "accumulation"
         assert meta["statistics"]["period"] == {"kind": "since_initialization"}
         assert "member" not in field.identity.to_dict()
-        assert meta["statistical_interval"]["start"] == "2026-10-30T06:00:00Z"
+        assert meta["statistical_interval"]["start"] == "2026-10-30T12:00:00Z"
+        assert field.identity.to_dict()["step"] == f"PT{hour * 3600}S"
         assert (
             meta["statistical_interval"]["end"]
             == field.identity.to_dict()["valid_time"]
@@ -172,7 +177,7 @@ def test_energy_preserves_a_real_bitmap_including_zero_and_signed_values(tmp_pat
 @pytest.mark.parametrize(
     "query",
     [
-        {"parameter": "guswc-since-initialization", "step": "PT12H"},
+        {"parameter": "guswc-since-initialization", "step": "PT9H"},
         {"parameter": "gdlwc-since-initialization", "level_type": "atmosphere_top"},
         {"parameter": "tuswc"},
         {"parameter": "hfx"},
@@ -199,3 +204,35 @@ def test_gfs_radiation_does_not_register_other_system_support(tmp_path, system):
     with from_source({"kind": "file", "dataset": system, "path": str(path)}) as source:
         with pytest.raises(QueryError):
             source.sel(parameter="guswc-since-initialization", step="PT6H").explain()
+
+
+def test_energy_all_assembles_cross_day_and_month_steps_without_new_windows(tmp_path):
+    path = tmp_path / "cross-month.grib2"
+    messages = []
+    for hour in [12, 24, 48, 72]:
+        encoded(path, "guswc", hour, values=[hour, -hour, 0, hour + 0.5])
+        messages.append(path.read_bytes())
+    path.write_bytes(b"".join(messages))
+    with from_source(
+        {"kind": "file", "dataset": "CMA-GFS", "path": str(path)}
+    ) as source:
+        selected = source.sel(
+            parameter="guswc-since-initialization",
+            time="2026-10-30T12:00:00Z",
+            step=["PT12H", "PT24H", "PT48H", "PT72H"],
+        )
+        fields = selected.all()
+        assert len(fields) == 4
+        ds = fields.to_xarray()
+        assert ds.sizes["step"] == 4
+        for hour, field in zip([12, 24, 48, 72], fields):
+            identity = field.identity.to_dict()
+            assert identity["valid_time"] == (
+                datetime(2026, 10, 30, 12, tzinfo=timezone.utc) + timedelta(hours=hour)
+            ).isoformat().replace("+00:00", "Z")
+            np.testing.assert_array_equal(
+                ds.guswc.sel(step=np.timedelta64(hour, "h")).values.reshape(-1),
+                [hour, -hour, 0, hour + 0.5],
+            )
+        with pytest.raises(CompletenessError):
+            selected.all(completeness="required")
