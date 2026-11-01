@@ -106,12 +106,7 @@
       "parameter": "cedarkit.psl"
     },
     {
-      "level": [
-        500,
-        850
-      ],
       "level_type": "pressure",
-      "level_unit": "hPa",
       "member": {
         "range": {
           "end": 14,
@@ -122,12 +117,7 @@
       "parameter": "cedarkit.rh"
     },
     {
-      "level": [
-        500,
-        850
-      ],
       "level_type": "pressure",
-      "level_unit": "hPa",
       "member": {
         "range": {
           "end": 14,
@@ -151,12 +141,7 @@
       "parameter": "cedarkit.t2m"
     },
     {
-      "level": [
-        500,
-        850
-      ],
       "level_type": "pressure",
-      "level_unit": "hPa",
       "member": {
         "range": {
           "end": 14,
@@ -180,12 +165,7 @@
       "parameter": "cedarkit.u10m"
     },
     {
-      "level": [
-        500,
-        850
-      ],
       "level_type": "pressure",
-      "level_unit": "hPa",
       "member": {
         "range": {
           "end": 14,
@@ -232,5 +212,5 @@
     }
   ],
   "time_zone": "UTC",
-  "version_policy": "current business only; sampled leads do not limit reading; no complete-domain claim"
+  "version_policy": "current business only; sampled leads and generic-pressure levels do not limit reading; no complete-domain claim"
 }

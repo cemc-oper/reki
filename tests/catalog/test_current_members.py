@@ -138,7 +138,7 @@ def test_member_bounds_and_no_statistics_or_unverified_parameters(
         for q in [
             {"member": maximum + 1},
             {"member": 1, "member_role": "control"},
-            {"level_type": "pressure", "level": 700},
+            {"level_type": "height_above_ground", "level": 20},
             {"statistics": {"over": "ensemble", "operation": "mean"}},
         ]:
             with pytest.raises(QueryError):

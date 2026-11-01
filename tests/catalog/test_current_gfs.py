@@ -119,11 +119,11 @@ def test_registered_names_use_supported_domain_and_reject_wrong_pairs(tmp_path):
         assert source.sel(parameter="t2m", step="PT5H").explain().effective_queries
         with pytest.raises(QueryError):
             source.sel(parameter="t2m", level=10)
-        with pytest.raises(QueryError) as error:
-            source.sel(
-                parameter="cedarkit.t", level_type="pressure", level=600
-            ).explain()
-        assert error.value.context["reason"] == "mapping_coverage_gap"
+        assert (
+            source.sel(parameter="cedarkit.t", level_type="pressure", level=600)
+            .explain()
+            .effective_queries
+        )
         with pytest.raises(QueryError):
             source.sel(parameter="cedarkit.sw").explain()
     finally:
@@ -169,7 +169,7 @@ def test_current_resource_pin_rejects_tampering():
         load_resource(ref, "mappings")
 
 
-def test_mapping_override_cannot_widen_current_supported_pairs(tmp_path):
+def test_mapping_override_cannot_widen_fixed_height_provision(tmp_path):
     path = tmp_path / "field.grib2"
     encoded(path)
     maps = load_resource(
@@ -186,7 +186,9 @@ def test_mapping_override_cannot_widen_current_supported_pairs(tmp_path):
     )
     try:
         with pytest.raises(QueryError) as error:
-            source.sel(parameter="t", level_type="pressure", level=600).explain()
+            source.sel(
+                parameter="t", level_type="height_above_ground", level=20
+            ).explain()
         assert error.value.context["reason"] == "mapping_coverage_gap"
     finally:
         source.close()
@@ -208,40 +210,21 @@ def test_mixed_height_and_soil_queries_keep_separate_supported_pairs(tmp_path):
 
 
 @pytest.mark.parametrize("dataset", ["CMA-GFS", "CMA-MESO-3KM"])
-def test_current_bindings_support_only_reviewed_pressure_pairs(tmp_path, dataset):
+def test_current_bindings_keep_pressure_type_without_sample_levels(tmp_path, dataset):
     encoded(tmp_path / "unopened.grib2")
-    source = from_source(
+    with from_source(
         {"kind": "file", "dataset": dataset, "path": str(tmp_path / "unopened.grib2")}
-    )
-    try:
+    ) as source:
         for name in ["t", "u", "v", "q", "rh"]:
-            info = source.sel(
-                parameter=name,
-                level_type="pressure",
-                level=[1000, 925, 850, 700, 500],
-                step=["PT0H", "PT12H", "PT24H"],
-            ).explain()
-            assert info.effective_queries
-        for step in (
-            ["PT3H", "PT6H", "PT36H"]
-            if dataset == "CMA-MESO-3KM"
-            else ["PT48H", "PT72H"]
-        ):
-            assert source.sel(parameter="t2m", step=step).explain().effective_queries
             assert (
-                source.sel(parameter="t", level_type="pressure", level=850, step=step)
+                source.sel(
+                    parameter=name, level_type="pressure", level=600, level_unit="hPa"
+                )
                 .explain()
                 .effective_queries
             )
-        assert (
-            source.sel(parameter="t", level_type="pressure", level=850, step="PT1H")
-            .explain()
-            .effective_queries
-        )
         with pytest.raises(QueryError):
-            source.sel(parameter="t", level_type="pressure", level=600).explain()
-    finally:
-        source.close()
+            source.sel(parameter="t2m", level_type="pressure", level=600).explain()
 
 
 def test_meso_local_layout_utc_and_one_terminal(tmp_path):
@@ -444,8 +427,11 @@ def test_new_current_analysis_forecast_local_pairs(
             source.sel(
                 parameter="t2m", time="2026-10-29T12:00:00Z", step=f"PT{step}H"
             ).all(completeness="required")
-        with pytest.raises(QueryError):
+        assert (
             source.sel(parameter="t", level_type="pressure", level=700, step="PT6H")
+            .explain()
+            .effective_queries
+        )
         assert source.sel(parameter="t2m", step="PT3H").explain().effective_queries
     finally:
         source.close()
@@ -491,3 +477,78 @@ def test_new_tym_layers_and_meso1_soil_gap(tmp_path):
     finally:
         tym.close()
         meso.close()
+
+
+@pytest.mark.parametrize(
+    "dataset",
+    ["CMA-GFS", "CMA-MESO-3KM", "CMA-MESO-1KM", "CMA-TYM", "CMA-GEPS", "CMA-REPS"],
+)
+def test_generic_pressure_field_reads_outside_sample_levels(tmp_path, dataset):
+    path = tmp_path / (dataset + ".grib2")
+    # 600000 * 10**-1 Pa = 600 hPa; this was outside both sampled lists.
+    native = dict(
+        typeOfFirstFixedSurface=100,
+        scaleFactorOfFirstFixedSurface=1,
+        scaledValueOfFirstFixedSurface=600000,
+    )
+    expected = [280, 281, 282, 283]
+    phase = dict(
+        typeOfProcessedData=1, typeOfGeneratingProcess=2, significanceOfReferenceTime=1
+    )
+    if dataset in {"CMA-GEPS", "CMA-REPS"}:
+        phase.update(
+            productDefinitionTemplateNumber=1,
+            typeOfProcessedData=3,
+            typeOfGeneratingProcess=4,
+            typeOfEnsembleForecast=0,
+            perturbationNumber=0,
+            numberOfForecastsInEnsemble=0 if dataset == "CMA-REPS" else 31,
+        )
+    encoded(path, forecastTime=6, **phase, **native)
+    with from_source({"kind": "file", "dataset": dataset, "path": str(path)}) as source:
+        field = source.sel(
+            parameter="t", level_type="pressure", level=600, level_unit="hPa"
+        ).one()
+        ds = field.to_xarray()
+        np.testing.assert_array_equal(ds.pressure.values, [600])
+        np.testing.assert_array_equal(ds.t.values.reshape(-1), expected)
+        assert ds.pressure.attrs["units"] == "hPa" and ds.t.attrs["units"] == "K"
+        equivalent = source.sel(
+            parameter="t", level_type="pressure", level=60000, level_unit="Pa"
+        ).one()
+        assert equivalent.identity.to_dict() == field.identity.to_dict()
+
+
+def test_generic_pressure_preserves_fractional_levels(tmp_path):
+    path = tmp_path / "fractional.grib2"
+    encoded(path, typeOfFirstFixedSurface=100, scaledValueOfFirstFixedSurface=10)
+    with from_source(
+        {"kind": "file", "dataset": "CMA-GFS", "path": str(path)}
+    ) as source:
+        ds = (
+            source.sel(
+                parameter="t", level_type="pressure", level=0.1, level_unit="hPa"
+            )
+            .one()
+            .to_xarray()
+        )
+        np.testing.assert_array_equal(ds.pressure.values, [0.1])
+        np.testing.assert_array_equal(ds.t.values.reshape(-1), [280, 281, 282, 283])
+
+
+def test_explicit_caller_pressure_bounds_remain_strict(tmp_path):
+    path = tmp_path / "unopened.grib2"
+    path.touch()
+    with from_source(
+        {"kind": "file", "dataset": "CMA-GFS", "path": str(path)},
+        context={
+            "scope": {
+                "level_type": "pressure",
+                "level": [500, 850],
+                "level_unit": "hPa",
+            }
+        },
+    ) as source:
+        assert source.sel(parameter="t", level=500).explain().effective_queries
+        with pytest.raises(QueryError):
+            source.sel(parameter="t", level=600).explain()

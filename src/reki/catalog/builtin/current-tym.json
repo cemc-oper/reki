@@ -26,21 +26,11 @@
       "parameter": "cedarkit.psl"
     },
     {
-      "level": [
-        500,
-        850
-      ],
       "level_type": "pressure",
-      "level_unit": "hPa",
       "parameter": "cedarkit.q"
     },
     {
-      "level": [
-        500,
-        850
-      ],
       "level_type": "pressure",
-      "level_unit": "hPa",
       "parameter": "cedarkit.rh"
     },
     {
@@ -100,12 +90,7 @@
       "parameter": "cedarkit.st-0-10"
     },
     {
-      "level": [
-        500,
-        850
-      ],
       "level_type": "pressure",
-      "level_unit": "hPa",
       "parameter": "cedarkit.t"
     },
     {
@@ -115,12 +100,7 @@
       "parameter": "cedarkit.t2m"
     },
     {
-      "level": [
-        500,
-        850
-      ],
       "level_type": "pressure",
-      "level_unit": "hPa",
       "parameter": "cedarkit.u"
     },
     {
@@ -130,12 +110,7 @@
       "parameter": "cedarkit.u10m"
     },
     {
-      "level": [
-        500,
-        850
-      ],
       "level_type": "pressure",
-      "level_unit": "hPa",
       "parameter": "cedarkit.v"
     },
     {
@@ -153,21 +128,11 @@
       "parameter": "cedarkit.psl"
     },
     {
-      "level": [
-        500,
-        850
-      ],
       "level_type": "pressure",
-      "level_unit": "hPa",
       "parameter": "cedarkit.q"
     },
     {
-      "level": [
-        500,
-        850
-      ],
       "level_type": "pressure",
-      "level_unit": "hPa",
       "parameter": "cedarkit.rh"
     },
     {
@@ -227,12 +192,7 @@
       "parameter": "cedarkit.st-0-10"
     },
     {
-      "level": [
-        500,
-        850
-      ],
       "level_type": "pressure",
-      "level_unit": "hPa",
       "parameter": "cedarkit.t"
     },
     {
@@ -242,12 +202,7 @@
       "parameter": "cedarkit.t2m"
     },
     {
-      "level": [
-        500,
-        850
-      ],
       "level_type": "pressure",
-      "level_unit": "hPa",
       "parameter": "cedarkit.u"
     },
     {
@@ -257,12 +212,7 @@
       "parameter": "cedarkit.u10m"
     },
     {
-      "level": [
-        500,
-        850
-      ],
       "level_type": "pressure",
-      "level_unit": "hPa",
       "parameter": "cedarkit.v"
     },
     {
@@ -285,5 +235,5 @@
     }
   ],
   "time_zone": "UTC",
-  "version_policy": "current business only; sampled leads do not limit reading; no complete-domain claim"
+  "version_policy": "current business only; sampled leads and generic-pressure levels do not limit reading; no complete-domain claim"
 }

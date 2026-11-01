@@ -10,8 +10,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-gfs.current",
-          "sha256": "389bc4894fec80b66f4aef6cb48dcd4185353a031dc4eeb49b9711af615a8471",
-          "version": "9"
+          "sha256": "9fea63385797b1e6720430e899c5410dbb4899042b7f57c01579a1baa5764a63",
+          "version": "10"
         }
       },
       "products": [
@@ -28,7 +28,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-19/verification-input.json#sha256=9462e0d519fcf8e2fe44ca9cf3ce50bcb1883db8b29513b395ded6caeeca3170;finite12/24/48/72h GFS surface energy pairs, raw signed values; complete domain unknown",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-20/verification-input.json#sha256=f937312a75d98c98f88138b725a3cfd0b7f7da09a13fd48c12977330f7cc31f9;twelve new original messages; full native context, offsets, SHA and one reference-anchored accumulation;GSWC netSW andGULWC upwardLW finite signed energy, complete domain unknown",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-21/verification-input.json#sha256=70b3422c6669fbaad30bbf6211f57410b3306d7b211deb6632107072e89e294f;12 freshly inspected original messages: six GSW accepted metadata, six GLW audit-only; offsets, full fingerprints and SHA;GSW netSW finite signed energy; GLW conflict remains unbound, complete domain unknown",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability"
           ],
           "id": "orig",
           "methods": [],
@@ -43,27 +44,11 @@
               "parameter": "cedarkit.psl"
             },
             {
-              "level": [
-                500,
-                700,
-                850,
-                925,
-                1000
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.q"
             },
             {
-              "level": [
-                500,
-                700,
-                850,
-                925,
-                1000
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.rh"
             },
             {
@@ -127,15 +112,7 @@
               "parameter": "cedarkit.st-40-100"
             },
             {
-              "level": [
-                500,
-                700,
-                850,
-                925,
-                1000
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.t"
             },
             {
@@ -145,15 +122,7 @@
               "parameter": "cedarkit.t2m"
             },
             {
-              "level": [
-                500,
-                700,
-                850,
-                925,
-                1000
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.u"
             },
             {
@@ -163,15 +132,7 @@
               "parameter": "cedarkit.u10m"
             },
             {
-              "level": [
-                500,
-                700,
-                850,
-                925,
-                1000
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.v"
             },
             {
@@ -238,8 +199,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-meso-3km.current",
-          "sha256": "9182162ab9fac2084b1d72b4fbe3df1bc4bbed9490ace12a728db3817fd6257c",
-          "version": "4"
+          "sha256": "abe43c233d0b725dbe38191c70b44304bac17e4439c99f25f3243885368e353f",
+          "version": "5"
         }
       },
       "products": [
@@ -252,7 +213,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/time-unit-decisions.json#sha256=eb47c4b26aca5a73c52644c11845d2bd79a177397af31e18cd55474b7ca54b85;actual since-initialization interval and finite water-equivalent convention",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;current finite precipitation lead extension",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability"
           ],
           "id": "orig",
           "methods": [],
@@ -267,27 +229,11 @@
               "parameter": "cedarkit.psl"
             },
             {
-              "level": [
-                500,
-                700,
-                850,
-                925,
-                1000
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.q"
             },
             {
-              "level": [
-                500,
-                700,
-                850,
-                925,
-                1000
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.rh"
             },
             {
@@ -306,15 +252,7 @@
               "parameter": "cedarkit.st-0-10"
             },
             {
-              "level": [
-                500,
-                700,
-                850,
-                925,
-                1000
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.t"
             },
             {
@@ -324,15 +262,7 @@
               "parameter": "cedarkit.t2m"
             },
             {
-              "level": [
-                500,
-                700,
-                850,
-                925,
-                1000
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.u"
             },
             {
@@ -342,15 +272,7 @@
               "parameter": "cedarkit.u10m"
             },
             {
-              "level": [
-                500,
-                700,
-                850,
-                925,
-                1000
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.v"
             },
             {
@@ -428,8 +350,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-meso-1km.current",
-          "sha256": "d8aba624341ff0c3826b07075b88154dd55cee4bb0d41d7aae4f08e028e0fd21",
-          "version": "4"
+          "sha256": "e95a764dbb6c37958ff0dbbc482088a1b5e85b583f359b3a280d5c9d0a747825",
+          "version": "5"
         }
       },
       "products": [
@@ -442,7 +364,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-13/time-unit-decisions.json#sha256=494d270174257d967594196cf94f42b585f4c7779df9df883bb535dd2f5ee4bf;actual since-initialization interval and finite water-equivalent convention",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;current finite precipitation lead extension",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability"
           ],
           "id": "orig",
           "methods": [],
@@ -457,30 +380,15 @@
               "parameter": "cedarkit.psl"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.q"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.rh"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.t"
             },
             {
@@ -490,12 +398,7 @@
               "parameter": "cedarkit.t2m"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.u"
             },
             {
@@ -505,12 +408,7 @@
               "parameter": "cedarkit.u10m"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.v"
             },
             {
@@ -528,30 +426,15 @@
               "parameter": "cedarkit.psl"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.q"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.rh"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.t"
             },
             {
@@ -561,12 +444,7 @@
               "parameter": "cedarkit.t2m"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.u"
             },
             {
@@ -576,12 +454,7 @@
               "parameter": "cedarkit.u10m"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.v"
             },
             {
@@ -618,8 +491,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-tym.current",
-          "sha256": "a8dde0739ae43496b3e31d359732d0fd5f3ece950c836eec7dcc5a0ca327f3bc",
-          "version": "4"
+          "sha256": "a85d3260f2a4eeeae9f32c9e0cf3559f7c10adb45385aba5805ae94e32006b2c",
+          "version": "5"
         }
       },
       "products": [
@@ -632,7 +505,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-13/time-unit-decisions.json#sha256=494d270174257d967594196cf94f42b585f4c7779df9df883bb535dd2f5ee4bf;actual since-initialization interval and finite water-equivalent convention",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;current finite precipitation lead extension",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability"
           ],
           "id": "orig",
           "methods": [],
@@ -647,21 +521,11 @@
               "parameter": "cedarkit.psl"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.q"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.rh"
             },
             {
@@ -721,12 +585,7 @@
               "parameter": "cedarkit.st-0-10"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.t"
             },
             {
@@ -736,12 +595,7 @@
               "parameter": "cedarkit.t2m"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.u"
             },
             {
@@ -751,12 +605,7 @@
               "parameter": "cedarkit.u10m"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.v"
             },
             {
@@ -774,21 +623,11 @@
               "parameter": "cedarkit.psl"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.q"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.rh"
             },
             {
@@ -848,12 +687,7 @@
               "parameter": "cedarkit.st-0-10"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.t"
             },
             {
@@ -863,12 +697,7 @@
               "parameter": "cedarkit.t2m"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.u"
             },
             {
@@ -878,12 +707,7 @@
               "parameter": "cedarkit.u10m"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "parameter": "cedarkit.v"
             },
             {
@@ -928,8 +752,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-geps.current",
-          "sha256": "63b89fb34b53442aeb8cf77d058e2dd3b03241ed494439c14b11c8288361b8dc",
-          "version": "4"
+          "sha256": "8ef1282206d3ef71d610037b1312a193001f1259e862d1634c875250afe3a603",
+          "version": "5"
         }
       },
       "products": [
@@ -943,7 +767,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;since-initialization variants and water-equivalent units",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;current finite precipitation lead extension",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability"
           ],
           "id": "orig",
           "methods": [],
@@ -972,12 +797,7 @@
               "parameter": "cedarkit.psl"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "member": {
                 "range": {
                   "end": 30,
@@ -988,12 +808,7 @@
               "parameter": "cedarkit.q"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "member": {
                 "range": {
                   "end": 30,
@@ -1004,12 +819,7 @@
               "parameter": "cedarkit.rh"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "member": {
                 "range": {
                   "end": 30,
@@ -1033,12 +843,7 @@
               "parameter": "cedarkit.t2m"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "member": {
                 "range": {
                   "end": 30,
@@ -1062,12 +867,7 @@
               "parameter": "cedarkit.u10m"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "member": {
                 "range": {
                   "end": 30,
@@ -1155,8 +955,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-reps.current",
-          "sha256": "bbad424e32be88e916d84980b526cde43a314f3224fc95d7883224d490d3eee3",
-          "version": "4"
+          "sha256": "43afc18967bcd5e1f9c0cb3e0c63810afa77e5e2f50ac75a591b908511b4deed",
+          "version": "5"
         }
       },
       "products": [
@@ -1170,7 +970,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;since-initialization variants and water-equivalent units",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;current finite precipitation lead extension",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability"
           ],
           "id": "orig",
           "methods": [],
@@ -1188,12 +989,7 @@
               "parameter": "cedarkit.psl"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "member": {
                 "range": {
                   "end": 14,
@@ -1204,12 +1000,7 @@
               "parameter": "cedarkit.rh"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "member": {
                 "range": {
                   "end": 14,
@@ -1233,12 +1024,7 @@
               "parameter": "cedarkit.t2m"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "member": {
                 "range": {
                   "end": 14,
@@ -1262,12 +1048,7 @@
               "parameter": "cedarkit.u10m"
             },
             {
-              "level": [
-                500,
-                850
-              ],
               "level_type": "pressure",
-              "level_unit": "hPa",
               "member": {
                 "range": {
                   "end": 14,
@@ -1423,5 +1204,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "14"
+  "version": "15"
 }

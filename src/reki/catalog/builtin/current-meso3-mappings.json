@@ -137,6 +137,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/meso-soil-evidence.json#sha256=26db33c19bb74171425f49b94b84a9f82b1ed499f125e2dd01aa8657d53f071b;MESO physical intervals differ from GFS; no GFS variant substitution",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;meso3; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-8/sample-headers.json#sha256=053994d36aefa727335f60552337226718e054549fdfc1a93d0a8cd08693ba91;exact original GFS f24 headers; not complete product provision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;original-object-verified writer",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;temperature/wind/humidity/pressure/soil declarations; not product version",
@@ -180,15 +181,7 @@
       },
       "parameter_id": "cedarkit.q",
       "when": {
-        "level": [
-          500,
-          700,
-          850,
-          925,
-          1000
-        ],
-        "level_type": "pressure",
-        "level_unit": "hPa"
+        "level_type": "pressure"
       }
     },
     {
@@ -380,6 +373,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/meso-soil-evidence.json#sha256=26db33c19bb74171425f49b94b84a9f82b1ed499f125e2dd01aa8657d53f071b;MESO physical intervals differ from GFS; no GFS variant substitution",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;meso3; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-8/sample-headers.json#sha256=053994d36aefa727335f60552337226718e054549fdfc1a93d0a8cd08693ba91;exact original GFS f24 headers; not complete product provision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;original-object-verified writer",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;temperature/wind/humidity/pressure/soil declarations; not product version",
@@ -423,15 +417,7 @@
       },
       "parameter_id": "cedarkit.rh",
       "when": {
-        "level": [
-          500,
-          700,
-          850,
-          925,
-          1000
-        ],
-        "level_type": "pressure",
-        "level_unit": "hPa"
+        "level_type": "pressure"
       }
     },
     {
@@ -616,6 +602,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/meso-soil-evidence.json#sha256=26db33c19bb74171425f49b94b84a9f82b1ed499f125e2dd01aa8657d53f071b;MESO physical intervals differ from GFS; no GFS variant substitution",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;meso3; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-8/sample-headers.json#sha256=053994d36aefa727335f60552337226718e054549fdfc1a93d0a8cd08693ba91;exact original GFS f24 headers; not complete product provision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;original-object-verified writer",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;temperature/wind/humidity/pressure/soil declarations; not product version",
@@ -659,15 +646,7 @@
       },
       "parameter_id": "cedarkit.t",
       "when": {
-        "level": [
-          500,
-          700,
-          850,
-          925,
-          1000
-        ],
-        "level_type": "pressure",
-        "level_unit": "hPa"
+        "level_type": "pressure"
       }
     },
     {
@@ -746,6 +725,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/meso-soil-evidence.json#sha256=26db33c19bb74171425f49b94b84a9f82b1ed499f125e2dd01aa8657d53f071b;MESO physical intervals differ from GFS; no GFS variant substitution",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;meso3; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-8/sample-headers.json#sha256=053994d36aefa727335f60552337226718e054549fdfc1a93d0a8cd08693ba91;exact original GFS f24 headers; not complete product provision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;original-object-verified writer",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;temperature/wind/humidity/pressure/soil declarations; not product version",
@@ -789,15 +769,7 @@
       },
       "parameter_id": "cedarkit.u",
       "when": {
-        "level": [
-          500,
-          700,
-          850,
-          925,
-          1000
-        ],
-        "level_type": "pressure",
-        "level_unit": "hPa"
+        "level_type": "pressure"
       }
     },
     {
@@ -876,6 +848,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/meso-soil-evidence.json#sha256=26db33c19bb74171425f49b94b84a9f82b1ed499f125e2dd01aa8657d53f071b;MESO physical intervals differ from GFS; no GFS variant substitution",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;meso3; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-8/sample-headers.json#sha256=053994d36aefa727335f60552337226718e054549fdfc1a93d0a8cd08693ba91;exact original GFS f24 headers; not complete product provision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;original-object-verified writer",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;temperature/wind/humidity/pressure/soil declarations; not product version",
@@ -919,15 +892,7 @@
       },
       "parameter_id": "cedarkit.v",
       "when": {
-        "level": [
-          500,
-          700,
-          850,
-          925,
-          1000
-        ],
-        "level_type": "pressure",
-        "level_unit": "hPa"
+        "level_type": "pressure"
       }
     },
     {
@@ -994,5 +959,5 @@
     }
   ],
   "tables": [],
-  "version": "4"
+  "version": "5"
 }

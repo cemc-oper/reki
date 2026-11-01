@@ -1118,6 +1118,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
@@ -1167,12 +1168,7 @@
       },
       "parameter_id": "cedarkit.rh",
       "when": {
-        "level": [
-          500,
-          850
-        ],
         "level_type": "pressure",
-        "level_unit": "hPa",
         "member": 0,
         "member_role": "control"
       }
@@ -1188,6 +1184,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
@@ -1240,12 +1237,7 @@
       },
       "parameter_id": "cedarkit.rh",
       "when": {
-        "level": [
-          500,
-          850
-        ],
         "level_type": "pressure",
-        "level_unit": "hPa",
         "member": {
           "range": {
             "end": 14,
@@ -1267,6 +1259,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
@@ -1316,12 +1309,7 @@
       },
       "parameter_id": "cedarkit.rh",
       "when": {
-        "level": [
-          500,
-          850
-        ],
         "level_type": "pressure",
-        "level_unit": "hPa",
         "member": 0,
         "member_role": "control"
       }
@@ -1337,6 +1325,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
@@ -1389,12 +1378,7 @@
       },
       "parameter_id": "cedarkit.rh",
       "when": {
-        "level": [
-          500,
-          850
-        ],
         "level_type": "pressure",
-        "level_unit": "hPa",
         "member": {
           "range": {
             "end": 14,
@@ -1416,6 +1400,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
@@ -1465,12 +1450,7 @@
       },
       "parameter_id": "cedarkit.t",
       "when": {
-        "level": [
-          500,
-          850
-        ],
         "level_type": "pressure",
-        "level_unit": "hPa",
         "member": 0,
         "member_role": "control"
       }
@@ -1486,6 +1466,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
@@ -1538,12 +1519,7 @@
       },
       "parameter_id": "cedarkit.t",
       "when": {
-        "level": [
-          500,
-          850
-        ],
         "level_type": "pressure",
-        "level_unit": "hPa",
         "member": {
           "range": {
             "end": 14,
@@ -1565,6 +1541,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
@@ -1614,12 +1591,7 @@
       },
       "parameter_id": "cedarkit.t",
       "when": {
-        "level": [
-          500,
-          850
-        ],
         "level_type": "pressure",
-        "level_unit": "hPa",
         "member": 0,
         "member_role": "control"
       }
@@ -1635,6 +1607,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
@@ -1687,12 +1660,7 @@
       },
       "parameter_id": "cedarkit.t",
       "when": {
-        "level": [
-          500,
-          850
-        ],
         "level_type": "pressure",
-        "level_unit": "hPa",
         "member": {
           "range": {
             "end": 14,
@@ -2000,6 +1968,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
@@ -2049,12 +2018,7 @@
       },
       "parameter_id": "cedarkit.u",
       "when": {
-        "level": [
-          500,
-          850
-        ],
         "level_type": "pressure",
-        "level_unit": "hPa",
         "member": 0,
         "member_role": "control"
       }
@@ -2070,6 +2034,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
@@ -2122,12 +2087,7 @@
       },
       "parameter_id": "cedarkit.u",
       "when": {
-        "level": [
-          500,
-          850
-        ],
         "level_type": "pressure",
-        "level_unit": "hPa",
         "member": {
           "range": {
             "end": 14,
@@ -2149,6 +2109,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
@@ -2198,12 +2159,7 @@
       },
       "parameter_id": "cedarkit.u",
       "when": {
-        "level": [
-          500,
-          850
-        ],
         "level_type": "pressure",
-        "level_unit": "hPa",
         "member": 0,
         "member_role": "control"
       }
@@ -2219,6 +2175,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
@@ -2271,12 +2228,7 @@
       },
       "parameter_id": "cedarkit.u",
       "when": {
-        "level": [
-          500,
-          850
-        ],
         "level_type": "pressure",
-        "level_unit": "hPa",
         "member": {
           "range": {
             "end": 14,
@@ -2584,6 +2536,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
@@ -2633,12 +2586,7 @@
       },
       "parameter_id": "cedarkit.v",
       "when": {
-        "level": [
-          500,
-          850
-        ],
         "level_type": "pressure",
-        "level_unit": "hPa",
         "member": 0,
         "member_role": "control"
       }
@@ -2654,6 +2602,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
@@ -2706,12 +2655,7 @@
       },
       "parameter_id": "cedarkit.v",
       "when": {
-        "level": [
-          500,
-          850
-        ],
         "level_type": "pressure",
-        "level_unit": "hPa",
         "member": {
           "range": {
             "end": 14,
@@ -2733,6 +2677,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
@@ -2782,12 +2727,7 @@
       },
       "parameter_id": "cedarkit.v",
       "when": {
-        "level": [
-          500,
-          850
-        ],
         "level_type": "pressure",
-        "level_unit": "hPa",
         "member": 0,
         "member_role": "control"
       }
@@ -2803,6 +2743,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
@@ -2855,12 +2796,7 @@
       },
       "parameter_id": "cedarkit.v",
       "when": {
-        "level": [
-          500,
-          850
-        ],
         "level_type": "pressure",
-        "level_unit": "hPa",
         "member": {
           "range": {
             "end": 14,
@@ -3159,5 +3095,5 @@
     }
   ],
   "tables": [],
-  "version": "4"
+  "version": "5"
 }
