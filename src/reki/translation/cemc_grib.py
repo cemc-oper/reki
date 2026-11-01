@@ -3,6 +3,8 @@
 The original paraNum.h and setGrib2Section4Parameters define these codes.
 The complete writer sets centre 38, master table 4 and local table 1.
 These slices cover operational deterministic instantaneous messages only.
+An additional exact GFS surface clear-sky longwave energy encoding is checked
+separately; its declared unit belongs to the finite product mapping.
 It supplies no default parameter IDs, product scope, members or statistics.
 See doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6 in the workspace.
 """
@@ -66,3 +68,41 @@ def value_unit(meta):
     if applies(meta) and meta.get("parameterCategory") == 1:
         return "m3/m3"
     return None
+
+
+def is_gfs_clear_sky_longwave_energy(meta):
+    """Recognize the reviewed local-use0/5/224 written with local table1.
+
+    Original writer element108 and business declarations identify this exact
+    producer encoding. Do not relax local-table checks for other codes, layers,
+    templates or producers. Time/statistic consistency is checked by its rules;
+    this function supplies neither a unit nor a parameter identity.
+    """
+    keys = (
+        "edition",
+        "centre",
+        "subCentre",
+        "tablesVersion",
+        "localTablesVersion",
+        "productionStatusOfProcessedData",
+        "productDefinitionTemplateNumber",
+        "discipline",
+        "parameterCategory",
+        "parameterNumber",
+        "typeOfFirstFixedSurface",
+        "typeOfSecondFixedSurface",
+    )
+    context = tuple(meta.get(k) for k in keys)
+    phase = tuple(
+        meta.get(k)
+        for k in (
+            "typeOfProcessedData",
+            "typeOfGeneratingProcess",
+            "significanceOfReferenceTime",
+        )
+    )
+    return (
+        all(type(v) is int for v in context + phase)
+        and context == (2, 38, 0, 4, 1, 0, 8, 0, 5, 224, 1, 255)
+        and phase in {(0, 0, 0), (1, 2, 1)}
+    )

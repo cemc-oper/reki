@@ -65,10 +65,12 @@ def applicability(meta):
     if (meta["tablesVersion"], meta["localTablesVersion"]) != (
         4,
         0,
-    ) and not cemc_grib.applies(meta):
+    ) and not (
+        cemc_grib.applies(meta) or cemc_grib.is_gfs_clear_sky_longwave_energy(meta)
+    ):
         metadata_error(
             "unsupported_native_encoding",
-            "encoding is outside the standard table-4/local-0 and reviewed CEMC v12.6 instantaneous profiles",
+            "encoding is outside the standard table-4/local-0 and reviewed finite CEMC profiles",
             fields={
                 "tablesVersion": meta["tablesVersion"],
                 "localTablesVersion": meta["localTablesVersion"],

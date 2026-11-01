@@ -38,6 +38,70 @@
       "fixed_conditions": {
         "level_type": "surface"
       },
+      "name": "gswc",
+      "parameter_id": "cedarkit.gswc",
+      "parent": "cedarkit.gswc.any"
+    },
+    {
+      "description": "Time-integrated net short-wave radiation, clear sky",
+      "description_cn": "晴空净短波辐射时间积分量",
+      "name": "gswc",
+      "parameter_id": "cedarkit.gswc.any",
+      "unit": "J/m2"
+    },
+    {
+      "aliases": [
+        "gswc-since-initialization"
+      ],
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "gswc",
+      "parameter_id": "cedarkit.gswc.since-initialization",
+      "parent": "cedarkit.gswc"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "gulwc",
+      "parameter_id": "cedarkit.gulwc",
+      "parent": "cedarkit.gulwc.any"
+    },
+    {
+      "description": "Time-integrated upward long-wave radiation, clear sky",
+      "description_cn": "晴空向上长波辐射时间积分量",
+      "name": "gulwc",
+      "parameter_id": "cedarkit.gulwc.any",
+      "unit": "J/m2"
+    },
+    {
+      "aliases": [
+        "gulwc-since-initialization"
+      ],
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "gulwc",
+      "parameter_id": "cedarkit.gulwc.since-initialization",
+      "parent": "cedarkit.gulwc"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
       "name": "guswc",
       "parameter_id": "cedarkit.guswc",
       "parent": "cedarkit.guswc.any"
@@ -376,5 +440,5 @@
       "parent": "cedarkit.v"
     }
   ],
-  "version": "3"
+  "version": "4"
 }

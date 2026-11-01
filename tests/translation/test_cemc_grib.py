@@ -78,6 +78,56 @@ def test_local_table_support_does_not_admit_unknown_profiles(changes):
     assert exc.value.context["reason"] == "unsupported_native_encoding"
 
 
+@pytest.mark.parametrize("phase", [(0, 0, 0), (1, 2, 1)])
+def test_gfs_clear_sky_longwave_encoding_does_not_supply_an_implicit_unit(phase):
+    native = profile(
+        localTablesVersion=1,
+        parameterCategory=5,
+        productDefinitionTemplateNumber=8,
+        typeOfProcessedData=phase[0],
+        typeOfGeneratingProcess=phase[1],
+        significanceOfReferenceTime=phase[2],
+        units="unknown",
+        parameterUnits="224",
+    )
+    grib.parameter_encoding(native)
+    assert grib.source_value_unit(native) is None
+    assert native["units"] == "unknown" and native["parameterUnits"] == "224"
+
+
+@pytest.mark.parametrize(
+    "changes",
+    [
+        {"centre": 98},
+        {"subCentre": 1},
+        {"tablesVersion": 5},
+        {"localTablesVersion": 0},
+        {"productionStatusOfProcessedData": 1},
+        {"discipline": 2},
+        {"parameterCategory": 4},
+        {"parameterNumber": 225},
+        {"productDefinitionTemplateNumber": 0},
+        {"productDefinitionTemplateNumber": 11},
+        {"typeOfFirstFixedSurface": 8},
+        {"typeOfSecondFixedSurface": 8},
+        {"typeOfGeneratingProcess": 0},
+        {"typeOfProcessedData": False},
+    ],
+)
+def test_gfs_local_energy_profile_does_not_admit_other_encodings(changes):
+    native = profile(
+        localTablesVersion=1,
+        parameterCategory=5,
+        productDefinitionTemplateNumber=8,
+        typeOfProcessedData=1,
+        typeOfGeneratingProcess=2,
+        significanceOfReferenceTime=1,
+    )
+    native.update(changes)
+    with pytest.raises(SourceError):
+        grib.parameter_encoding(native)
+
+
 def soil_layer(top, bottom):
     return {
         "bottom": {"type": "depth_below_land", "value": bottom, "unit": "m"},

@@ -28,15 +28,15 @@ def encoded(path, name, hour=6, *, values=(0, 1.25, -2.5, 3), **overrides):
             centre=38,
             subCentre=0,
             tablesVersion=4,
-            localTablesVersion=0,
+            localTablesVersion=1 if name == "gulwc" else 0,
             productionStatusOfProcessedData=0,
             typeOfProcessedData=0 if hour == 0 else 1,
             productDefinitionTemplateNumber=8,
             typeOfGeneratingProcess=0 if hour == 0 else 2,
             significanceOfReferenceTime=0 if hour == 0 else 1,
             discipline=0,
-            parameterCategory=4 if name == "guswc" else 5,
-            parameterNumber=53 if name == "guswc" else 8,
+            parameterCategory={"guswc": 4, "gdlwc": 5, "gswc": 4, "gulwc": 5}[name],
+            parameterNumber={"guswc": 53, "gdlwc": 8, "gswc": 11, "gulwc": 224}[name],
             typeOfFirstFixedSurface=1,
             typeOfSecondFixedSurface=255,
             dataDate=20261030,
@@ -65,7 +65,7 @@ def encoded(path, name, hour=6, *, values=(0, 1.25, -2.5, 3), **overrides):
         eccodes.codes_release(g)
 
 
-@pytest.mark.parametrize("name", ["guswc", "gdlwc"])
+@pytest.mark.parametrize("name", ["guswc", "gdlwc", "gswc", "gulwc"])
 @pytest.mark.parametrize("hour", [0, 6, 12, 24, 48, 72])
 def test_public_gfs_energy_values_are_not_scaled_by_duration_or_direction(
     tmp_path, name, hour
@@ -87,7 +87,11 @@ def test_public_gfs_energy_values_are_not_scaled_by_duration_or_direction(
         assert ds[name].attrs["units"] == "J/m2"
         meta = thaw(field.metadata)
         assert meta["source_unit"] == "J/m2"
-        assert meta["native_fields"]["units"] == "J m**-2"
+        assert meta["native_fields"]["units"] == (
+            "unknown" if name == "gulwc" else "J m**-2"
+        )
+        if name == "gulwc":
+            assert meta["native_fields"]["parameterUnits"] == "224"
         assert meta["statistics"]["operation"] == "accumulation"
         assert meta["statistics"]["period"] == {"kind": "since_initialization"}
         assert "member" not in field.identity.to_dict()
@@ -103,7 +107,7 @@ def test_public_gfs_energy_values_are_not_scaled_by_duration_or_direction(
             )
 
 
-@pytest.mark.parametrize("name", ["guswc", "gdlwc"])
+@pytest.mark.parametrize("name", ["guswc", "gdlwc", "gswc", "gulwc"])
 @pytest.mark.parametrize(
     "overrides,reason",
     [
@@ -127,13 +131,14 @@ def test_energy_rejects_mean_reanchored_or_invalid_intervals(
 
 
 @pytest.mark.parametrize("unit", ["W m**-2", "unknown"])
+@pytest.mark.parametrize("name", ["guswc", "gswc", "gulwc"])
 def test_energy_unit_conflicts_and_unavailable_units_are_not_silently_reinterpreted(
-    tmp_path, monkeypatch, unit
+    tmp_path, monkeypatch, unit, name
 ):
     from reki.translation import grib_backend
 
     path = tmp_path / "unit.grib2"
-    encoded(path, "guswc")
+    encoded(path, name)
     original = grib_backend._metadata
 
     def metadata(handle, **kwargs):
@@ -145,29 +150,32 @@ def test_energy_unit_conflicts_and_unavailable_units_are_not_silently_reinterpre
     with from_source(
         {"kind": "file", "dataset": "CMA-GFS", "path": str(path)}
     ) as source:
-        selection = source.sel(parameter="guswc-since-initialization", step="PT6H")
+        selection = source.sel(parameter=name + "-since-initialization", step="PT6H")
         if unit == "unknown":
             # A proven mapping source unit may fill a decoder absence placeholder.
-            assert selection.one().to_xarray().guswc.attrs["units"] == "J/m2"
+            assert selection.one().to_xarray()[name].attrs["units"] == "J/m2"
         else:
             with pytest.raises(SourceError) as error:
                 selection.one()
             assert error.value.context["reason"] == "inconsistent_native_metadata"
 
 
-def test_energy_preserves_a_real_bitmap_including_zero_and_signed_values(tmp_path):
+@pytest.mark.parametrize("name", ["gdlwc", "gswc", "gulwc"])
+def test_energy_preserves_a_real_bitmap_including_zero_and_signed_values(
+    tmp_path, name
+):
     path = tmp_path / "bitmap.grib2"
     encoded(
-        path, "gdlwc", values=[0, 9999, -1.25, 2.5], bitmapPresent=1, missingValue=9999
+        path, name, values=[0, 9999, -1.25, 2.5], bitmapPresent=1, missingValue=9999
     )
     with from_source(
         {"kind": "file", "dataset": "CMA-GFS", "path": str(path)}
     ) as source:
         values = (
-            source.sel(parameter="gdlwc-since-initialization", step="PT6H")
+            source.sel(parameter=name + "-since-initialization", step="PT6H")
             .one()
-            .to_xarray()
-            .gdlwc.values
+            .to_xarray()[name]
+            .values
         )
         np.testing.assert_allclose(
             values.reshape(-1), [0, np.nan, -1.25, 2.5], rtol=0, atol=0, equal_nan=True
@@ -180,6 +188,10 @@ def test_energy_preserves_a_real_bitmap_including_zero_and_signed_values(tmp_pat
         {"parameter": "guswc-since-initialization", "step": "PT9H"},
         {"parameter": "gdlwc-since-initialization", "level_type": "atmosphere_top"},
         {"parameter": "tuswc"},
+        {"parameter": "tswc"},
+        {"parameter": "tulwc"},
+        {"parameter": "gswc-since-initialization", "step": "PT9H"},
+        {"parameter": "gulwc-since-initialization", "step": "PT9H"},
         {"parameter": "hfx"},
     ],
 )
@@ -198,26 +210,30 @@ def test_energy_scope_does_not_acquire_unreviewed_leads_layers_or_heat_products(
 @pytest.mark.parametrize(
     "system", ["CMA-MESO-3KM", "CMA-MESO-1KM", "CMA-TYM", "CMA-GEPS", "CMA-REPS"]
 )
-def test_gfs_radiation_does_not_register_other_system_support(tmp_path, system):
+@pytest.mark.parametrize("name", ["guswc", "gswc", "gulwc"])
+def test_gfs_radiation_does_not_register_other_system_support(tmp_path, system, name):
     path = tmp_path / "unopened"
     path.touch()
     with from_source({"kind": "file", "dataset": system, "path": str(path)}) as source:
         with pytest.raises(QueryError):
-            source.sel(parameter="guswc-since-initialization", step="PT6H").explain()
+            source.sel(parameter=name + "-since-initialization", step="PT6H").explain()
 
 
-def test_energy_all_assembles_cross_day_and_month_steps_without_new_windows(tmp_path):
+@pytest.mark.parametrize("name", ["guswc", "gswc", "gulwc"])
+def test_energy_all_assembles_cross_day_and_month_steps_without_new_windows(
+    tmp_path, name
+):
     path = tmp_path / "cross-month.grib2"
     messages = []
     for hour in [12, 24, 48, 72]:
-        encoded(path, "guswc", hour, values=[hour, -hour, 0, hour + 0.5])
+        encoded(path, name, hour, values=[hour, -hour, 0, hour + 0.5])
         messages.append(path.read_bytes())
     path.write_bytes(b"".join(messages))
     with from_source(
         {"kind": "file", "dataset": "CMA-GFS", "path": str(path)}
     ) as source:
         selected = source.sel(
-            parameter="guswc-since-initialization",
+            parameter=name + "-since-initialization",
             time="2026-10-30T12:00:00Z",
             step=["PT12H", "PT24H", "PT48H", "PT72H"],
         )
@@ -231,8 +247,32 @@ def test_energy_all_assembles_cross_day_and_month_steps_without_new_windows(tmp_
                 datetime(2026, 10, 30, 12, tzinfo=timezone.utc) + timedelta(hours=hour)
             ).isoformat().replace("+00:00", "Z")
             np.testing.assert_array_equal(
-                ds.guswc.sel(step=np.timedelta64(hour, "h")).values.reshape(-1),
+                ds[name].sel(step=np.timedelta64(hour, "h")).values.reshape(-1),
                 [hour, -hour, 0, hour + 0.5],
             )
         with pytest.raises(CompletenessError):
             selected.all(completeness="required")
+
+
+@pytest.mark.parametrize(
+    "name,changes",
+    [
+        ("gswc", {"parameterNumber": 52}),  # GDSWC downwardSW is not GSWC netSW.
+        ("gulwc", {"centre": 98}),
+        ("gulwc", {"localTablesVersion": 0}),
+        ("gulwc", {"parameterNumber": 225}),
+        ("gulwc", {"typeOfGeneratingProcess": 0}),
+        ("gulwc", {"typeOfFirstFixedSurface": 8}),
+    ],
+)
+def test_new_energy_bindings_reject_other_identities_and_contexts(
+    tmp_path, name, changes
+):
+    path = tmp_path / "wrong-context.grib2"
+    encoded(path, name, **changes)
+    with from_source(
+        {"kind": "file", "dataset": "CMA-GFS", "path": str(path)}
+    ) as source:
+        with pytest.raises(QueryError) as error:
+            source.sel(parameter=name + "-since-initialization", step="PT6H").one()
+        assert error.value.code == "no_match"

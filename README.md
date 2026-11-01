@@ -92,8 +92,9 @@ Calling `first()` selects the first matching field, and `to_xarray()` decodes it
 
 ### Current finite GFS clear-sky energy products
 
-The current catalog also exposes surface clear-sky upward shortwave and downward
-longwave energy integrals through the public selection API. The reviewed leads
+The current catalog also exposes surface clear-sky upward shortwave, downward
+longwave, net shortwave and upward longwave energy integrals through the public
+selection API. The reviewed leads
 are 0, 6, 12, 24, 48 and 72 hours; each interval starts at the forecast origin.
 For example, the validated 2026-10-30 12UTC cycle crosses both day and month
 boundaries:
@@ -109,7 +110,12 @@ with reki.from_source(
     ).all().to_xarray()
 ```
 
-The variables `guswc` and `gdlwc` retain the original signed values in J/m2.
+The variables `guswc`, `gdlwc`, `gswc` and `gulwc` retain the original signed values
+in J/m2. Add `gswc-since-initialization` or `gulwc-since-initialization` to select
+the newly bound net shortwave or upward longwave field. GSWC is distinct from
+downward GDSWC. GULWC uses an exact reviewed producer encoding with local-use
+code 0/5/224 in local table 1; its absent decoder unit is filled by the finite
+mapping's evidence-bound J/m2 declaration, retaining the raw decoder keys.
 Direction names do not impose a positive-value convention. No duration scaling,
 mean flux or accumulation-difference windows are generated. This finite subset
 does not establish complete product coverage; other systems and top-of-atmosphere
