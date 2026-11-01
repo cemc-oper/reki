@@ -35,6 +35,34 @@
       "parent": "cedarkit.gdlwc"
     },
     {
+      "aliases": [
+        "ssr"
+      ],
+      "description": "Time-integrated net short-wave radiation",
+      "description_cn": "净短波辐射时间积分量",
+      "name": "gsw",
+      "parameter_id": "cedarkit.gsw",
+      "unit": "J/m2"
+    },
+    {
+      "aliases": [
+        "gsw-since-initialization"
+      ],
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "gsw",
+      "parameter_id": "cedarkit.gsw.since-initialization",
+      "parent": "cedarkit.gsw"
+    },
+    {
       "fixed_conditions": {
         "level_type": "surface"
       },
@@ -440,5 +468,5 @@
       "parent": "cedarkit.v"
     }
   ],
-  "version": "4"
+  "version": "5"
 }

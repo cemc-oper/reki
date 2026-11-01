@@ -1,4 +1,4 @@
-"""Finite GFS directional energy products never infer an instantaneous flux."""
+"""Finite GFS radiation energy products never infer an instantaneous flux."""
 
 from datetime import datetime, timedelta, timezone
 
@@ -35,8 +35,16 @@ def encoded(path, name, hour=6, *, values=(0, 1.25, -2.5, 3), **overrides):
             typeOfGeneratingProcess=0 if hour == 0 else 2,
             significanceOfReferenceTime=0 if hour == 0 else 1,
             discipline=0,
-            parameterCategory={"guswc": 4, "gdlwc": 5, "gswc": 4, "gulwc": 5}[name],
-            parameterNumber={"guswc": 53, "gdlwc": 8, "gswc": 11, "gulwc": 224}[name],
+            parameterCategory={"guswc": 4, "gdlwc": 5, "gswc": 4, "gulwc": 5, "gsw": 4}[
+                name
+            ],
+            parameterNumber={
+                "guswc": 53,
+                "gdlwc": 8,
+                "gswc": 11,
+                "gulwc": 224,
+                "gsw": 9,
+            }[name],
             typeOfFirstFixedSurface=1,
             typeOfSecondFixedSurface=255,
             dataDate=20261030,
@@ -65,7 +73,7 @@ def encoded(path, name, hour=6, *, values=(0, 1.25, -2.5, 3), **overrides):
         eccodes.codes_release(g)
 
 
-@pytest.mark.parametrize("name", ["guswc", "gdlwc", "gswc", "gulwc"])
+@pytest.mark.parametrize("name", ["guswc", "gdlwc", "gswc", "gulwc", "gsw"])
 @pytest.mark.parametrize("hour", [0, 6, 12, 24, 48, 72])
 def test_public_gfs_energy_values_are_not_scaled_by_duration_or_direction(
     tmp_path, name, hour
@@ -90,6 +98,9 @@ def test_public_gfs_energy_values_are_not_scaled_by_duration_or_direction(
         assert meta["native_fields"]["units"] == (
             "unknown" if name == "gulwc" else "J m**-2"
         )
+        if name == "gsw":
+            # A code-table annotation and a statistical unit concept have different roles.
+            assert meta["native_fields"]["parameterUnits"] == "W m-2"
         if name == "gulwc":
             assert meta["native_fields"]["parameterUnits"] == "224"
         assert meta["statistics"]["operation"] == "accumulation"
@@ -107,7 +118,7 @@ def test_public_gfs_energy_values_are_not_scaled_by_duration_or_direction(
             )
 
 
-@pytest.mark.parametrize("name", ["guswc", "gdlwc", "gswc", "gulwc"])
+@pytest.mark.parametrize("name", ["guswc", "gdlwc", "gswc", "gulwc", "gsw"])
 @pytest.mark.parametrize(
     "overrides,reason",
     [
@@ -131,7 +142,7 @@ def test_energy_rejects_mean_reanchored_or_invalid_intervals(
 
 
 @pytest.mark.parametrize("unit", ["W m**-2", "unknown"])
-@pytest.mark.parametrize("name", ["guswc", "gswc", "gulwc"])
+@pytest.mark.parametrize("name", ["guswc", "gswc", "gulwc", "gsw"])
 def test_energy_unit_conflicts_and_unavailable_units_are_not_silently_reinterpreted(
     tmp_path, monkeypatch, unit, name
 ):
@@ -160,7 +171,7 @@ def test_energy_unit_conflicts_and_unavailable_units_are_not_silently_reinterpre
             assert error.value.context["reason"] == "inconsistent_native_metadata"
 
 
-@pytest.mark.parametrize("name", ["gdlwc", "gswc", "gulwc"])
+@pytest.mark.parametrize("name", ["gdlwc", "gswc", "gulwc", "gsw"])
 def test_energy_preserves_a_real_bitmap_including_zero_and_signed_values(
     tmp_path, name
 ):
@@ -193,6 +204,10 @@ def test_energy_preserves_a_real_bitmap_including_zero_and_signed_values(
         {"parameter": "gswc-since-initialization", "step": "PT9H"},
         {"parameter": "gulwc-since-initialization", "step": "PT9H"},
         {"parameter": "hfx"},
+        {"parameter": "gsw-since-initialization", "step": "PT9H"},
+        {"parameter": "gsw-since-initialization", "level_type": "atmosphere_top"},
+        {"parameter": "tsw"},
+        {"parameter": "glw"},
     ],
 )
 def test_energy_scope_does_not_acquire_unreviewed_leads_layers_or_heat_products(
@@ -210,7 +225,7 @@ def test_energy_scope_does_not_acquire_unreviewed_leads_layers_or_heat_products(
 @pytest.mark.parametrize(
     "system", ["CMA-MESO-3KM", "CMA-MESO-1KM", "CMA-TYM", "CMA-GEPS", "CMA-REPS"]
 )
-@pytest.mark.parametrize("name", ["guswc", "gswc", "gulwc"])
+@pytest.mark.parametrize("name", ["guswc", "gswc", "gulwc", "gsw"])
 def test_gfs_radiation_does_not_register_other_system_support(tmp_path, system, name):
     path = tmp_path / "unopened"
     path.touch()
@@ -219,7 +234,7 @@ def test_gfs_radiation_does_not_register_other_system_support(tmp_path, system, 
             source.sel(parameter=name + "-since-initialization", step="PT6H").explain()
 
 
-@pytest.mark.parametrize("name", ["guswc", "gswc", "gulwc"])
+@pytest.mark.parametrize("name", ["guswc", "gswc", "gulwc", "gsw"])
 def test_energy_all_assembles_cross_day_and_month_steps_without_new_windows(
     tmp_path, name
 ):
@@ -257,6 +272,17 @@ def test_energy_all_assembles_cross_day_and_month_steps_without_new_windows(
 @pytest.mark.parametrize(
     "name,changes",
     [
+        ("gsw", {"parameterNumber": 11}),  # GSWC clear sky is distinct.
+        ("gsw", {"parameterNumber": 229}),  # GNSW flux is distinct.
+        ("gsw", {"parameterCategory": 5, "parameterNumber": 5}),  # Unresolved GLW.
+        ("gsw", {"centre": 98}),
+        ("gsw", {"tablesVersion": 5}),
+        ("gsw", {"localTablesVersion": 1}),
+        ("gsw", {"parameterNumber": 250}),
+        ("gsw", {"typeOfFirstFixedSurface": 8}),
+        ("gsw", {"typeOfGeneratingProcess": 0}),
+        ("gsw", {"typeOfProcessedData": 0}),
+        ("gsw", {"significanceOfReferenceTime": 0}),
         ("gswc", {"parameterNumber": 52}),  # GDSWC downwardSW is not GSWC netSW.
         ("gulwc", {"centre": 98}),
         ("gulwc", {"localTablesVersion": 0}),
