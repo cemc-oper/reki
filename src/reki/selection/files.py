@@ -16,7 +16,8 @@ def discover_paths(configuration, queries=()):
 
     Literal paths remain literal and ordered. Directory patterns are root-relative,
     deduplicated and lexically sorted. Local templates use registered I04 layouts;
-    missing predicted files remain paths for the adapter to classify by its scope.
+    explicit missing files remain paths for the adapter to classify by its scope.
+    Omitted local leads discover actual files within the explicit origin layout.
     """
     source = configuration.source
     kind = source["kind"]
@@ -66,15 +67,46 @@ def discover_paths(configuration, queries=()):
                     raise QueryError(
                         "invalid_config", "/source/root", "local path escapes root"
                     )
-                rendered.append(str(path))
+                # An omitted lead selects existing files for the explicit origin;
+                # validation sample leads are never used as a discovery domain.
+                if "step" not in row.to_dict() and _template_fields(template) & {
+                    "forecast_hour",
+                    "forecast_hour_label",
+                }:
+                    try:
+                        for found in root.glob(template.format(**values)):
+                            if not found.resolve().is_relative_to(root):
+                                raise QueryError(
+                                    "invalid_config",
+                                    "/source/root",
+                                    "local path escapes root",
+                                )
+                            if found.is_file():
+                                rendered.append(str(found))
+                    except PermissionError as exc:
+                        raise SourceError(
+                            "permission_denied",
+                            "/source/root",
+                            "cannot discover local files",
+                        ) from exc
+                    except OSError as exc:
+                        raise SourceError(
+                            "io_error", "/source/root", "local file discovery failed"
+                        ) from exc
+                else:
+                    rendered.append(str(path))
             paths.extend(sorted(set(rendered)))
     else:
         raise QueryError("unsupported", "/source", "source is not a file locator")
     return tuple(dict.fromkeys(Path(p).absolute() for p in paths))
 
 
+def _template_fields(template):
+    return {name for _, name, _, _ in Formatter().parse(template) if name is not None}
+
+
 def _template_values(template, query):
-    fields = {name for _, name, _, _ in Formatter().parse(template) if name is not None}
+    fields = _template_fields(template)
     values = {}
     if fields & {
         "start_time_label",
@@ -108,14 +140,17 @@ def _template_values(template, query):
         )
     if fields & {"forecast_hour", "forecast_hour_label"}:
         step = query.get("step")
-        if not isinstance(step, str) or duration_seconds(step) % 3600:
+        if step is None:
+            values.update(forecast_hour="*", forecast_hour_label="*")
+        elif not isinstance(step, str) or duration_seconds(step) % 3600:
             raise QueryError(
                 "unsupported",
                 "/queries",
-                "hourly layout needs explicit whole-hour step",
+                "hourly layout cannot represent this step",
             )
-        hour = int(duration_seconds(step) / 3600)
-        values.update(forecast_hour=hour, forecast_hour_label=f"{hour:03d}")
+        else:
+            hour = int(duration_seconds(step) / 3600)
+            values.update(forecast_hour=hour, forecast_hour_label=f"{hour:03d}")
     if "member_3digit" in fields:
         member = query.get("member")
         if type(member) is not int or not 0 <= member <= 999:

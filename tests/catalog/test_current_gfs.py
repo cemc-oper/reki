@@ -116,8 +116,7 @@ def test_registered_names_use_supported_domain_and_reject_wrong_pairs(tmp_path):
             .effective_queries[0]["query"]["parameter"]
             == "cedarkit.ps"
         )
-        with pytest.raises(QueryError):
-            source.sel(parameter="t2m", step="PT5H")
+        assert source.sel(parameter="t2m", step="PT5H").explain().effective_queries
         with pytest.raises(QueryError):
             source.sel(parameter="t2m", level=10)
         with pytest.raises(QueryError) as error:
@@ -234,10 +233,11 @@ def test_current_bindings_support_only_reviewed_pressure_pairs(tmp_path, dataset
                 .explain()
                 .effective_queries
             )
-        with pytest.raises(QueryError):
-            source.sel(
-                parameter="t", level_type="pressure", level=850, step="PT1H"
-            ).explain()
+        assert (
+            source.sel(parameter="t", level_type="pressure", level=850, step="PT1H")
+            .explain()
+            .effective_queries
+        )
         with pytest.raises(QueryError):
             source.sel(parameter="t", level_type="pressure", level=600).explain()
     finally:
@@ -446,8 +446,7 @@ def test_new_current_analysis_forecast_local_pairs(
             ).all(completeness="required")
         with pytest.raises(QueryError):
             source.sel(parameter="t", level_type="pressure", level=700, step="PT6H")
-        with pytest.raises(QueryError):
-            source.sel(parameter="t2m", step="PT3H")
+        assert source.sel(parameter="t2m", step="PT3H").explain().effective_queries
     finally:
         source.close()
 
@@ -455,7 +454,7 @@ def test_new_current_analysis_forecast_local_pairs(
 @pytest.mark.parametrize("dataset", ["CMA-MESO-1KM", "CMA-TYM"])
 @pytest.mark.parametrize(
     "step,processed,generating,reference",
-    [(0, 1, 2, 1), (6, 0, 0, 0), (6, 1, 0, 1), (0, 0, 2, 0)],
+    [(0, 1, 0, 1), (6, 0, 2, 0), (6, 1, 0, 1), (0, 0, 2, 0)],
 )
 def test_new_binding_rejects_incorrect_processing_phase(
     tmp_path, dataset, step, processed, generating, reference

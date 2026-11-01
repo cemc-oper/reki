@@ -242,10 +242,6 @@ def test_current_precipitation_does_not_widen_definition_or_provision(tmp_path, 
     path.touch()
     with from_source({"kind": "file", "dataset": system, "path": str(path)}) as source:
         for query in [
-            {
-                "parameter": "rain",
-                "step": "PT24H" if system == "CMA-MESO-1KM" else "PT9H",
-            },
             {"parameter": "cedarkit.rain"},
             {"parameter": "rain", "level_type": "pressure", "level": 850},
             {
@@ -263,9 +259,6 @@ def test_current_precipitation_does_not_widen_definition_or_provision(tmp_path, 
             for name in ["rainc", "rainnc"]:
                 with pytest.raises(QueryError):
                     source.sel(parameter=name).explain()
-        if system == "CMA-MESO-1KM":
-            with pytest.raises(QueryError):
-                source.sel(parameter="t2m", step="PT12H").explain()
 
 
 @pytest.mark.parametrize("system", SYSTEMS)
@@ -467,7 +460,7 @@ def test_old_and_extended_precipitation_rows_compose_without_ambiguity(
 
 
 @pytest.mark.parametrize("system", LEAD_HOURS)
-def test_precipitation_scope_extension_does_not_extend_instantaneous_pairs(
+def test_instantaneous_parameters_are_not_limited_by_precipitation_sample_leads(
     tmp_path, system
 ):
     path = tmp_path / "unopened"
@@ -476,8 +469,7 @@ def test_precipitation_scope_extension_does_not_extend_instantaneous_pairs(
     if system in ["CMA-GEPS", "CMA-REPS"]:
         q["member"] = 0
     with from_source({"kind": "file", "dataset": system, "path": str(path)}) as source:
-        with pytest.raises(QueryError):
-            source.sel(q).explain()
+        assert source.sel(q).explain().effective_queries
 
 
 @pytest.mark.parametrize("system", LEAD_HOURS)
@@ -582,18 +574,8 @@ def test_extended_precipitation_preserves_nontrivial_bitmap(tmp_path, system):
         )
 
 
-@pytest.mark.parametrize(
-    "system,expected",
-    [
-        ("CMA-GFS", [0, 6, 12, 24, 48, 72]),
-        ("CMA-MESO-3KM", [0, 3, 6, 12, 24, 36]),
-        ("CMA-GEPS", [0, 6, 24]),
-        ("CMA-REPS", [0, 6, 24]),
-    ],
-)
-def test_omitted_steps_keep_each_builtin_parameters_declared_domain(
-    tmp_path, system, expected
-):
+@pytest.mark.parametrize("system", ["CMA-GFS", "CMA-MESO-3KM", "CMA-GEPS", "CMA-REPS"])
+def test_omitted_steps_do_not_inherit_validation_samples(tmp_path, system):
     path = tmp_path / "unopened"
     path.touch()
     q = {"parameter": "t2m", "time": "2026-10-30T06:00:00Z"}
@@ -602,10 +584,10 @@ def test_omitted_steps_keep_each_builtin_parameters_declared_domain(
     with from_source({"kind": "file", "dataset": system, "path": str(path)}) as source:
         queries = source.sel(q).explain().to_dict()["effective_queries"]
         assert len(queries) == 1
-        assert queries[0]["query"]["step"] == [f"PT{h * 3600}S" for h in expected]
+        assert "step" not in queries[0]["query"]
 
 
-def test_implicit_parameter_steps_intersect_context_bounds(tmp_path):
+def test_explicit_context_step_bounds_are_preserved(tmp_path):
     path = tmp_path / "unopened"
     path.touch()
     with from_source(
@@ -617,14 +599,19 @@ def test_implicit_parameter_steps_intersect_context_bounds(tmp_path):
             .explain()
             .to_dict()["effective_queries"]
         )
-        assert query["query"]["step"] == "PT21600S"
-        with pytest.raises(QueryError):
+        assert query["query"]["step"] == ["PT10800S", "PT21600S"]
+        assert (
             source.sel(
                 parameter="t2m", time="2026-10-30T06:00:00Z", step=["PT3H", "PT6H"]
             )
+            .explain()
+            .effective_queries
+        )
+        with pytest.raises(QueryError):
+            source.sel(parameter="t2m", step="PT12H")
 
 
-def test_omitted_steps_remain_parameter_specific_in_multi_parameter_queries(tmp_path):
+def test_multi_parameter_queries_do_not_invent_sampled_steps(tmp_path):
     path = tmp_path / "unopened"
     path.touch()
     with from_source(
@@ -635,19 +622,14 @@ def test_omitted_steps_remain_parameter_specific_in_multi_parameter_queries(tmp_
             .explain()
             .to_dict()["effective_queries"]
         )
-        steps = {q["query"]["parameter"]: q["query"]["step"] for q in queries}
-        assert steps["cedarkit.t2m"] == [
-            f"PT{h * 3600}S" for h in [0, 6, 12, 24, 48, 72]
-        ]
-        assert steps["cedarkit.rain.since-initialization"] == [
-            f"PT{h * 3600}S" for h in [0, 3, 6, 12, 24, 48, 72]
-        ]
+        assert len(queries) == 2
+        assert all("step" not in q["query"] for q in queries)
 
 
 @pytest.mark.parametrize(
     "time_query", [{"step": ["PT3H", "PT6H"]}, {"valid_time": "2026-10-30T09:00:00Z"}]
 )
-def test_explicit_or_time_derived_steps_are_not_pruned_to_supported_subset(
+def test_explicit_or_time_derived_steps_are_not_limited_by_samples(
     tmp_path, time_query
 ):
     path = tmp_path / "unopened"
@@ -655,8 +637,11 @@ def test_explicit_or_time_derived_steps_are_not_pruned_to_supported_subset(
     with from_source(
         {"kind": "file", "dataset": "CMA-GFS", "path": str(path)}
     ) as source:
-        with pytest.raises(QueryError):
+        assert (
             source.sel(parameter="t2m", time="2026-10-30T06:00:00Z", **time_query)
+            .explain()
+            .effective_queries
+        )
 
 
 def test_external_catalog_does_not_inherit_builtin_implicit_step_policy(tmp_path):
@@ -688,11 +673,15 @@ def test_external_catalog_does_not_inherit_builtin_implicit_step_policy(tmp_path
         product_version="current",
     )
     with construct_source(configuration, GribBackend(configuration)) as source:
-        with pytest.raises(QueryError):
-            source.sel(parameter="t2m", time="2026-10-30T06:00:00Z").explain()
+        (query,) = (
+            source.sel(parameter="t2m", time="2026-10-30T06:00:00Z")
+            .explain()
+            .effective_queries
+        )
+        assert "step" not in query["query"]
 
 
-def test_fluent_explicit_steps_refine_implicit_parameter_bounds(tmp_path):
+def test_fluent_explicit_steps_remain_caller_selections(tmp_path):
     path = tmp_path / "unopened"
     path.touch()
     with from_source(

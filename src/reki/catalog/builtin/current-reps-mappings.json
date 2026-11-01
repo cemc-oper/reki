@@ -14,6 +14,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -64,11 +65,7 @@
       "when": {
         "level_type": "mean_sea_level",
         "member": 0,
-        "member_role": "control",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "control"
       }
     },
     {
@@ -82,6 +79,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -141,11 +139,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "perturbation"
       }
     },
     {
@@ -159,6 +153,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -209,8 +204,7 @@
       "when": {
         "level_type": "mean_sea_level",
         "member": 0,
-        "member_role": "control",
-        "step": "PT0S"
+        "member_role": "control"
       }
     },
     {
@@ -224,6 +218,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -283,8 +278,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": "PT0S"
+        "member_role": "perturbation"
       }
     },
     {
@@ -298,6 +292,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX accumulated precipitation declarations",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;complete new period variant and bounded water-equivalent unit convention",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false"
       ],
       "id": "rain.since-initialization.forecast.control",
@@ -346,11 +341,7 @@
       "when": {
         "level_type": "surface",
         "member": 0,
-        "member_role": "control",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "control"
       }
     },
     {
@@ -367,6 +358,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;latest exact current cycle, available leads and unchanged member ranges",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/native-evidence.json#sha256=137fd2477182ac2933f5abac92317f3dc637776a9df08a82785beed9bbf0a2e8;bounded target headers, all target members at new leads; not full-file or full numerical coverage",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false",
         "scope:surface since-initialization accumulations at finite added leads; no computed windows or formal ensemble statistics; complete_product_coverage=false"
       ],
@@ -416,12 +408,7 @@
       "when": {
         "level_type": "surface",
         "member": 0,
-        "member_role": "control",
-        "step": [
-          "PT43200S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "member_role": "control"
       }
     },
     {
@@ -435,6 +422,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX accumulated precipitation declarations",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;complete new period variant and bounded water-equivalent unit convention",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false"
       ],
       "id": "rain.since-initialization.forecast.perturbation",
@@ -492,11 +480,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "perturbation"
       }
     },
     {
@@ -513,6 +497,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;latest exact current cycle, available leads and unchanged member ranges",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/native-evidence.json#sha256=137fd2477182ac2933f5abac92317f3dc637776a9df08a82785beed9bbf0a2e8;bounded target headers, all target members at new leads; not full-file or full numerical coverage",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false",
         "scope:surface since-initialization accumulations at finite added leads; no computed windows or formal ensemble statistics; complete_product_coverage=false"
       ],
@@ -571,12 +556,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": [
-          "PT43200S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "member_role": "perturbation"
       }
     },
     {
@@ -590,6 +570,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX accumulated precipitation declarations",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;complete new period variant and bounded water-equivalent unit convention",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false"
       ],
       "id": "rain.since-initialization.initial.control",
@@ -638,8 +619,7 @@
       "when": {
         "level_type": "surface",
         "member": 0,
-        "member_role": "control",
-        "step": "PT0S"
+        "member_role": "control"
       }
     },
     {
@@ -653,6 +633,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX accumulated precipitation declarations",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;complete new period variant and bounded water-equivalent unit convention",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false"
       ],
       "id": "rain.since-initialization.initial.perturbation",
@@ -710,8 +691,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": "PT0S"
+        "member_role": "perturbation"
       }
     },
     {
@@ -725,6 +705,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX accumulated precipitation declarations",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;complete new period variant and bounded water-equivalent unit convention",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false"
       ],
       "id": "rainc.since-initialization.forecast.control",
@@ -773,11 +754,7 @@
       "when": {
         "level_type": "surface",
         "member": 0,
-        "member_role": "control",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "control"
       }
     },
     {
@@ -794,6 +771,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;latest exact current cycle, available leads and unchanged member ranges",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/native-evidence.json#sha256=137fd2477182ac2933f5abac92317f3dc637776a9df08a82785beed9bbf0a2e8;bounded target headers, all target members at new leads; not full-file or full numerical coverage",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false",
         "scope:surface since-initialization accumulations at finite added leads; no computed windows or formal ensemble statistics; complete_product_coverage=false"
       ],
@@ -843,12 +821,7 @@
       "when": {
         "level_type": "surface",
         "member": 0,
-        "member_role": "control",
-        "step": [
-          "PT43200S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "member_role": "control"
       }
     },
     {
@@ -862,6 +835,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX accumulated precipitation declarations",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;complete new period variant and bounded water-equivalent unit convention",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false"
       ],
       "id": "rainc.since-initialization.forecast.perturbation",
@@ -919,11 +893,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "perturbation"
       }
     },
     {
@@ -940,6 +910,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;latest exact current cycle, available leads and unchanged member ranges",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/native-evidence.json#sha256=137fd2477182ac2933f5abac92317f3dc637776a9df08a82785beed9bbf0a2e8;bounded target headers, all target members at new leads; not full-file or full numerical coverage",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false",
         "scope:surface since-initialization accumulations at finite added leads; no computed windows or formal ensemble statistics; complete_product_coverage=false"
       ],
@@ -998,12 +969,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": [
-          "PT43200S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "member_role": "perturbation"
       }
     },
     {
@@ -1017,6 +983,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX accumulated precipitation declarations",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;complete new period variant and bounded water-equivalent unit convention",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false"
       ],
       "id": "rainc.since-initialization.initial.control",
@@ -1065,8 +1032,7 @@
       "when": {
         "level_type": "surface",
         "member": 0,
-        "member_role": "control",
-        "step": "PT0S"
+        "member_role": "control"
       }
     },
     {
@@ -1080,6 +1046,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX accumulated precipitation declarations",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;complete new period variant and bounded water-equivalent unit convention",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;reps; exact PDT11 fields, reference/start/end/length and units",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:individual members, time accumulation since initialization, 0/6/24h; complete_product_coverage=false"
       ],
       "id": "rainc.since-initialization.initial.perturbation",
@@ -1137,8 +1104,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": "PT0S"
+        "member_role": "perturbation"
       }
     },
     {
@@ -1152,6 +1118,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -1207,11 +1174,7 @@
         "level_type": "pressure",
         "level_unit": "hPa",
         "member": 0,
-        "member_role": "control",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "control"
       }
     },
     {
@@ -1225,6 +1188,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -1289,11 +1253,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "perturbation"
       }
     },
     {
@@ -1307,6 +1267,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -1362,8 +1323,7 @@
         "level_type": "pressure",
         "level_unit": "hPa",
         "member": 0,
-        "member_role": "control",
-        "step": "PT0S"
+        "member_role": "control"
       }
     },
     {
@@ -1377,6 +1337,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -1441,8 +1402,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": "PT0S"
+        "member_role": "perturbation"
       }
     },
     {
@@ -1456,6 +1416,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -1511,11 +1472,7 @@
         "level_type": "pressure",
         "level_unit": "hPa",
         "member": 0,
-        "member_role": "control",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "control"
       }
     },
     {
@@ -1529,6 +1486,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -1593,11 +1551,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "perturbation"
       }
     },
     {
@@ -1611,6 +1565,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -1666,8 +1621,7 @@
         "level_type": "pressure",
         "level_unit": "hPa",
         "member": 0,
-        "member_role": "control",
-        "step": "PT0S"
+        "member_role": "control"
       }
     },
     {
@@ -1681,6 +1635,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -1745,8 +1700,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": "PT0S"
+        "member_role": "perturbation"
       }
     },
     {
@@ -1760,6 +1714,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -1812,11 +1767,7 @@
         "level_type": "height_above_ground",
         "level_unit": "m",
         "member": 0,
-        "member_role": "control",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "control"
       }
     },
     {
@@ -1830,6 +1781,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -1891,11 +1843,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "perturbation"
       }
     },
     {
@@ -1909,6 +1857,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -1961,8 +1910,7 @@
         "level_type": "height_above_ground",
         "level_unit": "m",
         "member": 0,
-        "member_role": "control",
-        "step": "PT0S"
+        "member_role": "control"
       }
     },
     {
@@ -1976,6 +1924,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -2037,8 +1986,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": "PT0S"
+        "member_role": "perturbation"
       }
     },
     {
@@ -2052,6 +2000,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -2107,11 +2056,7 @@
         "level_type": "pressure",
         "level_unit": "hPa",
         "member": 0,
-        "member_role": "control",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "control"
       }
     },
     {
@@ -2125,6 +2070,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -2189,11 +2135,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "perturbation"
       }
     },
     {
@@ -2207,6 +2149,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -2262,8 +2205,7 @@
         "level_type": "pressure",
         "level_unit": "hPa",
         "member": 0,
-        "member_role": "control",
-        "step": "PT0S"
+        "member_role": "control"
       }
     },
     {
@@ -2277,6 +2219,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -2341,8 +2284,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": "PT0S"
+        "member_role": "perturbation"
       }
     },
     {
@@ -2356,6 +2298,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -2408,11 +2351,7 @@
         "level_type": "height_above_ground",
         "level_unit": "m",
         "member": 0,
-        "member_role": "control",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "control"
       }
     },
     {
@@ -2426,6 +2365,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -2487,11 +2427,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "perturbation"
       }
     },
     {
@@ -2505,6 +2441,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -2557,8 +2494,7 @@
         "level_type": "height_above_ground",
         "level_unit": "m",
         "member": 0,
-        "member_role": "control",
-        "step": "PT0S"
+        "member_role": "control"
       }
     },
     {
@@ -2572,6 +2508,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -2633,8 +2570,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": "PT0S"
+        "member_role": "perturbation"
       }
     },
     {
@@ -2648,6 +2584,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -2703,11 +2640,7 @@
         "level_type": "pressure",
         "level_unit": "hPa",
         "member": 0,
-        "member_role": "control",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "control"
       }
     },
     {
@@ -2721,6 +2654,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -2785,11 +2719,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "perturbation"
       }
     },
     {
@@ -2803,6 +2733,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -2858,8 +2789,7 @@
         "level_type": "pressure",
         "level_unit": "hPa",
         "member": 0,
-        "member_role": "control",
-        "step": "PT0S"
+        "member_role": "control"
       }
     },
     {
@@ -2873,6 +2803,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -2937,8 +2868,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": "PT0S"
+        "member_role": "perturbation"
       }
     },
     {
@@ -2952,6 +2882,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -3004,11 +2935,7 @@
         "level_type": "height_above_ground",
         "level_unit": "m",
         "member": 0,
-        "member_role": "control",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "control"
       }
     },
     {
@@ -3022,6 +2949,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -3083,11 +3011,7 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "member_role": "perturbation"
       }
     },
     {
@@ -3101,6 +3025,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -3153,8 +3078,7 @@
         "level_type": "height_above_ground",
         "level_unit": "m",
         "member": 0,
-        "member_role": "control",
-        "step": "PT0S"
+        "member_role": "control"
       }
     },
     {
@@ -3168,6 +3092,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/business-material.json#sha256=d04647ac8c0d9cb399d3f4b80365d3d9bd686b70282b13cfe0d67dad905f2302;DOCX declarations; current observed pairs remain finite",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-9/member-decisions.json#sha256=cc07809d6d5a5988a6b59fb4c1f64e166273c35e9461095d59580e04787623ee;joint native numbering, role and current REPS range decision",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-12/native-evidence.json#sha256=c8f19e8e749a3450190432d5b505020e3f7ac8e2b426d9af587dabe11cff5ce6;reps; exact current instantaneous member records",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case(1,2,11,33,34,51,52,85); name/unit; conditional 2m/10m/soil",
         "scope:current member fields only; complete_product_coverage=false; no formal ensemble statistics or CMADaaS inference"
@@ -3229,11 +3154,10 @@
             "start": 1
           }
         },
-        "member_role": "perturbation",
-        "step": "PT0S"
+        "member_role": "perturbation"
       }
     }
   ],
   "tables": [],
-  "version": "3"
+  "version": "4"
 }

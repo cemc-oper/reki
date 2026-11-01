@@ -14,6 +14,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table0 rows81/82/85: explicit upward/downward clear-sky direction, surface/top and W m-2 s; not a complete provider domain",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-18/verification-input.json#sha256=f3216092823406b6a404d14881321343dd81114b3a68058fe8ea3401272dfa8c;mature GFS original PDT8 surface messages; actual unit J m**-2, one accumulation interval anchored at reference; no time scaling",
         "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;original-object-verified section4 category/number; full writer discipline must be considered separately",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;lines201/205 and longwave clear-sky declarations corroborate time-integrated units; no sign reversal",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case106 lines326-340 downward clear longwave and case107 lines341-355 upward clear shortwave; common ws/m2; same unit across surface/top"
       ],
@@ -56,8 +57,7 @@
       },
       "parameter_id": "cedarkit.gdlwc.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": "PT21600S"
+        "level_type": "surface"
       }
     },
     {
@@ -73,6 +73,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-18/verification-input.json#sha256=f3216092823406b6a404d14881321343dd81114b3a68058fe8ea3401272dfa8c;mature GFS original PDT8 surface messages; actual unit J m**-2, one accumulation interval anchored at reference; no time scaling",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-19/verification-input.json#sha256=9462e0d519fcf8e2fe44ca9cf3ce50bcb1883db8b29513b395ded6caeeca3170",
         "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;original-object-verified section4 category/number; full writer discipline must be considered separately",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;lines201/205 and longwave clear-sky declarations corroborate time-integrated units; no sign reversal",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case106 lines326-340 downward clear longwave and case107 lines341-355 upward clear shortwave; common ws/m2; same unit across surface/top"
       ],
@@ -115,13 +116,7 @@
       },
       "parameter_id": "cedarkit.gdlwc.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": [
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "level_type": "surface"
       }
     },
     {
@@ -135,6 +130,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table0 rows81/82/85: explicit upward/downward clear-sky direction, surface/top and W m-2 s; not a complete provider domain",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-18/verification-input.json#sha256=f3216092823406b6a404d14881321343dd81114b3a68058fe8ea3401272dfa8c;mature GFS original PDT8 surface messages; actual unit J m**-2, one accumulation interval anchored at reference; no time scaling",
         "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;original-object-verified section4 category/number; full writer discipline must be considered separately",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;lines201/205 and longwave clear-sky declarations corroborate time-integrated units; no sign reversal",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case106 lines326-340 downward clear longwave and case107 lines341-355 upward clear shortwave; common ws/m2; same unit across surface/top"
       ],
@@ -177,8 +173,7 @@
       },
       "parameter_id": "cedarkit.gdlwc.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": "PT0S"
+        "level_type": "surface"
       }
     },
     {
@@ -194,6 +189,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-18/identity-unit-review.json#sha256=18aae7fd5e88cbb009696711db579c5937dcf2ff6fd25c5a3b7309f42e564260;Reviewed GSW acceptance; GLW exact missing producer identity link retained. Decoder keys are derived views",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-21/verification-input.json#sha256=70b3422c6669fbaad30bbf6211f57410b3306d7b211deb6632107072e89e294f;12 freshly inspected original messages: six GSW accepted metadata, six GLW audit-only; offsets, full fingerprints and SHA",
         "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;preserved original object/reconstruction encoding comparisons, not new physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;lines105-107 element111=>4/9,112=>5/5,113=>4/229; historical original-object comparison covers these branches",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/tables/writer_discipline.csv#sha256=7c8cd517a370ed0577f5fd148ea1f919289b285ebb3c27619f23f9b40c0d3c8f;elements111/112/113 original-object-verified discipline0; does not resolve product Chinese label",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;lines33/35 gsw|ssr and glw|str w/m2s; generic flux text does not establish sign convention",
@@ -239,14 +235,7 @@
       },
       "parameter_id": "cedarkit.gsw.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": [
-          "PT21600S",
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "level_type": "surface"
       }
     },
     {
@@ -262,6 +251,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-18/identity-unit-review.json#sha256=18aae7fd5e88cbb009696711db579c5937dcf2ff6fd25c5a3b7309f42e564260;Reviewed GSW acceptance; GLW exact missing producer identity link retained. Decoder keys are derived views",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-21/verification-input.json#sha256=70b3422c6669fbaad30bbf6211f57410b3306d7b211deb6632107072e89e294f;12 freshly inspected original messages: six GSW accepted metadata, six GLW audit-only; offsets, full fingerprints and SHA",
         "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;preserved original object/reconstruction encoding comparisons, not new physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;lines105-107 element111=>4/9,112=>5/5,113=>4/229; historical original-object comparison covers these branches",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/tables/writer_discipline.csv#sha256=7c8cd517a370ed0577f5fd148ea1f919289b285ebb3c27619f23f9b40c0d3c8f;elements111/112/113 original-object-verified discipline0; does not resolve product Chinese label",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;lines33/35 gsw|ssr and glw|str w/m2s; generic flux text does not establish sign convention",
@@ -307,10 +297,7 @@
       },
       "parameter_id": "cedarkit.gsw.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": [
-          "PT0S"
-        ]
+        "level_type": "surface"
       }
     },
     {
@@ -324,6 +311,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table0 rows75/76 netSW and83/84 upwardLW, W m-2 s; surface/top labels, not full provision domain",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-20/verification-input.json#sha256=f937312a75d98c98f88138b725a3cfd0b7f7da09a13fd48c12977330f7cc31f9;twelve new original messages; full native context, offsets, SHA and one reference-anchored accumulation",
         "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;original object and reconstructed writer comparison; declaration/unit and encoding duties remain separate",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;lines102-103 element108=>5/224 and109=>4/11; element105=>4/52 is downwardSW; level carrier separately constrained",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/tables/writer_discipline.csv#sha256=7c8cd517a370ed0577f5fd148ea1f919289b285ebb3c27619f23f9b40c0d3c8f;elements108/109 prodStatus0..10 discipline0; original-object-verified writer, not section4 alone",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;lines189/199 GULWC upwardLW andGSWC netSW; declaredw/m2s; no producer positive-sign convention inferred",
@@ -368,14 +356,7 @@
       },
       "parameter_id": "cedarkit.gswc.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": [
-          "PT21600S",
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "level_type": "surface"
       }
     },
     {
@@ -389,6 +370,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table0 rows75/76 netSW and83/84 upwardLW, W m-2 s; surface/top labels, not full provision domain",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-20/verification-input.json#sha256=f937312a75d98c98f88138b725a3cfd0b7f7da09a13fd48c12977330f7cc31f9;twelve new original messages; full native context, offsets, SHA and one reference-anchored accumulation",
         "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;original object and reconstructed writer comparison; declaration/unit and encoding duties remain separate",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;lines102-103 element108=>5/224 and109=>4/11; element105=>4/52 is downwardSW; level carrier separately constrained",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/tables/writer_discipline.csv#sha256=7c8cd517a370ed0577f5fd148ea1f919289b285ebb3c27619f23f9b40c0d3c8f;elements108/109 prodStatus0..10 discipline0; original-object-verified writer, not section4 alone",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;lines189/199 GULWC upwardLW andGSWC netSW; declaredw/m2s; no producer positive-sign convention inferred",
@@ -433,10 +415,7 @@
       },
       "parameter_id": "cedarkit.gswc.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": [
-          "PT0S"
-        ]
+        "level_type": "surface"
       }
     },
     {
@@ -450,6 +429,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table0 rows75/76 netSW and83/84 upwardLW, W m-2 s; surface/top labels, not full provision domain",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-20/verification-input.json#sha256=f937312a75d98c98f88138b725a3cfd0b7f7da09a13fd48c12977330f7cc31f9;twelve new original messages; full native context, offsets, SHA and one reference-anchored accumulation",
         "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;original object and reconstructed writer comparison; declaration/unit and encoding duties remain separate",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;lines102-103 element108=>5/224 and109=>4/11; element105=>4/52 is downwardSW; level carrier separately constrained",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/tables/writer_discipline.csv#sha256=7c8cd517a370ed0577f5fd148ea1f919289b285ebb3c27619f23f9b40c0d3c8f;elements108/109 prodStatus0..10 discipline0; original-object-verified writer, not section4 alone",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;lines189/199 GULWC upwardLW andGSWC netSW; declaredw/m2s; no producer positive-sign convention inferred",
@@ -494,14 +474,7 @@
       },
       "parameter_id": "cedarkit.gulwc.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": [
-          "PT21600S",
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "level_type": "surface"
       }
     },
     {
@@ -515,6 +488,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table0 rows75/76 netSW and83/84 upwardLW, W m-2 s; surface/top labels, not full provision domain",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-20/verification-input.json#sha256=f937312a75d98c98f88138b725a3cfd0b7f7da09a13fd48c12977330f7cc31f9;twelve new original messages; full native context, offsets, SHA and one reference-anchored accumulation",
         "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;original object and reconstructed writer comparison; declaration/unit and encoding duties remain separate",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;lines102-103 element108=>5/224 and109=>4/11; element105=>4/52 is downwardSW; level carrier separately constrained",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/tables/writer_discipline.csv#sha256=7c8cd517a370ed0577f5fd148ea1f919289b285ebb3c27619f23f9b40c0d3c8f;elements108/109 prodStatus0..10 discipline0; original-object-verified writer, not section4 alone",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;lines189/199 GULWC upwardLW andGSWC netSW; declaredw/m2s; no producer positive-sign convention inferred",
@@ -559,10 +533,7 @@
       },
       "parameter_id": "cedarkit.gulwc.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": [
-          "PT0S"
-        ]
+        "level_type": "surface"
       }
     },
     {
@@ -576,6 +547,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table0 rows81/82/85: explicit upward/downward clear-sky direction, surface/top and W m-2 s; not a complete provider domain",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-18/verification-input.json#sha256=f3216092823406b6a404d14881321343dd81114b3a68058fe8ea3401272dfa8c;mature GFS original PDT8 surface messages; actual unit J m**-2, one accumulation interval anchored at reference; no time scaling",
         "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;original-object-verified section4 category/number; full writer discipline must be considered separately",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;lines201/205 and longwave clear-sky declarations corroborate time-integrated units; no sign reversal",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case106 lines326-340 downward clear longwave and case107 lines341-355 upward clear shortwave; common ws/m2; same unit across surface/top"
       ],
@@ -618,8 +590,7 @@
       },
       "parameter_id": "cedarkit.guswc.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": "PT21600S"
+        "level_type": "surface"
       }
     },
     {
@@ -635,6 +606,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-18/verification-input.json#sha256=f3216092823406b6a404d14881321343dd81114b3a68058fe8ea3401272dfa8c;mature GFS original PDT8 surface messages; actual unit J m**-2, one accumulation interval anchored at reference; no time scaling",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-19/verification-input.json#sha256=9462e0d519fcf8e2fe44ca9cf3ce50bcb1883db8b29513b395ded6caeeca3170",
         "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;original-object-verified section4 category/number; full writer discipline must be considered separately",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;lines201/205 and longwave clear-sky declarations corroborate time-integrated units; no sign reversal",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case106 lines326-340 downward clear longwave and case107 lines341-355 upward clear shortwave; common ws/m2; same unit across surface/top"
       ],
@@ -677,13 +649,7 @@
       },
       "parameter_id": "cedarkit.guswc.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": [
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "level_type": "surface"
       }
     },
     {
@@ -697,6 +663,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table0 rows81/82/85: explicit upward/downward clear-sky direction, surface/top and W m-2 s; not a complete provider domain",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-18/verification-input.json#sha256=f3216092823406b6a404d14881321343dd81114b3a68058fe8ea3401272dfa8c;mature GFS original PDT8 surface messages; actual unit J m**-2, one accumulation interval anchored at reference; no time scaling",
         "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;original-object-verified section4 category/number; full writer discipline must be considered separately",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;lines201/205 and longwave clear-sky declarations corroborate time-integrated units; no sign reversal",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;case106 lines326-340 downward clear longwave and case107 lines341-355 upward clear shortwave; common ws/m2; same unit across surface/top"
       ],
@@ -739,8 +706,7 @@
       },
       "parameter_id": "cedarkit.guswc.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": "PT0S"
+        "level_type": "surface"
       }
     },
     {
@@ -757,6 +723,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/meso-soil-evidence.json#sha256=26db33c19bb74171425f49b94b84a9f82b1ed499f125e2dd01aa8657d53f071b;MESO physical intervals differ from GFS; no GFS variant substitution",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;gfs; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-8/sample-headers.json#sha256=053994d36aefa727335f60552337226718e054549fdfc1a93d0a8cd08693ba91;exact original GFS f24 headers; not complete product provision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;original-object-verified writer",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;temperature/wind/humidity/pressure/soil declarations; not product version",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
@@ -799,15 +766,7 @@
       },
       "parameter_id": "cedarkit.ps",
       "when": {
-        "level_type": "surface",
-        "step": [
-          "PT0S",
-          "PT21600S",
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "level_type": "surface"
       }
     },
     {
@@ -824,6 +783,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/meso-soil-evidence.json#sha256=26db33c19bb74171425f49b94b84a9f82b1ed499f125e2dd01aa8657d53f071b;MESO physical intervals differ from GFS; no GFS variant substitution",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;gfs; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-8/sample-headers.json#sha256=053994d36aefa727335f60552337226718e054549fdfc1a93d0a8cd08693ba91;exact original GFS f24 headers; not complete product provision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;original-object-verified writer",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;temperature/wind/humidity/pressure/soil declarations; not product version",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
@@ -866,15 +826,7 @@
       },
       "parameter_id": "cedarkit.psl",
       "when": {
-        "level_type": "mean_sea_level",
-        "step": [
-          "PT0S",
-          "PT21600S",
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "level_type": "mean_sea_level"
       }
     },
     {
@@ -891,6 +843,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/meso-soil-evidence.json#sha256=26db33c19bb74171425f49b94b84a9f82b1ed499f125e2dd01aa8657d53f071b;MESO physical intervals differ from GFS; no GFS variant substitution",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;gfs; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-8/sample-headers.json#sha256=053994d36aefa727335f60552337226718e054549fdfc1a93d0a8cd08693ba91;exact original GFS f24 headers; not complete product provision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;original-object-verified writer",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;temperature/wind/humidity/pressure/soil declarations; not product version",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
@@ -941,15 +894,7 @@
           1000
         ],
         "level_type": "pressure",
-        "level_unit": "hPa",
-        "step": [
-          "PT0S",
-          "PT21600S",
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "level_unit": "hPa"
       }
     },
     {
@@ -964,6 +909,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/time-unit-decisions.json#sha256=eb47c4b26aca5a73c52644c11845d2bd79a177397af31e18cd55474b7ca54b85;unchanged reviewed since-initialization identity; separate native kg/m2 and target mm",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/native-evidence.json#sha256=fc283181c66d06fe56347f5e6d56d77251333f1bedd3cb7313d86aef7ce75a05;gfs; exact current PDT8 headers and original-message SHA; no numerical acceptance implied",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/verification-input.json#sha256=c8de8220304ea9a5e009c0fee90157a493dd057a280c7b99eee7b6efb1d4f4c9;frozen 0/6/24h native contexts",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows"
       ],
       "id": "rain.since-initialization.forecast",
@@ -1005,11 +951,7 @@
       },
       "parameter_id": "cedarkit.rain.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "level_type": "surface"
       }
     },
     {
@@ -1027,6 +969,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/verification-input.json#sha256=c8de8220304ea9a5e009c0fee90157a493dd057a280c7b99eee7b6efb1d4f4c9;frozen 0/6/24h native contexts",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;latest exact current cycle, available leads and unchanged member ranges",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/native-evidence.json#sha256=137fd2477182ac2933f5abac92317f3dc637776a9df08a82785beed9bbf0a2e8;bounded target headers, all target members at new leads; not full-file or full numerical coverage",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows",
         "scope:surface since-initialization accumulations at finite added leads; no computed windows or formal ensemble statistics; complete_product_coverage=false"
       ],
@@ -1069,13 +1012,7 @@
       },
       "parameter_id": "cedarkit.rain.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": [
-          "PT10800S",
-          "PT43200S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "level_type": "surface"
       }
     },
     {
@@ -1090,6 +1027,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/time-unit-decisions.json#sha256=eb47c4b26aca5a73c52644c11845d2bd79a177397af31e18cd55474b7ca54b85;unchanged reviewed since-initialization identity; separate native kg/m2 and target mm",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/native-evidence.json#sha256=fc283181c66d06fe56347f5e6d56d77251333f1bedd3cb7313d86aef7ce75a05;gfs; exact current PDT8 headers and original-message SHA; no numerical acceptance implied",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/verification-input.json#sha256=c8de8220304ea9a5e009c0fee90157a493dd057a280c7b99eee7b6efb1d4f4c9;frozen 0/6/24h native contexts",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows"
       ],
       "id": "rain.since-initialization.initial",
@@ -1131,8 +1069,7 @@
       },
       "parameter_id": "cedarkit.rain.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": "PT0S"
+        "level_type": "surface"
       }
     },
     {
@@ -1147,6 +1084,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/time-unit-decisions.json#sha256=eb47c4b26aca5a73c52644c11845d2bd79a177397af31e18cd55474b7ca54b85;unchanged reviewed since-initialization identity; separate native kg/m2 and target mm",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/native-evidence.json#sha256=fc283181c66d06fe56347f5e6d56d77251333f1bedd3cb7313d86aef7ce75a05;gfs; exact current PDT8 headers and original-message SHA; no numerical acceptance implied",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/verification-input.json#sha256=c8de8220304ea9a5e009c0fee90157a493dd057a280c7b99eee7b6efb1d4f4c9;frozen 0/6/24h native contexts",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows"
       ],
       "id": "rainc.since-initialization.forecast",
@@ -1188,11 +1126,7 @@
       },
       "parameter_id": "cedarkit.rainc.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "level_type": "surface"
       }
     },
     {
@@ -1210,6 +1144,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/verification-input.json#sha256=c8de8220304ea9a5e009c0fee90157a493dd057a280c7b99eee7b6efb1d4f4c9;frozen 0/6/24h native contexts",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;latest exact current cycle, available leads and unchanged member ranges",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/native-evidence.json#sha256=137fd2477182ac2933f5abac92317f3dc637776a9df08a82785beed9bbf0a2e8;bounded target headers, all target members at new leads; not full-file or full numerical coverage",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows",
         "scope:surface since-initialization accumulations at finite added leads; no computed windows or formal ensemble statistics; complete_product_coverage=false"
       ],
@@ -1252,13 +1187,7 @@
       },
       "parameter_id": "cedarkit.rainc.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": [
-          "PT10800S",
-          "PT43200S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "level_type": "surface"
       }
     },
     {
@@ -1273,6 +1202,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/time-unit-decisions.json#sha256=eb47c4b26aca5a73c52644c11845d2bd79a177397af31e18cd55474b7ca54b85;unchanged reviewed since-initialization identity; separate native kg/m2 and target mm",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/native-evidence.json#sha256=fc283181c66d06fe56347f5e6d56d77251333f1bedd3cb7313d86aef7ce75a05;gfs; exact current PDT8 headers and original-message SHA; no numerical acceptance implied",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/verification-input.json#sha256=c8de8220304ea9a5e009c0fee90157a493dd057a280c7b99eee7b6efb1d4f4c9;frozen 0/6/24h native contexts",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows"
       ],
       "id": "rainc.since-initialization.initial",
@@ -1314,8 +1244,7 @@
       },
       "parameter_id": "cedarkit.rainc.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": "PT0S"
+        "level_type": "surface"
       }
     },
     {
@@ -1330,6 +1259,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/time-unit-decisions.json#sha256=eb47c4b26aca5a73c52644c11845d2bd79a177397af31e18cd55474b7ca54b85;unchanged reviewed since-initialization identity; separate native kg/m2 and target mm",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/native-evidence.json#sha256=fc283181c66d06fe56347f5e6d56d77251333f1bedd3cb7313d86aef7ce75a05;gfs; exact current PDT8 headers and original-message SHA; no numerical acceptance implied",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/verification-input.json#sha256=c8de8220304ea9a5e009c0fee90157a493dd057a280c7b99eee7b6efb1d4f4c9;frozen 0/6/24h native contexts",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows"
       ],
       "id": "rainnc.since-initialization.forecast",
@@ -1371,11 +1301,7 @@
       },
       "parameter_id": "cedarkit.rainnc.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": [
-          "PT21600S",
-          "PT86400S"
-        ]
+        "level_type": "surface"
       }
     },
     {
@@ -1393,6 +1319,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/verification-input.json#sha256=c8de8220304ea9a5e009c0fee90157a493dd057a280c7b99eee7b6efb1d4f4c9;frozen 0/6/24h native contexts",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;latest exact current cycle, available leads and unchanged member ranges",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/native-evidence.json#sha256=137fd2477182ac2933f5abac92317f3dc637776a9df08a82785beed9bbf0a2e8;bounded target headers, all target members at new leads; not full-file or full numerical coverage",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows",
         "scope:surface since-initialization accumulations at finite added leads; no computed windows or formal ensemble statistics; complete_product_coverage=false"
       ],
@@ -1435,13 +1362,7 @@
       },
       "parameter_id": "cedarkit.rainnc.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": [
-          "PT10800S",
-          "PT43200S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "level_type": "surface"
       }
     },
     {
@@ -1456,6 +1377,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/time-unit-decisions.json#sha256=eb47c4b26aca5a73c52644c11845d2bd79a177397af31e18cd55474b7ca54b85;unchanged reviewed since-initialization identity; separate native kg/m2 and target mm",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/native-evidence.json#sha256=fc283181c66d06fe56347f5e6d56d77251333f1bedd3cb7313d86aef7ce75a05;gfs; exact current PDT8 headers and original-message SHA; no numerical acceptance implied",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/verification-input.json#sha256=c8de8220304ea9a5e009c0fee90157a493dd057a280c7b99eee7b6efb1d4f4c9;frozen 0/6/24h native contexts",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "scope:deterministic surface, zero-length initial and since-initialization forecast accumulation; complete_product_coverage=false; no computed windows"
       ],
       "id": "rainnc.since-initialization.initial",
@@ -1497,8 +1419,7 @@
       },
       "parameter_id": "cedarkit.rainnc.since-initialization",
       "when": {
-        "level_type": "surface",
-        "step": "PT0S"
+        "level_type": "surface"
       }
     },
     {
@@ -1515,6 +1436,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/meso-soil-evidence.json#sha256=26db33c19bb74171425f49b94b84a9f82b1ed499f125e2dd01aa8657d53f071b;MESO physical intervals differ from GFS; no GFS variant substitution",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;gfs; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-8/sample-headers.json#sha256=053994d36aefa727335f60552337226718e054549fdfc1a93d0a8cd08693ba91;exact original GFS f24 headers; not complete product provision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;original-object-verified writer",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;temperature/wind/humidity/pressure/soil declarations; not product version",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
@@ -1565,15 +1487,7 @@
           1000
         ],
         "level_type": "pressure",
-        "level_unit": "hPa",
-        "step": [
-          "PT0S",
-          "PT21600S",
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "level_unit": "hPa"
       }
     },
     {
@@ -1590,6 +1504,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/meso-soil-evidence.json#sha256=26db33c19bb74171425f49b94b84a9f82b1ed499f125e2dd01aa8657d53f071b;MESO physical intervals differ from GFS; no GFS variant substitution",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;gfs; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-8/sample-headers.json#sha256=053994d36aefa727335f60552337226718e054549fdfc1a93d0a8cd08693ba91;exact original GFS f24 headers; not complete product provision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;original-object-verified writer",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;temperature/wind/humidity/pressure/soil declarations; not product version",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
@@ -1643,15 +1558,7 @@
             "unit": "m",
             "value": 0
           }
-        },
-        "step": [
-          "PT0S",
-          "PT21600S",
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        }
       }
     },
     {
@@ -1669,6 +1576,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;gfs; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-4/header-observations.json#sha256=3fb95ecd4691fe4acc1285bed7a11c6f541625af0888cbf482b521c1cb8a640b;typed-native-sample-evidence-not-complete-product-domain",
         "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;finite-original-object-proof",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;verified-original-section4-behavior",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/tables/writer_discipline.csv#sha256=7c8cd517a370ed0577f5fd148ea1f919289b285ebb3c27619f23f9b40c0d3c8f;original-complete-writer-interception",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;original-definition",
@@ -1724,15 +1632,7 @@
             "unit": "m",
             "value": 0.1
           }
-        },
-        "step": [
-          "PT0S",
-          "PT21600S",
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        }
       }
     },
     {
@@ -1749,6 +1649,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/meso-soil-evidence.json#sha256=26db33c19bb74171425f49b94b84a9f82b1ed499f125e2dd01aa8657d53f071b;MESO physical intervals differ from GFS; no GFS variant substitution",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;gfs; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-8/sample-headers.json#sha256=053994d36aefa727335f60552337226718e054549fdfc1a93d0a8cd08693ba91;exact original GFS f24 headers; not complete product provision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;original-object-verified writer",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;temperature/wind/humidity/pressure/soil declarations; not product version",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
@@ -1802,15 +1703,7 @@
             "unit": "m",
             "value": 1
           }
-        },
-        "step": [
-          "PT0S",
-          "PT21600S",
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        }
       }
     },
     {
@@ -1827,6 +1720,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/meso-soil-evidence.json#sha256=26db33c19bb74171425f49b94b84a9f82b1ed499f125e2dd01aa8657d53f071b;MESO physical intervals differ from GFS; no GFS variant substitution",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;gfs; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-8/sample-headers.json#sha256=053994d36aefa727335f60552337226718e054549fdfc1a93d0a8cd08693ba91;exact original GFS f24 headers; not complete product provision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;original-object-verified writer",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;temperature/wind/humidity/pressure/soil declarations; not product version",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
@@ -1880,15 +1774,7 @@
             "unit": "m",
             "value": 0.4
           }
-        },
-        "step": [
-          "PT0S",
-          "PT21600S",
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        }
       }
     },
     {
@@ -1905,6 +1791,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/meso-soil-evidence.json#sha256=26db33c19bb74171425f49b94b84a9f82b1ed499f125e2dd01aa8657d53f071b;MESO physical intervals differ from GFS; no GFS variant substitution",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;gfs; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-8/sample-headers.json#sha256=053994d36aefa727335f60552337226718e054549fdfc1a93d0a8cd08693ba91;exact original GFS f24 headers; not complete product provision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;original-object-verified writer",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;temperature/wind/humidity/pressure/soil declarations; not product version",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
@@ -1955,15 +1842,7 @@
           1000
         ],
         "level_type": "pressure",
-        "level_unit": "hPa",
-        "step": [
-          "PT0S",
-          "PT21600S",
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "level_unit": "hPa"
       }
     },
     {
@@ -1980,6 +1859,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/meso-soil-evidence.json#sha256=26db33c19bb74171425f49b94b84a9f82b1ed499f125e2dd01aa8657d53f071b;MESO physical intervals differ from GFS; no GFS variant substitution",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;gfs; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-8/sample-headers.json#sha256=053994d36aefa727335f60552337226718e054549fdfc1a93d0a8cd08693ba91;exact original GFS f24 headers; not complete product provision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;original-object-verified writer",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;temperature/wind/humidity/pressure/soil declarations; not product version",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
@@ -2024,15 +1904,7 @@
       "when": {
         "level": 2,
         "level_type": "height_above_ground",
-        "level_unit": "m",
-        "step": [
-          "PT0S",
-          "PT21600S",
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "level_unit": "m"
       }
     },
     {
@@ -2049,6 +1921,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/meso-soil-evidence.json#sha256=26db33c19bb74171425f49b94b84a9f82b1ed499f125e2dd01aa8657d53f071b;MESO physical intervals differ from GFS; no GFS variant substitution",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;gfs; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-8/sample-headers.json#sha256=053994d36aefa727335f60552337226718e054549fdfc1a93d0a8cd08693ba91;exact original GFS f24 headers; not complete product provision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;original-object-verified writer",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;temperature/wind/humidity/pressure/soil declarations; not product version",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
@@ -2099,15 +1972,7 @@
           1000
         ],
         "level_type": "pressure",
-        "level_unit": "hPa",
-        "step": [
-          "PT0S",
-          "PT21600S",
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "level_unit": "hPa"
       }
     },
     {
@@ -2124,6 +1989,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/meso-soil-evidence.json#sha256=26db33c19bb74171425f49b94b84a9f82b1ed499f125e2dd01aa8657d53f071b;MESO physical intervals differ from GFS; no GFS variant substitution",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;gfs; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-8/sample-headers.json#sha256=053994d36aefa727335f60552337226718e054549fdfc1a93d0a8cd08693ba91;exact original GFS f24 headers; not complete product provision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;original-object-verified writer",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;temperature/wind/humidity/pressure/soil declarations; not product version",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
@@ -2168,15 +2034,7 @@
       "when": {
         "level": 10,
         "level_type": "height_above_ground",
-        "level_unit": "m",
-        "step": [
-          "PT0S",
-          "PT21600S",
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "level_unit": "m"
       }
     },
     {
@@ -2193,6 +2051,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/meso-soil-evidence.json#sha256=26db33c19bb74171425f49b94b84a9f82b1ed499f125e2dd01aa8657d53f071b;MESO physical intervals differ from GFS; no GFS variant substitution",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;gfs; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-8/sample-headers.json#sha256=053994d36aefa727335f60552337226718e054549fdfc1a93d0a8cd08693ba91;exact original GFS f24 headers; not complete product provision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;original-object-verified writer",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;temperature/wind/humidity/pressure/soil declarations; not product version",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
@@ -2243,15 +2102,7 @@
           1000
         ],
         "level_type": "pressure",
-        "level_unit": "hPa",
-        "step": [
-          "PT0S",
-          "PT21600S",
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "level_unit": "hPa"
       }
     },
     {
@@ -2268,6 +2119,7 @@
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/meso-soil-evidence.json#sha256=26db33c19bb74171425f49b94b84a9f82b1ed499f125e2dd01aa8657d53f071b;MESO physical intervals differ from GFS; no GFS variant substitution",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-10/native-evidence.json#sha256=99cbabd0a619431346ce8b49f285748760bbffca5e830e4d7f3a0594f72fa2de;gfs; typed paired pressure/surface/time evidence; no numerical acceptance asserted by this file",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-8/sample-headers.json#sha256=053994d36aefa727335f60552337226718e054549fdfc1a93d0a8cd08693ba91;exact original GFS f24 headers; not complete product provision",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
         "doc/2026-10-13-stage1.1-query-reki/ref/decompiled/source/module_put_grib2_msg__setGrib2Section4Parameters.f90#sha256=ff2e5bd755ccb77f79d21b0a1dda0da85fad908d80d60a3bf6fb3865a1ebb3b6;original-object-verified writer",
         "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;temperature/wind/humidity/pressure/soil declarations; not product version",
         "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraFromGrib2ToGrib1.h#sha256=98f3ba0b37cfcba0163c00a5968507d3bf379f9cf839ab3653562a180cdfb8c8;complete native-code and fixed-surface discrimination",
@@ -2312,18 +2164,10 @@
       "when": {
         "level": 10,
         "level_type": "height_above_ground",
-        "level_unit": "m",
-        "step": [
-          "PT0S",
-          "PT21600S",
-          "PT43200S",
-          "PT86400S",
-          "PT172800S",
-          "PT259200S"
-        ]
+        "level_unit": "m"
       }
     }
   ],
   "tables": [],
-  "version": "8"
+  "version": "9"
 }

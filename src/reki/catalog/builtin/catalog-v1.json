@@ -10,8 +10,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-gfs.current",
-          "sha256": "4555c89c07b50e617dd8819e859056678539635ce8e0fcf29041f651e1221f58",
-          "version": "8"
+          "sha256": "389bc4894fec80b66f4aef6cb48dcd4185353a031dc4eeb49b9711af615a8471",
+          "version": "9"
         }
       },
       "products": [
@@ -27,7 +27,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-18/verification-input.json#sha256=f3216092823406b6a404d14881321343dd81114b3a68058fe8ea3401272dfa8c;finite mature12UTC GFS directional surface clear-sky energy; no inferred complete domain",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-19/verification-input.json#sha256=9462e0d519fcf8e2fe44ca9cf3ce50bcb1883db8b29513b395ded6caeeca3170;finite12/24/48/72h GFS surface energy pairs, raw signed values; complete domain unknown",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-20/verification-input.json#sha256=f937312a75d98c98f88138b725a3cfd0b7f7da09a13fd48c12977330f7cc31f9;twelve new original messages; full native context, offsets, SHA and one reference-anchored accumulation;GSWC netSW andGULWC upwardLW finite signed energy, complete domain unknown",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-21/verification-input.json#sha256=70b3422c6669fbaad30bbf6211f57410b3306d7b211deb6632107072e89e294f;12 freshly inspected original messages: six GSW accepted metadata, six GLW audit-only; offsets, full fingerprints and SHA;GSW netSW finite signed energy; GLW conflict remains unbound, complete domain unknown"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-21/verification-input.json#sha256=70b3422c6669fbaad30bbf6211f57410b3306d7b211deb6632107072e89e294f;12 freshly inspected original messages: six GSW accepted metadata, six GLW audit-only; offsets, full fingerprints and SHA;GSW netSW finite signed energy; GLW conflict remains unbound, complete domain unknown",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability"
           ],
           "id": "orig",
           "methods": [],
@@ -35,27 +36,11 @@
           "provides": [
             {
               "level_type": "surface",
-              "parameter": "cedarkit.ps",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT172800S",
-                "PT259200S"
-              ]
+              "parameter": "cedarkit.ps"
             },
             {
               "level_type": "mean_sea_level",
-              "parameter": "cedarkit.psl",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT172800S",
-                "PT259200S"
-              ]
+              "parameter": "cedarkit.psl"
             },
             {
               "level": [
@@ -67,15 +52,7 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.q",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT172800S",
-                "PT259200S"
-              ]
+              "parameter": "cedarkit.q"
             },
             {
               "level": [
@@ -87,15 +64,7 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.rh",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT172800S",
-                "PT259200S"
-              ]
+              "parameter": "cedarkit.rh"
             },
             {
               "layer": {
@@ -110,15 +79,7 @@
                   "value": 0
                 }
               },
-              "parameter": "cedarkit.st-0-10",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT172800S",
-                "PT259200S"
-              ]
+              "parameter": "cedarkit.st-0-10"
             },
             {
               "layer": {
@@ -133,15 +94,7 @@
                   "value": 0.1
                 }
               },
-              "parameter": "cedarkit.st-10-40",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT172800S",
-                "PT259200S"
-              ]
+              "parameter": "cedarkit.st-10-40"
             },
             {
               "layer": {
@@ -156,15 +109,7 @@
                   "value": 1
                 }
               },
-              "parameter": "cedarkit.st-100-200",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT172800S",
-                "PT259200S"
-              ]
+              "parameter": "cedarkit.st-100-200"
             },
             {
               "layer": {
@@ -179,15 +124,7 @@
                   "value": 0.4
                 }
               },
-              "parameter": "cedarkit.st-40-100",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT172800S",
-                "PT259200S"
-              ]
+              "parameter": "cedarkit.st-40-100"
             },
             {
               "level": [
@@ -199,29 +136,13 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.t",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT172800S",
-                "PT259200S"
-              ]
+              "parameter": "cedarkit.t"
             },
             {
               "level": 2,
               "level_type": "height_above_ground",
               "level_unit": "m",
-              "parameter": "cedarkit.t2m",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT172800S",
-                "PT259200S"
-              ]
+              "parameter": "cedarkit.t2m"
             },
             {
               "level": [
@@ -233,29 +154,13 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.u",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT172800S",
-                "PT259200S"
-              ]
+              "parameter": "cedarkit.u"
             },
             {
               "level": 10,
               "level_type": "height_above_ground",
               "level_unit": "m",
-              "parameter": "cedarkit.u10m",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT172800S",
-                "PT259200S"
-              ]
+              "parameter": "cedarkit.u10m"
             },
             {
               "level": [
@@ -267,141 +172,48 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.v",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT172800S",
-                "PT259200S"
-              ]
+              "parameter": "cedarkit.v"
             },
             {
               "level": 10,
               "level_type": "height_above_ground",
               "level_unit": "m",
-              "parameter": "cedarkit.v10m",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT172800S",
-                "PT259200S"
-              ]
+              "parameter": "cedarkit.v10m"
             },
             {
               "level_type": "surface",
-              "parameter": "cedarkit.rain.since-initialization",
-              "step": [
-                "PT0H",
-                "PT3H",
-                "PT6H",
-                "PT12H",
-                "PT24H",
-                "PT48H",
-                "PT72H"
-              ]
+              "parameter": "cedarkit.rain.since-initialization"
             },
             {
               "level_type": "surface",
-              "parameter": "cedarkit.rainc.since-initialization",
-              "step": [
-                "PT0H",
-                "PT3H",
-                "PT6H",
-                "PT12H",
-                "PT24H",
-                "PT48H",
-                "PT72H"
-              ]
+              "parameter": "cedarkit.rainc.since-initialization"
             },
             {
               "level_type": "surface",
-              "parameter": "cedarkit.rainnc.since-initialization",
-              "step": [
-                "PT0H",
-                "PT3H",
-                "PT6H",
-                "PT12H",
-                "PT24H",
-                "PT48H",
-                "PT72H"
-              ]
+              "parameter": "cedarkit.rainnc.since-initialization"
             },
             {
               "level_type": "surface",
-              "parameter": "cedarkit.guswc.since-initialization",
-              "step": [
-                "PT0H",
-                "PT6H",
-                "PT12H",
-                "PT24H",
-                "PT48H",
-                "PT72H"
-              ]
+              "parameter": "cedarkit.guswc.since-initialization"
             },
             {
               "level_type": "surface",
-              "parameter": "cedarkit.gdlwc.since-initialization",
-              "step": [
-                "PT0H",
-                "PT6H",
-                "PT12H",
-                "PT24H",
-                "PT48H",
-                "PT72H"
-              ]
+              "parameter": "cedarkit.gdlwc.since-initialization"
             },
             {
               "level_type": "surface",
-              "parameter": "cedarkit.gswc.since-initialization",
-              "step": [
-                "PT0H",
-                "PT6H",
-                "PT12H",
-                "PT24H",
-                "PT48H",
-                "PT72H"
-              ]
+              "parameter": "cedarkit.gswc.since-initialization"
             },
             {
               "level_type": "surface",
-              "parameter": "cedarkit.gulwc.since-initialization",
-              "step": [
-                "PT0H",
-                "PT6H",
-                "PT12H",
-                "PT24H",
-                "PT48H",
-                "PT72H"
-              ]
+              "parameter": "cedarkit.gulwc.since-initialization"
             },
             {
               "level_type": "surface",
-              "parameter": "cedarkit.gsw.since-initialization",
-              "step": [
-                "PT0H",
-                "PT6H",
-                "PT12H",
-                "PT24H",
-                "PT48H",
-                "PT72H"
-              ]
+              "parameter": "cedarkit.gsw.since-initialization"
             }
           ],
-          "scope": {
-            "step": [
-              "PT0H",
-              "PT3H",
-              "PT6H",
-              "PT12H",
-              "PT24H",
-              "PT48H",
-              "PT72H"
-            ]
-          },
+          "scope": {},
           "sources": [
             {
               "id": "cmadaas-disk",
@@ -426,8 +238,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-meso-3km.current",
-          "sha256": "def3b2c9f2ff69fe5d885dbfff0bada7bf6b6e0fd01348c6c38b80ec22d6fc1d",
-          "version": "3"
+          "sha256": "9182162ab9fac2084b1d72b4fbe3df1bc4bbed9490ace12a728db3817fd6257c",
+          "version": "4"
         }
       },
       "products": [
@@ -439,7 +251,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-15/native-evidence.json#sha256=fc283181c66d06fe56347f5e6d56d77251333f1bedd3cb7313d86aef7ce75a05;current deterministic PDT8 precipitation",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-12/time-unit-decisions.json#sha256=eb47c4b26aca5a73c52644c11845d2bd79a177397af31e18cd55474b7ca54b85;actual since-initialization interval and finite water-equivalent convention",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;current finite precipitation lead extension",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability"
           ],
           "id": "orig",
           "methods": [],
@@ -447,27 +260,11 @@
           "provides": [
             {
               "level_type": "surface",
-              "parameter": "cedarkit.ps",
-              "step": [
-                "PT0S",
-                "PT10800S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT129600S"
-              ]
+              "parameter": "cedarkit.ps"
             },
             {
               "level_type": "mean_sea_level",
-              "parameter": "cedarkit.psl",
-              "step": [
-                "PT0S",
-                "PT10800S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT129600S"
-              ]
+              "parameter": "cedarkit.psl"
             },
             {
               "level": [
@@ -479,15 +276,7 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.q",
-              "step": [
-                "PT0S",
-                "PT10800S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT129600S"
-              ]
+              "parameter": "cedarkit.q"
             },
             {
               "level": [
@@ -499,15 +288,7 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.rh",
-              "step": [
-                "PT0S",
-                "PT10800S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT129600S"
-              ]
+              "parameter": "cedarkit.rh"
             },
             {
               "layer": {
@@ -522,15 +303,7 @@
                   "value": 0
                 }
               },
-              "parameter": "cedarkit.st-0-10",
-              "step": [
-                "PT0S",
-                "PT10800S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT129600S"
-              ]
+              "parameter": "cedarkit.st-0-10"
             },
             {
               "level": [
@@ -542,29 +315,13 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.t",
-              "step": [
-                "PT0S",
-                "PT10800S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT129600S"
-              ]
+              "parameter": "cedarkit.t"
             },
             {
               "level": 2,
               "level_type": "height_above_ground",
               "level_unit": "m",
-              "parameter": "cedarkit.t2m",
-              "step": [
-                "PT0S",
-                "PT10800S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT129600S"
-              ]
+              "parameter": "cedarkit.t2m"
             },
             {
               "level": [
@@ -576,29 +333,13 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.u",
-              "step": [
-                "PT0S",
-                "PT10800S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT129600S"
-              ]
+              "parameter": "cedarkit.u"
             },
             {
               "level": 10,
               "level_type": "height_above_ground",
               "level_unit": "m",
-              "parameter": "cedarkit.u10m",
-              "step": [
-                "PT0S",
-                "PT10800S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT129600S"
-              ]
+              "parameter": "cedarkit.u10m"
             },
             {
               "level": [
@@ -610,29 +351,13 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.v",
-              "step": [
-                "PT0S",
-                "PT10800S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT129600S"
-              ]
+              "parameter": "cedarkit.v"
             },
             {
               "level": 10,
               "level_type": "height_above_ground",
               "level_unit": "m",
-              "parameter": "cedarkit.v10m",
-              "step": [
-                "PT0S",
-                "PT10800S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT129600S"
-              ]
+              "parameter": "cedarkit.v10m"
             },
             {
               "layer": [
@@ -673,41 +398,14 @@
                   }
                 }
               ],
-              "parameter": "cedarkit.st",
-              "step": [
-                "PT0S",
-                "PT10800S",
-                "PT21600S",
-                "PT43200S",
-                "PT86400S",
-                "PT129600S"
-              ]
+              "parameter": "cedarkit.st"
             },
             {
               "level_type": "surface",
-              "parameter": "cedarkit.rain.since-initialization",
-              "step": [
-                "PT0H",
-                "PT1H",
-                "PT3H",
-                "PT6H",
-                "PT12H",
-                "PT24H",
-                "PT36H"
-              ]
+              "parameter": "cedarkit.rain.since-initialization"
             }
           ],
-          "scope": {
-            "step": [
-              "PT0H",
-              "PT1H",
-              "PT3H",
-              "PT6H",
-              "PT12H",
-              "PT24H",
-              "PT36H"
-            ]
-          },
+          "scope": {},
           "sources": [
             {
               "id": "cmadaas-disk",
@@ -730,8 +428,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-meso-1km.current",
-          "sha256": "41606bc36ccd8ca0f2b5063fe215c12a00747d86573b4943d4722f99ad243ea8",
-          "version": "3"
+          "sha256": "d8aba624341ff0c3826b07075b88154dd55cee4bb0d41d7aae4f08e028e0fd21",
+          "version": "4"
         }
       },
       "products": [
@@ -743,7 +441,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-16/native-evidence.json#sha256=e4128926a52defa28ffa54010445dfaba836cc60c80173c634016710fecba21b;current deterministic PDT8 precipitation",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-13/time-unit-decisions.json#sha256=494d270174257d967594196cf94f42b585f4c7779df9df883bb535dd2f5ee4bf;actual since-initialization interval and finite water-equivalent convention",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;current finite precipitation lead extension",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability"
           ],
           "id": "orig",
           "methods": [],
@@ -751,13 +450,11 @@
           "provides": [
             {
               "level_type": "surface",
-              "parameter": "cedarkit.ps",
-              "step": "PT0S"
+              "parameter": "cedarkit.ps"
             },
             {
               "level_type": "mean_sea_level",
-              "parameter": "cedarkit.psl",
-              "step": "PT0S"
+              "parameter": "cedarkit.psl"
             },
             {
               "level": [
@@ -766,8 +463,7 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.q",
-              "step": "PT0S"
+              "parameter": "cedarkit.q"
             },
             {
               "level": [
@@ -776,8 +472,7 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.rh",
-              "step": "PT0S"
+              "parameter": "cedarkit.rh"
             },
             {
               "level": [
@@ -786,15 +481,13 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.t",
-              "step": "PT0S"
+              "parameter": "cedarkit.t"
             },
             {
               "level": 2,
               "level_type": "height_above_ground",
               "level_unit": "m",
-              "parameter": "cedarkit.t2m",
-              "step": "PT0S"
+              "parameter": "cedarkit.t2m"
             },
             {
               "level": [
@@ -803,15 +496,13 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.u",
-              "step": "PT0S"
+              "parameter": "cedarkit.u"
             },
             {
               "level": 10,
               "level_type": "height_above_ground",
               "level_unit": "m",
-              "parameter": "cedarkit.u10m",
-              "step": "PT0S"
+              "parameter": "cedarkit.u10m"
             },
             {
               "level": [
@@ -820,31 +511,21 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.v",
-              "step": "PT0S"
+              "parameter": "cedarkit.v"
             },
             {
               "level": 10,
               "level_type": "height_above_ground",
               "level_unit": "m",
-              "parameter": "cedarkit.v10m",
-              "step": "PT0S"
+              "parameter": "cedarkit.v10m"
             },
             {
               "level_type": "surface",
-              "parameter": "cedarkit.ps",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.ps"
             },
             {
               "level_type": "mean_sea_level",
-              "parameter": "cedarkit.psl",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.psl"
             },
             {
               "level": [
@@ -853,11 +534,7 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.q",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.q"
             },
             {
               "level": [
@@ -866,11 +543,7 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.rh",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.rh"
             },
             {
               "level": [
@@ -879,21 +552,13 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.t",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.t"
             },
             {
               "level": 2,
               "level_type": "height_above_ground",
               "level_unit": "m",
-              "parameter": "cedarkit.t2m",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.t2m"
             },
             {
               "level": [
@@ -902,21 +567,13 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.u",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.u"
             },
             {
               "level": 10,
               "level_type": "height_above_ground",
               "level_unit": "m",
-              "parameter": "cedarkit.u10m",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.u10m"
             },
             {
               "level": [
@@ -925,44 +582,20 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.v",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.v"
             },
             {
               "level": 10,
               "level_type": "height_above_ground",
               "level_unit": "m",
-              "parameter": "cedarkit.v10m",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.v10m"
             },
             {
               "level_type": "surface",
-              "parameter": "cedarkit.rain.since-initialization",
-              "step": [
-                "PT0H",
-                "PT1H",
-                "PT3H",
-                "PT6H",
-                "PT12H"
-              ]
+              "parameter": "cedarkit.rain.since-initialization"
             }
           ],
-          "scope": {
-            "step": [
-              "PT0H",
-              "PT1H",
-              "PT3H",
-              "PT6H",
-              "PT12H",
-              "PT24H"
-            ]
-          },
+          "scope": {},
           "sources": [
             {
               "id": "cmadaas-disk",
@@ -985,8 +618,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-tym.current",
-          "sha256": "3a34536718df3509fba4b109cbc1f909ed50b8daa091d7b699b4133e98fce4f2",
-          "version": "3"
+          "sha256": "a8dde0739ae43496b3e31d359732d0fd5f3ece950c836eec7dcc5a0ca327f3bc",
+          "version": "4"
         }
       },
       "products": [
@@ -998,7 +631,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-16/native-evidence.json#sha256=e4128926a52defa28ffa54010445dfaba836cc60c80173c634016710fecba21b;current deterministic PDT8 precipitation",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-13/time-unit-decisions.json#sha256=494d270174257d967594196cf94f42b585f4c7779df9df883bb535dd2f5ee4bf;actual since-initialization interval and finite water-equivalent convention",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;current finite precipitation lead extension",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability"
           ],
           "id": "orig",
           "methods": [],
@@ -1006,13 +640,11 @@
           "provides": [
             {
               "level_type": "surface",
-              "parameter": "cedarkit.ps",
-              "step": "PT0S"
+              "parameter": "cedarkit.ps"
             },
             {
               "level_type": "mean_sea_level",
-              "parameter": "cedarkit.psl",
-              "step": "PT0S"
+              "parameter": "cedarkit.psl"
             },
             {
               "level": [
@@ -1021,8 +653,7 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.q",
-              "step": "PT0S"
+              "parameter": "cedarkit.q"
             },
             {
               "level": [
@@ -1031,8 +662,7 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.rh",
-              "step": "PT0S"
+              "parameter": "cedarkit.rh"
             },
             {
               "layer": [
@@ -1073,8 +703,7 @@
                   }
                 }
               ],
-              "parameter": "cedarkit.st",
-              "step": "PT0S"
+              "parameter": "cedarkit.st"
             },
             {
               "layer": {
@@ -1089,8 +718,7 @@
                   "value": 0
                 }
               },
-              "parameter": "cedarkit.st-0-10",
-              "step": "PT0S"
+              "parameter": "cedarkit.st-0-10"
             },
             {
               "level": [
@@ -1099,15 +727,13 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.t",
-              "step": "PT0S"
+              "parameter": "cedarkit.t"
             },
             {
               "level": 2,
               "level_type": "height_above_ground",
               "level_unit": "m",
-              "parameter": "cedarkit.t2m",
-              "step": "PT0S"
+              "parameter": "cedarkit.t2m"
             },
             {
               "level": [
@@ -1116,15 +742,13 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.u",
-              "step": "PT0S"
+              "parameter": "cedarkit.u"
             },
             {
               "level": 10,
               "level_type": "height_above_ground",
               "level_unit": "m",
-              "parameter": "cedarkit.u10m",
-              "step": "PT0S"
+              "parameter": "cedarkit.u10m"
             },
             {
               "level": [
@@ -1133,31 +757,21 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.v",
-              "step": "PT0S"
+              "parameter": "cedarkit.v"
             },
             {
               "level": 10,
               "level_type": "height_above_ground",
               "level_unit": "m",
-              "parameter": "cedarkit.v10m",
-              "step": "PT0S"
+              "parameter": "cedarkit.v10m"
             },
             {
               "level_type": "surface",
-              "parameter": "cedarkit.ps",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.ps"
             },
             {
               "level_type": "mean_sea_level",
-              "parameter": "cedarkit.psl",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.psl"
             },
             {
               "level": [
@@ -1166,11 +780,7 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.q",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.q"
             },
             {
               "level": [
@@ -1179,11 +789,7 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.rh",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.rh"
             },
             {
               "layer": [
@@ -1224,11 +830,7 @@
                   }
                 }
               ],
-              "parameter": "cedarkit.st",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.st"
             },
             {
               "layer": {
@@ -1243,11 +845,7 @@
                   "value": 0
                 }
               },
-              "parameter": "cedarkit.st-0-10",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.st-0-10"
             },
             {
               "level": [
@@ -1256,21 +854,13 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.t",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.t"
             },
             {
               "level": 2,
               "level_type": "height_above_ground",
               "level_unit": "m",
-              "parameter": "cedarkit.t2m",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.t2m"
             },
             {
               "level": [
@@ -1279,21 +869,13 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.u",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.u"
             },
             {
               "level": 10,
               "level_type": "height_above_ground",
               "level_unit": "m",
-              "parameter": "cedarkit.u10m",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.u10m"
             },
             {
               "level": [
@@ -1302,73 +884,28 @@
               ],
               "level_type": "pressure",
               "level_unit": "hPa",
-              "parameter": "cedarkit.v",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.v"
             },
             {
               "level": 10,
               "level_type": "height_above_ground",
               "level_unit": "m",
-              "parameter": "cedarkit.v10m",
-              "step": [
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.v10m"
             },
             {
               "level_type": "surface",
-              "parameter": "cedarkit.rain.since-initialization",
-              "step": [
-                "PT0H",
-                "PT3H",
-                "PT6H",
-                "PT12H",
-                "PT24H",
-                "PT48H",
-                "PT72H"
-              ]
+              "parameter": "cedarkit.rain.since-initialization"
             },
             {
               "level_type": "surface",
-              "parameter": "cedarkit.rainc.since-initialization",
-              "step": [
-                "PT0H",
-                "PT3H",
-                "PT6H",
-                "PT12H",
-                "PT24H",
-                "PT48H",
-                "PT72H"
-              ]
+              "parameter": "cedarkit.rainc.since-initialization"
             },
             {
               "level_type": "surface",
-              "parameter": "cedarkit.rainnc.since-initialization",
-              "step": [
-                "PT0H",
-                "PT3H",
-                "PT6H",
-                "PT12H",
-                "PT24H",
-                "PT48H",
-                "PT72H"
-              ]
+              "parameter": "cedarkit.rainnc.since-initialization"
             }
           ],
-          "scope": {
-            "step": [
-              "PT0H",
-              "PT3H",
-              "PT6H",
-              "PT12H",
-              "PT24H",
-              "PT48H",
-              "PT72H"
-            ]
-          },
+          "scope": {},
           "sources": [
             {
               "id": "cmadaas-disk",
@@ -1391,8 +928,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-geps.current",
-          "sha256": "b5773d7f9a51ef922ed20f089afc619d1e255dc59c34d4606c62218acd1d9d4d",
-          "version": "3"
+          "sha256": "63b89fb34b53442aeb8cf77d058e2dd3b03241ed494439c14b11c8288361b8dc",
+          "version": "4"
         }
       },
       "products": [
@@ -1405,7 +942,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;PDT11 original-member accumulation pairs",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;since-initialization variants and water-equivalent units",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;current finite precipitation lead extension",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability"
           ],
           "id": "orig",
           "methods": [],
@@ -1420,12 +958,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.ps",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.ps"
             },
             {
               "level_type": "mean_sea_level",
@@ -1436,12 +969,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.psl",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.psl"
             },
             {
               "level": [
@@ -1457,12 +985,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.q",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.q"
             },
             {
               "level": [
@@ -1478,12 +1001,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.rh",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.rh"
             },
             {
               "level": [
@@ -1499,12 +1017,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.t",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.t"
             },
             {
               "level": 2,
@@ -1517,12 +1030,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.t2m",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.t2m"
             },
             {
               "level": [
@@ -1538,12 +1046,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.u",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.u"
             },
             {
               "level": 10,
@@ -1556,12 +1059,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.u10m",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.u10m"
             },
             {
               "level": [
@@ -1577,12 +1075,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.v",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.v"
             },
             {
               "level": 10,
@@ -1595,12 +1088,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.v10m",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.v10m"
             },
             {
               "level_type": "surface",
@@ -1611,15 +1099,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.rain.since-initialization",
-              "step": [
-                "PT0H",
-                "PT6H",
-                "PT12H",
-                "PT24H",
-                "PT48H",
-                "PT72H"
-              ]
+              "parameter": "cedarkit.rain.since-initialization"
             },
             {
               "level_type": "surface",
@@ -1630,15 +1110,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.rainc.since-initialization",
-              "step": [
-                "PT0H",
-                "PT6H",
-                "PT12H",
-                "PT24H",
-                "PT48H",
-                "PT72H"
-              ]
+              "parameter": "cedarkit.rainc.since-initialization"
             },
             {
               "level_type": "surface",
@@ -1649,15 +1121,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.rainnc.since-initialization",
-              "step": [
-                "PT0H",
-                "PT6H",
-                "PT12H",
-                "PT24H",
-                "PT48H",
-                "PT72H"
-              ]
+              "parameter": "cedarkit.rainnc.since-initialization"
             }
           ],
           "scope": {
@@ -1667,15 +1131,7 @@
                 "every": 1,
                 "start": 0
               }
-            },
-            "step": [
-              "PT0H",
-              "PT6H",
-              "PT12H",
-              "PT24H",
-              "PT48H",
-              "PT72H"
-            ]
+            }
           },
           "sources": [
             {
@@ -1699,8 +1155,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-reps.current",
-          "sha256": "d3c08126c677cce2f5491d897e166f170741ce298a040e5699cd7593cdfa452c",
-          "version": "3"
+          "sha256": "bbad424e32be88e916d84980b526cde43a314f3224fc95d7883224d490d3eee3",
+          "version": "4"
         }
       },
       "products": [
@@ -1713,7 +1169,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-13/native-evidence.json#sha256=d0854afadc9a4d89d17180ab473837de01f119695bd8ee1cec8221bb83aa3c76;PDT11 original-member accumulation pairs",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-10/time-unit-decisions.json#sha256=c7ed556a1730c5ca6a46149cde1e78ec75b5eddca81b95c2c7bb6f8bfdd16778;since-initialization variants and water-equivalent units",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;current finite precipitation lead extension",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability"
           ],
           "id": "orig",
           "methods": [],
@@ -1728,12 +1185,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.psl",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.psl"
             },
             {
               "level": [
@@ -1749,12 +1201,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.rh",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.rh"
             },
             {
               "level": [
@@ -1770,12 +1217,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.t",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.t"
             },
             {
               "level": 2,
@@ -1788,12 +1230,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.t2m",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.t2m"
             },
             {
               "level": [
@@ -1809,12 +1246,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.u",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.u"
             },
             {
               "level": 10,
@@ -1827,12 +1259,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.u10m",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.u10m"
             },
             {
               "level": [
@@ -1848,12 +1275,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.v",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.v"
             },
             {
               "level": 10,
@@ -1866,12 +1288,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.v10m",
-              "step": [
-                "PT0S",
-                "PT21600S",
-                "PT86400S"
-              ]
+              "parameter": "cedarkit.v10m"
             },
             {
               "level_type": "surface",
@@ -1882,15 +1299,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.rain.since-initialization",
-              "step": [
-                "PT0H",
-                "PT6H",
-                "PT12H",
-                "PT24H",
-                "PT48H",
-                "PT72H"
-              ]
+              "parameter": "cedarkit.rain.since-initialization"
             },
             {
               "level_type": "surface",
@@ -1901,15 +1310,7 @@
                   "start": 0
                 }
               },
-              "parameter": "cedarkit.rainc.since-initialization",
-              "step": [
-                "PT0H",
-                "PT6H",
-                "PT12H",
-                "PT24H",
-                "PT48H",
-                "PT72H"
-              ]
+              "parameter": "cedarkit.rainc.since-initialization"
             }
           ],
           "scope": {
@@ -1919,15 +1320,7 @@
                 "every": 1,
                 "start": 0
               }
-            },
-            "step": [
-              "PT0H",
-              "PT6H",
-              "PT12H",
-              "PT24H",
-              "PT48H",
-              "PT72H"
-            ]
+            }
           },
           "sources": [
             {
@@ -2030,5 +1423,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "13"
+  "version": "14"
 }

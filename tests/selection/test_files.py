@@ -51,6 +51,14 @@ def test_registered_local_layout_pairing_and_no_rounding(tmp_path, q):
         tmp_path / "2026/20260101/SYNTHETIC_2026010100_006_002",
         tmp_path / "2026/20260101/SYNTHETIC_2026010100_012_000",
     )
+    # Without a lead, discover existing files for this exact origin/member only.
+    selected = tmp_path / "2026/20260101/SYNTHETIC_2026010100_012_002"
+    selected.parent.mkdir(parents=True)
+    selected.write_bytes(b"SYNTHETIC")
+    (selected.parent / "SYNTHETIC_2026010100_012_000").write_bytes(b"OTHER MEMBER")
+    (selected.parent / "SYNTHETIC_2026010106_012_002").write_bytes(b"OTHER ORIGIN")
+    omitted = {k: v for k, v in a.items() if k not in {"step", "valid_time"}}
+    assert discover_paths(config, [omitted]) == (selected,)
     for changes in ({"step": "PT30M"}, {"time": "2026-01-01T00:00:00.1Z"}):
         invalid = {**a, **changes}
         invalid.pop("valid_time", None)

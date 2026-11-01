@@ -17,27 +17,11 @@
   "supported_pairs": [
     {
       "level_type": "surface",
-      "parameter": "cedarkit.ps",
-      "step": [
-        "PT0S",
-        "PT10800S",
-        "PT21600S",
-        "PT43200S",
-        "PT86400S",
-        "PT129600S"
-      ]
+      "parameter": "cedarkit.ps"
     },
     {
       "level_type": "mean_sea_level",
-      "parameter": "cedarkit.psl",
-      "step": [
-        "PT0S",
-        "PT10800S",
-        "PT21600S",
-        "PT43200S",
-        "PT86400S",
-        "PT129600S"
-      ]
+      "parameter": "cedarkit.psl"
     },
     {
       "level": [
@@ -49,15 +33,7 @@
       ],
       "level_type": "pressure",
       "level_unit": "hPa",
-      "parameter": "cedarkit.q",
-      "step": [
-        "PT0S",
-        "PT10800S",
-        "PT21600S",
-        "PT43200S",
-        "PT86400S",
-        "PT129600S"
-      ]
+      "parameter": "cedarkit.q"
     },
     {
       "level": [
@@ -69,15 +45,7 @@
       ],
       "level_type": "pressure",
       "level_unit": "hPa",
-      "parameter": "cedarkit.rh",
-      "step": [
-        "PT0S",
-        "PT10800S",
-        "PT21600S",
-        "PT43200S",
-        "PT86400S",
-        "PT129600S"
-      ]
+      "parameter": "cedarkit.rh"
     },
     {
       "layer": {
@@ -92,15 +60,7 @@
           "value": 0
         }
       },
-      "parameter": "cedarkit.st-0-10",
-      "step": [
-        "PT0S",
-        "PT10800S",
-        "PT21600S",
-        "PT43200S",
-        "PT86400S",
-        "PT129600S"
-      ]
+      "parameter": "cedarkit.st-0-10"
     },
     {
       "level": [
@@ -112,29 +72,13 @@
       ],
       "level_type": "pressure",
       "level_unit": "hPa",
-      "parameter": "cedarkit.t",
-      "step": [
-        "PT0S",
-        "PT10800S",
-        "PT21600S",
-        "PT43200S",
-        "PT86400S",
-        "PT129600S"
-      ]
+      "parameter": "cedarkit.t"
     },
     {
       "level": 2,
       "level_type": "height_above_ground",
       "level_unit": "m",
-      "parameter": "cedarkit.t2m",
-      "step": [
-        "PT0S",
-        "PT10800S",
-        "PT21600S",
-        "PT43200S",
-        "PT86400S",
-        "PT129600S"
-      ]
+      "parameter": "cedarkit.t2m"
     },
     {
       "level": [
@@ -146,29 +90,13 @@
       ],
       "level_type": "pressure",
       "level_unit": "hPa",
-      "parameter": "cedarkit.u",
-      "step": [
-        "PT0S",
-        "PT10800S",
-        "PT21600S",
-        "PT43200S",
-        "PT86400S",
-        "PT129600S"
-      ]
+      "parameter": "cedarkit.u"
     },
     {
       "level": 10,
       "level_type": "height_above_ground",
       "level_unit": "m",
-      "parameter": "cedarkit.u10m",
-      "step": [
-        "PT0S",
-        "PT10800S",
-        "PT21600S",
-        "PT43200S",
-        "PT86400S",
-        "PT129600S"
-      ]
+      "parameter": "cedarkit.u10m"
     },
     {
       "level": [
@@ -180,29 +108,13 @@
       ],
       "level_type": "pressure",
       "level_unit": "hPa",
-      "parameter": "cedarkit.v",
-      "step": [
-        "PT0S",
-        "PT10800S",
-        "PT21600S",
-        "PT43200S",
-        "PT86400S",
-        "PT129600S"
-      ]
+      "parameter": "cedarkit.v"
     },
     {
       "level": 10,
       "level_type": "height_above_ground",
       "level_unit": "m",
-      "parameter": "cedarkit.v10m",
-      "step": [
-        "PT0S",
-        "PT10800S",
-        "PT21600S",
-        "PT43200S",
-        "PT86400S",
-        "PT129600S"
-      ]
+      "parameter": "cedarkit.v10m"
     },
     {
       "layer": [
@@ -243,30 +155,13 @@
           }
         }
       ],
-      "parameter": "cedarkit.st",
-      "step": [
-        "PT0S",
-        "PT10800S",
-        "PT21600S",
-        "PT43200S",
-        "PT86400S",
-        "PT129600S"
-      ]
+      "parameter": "cedarkit.st"
     },
     {
       "level_type": "surface",
-      "parameter": "cedarkit.rain.since-initialization",
-      "step": [
-        "PT0H",
-        "PT1H",
-        "PT3H",
-        "PT6H",
-        "PT12H",
-        "PT24H",
-        "PT36H"
-      ]
+      "parameter": "cedarkit.rain.since-initialization"
     }
   ],
   "time_zone": "UTC",
-  "version_policy": "current business only; no historical-version or complete-domain claim"
+  "version_policy": "current business only; sampled leads do not limit reading; no complete-domain claim"
 }

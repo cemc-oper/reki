@@ -196,23 +196,17 @@ def test_energy_preserves_a_real_bitmap_including_zero_and_signed_values(
 @pytest.mark.parametrize(
     "query",
     [
-        {"parameter": "guswc-since-initialization", "step": "PT9H"},
         {"parameter": "gdlwc-since-initialization", "level_type": "atmosphere_top"},
         {"parameter": "tuswc"},
         {"parameter": "tswc"},
         {"parameter": "tulwc"},
-        {"parameter": "gswc-since-initialization", "step": "PT9H"},
-        {"parameter": "gulwc-since-initialization", "step": "PT9H"},
         {"parameter": "hfx"},
-        {"parameter": "gsw-since-initialization", "step": "PT9H"},
         {"parameter": "gsw-since-initialization", "level_type": "atmosphere_top"},
         {"parameter": "tsw"},
         {"parameter": "glw"},
     ],
 )
-def test_energy_scope_does_not_acquire_unreviewed_leads_layers_or_heat_products(
-    tmp_path, query
-):
+def test_energy_scope_keeps_layer_and_parameter_identity_boundaries(tmp_path, query):
     path = tmp_path / "unopened"
     path.touch()
     with from_source(

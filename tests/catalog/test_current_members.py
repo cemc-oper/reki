@@ -138,7 +138,6 @@ def test_member_bounds_and_no_statistics_or_unverified_parameters(
         for q in [
             {"member": maximum + 1},
             {"member": 1, "member_role": "control"},
-            {"step": "PT12H"},
             {"level_type": "pressure", "level": 700},
             {"statistics": {"over": "ensemble", "operation": "mean"}},
         ]:
@@ -176,7 +175,7 @@ def test_wrong_joint_kind_number_is_not_silently_renumbered(tmp_path, system, na
     "native",
     [
         {"typeOfGeneratingProcess": 2},
-        {"significanceOfReferenceTime": 0},
+        {"significanceOfReferenceTime": 2},
         {"productDefinitionTemplateNumber": 0},
         {"numberOfForecastsInEnsemble": 15},
     ],
