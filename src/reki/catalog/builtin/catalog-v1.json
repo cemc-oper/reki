@@ -10,8 +10,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-gfs.current",
-          "sha256": "9fea63385797b1e6720430e899c5410dbb4899042b7f57c01579a1baa5764a63",
-          "version": "10"
+          "sha256": "f7c7a9bdf9bfe8a3d1738d189a89373227e019ecc84bcf0cc839321065ec9971",
+          "version": "11"
         }
       },
       "products": [
@@ -29,7 +29,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-20/verification-input.json#sha256=f937312a75d98c98f88138b725a3cfd0b7f7da09a13fd48c12977330f7cc31f9;twelve new original messages; full native context, offsets, SHA and one reference-anchored accumulation;GSWC netSW andGULWC upwardLW finite signed energy, complete domain unknown",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-21/verification-input.json#sha256=70b3422c6669fbaad30bbf6211f57410b3306d7b211deb6632107072e89e294f;12 freshly inspected original messages: six GSW accepted metadata, six GLW audit-only; offsets, full fingerprints and SHA;GSW netSW finite signed energy; GLW conflict remains unbound, complete domain unknown",
             "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-22/verification-input.json#sha256=a1da3465347b5b7a061ec454fff7f00ff1f2b8532a0185d99a38650fcc02f3f2;12 newly inspected original TOA messages; surface8/255, master4, local0 for shortwave and local1 for TULWC, PDT8 single reference-anchored accumulation;four integrated TOA identities; sample leads are not support bounds; complete provider domain unknown"
           ],
           "id": "orig",
           "methods": [],
@@ -172,6 +173,22 @@
             {
               "level_type": "surface",
               "parameter": "cedarkit.gsw.since-initialization"
+            },
+            {
+              "level_type": "atmosphere_top",
+              "parameter": "cedarkit.tsw.since-initialization"
+            },
+            {
+              "level_type": "atmosphere_top",
+              "parameter": "cedarkit.tswc.since-initialization"
+            },
+            {
+              "level_type": "atmosphere_top",
+              "parameter": "cedarkit.tuswc.since-initialization"
+            },
+            {
+              "level_type": "atmosphere_top",
+              "parameter": "cedarkit.tulwc.since-initialization"
             }
           ],
           "scope": {},
@@ -1204,5 +1221,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "15"
+  "version": "16"
 }

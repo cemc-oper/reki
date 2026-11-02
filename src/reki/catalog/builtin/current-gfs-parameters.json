@@ -422,6 +422,118 @@
       "parent": "cedarkit.t"
     },
     {
+      "description": "Time-integrated net short-wave radiation at the top of atmosphere",
+      "description_cn": "大气顶净短波辐射时间积分量",
+      "fixed_conditions": {
+        "level_type": "atmosphere_top",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time"
+        }
+      },
+      "name": "tsw",
+      "parameter_id": "cedarkit.tsw",
+      "parent": "cedarkit.gsw"
+    },
+    {
+      "aliases": [
+        "tsw-since-initialization"
+      ],
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "tsw",
+      "parameter_id": "cedarkit.tsw.since-initialization",
+      "parent": "cedarkit.tsw"
+    },
+    {
+      "description": "Time-integrated net short-wave radiation at the top of atmosphere, clear sky",
+      "description_cn": "大气顶晴空净短波辐射时间积分量",
+      "fixed_conditions": {
+        "level_type": "atmosphere_top"
+      },
+      "name": "tswc",
+      "parameter_id": "cedarkit.tswc",
+      "parent": "cedarkit.gswc.any"
+    },
+    {
+      "aliases": [
+        "tswc-since-initialization"
+      ],
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "tswc",
+      "parameter_id": "cedarkit.tswc.since-initialization",
+      "parent": "cedarkit.tswc"
+    },
+    {
+      "description": "Time-integrated upward long-wave radiation at the top of atmosphere, clear sky",
+      "description_cn": "大气顶晴空向上长波辐射时间积分量",
+      "fixed_conditions": {
+        "level_type": "atmosphere_top"
+      },
+      "name": "tulwc",
+      "parameter_id": "cedarkit.tulwc",
+      "parent": "cedarkit.gulwc.any"
+    },
+    {
+      "aliases": [
+        "tulwc-since-initialization"
+      ],
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "tulwc",
+      "parameter_id": "cedarkit.tulwc.since-initialization",
+      "parent": "cedarkit.tulwc"
+    },
+    {
+      "description": "Time-integrated upward short-wave radiation at the top of atmosphere, clear sky",
+      "description_cn": "大气顶晴空向上短波辐射时间积分量",
+      "fixed_conditions": {
+        "level_type": "atmosphere_top"
+      },
+      "name": "tuswc",
+      "parameter_id": "cedarkit.tuswc",
+      "parent": "cedarkit.guswc.any"
+    },
+    {
+      "aliases": [
+        "tuswc-since-initialization"
+      ],
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "tuswc",
+      "parameter_id": "cedarkit.tuswc.since-initialization",
+      "parent": "cedarkit.tuswc"
+    },
+    {
       "description": "U-component of wind",
       "description_cn": "东西风",
       "name": "u",
@@ -468,5 +580,5 @@
       "parent": "cedarkit.v"
     }
   ],
-  "version": "5"
+  "version": "6"
 }

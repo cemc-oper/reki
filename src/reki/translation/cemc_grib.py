@@ -3,7 +3,7 @@
 The original paraNum.h and setGrib2Section4Parameters define these codes.
 The complete writer sets centre 38, master table 4 and local table 1.
 These slices cover operational deterministic instantaneous messages only.
-An additional exact GFS surface clear-sky longwave energy encoding is checked
+Additional exact GFS surface and TOA clear-sky longwave energy encodings are checked
 separately; its declared unit belongs to the finite product mapping.
 It supplies no default parameter IDs, product scope, members or statistics.
 See doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6 in the workspace.
@@ -73,7 +73,8 @@ def value_unit(meta):
 def is_gfs_clear_sky_longwave_energy(meta):
     """Recognize the reviewed local-use0/5/224 written with local table1.
 
-    Original writer element108 and business declarations identify this exact
+    Original writer element108 and business declarations identify the surface
+    and top-of-atmosphere forms of this exact
     producer encoding. Do not relax local-table checks for other codes, layers,
     templates or producers. Time/statistic consistency is checked by its rules;
     this function supplies neither a unit nor a parameter identity.
@@ -103,6 +104,9 @@ def is_gfs_clear_sky_longwave_energy(meta):
     )
     return (
         all(type(v) is int for v in context + phase)
-        and context == (2, 38, 0, 4, 1, 0, 8, 0, 5, 224, 1, 255)
+        and context in {
+            (2, 38, 0, 4, 1, 0, 8, 0, 5, 224, 1, 255),
+            (2, 38, 0, 4, 1, 0, 8, 0, 5, 224, 8, 255),
+        }
         and phase in {(0, 0, 0), (1, 2, 1)}
     )

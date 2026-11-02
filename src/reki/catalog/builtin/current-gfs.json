@@ -6,8 +6,8 @@
   ],
   "parameter_registry": {
     "builtin": "reki.parameters.cma-gfs.current",
-    "sha256": "a51f8a9eae19578e7ed35cfb7dff32f74fffe08a98b14ce2ffc9037c0f906029",
-    "version": "5"
+    "sha256": "6b5cd03ee0d6d119385def1b21c613e9b512d39c01c31ad662dfca7fc0940b37",
+    "version": "6"
   },
   "product": "orig",
   "product_version": "current",
@@ -154,6 +154,22 @@
     {
       "level_type": "surface",
       "parameter": "cedarkit.gsw.since-initialization"
+    },
+    {
+      "level_type": "atmosphere_top",
+      "parameter": "cedarkit.tsw.since-initialization"
+    },
+    {
+      "level_type": "atmosphere_top",
+      "parameter": "cedarkit.tswc.since-initialization"
+    },
+    {
+      "level_type": "atmosphere_top",
+      "parameter": "cedarkit.tuswc.since-initialization"
+    },
+    {
+      "level_type": "atmosphere_top",
+      "parameter": "cedarkit.tulwc.since-initialization"
     }
   ],
   "time_zone": "UTC",

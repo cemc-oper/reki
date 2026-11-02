@@ -28,14 +28,15 @@ def encoded(path, name, hour=6, *, values=(0, 1.25, -2.5, 3), **overrides):
             centre=38,
             subCentre=0,
             tablesVersion=4,
-            localTablesVersion=1 if name == "gulwc" else 0,
+            localTablesVersion=1 if name in {"gulwc", "tulwc"} else 0,
             productionStatusOfProcessedData=0,
             typeOfProcessedData=0 if hour == 0 else 1,
             productDefinitionTemplateNumber=8,
             typeOfGeneratingProcess=0 if hour == 0 else 2,
             significanceOfReferenceTime=0 if hour == 0 else 1,
             discipline=0,
-            parameterCategory={"guswc": 4, "gdlwc": 5, "gswc": 4, "gulwc": 5, "gsw": 4}[
+            parameterCategory={"guswc": 4, "gdlwc": 5, "gswc": 4, "gulwc": 5, "gsw": 4,
+                               "tsw": 4, "tswc": 4, "tuswc": 4, "tulwc": 5}[
                 name
             ],
             parameterNumber={
@@ -44,8 +45,12 @@ def encoded(path, name, hour=6, *, values=(0, 1.25, -2.5, 3), **overrides):
                 "gswc": 11,
                 "gulwc": 224,
                 "gsw": 9,
+                "tsw": 9,
+                "tswc": 11,
+                "tuswc": 53,
+                "tulwc": 224,
             }[name],
-            typeOfFirstFixedSurface=1,
+            typeOfFirstFixedSurface=8 if name.startswith("t") else 1,
             typeOfSecondFixedSurface=255,
             dataDate=20261030,
             dataTime=1200,
@@ -197,12 +202,12 @@ def test_energy_preserves_a_real_bitmap_including_zero_and_signed_values(
     "query",
     [
         {"parameter": "gdlwc-since-initialization", "level_type": "atmosphere_top"},
-        {"parameter": "tuswc"},
-        {"parameter": "tswc"},
-        {"parameter": "tulwc"},
+        {"parameter": "tuswc-since-initialization", "level_type": "surface"},
+        {"parameter": "tswc-since-initialization", "level_type": "surface"},
+        {"parameter": "tulwc-since-initialization", "level_type": "surface"},
         {"parameter": "hfx"},
         {"parameter": "gsw-since-initialization", "level_type": "atmosphere_top"},
-        {"parameter": "tsw"},
+        {"parameter": "tsw-since-initialization", "level_type": "surface"},
         {"parameter": "glw"},
     ],
 )
@@ -296,3 +301,125 @@ def test_new_energy_bindings_reject_other_identities_and_contexts(
         with pytest.raises(QueryError) as error:
             source.sel(parameter=name + "-since-initialization", step="PT6H").one()
         assert error.value.code == "no_match"
+
+
+@pytest.mark.parametrize("name", ["tsw", "tswc", "tuswc", "tulwc"])
+@pytest.mark.parametrize("hour", [0, 48])
+def test_toa_energy_preserves_values_masks_and_time_identity(tmp_path, name, hour):
+    path = tmp_path / "toa.grib2"
+    encoded(path, name, hour, values=[0, 9999, -1.25, 2.5],
+            bitmapPresent=1, missingValue=9999)
+    with from_source({"kind": "file", "dataset": "CMA-GFS", "path": str(path)}) as source:
+        field = source.sel(parameter=name + "-since-initialization",
+                           time="2026-10-30T12:00:00Z").one()
+        dataset = field.to_xarray()
+        np.testing.assert_allclose(dataset[name].values.reshape(-1),
+                                   [0, np.nan, -1.25, 2.5], rtol=0, atol=0, equal_nan=True)
+        assert dataset[name].dims == ("time", "step", "latitude", "longitude")
+        assert dataset[name].attrs["units"] == "J/m2"
+        identity = field.identity.to_dict()
+        assert identity["level_type"] == "atmosphere_top"
+        assert "level" not in identity and "member" not in identity
+        assert identity["step"] == f"PT{hour * 3600}S"
+        meta = thaw(field.metadata)
+        assert meta["source_unit"] == "J/m2"
+        assert meta["statistical_interval"] == {
+            "start": identity["time"], "end": identity["valid_time"]}
+        assert meta["statistics"]["period"] == {"kind": "since_initialization"}
+        assert meta["native_fields"]["units"] == (
+            "unknown" if name in {"tuswc", "tulwc"} else "J m**-2")
+        with pytest.raises(CompletenessError):
+            source.sel(parameter=name + "-since-initialization").all(completeness="required")
+
+
+@pytest.mark.parametrize("name", ["tsw", "tulwc"])
+@pytest.mark.parametrize("overrides,reason", [
+    ({"typeOfStatisticalProcessing": 0}, "fixed_definition_mismatch"),
+    ({"forecastTime": 3, "lengthOfTimeRange": 3}, "fixed_definition_mismatch"),
+    ({"lengthOfTimeRange": 5}, "inconsistent_native_metadata"),
+    ({"typeOfTimeIncrement": 1}, "unsupported_native_encoding"),
+])
+def test_toa_energy_rejects_incompatible_statistics(tmp_path, name, overrides, reason):
+    path = tmp_path / "invalid-toa.grib2"
+    encoded(path, name, **overrides)
+    with from_source({"kind": "file", "dataset": "CMA-GFS", "path": str(path)}) as source:
+        with pytest.raises(SourceError) as error:
+            source.sel(parameter=name + "-since-initialization").one()
+        assert error.value.context["reason"] == reason
+
+
+@pytest.mark.parametrize("name", ["tsw", "tswc", "tuswc", "tulwc"])
+@pytest.mark.parametrize("unit", ["unknown", "W m**-2"])
+def test_toa_declared_unit_fills_absence_but_rejects_flux_conflict(tmp_path, monkeypatch, name, unit):
+    from reki.translation import grib_backend
+
+    path = tmp_path / "toa-unit.grib2"
+    encoded(path, name)
+    original = grib_backend._metadata
+
+    def metadata(handle, **kwargs):
+        value = original(handle, **kwargs)
+        value["units"] = unit
+        return value
+
+    monkeypatch.setattr(grib_backend, "_metadata", metadata)
+    with from_source({"kind": "file", "dataset": "CMA-GFS", "path": str(path)}) as source:
+        selection = source.sel(parameter=name + "-since-initialization")
+        if unit == "unknown":
+            assert selection.one().to_xarray()[name].attrs["units"] == "J/m2"
+        else:
+            with pytest.raises(SourceError) as error:
+                selection.one()
+            assert error.value.context["reason"] == "inconsistent_native_metadata"
+
+
+@pytest.mark.parametrize("name,changes", [
+    ("tsw", {"typeOfFirstFixedSurface": 1}),
+    ("tsw", {"parameterNumber": 11}),
+    ("tsw", {"centre": 98}),
+    ("tsw", {"typeOfGeneratingProcess": 0}),
+    ("tswc", {"parameterNumber": 52}),
+    ("tuswc", {"parameterNumber": 10}),
+    ("tulwc", {"typeOfFirstFixedSurface": 1}),
+    ("tulwc", {"localTablesVersion": 0}),
+    ("tulwc", {"productDefinitionTemplateNumber": 11}),
+    ("tulwc", {"parameterNumber": 225}),
+])
+def test_toa_bindings_reject_other_identities_and_native_contexts(tmp_path, name, changes):
+    path = tmp_path / "wrong-toa.grib2"
+    encoded(path, name, **changes)
+    with from_source({"kind": "file", "dataset": "CMA-GFS", "path": str(path)}) as source:
+        with pytest.raises(QueryError) as error:
+            source.sel(parameter=name + "-since-initialization").one()
+        assert error.value.code == "no_match"
+
+
+def test_toa_all_pairs_are_independent_of_sampled_leads(tmp_path):
+    path = tmp_path / "toa-pairs.grib2"
+    messages = []
+    # A representative unsampled lead and a cross-month lead exercise assembly;
+    # the resource definition deliberately contains no numeric lead list.
+    for name, hour in [("tsw", 18), ("tswc", 48), ("tuswc", 48), ("tulwc", 48)]:
+        encoded(path, name, hour)
+        messages.append(path.read_bytes())
+    path.write_bytes(b"".join(messages))
+    with from_source({"kind": "file", "dataset": "CMA-GFS", "path": str(path)}) as source:
+        fields = source.sel(parameter=[name + "-since-initialization" for name in
+                                      ["tsw", "tswc", "tuswc", "tulwc"]]).all()
+        assert len(fields) == 4
+        dataset = fields.to_xarray()
+        assert set(dataset.data_vars) == {"tsw", "tswc", "tuswc", "tulwc"}
+        assert dataset.sizes["step"] == 2
+        for field in fields:
+            name = field.identity.to_dict()["parameter"].split(".")[1]
+            hour = 18 if name == "tsw" else 48
+            np.testing.assert_array_equal(dataset[name].sel(step=np.timedelta64(hour, "h")).values.reshape(-1), [0, 1.25, -2.5, 3])
+
+
+@pytest.mark.parametrize("system", ["CMA-MESO-3KM", "CMA-MESO-1KM", "CMA-TYM", "CMA-GEPS", "CMA-REPS"])
+def test_toa_binding_does_not_imply_other_system_support(tmp_path, system):
+    path = tmp_path / "unopened"
+    path.touch()
+    with from_source({"kind": "file", "dataset": system, "path": str(path)}) as source:
+        with pytest.raises(QueryError):
+            source.sel(parameter="tsw-since-initialization").explain()

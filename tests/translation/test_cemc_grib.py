@@ -79,7 +79,8 @@ def test_local_table_support_does_not_admit_unknown_profiles(changes):
 
 
 @pytest.mark.parametrize("phase", [(0, 0, 0), (1, 2, 1)])
-def test_gfs_clear_sky_longwave_encoding_does_not_supply_an_implicit_unit(phase):
+@pytest.mark.parametrize("surface", [1, 8])
+def test_gfs_clear_sky_longwave_encoding_does_not_supply_an_implicit_unit(phase, surface):
     native = profile(
         localTablesVersion=1,
         parameterCategory=5,
@@ -89,6 +90,7 @@ def test_gfs_clear_sky_longwave_encoding_does_not_supply_an_implicit_unit(phase)
         significanceOfReferenceTime=phase[2],
         units="unknown",
         parameterUnits="224",
+        typeOfFirstFixedSurface=surface,
     )
     grib.parameter_encoding(native)
     assert grib.source_value_unit(native) is None
@@ -108,7 +110,7 @@ def test_gfs_clear_sky_longwave_encoding_does_not_supply_an_implicit_unit(phase)
         {"parameterNumber": 225},
         {"productDefinitionTemplateNumber": 0},
         {"productDefinitionTemplateNumber": 11},
-        {"typeOfFirstFixedSurface": 8},
+        {"typeOfFirstFixedSurface": 10},
         {"typeOfSecondFixedSurface": 8},
         {"typeOfGeneratingProcess": 0},
         {"typeOfProcessedData": False},
