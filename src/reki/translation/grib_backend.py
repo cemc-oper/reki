@@ -600,6 +600,22 @@ class GribScan:
                         if not interpretations:
                             continue
                         identity, meta, links = interpretations[0]
+                        # Canonical residuals are known before any grid arrays.
+                        # Large meshes must not be decoded for unselected levels
+                        # or times. Core still verifies the complete Query.
+                        remaining_links = []
+                        for qi, bi in links:
+                            residual = thaw(
+                                self.plan.translations[qi]["branches"][bi]["residual"]
+                            )
+                            statistics = residual.pop("statistics", None)
+                            if matches(identity, residual) and (
+                                statistics is None or meta.get("statistics") == statistics
+                            ):
+                                remaining_links.append((qi, bi))
+                        if not remaining_links:
+                            continue
+                        links = remaining_links
                         grid, lat, lon, shape = _grid(header.handle)
                         offset = header.offset
                         meta.update(
@@ -705,9 +721,22 @@ class GribScan:
             if terrain_unit is not None:
                 source_unit = terrain_unit
                 unit_origin = (
-                    "CEMC.GFS.current.ZS: producer original case7, model and business Gpm; "
+                    "CEMC.current.ORIG.ZS: producer original case7 and reviewed model Gpm; "
                     "ecCodes units=m is the surface-orography concept view; "
                     "raw units/parameterUnits retained in native_fields"
+                )
+        if parameter["parameter_id"] == "cedarkit.sweatidx":
+            score_unit = cemc_grib.sweat_source_unit(
+                native,
+                context=self.backend.configuration.report_context()["source"],
+                parameter_id=parameter["parameter_id"],
+                source_unit=unit_rule.get("config", {}).get("source_unit"),
+            )
+            if score_unit is not None:
+                source_unit = score_unit
+                unit_origin = (
+                    "CEMC.GFS.current.SWEAT: producer named score, business row49 "
+                    "explicitly no unit; Numeric is a derived view; raw views retained"
                 )
         probability = native["productDefinitionTemplateNumber"] in {5, 9}
         object_unit = native.get("parameterUnits") if probability else None

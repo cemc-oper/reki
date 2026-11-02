@@ -71,9 +71,10 @@ def value_unit(meta):
 
 
 def terrain_source_unit(meta, *, context, parameter_id, source_unit):
-    """Resolve the exact GFS ZS decoder-view conflict from producer evidence.
+    """Resolve reviewed current ORIG ZS decoder views from producer evidence.
 
-    Original case7, GFS configuration and business table all declare Gpm.
+    Original case7 and each reviewed model declaration state Gpm; own
+    product business rows corroborate it where available.
     ecCodes' generic geopotential-height concept says gpm, while its surface
     orography concept selects m. Neither string is stored in the message.
     This scoped interpretation changes no values and defines no global m/Gpm
@@ -82,10 +83,11 @@ def terrain_source_unit(meta, *, context, parameter_id, source_unit):
     if (
         parameter_id != "cedarkit.zs"
         or source_unit != "Gpm"
+        or context.get("dataset")
+        not in {"cma_gfs_gmf", "cma_meso_1km", "cma_meso_3km", "cma_tym"}
         or any(
             context.get(key) != value
             for key, value in {
-                "dataset": "cma_gfs_gmf",
                 "product": "orig",
                 "product_version": "current",
             }.items()
@@ -123,6 +125,60 @@ def terrain_source_unit(meta, *, context, parameter_id, source_unit):
         and phase in {(0, 0, 0), (1, 2, 1)}
     ):
         return "Gpm"
+    return None
+
+
+def sweat_source_unit(meta, *, context, parameter_id, source_unit):
+    """Interpret the explicitly unitless GFS SWEAT numeric score, without scaling.
+
+    Business table0 row49 says no unit (无), independently of original [-].
+    Numeric is an ecCodes view; it is not a shared alias for dimensionless1.
+    The score is neither a probability nor a categorical code-table field.
+    """
+    if (
+        parameter_id != "cedarkit.sweatidx"
+        or source_unit != "1"
+        or any(
+            context.get(k) != v
+            for k, v in {
+                "dataset": "cma_gfs_gmf",
+                "product": "orig",
+                "product_version": "current",
+            }.items()
+        )
+        or meta.get("units") != "Numeric"
+        or meta.get("parameterUnits") != "Numeric"
+    ):
+        return None
+    keys = (
+        "edition",
+        "centre",
+        "subCentre",
+        "tablesVersion",
+        "localTablesVersion",
+        "productionStatusOfProcessedData",
+        "productDefinitionTemplateNumber",
+        "discipline",
+        "parameterCategory",
+        "parameterNumber",
+        "typeOfFirstFixedSurface",
+        "typeOfSecondFixedSurface",
+    )
+    native = tuple(meta.get(k) for k in keys)
+    phase = tuple(
+        meta.get(k)
+        for k in (
+            "typeOfProcessedData",
+            "typeOfGeneratingProcess",
+            "significanceOfReferenceTime",
+        )
+    )
+    if (
+        all(type(v) is int for v in native + phase)
+        and native == (2, 38, 0, 4, 0, 0, 0, 0, 7, 5, 1, 255)
+        and phase in {(0, 0, 0), (1, 2, 1)}
+    ):
+        return "1"
     return None
 
 

@@ -5403,6 +5403,120 @@
       },
       "backend": "grib2",
       "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Own product rows; no dedicated1km table; GFS SWEATX row49 explicitly unit 无",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Preserved decoder concept role proof; each new product independently reviews its own producer Gpm declaration",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-22/business-extract.json#sha256=4be8e71ac79ae076cb9eaa7d9ff72438012b1f361aded30fd29985541359c004;Fresh XML original rows and positions; no product-domain borrowing",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-22/identity-unit-review.json#sha256=28d5488854897687c7b0861a03515625a2110400881abbcb715e3aa956b6dd1d;154 scoped decisions,64 stable identities, per-product model/original/business literal positions and SHA",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-22/sweat-unit-role-proof.json#sha256=4e7e2cd1881755c5e063452834a9118e1a617a29b85024e99523d7796218e514;Independent explicit no-unit numeric score statement; parent unit1 and child inheritance, exact GFS only, no Numeric alias or probability scaling",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-25/candidate-headers.json#sha256=6bbc555410400a6a7747e54555f229dc639b3520da46489f1a5eca993585fb45;Fresh four products/12 bounded files with per-message SHA and complete fingerprints; not a complete provider-domain census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-25/original-writer-probe.json#sha256=fda170a88fea901131f9226ea17fa5e9be7ab0599488947f16ebfcb6f2676996;Fresh60 normal original cases x7 carrier types;420 encoding branch probes, no claim of420 legal business combinations; QR154 excluded, TADV216/SHDMIN287 collision retained",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-25/verification-input.json#sha256=d88d856413473b4d5f7315bf9a863986e465dee40250225866030dc7a8c69348;108 accepted product bindings/46 specific gaps;128 numerical original samples; no sampled runtime step/pressure values",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original literal quantities/units/conditions; no unit inferred from a dash"
+      ],
+      "id": "sweatidx.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 7,
+          "parameterNumber": 5,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "1"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sweatidx",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Own product rows; no dedicated1km table; GFS SWEATX row49 explicitly unit 无",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Preserved decoder concept role proof; each new product independently reviews its own producer Gpm declaration",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-22/business-extract.json#sha256=4be8e71ac79ae076cb9eaa7d9ff72438012b1f361aded30fd29985541359c004;Fresh XML original rows and positions; no product-domain borrowing",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-22/identity-unit-review.json#sha256=28d5488854897687c7b0861a03515625a2110400881abbcb715e3aa956b6dd1d;154 scoped decisions,64 stable identities, per-product model/original/business literal positions and SHA",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-22/sweat-unit-role-proof.json#sha256=4e7e2cd1881755c5e063452834a9118e1a617a29b85024e99523d7796218e514;Independent explicit no-unit numeric score statement; parent unit1 and child inheritance, exact GFS only, no Numeric alias or probability scaling",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-25/candidate-headers.json#sha256=6bbc555410400a6a7747e54555f229dc639b3520da46489f1a5eca993585fb45;Fresh four products/12 bounded files with per-message SHA and complete fingerprints; not a complete provider-domain census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-25/original-writer-probe.json#sha256=fda170a88fea901131f9226ea17fa5e9be7ab0599488947f16ebfcb6f2676996;Fresh60 normal original cases x7 carrier types;420 encoding branch probes, no claim of420 legal business combinations; QR154 excluded, TADV216/SHDMIN287 collision retained",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-25/verification-input.json#sha256=d88d856413473b4d5f7315bf9a863986e465dee40250225866030dc7a8c69348;108 accepted product bindings/46 specific gaps;128 numerical original samples; no sampled runtime step/pressure values",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original literal quantities/units/conditions; no unit inferred from a dash"
+      ],
+      "id": "sweatidx.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 7,
+          "parameterNumber": 5,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "1"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sweatidx",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/cedarkit-param-db/migrations/stage1.1-i03-grib-util-batch-2/file-mappings/mappings-00-grib2.json#sha256=2a1c30e3ba08084f2bb26d235e840f795d405ae422350d73556a2e68ccf7379d;reviewed encoding origin",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-6/current-version-policy.md#sha256=ad9dcfdca70c99d4c2df56c38d18f0098611a77d1b98a22d45499d0b9ff70152;user-authorized current-only business policy; no official V-number asserted",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table 0; pressure, height, unit and actual soil intervals",
@@ -7850,5 +7964,5 @@
     }
   ],
   "tables": [],
-  "version": "13"
+  "version": "14"
 }

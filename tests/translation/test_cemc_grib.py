@@ -382,7 +382,10 @@ def test_frozen_plan_filters_retain_native_selector_semantics(condition):
 
 
 @pytest.mark.parametrize("phase", [(0, 0, 0), (1, 2, 1)])
-def test_terrain_source_unit_is_limited_to_explicit_current_product(phase):
+@pytest.mark.parametrize(
+    "dataset", ["cma_gfs_gmf", "cma_meso_1km", "cma_meso_3km", "cma_tym"]
+)
+def test_terrain_source_unit_is_limited_to_explicit_current_product(phase, dataset):
     from reki.translation.cemc_grib import terrain_source_unit
 
     native = profile(
@@ -396,7 +399,7 @@ def test_terrain_source_unit_is_limited_to_explicit_current_product(phase):
         parameterUnits="gpm",
     )
     context = {
-        "dataset": "cma_gfs_gmf",
+        "dataset": dataset,
         "product": "orig",
         "product_version": "current",
     }
@@ -423,6 +426,7 @@ def test_terrain_source_unit_is_limited_to_explicit_current_product(phase):
         ("parameterUnits", "m"),
     ]:
         assert resolve({**native, key: value}) is None
+    assert resolve(ctx={**context, "dataset": "cma_geps"}) is None
     assert resolve(ctx={}) is None
     assert resolve(ctx={**context, "product": "post"}) is None
     assert resolve(ctx={**context, "product_version": "next"}) is None
@@ -430,3 +434,52 @@ def test_terrain_source_unit_is_limited_to_explicit_current_product(phase):
     assert resolve(unit="m") is None
     assert resolve(unit=None) is None
     assert native["units"] == "m" and native["parameterUnits"] == "gpm"
+
+
+@pytest.mark.parametrize("phase", [(0, 0, 0), (1, 2, 1)])
+def test_explicit_sweat_source_unit_has_exact_producer_product_and_view_guards(phase):
+    from reki.translation.cemc_grib import sweat_source_unit
+
+    native = profile(
+        localTablesVersion=0,
+        parameterCategory=7,
+        parameterNumber=5,
+        typeOfProcessedData=phase[0],
+        typeOfGeneratingProcess=phase[1],
+        significanceOfReferenceTime=phase[2],
+        units="Numeric",
+        parameterUnits="Numeric",
+    )
+    ctx = {"dataset": "cma_gfs_gmf", "product": "orig", "product_version": "current"}
+
+    def resolve(meta=native, context=ctx, pid="cedarkit.sweatidx", unit="1"):
+        return sweat_source_unit(
+            meta, context=context, parameter_id=pid, source_unit=unit
+        )
+
+    assert resolve() == "1"
+    for k, v in [
+        ("centre", 98),
+        ("subCentre", 1),
+        ("tablesVersion", 5),
+        ("localTablesVersion", 1),
+        ("productionStatusOfProcessedData", 1),
+        ("parameterCategory", 1),
+        ("parameterNumber", 19),
+        ("productDefinitionTemplateNumber", 8),
+        ("typeOfFirstFixedSurface", 100),
+        ("typeOfSecondFixedSurface", 8),
+        ("typeOfProcessedData", False),
+        ("typeOfGeneratingProcess", 9),
+        ("units", "K"),
+        ("parameterUnits", "Code table 4.201"),
+    ]:
+        assert resolve({**native, k: v}) is None
+    for dataset in ["cma_meso_1km", "cma_meso_3km", "cma_tym", "cma_geps"]:
+        assert resolve(context={**ctx, "dataset": dataset}) is None
+    assert resolve(context={}) is None
+    assert resolve(context={**ctx, "product": "post"}) is None
+    assert resolve(context={**ctx, "product_version": "next"}) is None
+    assert resolve(pid="cedarkit.precitype") is None
+    assert resolve(unit="%") is None
+    assert resolve(unit=None) is None

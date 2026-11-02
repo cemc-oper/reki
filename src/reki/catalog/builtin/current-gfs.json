@@ -6,8 +6,8 @@
   ],
   "parameter_registry": {
     "builtin": "reki.parameters.cma-gfs.current",
-    "sha256": "aeaafb8ddccf0d2210338f712050bcd1eff684c6601b90bb5bfbb4572e51f0fa",
-    "version": "8"
+    "sha256": "605c52c8c75de80ab9bc18dcdc3edcd1e370969515f53c72ea8cafc12c294141",
+    "version": "9"
   },
   "product": "orig",
   "product_version": "current",
@@ -417,6 +417,10 @@
         }
       },
       "parameter": "cedarkit.shr-0-6000"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.sweatidx"
     }
   ],
   "time_zone": "UTC",

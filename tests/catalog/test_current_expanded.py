@@ -327,7 +327,7 @@ def test_generic_pressure_and_unsampled_lead_remain_readable_with_explicit_calle
 
 
 @pytest.mark.parametrize(
-    "system", ["CMA-MESO-3KM", "CMA-MESO-1KM", "CMA-TYM", "CMA-GEPS", "CMA-REPS"]
+    "system", ["CMA-GEPS", "CMA-REPS"]
 )
 def test_gfs_pressure_height_binding_does_not_register_other_systems(tmp_path, system):
     path = tmp_path / "unopened"

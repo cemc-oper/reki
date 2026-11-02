@@ -6,8 +6,8 @@
   ],
   "parameter_registry": {
     "builtin": "reki.parameters.cma-tym.current",
-    "sha256": "450c76bf55ba0415876b30751f1052294e702709aa6eb7eb84042dd9f651a3fb",
-    "version": "2"
+    "sha256": "0894a2e42485baff0430006cab46e4b412ecf479e958ada3d9ed617f52be7f71",
+    "version": "3"
   },
   "product": "orig",
   "product_version": "current",
@@ -232,6 +232,179 @@
     {
       "level_type": "surface",
       "parameter": "cedarkit.rainnc.since-initialization"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.h"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.w"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.div"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.vor"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.td"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.ttd"
+    },
+    {
+      "level": 2,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.rh2m"
+    },
+    {
+      "level": 2,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.td2m"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.cape"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.cin"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.bli"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "surface"
+        },
+        "top": {
+          "type": "atmosphere_top"
+        }
+      },
+      "parameter": "cedarkit.tcc"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "surface"
+        },
+        "top": {
+          "type": "atmosphere_top"
+        }
+      },
+      "parameter": "cedarkit.lcc"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.cc"
+    },
+    {
+      "level_type": "entire_atmosphere",
+      "parameter": "cedarkit.pwat"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.vis"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.qc"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.qr"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.qs"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.qi"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.graupel"
+    },
+    {
+      "level": 2,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.q2m"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.ts"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.zs"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.theta-se"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.cdbz"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.fogh"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 0
+        },
+        "top": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 1000
+        }
+      },
+      "parameter": "cedarkit.shr-0-1000"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 0
+        },
+        "top": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 3000
+        }
+      },
+      "parameter": "cedarkit.shr-0-3000"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 0
+        },
+        "top": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 6000
+        }
+      },
+      "parameter": "cedarkit.shr-0-6000"
     }
   ],
   "time_zone": "UTC",

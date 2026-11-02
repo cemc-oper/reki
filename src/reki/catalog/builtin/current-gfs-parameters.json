@@ -775,6 +775,27 @@
       "parent": "cedarkit.t"
     },
     {
+      "aliases": [
+        "sweat"
+      ],
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "sweatidx",
+      "parameter_id": "cedarkit.sweatidx",
+      "parent": "cedarkit.sweatidx.any"
+    },
+    {
+      "aliases": [
+        "SWEATX"
+      ],
+      "description": "Sweat index",
+      "description_cn": "强天气胁迫指数",
+      "name": "sweatidx",
+      "parameter_id": "cedarkit.sweatidx.any",
+      "unit": "1"
+    },
+    {
       "description": "Temperature",
       "description_cn": "温度",
       "name": "t",
@@ -1119,5 +1140,5 @@
       "parent": "cedarkit.h.any"
     }
   ],
-  "version": "8"
+  "version": "9"
 }

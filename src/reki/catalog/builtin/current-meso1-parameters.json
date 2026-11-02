@@ -3,6 +3,171 @@
   "id": "cedarkit.parameters.cma-meso-1km.current",
   "parameters": [
     {
+      "description": "Best lifted index",
+      "description_cn": "最优抬升指数",
+      "name": "bli",
+      "parameter_id": "cedarkit.bli",
+      "unit": "K"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "cape",
+      "parameter_id": "cedarkit.cape",
+      "parent": "cedarkit.cape.any"
+    },
+    {
+      "description": "Convective available potential energy",
+      "description_cn": "对流有效位能",
+      "name": "cape",
+      "parameter_id": "cedarkit.cape.any",
+      "unit": "J/kg"
+    },
+    {
+      "description": "Cloud cover",
+      "description_cn": "云量",
+      "name": "cc",
+      "parameter_id": "cedarkit.cc",
+      "unit": "%"
+    },
+    {
+      "aliases": [
+        "c_dbz",
+        "cr"
+      ],
+      "description": "Composite radar reflectivity",
+      "description_cn": "雷达组合反射率",
+      "name": "cdbz",
+      "parameter_id": "cedarkit.cdbz",
+      "unit": "dbz"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "cin",
+      "parameter_id": "cedarkit.cin",
+      "parent": "cedarkit.cin.any"
+    },
+    {
+      "description": "Convective inhibition",
+      "description_cn": "对流抑制能量",
+      "name": "cin",
+      "parameter_id": "cedarkit.cin.any",
+      "unit": "J/kg"
+    },
+    {
+      "description": "Radar reflectivity",
+      "description_cn": "雷达反射率",
+      "name": "dbz",
+      "parameter_id": "cedarkit.dbz",
+      "unit": "dbz"
+    },
+    {
+      "description": "Down convective available potential energy",
+      "description_cn": "下沉对流有效位能",
+      "name": "dcape",
+      "parameter_id": "cedarkit.dcape",
+      "unit": "J/kg"
+    },
+    {
+      "description": "Relative divergence",
+      "description_cn": "散度",
+      "name": "div",
+      "parameter_id": "cedarkit.div",
+      "unit": "s-1"
+    },
+    {
+      "description": "Graupel",
+      "description_cn": "霰",
+      "name": "graupel",
+      "parameter_id": "cedarkit.graupel",
+      "unit": "kg/kg"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "pressure",
+        "level_unit": "hPa"
+      },
+      "name": "h",
+      "parameter_id": "cedarkit.h",
+      "parent": "cedarkit.h.any"
+    },
+    {
+      "description": "Geopotential height",
+      "description_cn": "位势高度",
+      "name": "h",
+      "parameter_id": "cedarkit.h.any",
+      "unit": "Gpm"
+    },
+    {
+      "description": "High cloud cover",
+      "description_cn": "高云量",
+      "name": "hcc",
+      "parameter_id": "cedarkit.hcc",
+      "unit": "%"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "ht0",
+      "parameter_id": "cedarkit.ht0",
+      "parent": "cedarkit.ht0.any"
+    },
+    {
+      "description": "Height of 0 degree isothermal level",
+      "description_cn": "0度层高度",
+      "name": "ht0",
+      "parameter_id": "cedarkit.ht0.any",
+      "unit": "m"
+    },
+    {
+      "description": "Low cloud cover",
+      "description_cn": "低云量",
+      "name": "lcc",
+      "parameter_id": "cedarkit.lcc",
+      "unit": "%"
+    },
+    {
+      "description": "Medium cloud cover",
+      "description_cn": "中云量",
+      "name": "mcc",
+      "parameter_id": "cedarkit.mcc",
+      "unit": "%"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "pblh",
+      "parameter_id": "cedarkit.pblh",
+      "parent": "cedarkit.pblh.any"
+    },
+    {
+      "description": "Planet boundary layer height",
+      "description_cn": "边界层高度",
+      "name": "pblh",
+      "parameter_id": "cedarkit.pblh.any",
+      "unit": "m"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "pli",
+      "parameter_id": "cedarkit.pli",
+      "parent": "cedarkit.pli.any"
+    },
+    {
+      "description": "Parcel lifted index(to 500 hpa)",
+      "description_cn": "气块抬升指数",
+      "name": "pli",
+      "parameter_id": "cedarkit.pli.any",
+      "unit": "K"
+    },
+    {
       "aliases": [
         "psfc"
       ],
@@ -43,6 +208,49 @@
       "description_cn": "比湿",
       "name": "q",
       "parameter_id": "cedarkit.q",
+      "unit": "kg/kg"
+    },
+    {
+      "description": "Specific humidity at 2 meters height",
+      "description_cn": "2米比湿",
+      "fixed_conditions": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      },
+      "name": "q2m",
+      "parameter_id": "cedarkit.q2m",
+      "parent": "cedarkit.q"
+    },
+    {
+      "aliases": [
+        "CLWMR"
+      ],
+      "description": "Cloud mixing ratio",
+      "description_cn": "云水混合比",
+      "name": "qc",
+      "parameter_id": "cedarkit.qc",
+      "unit": "kg/kg"
+    },
+    {
+      "description": "Ice mixing ratio",
+      "description_cn": "冰水混合比",
+      "name": "qi",
+      "parameter_id": "cedarkit.qi",
+      "unit": "kg/kg"
+    },
+    {
+      "description": "Rain mixing ratio",
+      "description_cn": "雨水混合比",
+      "name": "qr",
+      "parameter_id": "cedarkit.qr",
+      "unit": "kg/kg"
+    },
+    {
+      "description": "Snow mixing ratio",
+      "description_cn": "雪水混合比",
+      "name": "qs",
+      "parameter_id": "cedarkit.qs",
       "unit": "kg/kg"
     },
     {
@@ -93,6 +301,88 @@
       "unit": "%"
     },
     {
+      "description": "Relative humidity at 2 meters height",
+      "description_cn": "2米相对湿度",
+      "fixed_conditions": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      },
+      "name": "rh2m",
+      "parameter_id": "cedarkit.rh2m",
+      "parent": "cedarkit.rh"
+    },
+    {
+      "aliases": [
+        "vwsh"
+      ],
+      "description": "Vertical speed shear",
+      "description_cn": "垂直风切变",
+      "name": "shr",
+      "parameter_id": "cedarkit.shr",
+      "unit": "s-1"
+    },
+    {
+      "description_cn": "0-1km垂直风切变",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 0
+          },
+          "top": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 1000
+          }
+        }
+      },
+      "name": "shr(0-1000)",
+      "parameter_id": "cedarkit.shr-0-1000",
+      "parent": "cedarkit.shr"
+    },
+    {
+      "description_cn": "0-3km垂直风切变",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 0
+          },
+          "top": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 3000
+          }
+        }
+      },
+      "name": "shr(0-3000)",
+      "parameter_id": "cedarkit.shr-0-3000",
+      "parent": "cedarkit.shr"
+    },
+    {
+      "description_cn": "0-6km垂直风切变",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 0
+          },
+          "top": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 6000
+          }
+        }
+      },
+      "name": "shr(0-6000)",
+      "parameter_id": "cedarkit.shr-0-6000",
+      "parent": "cedarkit.shr"
+    },
+    {
       "description": "Temperature",
       "description_cn": "温度",
       "name": "t",
@@ -110,6 +400,95 @@
       "name": "t2m",
       "parameter_id": "cedarkit.t2m",
       "parent": "cedarkit.t"
+    },
+    {
+      "description": "Total cloud cover",
+      "description_cn": "总云量",
+      "name": "tcc",
+      "parameter_id": "cedarkit.tcc",
+      "unit": "%"
+    },
+    {
+      "aliases": [
+        "dpt"
+      ],
+      "description": "Dew point",
+      "description_cn": "露点温度",
+      "name": "td",
+      "parameter_id": "cedarkit.td",
+      "unit": "K"
+    },
+    {
+      "description": "2 meters high Dew point",
+      "description_cn": "2米露点温度",
+      "fixed_conditions": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      },
+      "name": "td2m",
+      "parameter_id": "cedarkit.td2m",
+      "parent": "cedarkit.td"
+    },
+    {
+      "aliases": [
+        "pte"
+      ],
+      "description": "Pseudo-equivalent potential temperature",
+      "description_cn": "假相当位温",
+      "name": "thetaSe",
+      "parameter_id": "cedarkit.theta-se",
+      "unit": "K"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "entire_atmosphere"
+      },
+      "name": "tiw",
+      "parameter_id": "cedarkit.tiw",
+      "parent": "cedarkit.tiw.any"
+    },
+    {
+      "description": "Total column integrated cloud ice",
+      "description_cn": "总柱状云冰",
+      "name": "tiw",
+      "parameter_id": "cedarkit.tiw.any",
+      "unit": "kg/m2"
+    },
+    {
+      "aliases": [
+        "tsfc"
+      ],
+      "description": "Surface temperature",
+      "description_cn": "地面温度",
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "ts",
+      "parameter_id": "cedarkit.ts",
+      "parent": "cedarkit.t"
+    },
+    {
+      "description": "Dew point depression",
+      "description_cn": "温度露点差",
+      "name": "ttd",
+      "parameter_id": "cedarkit.ttd",
+      "unit": "K"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "entire_atmosphere"
+      },
+      "name": "tvw",
+      "parameter_id": "cedarkit.tvw",
+      "parent": "cedarkit.tvw.any"
+    },
+    {
+      "description": "Total column integrated water vapor",
+      "description_cn": "总柱状水汽",
+      "name": "tvw",
+      "parameter_id": "cedarkit.tvw.any",
+      "unit": "kg/m2"
     },
     {
       "description": "U-component of wind",
@@ -156,7 +535,48 @@
       "name": "v10m",
       "parameter_id": "cedarkit.v10m",
       "parent": "cedarkit.v"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "vis",
+      "parameter_id": "cedarkit.vis",
+      "parent": "cedarkit.vis.any"
+    },
+    {
+      "description": "Visibility",
+      "description_cn": "能见度",
+      "name": "vis",
+      "parameter_id": "cedarkit.vis.any",
+      "unit": "m"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "pressure",
+        "level_unit": "hPa"
+      },
+      "name": "w",
+      "parameter_id": "cedarkit.w",
+      "parent": "cedarkit.w.any"
+    },
+    {
+      "description": "Vertical velocity (geometric)",
+      "description_cn": "垂直速度",
+      "name": "w",
+      "parameter_id": "cedarkit.w.any",
+      "unit": "m/s"
+    },
+    {
+      "description": "Terrain",
+      "description_cn": "地形高度",
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "zs",
+      "parameter_id": "cedarkit.zs",
+      "parent": "cedarkit.h.any"
     }
   ],
-  "version": "2"
+  "version": "3"
 }
