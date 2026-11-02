@@ -6,8 +6,8 @@
   ],
   "parameter_registry": {
     "builtin": "reki.parameters.cma-gfs.current",
-    "sha256": "6b5cd03ee0d6d119385def1b21c613e9b512d39c01c31ad662dfca7fc0940b37",
-    "version": "6"
+    "sha256": "86f28ac39b38505010f27a1a8611234bbcb2358dd93b1a7e8a29e4599babed83",
+    "version": "7"
   },
   "product": "orig",
   "product_version": "current",
@@ -170,6 +170,118 @@
     {
       "level_type": "atmosphere_top",
       "parameter": "cedarkit.tulwc.since-initialization"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.h"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.w"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.div"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.vor"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.td"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.ttd"
+    },
+    {
+      "level": 2,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.rh2m"
+    },
+    {
+      "level": 2,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.td2m"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.cape"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.cin"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.dcape"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.pli"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.bli"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "surface"
+        },
+        "top": {
+          "type": "atmosphere_top"
+        }
+      },
+      "parameter": "cedarkit.tcc"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "surface"
+        },
+        "top": {
+          "type": "atmosphere_top"
+        }
+      },
+      "parameter": "cedarkit.lcc"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "surface"
+        },
+        "top": {
+          "type": "atmosphere_top"
+        }
+      },
+      "parameter": "cedarkit.mcc"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "surface"
+        },
+        "top": {
+          "type": "atmosphere_top"
+        }
+      },
+      "parameter": "cedarkit.hcc"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.cc"
+    },
+    {
+      "level_type": "entire_atmosphere",
+      "parameter": "cedarkit.pwat"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.vis"
     }
   ],
   "time_zone": "UTC",

@@ -11,6 +11,678 @@
       },
       "backend": "grib2",
       "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "bli.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 7,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.bli",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "bli.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 7,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.bli",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "cape.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 7,
+          "parameterNumber": 6,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/kg"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.cape",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "cape.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 7,
+          "parameterNumber": 6,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/kg"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.cape",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "cc.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 22,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.cc",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "cc.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 22,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.cc",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "cin.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 7,
+          "parameterNumber": 7,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/kg"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.cin",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "cin.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 7,
+          "parameterNumber": 7,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/kg"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.cin",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "dcape.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 1,
+          "parameterCategory": 7,
+          "parameterNumber": 224,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/kg"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.dcape",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "dcape.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 1,
+          "parameterCategory": 7,
+          "parameterNumber": 224,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/kg"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.dcape",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "div.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 13,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "s-1"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.div",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "div.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 13,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "s-1"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.div",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table0 rows81/82/85: explicit upward/downward clear-sky direction, surface/top and W m-2 s; not a complete provider domain",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-18/verification-input.json#sha256=f3216092823406b6a404d14881321343dd81114b3a68058fe8ea3401272dfa8c;mature GFS original PDT8 surface messages; actual unit J m**-2, one accumulation interval anchored at reference; no time scaling",
         "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;original-object-verified section4 category/number; full writer discipline must be considered separately",
@@ -717,6 +1389,608 @@
       },
       "backend": "grib2",
       "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "h.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 5,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "Gpm"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.h",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "h.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 5,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "Gpm"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.h",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "hcc.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 5,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 8
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.hcc",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "surface"
+          },
+          "top": {
+            "type": "atmosphere_top"
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "hcc.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 5,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 8
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.hcc",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "surface"
+          },
+          "top": {
+            "type": "atmosphere_top"
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "lcc.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 8
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.lcc",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "surface"
+          },
+          "top": {
+            "type": "atmosphere_top"
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "lcc.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 8
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.lcc",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "surface"
+          },
+          "top": {
+            "type": "atmosphere_top"
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "mcc.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 4,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 8
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.mcc",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "surface"
+          },
+          "top": {
+            "type": "atmosphere_top"
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "mcc.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 4,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 8
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.mcc",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "surface"
+          },
+          "top": {
+            "type": "atmosphere_top"
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "pli.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 7,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.pli",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "pli.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 7,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.pli",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/cedarkit-param-db/migrations/stage1.1-i03-grib-util-batch-2/file-mappings/mappings-00-grib2.json#sha256=2a1c30e3ba08084f2bb26d235e840f795d405ae422350d73556a2e68ccf7379d;reviewed encoding origin",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-6/current-version-policy.md#sha256=ad9dcfdca70c99d4c2df56c38d18f0098611a77d1b98a22d45499d0b9ff70152;user-authorized current-only business policy; no official V-number asserted",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table 0; pressure, height, unit and actual soil intervals",
@@ -827,6 +2101,118 @@
       "parameter_id": "cedarkit.psl",
       "when": {
         "level_type": "mean_sea_level"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "pwat.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 10,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.pwat",
+      "when": {
+        "level_type": "entire_atmosphere"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "pwat.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 10,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.pwat",
+      "when": {
+        "level_type": "entire_atmosphere"
       }
     },
     {
@@ -1484,6 +2870,126 @@
       },
       "backend": "grib2",
       "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "rh2m.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "scaleFactorOfFirstFixedSurface": 0,
+          "scaledValueOfFirstFixedSurface": 2,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rh2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "rh2m.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "scaleFactorOfFirstFixedSurface": 0,
+          "scaledValueOfFirstFixedSurface": 2,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rh2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/cedarkit-param-db/migrations/stage1.1-i03-grib-util-batch-2/file-mappings/mappings-00-grib2.json#sha256=2a1c30e3ba08084f2bb26d235e840f795d405ae422350d73556a2e68ccf7379d;reviewed encoding origin",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-6/current-version-policy.md#sha256=ad9dcfdca70c99d4c2df56c38d18f0098611a77d1b98a22d45499d0b9ff70152;user-authorized current-only business policy; no official V-number asserted",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table 0; pressure, height, unit and actual soil intervals",
@@ -1894,6 +3400,364 @@
       },
       "backend": "grib2",
       "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "tcc.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 8
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.tcc",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "surface"
+          },
+          "top": {
+            "type": "atmosphere_top"
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "tcc.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 8
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.tcc",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "surface"
+          },
+          "top": {
+            "type": "atmosphere_top"
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "td.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 6,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.td",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "td.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 6,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.td",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "td2m.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 6,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "scaleFactorOfFirstFixedSurface": 0,
+          "scaledValueOfFirstFixedSurface": 2,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.td2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "td2m.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 6,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "scaleFactorOfFirstFixedSurface": 0,
+          "scaledValueOfFirstFixedSurface": 2,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.td2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;table0 rows74/76/82/84 TOA netSW/clear-netSW/clear-upSW/clear-upLW W m-2 s",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-18/decoder-unit-role-proof.json#sha256=168aee34ceaef4fb15a4e3da9c049c78667a6a94449ad576cd3451a846cf380c;units and parameterUnits are decoder-derived views, not stored GRIB unit strings; producer declarations establish quantity",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-19/business-extract.json#sha256=7b2676fe1474c676d35508e7de1727243eaba135c10a4741a4d5d43c11ae7318;Fresh original XML rows70..85; TUSWC0/4/53 and TULWC0/5/224 retained, unlike rejected exploratory code10",
@@ -2124,6 +3988,118 @@
       "parameter_id": "cedarkit.tswc.since-initialization",
       "when": {
         "level_type": "atmosphere_top"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "ttd.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 7,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.ttd",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "ttd.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 7,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.ttd",
+      "when": {
+        "level_type": "pressure"
       }
     },
     {
@@ -2611,8 +4587,344 @@
         "level_type": "height_above_ground",
         "level_unit": "m"
       }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "vis.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 19,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.vis",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "vis.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 19,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.vis",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "vor.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 12,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "s-1"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.vor",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "vor.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 12,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "s-1"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.vor",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "w.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 9,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.w",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/original-writer-probe.json#sha256=346dfba942e601d25886b96e64c8619fc0cf8b470894e102584beb2718edc9f8;Fresh original-object19 elements x5 GRIB1 level types; cloud cases71/73/74/75 levType8 write surface1/top8; PWAT levType200 writes first10",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved complete writer discipline evidence; code alone is not physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;Exact names/units including h5,w23,div55,vor57,td67,ttd69,cape77,cin79,pli81,cloud95..101/111,rh2m117,td2m119,pwat221,dcape233,bli235,vis239; current-product evidence, not all producers",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original named quantities, units and conditional H/ZS; PWAT case54 kg/kg is preserved as a conflicting generic declaration, not silently corrected"
+      ],
+      "id": "w.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 9,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.w",
+      "when": {
+        "level_type": "pressure"
+      }
     }
   ],
   "tables": [],
-  "version": "11"
+  "version": "12"
 }
