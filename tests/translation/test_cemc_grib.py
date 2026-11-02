@@ -379,3 +379,54 @@ def test_frozen_plan_filters_retain_native_selector_semantics(condition):
     # Plan freezes lists/dicts; acquisition must still perform membership.
     assert native_matches({"localTablesVersion": 1}, freeze(condition))
     assert not native_matches({"localTablesVersion": 2}, freeze(condition))
+
+
+@pytest.mark.parametrize("phase", [(0, 0, 0), (1, 2, 1)])
+def test_terrain_source_unit_is_limited_to_explicit_current_product(phase):
+    from reki.translation.cemc_grib import terrain_source_unit
+
+    native = profile(
+        localTablesVersion=0,
+        parameterCategory=3,
+        parameterNumber=5,
+        typeOfProcessedData=phase[0],
+        typeOfGeneratingProcess=phase[1],
+        significanceOfReferenceTime=phase[2],
+        units="m",
+        parameterUnits="gpm",
+    )
+    context = {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current",
+    }
+
+    def resolve(meta=native, ctx=context, pid="cedarkit.zs", unit="Gpm"):
+        return terrain_source_unit(
+            meta, context=ctx, parameter_id=pid, source_unit=unit
+        )
+
+    assert resolve() == "Gpm"
+    for key, value in [
+        ("centre", 98),
+        ("subCentre", 1),
+        ("tablesVersion", 5),
+        ("localTablesVersion", 1),
+        ("productionStatusOfProcessedData", 1),
+        ("productDefinitionTemplateNumber", 8),
+        ("parameterNumber", 4),
+        ("typeOfFirstFixedSurface", 100),
+        ("typeOfSecondFixedSurface", 8),
+        ("typeOfProcessedData", False),
+        ("typeOfGeneratingProcess", 9),
+        ("units", "unknown"),
+        ("parameterUnits", "m"),
+    ]:
+        assert resolve({**native, key: value}) is None
+    assert resolve(ctx={}) is None
+    assert resolve(ctx={**context, "product": "post"}) is None
+    assert resolve(ctx={**context, "product_version": "next"}) is None
+    assert resolve(pid="cedarkit.h") is None
+    assert resolve(unit="m") is None
+    assert resolve(unit=None) is None
+    assert native["units"] == "m" and native["parameterUnits"] == "gpm"

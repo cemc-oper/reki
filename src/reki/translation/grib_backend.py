@@ -695,6 +695,20 @@ class GribScan:
             .get("translate", {})
             .get("unit", {"rule": "common.value_unit"})
         )
+        if parameter["parameter_id"] == "cedarkit.zs":
+            terrain_unit = cemc_grib.terrain_source_unit(
+                native,
+                context=self.backend.configuration.report_context()["source"],
+                parameter_id=parameter["parameter_id"],
+                source_unit=unit_rule.get("config", {}).get("source_unit"),
+            )
+            if terrain_unit is not None:
+                source_unit = terrain_unit
+                unit_origin = (
+                    "CEMC.GFS.current.ZS: producer original case7, model and business Gpm; "
+                    "ecCodes units=m is the surface-orography concept view; "
+                    "raw units/parameterUnits retained in native_fields"
+                )
         probability = native["productDefinitionTemplateNumber"] in {5, 9}
         object_unit = native.get("parameterUnits") if probability else None
         # ecCodes parameterUnits uses this SI spelling while units uses m s**-1.

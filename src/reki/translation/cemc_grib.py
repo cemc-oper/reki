@@ -70,6 +70,62 @@ def value_unit(meta):
     return None
 
 
+def terrain_source_unit(meta, *, context, parameter_id, source_unit):
+    """Resolve the exact GFS ZS decoder-view conflict from producer evidence.
+
+    Original case7, GFS configuration and business table all declare Gpm.
+    ecCodes' generic geopotential-height concept says gpm, while its surface
+    orography concept selects m. Neither string is stored in the message.
+    This scoped interpretation changes no values and defines no global m/Gpm
+    equivalence. Native queries and other product contexts keep their unit view.
+    """
+    if (
+        parameter_id != "cedarkit.zs"
+        or source_unit != "Gpm"
+        or any(
+            context.get(key) != value
+            for key, value in {
+                "dataset": "cma_gfs_gmf",
+                "product": "orig",
+                "product_version": "current",
+            }.items()
+        )
+        or meta.get("units") != "m"
+        or meta.get("parameterUnits") != "gpm"
+    ):
+        return None
+    keys = (
+        "edition",
+        "centre",
+        "subCentre",
+        "tablesVersion",
+        "localTablesVersion",
+        "productionStatusOfProcessedData",
+        "productDefinitionTemplateNumber",
+        "discipline",
+        "parameterCategory",
+        "parameterNumber",
+        "typeOfFirstFixedSurface",
+        "typeOfSecondFixedSurface",
+    )
+    native = tuple(meta.get(key) for key in keys)
+    phase = tuple(
+        meta.get(key)
+        for key in (
+            "typeOfProcessedData",
+            "typeOfGeneratingProcess",
+            "significanceOfReferenceTime",
+        )
+    )
+    if (
+        all(type(value) is int for value in native + phase)
+        and native == (2, 38, 0, 4, 0, 0, 0, 0, 3, 5, 1, 255)
+        and phase in {(0, 0, 0), (1, 2, 1)}
+    ):
+        return "Gpm"
+    return None
+
+
 def is_gfs_clear_sky_longwave_energy(meta):
     """Recognize the reviewed local-use0/5/224 written with local table1.
 

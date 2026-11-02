@@ -10,8 +10,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-gfs.current",
-          "sha256": "73bfee4c08dc78869cd1415b8919c4ff3682c9f07e7edaead4934bdb1209f9f0",
-          "version": "12"
+          "sha256": "58a7a9c5abb6a57f9be9f9177aff318ab886a0839ec44f308d40c716c980dfb7",
+          "version": "13"
         }
       },
       "products": [
@@ -31,7 +31,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
             "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-22/verification-input.json#sha256=a1da3465347b5b7a061ec454fff7f00ff1f2b8532a0185d99a38650fcc02f3f2;12 newly inspected original TOA messages; surface8/255, master4, local0 for shortwave and local1 for TULWC, PDT8 single reference-anchored accumulation;four integrated TOA identities; sample leads are not support bounds; complete provider domain unknown",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist;20 current instantaneous identities; source discrepancies retained in review; complete domain unknown"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist;20 current instantaneous identities; source discrepancies retained in review; complete domain unknown",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions;25 current instantaneous identities from32 reviewed candidates; source discrepancies retained in review; complete domain unknown"
           ],
           "id": "orig",
           "methods": [],
@@ -302,6 +303,141 @@
             {
               "level_type": "surface",
               "parameter": "cedarkit.vis"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qc"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qr"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qs"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qi"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.graupel"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.q2m"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ts"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.zs"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.theta-se"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.si"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.tvw"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.tcw"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.tiw"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cdbz"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.dbz"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ceiling"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.fogh"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.pblh"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht0"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.znt"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.albedo"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sd"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "parameter": "cedarkit.shr-0-1000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 3000
+                }
+              },
+              "parameter": "cedarkit.shr-0-3000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 6000
+                }
+              },
+              "parameter": "cedarkit.shr-0-6000"
             }
           ],
           "scope": {},
@@ -1334,5 +1470,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "17"
+  "version": "18"
 }

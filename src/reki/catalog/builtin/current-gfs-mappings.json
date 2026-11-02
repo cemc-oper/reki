@@ -11,6 +11,120 @@
       },
       "backend": "grib2",
       "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "albedo.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 19,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.albedo",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "albedo.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 19,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.albedo",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
@@ -347,6 +461,234 @@
       },
       "backend": "grib2",
       "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "cdbz.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 1,
+          "parameterCategory": 16,
+          "parameterNumber": 224,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "dbz"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.cdbz",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "cdbz.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 1,
+          "parameterCategory": 16,
+          "parameterNumber": 224,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "dbz"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.cdbz",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "ceiling.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 13,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.ceiling",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "ceiling.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 13,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.ceiling",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
@@ -449,6 +791,120 @@
       "parameter_id": "cedarkit.cin",
       "when": {
         "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "dbz.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 1,
+          "parameterCategory": 16,
+          "parameterNumber": 225,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "dbz"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.dbz",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "dbz.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 1,
+          "parameterCategory": 16,
+          "parameterNumber": 225,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "dbz"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.dbz",
+      "when": {
+        "level_type": "pressure"
       }
     },
     {
@@ -683,6 +1139,120 @@
       },
       "backend": "grib2",
       "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "fogh.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 1,
+          "parameterCategory": 19,
+          "parameterNumber": 224,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.fogh",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "fogh.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 1,
+          "parameterCategory": 19,
+          "parameterNumber": 224,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.fogh",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table0 rows81/82/85: explicit upward/downward clear-sky direction, surface/top and W m-2 s; not a complete provider domain",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-18/verification-input.json#sha256=f3216092823406b6a404d14881321343dd81114b3a68058fe8ea3401272dfa8c;mature GFS original PDT8 surface messages; actual unit J m**-2, one accumulation interval anchored at reference; no time scaling",
         "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;original-object-verified section4 category/number; full writer discipline must be considered separately",
@@ -846,6 +1416,120 @@
       "parameter_id": "cedarkit.gdlwc.since-initialization",
       "when": {
         "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "graupel.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 32,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/kg"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.graupel",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "graupel.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 32,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/kg"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.graupel",
+      "when": {
+        "level_type": "pressure"
       }
     },
     {
@@ -1627,6 +2311,120 @@
       },
       "backend": "grib2",
       "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "ht0.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 1,
+          "parameterCategory": 3,
+          "parameterNumber": 225,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.ht0",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "ht0.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 1,
+          "parameterCategory": 3,
+          "parameterNumber": 225,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.ht0",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
@@ -1869,6 +2667,120 @@
             "type": "atmosphere_top"
           }
         }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "pblh.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 18,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.pblh",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "pblh.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 18,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.pblh",
+      "when": {
+        "level_type": "surface"
       }
     },
     {
@@ -2272,6 +3184,584 @@
         }
       },
       "parameter_id": "cedarkit.q",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "q2m.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "scaleFactorOfFirstFixedSurface": 0,
+          "scaledValueOfFirstFixedSurface": 2,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/kg"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.q2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "q2m.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "scaleFactorOfFirstFixedSurface": 0,
+          "scaledValueOfFirstFixedSurface": 2,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/kg"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.q2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "qc.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 22,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/kg"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.qc",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "qc.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 22,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/kg"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.qc",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "qi.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 23,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/kg"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.qi",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "qi.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 23,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/kg"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.qi",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "qr.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 24,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/kg"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.qr",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "qr.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 24,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/kg"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.qr",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "qs.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 25,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/kg"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.qs",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "qs.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 25,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/kg"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.qs",
       "when": {
         "level_type": "pressure"
       }
@@ -2990,6 +4480,642 @@
       },
       "backend": "grib2",
       "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "sd.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 11,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sd",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "sd.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 11,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sd",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "shr-0-1000.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 25,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 103
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "s-1"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.shr-0-1000",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 0
+          },
+          "top": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 1000
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "shr-0-1000.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 25,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 103
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "s-1"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.shr-0-1000",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 0
+          },
+          "top": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 1000
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "shr-0-3000.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 25,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 103
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "s-1"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.shr-0-3000",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 0
+          },
+          "top": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 3000
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "shr-0-3000.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 25,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 103
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "s-1"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.shr-0-3000",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 0
+          },
+          "top": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 3000
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "shr-0-6000.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 25,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 103
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "s-1"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.shr-0-6000",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 0
+          },
+          "top": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 6000
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "shr-0-6000.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 25,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 103
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "s-1"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.shr-0-6000",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 0
+          },
+          "top": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 6000
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "si.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 7,
+          "parameterNumber": 13,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.si",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "si.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 7,
+          "parameterNumber": 13,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.si",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/cedarkit-param-db/migrations/stage1.1-i03-grib-util-batch-2/file-mappings/mappings-00-grib2.json#sha256=2a1c30e3ba08084f2bb26d235e840f795d405ae422350d73556a2e68ccf7379d;reviewed encoding origin",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-6/current-version-policy.md#sha256=ad9dcfdca70c99d4c2df56c38d18f0098611a77d1b98a22d45499d0b9ff70152;user-authorized current-only business policy; no official V-number asserted",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table 0; pressure, height, unit and actual soil intervals",
@@ -3526,6 +5652,120 @@
       },
       "backend": "grib2",
       "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "tcw.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 69,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 10,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.tcw",
+      "when": {
+        "level_type": "entire_atmosphere"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "tcw.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 69,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 10,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.tcw",
+      "when": {
+        "level_type": "entire_atmosphere"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0 quantities, units and declared carriers; PWAT row92 explicitly Kg/m2, TTD row43 degreeC, clouds rows28..31 cloud base retained literally",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-20/business-extract.json#sha256=ff88ba5e220880242999fb1bb6d0abcc4a3389b09c50ef8d6a7abdaf3718c51d;Fresh original XML; compare units and carriers per candidate; no invented cloud height boundaries",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/candidate-headers.json#sha256=ed7f69224e2552cdf688c17a49a3e35246f2e59a8558a5dfdd437178dcce49ac;Fresh3 files x861 headers,792 target candidate contexts; exact raw contexts, offsets, fingerprints and original message SHA; no complete provider census",
@@ -3748,6 +5988,348 @@
         "level": 2,
         "level_type": "height_above_ground",
         "level_unit": "m"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "theta-se.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.theta-se",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "theta-se.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.theta-se",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "tiw.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 70,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 10,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.tiw",
+      "when": {
+        "level_type": "entire_atmosphere"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "tiw.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 70,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 10,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.tiw",
+      "when": {
+        "level_type": "entire_atmosphere"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "ts.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.ts",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "ts.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.ts",
+      "when": {
+        "level_type": "surface"
       }
     },
     {
@@ -4350,6 +6932,120 @@
       },
       "backend": "grib2",
       "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "tvw.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 64,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 10,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.tvw",
+      "when": {
+        "level_type": "entire_atmosphere"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "tvw.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 64,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 10,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.tvw",
+      "when": {
+        "level_type": "entire_atmosphere"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/cedarkit-param-db/migrations/stage1.1-i03-grib-util-batch-2/file-mappings/mappings-00-grib2.json#sha256=2a1c30e3ba08084f2bb26d235e840f795d405ae422350d73556a2e68ccf7379d;reviewed encoding origin",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-6/current-version-policy.md#sha256=ad9dcfdca70c99d4c2df56c38d18f0098611a77d1b98a22d45499d0b9ff70152;user-authorized current-only business policy; no official V-number asserted",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table 0; pressure, height, unit and actual soil intervals",
@@ -4923,8 +7619,236 @@
       "when": {
         "level_type": "pressure"
       }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "znt.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 1,
+          "parameterCategory": 3,
+          "parameterNumber": 228,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.znt",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "znt.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 1,
+          "parameterCategory": 3,
+          "parameterNumber": 228,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.znt",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "zs.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 5,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "Gpm"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.zs",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Original GFS table0; PC hPa vs producer Pa, KIDX Celsius vs K, PBLH dimensional typo preserved",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/business-extract.json#sha256=f75615d3e3c00329d4018c541ed5276aa2b98fb314e0168203daad5cb6f52875;Fresh original XML rows with literal names/units/carriers; no invented corrections",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Independent original/model/business Gpm and ecCodes surface m vs generic gpm concept roles; exact current ZS interpretation only, no global equivalence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/candidate-headers.json#sha256=8d6e871d796bea1c19093afac2d10ac91e517a6f8f2b619c21485c4f88fa3e33;Fresh3 files x861 headers,1053 candidate contexts; offsets/fingerprints/original SHA; bounded inventory, not complete provider census",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/original-writer-probe.json#sha256=6d582c7da2dd84fd892bc9979ea026b6879663bb99de063b048634b77d26f7c0;Fresh supported29 original-object cases x7 GRIB1 carrier types; QR170 not unsupported154",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6/binary-verification.json#sha256=347ebb7850c5d2fcf55f8af3205ed7767af850356d5c9654e736ecc2f8e61bee;Preserved full writer discipline0 evidence; not independent physical acceptance",
+        "doc/2026-10-13-stage1.1-query-reki/ref/models/gfs/varname.dat#sha256=3b74ee990de961e447c9fb05f9b92ed1507d0e2fce471279afdaca80317354e1;GFS named quantities and units; cloud-base/top English reversal retained as identity conflict",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Exact cases7/11/14/51/66/68..70/84/91/133/153/159/170/171/178/179/183/190/210/220..222/245/281/282/284/322/331; see per-candidate literals and gaps"
+      ],
+      "id": "zs.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 5,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "Gpm"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.zs",
+      "when": {
+        "level_type": "surface"
+      }
     }
   ],
   "tables": [],
-  "version": "12"
+  "version": "13"
 }

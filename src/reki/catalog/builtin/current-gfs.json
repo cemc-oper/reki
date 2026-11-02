@@ -6,8 +6,8 @@
   ],
   "parameter_registry": {
     "builtin": "reki.parameters.cma-gfs.current",
-    "sha256": "86f28ac39b38505010f27a1a8611234bbcb2358dd93b1a7e8a29e4599babed83",
-    "version": "7"
+    "sha256": "aeaafb8ddccf0d2210338f712050bcd1eff684c6601b90bb5bfbb4572e51f0fa",
+    "version": "8"
   },
   "product": "orig",
   "product_version": "current",
@@ -282,6 +282,141 @@
     {
       "level_type": "surface",
       "parameter": "cedarkit.vis"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.qc"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.qr"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.qs"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.qi"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.graupel"
+    },
+    {
+      "level": 2,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.q2m"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.ts"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.zs"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.theta-se"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.si"
+    },
+    {
+      "level_type": "entire_atmosphere",
+      "parameter": "cedarkit.tvw"
+    },
+    {
+      "level_type": "entire_atmosphere",
+      "parameter": "cedarkit.tcw"
+    },
+    {
+      "level_type": "entire_atmosphere",
+      "parameter": "cedarkit.tiw"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.cdbz"
+    },
+    {
+      "level_type": "pressure",
+      "parameter": "cedarkit.dbz"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.ceiling"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.fogh"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.pblh"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.ht0"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.znt"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.albedo"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.sd"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 0
+        },
+        "top": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 1000
+        }
+      },
+      "parameter": "cedarkit.shr-0-1000"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 0
+        },
+        "top": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 3000
+        }
+      },
+      "parameter": "cedarkit.shr-0-3000"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 0
+        },
+        "top": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 6000
+        }
+      },
+      "parameter": "cedarkit.shr-0-6000"
     }
   ],
   "time_zone": "UTC",
