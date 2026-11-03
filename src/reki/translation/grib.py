@@ -68,6 +68,7 @@ def applicability(meta):
     ) and not (
         cemc_grib.applies(meta)
         or cemc_grib.member_instantaneous(meta)
+        or cemc_grib.composite_reflectivity_maximum(meta)
         or cemc_grib.is_gfs_clear_sky_longwave_energy(meta)
     ):
         metadata_error(

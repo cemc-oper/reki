@@ -5018,6 +5018,71 @@
       },
       "backend": "grib2",
       "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Own product business rows",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-24/identity-unit-review.json#sha256=e071d189aee170d01b51bf58b98cb7563cfc57dee5cf0121ffcb16d4b8225daf;Product model, business, native window and carrier decisions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-27/candidate-headers.json#sha256=707416cf33a5c8ec935715471b390138548eb7ba50e159f6098cbf21009b32f7;Frozen current originals and per-message SHA",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-27/original-writer-probe.json#sha256=40aa90137984366b4dd2ab1c985bdd2a98974190ab76c798f4bb661250c0dac8;Original binary carrier and code branches for this review",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-27/verification-input.json#sha256=ceb6afb7477fff8efce9307d7d6b93ed3652d9bb8f47d0d59194cacbc7130ea2;Representative numerical originals and separate initial-window dispositions",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original identity and unit declarations",
+        "doc/2026-10-13-stage1.1-query-reki/ref/rebuilt/src/module_grib_util.f90#sha256=d4a4378fa80c322552eb056404dd5e608ed05bb333aa764385476aa0274f8d61;Reconstructed producer naming and operation branches, corroborated by original encoding evidence"
+      ],
+      "id": "u10mmax-1.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "indicatorOfUnitForTimeRange": 1,
+          "lengthOfTimeRange": 1,
+          "localTablesVersion": 0,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 2,
+          "typeOfTimeIncrement": 2
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u10mmax-1",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/cedarkit-param-db/migrations/stage1.1-i03-grib-util-batch-2/file-mappings/mappings-00-grib2.json#sha256=2a1c30e3ba08084f2bb26d235e840f795d405ae422350d73556a2e68ccf7379d;reviewed encoding origin",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-6/current-version-policy.md#sha256=ad9dcfdca70c99d4c2df56c38d18f0098611a77d1b98a22d45499d0b9ff70152;user-authorized current-only business policy; no official V-number asserted",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table 1; pressure, height, unit and actual soil intervals",
@@ -5270,6 +5335,71 @@
         }
       },
       "parameter_id": "cedarkit.v10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Own product business rows",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-24/identity-unit-review.json#sha256=e071d189aee170d01b51bf58b98cb7563cfc57dee5cf0121ffcb16d4b8225daf;Product model, business, native window and carrier decisions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-27/candidate-headers.json#sha256=707416cf33a5c8ec935715471b390138548eb7ba50e159f6098cbf21009b32f7;Frozen current originals and per-message SHA",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-27/original-writer-probe.json#sha256=40aa90137984366b4dd2ab1c985bdd2a98974190ab76c798f4bb661250c0dac8;Original binary carrier and code branches for this review",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-27/verification-input.json#sha256=ceb6afb7477fff8efce9307d7d6b93ed3652d9bb8f47d0d59194cacbc7130ea2;Representative numerical originals and separate initial-window dispositions",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original identity and unit declarations",
+        "doc/2026-10-13-stage1.1-query-reki/ref/rebuilt/src/module_grib_util.f90#sha256=d4a4378fa80c322552eb056404dd5e608ed05bb333aa764385476aa0274f8d61;Reconstructed producer naming and operation branches, corroborated by original encoding evidence"
+      ],
+      "id": "v10mmax-1.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "indicatorOfUnitForTimeRange": 1,
+          "lengthOfTimeRange": 1,
+          "localTablesVersion": 0,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 2,
+          "typeOfTimeIncrement": 2
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v10mmax-1",
       "when": {
         "level": 10,
         "level_type": "height_above_ground",
@@ -5626,6 +5756,71 @@
       },
       "backend": "grib2",
       "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Own product business rows",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-24/identity-unit-review.json#sha256=e071d189aee170d01b51bf58b98cb7563cfc57dee5cf0121ffcb16d4b8225daf;Product model, business, native window and carrier decisions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-27/candidate-headers.json#sha256=707416cf33a5c8ec935715471b390138548eb7ba50e159f6098cbf21009b32f7;Frozen current originals and per-message SHA",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-27/original-writer-probe.json#sha256=40aa90137984366b4dd2ab1c985bdd2a98974190ab76c798f4bb661250c0dac8;Original binary carrier and code branches for this review",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-27/verification-input.json#sha256=ceb6afb7477fff8efce9307d7d6b93ed3652d9bb8f47d0d59194cacbc7130ea2;Representative numerical originals and separate initial-window dispositions",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original identity and unit declarations",
+        "doc/2026-10-13-stage1.1-query-reki/ref/rebuilt/src/module_grib_util.f90#sha256=d4a4378fa80c322552eb056404dd5e608ed05bb333aa764385476aa0274f8d61;Reconstructed producer naming and operation branches, corroborated by original encoding evidence"
+      ],
+      "id": "wmax-1.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "indicatorOfUnitForTimeRange": 1,
+          "lengthOfTimeRange": 1,
+          "localTablesVersion": 0,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 2,
+          "parameterNumber": 9,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 2,
+          "typeOfTimeIncrement": 2
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.wmax-1",
+      "when": {
+        "level": 1000,
+        "level_type": "pressure",
+        "level_unit": "hPa"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Own product rows; no dedicated1km table; GFS SWEATX row49 explicitly unit 无",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Preserved decoder concept role proof; each new product independently reviews its own producer Gpm declaration",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-22/business-extract.json#sha256=4be8e71ac79ae076cb9eaa7d9ff72438012b1f361aded30fd29985541359c004;Fresh XML original rows and positions; no product-domain borrowing",
@@ -5734,5 +5929,5 @@
     }
   ],
   "tables": [],
-  "version": "6"
+  "version": "7"
 }

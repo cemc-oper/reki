@@ -546,6 +546,26 @@
       "parent": "cedarkit.u"
     },
     {
+      "description": "Maximum of u10m during 1 hours",
+      "description_cn": "输出间隔内最大10米东西风",
+      "fixed_conditions": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "statistics": {
+          "operation": "maximum",
+          "over": "time",
+          "period": {
+            "duration": "PT3600S",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "u10mmax#1",
+      "parameter_id": "cedarkit.u10mmax-1",
+      "parent": "cedarkit.u"
+    },
+    {
       "description": "V-component of wind",
       "description_cn": "南北风",
       "name": "v",
@@ -566,6 +586,26 @@
       },
       "name": "v10m",
       "parameter_id": "cedarkit.v10m",
+      "parent": "cedarkit.v"
+    },
+    {
+      "description": "Maximim of v10m during 1 hours",
+      "description_cn": "输出间隔内10米南北风",
+      "fixed_conditions": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "statistics": {
+          "operation": "maximum",
+          "over": "time",
+          "period": {
+            "duration": "PT3600S",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "v10mmax#1",
+      "parameter_id": "cedarkit.v10mmax-1",
       "parent": "cedarkit.v"
     },
     {
@@ -607,6 +647,25 @@
       "unit": "m/s"
     },
     {
+      "description": "Maximum of w during 1 hours",
+      "description_cn": "1小时最大垂直速度",
+      "fixed_conditions": {
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "statistics": {
+          "operation": "maximum",
+          "over": "time",
+          "period": {
+            "duration": "PT3600S",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "wmax#1",
+      "parameter_id": "cedarkit.wmax-1",
+      "parent": "cedarkit.w.any"
+    },
+    {
       "description": "Terrain",
       "description_cn": "地形高度",
       "fixed_conditions": {
@@ -617,5 +676,5 @@
       "parent": "cedarkit.h.any"
     }
   ],
-  "version": "3"
+  "version": "4"
 }

@@ -554,3 +554,25 @@ def test_geps_terrain_unit_uses_own_member_product_declaration(phase):
     assert resolve(ctx={**context, "product_version": "next"}) is None
     assert resolve(pid="cedarkit.h") is None
     assert resolve(unit="m") is None
+
+
+def test_composite_maximum_requires_the_reviewed_forecast_encoding():
+    native = profile(
+        productDefinitionTemplateNumber=8,
+        localTablesVersion=1,
+        typeOfProcessedData=1,
+        typeOfGeneratingProcess=2,
+        significanceOfReferenceTime=1,
+        typeOfStatisticalProcessing=2,
+    )
+    grib.parameter_encoding(native)
+    for change in [
+        {"centre": 98},
+        {"localTablesVersion": 0},
+        {"typeOfProcessedData": 0, "significanceOfReferenceTime": 0},
+        {"typeOfStatisticalProcessing": 1},
+        {"typeOfFirstFixedSurface": 100},
+        {"parameterNumber": 225},
+    ]:
+        with pytest.raises(SourceError):
+            grib.parameter_encoding({**native, **change})

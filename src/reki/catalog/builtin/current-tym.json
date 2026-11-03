@@ -6,8 +6,8 @@
   ],
   "parameter_registry": {
     "builtin": "reki.parameters.cma-tym.current",
-    "sha256": "0894a2e42485baff0430006cab46e4b412ecf479e958ada3d9ed617f52be7f71",
-    "version": "3"
+    "sha256": "3f7158af5c12dfef444d0a9453248b2bcd6c18781be068beae87f6557df4ee08",
+    "version": "4"
   },
   "product": "orig",
   "product_version": "current",
@@ -405,6 +405,24 @@
         }
       },
       "parameter": "cedarkit.shr-0-6000"
+    },
+    {
+      "level": 1000,
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.wmax-1"
+    },
+    {
+      "level": 10,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.u10mmax-1"
+    },
+    {
+      "level": 10,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.v10mmax-1"
     }
   ],
   "time_zone": "UTC",

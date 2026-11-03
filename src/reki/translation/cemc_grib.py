@@ -99,6 +99,32 @@ def member_instantaneous(meta):
     }
 
 
+def composite_reflectivity_maximum(meta):
+    """Recognize the CEMC surface composite maximum encoding."""
+    expected = {
+        "edition": 2,
+        "centre": 38,
+        "subCentre": 0,
+        "tablesVersion": 4,
+        "localTablesVersion": 1,
+        "productionStatusOfProcessedData": 0,
+        "productDefinitionTemplateNumber": 8,
+        "typeOfProcessedData": 1,
+        "typeOfGeneratingProcess": 2,
+        "significanceOfReferenceTime": 1,
+        "discipline": 0,
+        "parameterCategory": 16,
+        "parameterNumber": 224,
+        "typeOfFirstFixedSurface": 1,
+        "typeOfSecondFixedSurface": 255,
+        "typeOfStatisticalProcessing": 2,
+    }
+    return all(
+        type(meta.get(key)) is int and meta[key] == value
+        for key, value in expected.items()
+    )
+
+
 def terrain_source_unit(meta, *, context, parameter_id, source_unit):
     """Resolve reviewed current ORIG ZS decoder views from producer evidence.
 
