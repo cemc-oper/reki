@@ -3784,6 +3784,422 @@
       },
       "backend": "grib2",
       "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-27/identity-unit-review.json#sha256=591181c360ac6b2cc64d9ed1791fda442b780ec5e9124c6582d67760b0013b3c;Producer case, physical carrier, original and scoped decisions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/candidate-headers.json#sha256=eafcdf8b5a5aa02f528700eb1db47d612f1c994e6b1b987cd2284d2c6b27dd34;Frozen complete original header index",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/native-difference.json#sha256=fea8c809e9ee0308d9bba07a32a4ff473abef65167499c55477e3bb2415fc77b;Comparison using existing finite backend rules",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/verification-input.json#sha256=79772e985161d34c16fafb45e5be1d3cf40fb95b147df685a6b2e2a39fb704ab;Representative originals and per-message SHA"
+      ],
+      "id": "sw-0-10.instantaneous.analysis",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 106,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 106
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m3/m3"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sw-0-10",
+      "when": {
+        "layer": [
+          {
+            "bottom": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.1
+            },
+            "top": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0
+            }
+          },
+          {
+            "bottom": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.1
+            },
+            "top": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-27/identity-unit-review.json#sha256=591181c360ac6b2cc64d9ed1791fda442b780ec5e9124c6582d67760b0013b3c;Producer case, physical carrier, original and scoped decisions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/candidate-headers.json#sha256=eafcdf8b5a5aa02f528700eb1db47d612f1c994e6b1b987cd2284d2c6b27dd34;Frozen complete original header index",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/native-difference.json#sha256=fea8c809e9ee0308d9bba07a32a4ff473abef65167499c55477e3bb2415fc77b;Comparison using existing finite backend rules",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/verification-input.json#sha256=79772e985161d34c16fafb45e5be1d3cf40fb95b147df685a6b2e2a39fb704ab;Representative originals and per-message SHA"
+      ],
+      "id": "sw-0-10.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 106,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 106
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m3/m3"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sw-0-10",
+      "when": {
+        "layer": [
+          {
+            "bottom": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.1
+            },
+            "top": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0
+            }
+          },
+          {
+            "bottom": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.1
+            },
+            "top": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-27/identity-unit-review.json#sha256=591181c360ac6b2cc64d9ed1791fda442b780ec5e9124c6582d67760b0013b3c;Producer case, physical carrier, original and scoped decisions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/candidate-headers.json#sha256=eafcdf8b5a5aa02f528700eb1db47d612f1c994e6b1b987cd2284d2c6b27dd34;Frozen complete original header index",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/native-difference.json#sha256=fea8c809e9ee0308d9bba07a32a4ff473abef65167499c55477e3bb2415fc77b;Comparison using existing finite backend rules",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/verification-input.json#sha256=79772e985161d34c16fafb45e5be1d3cf40fb95b147df685a6b2e2a39fb704ab;Representative originals and per-message SHA"
+      ],
+      "id": "sw.instantaneous.analysis",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 106,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 106
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m3/m3"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sw",
+      "when": {
+        "layer": [
+          {
+            "bottom": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.3
+            },
+            "top": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.1
+            }
+          },
+          {
+            "bottom": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.6
+            },
+            "top": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.3
+            }
+          },
+          {
+            "bottom": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 1
+            },
+            "top": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.6
+            }
+          },
+          {
+            "bottom": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.3
+            },
+            "top": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.1
+            }
+          },
+          {
+            "bottom": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.6
+            },
+            "top": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.3
+            }
+          },
+          {
+            "bottom": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 1
+            },
+            "top": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.6
+            }
+          }
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-27/identity-unit-review.json#sha256=591181c360ac6b2cc64d9ed1791fda442b780ec5e9124c6582d67760b0013b3c;Producer case, physical carrier, original and scoped decisions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/candidate-headers.json#sha256=eafcdf8b5a5aa02f528700eb1db47d612f1c994e6b1b987cd2284d2c6b27dd34;Frozen complete original header index",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/native-difference.json#sha256=fea8c809e9ee0308d9bba07a32a4ff473abef65167499c55477e3bb2415fc77b;Comparison using existing finite backend rules",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/verification-input.json#sha256=79772e985161d34c16fafb45e5be1d3cf40fb95b147df685a6b2e2a39fb704ab;Representative originals and per-message SHA"
+      ],
+      "id": "sw.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 106,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 106
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m3/m3"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sw",
+      "when": {
+        "layer": [
+          {
+            "bottom": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.3
+            },
+            "top": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.1
+            }
+          },
+          {
+            "bottom": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.6
+            },
+            "top": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.3
+            }
+          },
+          {
+            "bottom": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 1
+            },
+            "top": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.6
+            }
+          },
+          {
+            "bottom": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.3
+            },
+            "top": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.1
+            }
+          },
+          {
+            "bottom": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.6
+            },
+            "top": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.3
+            }
+          },
+          {
+            "bottom": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 1
+            },
+            "top": {
+              "type": "depth_below_land",
+              "unit": "m",
+              "value": 0.6
+            }
+          }
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/cedarkit-param-db/migrations/stage1.1-i03-grib-util-batch-2/file-mappings/mappings-00-grib2.json#sha256=2a1c30e3ba08084f2bb26d235e840f795d405ae422350d73556a2e68ccf7379d;reviewed encoding origin",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-6/current-version-policy.md#sha256=ad9dcfdca70c99d4c2df56c38d18f0098611a77d1b98a22d45499d0b9ff70152;user-authorized current-only business policy; no official V-number asserted",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table 1; pressure, height, unit and actual soil intervals",
@@ -5929,5 +6345,5 @@
     }
   ],
   "tables": [],
-  "version": "7"
+  "version": "8"
 }

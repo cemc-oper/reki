@@ -10,8 +10,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-gfs.current",
-          "sha256": "67c7a4f2da206df578e96f6953d86a39d2d2b69995fdba9e74c0fe5893438a0a",
-          "version": "14"
+          "sha256": "92468085713e61793df3421f7e731295b399b5d3e7723575d678269c72471d8c",
+          "version": "15"
         }
       },
       "products": [
@@ -33,7 +33,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-22/verification-input.json#sha256=a1da3465347b5b7a061ec454fff7f00ff1f2b8532a0185d99a38650fcc02f3f2;12 newly inspected original TOA messages; surface8/255, master4, local0 for shortwave and local1 for TULWC, PDT8 single reference-anchored accumulation;four integrated TOA identities; sample leads are not support bounds; complete provider domain unknown",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-23/verification-input.json#sha256=05fc6cfe421c2c6a8ec7fce929112e19df9bf8b23ffc5e00f61cb59755a135f8;30 representative numerical originals; all20 have independent0/6/48 identity headers, no sampled runtime step or pressure whitelist;20 current instantaneous identities; source discrepancies retained in review; complete domain unknown",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-24/verification-input.json#sha256=4cab14f0cf0fa6917f15af9e496a310f9286e0494e09e7f8e9c2a048bf79a764;32 reviewed,25 accepted and7 explicit missing facts;36 numerical originals, generic pressure unrestricted;2m and shear layers are definition conditions;25 current instantaneous identities from32 reviewed candidates; source discrepancies retained in review; complete domain unknown",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-22/identity-unit-review.json#sha256=28d5488854897687c7b0861a03515625a2110400881abbcb715e3aa956b6dd1d;154 scoped decisions,64 stable identities, per-product model/original/business literal positions and SHA;finite reviewed identities only; complete domain remains unknown"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-22/identity-unit-review.json#sha256=28d5488854897687c7b0861a03515625a2110400881abbcb715e3aa956b6dd1d;154 scoped decisions,64 stable identities, per-product model/original/business literal positions and SHA;finite reviewed identities only; complete domain remains unknown",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/verification-input.json#sha256=79772e985161d34c16fafb45e5be1d3cf40fb95b147df685a6b2e2a39fb704ab;Representative originals and per-message SHA;finite reviewed identities only; complete domain remains unknown"
           ],
           "id": "orig",
           "methods": [],
@@ -443,6 +444,96 @@
             {
               "level_type": "surface",
               "parameter": "cedarkit.sweatidx"
+            },
+            {
+              "level": [
+                30,
+                50,
+                70,
+                100,
+                120,
+                140,
+                160,
+                180,
+                200
+              ],
+              "level_type": "height_above_ground",
+              "parameter": "cedarkit.u"
+            },
+            {
+              "level": [
+                30,
+                50,
+                70,
+                100,
+                120,
+                140,
+                160,
+                180,
+                200
+              ],
+              "level_type": "height_above_ground",
+              "parameter": "cedarkit.v"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0
+                }
+              },
+              "parameter": "cedarkit.sw-0-10"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.4
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                }
+              },
+              "parameter": "cedarkit.sw-10-40"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 2
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1
+                }
+              },
+              "parameter": "cedarkit.sw-100-200"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.4
+                }
+              },
+              "parameter": "cedarkit.sw-40-100"
             }
           ],
           "scope": {},
@@ -470,8 +561,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-meso-3km.current",
-          "sha256": "ffe9648d1b68e6b852b2e648dc9a8eaa18a15e5ac09fa87295dfefcb44ac8300",
-          "version": "8"
+          "sha256": "e36fa78448caebdc65f258a4a7b87be9931d525946da6a87ca30b410ffcf94d1",
+          "version": "9"
         }
       },
       "products": [
@@ -488,7 +579,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-22/identity-unit-review.json#sha256=28d5488854897687c7b0861a03515625a2110400881abbcb715e3aa956b6dd1d;154 scoped decisions,64 stable identities, per-product model/original/business literal positions and SHA;finite reviewed identities only; complete domain remains unknown",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-24/identity-unit-review.json#sha256=e071d189aee170d01b51bf58b98cb7563cfc57dee5cf0121ffcb16d4b8225daf;Product model, business, native window and carrier decisions;finite reviewed identities only; complete domain remains unknown",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-25/identity-unit-review.json#sha256=eda0ef3b1cf4c31f60b92a9bf503b9a3939a42420368e87f4f0dfac2bea56719;Product model, business, native window and carrier decisions;finite reviewed identities only; complete domain remains unknown"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-25/identity-unit-review.json#sha256=eda0ef3b1cf4c31f60b92a9bf503b9a3939a42420368e87f4f0dfac2bea56719;Product model, business, native window and carrier decisions;finite reviewed identities only; complete domain remains unknown",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/verification-input.json#sha256=79772e985161d34c16fafb45e5be1d3cf40fb95b147df685a6b2e2a39fb704ab;Representative originals and per-message SHA;finite reviewed identities only; complete domain remains unknown"
           ],
           "id": "orig",
           "methods": [],
@@ -867,6 +959,134 @@
                 }
               },
               "parameter": "cedarkit.uhmax-2000-5000"
+            },
+            {
+              "level": [
+                30,
+                50,
+                70,
+                100,
+                120,
+                140,
+                160,
+                180,
+                200
+              ],
+              "level_type": "height_above_ground",
+              "parameter": "cedarkit.u"
+            },
+            {
+              "level": [
+                30,
+                50,
+                70,
+                100,
+                120,
+                140,
+                160,
+                180,
+                200
+              ],
+              "level_type": "height_above_ground",
+              "parameter": "cedarkit.v"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "parameter": "cedarkit.srh-0-1000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 3000
+                }
+              },
+              "parameter": "cedarkit.srh-0-3000"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.echotop"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht2"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.tti"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0
+                }
+              },
+              "parameter": "cedarkit.sw-0-10"
+            },
+            {
+              "layer": [
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.3
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.1
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.6
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.3
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 1
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.6
+                  }
+                }
+              ],
+              "parameter": "cedarkit.sw"
             }
           ],
           "scope": {},
@@ -892,8 +1112,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-meso-1km.current",
-          "sha256": "6976691ba86aa8dd5fc6ee8994b45beb37a3495308c7967ac71ce8966803aeae",
-          "version": "8"
+          "sha256": "08130762228e473c7c3c72052a6060f59275bd97a666c2a3e22152f514c13af7",
+          "version": "9"
         }
       },
       "products": [
@@ -910,7 +1130,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-22/identity-unit-review.json#sha256=28d5488854897687c7b0861a03515625a2110400881abbcb715e3aa956b6dd1d;154 scoped decisions,64 stable identities, per-product model/original/business literal positions and SHA;finite reviewed identities only; complete domain remains unknown",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-24/identity-unit-review.json#sha256=e071d189aee170d01b51bf58b98cb7563cfc57dee5cf0121ffcb16d4b8225daf;Product model, business, native window and carrier decisions;finite reviewed identities only; complete domain remains unknown",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-25/identity-unit-review.json#sha256=eda0ef3b1cf4c31f60b92a9bf503b9a3939a42420368e87f4f0dfac2bea56719;Product model, business, native window and carrier decisions;finite reviewed identities only; complete domain remains unknown"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-25/identity-unit-review.json#sha256=eda0ef3b1cf4c31f60b92a9bf503b9a3939a42420368e87f4f0dfac2bea56719;Product model, business, native window and carrier decisions;finite reviewed identities only; complete domain remains unknown",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/verification-input.json#sha256=79772e985161d34c16fafb45e5be1d3cf40fb95b147df685a6b2e2a39fb704ab;Representative originals and per-message SHA;finite reviewed identities only; complete domain remains unknown"
           ],
           "id": "orig",
           "methods": [],
@@ -1257,6 +1478,74 @@
                 }
               },
               "parameter": "cedarkit.uhmax-2000-5000"
+            },
+            {
+              "level": [
+                30,
+                50,
+                70,
+                100,
+                120,
+                140,
+                160,
+                180,
+                200
+              ],
+              "level_type": "height_above_ground",
+              "parameter": "cedarkit.u"
+            },
+            {
+              "level": [
+                30,
+                50,
+                70,
+                100,
+                120,
+                140,
+                160,
+                180,
+                200
+              ],
+              "level_type": "height_above_ground",
+              "parameter": "cedarkit.v"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "parameter": "cedarkit.srh-0-1000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 3000
+                }
+              },
+              "parameter": "cedarkit.srh-0-3000"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.echotop"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht2"
             }
           ],
           "scope": {},
@@ -1282,8 +1571,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-tym.current",
-          "sha256": "0af0af8c36da607efe43937d67dabc2e9b56a501706621a4fdb4500d8ba71642",
-          "version": "7"
+          "sha256": "9e7c2065b03174b962e77fb90399cc022450e6f5aaf5d35ec273c580838d690f",
+          "version": "8"
         }
       },
       "products": [
@@ -1299,7 +1588,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
             "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-22/identity-unit-review.json#sha256=28d5488854897687c7b0861a03515625a2110400881abbcb715e3aa956b6dd1d;154 scoped decisions,64 stable identities, per-product model/original/business literal positions and SHA;finite reviewed identities only; complete domain remains unknown",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-24/identity-unit-review.json#sha256=e071d189aee170d01b51bf58b98cb7563cfc57dee5cf0121ffcb16d4b8225daf;Product model, business, native window and carrier decisions;finite reviewed identities only; complete domain remains unknown"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-24/identity-unit-review.json#sha256=e071d189aee170d01b51bf58b98cb7563cfc57dee5cf0121ffcb16d4b8225daf;Product model, business, native window and carrier decisions;finite reviewed identities only; complete domain remains unknown",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/verification-input.json#sha256=79772e985161d34c16fafb45e5be1d3cf40fb95b147df685a6b2e2a39fb704ab;Representative originals and per-message SHA;finite reviewed identities only; complete domain remains unknown"
           ],
           "id": "orig",
           "methods": [],
@@ -1711,6 +2001,112 @@
               "level_type": "height_above_ground",
               "level_unit": "m",
               "parameter": "cedarkit.v10mmax-1"
+            },
+            {
+              "layer": [
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.3
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.1
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.6
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.3
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 1
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.6
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.3
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.1
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.6
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.3
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 1
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.6
+                  }
+                }
+              ],
+              "parameter": "cedarkit.sw"
+            },
+            {
+              "layer": [
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.1
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.1
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0
+                  }
+                }
+              ],
+              "parameter": "cedarkit.sw-0-10"
             }
           ],
           "scope": {},
@@ -2641,5 +3037,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "23"
+  "version": "24"
 }

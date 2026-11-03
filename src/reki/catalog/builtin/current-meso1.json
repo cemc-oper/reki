@@ -6,8 +6,8 @@
   ],
   "parameter_registry": {
     "builtin": "reki.parameters.cma-meso-1km.current",
-    "sha256": "31902278cef4be705ce20d97d2f3e8d5fb0396d316b2c1da775c1f81e267e41c",
-    "version": "5"
+    "sha256": "c2154948500e3300868bc9b681cd067e7696f8f7f4064052e48466fae345e57b",
+    "version": "6"
   },
   "product": "orig",
   "product_version": "current",
@@ -356,6 +356,74 @@
         }
       },
       "parameter": "cedarkit.uhmax-2000-5000"
+    },
+    {
+      "level": [
+        30,
+        50,
+        70,
+        100,
+        120,
+        140,
+        160,
+        180,
+        200
+      ],
+      "level_type": "height_above_ground",
+      "parameter": "cedarkit.u"
+    },
+    {
+      "level": [
+        30,
+        50,
+        70,
+        100,
+        120,
+        140,
+        160,
+        180,
+        200
+      ],
+      "level_type": "height_above_ground",
+      "parameter": "cedarkit.v"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 0
+        },
+        "top": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 1000
+        }
+      },
+      "parameter": "cedarkit.srh-0-1000"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 0
+        },
+        "top": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 3000
+        }
+      },
+      "parameter": "cedarkit.srh-0-3000"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.echotop"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.ht2"
     }
   ],
   "time_zone": "UTC",

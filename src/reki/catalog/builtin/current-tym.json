@@ -6,8 +6,8 @@
   ],
   "parameter_registry": {
     "builtin": "reki.parameters.cma-tym.current",
-    "sha256": "3f7158af5c12dfef444d0a9453248b2bcd6c18781be068beae87f6557df4ee08",
-    "version": "4"
+    "sha256": "f7dfd96c6e8e5914cecf219358e95380a59bbd01affa4e4ccf01bb6aabc66818",
+    "version": "5"
   },
   "product": "orig",
   "product_version": "current",
@@ -423,6 +423,112 @@
       "level_type": "height_above_ground",
       "level_unit": "m",
       "parameter": "cedarkit.v10mmax-1"
+    },
+    {
+      "layer": [
+        {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.3
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          }
+        },
+        {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.6
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.3
+          }
+        },
+        {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 1
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.6
+          }
+        },
+        {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.3
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          }
+        },
+        {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.6
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.3
+          }
+        },
+        {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 1
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.6
+          }
+        }
+      ],
+      "parameter": "cedarkit.sw"
+    },
+    {
+      "layer": [
+        {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0
+          }
+        },
+        {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0
+          }
+        }
+      ],
+      "parameter": "cedarkit.sw-0-10"
     }
   ],
   "time_zone": "UTC",

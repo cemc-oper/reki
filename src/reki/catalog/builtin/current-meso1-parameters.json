@@ -96,6 +96,13 @@
       "unit": "s-1"
     },
     {
+      "description": "radar echo top",
+      "description_cn": "雷达回波顶",
+      "name": "echotop",
+      "parameter_id": "cedarkit.echotop",
+      "unit": "m"
+    },
+    {
       "description": "Graupel",
       "description_cn": "霰",
       "name": "graupel",
@@ -138,6 +145,21 @@
       "description_cn": "0度层高度",
       "name": "ht0",
       "parameter_id": "cedarkit.ht0.any",
+      "unit": "m"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "ht2",
+      "parameter_id": "cedarkit.ht2",
+      "parent": "cedarkit.ht2.any"
+    },
+    {
+      "description": "Height of -20 degree isothermal level",
+      "description_cn": "-20度层高度",
+      "name": "ht2",
+      "parameter_id": "cedarkit.ht2.any",
       "unit": "m"
     },
     {
@@ -398,6 +420,53 @@
       "name": "shr(0-6000)",
       "parameter_id": "cedarkit.shr-0-6000",
       "parent": "cedarkit.shr"
+    },
+    {
+      "description": "Storm relative helicity",
+      "description_cn": "风暴螺旋度",
+      "name": "srh",
+      "parameter_id": "cedarkit.srh",
+      "unit": "J/kg"
+    },
+    {
+      "description_cn": "0-1km垂直风暴螺旋度",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 0
+          },
+          "top": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 1000
+          }
+        }
+      },
+      "name": "srh(0-1000)",
+      "parameter_id": "cedarkit.srh-0-1000",
+      "parent": "cedarkit.srh"
+    },
+    {
+      "description_cn": "0-3km垂直风暴螺旋度",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 0
+          },
+          "top": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 3000
+          }
+        }
+      },
+      "name": "srh(0-3000)",
+      "parameter_id": "cedarkit.srh-0-3000",
+      "parent": "cedarkit.srh"
     },
     {
       "description": "Temperature",
@@ -688,5 +757,5 @@
       "parent": "cedarkit.h.any"
     }
   ],
-  "version": "5"
+  "version": "6"
 }

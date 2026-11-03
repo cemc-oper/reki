@@ -775,6 +775,97 @@
       "parent": "cedarkit.t"
     },
     {
+      "description": "Soil moisture",
+      "description_cn": "土壤湿度",
+      "fixed_conditions": {
+        "level_type": "depth_below_land",
+        "level_unit": "m"
+      },
+      "name": "sw",
+      "parameter_id": "cedarkit.sw",
+      "unit": "m3/m3"
+    },
+    {
+      "description_cn": "0-10cm土壤湿度",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0
+          }
+        }
+      },
+      "name": "sw(0-10)",
+      "parameter_id": "cedarkit.sw-0-10",
+      "parent": "cedarkit.sw"
+    },
+    {
+      "description_cn": "10-40cm土壤湿度",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.4
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          }
+        }
+      },
+      "name": "sw(10-40)",
+      "parameter_id": "cedarkit.sw-10-40",
+      "parent": "cedarkit.sw"
+    },
+    {
+      "description_cn": "100-200cm土壤湿度",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 2
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 1
+          }
+        }
+      },
+      "name": "sw(100-200)",
+      "parameter_id": "cedarkit.sw-100-200",
+      "parent": "cedarkit.sw"
+    },
+    {
+      "description_cn": "40-100cm土壤湿度",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 1
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.4
+          }
+        }
+      },
+      "name": "sw(40-100)",
+      "parameter_id": "cedarkit.sw-40-100",
+      "parent": "cedarkit.sw"
+    },
+    {
       "aliases": [
         "sweat"
       ],
@@ -1140,5 +1231,5 @@
       "parent": "cedarkit.h.any"
     }
   ],
-  "version": "9"
+  "version": "10"
 }

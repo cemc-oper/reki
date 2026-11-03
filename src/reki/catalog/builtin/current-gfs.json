@@ -6,8 +6,8 @@
   ],
   "parameter_registry": {
     "builtin": "reki.parameters.cma-gfs.current",
-    "sha256": "605c52c8c75de80ab9bc18dcdc3edcd1e370969515f53c72ea8cafc12c294141",
-    "version": "9"
+    "sha256": "055a327802fdc33fc6fc9b7e4a634df151bc4e15d78cd194a6963cb1eb10b97a",
+    "version": "10"
   },
   "product": "orig",
   "product_version": "current",
@@ -421,6 +421,96 @@
     {
       "level_type": "surface",
       "parameter": "cedarkit.sweatidx"
+    },
+    {
+      "level": [
+        30,
+        50,
+        70,
+        100,
+        120,
+        140,
+        160,
+        180,
+        200
+      ],
+      "level_type": "height_above_ground",
+      "parameter": "cedarkit.u"
+    },
+    {
+      "level": [
+        30,
+        50,
+        70,
+        100,
+        120,
+        140,
+        160,
+        180,
+        200
+      ],
+      "level_type": "height_above_ground",
+      "parameter": "cedarkit.v"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.1
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0
+        }
+      },
+      "parameter": "cedarkit.sw-0-10"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.4
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.1
+        }
+      },
+      "parameter": "cedarkit.sw-10-40"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 2
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 1
+        }
+      },
+      "parameter": "cedarkit.sw-100-200"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 1
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.4
+        }
+      },
+      "parameter": "cedarkit.sw-40-100"
     }
   ],
   "time_zone": "UTC",

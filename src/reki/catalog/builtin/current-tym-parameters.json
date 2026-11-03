@@ -445,6 +445,37 @@
       "parent": "cedarkit.t"
     },
     {
+      "description": "Soil moisture",
+      "description_cn": "土壤湿度",
+      "fixed_conditions": {
+        "level_type": "depth_below_land",
+        "level_unit": "m"
+      },
+      "name": "sw",
+      "parameter_id": "cedarkit.sw",
+      "unit": "m3/m3"
+    },
+    {
+      "description_cn": "0-10cm土壤湿度",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0
+          }
+        }
+      },
+      "name": "sw(0-10)",
+      "parameter_id": "cedarkit.sw-0-10",
+      "parent": "cedarkit.sw"
+    },
+    {
       "description": "Temperature",
       "description_cn": "温度",
       "name": "t",
@@ -676,5 +707,5 @@
       "parent": "cedarkit.h.any"
     }
   ],
-  "version": "4"
+  "version": "5"
 }
