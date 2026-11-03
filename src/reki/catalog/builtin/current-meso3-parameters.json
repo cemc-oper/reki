@@ -294,6 +294,24 @@
       "unit": "kg/kg"
     },
     {
+      "aliases": [
+        "qfx"
+      ],
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "qfxsfc",
+      "parameter_id": "cedarkit.qfxsfc",
+      "parent": "cedarkit.qfxsfc.any"
+    },
+    {
+      "description": "Surface moisture flux",
+      "description_cn": "地表水汽通量",
+      "name": "qfxsfc",
+      "parameter_id": "cedarkit.qfxsfc.any",
+      "unit": "kg/(m2.s)"
+    },
+    {
       "description": "Ice mixing ratio",
       "description_cn": "冰水混合比",
       "name": "qi",
@@ -566,6 +584,27 @@
       "name": "sw(0-10)",
       "parameter_id": "cedarkit.sw-0-10",
       "parent": "cedarkit.sw"
+    },
+    {
+      "aliases": [
+        "sweat"
+      ],
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "sweatidx",
+      "parameter_id": "cedarkit.sweatidx",
+      "parent": "cedarkit.sweatidx.any"
+    },
+    {
+      "aliases": [
+        "SWEATX"
+      ],
+      "description": "Sweat index",
+      "description_cn": "强天气胁迫指数",
+      "name": "sweatidx",
+      "parameter_id": "cedarkit.sweatidx.any",
+      "unit": "1"
     },
     {
       "description": "Temperature",
@@ -893,5 +932,5 @@
       "parent": "cedarkit.h.any"
     }
   ],
-  "version": "6"
+  "version": "7"
 }

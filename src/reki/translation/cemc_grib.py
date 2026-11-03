@@ -9,9 +9,8 @@ It supplies no default parameter IDs, product scope, members or statistics.
 See doc/2026-10-13-stage1.1-query-reki/evidence/grib-util-v12.6 in the workspace.
 """
 
-# (discipline, category, number): allowed first fixed surface. The eight local
-# codes have matching typed business headers; soil encodings also have binary
-# writer/reader evidence. Other codes and template families remain unsupported.
+# (discipline, category, number): allowed first fixed surface. These forms have
+# reviewed producer and original-message evidence.
 SURFACES = {
     (0, 16, 224): 1,  # 281 CDBZ
     (0, 16, 225): 100,  # 282 DBZ
@@ -21,6 +20,7 @@ SURFACES = {
     (0, 3, 226): 1,  # 323 HT2
     (0, 3, 228): 1,  # 91 ZNT
     (0, 16, 226): 1,  # 284 DBZMAXH
+    (0, 1, 229): 1,  # 136 QFXSFC
     (0, 0, 0): 106,  # 85 ST, ordinary producer status
     (0, 1, 0): 106,  # 144 SW, ordinary producer status
 }
@@ -65,7 +65,11 @@ def value_unit(meta):
     The raw ecCodes literal remains in FieldReference.metadata.native_fields.
     All other units continue through the normal native/mapping consistency check.
     """
-    if applies(meta) and meta.get("parameterCategory") == 1:
+    if (
+        applies(meta)
+        and meta.get("parameterCategory") == 1
+        and meta.get("parameterNumber") == 0
+    ):
         return "m3/m3"
     return None
 
@@ -191,19 +195,19 @@ def terrain_source_unit(meta, *, context, parameter_id, source_unit):
 
 
 def sweat_source_unit(meta, *, context, parameter_id, source_unit):
-    """Interpret the explicitly unitless GFS SWEAT numeric score, without scaling.
+    """Interpret the explicitly unitless GFS and MESO-3KM SWEAT numeric score.
 
-    Business table0 row49 says no unit (无), independently of original [-].
+    Business tables 0 row 49 and 1 row 38 declare no unit (无).
     Numeric is an ecCodes view; it is not a shared alias for dimensionless1.
     The score is neither a probability nor a categorical code-table field.
     """
     if (
         parameter_id != "cedarkit.sweatidx"
         or source_unit != "1"
+        or context.get("dataset") not in {"cma_gfs_gmf", "cma_meso_3km"}
         or any(
             context.get(k) != v
             for k, v in {
-                "dataset": "cma_gfs_gmf",
                 "product": "orig",
                 "product_version": "current",
             }.items()

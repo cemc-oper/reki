@@ -726,16 +726,22 @@ class GribScan:
                     "raw units/parameterUnits retained in native_fields"
                 )
         if parameter["parameter_id"] == "cedarkit.sweatidx":
+            context = self.backend.configuration.report_context()["source"]
             score_unit = cemc_grib.sweat_source_unit(
                 native,
-                context=self.backend.configuration.report_context()["source"],
+                context=context,
                 parameter_id=parameter["parameter_id"],
                 source_unit=unit_rule.get("config", {}).get("source_unit"),
             )
             if score_unit is not None:
                 source_unit = score_unit
+                product, row = (
+                    ("GFS", 49)
+                    if context["dataset"] == "cma_gfs_gmf"
+                    else ("MESO-3KM", 38)
+                )
                 unit_origin = (
-                    "CEMC.GFS.current.SWEAT: producer named score, business row49 "
+                    f"CEMC.{product}.current.SWEAT: producer named score, business row{row} "
                     "explicitly no unit; Numeric is a derived view; raw views retained"
                 )
         probability = native["productDefinitionTemplateNumber"] in {5, 9}

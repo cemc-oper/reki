@@ -43,6 +43,7 @@ def profile(**changes):
         (3, 226, 1),
         (3, 228, 1),
         (16, 226, 1),
+        (1, 229, 1),
     ],
 )
 def test_reviewed_codes_have_a_bounded_native_path(category, number, surface):
@@ -75,6 +76,15 @@ def test_reviewed_codes_have_a_bounded_native_path(category, number, surface):
 def test_local_table_support_does_not_admit_unknown_profiles(changes):
     with pytest.raises(SourceError) as exc:
         grib.parameter_encoding(profile(**changes))
+    assert exc.value.context["reason"] == "unsupported_native_encoding"
+
+
+def test_qfxsfc_uses_mapping_unit_and_requires_surface_carrier():
+    native = profile(parameterCategory=1, parameterNumber=229, units="unknown")
+    grib.parameter_encoding(native)
+    assert grib.source_value_unit(native) is None
+    with pytest.raises(SourceError) as exc:
+        grib.parameter_encoding({**native, "typeOfFirstFixedSurface": 100})
     assert exc.value.context["reason"] == "unsupported_native_encoding"
 
 
@@ -458,6 +468,7 @@ def test_explicit_sweat_source_unit_has_exact_producer_product_and_view_guards(p
         )
 
     assert resolve() == "1"
+    assert resolve(context={**ctx, "dataset": "cma_meso_3km"}) == "1"
     for k, v in [
         ("centre", 98),
         ("subCentre", 1),
@@ -475,7 +486,7 @@ def test_explicit_sweat_source_unit_has_exact_producer_product_and_view_guards(p
         ("parameterUnits", "Code table 4.201"),
     ]:
         assert resolve({**native, k: v}) is None
-    for dataset in ["cma_meso_1km", "cma_meso_3km", "cma_tym", "cma_geps"]:
+    for dataset in ["cma_meso_1km", "cma_tym", "cma_geps"]:
         assert resolve(context={**ctx, "dataset": dataset}) is None
     assert resolve(context={}) is None
     assert resolve(context={**ctx, "product": "post"}) is None

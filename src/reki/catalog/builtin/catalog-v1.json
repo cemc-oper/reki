@@ -561,8 +561,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-meso-3km.current",
-          "sha256": "e36fa78448caebdc65f258a4a7b87be9931d525946da6a87ca30b410ffcf94d1",
-          "version": "9"
+          "sha256": "31e9542778d17bd19ede98bb54196d5006062322f1ff104c414c0e2e0d3f08ae",
+          "version": "10"
         }
       },
       "products": [
@@ -580,7 +580,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-22/identity-unit-review.json#sha256=28d5488854897687c7b0861a03515625a2110400881abbcb715e3aa956b6dd1d;154 scoped decisions,64 stable identities, per-product model/original/business literal positions and SHA;finite reviewed identities only; complete domain remains unknown",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-24/identity-unit-review.json#sha256=e071d189aee170d01b51bf58b98cb7563cfc57dee5cf0121ffcb16d4b8225daf;Product model, business, native window and carrier decisions;finite reviewed identities only; complete domain remains unknown",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-25/identity-unit-review.json#sha256=eda0ef3b1cf4c31f60b92a9bf503b9a3939a42420368e87f4f0dfac2bea56719;Product model, business, native window and carrier decisions;finite reviewed identities only; complete domain remains unknown",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/verification-input.json#sha256=79772e985161d34c16fafb45e5be1d3cf40fb95b147df685a6b2e2a39fb704ab;Representative originals and per-message SHA;finite reviewed identities only; complete domain remains unknown"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/verification-input.json#sha256=79772e985161d34c16fafb45e5be1d3cf40fb95b147df685a6b2e2a39fb704ab;Representative originals and per-message SHA;finite reviewed identities only; complete domain remains unknown",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-31/verification-input.json#sha256=f5ac61c0373d34b3d0e2221541eb4601fcb8b0ae5f63bba6a62832fbc7271133;Representative originals and per-message SHA;finite reviewed identities only; complete domain remains unknown"
           ],
           "id": "orig",
           "methods": [],
@@ -1087,6 +1088,14 @@
                 }
               ],
               "parameter": "cedarkit.sw"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.qfxsfc"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sweatidx"
             }
           ],
           "scope": {},
@@ -1571,8 +1580,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-tym.current",
-          "sha256": "9e7c2065b03174b962e77fb90399cc022450e6f5aaf5d35ec273c580838d690f",
-          "version": "8"
+          "sha256": "dfafbaf6fbb1f71ec52cf3f89b0a88fd61a8d5711d0bd745e6b16596a6704c29",
+          "version": "9"
         }
       },
       "products": [
@@ -1589,7 +1598,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-22/identity-unit-review.json#sha256=28d5488854897687c7b0861a03515625a2110400881abbcb715e3aa956b6dd1d;154 scoped decisions,64 stable identities, per-product model/original/business literal positions and SHA;finite reviewed identities only; complete domain remains unknown",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-24/identity-unit-review.json#sha256=e071d189aee170d01b51bf58b98cb7563cfc57dee5cf0121ffcb16d4b8225daf;Product model, business, native window and carrier decisions;finite reviewed identities only; complete domain remains unknown",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/verification-input.json#sha256=79772e985161d34c16fafb45e5be1d3cf40fb95b147df685a6b2e2a39fb704ab;Representative originals and per-message SHA;finite reviewed identities only; complete domain remains unknown"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-30/verification-input.json#sha256=79772e985161d34c16fafb45e5be1d3cf40fb95b147df685a6b2e2a39fb704ab;Representative originals and per-message SHA;finite reviewed identities only; complete domain remains unknown",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-31/verification-input.json#sha256=f5ac61c0373d34b3d0e2221541eb4601fcb8b0ae5f63bba6a62832fbc7271133;Representative originals and per-message SHA;finite reviewed identities only; complete domain remains unknown"
           ],
           "id": "orig",
           "methods": [],
@@ -2107,6 +2117,10 @@
                 }
               ],
               "parameter": "cedarkit.sw-0-10"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.qfxsfc"
             }
           ],
           "scope": {},
@@ -3037,5 +3051,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "24"
+  "version": "25"
 }

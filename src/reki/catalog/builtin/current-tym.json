@@ -6,8 +6,8 @@
   ],
   "parameter_registry": {
     "builtin": "reki.parameters.cma-tym.current",
-    "sha256": "f7dfd96c6e8e5914cecf219358e95380a59bbd01affa4e4ccf01bb6aabc66818",
-    "version": "5"
+    "sha256": "63779c76f07c95e058c0010e523eba9a54c9af7727b92907e133bc3aa99bd8ae",
+    "version": "6"
   },
   "product": "orig",
   "product_version": "current",
@@ -529,6 +529,10 @@
         }
       ],
       "parameter": "cedarkit.sw-0-10"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.qfxsfc"
     }
   ],
   "time_zone": "UTC",

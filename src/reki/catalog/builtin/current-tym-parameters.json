@@ -190,6 +190,24 @@
       "unit": "kg/kg"
     },
     {
+      "aliases": [
+        "qfx"
+      ],
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "qfxsfc",
+      "parameter_id": "cedarkit.qfxsfc",
+      "parent": "cedarkit.qfxsfc.any"
+    },
+    {
+      "description": "Surface moisture flux",
+      "description_cn": "地表水汽通量",
+      "name": "qfxsfc",
+      "parameter_id": "cedarkit.qfxsfc.any",
+      "unit": "kg/(m2.s)"
+    },
+    {
       "description": "Ice mixing ratio",
       "description_cn": "冰水混合比",
       "name": "qi",
@@ -707,5 +725,5 @@
       "parent": "cedarkit.h.any"
     }
   ],
-  "version": "5"
+  "version": "6"
 }

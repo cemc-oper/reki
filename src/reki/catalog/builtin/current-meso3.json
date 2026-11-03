@@ -6,8 +6,8 @@
   ],
   "parameter_registry": {
     "builtin": "reki.parameters.cma-meso-3km.current",
-    "sha256": "a9ea6aafd5f0df810446ee272bec8576f7c19c3c0982f76b618138a9c3830d51",
-    "version": "6"
+    "sha256": "3bad2962e2688f7cbd5fd770b9ba5fdd4a16e536594be1cb99716b519fe83938",
+    "version": "7"
   },
   "product": "orig",
   "product_version": "current",
@@ -516,6 +516,14 @@
         }
       ],
       "parameter": "cedarkit.sw"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.qfxsfc"
+    },
+    {
+      "level_type": "surface",
+      "parameter": "cedarkit.sweatidx"
     }
   ],
   "time_zone": "UTC",

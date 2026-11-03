@@ -1903,6 +1903,116 @@
       },
       "backend": "grib2",
       "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-28/identity-unit-review.json#sha256=0bb228a9b2a3398d443a6b1cff3840944703fa077510bb5cb070ef441b8af3f0;Producer case, physical carrier, original and scoped decisions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-31/candidate-headers.json#sha256=8305ab379ade76ad4faf3b42573ec8942580b926bcaba0d1c0d53fff7493fa06;Frozen complete original header index",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-31/native-difference.json#sha256=be26ae6287f6a1f6af39c1dcd9f2976218fd95250bae4abe3e5e5d43c1c12ffd;Comparison using existing finite backend rules",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-31/verification-input.json#sha256=f5ac61c0373d34b3d0e2221541eb4601fcb8b0ae5f63bba6a62832fbc7271133;Representative originals and per-message SHA"
+      ],
+      "id": "qfxsfc.instantaneous.analysis",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 1,
+          "parameterCategory": 1,
+          "parameterNumber": 229,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/(m2.s)"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.qfxsfc",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-28/identity-unit-review.json#sha256=0bb228a9b2a3398d443a6b1cff3840944703fa077510bb5cb070ef441b8af3f0;Producer case, physical carrier, original and scoped decisions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-31/candidate-headers.json#sha256=8305ab379ade76ad4faf3b42573ec8942580b926bcaba0d1c0d53fff7493fa06;Frozen complete original header index",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-31/native-difference.json#sha256=be26ae6287f6a1f6af39c1dcd9f2976218fd95250bae4abe3e5e5d43c1c12ffd;Comparison using existing finite backend rules",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-31/verification-input.json#sha256=f5ac61c0373d34b3d0e2221541eb4601fcb8b0ae5f63bba6a62832fbc7271133;Representative originals and per-message SHA"
+      ],
+      "id": "qfxsfc.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 1,
+          "parameterCategory": 1,
+          "parameterNumber": 229,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/(m2.s)"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.qfxsfc",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Own product rows; no dedicated1km table; GFS SWEATX row49 explicitly unit 无",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-21/terrain-unit-role-proof.json#sha256=a2f3ffacfca37d0aed915cb36b43a7d3e62aeaaf2b95ae0aca901343ddca2b71;Preserved decoder concept role proof; each new product independently reviews its own producer Gpm declaration",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-22/business-extract.json#sha256=4be8e71ac79ae076cb9eaa7d9ff72438012b1f361aded30fd29985541359c004;Fresh XML original rows and positions; no product-domain borrowing",
@@ -6345,5 +6455,5 @@
     }
   ],
   "tables": [],
-  "version": "8"
+  "version": "9"
 }
