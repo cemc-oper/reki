@@ -5322,6 +5322,79 @@
       },
       "backend": "grib2",
       "evidence": [
+        "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Own product business rows",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-25/identity-unit-review.json#sha256=eda0ef3b1cf4c31f60b92a9bf503b9a3939a42420368e87f4f0dfac2bea56719;Product model, business, native window and carrier decisions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-25/q21-decision.md#sha256=c993deeb614222aa88a4dd6127ba78c0a32cf58c71f33acbf8acdb7a8deb5269;Confirmed time extremum period contract",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-27/original-writer-probe.json#sha256=40aa90137984366b4dd2ab1c985bdd2a98974190ab76c798f4bb661250c0dac8;Preserved original binary carrier and code branch evidence",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-28/candidate-headers.json#sha256=7894bab5e90b9e3da38e3c248afb0b72fbf8905b329949bf0e604cc6377e412a;Frozen current originals and per-message SHA",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-28/verification-input.json#sha256=ca189cabe96083e59f4f58855ae006eaea1c8102275654b84a239ef5351b9d04;Representative numerical originals and separate initial-window dispositions",
+        "doc/2026-10-13-stage1.1-query-reki/ref/package/grib_util_v12.6/include/paraNum.h#sha256=4155dc170aa283dbefba976d15b4e684486aa8e788f68e3f38c6aa31e1ef7bb3;Original identity and unit declarations",
+        "doc/2026-10-13-stage1.1-query-reki/ref/rebuilt/src/module_grib_util.f90#sha256=d4a4378fa80c322552eb056404dd5e608ed05bb333aa764385476aa0274f8d61;Reconstructed producer naming and operation branches, corroborated by original encoding evidence"
+      ],
+      "id": "uhmax-2000-5000.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 7,
+          "parameterNumber": 15,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 103,
+          "typeOfStatisticalProcessing": 2,
+          "typeOfTimeIncrement": 2
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m2/s2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.uhmax-2000-5000",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 2000
+          },
+          "top": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 5000
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/cedarkit-param-db/migrations/stage1.1-i03-grib-util-batch-2/file-mappings/mappings-00-grib2.json#sha256=2a1c30e3ba08084f2bb26d235e840f795d405ae422350d73556a2e68ccf7379d;reviewed encoding origin",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-6/current-version-policy.md#sha256=ad9dcfdca70c99d4c2df56c38d18f0098611a77d1b98a22d45499d0b9ff70152;user-authorized current-only business policy; no official V-number asserted",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-7/business-material.json#sha256=a611efb07e9486352bd84f44bc6808d3fb7fd3314c5066cd4901fa55400cadc0;DOCX table 1; pressure, height, unit and actual soil intervals",
@@ -6025,5 +6098,5 @@
     }
   ],
   "tables": [],
-  "version": "7"
+  "version": "8"
 }

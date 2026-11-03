@@ -6,8 +6,8 @@
   ],
   "parameter_registry": {
     "builtin": "reki.parameters.cma-meso-1km.current",
-    "sha256": "aecf2e2f640aefbfca1b9967b0806aa00a3fa20987a8a887de007fed444934c7",
-    "version": "4"
+    "sha256": "31902278cef4be705ce20d97d2f3e8d5fb0396d316b2c1da775c1f81e267e41c",
+    "version": "5"
   },
   "product": "orig",
   "product_version": "current",
@@ -341,6 +341,21 @@
       "level_type": "height_above_ground",
       "level_unit": "m",
       "parameter": "cedarkit.v10mmax-1"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 2000
+        },
+        "top": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 5000
+        }
+      },
+      "parameter": "cedarkit.uhmax-2000-5000"
     }
   ],
   "time_zone": "UTC",

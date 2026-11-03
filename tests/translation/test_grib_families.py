@@ -422,22 +422,56 @@ def test_actual_layer_boundaries_survive_all_template_families(family_source, te
         assert variable.attrs["layer_top_value"] == 500
 
 
-@pytest.mark.parametrize("template", (8, 11, 12, 9, 10))
+@pytest.mark.parametrize(
+    ("template", "operation", "native_operation"),
+    [(template, "accumulation", 1) for template in (8, 11, 12, 9, 10)]
+    + [(8, "maximum", 2), (8, "minimum", 3)],
+)
 def test_actual_trailing_window_cannot_be_relabelled_since_init(
-    family_source, template
+    family_source, template, operation, native_operation
 ):
     def edit(params, maps, product):
         parameter = params["parameters"][1 if template in ENSEMBLE else 0]
         parameter["fixed_conditions"]["statistics"].update(
-            operation="accumulation", period={"kind": "since_initialization"}
+            operation=operation, period={"kind": "since_initialization"}
         )
 
     source, identity, _ = family_source(
-        template, edit=edit, overrides=[{"typeOfStatisticalProcessing": 1}]
+        template, edit=edit, overrides=[{"typeOfStatisticalProcessing": native_operation}]
     )
     with source, pytest.raises(SourceError) as exc:
         source.sel(identity).all()
     assert exc.value.context["reason"] == "fixed_definition_mismatch"
+
+
+@pytest.mark.parametrize(
+    ("operation", "native_operation"), [("maximum", 2), ("minimum", 3)]
+)
+def test_since_initialization_extremum_uses_the_actual_interval(
+    family_source, operation, native_operation
+):
+    def edit(params, maps, product):
+        params["parameters"][0]["fixed_conditions"]["statistics"].update(
+            operation=operation, period={"kind": "since_initialization"}
+        )
+
+    source, identity, _ = family_source(
+        8,
+        edit=edit,
+        overrides=[
+            {
+                "forecastTime": 0,
+                "lengthOfTimeRange": 12,
+                "typeOfStatisticalProcessing": native_operation,
+            }
+        ],
+    )
+    with source:
+        field = source.sel(identity).one()
+    assert field.metadata["statistical_interval"] == {
+        "start": REFERENCE,
+        "end": "2026-01-01T12:00:00Z",
+    }
 
 
 @pytest.mark.parametrize("template", (5, 9))

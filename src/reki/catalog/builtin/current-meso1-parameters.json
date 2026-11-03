@@ -551,6 +551,40 @@
       "parent": "cedarkit.u"
     },
     {
+      "description_cn": "2-5km最大上升螺旋度",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 2000
+          },
+          "top": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 5000
+          }
+        },
+        "statistics": {
+          "operation": "maximum",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "uhmax(2000-5000)",
+      "parameter_id": "cedarkit.uhmax-2000-5000",
+      "parent": "cedarkit.uhmax.any"
+    },
+    {
+      "description": "Updraught helicity",
+      "description_cn": "最大上升螺旋度",
+      "name": "uhmax",
+      "parameter_id": "cedarkit.uhmax.any",
+      "unit": "m2/s2"
+    },
+    {
       "description": "V-component of wind",
       "description_cn": "南北风",
       "name": "v",
@@ -654,5 +688,5 @@
       "parent": "cedarkit.h.any"
     }
   ],
-  "version": "4"
+  "version": "5"
 }

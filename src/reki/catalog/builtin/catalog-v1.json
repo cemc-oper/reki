@@ -470,8 +470,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-meso-3km.current",
-          "sha256": "86167892f8e97954b5383f4d2cf73b699da2a77ab82ecdb249b63dff3cbf4224",
-          "version": "7"
+          "sha256": "ffe9648d1b68e6b852b2e648dc9a8eaa18a15e5ac09fa87295dfefcb44ac8300",
+          "version": "8"
         }
       },
       "products": [
@@ -487,7 +487,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
             "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-22/identity-unit-review.json#sha256=28d5488854897687c7b0861a03515625a2110400881abbcb715e3aa956b6dd1d;154 scoped decisions,64 stable identities, per-product model/original/business literal positions and SHA;finite reviewed identities only; complete domain remains unknown",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-24/identity-unit-review.json#sha256=e071d189aee170d01b51bf58b98cb7563cfc57dee5cf0121ffcb16d4b8225daf;Product model, business, native window and carrier decisions;finite reviewed identities only; complete domain remains unknown"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-24/identity-unit-review.json#sha256=e071d189aee170d01b51bf58b98cb7563cfc57dee5cf0121ffcb16d4b8225daf;Product model, business, native window and carrier decisions;finite reviewed identities only; complete domain remains unknown",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-25/identity-unit-review.json#sha256=eda0ef3b1cf4c31f60b92a9bf503b9a3939a42420368e87f4f0dfac2bea56719;Product model, business, native window and carrier decisions;finite reviewed identities only; complete domain remains unknown"
           ],
           "id": "orig",
           "methods": [],
@@ -851,6 +852,21 @@
               "level_type": "height_above_ground",
               "level_unit": "m",
               "parameter": "cedarkit.v10mmax-1"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 2000
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 5000
+                }
+              },
+              "parameter": "cedarkit.uhmax-2000-5000"
             }
           ],
           "scope": {},
@@ -876,8 +892,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-meso-1km.current",
-          "sha256": "60de65f7e1f5971a94ff6a9d4919a7fe5dee44e680725a14219af24acc854282",
-          "version": "7"
+          "sha256": "6976691ba86aa8dd5fc6ee8994b45beb37a3495308c7967ac71ce8966803aeae",
+          "version": "8"
         }
       },
       "products": [
@@ -893,7 +909,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
             "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-22/identity-unit-review.json#sha256=28d5488854897687c7b0861a03515625a2110400881abbcb715e3aa956b6dd1d;154 scoped decisions,64 stable identities, per-product model/original/business literal positions and SHA;finite reviewed identities only; complete domain remains unknown",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-24/identity-unit-review.json#sha256=e071d189aee170d01b51bf58b98cb7563cfc57dee5cf0121ffcb16d4b8225daf;Product model, business, native window and carrier decisions;finite reviewed identities only; complete domain remains unknown"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-24/identity-unit-review.json#sha256=e071d189aee170d01b51bf58b98cb7563cfc57dee5cf0121ffcb16d4b8225daf;Product model, business, native window and carrier decisions;finite reviewed identities only; complete domain remains unknown",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-25/identity-unit-review.json#sha256=eda0ef3b1cf4c31f60b92a9bf503b9a3939a42420368e87f4f0dfac2bea56719;Product model, business, native window and carrier decisions;finite reviewed identities only; complete domain remains unknown"
           ],
           "id": "orig",
           "methods": [],
@@ -1225,6 +1242,21 @@
               "level_type": "height_above_ground",
               "level_unit": "m",
               "parameter": "cedarkit.v10mmax-1"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 2000
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 5000
+                }
+              },
+              "parameter": "cedarkit.uhmax-2000-5000"
             }
           ],
           "scope": {},
@@ -2597,5 +2629,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "21"
+  "version": "22"
 }
