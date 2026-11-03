@@ -63,7 +63,7 @@ def test_reviewed_codes_have_a_bounded_native_path(category, number, surface):
         {"tablesVersion": 5},
         {"localTablesVersion": 2},
         {"productionStatusOfProcessedData": 4},
-        {"productDefinitionTemplateNumber": 1},
+        {"productDefinitionTemplateNumber": 11},
         {"productDefinitionTemplateNumber": 8},
         {"parameterNumber": 227},
         {"typeOfFirstFixedSurface": 100},
@@ -483,3 +483,74 @@ def test_explicit_sweat_source_unit_has_exact_producer_product_and_view_guards(p
     assert resolve(pid="cedarkit.precitype") is None
     assert resolve(unit="%") is None
     assert resolve(unit=None) is None
+
+
+@pytest.mark.parametrize("category", [7, 16])
+def test_reviewed_local_member_forms_keep_precise_template_and_producer_guards(
+    category,
+):
+    native = profile(
+        productDefinitionTemplateNumber=1,
+        parameterCategory=category,
+        parameterNumber=224,
+        typeOfFirstFixedSurface=1,
+        typeOfSecondFixedSurface=255,
+    )
+    assert grib.applicability(native) == 1
+    for key, value in [
+        ("centre", 98),
+        ("subCentre", 1),
+        ("tablesVersion", 5),
+        ("localTablesVersion", 2),
+        ("productionStatusOfProcessedData", 4),
+        ("productDefinitionTemplateNumber", 11),
+        ("parameterNumber", 225),
+        ("typeOfFirstFixedSurface", 100),
+        ("typeOfSecondFixedSurface", 8),
+    ]:
+        with pytest.raises(SourceError) as exc:
+            grib.applicability({**native, key: value})
+        assert exc.value.context["reason"] == "unsupported_native_encoding"
+    # Recognizing the member template supplies no CDBZ/DCAPE unit or identity.
+    assert grib.source_value_unit({**native, "units": "unknown"}) is None
+
+
+@pytest.mark.parametrize("phase", [(3, 4, 0), (3, 4, 1), (4, 4, 0), (4, 4, 1)])
+def test_geps_terrain_unit_uses_own_member_product_declaration(phase):
+    from reki.translation.cemc_grib import terrain_source_unit
+
+    native = profile(
+        localTablesVersion=0,
+        productDefinitionTemplateNumber=1,
+        parameterCategory=3,
+        parameterNumber=5,
+        typeOfProcessedData=phase[0],
+        typeOfGeneratingProcess=phase[1],
+        significanceOfReferenceTime=phase[2],
+        units="m",
+        parameterUnits="gpm",
+    )
+    context = {"dataset": "cma_geps", "product": "orig", "product_version": "current"}
+
+    def resolve(meta=native, ctx=context, pid="cedarkit.zs", unit="Gpm"):
+        return terrain_source_unit(
+            meta, context=ctx, parameter_id=pid, source_unit=unit
+        )
+
+    assert resolve() == "Gpm"
+    for key, value in [
+        ("centre", 98),
+        ("localTablesVersion", 1),
+        ("productDefinitionTemplateNumber", 0),
+        ("parameterNumber", 4),
+        ("typeOfProcessedData", False),
+        ("typeOfGeneratingProcess", 2),
+        ("units", "unknown"),
+        ("parameterUnits", "m"),
+    ]:
+        assert resolve({**native, key: value}) is None
+    for dataset in ["cma_reps", "cma_gfs_gmf", "cma_meso_1km", "cma_tym"]:
+        assert resolve(ctx={**context, "dataset": dataset}) is None
+    assert resolve(ctx={**context, "product_version": "next"}) is None
+    assert resolve(pid="cedarkit.h") is None
+    assert resolve(unit="m") is None

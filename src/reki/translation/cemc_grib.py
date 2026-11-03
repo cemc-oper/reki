@@ -2,7 +2,7 @@
 
 The original paraNum.h and setGrib2Section4Parameters define these codes.
 The complete writer sets centre 38, master table 4 and local table 1.
-These slices cover operational deterministic instantaneous messages only.
+These slices cover reviewed operational instantaneous producer encodings.
 Additional exact GFS surface and TOA clear-sky longwave energy encodings are checked
 separately; its declared unit belongs to the finite product mapping.
 It supplies no default parameter IDs, product scope, members or statistics.
@@ -70,11 +70,40 @@ def value_unit(meta):
     return None
 
 
+def member_instantaneous(meta):
+    """Recognize only the reviewed CDBZ/DCAPE local member encodings.
+
+    Original cases281/329 and current GEPS/REPS headers establish these
+    surface PDT1 forms. Product mappings retain their exact phase/role
+    conditions; grib.member checks the product's complete joint numbering.
+    This supplies no unit, member domain or ensemble-statistic identity.
+    """
+    keys = (
+        "edition",
+        "centre",
+        "subCentre",
+        "tablesVersion",
+        "localTablesVersion",
+        "productionStatusOfProcessedData",
+        "productDefinitionTemplateNumber",
+        "discipline",
+        "parameterCategory",
+        "parameterNumber",
+        "typeOfFirstFixedSurface",
+        "typeOfSecondFixedSurface",
+    )
+    native = tuple(meta.get(k) for k in keys)
+    return all(type(v) is int for v in native) and native in {
+        (2, 38, 0, 4, 1, 0, 1, 0, 16, 224, 1, 255),
+        (2, 38, 0, 4, 1, 0, 1, 0, 7, 224, 1, 255),
+    }
+
+
 def terrain_source_unit(meta, *, context, parameter_id, source_unit):
     """Resolve reviewed current ORIG ZS decoder views from producer evidence.
 
-    Original case7 and each reviewed model declaration state Gpm; own
-    product business rows corroborate it where available.
+    Original case7 and reviewed model declarations state Gpm; GEPS has its
+    own explicit business Gpm declaration and reviewed member context.
     ecCodes' generic geopotential-height concept says gpm, while its surface
     orography concept selects m. Neither string is stored in the message.
     This scoped interpretation changes no values and defines no global m/Gpm
@@ -84,7 +113,7 @@ def terrain_source_unit(meta, *, context, parameter_id, source_unit):
         parameter_id != "cedarkit.zs"
         or source_unit != "Gpm"
         or context.get("dataset")
-        not in {"cma_gfs_gmf", "cma_meso_1km", "cma_meso_3km", "cma_tym"}
+        not in {"cma_gfs_gmf", "cma_meso_1km", "cma_meso_3km", "cma_tym", "cma_geps"}
         or any(
             context.get(key) != value
             for key, value in {
@@ -119,10 +148,17 @@ def terrain_source_unit(meta, *, context, parameter_id, source_unit):
             "significanceOfReferenceTime",
         )
     )
-    if (
-        all(type(value) is int for value in native + phase)
-        and native == (2, 38, 0, 4, 0, 0, 0, 0, 3, 5, 1, 255)
-        and phase in {(0, 0, 0), (1, 2, 1)}
+    if all(type(value) is int for value in native + phase) and (
+        (
+            context.get("dataset") != "cma_geps"
+            and native == (2, 38, 0, 4, 0, 0, 0, 0, 3, 5, 1, 255)
+            and phase in {(0, 0, 0), (1, 2, 1)}
+        )
+        or (
+            context.get("dataset") == "cma_geps"
+            and native == (2, 38, 0, 4, 0, 0, 1, 0, 3, 5, 1, 255)
+            and phase in {(3, 4, 0), (3, 4, 1), (4, 4, 0), (4, 4, 1)}
+        )
     ):
         return "Gpm"
     return None

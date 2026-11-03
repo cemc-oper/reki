@@ -66,7 +66,9 @@ def applicability(meta):
         4,
         0,
     ) and not (
-        cemc_grib.applies(meta) or cemc_grib.is_gfs_clear_sky_longwave_energy(meta)
+        cemc_grib.applies(meta)
+        or cemc_grib.member_instantaneous(meta)
+        or cemc_grib.is_gfs_clear_sky_longwave_energy(meta)
     ):
         metadata_error(
             "unsupported_native_encoding",

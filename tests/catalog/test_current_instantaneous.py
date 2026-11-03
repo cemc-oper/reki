@@ -309,9 +309,9 @@ def test_generic_pressure_and_unsampled_lead_remain_readable_with_explicit_calle
 @pytest.mark.parametrize(
     "system", ["CMA-GEPS", "CMA-REPS"]
 )
-def test_gfs_pressure_height_binding_does_not_register_other_systems(tmp_path, system):
+def test_unreviewed_wind_index_is_not_registered_in_member_products(tmp_path, system):
     path = tmp_path / "unopened"
     path.touch()
     with from_source({"kind": "file", "dataset": system, "path": str(path)}) as source:
         with pytest.raises(QueryError):
-            source.sel(parameter="h").explain()
+            source.sel(parameter="wi").explain()

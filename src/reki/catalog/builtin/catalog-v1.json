@@ -1641,8 +1641,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-geps.current",
-          "sha256": "8ef1282206d3ef71d610037b1312a193001f1259e862d1634c875250afe3a603",
-          "version": "5"
+          "sha256": "213c35b825fd215d290d9b2a85d40881bd9e721d7689fc1d3f8dd6bfc0fee512",
+          "version": "6"
         }
       },
       "products": [
@@ -1657,7 +1657,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;current finite precipitation lead extension",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries",
             "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-23/identity-unit-review.json#sha256=282edd43a6999b50dc787c017ece9dd626b2d79df1b44f6a527d30f15b114aa5;140 product-pair decisions, own source literals and missing ensemble model configurations explicit;finite reviewed identities only; complete domain remains unknown"
           ],
           "id": "orig",
           "methods": [],
@@ -1811,6 +1812,256 @@
                 }
               },
               "parameter": "cedarkit.rainnc.since-initialization"
+            },
+            {
+              "level_type": "pressure",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.h"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.rh2m"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.cape"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.cin"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.dcape"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.bli"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "surface"
+                },
+                "top": {
+                  "type": "atmosphere_top"
+                }
+              },
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.tcc"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "surface"
+                },
+                "top": {
+                  "type": "atmosphere_top"
+                }
+              },
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.lcc"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "surface"
+                },
+                "top": {
+                  "type": "atmosphere_top"
+                }
+              },
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.mcc"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "surface"
+                },
+                "top": {
+                  "type": "atmosphere_top"
+                }
+              },
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.hcc"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.pwat"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.vis"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.zs"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.cdbz"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.shr-0-1000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 3000
+                }
+              },
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.shr-0-3000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 6000
+                }
+              },
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.shr-0-6000"
             }
           ],
           "scope": {
@@ -1844,8 +2095,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-reps.current",
-          "sha256": "43afc18967bcd5e1f9c0cb3e0c63810afa77e5e2f50ac75a591b908511b4deed",
-          "version": "5"
+          "sha256": "656e0a221d9bf3859ebb3791cb35818e9a5531b51969ab05acea2108f0c36ee2",
+          "version": "6"
         }
       },
       "products": [
@@ -1860,7 +2111,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-17/inventory.json#sha256=5187a33dd310b595583407dc2058b01305575bff38ad783d09be2d4e97ca5952;current finite precipitation lead extension",
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries",
             "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-23/identity-unit-review.json#sha256=282edd43a6999b50dc787c017ece9dd626b2d79df1b44f6a527d30f15b114aa5;140 product-pair decisions, own source literals and missing ensemble model configurations explicit;finite reviewed identities only; complete domain remains unknown"
           ],
           "id": "orig",
           "methods": [],
@@ -1981,6 +2233,195 @@
                 }
               },
               "parameter": "cedarkit.rainc.since-initialization"
+            },
+            {
+              "level_type": "pressure",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.h"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.rh2m"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.cape"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.cin"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.dcape"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.bli"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.vis"
+            },
+            {
+              "level_type": "pressure",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.qc"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.ts"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.cdbz"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.sd"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.shr-0-1000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 3000
+                }
+              },
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.shr-0-3000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 6000
+                }
+              },
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.shr-0-6000"
             }
           ],
           "scope": {
@@ -2093,5 +2534,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "19"
+  "version": "20"
 }

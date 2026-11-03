@@ -164,8 +164,8 @@
   ],
   "parameter_registry": {
     "builtin": "reki.parameters.cma-geps.current",
-    "sha256": "73c293e71ff9123054b8eaf0b458e3464451156c214367e717adb0bae6a859dc",
-    "version": "2"
+    "sha256": "7a16e78bf95b891526450c6cf0468ea0a7a4f11733db25c17d1dcac1a877e1be",
+    "version": "3"
   },
   "product": "orig",
   "product_version": "current",
@@ -323,6 +323,256 @@
         }
       },
       "parameter": "cedarkit.rainnc.since-initialization"
+    },
+    {
+      "level_type": "pressure",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.h"
+    },
+    {
+      "level": 2,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.rh2m"
+    },
+    {
+      "level_type": "surface",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.cape"
+    },
+    {
+      "level_type": "surface",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.cin"
+    },
+    {
+      "level_type": "surface",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.dcape"
+    },
+    {
+      "level_type": "surface",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.bli"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "surface"
+        },
+        "top": {
+          "type": "atmosphere_top"
+        }
+      },
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.tcc"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "surface"
+        },
+        "top": {
+          "type": "atmosphere_top"
+        }
+      },
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.lcc"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "surface"
+        },
+        "top": {
+          "type": "atmosphere_top"
+        }
+      },
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.mcc"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "surface"
+        },
+        "top": {
+          "type": "atmosphere_top"
+        }
+      },
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.hcc"
+    },
+    {
+      "level_type": "entire_atmosphere",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.pwat"
+    },
+    {
+      "level_type": "surface",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.vis"
+    },
+    {
+      "level_type": "surface",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.zs"
+    },
+    {
+      "level_type": "surface",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.cdbz"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 0
+        },
+        "top": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 1000
+        }
+      },
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.shr-0-1000"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 0
+        },
+        "top": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 3000
+        }
+      },
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.shr-0-3000"
+    },
+    {
+      "layer": {
+        "bottom": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 0
+        },
+        "top": {
+          "type": "height_above_ground",
+          "unit": "m",
+          "value": 6000
+        }
+      },
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.shr-0-6000"
     }
   ],
   "time_zone": "UTC",

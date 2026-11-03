@@ -721,7 +721,7 @@ class GribScan:
             if terrain_unit is not None:
                 source_unit = terrain_unit
                 unit_origin = (
-                    "CEMC.current.ORIG.ZS: producer original case7 and reviewed model Gpm; "
+                    "CEMC.current.ORIG.ZS: producer original case7 and reviewed product Gpm declaration; "
                     "ecCodes units=m is the surface-orography concept view; "
                     "raw units/parameterUnits retained in native_fields"
                 )

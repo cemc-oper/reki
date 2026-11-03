@@ -327,9 +327,9 @@ def test_generic_pressure_and_unsampled_lead_remain_readable_with_explicit_calle
 
 
 @pytest.mark.parametrize(
-    "system", ["CMA-GEPS", "CMA-REPS"]
+    "system", ["CMA-GEPS"]
 )
-def test_gfs_pressure_height_binding_does_not_register_other_systems(tmp_path, system):
+def test_geps_cloud_water_remains_unregistered_without_an_exact_field(tmp_path, system):
     path = tmp_path / "unopened"
     path.touch()
     with from_source({"kind": "file", "dataset": system, "path": str(path)}) as source:
