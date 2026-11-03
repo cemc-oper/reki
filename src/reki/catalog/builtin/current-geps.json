@@ -164,8 +164,8 @@
   ],
   "parameter_registry": {
     "builtin": "reki.parameters.cma-geps.current",
-    "sha256": "7a16e78bf95b891526450c6cf0468ea0a7a4f11733db25c17d1dcac1a877e1be",
-    "version": "3"
+    "sha256": "02ab87429076f6efd87351930fe44401979c9603e34f99d84fae586c10443b89",
+    "version": "4"
   },
   "product": "orig",
   "product_version": "current",
@@ -573,6 +573,17 @@
         }
       },
       "parameter": "cedarkit.shr-0-6000"
+    },
+    {
+      "level_type": "surface",
+      "member": {
+        "range": {
+          "end": 30,
+          "every": 1,
+          "start": 0
+        }
+      },
+      "parameter": "cedarkit.sf"
     }
   ],
   "time_zone": "UTC",

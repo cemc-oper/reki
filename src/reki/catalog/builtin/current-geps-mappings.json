@@ -6666,6 +6666,204 @@
       },
       "backend": "grib2",
       "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-26/identity-unit-review.json#sha256=65a94c3af57b1f8fb451e5ae6b4f850f956f3f2173a29262f84221c0cdd1b449;Scoped source and fresh native interval decisions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-26/rain5max-contract.md#sha256=aa0cb39f71b3cd69fbb97ff2f941f37013e3b5b76ceff4e266aec570b3f64b4d;Separate inner five-minute quantity and outer maximum period",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-26/source-declarations.json#sha256=29cff94c049cbb9c477b7c82742d07a3db27b2721a27f7c6f42f7c2021736c44;Original case literals, probe, own business declarations and standard SF table",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-29/candidate-headers.json#sha256=6a2345a8a943a762e12763ff8f65294419f3d4923e5b1008fdbb4c62f24342a8;Frozen current originals and per-message SHA",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-29/original-writer-probe.json#sha256=a99dd9fb32c9c45dd7c739d48e91f40bf1683a7475a599f91feb974563035623;Original binary carrier and code branches",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-29/verification-input.json#sha256=b28bfbd86dde67715ed7473119ea6009bbc1bfa4970474f37448754f22264d3e;Representative numerical originals and separate initial-window dispositions"
+      ],
+      "id": "sf.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 31,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 1,
+          "parameterNumber": 29,
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 1,
+          "typeOfTimeIncrement": 2
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf",
+      "when": {
+        "level_type": "surface",
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_geps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-26/identity-unit-review.json#sha256=65a94c3af57b1f8fb451e5ae6b4f850f956f3f2173a29262f84221c0cdd1b449;Scoped source and fresh native interval decisions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-26/rain5max-contract.md#sha256=aa0cb39f71b3cd69fbb97ff2f941f37013e3b5b76ceff4e266aec570b3f64b4d;Separate inner five-minute quantity and outer maximum period",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-26/source-declarations.json#sha256=29cff94c049cbb9c477b7c82742d07a3db27b2721a27f7c6f42f7c2021736c44;Original case literals, probe, own business declarations and standard SF table",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-29/candidate-headers.json#sha256=6a2345a8a943a762e12763ff8f65294419f3d4923e5b1008fdbb4c62f24342a8;Frozen current originals and per-message SHA",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-29/original-writer-probe.json#sha256=a99dd9fb32c9c45dd7c739d48e91f40bf1683a7475a599f91feb974563035623;Original binary carrier and code branches",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-29/verification-input.json#sha256=b28bfbd86dde67715ed7473119ea6009bbc1bfa4970474f37448754f22264d3e;Representative numerical originals and separate initial-window dispositions"
+      ],
+      "id": "sf.forecast.negative",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 31,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 1,
+          "parameterNumber": 29,
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 2,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 1,
+          "typeOfTimeIncrement": 2
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf",
+      "when": {
+        "level_type": "surface",
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_geps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-26/identity-unit-review.json#sha256=65a94c3af57b1f8fb451e5ae6b4f850f956f3f2173a29262f84221c0cdd1b449;Scoped source and fresh native interval decisions",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-26/rain5max-contract.md#sha256=aa0cb39f71b3cd69fbb97ff2f941f37013e3b5b76ceff4e266aec570b3f64b4d;Separate inner five-minute quantity and outer maximum period",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-26/source-declarations.json#sha256=29cff94c049cbb9c477b7c82742d07a3db27b2721a27f7c6f42f7c2021736c44;Original case literals, probe, own business declarations and standard SF table",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-29/candidate-headers.json#sha256=6a2345a8a943a762e12763ff8f65294419f3d4923e5b1008fdbb4c62f24342a8;Frozen current originals and per-message SHA",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-29/original-writer-probe.json#sha256=a99dd9fb32c9c45dd7c739d48e91f40bf1683a7475a599f91feb974563035623;Original binary carrier and code branches",
+        "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-29/verification-input.json#sha256=b28bfbd86dde67715ed7473119ea6009bbc1bfa4970474f37448754f22264d3e;Representative numerical originals and separate initial-window dispositions"
+      ],
+      "id": "sf.forecast.positive",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 31,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 1,
+          "parameterNumber": 29,
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 3,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 1,
+          "typeOfTimeIncrement": 2
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf",
+      "when": {
+        "level_type": "surface",
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_geps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
         "data/doc/CMA天气模式数据 - 2026.06.docx#sha256=fee50842a93fa9a344a7839c56eaa386355799481c251ec1552bf1a43fd3116a;Own GEPS table3/REPS table4 business literals, other current product rows independently reviewed",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-23/business-extract.json#sha256=248c667b07499c2922715933d8688c2d6e373b74d9df7ebe3233950a78a2eae5;Fresh DOCX XML original rows and positions",
         "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-23/identity-unit-review.json#sha256=282edd43a6999b50dc787c017ece9dd626b2d79df1b44f6a527d30f15b114aa5;140 product-pair decisions, own source literals and missing ensemble model configurations explicit",
@@ -10872,5 +11070,5 @@
     }
   ],
   "tables": [],
-  "version": "6"
+  "version": "7"
 }

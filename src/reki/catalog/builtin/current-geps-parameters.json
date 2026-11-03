@@ -287,6 +287,32 @@
     },
     {
       "aliases": [
+        "asnow",
+        "snow"
+      ],
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "sf",
+      "parameter_id": "cedarkit.sf",
+      "parent": "cedarkit.sf.any"
+    },
+    {
+      "description": "Total snowfall",
+      "description_cn": "降雪",
+      "name": "sf",
+      "parameter_id": "cedarkit.sf.any",
+      "unit": "m"
+    },
+    {
+      "aliases": [
         "vwsh"
       ],
       "description": "Vertical speed shear",
@@ -453,5 +479,5 @@
       "parent": "cedarkit.h.any"
     }
   ],
-  "version": "3"
+  "version": "4"
 }

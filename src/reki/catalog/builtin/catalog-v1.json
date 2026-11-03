@@ -1736,8 +1736,8 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-geps.current",
-          "sha256": "213c35b825fd215d290d9b2a85d40881bd9e721d7689fc1d3f8dd6bfc0fee512",
-          "version": "6"
+          "sha256": "080dc11393d59f247d6c10f0a8e8fccc762406bfe9a9c74e2c8697ad9332f511",
+          "version": "7"
         }
       },
       "products": [
@@ -1753,7 +1753,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-14/time-unit-decisions.json#sha256=184ab4640b5877fb27513c72ff69d383d96f33f9d924a18f110782e97103c5f2;actual coded intervals, units, initial/forecast and member role boundaries",
             "doc/2026-10-13-stage1.1-query-reki/evidence/step-sampling-correction/review.json#sha256=f256034f7815aae0aace925127b326c586bcbfc831d26bdb4dc948bd791b795f;user-confirmed CEMC lead invariance; historical leads are validation samples, not runtime applicability",
             "doc/2026-10-13-stage1.1-query-reki/evidence/pressure-sampling-correction/review.json#sha256=9e3942d522410a8dad2ee691942b9d66a33547a2fe9d622ab0f980d2ff951b09;generic pressure definitions and surface100 retain native pressure semantics; numeric sample levels are not runtime applicability",
-            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-23/identity-unit-review.json#sha256=282edd43a6999b50dc787c017ece9dd626b2d79df1b44f6a527d30f15b114aa5;140 product-pair decisions, own source literals and missing ensemble model configurations explicit;finite reviewed identities only; complete domain remains unknown"
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I04/round-23/identity-unit-review.json#sha256=282edd43a6999b50dc787c017ece9dd626b2d79df1b44f6a527d30f15b114aa5;140 product-pair decisions, own source literals and missing ensemble model configurations explicit;finite reviewed identities only; complete domain remains unknown",
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-29/candidate-headers.json#sha256=6a2345a8a943a762e12763ff8f65294419f3d4923e5b1008fdbb4c62f24342a8;Frozen current originals and per-message SHA;finite reviewed identities only; complete domain remains unknown"
           ],
           "id": "orig",
           "methods": [],
@@ -2157,6 +2158,17 @@
                 }
               },
               "parameter": "cedarkit.shr-0-6000"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 0
+                }
+              },
+              "parameter": "cedarkit.sf"
             }
           ],
           "scope": {
@@ -2629,5 +2641,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "22"
+  "version": "23"
 }
