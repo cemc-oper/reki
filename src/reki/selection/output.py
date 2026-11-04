@@ -49,14 +49,52 @@ def _coordinates(identity):
     return coords
 
 
+def _business_name(identity, name, fixed_layer):
+    layer = identity.get("layer")
+    if layer is None or layer == fixed_layer:
+        return name
+    bottom, top = layer["bottom"], layer["top"]
+
+    def value(point):
+        return f"{point.get('value', '')}{point.get('unit', '')}"
+
+    if bottom["type"] == top["type"]:
+        return (
+            f"{name}__layer__{bottom['type']}__bottom_{value(bottom)}__top_{value(top)}"
+        )
+    endpoints = [
+        f"{side}_{point['type']}" + (f"_{value(point)}" if "value" in point else "")
+        for side, point in (("bottom", bottom), ("top", top))
+    ]
+    return name + "__layer__" + "__".join(endpoints)
+
+
 def _variable(field):
     identity = field.identity.to_dict()
     meta = thaw(field.metadata)
+    if "parameter_id" in meta:
+        semantic = {
+            "parameter": meta["parameter_id"],
+            "vertical": identity.get("level_type"),
+        }
+        name = _business_name(identity, meta["parameter_name"], meta.get("fixed_layer"))
+        if "layer" in identity:
+            semantic["layer"] = identity["layer"]
+        return key(semantic), name, identity, meta
     return key(meta["native_variable"]), meta["native_name"], identity, meta
 
 
 def _attrs(identity, meta):
-    attrs = {f"GRIB_{k}": v for k, v in meta["native_variable"].items()}
+    if "parameter_id" in meta:
+        attrs = {
+            "cedarkit_parameter_id": meta["parameter_id"],
+            "cedarkit_parameter_name": meta["parameter_name"],
+            "units": meta["unit"],
+        }
+        if "description" in meta:
+            attrs["long_name"] = meta["description"]
+    else:
+        attrs = {f"GRIB_{k}": v for k, v in meta["native_variable"].items()}
     if "layer" in identity:
         for side, endpoint in identity["layer"].items():
             for k, v in endpoint.items():
@@ -87,7 +125,7 @@ def _values(field):
     return array
 
 
-def assemble(fields, report, rename):
+def assemble(fields, report, rename, *, parameters=None):
     groups, names, positions, grids, vertical, roles = {}, {}, set(), [], {}, {}
     for field in fields:
         semantic, name, identity, meta = _variable(field)
@@ -146,8 +184,21 @@ def assemble(fields, report, rename):
         targets = {g: rename for g in groups}
     elif rename is None or isinstance(rename, dict):
         rename = {} if rename is None else rename
+        missing_names = set()
+        if rename and parameters:
+            for missing in report.overall["missing"]:
+                selection = missing["selection"]
+                definition = parameters.get(selection.get("parameter"))
+                if definition is not None:
+                    missing_names.add(
+                        _business_name(
+                            selection,
+                            definition["name"],
+                            definition["fixed_conditions"].get("layer"),
+                        )
+                    )
         for source in rename:
-            if source not in names:
+            if source not in names and source not in missing_names:
                 _error(
                     "invalid_query",
                     "rename contains an unknown source name",

@@ -1,0 +1,328 @@
+"""Reviewed named GRIB paths over the existing native metadata reader."""
+
+from cedarkit_query import (
+    QueryError,
+    constrain_query,
+    expand_queries,
+    intersect_scopes,
+    normalize_query,
+)
+from cedarkit_query.normalize import _contains
+
+from reki.catalog.model import thaw
+from reki.selection.backend import is_concrete
+from reki.selection.core import matches
+
+from . import grib
+from .common import metadata_error
+
+_RULES = {
+    "vertical": "grib.fixed_surfaces",
+    "time": "grib.time",
+    "statistics": "grib.statistics",
+    "unit": "common.value_unit",
+}
+
+
+def _covered(row, condition):
+    try:
+        return constrain_query(row, condition).to_dict() == row
+    except QueryError as exc:
+        if exc.code == "constraint_conflict":
+            return False
+        raise
+
+
+def _error(index, reason, message, *, code="unsupported", field="parameter"):
+    raise QueryError(code, f"/queries/{index}/{field}", message, {"reason": reason})
+
+
+def named_branches(query, index, config, mappings):
+    pid = query["parameter"]
+    definition = config.parameters[pid]
+    context = config.report_context()["source"]
+    source = {
+        k: context[k] for k in ("dataset", "product", "product_version") if k in context
+    }
+    provided = [
+        thaw(row)
+        for row in (config.product or {}).get("provides", ())
+        if row.get("parameter") == pid
+    ]
+    branches = []
+    native_conflict = False
+    selectors = query.get("native", {}).get("grib", {})
+    for (resource, mapping_id), row in mappings.items():
+        if row["parameter_id"] != pid:
+            continue
+        scope = row["applies_to"]
+        if (scope.keys() & {"dataset", "product", "product_version"}) - source.keys():
+            _error(
+                index,
+                "missing_context",
+                "mapping needs a product identity",
+                code="invalid_config",
+            )
+        if any(
+            name in scope and not _contains(scope[name], value, "literal")
+            for name, value in source.items()
+        ):
+            continue
+        condition = {"parameter": pid, **row["when"]}
+        if "time" in scope:
+            bounded = intersect_scopes(condition, {"time": scope["time"]})
+            if bounded is None:
+                continue
+            condition = bounded.to_dict()
+        for provision in provided:
+            domain = intersect_scopes(condition, provision)
+            if domain is None:
+                continue
+            residual = intersect_scopes(query, domain)
+            if residual is None:
+                continue
+            native = (
+                intersect_scopes(
+                    {"native": {"grib": row["native"]["match"]}},
+                    {"native": {"grib": selectors}},
+                )
+                if selectors
+                else None
+            )
+            if selectors and native is None:
+                native_conflict = True
+                continue
+            filters = (
+                native.native["grib"] if native is not None else row["native"]["match"]
+            )
+            residual = residual.to_dict()
+            if selectors:
+                narrowed = {name: thaw(filters[name]) for name in selectors}
+                native_conflict |= narrowed != selectors
+                residual["native"] = {"grib": narrowed}
+            rules = row["native"].get("translate", {})
+            template = filters.get("productDefinitionTemplateNumber")
+            statistics = definition["fixed_conditions"].get("statistics", {})
+            if template == 0 and {"member", "member_role"} & query.keys():
+                _error(
+                    index,
+                    "fixed_condition_conflict",
+                    "deterministic fields have no member identity",
+                    code="constraint_conflict",
+                    field="member" if "member" in query else "member_role",
+                )
+            if (
+                any(_RULES.get(duty) != rule["rule"] for duty, rule in rules.items())
+                or template != 0
+                or statistics.get("operation", "instantaneous") != "instantaneous"
+                or statistics.get("over", "time") != "time"
+            ):
+                _error(
+                    index,
+                    "translation_unavailable",
+                    "named GRIB binding requires a reviewed deterministic instantaneous path",
+                )
+            declared_unit = rules.get("unit", {}).get("config", {}).get("source_unit")
+            if declared_unit is not None:
+                _conversion(declared_unit, definition["unit"], index=index)
+            basis = [
+                {
+                    "kind": "mapping",
+                    "resource": {"kind": "mappings", "id": resource},
+                    "mapping": mapping_id,
+                },
+                {
+                    "kind": "definition",
+                    "resource": {
+                        "kind": "parameters",
+                        "id": next(
+                            item["id"]
+                            for item in config.definitions
+                            if item["role"] == "parameter_registry"
+                        ),
+                    },
+                    "parameter_id": pid,
+                },
+                *(
+                    {"kind": "builtin", "responsibility": duty, "rule": rule["rule"]}
+                    for duty, rule in rules.items()
+                ),
+            ]
+            branch = {
+                "index": len(branches),
+                "backend": "grib2",
+                "scope": source,
+                "candidate_filter": thaw(filters),
+                "residual": residual,
+                "basis": basis,
+            }
+            for previous in branches:
+                if (
+                    intersect_scopes(previous["residual"], residual) is not None
+                    and intersect_scopes(
+                        {"native": {"grib": previous["candidate_filter"]}},
+                        {"native": {"grib": filters}},
+                    )
+                    is not None
+                ):
+                    _error(
+                        index,
+                        "ambiguous_mapping",
+                        "overlapping GRIB mapping branches",
+                        code="invalid_config",
+                    )
+            branches.append(branch)
+    if not branches and native_conflict:
+        _error(
+            index,
+            "fixed_condition_conflict",
+            "native predicates contradict the named mapping",
+            code="constraint_conflict",
+            field="native/grib",
+        )
+    if not any(_covered(query, b["residual"]) for b in branches):
+        rows = expand_queries(
+            [query], max_expansion=config.execution_defaults["max_expansion"]
+        )
+        if not all(
+            any(_covered(row.to_dict(), b["residual"]) for b in branches)
+            for row in rows
+        ):
+            if native_conflict:
+                _error(
+                    index,
+                    "fixed_condition_conflict",
+                    "explicit native choices exceed the named mapping",
+                    code="constraint_conflict",
+                    field="native/grib",
+                )
+            _error(
+                index,
+                "mapping_coverage_gap",
+                "no reviewed GRIB mapping covers the complete query",
+            )
+    return branches
+
+
+def expected_cells(query, config):
+    """Only explicitly requested cells in the finite catalog domain are known."""
+    if "parameter" not in query or config.product is None:
+        return None
+    domain = config.product.get("expected_domain", ())
+    if not domain:
+        return None
+    domain = [normalize_query(cell).to_dict() for cell in domain]
+    rows = expand_queries(
+        [query], max_expansion=config.execution_defaults["max_expansion"]
+    )
+    for row in rows:
+        condition = row.to_dict()
+        if not is_concrete(condition) or not any(condition == cell for cell in domain):
+            return None
+    return tuple(row.to_dict() for row in rows)
+
+
+def _unit(value):
+    return {"kelvin": "K", "Celsius": "degC", "degrees_Celsius": "degC"}.get(
+        value, value
+    )
+
+
+def _conversion(source, target, *, index=None):
+    source, target = _unit(source), _unit(target)
+    if source == target:
+        return 0.0
+    if {source, target} == {"K", "degC"}:
+        return -273.15 if source == "K" else 273.15
+    if index is not None:
+        _error(
+            index, "translation_unavailable", "no reviewed GRIB field unit conversion"
+        )
+    metadata_error(
+        "unsupported_native_encoding", "no reviewed GRIB field unit conversion"
+    )
+
+
+def interpret_named(native, candidates, config, mappings):
+    """Interpret target candidates strictly and recheck each complete residual."""
+    times, _ = grib.time_fields(native)
+    candidates = [
+        (qi, branch)
+        for qi, branch in candidates
+        if matches(times, {k: v for k, v in branch["residual"].items() if k in times})
+    ]
+    if not candidates:
+        return None, (), {}, 0.0
+    identity = {**grib.fixed_surfaces(native), **times, "native": {"grib": native}}
+    selected = []
+    for qi, branch in candidates:
+        pid = branch["residual"]["parameter"]
+        if matches({**identity, "parameter": pid}, branch["residual"]):
+            selected.append((qi, branch))
+    if not selected:
+        return None, (), {}, 0.0
+    pids = {branch["residual"]["parameter"] for _, branch in selected}
+    if len(pids) != 1:
+        metadata_error(
+            "inconsistent_native_metadata",
+            "record matches multiple business identities",
+            parameter_ids=sorted(pids),
+        )
+    pid = pids.pop()
+    definition = config.parameters[pid]
+    source_unit = None
+    mapping_ids = set()
+    for _, branch in selected:
+        basis = branch["basis"][0]
+        mapping = mappings[basis["resource"]["id"], basis["mapping"]]
+        mapping_ids.add(mapping["id"])
+        declared = (
+            mapping["native"]
+            .get("translate", {})
+            .get("unit", {})
+            .get("config", {})
+            .get("source_unit")
+        )
+        observed = {_unit(native.get(k)) for k in ("units", "parameterUnits")}
+        observed.difference_update({None, "", "unknown", "~"})
+        if declared is not None:
+            observed.add(_unit(declared))
+        if not observed:
+            metadata_error(
+                "missing_native_metadata",
+                "GRIB field unit is unknown",
+                missing_fields=["units"],
+            )
+        if len(observed) != 1:
+            metadata_error(
+                "inconsistent_native_metadata",
+                "GRIB field unit contradicts the reviewed mapping",
+                fields={
+                    k: native[k] for k in ("units", "parameterUnits") if k in native
+                },
+            )
+        unit = observed.pop()
+        if source_unit is not None and unit != source_unit:
+            metadata_error(
+                "inconsistent_native_metadata",
+                "mappings disagree on the source field unit",
+            )
+        source_unit = unit
+    target = _unit(definition["unit"])
+    meta = {
+        "parameter_id": pid,
+        "parameter_name": definition["name"],
+        "unit": target,
+        "source_unit": source_unit,
+        "mapping_ids": sorted(mapping_ids),
+    }
+    if "layer" in definition["fixed_conditions"]:
+        meta["fixed_layer"] = thaw(definition["fixed_conditions"]["layer"])
+    if "description" in definition:
+        meta["description"] = definition["description"]
+    return (
+        {**identity, "parameter": pid},
+        tuple((qi, branch["index"]) for qi, branch in selected),
+        meta,
+        _conversion(source_unit, target),
+    )

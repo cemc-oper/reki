@@ -15,6 +15,7 @@ from reki.selection.files import FileSnapshot, discover_paths
 from reki.grib_io import decode_values
 from . import grib
 from .common import metadata_error, software_origin
+from .grib_mapping import expected_cells, interpret_named, named_branches
 
 INTEGER_KEYS = frozenset(
     {
@@ -238,9 +239,15 @@ class GribBackend:
     def __init__(self, configuration, *, numbering=None):
         self.configuration = configuration
         self.numbering = numbering
+        self.mappings = {
+            (resource.id, row["id"]): row
+            for resource in configuration.mappings
+            if resource.backend == "grib2"
+            for row in resource.to_dict()["mappings"]
+        }
 
     def plan(self, queries, configuration):
-        translations = []
+        translations, expected = [], []
         for qi, query in enumerate(queries):
             q = query.to_dict()
             native = q.get("native", {})
@@ -250,31 +257,43 @@ class GribBackend:
                 )
             filters = native.get("grib", {})
             check_filter(filters)
-            if {"member", "member_role"} & q.keys() and self.numbering is None:
+            if "parameter" in q:
+                branches = named_branches(q, qi, configuration, self.mappings)
+                for branch in branches:
+                    check_filter(branch["candidate_filter"])
+                expected.append(expected_cells(q, configuration))
+                message = (
+                    "Scan reviewed GRIB mappings and check complete field metadata"
+                )
+            elif {"member", "member_role"} & q.keys() and self.numbering is None:
                 raise QueryError(
                     "unsupported", "/member", "use the native GRIB member keys"
                 )
+            else:
+                branches = [
+                    dict(
+                        index=0,
+                        backend="grib2",
+                        scope={},
+                        candidate_filter=filters,
+                        residual=q,
+                        basis=[],
+                    )
+                ]
+                expected.append(None)
+                message = "Scan original GRIB records with native predicates"
             translations.append(
                 dict(
                     query_index=qi,
                     coverage=dict(
                         status="passed",
-                        message="Scan original GRIB records with native predicates",
+                        message=message,
                     ),
-                    branches=[
-                        dict(
-                            index=0,
-                            backend="grib2",
-                            scope={},
-                            candidate_filter=filters,
-                            residual=q,
-                            basis=[],
-                        )
-                    ],
+                    branches=branches,
                     checks=[],
                 )
             )
-        return Plan(tuple(translations), tuple(None for _ in queries))
+        return Plan(tuple(translations), tuple(expected))
 
     def start(self, plan):
         return GribScan(self, plan)
@@ -373,15 +392,49 @@ class GribScan:
                         ]
                         if not candidates:
                             continue
-                        identity, interval = _coordinates(
-                            native, self.backend.numbering, self.backend.configuration
-                        )
-                        identity["native"] = {"grib": native}
-                        links = [
+                        named = [
+                            (qi, b)
+                            for qi, b in candidates
+                            if "parameter" in b["residual"]
+                        ]
+                        identity, links, named_meta, unit_offset = None, (), {}, 0.0
+                        if named:
+                            try:
+                                identity, links, named_meta, unit_offset = (
+                                    interpret_named(
+                                        native,
+                                        named,
+                                        self.backend.configuration,
+                                        self.backend.mappings,
+                                    )
+                                )
+                            except SourceError as exc:
+                                raise SourceError(
+                                    exc.code,
+                                    exc.path,
+                                    exc.message,
+                                    {
+                                        **thaw(exc.context),
+                                        "resource": str(snapshot.path),
+                                        "offset": header.offset,
+                                    },
+                                ) from exc
+                        interval = None
+                        if identity is None:
+                            if len(named) == len(candidates):
+                                continue
+                            identity, interval = _coordinates(
+                                native,
+                                self.backend.numbering,
+                                self.backend.configuration,
+                            )
+                            identity["native"] = {"grib": native}
+                        links += tuple(
                             (qi, b["index"])
                             for qi, b in candidates
-                            if matches(identity, thaw(b["residual"]))
-                        ]
+                            if "parameter" not in b["residual"]
+                            and matches(identity, b["residual"])
+                        )
                         if not links:
                             continue
                         grid_id = eccodes.codes_get_string(
@@ -402,6 +455,7 @@ class GribScan:
                             native_variable=signature,
                             native_name=name,
                             vertical_definition={"id": "WMO.GRIB2.fixed-surfaces"},
+                            **named_meta,
                         )
                         if interval is not None:
                             meta["statistical_interval"] = interval
@@ -410,8 +464,8 @@ class GribScan:
                             Query(identity),
                             meta,
                             grid,
-                            lambda s=snapshot, o=offset, c=coords, d=dims, sh=shape: (
-                                _load(s, o, c, d, sh)
+                            lambda s=snapshot, o=offset, c=coords, d=dims, sh=shape, u=unit_offset: (
+                                _load(s, o, c, d, sh, u)
                             ),
                             tuple(links),
                         )
@@ -480,7 +534,7 @@ def _grid(handle, definition):
     )
 
 
-def _load(snapshot, offset, coords, dims, shape):
+def _load(snapshot, offset, coords, dims, shape, unit_offset=0.0):
     import eccodes
     from reki.grib_io import load_message_at_offset
 
@@ -492,6 +546,8 @@ def _load(snapshot, offset, coords, dims, shape):
             )
         try:
             values = decode_values(handle).reshape(shape)
+            if unit_offset:
+                values = values + unit_offset
             return xr.DataArray(values, dims=dims, coords=coords)
         except eccodes.CodesInternalError as exc:
             raise SourceError(

@@ -15,6 +15,7 @@ from cedarkit_query import (
     expand_queries,
     intersect_queries,
     normalize_query,
+    prepare_queries,
 )
 from reki.catalog import plan_source_binding
 from cedarkit_query.normalize import _contains, _count
@@ -871,7 +872,12 @@ class Fields:
         self._owner._ensure_open()
         from .output import assemble
 
-        return assemble(self._fields, self.report, rename)
+        return assemble(
+            self._fields,
+            self.report,
+            rename,
+            parameters=self._owner.configuration.parameters,
+        )
 
 
 def _has_continuous(value):
@@ -897,7 +903,9 @@ def _needs_vertical_type(query):
 def _prepare_input(query, configuration):
     scope = configuration.scope.to_dict()
     raw = query.to_dict()
-    if "parameter" in raw or "parameter" in scope:
+    if (
+        "parameter" in raw or "parameter" in scope
+    ) and configuration.parameters is None:
         raise QueryError(
             "unsupported",
             "/parameter" if "parameter" in raw else "/context/scope/parameter",
@@ -931,16 +939,28 @@ def _prepare_input(query, configuration):
                     "role is outside the source member domain",
                 )
             scope["member"] = selected
-    if "level_type" not in scope and _needs_vertical_type(scope):
-        kind = normalize_query(query).to_dict().get("level_type")
-        if kind is None:
-            raise QueryError(
-                "invalid_config",
-                "/context/scope/level_type",
-                "vertical scope needs an explicit effective type",
-            )
-        scope = {"level_type": kind, **scope}
-    return (constrain_query(query, scope),)
+    if "parameter" in scope and "parameter" not in raw:
+        raw["parameter"] = scope["parameter"]
+    if "parameter" in raw:
+        if "level_type" in scope and "level_type" not in raw:
+            raw["level_type"] = scope["level_type"]
+        candidates = prepare_queries([raw], configuration.parameters)
+    else:
+        candidates = (query,)
+    result = []
+    for candidate in candidates:
+        bound = scope
+        if "level_type" not in bound and _needs_vertical_type(bound):
+            kind = normalize_query(candidate).to_dict().get("level_type")
+            if kind is None:
+                raise QueryError(
+                    "invalid_config",
+                    "/context/scope/level_type",
+                    "vertical scope needs an explicit effective type",
+                )
+            bound = {"level_type": kind, **scope}
+        result.append(constrain_query(candidate, bound))
+    return tuple(result)
 
 
 def expected_from_domain(queries, domain, configuration, *, identity_fields):
@@ -962,6 +982,7 @@ def expected_from_domain(queries, domain, configuration, *, identity_fields):
             "explicit applicable identity fields required",
         )
     fields = {
+        "parameter",
         "level_type",
         "level",
         "level_unit",

@@ -8,6 +8,7 @@ from cedarkit_query import (
     QueryError,
     Request,
     intersect_scopes,
+    prepare_queries,
     validate_resource_set,
 )
 from cedarkit_query.resources import effective_parameters
@@ -191,6 +192,15 @@ def plan_source_binding(source, *, context=None, base_dir=None, client=None):
                 "/context/scope",
                 "context and product scopes are disjoint",
             )
+    if "parameter" in scope.to_dict() and parameters is not None:
+        bound = prepare_queries([scope], parameters)
+        if len(bound) != 1:
+            raise QueryError(
+                "invalid_config",
+                "/context/scope/parameter",
+                "parameter scope must bind one fixed business identity",
+            )
+        scope = bound[0]
     for name in execution:
         origins[f"execution.{name}"] = "library"
     for values, origin in ((dataset, "dataset"), (ctx, "context")):

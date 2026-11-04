@@ -77,6 +77,10 @@ class SourceConfiguration:
         source = {"kind": self.source["kind"]}
         if "dataset" in self.source:
             source["dataset"] = self.source["dataset"]
+        if self.product is not None:
+            source.update(
+                product=self.product["id"], product_version=self.product["version"]
+            )
         return {
             **({"dataset": self.source["dataset"]} if "dataset" in self.source else {}),
             "scope": self.scope.to_dict(),
