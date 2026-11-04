@@ -7,11 +7,9 @@ import pandas as pd
 
 import eccodes
 
-from reki.diagnostics import record_io_event
+from reki.grib_io import decode_values, fill_missing
 
 from reki.readers.grib.common import MISSING_VALUE
-from reki.readers.grib.config import find_wgrib2_name, find_cemc_name
-from reki.readers.grib._parameter_metadata import attrs_to_grib_parameter_key
 
 # from loguru import logger
 
@@ -52,18 +50,14 @@ def create_data_array_from_message(
     values_is_lazy = values is not None and not isinstance(values, np.ndarray)
 
     if not values_is_lazy:
-        if missing_value is None:
-            missing_value = MISSING_VALUE
-        eccodes.codes_set(message, "missingValue", missing_value)
-
         if values is None:
-            # logger.info("decoding...")
-            record_io_event("value_decode_count")
-            values = eccodes.codes_get_double_array(message, "values")
-            # logger.info("decoding...done")
-
-        if fill_missing_value is not None:
-            np.place(values, values == missing_value, fill_missing_value)
+            values = decode_values(
+                message,
+                missing_value=MISSING_VALUE if missing_value is None else missing_value,
+                fill_value=fill_missing_value,
+            )
+        else:
+            values = fill_missing(message, values, fill_missing_value)
 
     attr_keys = [
         'edition',
@@ -210,13 +204,11 @@ def create_data_array_from_message(
 
     # name
     names = get_field_name(all_attrs, field_name=field_name)
-    data_attrs['long_name'] = names['long_name']
 
     var_name = names['name']
 
-    for key in ('cemc_name', 'eccodes_name', 'wgrib2_name'):
-        if key in names and names[key] is not None:
-            data_attrs[key] = names[key]
+    if "eccodes_name" in names:
+        data_attrs["eccodes_name"] = names["eccodes_name"]
 
     # set units
     if "GRIB_units" in data_attrs:
@@ -304,70 +296,16 @@ def get_attrs_from_message(keys: list[str], message) -> dict[str, Union[str, int
     return all_attrs
 
 
-def get_field_name(
-        all_attrs: dict[str, Union[str, int, float]],
-        field_name: Optional[str] = None,
-) -> dict:
-    """
-    Get field name from attributes.
-
-    Parameters
-    ----------
-    all_attrs
-        Attributes from GRIB message.
-    field_name
-        if field_name is set, use it as name.
-    Returns
-    -------
-    dict
-        names, possible keys:
-
-        * long_name
-        * name
-        * cemc_name
-        * eccodes_name
-        * wgrib2_name
-    """
-    result = {}
-
-    # set long_name
-    if "name" in all_attrs:
-        result["long_name"] = all_attrs["name"]
-    else:
-        name = (f"discipline={all_attrs['discipline']} "
-                f"parmcat={all_attrs['parameterCategory']} "
-                f"parm={all_attrs['parameterNumber']}")
-        result["long_name"] = name
-
-    # different name
-    if "shortName" in all_attrs and all_attrs["shortName"] != "unknown":
-        result["eccodes_name"] = all_attrs["shortName"]
-
-    grib_parameter_key = attrs_to_grib_parameter_key(all_attrs)
-    wgrib2_name = find_wgrib2_name(grib_parameter_key) if grib_parameter_key is not None else None
-    if wgrib2_name is not None:
-        result["wgrib2_name"] = wgrib2_name
-
-    cemc_name = find_cemc_name(grib_parameter_key) if grib_parameter_key is not None else None
-    if cemc_name is not None:
-        result["cemc_name"] = cemc_name
-
-    # set name
-    var_name = None
-    if field_name is not None:
-        var_name = field_name
-    elif 'cemc_name' in result:
-        var_name = result['cemc_name']
-    elif 'eccodes_name' in result:
-        var_name = result['eccodes_name']
-    elif 'wgrib2_name' in result:
-        var_name = result['wgrib2_name']
-    else:
-        var_name = f"{all_attrs['discipline']}_{all_attrs['parameterCategory']}_{all_attrs['parameterNumber']}"
-
-    result["name"] = var_name
-
-    return result
+def get_field_name(all_attrs, field_name=None):
+    """Use the explicit name or the ecCodes shortName, with a numeric fallback."""
+    short_name = all_attrs.get("shortName")
+    if short_name in {None, "", "unknown", "undef"}:
+        short_name = None
+    code = "_".join(str(all_attrs.get(key, "unknown")) for key in (
+        "discipline", "parameterCategory", "parameterNumber",
+    ))
+    return {"name": field_name or short_name or code,
+            **({"eccodes_name": short_name} if short_name else {})}
 
 
 def get_level_coordinate_name(data: xr.DataArray) -> Optional[str]:

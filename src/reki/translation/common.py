@@ -1,10 +1,9 @@
 """Finite translation helpers; shared declarations remain in cedarkit_query."""
 
 from decimal import Decimal
-from dataclasses import dataclass
 
-from cedarkit_query import QueryError, SourceError, validate_rule
-from cedarkit_query.normalize import unit_info, unit_name, json_number
+from cedarkit_query import QueryError, SourceError
+from cedarkit_query.normalize import json_number
 
 
 def metadata_error(reason, message, *, fields=None, **context):
@@ -59,75 +58,6 @@ def integer(
             fields={key: value},
         )
     return value
-
-
-def unsupported(message, **context):
-    raise QueryError(
-        "unsupported",
-        "/queries",
-        message,
-        {"reason": "translation_unavailable", **context},
-    )
-
-
-@dataclass(frozen=True)
-class UnitRequirement:
-    source: str
-    target: str
-    scale: Decimal
-    offset: Decimal
-
-
-def value_unit(response_unit, target_unit, rule=None, *, quantity_kind=None):
-    """common.value_unit: no values are read or converted by this rule."""
-    rule = validate_rule(
-        rule or {"rule": "common.value_unit"}, backend="grib2", responsibility="unit"
-    )
-    declared = rule.get("config", {}).get("source_unit")
-    if declared is not None and response_unit:
-        if unit_info(declared) != unit_info(response_unit):
-            metadata_error(
-                "inconsistent_native_metadata",
-                "response unit conflicts with the mapping source_unit",
-                fields={"response_unit": response_unit, "source_unit": declared},
-            )
-    source = response_unit or declared
-    if not source:
-        metadata_error(
-            "missing_native_metadata",
-            "source value unit has no response or definition evidence",
-            missing_fields=["source_unit"],
-        )
-    if not target_unit:
-        raise QueryError(
-            "invalid_config",
-            "/unit",
-            "business target unit is missing",
-            {"reason": "missing_context"},
-        )
-    sd, sf, so = unit_info(source)
-    td, tf, to = unit_info(target_unit)
-    # Water-equivalent precipitation has a specific mass-area/depth convention.
-    # It is not a global dimensional equivalence or a configurable multiplier.
-    if (
-        quantity_kind == "water_equivalent_precipitation"
-        and unit_name(source) == "kg/m2"
-        and unit_name(target_unit) == "mm"
-    ):
-        return UnitRequirement("kg/m2", "mm", Decimal(1), Decimal(0))
-    if sd != td:
-        unsupported(
-            "source and business units are incompatible",
-            source_unit=source,
-            target_unit=target_unit,
-        )
-    if so != to and quantity_kind != "absolute_temperature":
-        unsupported(
-            "affine value conversion requires explicit absolute-temperature evidence"
-        )
-    return UnitRequirement(
-        unit_name(source), unit_name(target_unit), sf / tf, (so - to) / tf
-    )
 
 
 def scaled(

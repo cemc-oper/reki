@@ -12,12 +12,13 @@ from dataclasses import asdict
 
 import click
 
-from reki.catalog import CatalogError, load_catalog
-from reki.core.source_spec import redact
+from cedarkit_query import QueryError, SourceError
+from reki.catalog import load_catalog
+from reki.catalog.current import current_registration
+from reki.catalog.loader import load_resource
 from reki.diagnostics import collect_io_metrics
 from reki import from_source
 from reki.core import UnsupportedOperationError
-from reki.cmadaas_inventory import cmadaas_inventory
 from reki.query_cli import request
 
 
@@ -39,57 +40,33 @@ def cli():
     """Inspect reki configuration and local data files."""
 
 
-cli.add_command(cmadaas_inventory)
 cli.add_command(request)
-
-
-def _catalog_options(command):
-    command = click.option("--no-user", is_flag=True, help="Do not load the user catalog.")(command)
-    return click.option("--no-plugins", is_flag=True, help="Do not load plugin catalogs.")(command)
 
 
 @cli.group()
 def catalog():
-    """List, inspect, and resolve logical datasets."""
-
-
-def _load(no_user, no_plugins):
-    try:
-        return load_catalog(user=not no_user, plugins=not no_plugins)
-    except CatalogError as exc:
-        raise click.ClickException(str(exc)) from exc
+    """List and inspect native dataset locators."""
 
 
 @catalog.command("list")
-@_catalog_options
-def list_catalog(no_user, no_plugins):
-    for record in _load(no_user, no_plugins).list():
-        click.echo(record.dataset_id)
+def list_catalog():
+    for dataset in load_catalog().to_dict()["datasets"]:
+        click.echo(dataset["id"])
 
 
 @catalog.command("show")
-@_catalog_options
 @click.argument("dataset_id")
-def show_catalog(no_user, no_plugins, dataset_id):
-    _emit(_load(no_user, no_plugins).show(dataset_id))
-
-
-@catalog.command("resolve")
-@_catalog_options
-@click.argument("dataset_id")
-def resolve_catalog(no_user, no_plugins, dataset_id):
-    _emit(_load(no_user, no_plugins).resolve(dataset_id))
-
-
-def _emit(resolved):
-    click.echo(json.dumps({
-        "id": resolved.record.dataset_id,
-        "aliases": list(resolved.record.aliases),
-        "source": {"name": resolved.source.name, "args": list(redact(resolved.source.args)),
-                   "kwargs": redact(resolved.source.kwargs)},
-        "origin": resolved.origin,
-        "replaced_origins": list(resolved.replaced_origins),
-    }, default=dict, ensure_ascii=False, indent=2, sort_keys=True))
+def show_catalog(dataset_id):
+    try:
+        catalog = load_resource({"builtin": "reki.catalog"}, "catalog")
+    except (QueryError, SourceError) as exc:
+        raise click.ClickException(exc.message) from exc
+    for dataset in catalog.value.to_dict()["datasets"]:
+        if dataset_id in (dataset["id"], *dataset.get("aliases", ())):
+            layout = current_registration(catalog, dataset["id"]) or {}
+            click.echo(json.dumps({**dataset, **layout}, ensure_ascii=False, indent=2))
+            return
+    raise click.ClickException(f"unknown dataset {dataset_id!r}")
 
 
 def _index_options(command):

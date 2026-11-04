@@ -18,7 +18,7 @@ def field(q, **changes):
 
 def layer(bottom, top, **extra):
     return Query(
-        parameter="synthetic.st",
+        native={"grib": {"shortName": "st"}},
         time=TIME,
         step="PT0H",
         level_type="depth_below_land",
@@ -37,7 +37,6 @@ def test_internal_holes_and_absent_coordinate_not_fabricated(factory, q):
     np.testing.assert_array_equal(ds.pressure, [850, 500])
     assert ds.pressure.attrs["units"] == "hPa"
     assert np.isnan(ds.t.isel(step=1, pressure=1)).all()
-    assert ds.t.attrs["cedarkit_parameter_id"] == "synthetic.t"
     assert ds.time.attrs["timezone"] == ds.valid_time.attrs["timezone"] == "UTC"
     assert ds.valid_time.dims == ("time", "step")
     assert ds.step.dtype.kind == "m"
@@ -112,35 +111,9 @@ def test_member_axis_roles_sorted_and_no_implicit_control(factory, q):
     assert "member" not in source.sel(q).to_xarray().dims
 
 
-def test_layers_are_variables_with_canonical_names_and_six_attrs(factory):
-    a, b = layer(0.3, 0.1), layer(0.5, 0.3)
-    source, _, _ = factory([a, b], [a, b])
-    ds = source.sel([a, b]).to_xarray()
-    name = "st__layer__depth_below_land__bottom_0.3m__top_0.1m"
-    assert set(ds.data_vars) == {
-        name,
-        "st__layer__depth_below_land__bottom_0.5m__top_0.3m",
-    }
-    assert "layer" not in ds.dims and "depth_below_land" not in ds.dims
-    assert {k: v for k, v in ds[name].attrs.items() if k.startswith("layer_")} == dict(
-        layer_bottom_type="depth_below_land",
-        layer_bottom_value=0.3,
-        layer_bottom_unit="m",
-        layer_top_type="depth_below_land",
-        layer_top_value=0.1,
-        layer_top_unit="m",
-    )
-    with pytest.raises(QueryError) as exc:
-        source.sel([a, b]).to_xarray(rename="soil")
-    assert exc.value.code == "multiple_variables"
-    renamed = source.sel(a).to_xarray(rename="soil")
-    assert renamed.soil.attrs["cedarkit_parameter_name"] == "st"
-    assert renamed.soil.attrs["layer_bottom_value"] == 0.3
-
-
 def test_named_boundaries_and_surface_no_fictitious_values(factory):
     query = Query(
-        parameter="synthetic.st",
+        native={"grib": {"shortName": "st"}},
         layer={"bottom": {"type": "surface"}, "top": {"type": "atmosphere_top"}},
     )
     source, _, _ = factory([query], [query])
@@ -148,7 +121,7 @@ def test_named_boundaries_and_surface_no_fictitious_values(factory):
     attrs = next(iter(ds.data_vars.values())).attrs
     assert attrs["layer_bottom_type"] == "surface" and "layer_bottom_value" not in attrs
     assert "layer_bottom_unit" not in attrs
-    query = Query(parameter="synthetic.t", level_type="surface")
+    query = Query(native={"grib": {"shortName": "t"}}, level_type="surface")
     source, _, _ = factory([query], [query])
     ds = source.sel(query).to_xarray()
     assert (
@@ -157,9 +130,9 @@ def test_named_boundaries_and_surface_no_fictitious_values(factory):
 
 
 def test_rename_validation_and_missing_variable_no_fabrication(factory, q):
-    u = field(q, parameter="synthetic.u")
+    u = field(q, native={"grib": {"shortName": "u"}})
     source, _, _ = factory([q], [q, u])
-    ds = source.sel([q, u]).to_xarray(rename={"u": "wind", "t": "temperature"})
+    ds = source.sel([q, u]).to_xarray(rename={"t": "temperature"})
     assert set(ds.data_vars) == {"temperature"}
     with pytest.raises(QueryError):
         source.sel(q).to_xarray(rename={"unknown": "x"})
@@ -214,57 +187,11 @@ def test_grid_definitions_and_coordinates_and_vertical_conflicts(factory, q):
     assert exc.value.code == "incompatible_grid"
 
 
-def test_source_units_convert_only_after_loading_and_report_not_value_quality(
-    factory, q
-):
-    source, backend, _ = factory(
-        [q],
-        [q],
-        metadata={"source_unit": "degC", "quantity_kind": "absolute_temperature"},
-    )
-    result = source.sel(q).all()
-    assert backend.loads == 0
-    ds = result.to_xarray()
-    np.testing.assert_allclose(ds.t, 274.15)
-    assert ds.t.attrs["units"] == "K" and backend.loads == 1
-
-
-@pytest.mark.parametrize(
-    "meta", [{"source_unit": None}, {"source_unit": "m"}, {"source_unit": "degC"}]
-)
-def test_unknown_incompatible_or_unproven_affine_units_fail(factory, q, meta):
-    source, backend, _ = factory([q], [q], metadata=meta)
-    with pytest.raises(QueryError) as exc:
-        source.sel(q).to_xarray()
-    assert exc.value.code == "unsupported" and backend.loads == 0
-
-
 def test_native_single_field_rename_does_not_fabricate_parameter_id(factory):
     query = Query(native={"grib": {"discipline": 0, "parameterNumber": 0}})
     source, _, _ = factory([query], None, no_resources=True)
     ds = source.sel(query).to_xarray(rename="native_field")
     assert "cedarkit_parameter_id" not in ds.native_field.attrs
-    assert ds.native_field.attrs["units"] == "K"
-
-
-def test_exact_registered_layer_variant_uses_business_name(factory):
-    from cedarkit_query import normalize_query
-
-    base = normalize_query(layer(0.3, 0.1))
-    exact = Query({**base.to_dict(), "parameter": "synthetic.st.variant"})
-    definition = dict(
-        parameter_id="synthetic.st.variant",
-        name="st(SYNTHETIC-layer)",
-        parent="synthetic.st",
-        fixed_conditions={"layer": base.to_dict()["layer"]},
-    )
-    source, _, _ = factory([exact], [exact], extra_parameters=[definition])
-    ds = source.sel(base).to_xarray(completeness="required")
-    assert set(ds.data_vars) == {"st(SYNTHETIC-layer)"}
-    assert (
-        ds["st(SYNTHETIC-layer)"].attrs["cedarkit_parameter_id"]
-        == "synthetic.st.variant"
-    )
 
 
 def test_model_level_vertical_definition_and_depth_ascending(factory, q):

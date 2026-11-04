@@ -15,7 +15,6 @@ from cedarkit_query import (
     expand_queries,
     intersect_queries,
     normalize_query,
-    prepare_queries,
 )
 from reki.catalog import plan_source_binding
 from cedarkit_query.normalize import _contains, _count
@@ -74,7 +73,6 @@ def _selection_error(exc, origins, *, query_index=None):
     path = exc.path
     context = thaw(exc.context)
     query_fields = {
-        "parameter",
         "level_type",
         "level",
         "level_unit",
@@ -292,24 +290,16 @@ class QuerySource:
 def from_source(source, *, context=None, client=None):
     """Construct the new Query source without discovery, scans or service calls.
 
-    Registered builtin datasets carry explicit current-business bindings.
+    Registered datasets supply file layouts for native sources.
     File discovery and native metadata checks remain terminal operations.
     """
     configuration = plan_source_binding(source, context=context, client=client)
     if configuration.source["kind"] in {"file", "local"}:
-        from reki.catalog.current import (
-            current_member_numbering,
-            current_quantity_kinds,
-        )
         from reki.translation.grib_backend import GribBackend
 
         return construct_source(
             configuration,
-            GribBackend(
-                configuration,
-                numbering=current_member_numbering(configuration),
-                quantity_kinds=current_quantity_kinds(configuration),
-            ),
+            GribBackend(configuration, numbering=configuration.member_numbering),
         )
     return construct_source(configuration)
 
@@ -375,13 +365,6 @@ class Selection:
                         prepared_input = Query(
                             {"level_type": kinds.pop(), **q.to_dict()}
                         )
-                if "parameter" in q.to_dict() and config.resources is None:
-                    raise QueryError(
-                        "invalid_config",
-                        "/context/parameter_registry",
-                        "business queries need a parameter registry",
-                        {"reason": "missing_context"},
-                    )
                 values = _prepare_input(prepared_input, config)
                 for normalized in values:
                     _check_member_roles(normalized, config)
@@ -522,7 +505,7 @@ class Selection:
                     dict(
                         code="constrained",
                         origins=origins,
-                        message="Applied parameter identity, fixed definitions and source scope",
+                        message="Applied the configured source scope",
                     )
                 )
             if si and current != previous:
@@ -650,14 +633,8 @@ class Selection:
                         residual = thaw(
                             plan.translations[qi]["branches"][bi]["residual"]
                         )
-                        statistics = residual.pop("statistics", None)
-                        if (
-                            matches(ref.identity, branches[qi]["query"])
-                            and matches(ref.identity, residual)
-                            and (
-                                statistics is None
-                                or thaw(ref.metadata.get("statistics")) == statistics
-                            )
+                        if matches(ref.identity, branches[qi]["query"]) and matches(
+                            ref.identity, residual
                         ):
                             selected.add(qi)
                     if not selected:
@@ -893,7 +870,7 @@ class Fields:
         self._owner._ensure_open()
         from .output import assemble
 
-        return assemble(self._fields, self.report, rename, self._owner.configuration)
+        return assemble(self._fields, self.report, rename)
 
 
 def _has_continuous(value):
@@ -946,52 +923,16 @@ def _prepare_input(query, configuration):
                     "role is outside the source member domain",
                 )
             scope["member"] = selected
-    resources = configuration.resources
-    parameter_ids = None
-    if configuration.product is not None:
-        parameter_ids = {
-            name
-            for provided in configuration.product["provides"]
-            for name in (
-                (provided["parameter"],)
-                if isinstance(provided.get("parameter"), str)
-                else provided.get("parameter", ())
-            )
-        }
-    return _prepare_input_scope(query, resources, scope, parameter_ids)
-
-
-def _prepare_input_scope(query, resources, scope, parameter_ids):
     if "level_type" not in scope and _needs_vertical_type(scope):
-        preliminary = (
-            prepare_queries([query], resources, parameter_ids=parameter_ids)
-            if resources is not None
-            else (normalize_query(query),)
-        )
-        result = []
-        for value in preliminary:
-            kind = value.to_dict().get("level_type")
-            if kind is None:
-                raise QueryError(
-                    "invalid_config",
-                    "/context/scope/level_type",
-                    "vertical scope needs an explicit effective type",
-                    {"reason": "missing_context"},
-                )
-            bound = {"level_type": kind, **scope}
-            result.extend(
-                prepare_queries(
-                    [value], resources, scope=bound, parameter_ids=parameter_ids
-                )
-                if resources is not None
-                else (constrain_query(value, bound),)
+        kind = normalize_query(query).to_dict().get("level_type")
+        if kind is None:
+            raise QueryError(
+                "invalid_config",
+                "/context/scope/level_type",
+                "vertical scope needs an explicit effective type",
             )
-        return tuple(result)
-    return (
-        prepare_queries([query], resources, scope=scope, parameter_ids=parameter_ids)
-        if resources is not None
-        else (constrain_query(query, scope),)
-    )
+        scope = {"level_type": kind, **scope}
+    return (constrain_query(query, scope),)
 
 
 def expected_from_domain(queries, domain, configuration, *, identity_fields):
@@ -1013,7 +954,6 @@ def expected_from_domain(queries, domain, configuration, *, identity_fields):
             "explicit applicable identity fields required",
         )
     fields = {
-        "parameter",
         "level_type",
         "level",
         "level_unit",
@@ -1042,19 +982,6 @@ def expected_from_domain(queries, domain, configuration, *, identity_fields):
                     )
                 if not set(identity_fields) <= row.keys():
                     incomplete = True
-                product = configuration.product
-                if product is not None and set(identity_fields) <= row.keys():
-                    if not matches(row, thaw(product["scope"])) or not any(
-                        matches(row, item.to_dict())
-                        for item in prepare_queries(
-                            thaw(product["provides"]), configuration.resources
-                        )
-                    ):
-                        raise QueryError(
-                            "invalid_config",
-                            "",
-                            "domain identity exceeds the declared product provision",
-                        )
                 if matches(row, configuration.scope):
                     rows[key(row)] = row
         except QueryError as exc:
@@ -1078,20 +1005,7 @@ def expected_from_domain(queries, domain, configuration, *, identity_fields):
 
 
 def _expected_identity(value, configuration):
-    values = (
-        prepare_queries([value], configuration.resources)
-        if configuration.resources is not None
-        else (normalize_query(value),)
-    )
-    if len(values) != 1 or not is_concrete(values[0].to_dict()):
-        raise QueryError("invalid_config", "", "expected identities must be concrete")
-    row = values[0].to_dict()
-    if "parameter" in row and configuration.resources is None:
-        raise QueryError(
-            "invalid_config",
-            "/context/parameter_registry",
-            "expected parameter needs its registry",
-        )
+    row = normalize_query(value).to_dict()
     if "member" in row:
         role = configuration.member_role(row["member"])
         if role is not None:
@@ -1144,13 +1058,6 @@ def _check_member_roles(query, configuration):
 
 def _validate_reference(ref, configuration):
     identity = ref.identity.to_dict()
-    if "parameter" in identity and configuration.resources is None:
-        raise QueryError(
-            "invalid_config",
-            "/context/parameter_registry",
-            "canonical field needs its parameter registry",
-            {"reason": "missing_context"},
-        )
     if not matches(identity, configuration.scope):
         raise SourceError(
             "metadata_interpretation_failed",
@@ -1166,28 +1073,6 @@ def _validate_reference(ref, configuration):
                 "",
                 "member role differs from effective configuration",
                 {"reason": "invalid_member_metadata"},
-            )
-    if configuration.resources is not None and "parameter" in identity:
-        p = configuration.resources.parameter(identity["parameter"])
-        fixed = p.get("fixed_conditions", {})
-        constraints = {k: v for k, v in fixed.items() if k != "statistics"}
-        metadata = thaw(ref.metadata)
-        if (
-            not matches(identity, constraints)
-            or metadata.get("parameter_id") != p["parameter_id"]
-            or metadata.get("parameter_name") != p["name"]
-            or metadata.get("unit") != p["unit"]
-            or metadata.get("fixed_conditions", {}) != fixed
-            or (
-                "statistics" in fixed
-                and metadata.get("statistics") != fixed["statistics"]
-            )
-        ):
-            raise SourceError(
-                "metadata_interpretation_failed",
-                "",
-                "canonical metadata differs from loaded definition",
-                {"reason": "fixed_definition_mismatch"},
             )
 
 

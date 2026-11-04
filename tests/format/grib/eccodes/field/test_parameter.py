@@ -59,59 +59,28 @@ def test_numbers(grib2_gfs_basic_file_path, test_case):
     assert field.attrs["GRIB_count"] == test_case.expected_grib_key_count
 
 
-def test_embedded_short_name(grib2_gfs_basic_file_path):
-    test_cases = [
-        TestCase(
-            query=QueryOption(parameter="DEPR", level_type="pl", level=850),
-            expected_grib_key_count=719,
-        ),
-        TestCase(
-            query=QueryOption(parameter={
-                "discipline": 0,
-                "parameterCategory": 0,
-                "parameterNumber": 7,
-            }, level_type="pl", level=850),
-            expected_grib_key_count=719,
-        ),
-    ]
-
-    fields = []
-
-    for test_case in test_cases:
-        field = load_field_from_file(
-            grib2_gfs_basic_file_path,
-            **asdict(test_case.query)
-        )
-        assert field is not None
-        assert field.attrs["GRIB_count"] == test_case.expected_grib_key_count
-        fields.append(field)
-
-    assert fields[0].attrs["GRIB_count"] == fields[1].attrs["GRIB_count"]
-
-
-
 @pytest.mark.parametrize(
     "test_case",
     [
         TestCase(
-            query=QueryOption(parameter="t2m"),
+            query=QueryOption(parameter="2t"),
             expected_grib_key_count=25,
         ),
         TestCase(
-            query=QueryOption(parameter="q2m"),
+            query=QueryOption(parameter="2sh"),
             expected_grib_key_count=24,
         ),
         TestCase(
-            query=QueryOption(parameter="st(10-40)"),
+            query=QueryOption(parameter="t", level_type="depthBelowLandLayer", level={"first_level": 0.1, "second_level": 0.4}),
             expected_grib_key_count=465,
         ),
         TestCase(
-            query=QueryOption(parameter="shr(0-3000)"),
+            query=QueryOption(parameter="vwsh", level_type="heightAboveGroundLayer", level={"first_level": 3000, "second_level": 0}),
             expected_grib_key_count=782,
         ),
     ]
 )
-def test_cemc_name(grib2_gfs_basic_file_path, test_case):
+def test_native_conditions(grib2_gfs_basic_file_path, test_case):
     field = load_field_from_file(
         grib2_gfs_basic_file_path,
         **asdict(test_case.query)

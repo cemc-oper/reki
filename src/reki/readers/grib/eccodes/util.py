@@ -2,7 +2,6 @@ from typing import Optional, Union, List, Dict
 
 from ._check import _check_message
 from ._level import _fix_level
-from reki.readers.grib.common import convert_parameter
 
 
 def check_message_with_level_fix(
@@ -27,7 +26,6 @@ def check_message_with_level_fix(
     -------
     bool
     """
-    # parameter = _convert_parameter(parameter)
     level_type, _ = _fix_level(level_type, None)
 
     return _check_message(

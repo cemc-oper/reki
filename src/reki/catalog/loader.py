@@ -13,30 +13,6 @@ from .model import LoadedResource, freeze
 BUILTINS = MappingProxyType(
     {
         "reki.catalog": Path(__file__).with_name("builtin") / "catalog-v1.json",
-        "reki.parameters.cma-gfs.current": Path(__file__).with_name("builtin")
-        / "current-gfs-parameters.json",
-        "reki.mappings.cma-gfs.current": Path(__file__).with_name("builtin")
-        / "current-gfs-mappings.json",
-        "reki.parameters.cma-meso-3km.current": Path(__file__).with_name("builtin")
-        / "current-meso3-parameters.json",
-        "reki.mappings.cma-meso-3km.current": Path(__file__).with_name("builtin")
-        / "current-meso3-mappings.json",
-        "reki.parameters.cma-meso-1km.current": Path(__file__).with_name("builtin")
-        / "current-meso1-parameters.json",
-        "reki.mappings.cma-meso-1km.current": Path(__file__).with_name("builtin")
-        / "current-meso1-mappings.json",
-        "reki.parameters.cma-tym.current": Path(__file__).with_name("builtin")
-        / "current-tym-parameters.json",
-        "reki.mappings.cma-tym.current": Path(__file__).with_name("builtin")
-        / "current-tym-mappings.json",
-        "reki.parameters.cma-geps.current": Path(__file__).with_name("builtin")
-        / "current-geps-parameters.json",
-        "reki.mappings.cma-geps.current": Path(__file__).with_name("builtin")
-        / "current-geps-mappings.json",
-        "reki.parameters.cma-reps.current": Path(__file__).with_name("builtin")
-        / "current-reps-parameters.json",
-        "reki.mappings.cma-reps.current": Path(__file__).with_name("builtin")
-        / "current-reps-mappings.json",
     }
 )
 
@@ -80,15 +56,11 @@ def load_context(value=None, *, base_dir=None):
 
 
 def load_resource(reference, kind, *, base_dir=None, pointer="/resource"):
-    # The shared context validates references; do not maintain another ref schema.
-    key = {
-        "parameters": "parameter_registry",
-        "catalog": "catalog",
-        "mappings": "mappings",
-    }[kind]
-    wrapped = {key: {"grib2": reference} if kind == "mappings" else reference}
-    checked = Context(wrapped, base_dir=base_dir).to_dict()[key]
-    ref = checked["grib2"] if kind == "mappings" else checked
+    if kind != "catalog":
+        raise QueryError(
+            "invalid_config", pointer, "only catalog resources are supported"
+        )
+    ref = Context({"catalog": reference}, base_dir=base_dir).to_dict()["catalog"]
     if "builtin" in ref:
         path = BUILTINS.get(ref["builtin"])
         if path is None:

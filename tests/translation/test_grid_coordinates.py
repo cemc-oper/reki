@@ -177,7 +177,9 @@ def inspect_synthetic(path):
     with path.open("rb") as stream:
         handle = eccodes.codes_grib_new_from_file(stream, headers_only=True)
     try:
-        grid, lat, lon, shape = _grid(handle)
+        grid, coords, dims, shape = _grid(
+            handle, eccodes.codes_get_string(handle, "md5GridSection")
+        )
         raw = {
             key: eccodes.codes_get_long(handle, key)
             for key in (
@@ -194,8 +196,9 @@ def inspect_synthetic(path):
         }
         return {
             "grid": grid,
-            "latitude": lat.tolist(),
-            "longitude": lon.tolist(),
+            "latitude": coords["latitude"],
+            "longitude": coords["longitude"],
+            "dims": dims,
             "shape": list(shape),
             "raw": raw,
         }
@@ -261,16 +264,11 @@ def test_nonfinite_coordinate_is_metadata_error_not_an_accepted_axis(
 
 
 @pytest.mark.parametrize("flag", ["jPointsAreConsecutive", "alternativeRowScanning"])
-def test_unimplemented_scan_layout_fails_before_coordinates(
-    tmp_path, monkeypatch, flag
-):
+def test_alternate_scan_layout_keeps_native_point_order(tmp_path, flag):
     case = ("SYNTHETIC.scan", {flag: 1}, [], [], [])
     path = write_synthetic_grid(tmp_path / "SYNTHETIC.scan.grib2", case)
-
-    def forbidden(*args):
-        raise AssertionError("unsupported scan requested coordinates")
-
-    monkeypatch.setattr(eccodes, "codes_get_double_array", forbidden)
-    with pytest.raises(SourceError) as exc:
-        inspect_synthetic(path)
-    assert exc.value.context["reason"] == "unsupported_native_encoding"
+    actual = inspect_synthetic(path)
+    assert actual["dims"] == ("point",)
+    assert (
+        len(actual["latitude"][1]) == len(actual["longitude"][1]) == actual["shape"][0]
+    )

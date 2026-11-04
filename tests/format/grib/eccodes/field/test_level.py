@@ -38,7 +38,7 @@ class TestCase:
             expected_level=850
         ),
         TestCase(
-            query=QueryOption(parameter="TMAX", level_type="heightAboveGround", level=2),
+            query=QueryOption(parameter="tmax", level_type="heightAboveGround", level=2),
             expected_grib_key_count=40,
             expected_level_name="heightAboveGround",
             expected_level=2

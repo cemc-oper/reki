@@ -33,16 +33,6 @@ class TestCase:
             expected_grib_key_count=109,
             expected_field_name="other_field_name",
         ),
-        TestCase(
-            query=QueryOption(parameter="TMP", level_type="pl", level=850, field_name=None),
-            expected_grib_key_count=109,
-            expected_field_name="TMP",
-        ),
-        TestCase(
-            query=QueryOption(parameter="TMP", level_type="pl", level=850, field_name="other_field_name"),
-            expected_grib_key_count=109,
-            expected_field_name="other_field_name",
-        )
     ]
 )
 def test_parameter_string(grib2_gfs_basic_file_path, test_case):
@@ -60,18 +50,18 @@ def test_parameter_string(grib2_gfs_basic_file_path, test_case):
     "test_case",
     [
         TestCase(
-            query=QueryOption(parameter="btv", field_name=None),
+            query=QueryOption(parameter=dict(discipline=0, parameterCategory=4, parameterNumber=227), field_name=None),
             expected_grib_key_count=861,
-            expected_field_name="btv"
+            expected_field_name="0_4_227"
         ),
         TestCase(
-            query=QueryOption(parameter="zs", field_name=None),
+            query=QueryOption(parameter="orog", field_name=None),
             expected_grib_key_count=23,
-            expected_field_name="zs",
+            expected_field_name="orog",
         ),
     ]
 )
-def test_parameter_cedarkit_param_db(grib2_gfs_basic_file_path, test_case):
+def test_native_short_name_and_numeric_fallback(grib2_gfs_basic_file_path, test_case):
     f = load_field_from_file(
         grib2_gfs_basic_file_path,
         **asdict(test_case.query)
@@ -92,7 +82,7 @@ def test_parameter_cedarkit_param_db(grib2_gfs_basic_file_path, test_case):
                 field_name=None,
             ),
             expected_grib_key_count=599,
-            expected_field_name="voradv"
+            expected_field_name="0_2_224"
         ),
         TestCase(
             query=QueryOption(
@@ -111,7 +101,7 @@ def test_parameter_cedarkit_param_db(grib2_gfs_basic_file_path, test_case):
                 field_name=None
             ),
             expected_grib_key_count=36,
-            expected_field_name="wess"
+            expected_field_name="0_2_227"
         ),
         TestCase(
             query=QueryOption(
@@ -129,7 +119,7 @@ def test_parameter_cedarkit_param_db(grib2_gfs_basic_file_path, test_case):
                 field_name=None,
             ),
             expected_grib_key_count=10,
-            expected_field_name="gulw",
+            expected_field_name="sulwrf",
         ),
         TestCase(
             query=QueryOption(

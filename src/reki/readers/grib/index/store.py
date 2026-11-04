@@ -1,4 +1,4 @@
-"""SQLite schema v2, validation and atomic publication for GRIB metadata."""
+"""SQLite schema v3, validation and atomic publication for GRIB metadata."""
 
 from dataclasses import dataclass
 import hashlib
@@ -13,11 +13,11 @@ import eccodes
 
 from reki.diagnostics import record_io_event
 from ..eccodes._scan import iter_headers
-from .._header_metadata import parameter_names_from_message, time_metadata_from_message
+from .._header_metadata import time_metadata_from_message
 from .lock import target_lock
 
-INDEX_SCHEMA_VERSION = 2
-SCHEMA_ID = "reki-grib-index/2"
+INDEX_SCHEMA_VERSION = 3
+SCHEMA_ID = "reki-grib-index/3"
 QUERY_RULES_VERSION = "1"
 METADATA_KEYS_VERSION = "4"
 APPLICATION_ID = 0x524B4931
@@ -77,7 +77,7 @@ def _row(header):
     ni, nj = _get(message, "Ni"), _get(message, "Nj")
     level = _get(message, "level")
     time_metadata = time_metadata_from_message(message)
-    extra_metadata = parameter_names_from_message(message)
+    extra_metadata = {}
     extra_metadata.update({
         key: value for key, value in {
             "layer_top": _get(message, "topLevel"),

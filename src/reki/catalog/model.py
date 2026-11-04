@@ -48,8 +48,6 @@ class SourceConfiguration:
     """An I04 construction plan, with no data availability or capability claim."""
 
     source: Mapping
-    resources: object
-    product: object
     scope: object
     execution_defaults: Mapping
     member_roles: Mapping
@@ -57,18 +55,7 @@ class SourceConfiguration:
     definitions: tuple
     origins: Mapping
     layout: object = None
-    mapping_applicability: tuple = ()
-    product_coverage: tuple = ()
-
-    @property
-    def source_binding(self):
-        if self.product is None:
-            return None
-        return next(
-            s
-            for s in self.product["sources"]
-            if s["id"] == self.origins["source_binding"]
-        )
+    member_numbering: Mapping | None = None
 
     def member_role(self, member):
         if type(member) is not int or member < 0:
@@ -87,15 +74,6 @@ class SourceConfiguration:
         source = {"kind": self.source["kind"]}
         if "dataset" in self.source:
             source["dataset"] = self.source["dataset"]
-        if self.product is not None:
-            source.update(
-                product=self.product["id"], product_version=self.product["version"]
-            )
-            for binding in self.product["sources"]:
-                if binding["id"] == self.origins["source_binding"]:
-                    for key in ("data_code", "interface_contract"):
-                        if key in binding:
-                            source[key] = thaw(binding[key])
         return {
             **({"dataset": self.source["dataset"]} if "dataset" in self.source else {}),
             "scope": self.scope.to_dict(),

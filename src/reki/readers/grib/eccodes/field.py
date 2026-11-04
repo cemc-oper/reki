@@ -13,7 +13,6 @@ from ._lazy import lazy_values, concat_lazy_arrays
 from ._xarray import create_data_array_from_message, get_level_coordinate_name
 from reki._util import _load_first_variable
 from reki.readers.grib.common import MISSING_VALUE
-from reki.readers.grib.common._parameter import convert_parameter
 from ._scan import iter_headers
 
 
@@ -185,7 +184,6 @@ def load_field_from_file(
     if field_name is None and isinstance(parameter, str):
         field_name = parameter
 
-    parameter = convert_parameter(parameter)
 
     if show_progress:
         with open(file_path, "rb") as f:

@@ -189,7 +189,7 @@ class TestFromSourceUrl:
         assert isinstance(data, xr.DataArray)
         # the first message of the GFS test file is acpcp at surface,
         # decoded under its CEMC parameter table name
-        assert data.name == "rainc"
+        assert data.name == "acpcp"
         assert data.attrs["eccodes_name"] == "acpcp"
 
     def test_explicit_reader_skips_detection(

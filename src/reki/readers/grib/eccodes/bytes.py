@@ -4,7 +4,6 @@ from typing import List, Dict, Union, Optional
 import eccodes
 
 from reki.readers.grib.common._level import fix_level_type
-from reki.readers.grib.common._parameter import convert_parameter
 from ._check import _check_message
 
 
@@ -49,7 +48,6 @@ def load_bytes_from_file(
 
     fixed_level_type = fix_level_type(level_type)
 
-    parameter = convert_parameter(parameter)
 
     with open(file_path, "rb") as f:
         while True:

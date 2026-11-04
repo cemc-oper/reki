@@ -8,7 +8,6 @@ import eccodes
 from ._level import _fix_level
 from ._check import _check_message
 
-from reki.readers.grib.common._parameter import convert_parameter
 from ._scan import iter_headers
 from ._decode import load_message_at_offset
 
@@ -89,9 +88,6 @@ def load_message_from_file(
 
     fixed_level_type, _ = _fix_level(level_type, None)
 
-    if look_parameter:
-        parameter = convert_parameter(parameter)
-
     for header in iter_headers(file_path, headers_only=False):
         if not _check_message(header.handle, parameter, fixed_level_type, level, **kwargs):
             continue
@@ -142,7 +138,6 @@ def load_messages_from_file(
     """
     fixed_level_type, _ = _fix_level(level_type, None)
 
-    parameter = convert_parameter(parameter)
 
     messages = []
 

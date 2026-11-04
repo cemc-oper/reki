@@ -16,7 +16,7 @@ Support for other data formats, including NetCDF, GrADS, tabular data, and in-me
 - Resolve operational file paths from versioned YAML templates.
 - Read GRIB2 from local-file and URL sources.
 - Select fields through a consistent query interface.
-- Resolve stable parameter identifiers and external parameter names.
+- Select original messages by their ecCodes keys and preserve decoded values and missing cells.
 - Return decoded fields as `xarray.DataArray` objects for use with the Python scientific ecosystem.
 - Provide common grid operations, including region extraction, point sampling, and interpolation.
 
@@ -61,165 +61,24 @@ The following data types currently have CMADaaS mount templates:
 
 ## Quick start
 
-### Read a field directly from the mount
-
-Use `from_source("local", ...)` to resolve the file and open it in one step.
-The example reads CMA-GFS 2 m temperature from the CMADaaS mount:
-
 ```python
-import reki
+from reki import from_source
 
-reader = reki.from_source(
-    "local",
-    "cma_gfs_gmf/grib2/orig",
-    start_time="2026090112",
-    forecast_time="24h",
-    data_class="cmadaas",
-    storage_base="/CMADAAS",
-)
-
-t2m = reader.sel(
-    parameter="t2m",
-    level_type="heightAboveGround",
-    level=2,
-).first().to_xarray()
-
-print(t2m.name, t2m.shape)
-```
-
-`sel()` narrows the field list without decoding the GRIB values. 
-Calling `first()` selects the first matching field, and `to_xarray()` decodes it to an `xarray.DataArray`.
-
-### Current finite GFS clear-sky energy products
-
-The current catalog also exposes surface clear-sky upward shortwave, downward
-longwave, net shortwave and upward longwave energy integrals through the public
-selection API. The reviewed leads
-are 0, 6, 12, 24, 48 and 72 hours; each interval starts at the forecast origin.
-For example, the validated 2026-10-30 12UTC cycle crosses both day and month
-boundaries:
-
-```python
-with reki.from_source(
-    {"kind": "local", "dataset": "CMA-GFS", "root": "/CMADAAS"}
-) as source:
-    energy = source.sel(
-        parameter=["guswc-since-initialization", "gdlwc-since-initialization"],
-        time="2026-10-30T12:00:00Z",
-        step=["PT12H", "PT24H", "PT48H", "PT72H"],
-    ).all().to_xarray()
-```
-
-The variables `guswc`, `gdlwc`, `gswc` and `gulwc` retain the original signed values
-in J/m2. Add `gswc-since-initialization` or `gulwc-since-initialization` to select
-the newly bound net shortwave or upward longwave field. GSWC is distinct from
-downward GDSWC. GULWC uses an exact reviewed producer encoding with local-use
-code 0/5/224 in local table 1; its absent decoder unit is filled by the finite
-mapping's evidence-bound J/m2 declaration, retaining the raw decoder keys.
-Direction names do not impose a positive-value convention. No duration scaling,
-mean flux or accumulation-difference windows are generated. This finite subset
-does not establish complete product coverage; other systems and top-of-atmosphere
-radiation are outside these bindings.
-
-### Resolve the file path first
-
-When an application needs the path for logging, validation, or another GRIB tool, use `path` to get file path from local reader:
-
-```python
-from reki.data_finder import find_local_file
-
-file_path = reki.from_source(
-    "local",
-    "cma_meso_3km/grib2/orig",
-    start_time="2026090112",
-    forecast_time="24h",
-    data_class="cmadaas",
-    storage_base="/CMADAAS",
-).path
-
-print(file_path)
-# /CMADAAS/DATA/NAFP/GRAPES/RAFS/2026/20260901/Z_NAFP_C_BABJ_20260901120000_P_NWPC-GRAPES-3KM-ORIG-02400.grb2 
-```
-
-For ensemble data, add the member `number` used by the template:
-
-```python
-file_path = reki.from_source(
-    "local",
-    "cma_geps/grib2/orig",
-    start_time="2025081900",
-    forecast_time="24h",
-    number=2,
-    data_class="cmadaas",
-    storage_base="/CMADAAS",
-).path
-print(file_path)
-# /CMADAAS/DATA/NAFP/NMC/GRAPES-GEPS/2025/20250819/Z_NAFP_C_BABJ_20250819000000_P_NWPC-GRAPES-GEPS-GLB-02400-m002.grib2
-```
-
-## Querying fields
-
-Use GRIB keys in `sel()` to identify a field. 
-The common keys are `parameter`, `level_type`, and `level`; 
-additional GRIB keys can be supplied when a product needs more specific filtering.
-
-```python
-temperature_850 = reader.sel(
-    parameter="t",
-    level_type="pl",
-    level=850,
-).first().to_xarray()
-
-reflectivity_850 = reader.sel(
-    parameter={
+with from_source({"kind": "file", "path": "original.grib2"}) as source:
+    field = source.sel(native={"grib": {
         "discipline": 0,
-        "parameterCategory": 16,
-        "parameterNumber": 225,
-    },
-    level_type="pl",
-    level=850,
-).first().to_xarray()
+        "parameterCategory": 0,
+        "parameterNumber": 0,
+        "typeOfFirstFixedSurface": 103,
+        "scaleFactorOfFirstFixedSurface": 0,
+        "scaledValueOfFirstFixedSurface": 2,
+    }}).one()
+    data = field.to_xarray(rename="original")
+    native_keys = field.metadata["native_fields"]
 ```
 
-Use `one()` instead of `first()` when exactly one match is required. 
-It raises an error if the query is ambiguous, which is useful in production workflows.
+For a mounted CEMC original product, use `{"kind": "local", "dataset": "cma_gfs_gmf", "root": "/CMADAAS"}` and include the reference `time`. The dataset registration contains the file layout. Omitted lead or member selectors discover matching files in the layout. Use native keys to distinguish encodings within those files.
 
-## Working with xarray data
+`one()` requires a unique original message. `all()` returns each matching field in source order. Assemble fields on a compatible grid with `to_xarray()`; inspect individual fields when grids differ. Original scalar metadata is available from each Field. Legacy message readers still accept an ecCodes shortName, a native key mapping or a record count.
 
-The decoded result is a regular `xarray.DataArray`, including spatial and time coordinates. 
-Standard xarray operations work directly:
-
-```python
-from reki.operator import extract_region
-
-east_asia_t2m = extract_region(
-    t2m,
-    start_longitude=105,
-    end_longitude=125,
-    start_latitude=25,
-    end_latitude=45,
-)
-
-mean_temperature = float(east_asia_t2m.mean())
-```
-
-## Source model
-
-The public source flow is intentionally small:
-
-```text
-source configuration → source → reader → field query → xarray.DataArray
-```
-
-- A **source** identifies where data comes from, such as a local mount, file, URL, memory object, or remote service.
-- A **reader** understands the source format and exposes a field list.
-- A **field query** selects metadata without reading all field values.
-- `to_xarray()` decodes the selected field only when its values are needed.
-
-This separation lets the same query-oriented application code work across different file locations and supported source types.
-
-## License
-
-Copyright &copy; 2020-2026, developers at CMA Earth System Modeling And Prediction Centre.
-
-`reki` is licensed under the [Apache License 2.0](LICENSE).
+See [native field queries](doc/source/guide/public-query.md).

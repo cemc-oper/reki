@@ -159,21 +159,19 @@ def test_refining_a_step_query_preserves_public_fieldlist_merge(tmp_path):
     assert selected.to_xarray().name == "t"
 
 
-def test_cemc_name_uses_second_fixed_surface_in_scan_and_index(tmp_path):
+def test_scan_and_index_preserve_native_fixed_surfaces(tmp_path):
     path = tmp_path / "soil.grib"
     root = tmp_path / "index"
     _write_soil_layer(path)
 
     scanned = GribReader(None, path, index_policy="off").all().one()
-    assert scanned.metadata.extra["cemc_name"] == "st(0-10)"
-    assert scanned.metadata.extra["wgrib2_name"] == "TMP"
-    assert scanned.to_xarray().name == scanned.metadata.extra["cemc_name"]
+    assert "cemc_name" not in scanned.metadata.extra
+    assert "wgrib2_name" not in scanned.metadata.extra
+    assert scanned.to_xarray().name == scanned.metadata.parameter
 
     GribReader(None, path, index_policy="auto", index_dir=root).all()
-    indexed = GribReader(None, path, index_policy="auto", index_dir=root).all()
-    assert indexed.ls(["cemc_name", "wgrib2_name"]).to_dict("records") == [
-        {"cemc_name": "st(0-10)", "wgrib2_name": "TMP"},
-    ]
+    indexed = GribReader(None, path, index_policy="auto", index_dir=root).all().one()
+    assert indexed.metadata.extra == scanned.metadata.extra
 
 
 def test_fetch_many_uses_one_metadata_scan_and_preserves_duplicates(tmp_path):

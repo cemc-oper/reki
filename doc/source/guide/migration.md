@@ -86,7 +86,7 @@ east_asia = extract_region(
 | `guide/loading/new-api` | {doc}`grib/select-fields` | 兼容页 |
 | `guide/loading/xarray-output` | {doc}`grib/xarray-output` | 兼容页 |
 | `guide/loading/grib` | {doc}`grib/index` | 兼容页 |
-| `guide/grib_parameter`、`guide/parameter_resolver` | {doc}`grib/parameters` | 兼容页 |
+| `guide/grib_parameter` | {doc}`grib/parameters` | 兼容页 |
 | `guide/grib_level` | {doc}`grib/levels` | 兼容页 |
 | `guide/legacy_find`、`guide/legacy_finder_config` | 旧 `data_finder` 正文 | 兼容 API 的唯一正文；从 {doc}`finding/legacy-api` 进入 |
 | `guide/legacy_grib` | 旧 `reki.format.grib` 正文 | 兼容 API 的唯一正文；从 {doc}`loading/legacy-api` 与 {doc}`processing/legacy-api` 进入 |

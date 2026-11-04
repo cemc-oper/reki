@@ -1,30 +1,20 @@
-"""ecCodes-only backend for explicit local files and finite standard GRIB2 paths.
+"""Locate and decode original GRIB records using ecCodes native keys."""
 
-No business catalog/mapping defaults are supplied. Product-specific numbering,
-vertical definitions and independent expected domains require explicit proven
-internal bindings; these are never inferred from paths or observed records.
-"""
+from collections.abc import Mapping
+from hashlib import sha256
 
 import numpy as np
 import xarray as xr
 
-from cedarkit_query import (
-    Query,
-    QueryError,
-    SourceError,
-    expand_queries,
-    validate_rule,
-    constrain_query,
-    prepare_queries,
-)
-from cedarkit_query.normalize import _contains, _count
-from reki.catalog.model import thaw, freeze
+from cedarkit_query import Query, QueryError, SourceError
+from cedarkit_query.normalize import _contains
+from reki.catalog.model import thaw
 from reki.selection.backend import Plan, FieldReference, BranchEvent
-from reki.selection.core import matches, expected_from_domain
+from reki.selection.core import key as identity_key, matches
 from reki.selection.files import FileSnapshot, discover_paths
-from reki.diagnostics import record_io_event
-from . import grib, cemc_grib
-from .common import metadata_error, unsupported, value_unit, software_origin
+from reki.grib_io import decode_values
+from . import grib
+from .common import metadata_error, software_origin
 
 INTEGER_KEYS = frozenset(
     {
@@ -76,9 +66,15 @@ INTEGER_KEYS = frozenset(
         "perturbationNumber",
         "typeOfEnsembleForecast",
         "numberOfForecastsInEnsemble",
+        "backgroundProcess",
+        "generatingProcessIdentifier",
+        "forecastProbabilityNumber",
+        "totalNumberOfForecastProbabilities",
     }
 )
-STRING_KEYS = frozenset({"units", "parameterUnits", "gridType"})
+STRING_KEYS = frozenset(
+    {"units", "parameterUnits", "gridType", "shortName", "packingType"}
+)
 NATIVE_KEYS = INTEGER_KEYS | STRING_KEYS
 # Retain the remaining time-range descriptor fields as evidence, without
 # claiming a sampling algorithm or widening the finite native Query selectors.
@@ -118,8 +114,11 @@ def native_matches(metadata, condition):
     return all(
         k in metadata
         and metadata[k] is not None
+        and (not isinstance(v, Mapping) or type(metadata[k]) in {int, float})
         and _contains(
-            thaw(v), metadata[k], "number" if k in INTEGER_KEYS else "literal"
+            thaw(v),
+            metadata[k],
+            "number" if type(metadata[k]) in {int, float} else "literal",
         )
         for k, v in condition.items()
     )
@@ -127,10 +126,6 @@ def native_matches(metadata, condition):
 
 def check_filter(condition):
     for key, value in condition.items():
-        if key not in NATIVE_KEYS:
-            unsupported(
-                "native key is not registered by this finite backend", native_key=key
-            )
         values = (
             value
             if isinstance(value, list)
@@ -138,33 +133,13 @@ def check_filter(condition):
             if isinstance(value, dict)
             else [value]
         )
-        expected = int if key in INTEGER_KEYS else str
-        if any(type(v) is not expected for v in values) or (
-            expected is str and isinstance(value, dict)
-        ):
+        expected = int if key in INTEGER_KEYS else str if key in STRING_KEYS else None
+        if expected is not None and any(type(v) is not expected for v in values):
             raise QueryError(
                 "invalid_query",
                 "/native/grib/" + key,
                 "native key selector has the wrong scalar type",
             )
-        if key in {
-            "edition",
-            "productDefinitionTemplateNumber",
-            "tablesVersion",
-            "localTablesVersion",
-        }:
-            allowed = {
-                "edition": {2},
-                "tablesVersion": {4},
-                "localTablesVersion": {0, 1},
-            }.get(key, grib.TEMPLATES)
-            count = _count(value, "number")
-            if count is None:
-                count = value["range"]["end"] - value["range"]["start"] + 1
-            if sum(_contains(value, v, "number") for v in allowed) != count:
-                unsupported(
-                    "query requests an unregistered edition or template", native_key=key
-                )
 
 
 def _metadata(handle, *, keys=None):
@@ -177,278 +152,135 @@ def _metadata(handle, *, keys=None):
         else keys
     ):
         try:
-            if not eccodes.codes_is_defined(handle, key) or eccodes.codes_is_missing(
-                handle, key
+            if (
+                not eccodes.codes_is_defined(handle, key)
+                or eccodes.codes_is_missing(handle, key)
+                or eccodes.codes_get_size(handle, key) != 1
             ):
                 result[key] = None
             else:
                 result[key] = (
                     eccodes.codes_get_long(handle, key)
                     if key in INTEGER_KEYS | GRID_INTEGER_KEYS | STATISTIC_EVIDENCE_KEYS
-                    else eccodes.codes_get_string(handle, key)
+                    else eccodes.codes_get(handle, key)
                 )
-        except eccodes.KeyValueNotFoundError:
+        except (
+            eccodes.KeyValueNotFoundError,
+            eccodes.WrongTypeError,
+            eccodes.ArrayTooSmallError,
+        ):
             result[key] = None
     return result
 
 
-class GribBackend:
-    def __init__(
-        self,
-        configuration,
-        *,
-        numbering=None,
-        vertical_definition=None,
-        expected_domain=None,
-        identity_fields=(),
-        quantity_kinds=None,
-    ):
-        self.configuration = configuration
-        self.numbering = None if numbering is None else freeze(numbering)
-        self.vertical_definition = freeze(vertical_definition)
-        self.expected_domain = freeze(expected_domain)
-        self.identity_fields = tuple(identity_fields)
-        self.quantity_kinds = freeze({} if quantity_kinds is None else quantity_kinds)
+_TIME_KEYS = {
+    "year",
+    "month",
+    "day",
+    "hour",
+    "minute",
+    "second",
+    "forecastTime",
+    *(
+        part + "OfEndOfOverallTimeInterval"
+        for part in ("year", "month", "day", "hour", "minute", "second")
+    ),
+}
+_LEVEL_KEYS = {"scaleFactorOfFirstFixedSurface", "scaledValueOfFirstFixedSurface"}
+_MEMBER_KEYS = {"perturbationNumber", "typeOfEnsembleForecast"}
 
-    def _mappings(self, query):
-        config = self.configuration
-        parameter = query.to_dict().get("parameter")
-        if parameter is None:
-            return []
-        names = parameter if isinstance(parameter, list) else [parameter]
-        selected = []
-        known = config.report_context()["source"]
-        for resource in config.resources.mappings:
-            if resource["backend"] != "grib2":
-                continue
-            for mapping in resource["mappings"]:
-                if mapping["parameter_id"] not in names:
-                    continue
-                scope = thaw(mapping["applies_to"])
-                for key in ("dataset", "product", "product_version"):
-                    if key in scope and key not in known:
-                        raise QueryError(
-                            "invalid_config",
-                            "/context",
-                            "mapping requires exact source/product identity",
-                            {"reason": "missing_context"},
-                        )
-                if any(
-                    not _contains(scope[k], known[k], "literal")
-                    for k in ("dataset", "product", "product_version")
-                    if k in scope
-                ):
-                    continue
-                selected.append((resource, mapping))
-        return selected
+
+def _coordinates(metadata, numbering, configuration):
+    identity = {}
+    interval = None
+    # Generic coordinate projections are optional. Unknown local templates
+    # and fixed-surface codes remain selectable by their encoded values.
+    try:
+        identity.update(grib.fixed_surfaces(metadata))
+    except SourceError:
+        pass
+    try:
+        times, interval = grib.time_fields(metadata)
+        identity.update(times)
+    except SourceError:
+        pass
+    if numbering:
+        member = numbering.get(
+            (metadata.get("typeOfEnsembleForecast"), metadata.get("perturbationNumber"))
+        )
+        if member is not None:
+            identity.update(
+                member=member, member_role=configuration.member_role(member)
+            )
+    return identity, interval
+
+
+def _variable(metadata, identity):
+    omit = set()
+    if "time" in identity:
+        omit.update(_TIME_KEYS)
+    if "level" in identity:
+        omit.update(_LEVEL_KEYS)
+    if "member" in identity:
+        omit.update(_MEMBER_KEYS)
+    signature = {
+        k: v for k, v in metadata.items() if k in INTEGER_KEYS and k not in omit
+    }
+    triple = "_".join(
+        str(metadata.get(k, "x"))
+        for k in ("discipline", "parameterCategory", "parameterNumber")
+    )
+    digest = sha256(identity_key(signature).encode()).hexdigest()[:16]
+    return signature, f"grib_{triple}_{digest}"
+
+
+class GribBackend:
+    def __init__(self, configuration, *, numbering=None):
+        self.configuration = configuration
+        self.numbering = numbering
 
     def plan(self, queries, configuration):
         translations = []
-        provided = (
-            prepare_queries(
-                thaw(configuration.product["provides"]),
-                configuration.resources,
-                scope=thaw(configuration.product["scope"]),
-            )
-            if configuration.origins.get("product_selection")
-            == "builtin.current-business"
-            else None
-        )
         for qi, query in enumerate(queries):
             q = query.to_dict()
-            if "parameter" in q and provided is not None:
-                # A replacement mapping cannot widen the published supported
-                # parameter/level/step pairs of this bounded current binding.
-                covered = False
-                for condition in provided:
-                    if condition.to_dict().get("parameter") != q["parameter"]:
-                        continue
-                    try:
-                        if constrain_query(query, condition).to_dict() == q:
-                            covered = True
-                    except QueryError as exc:
-                        if exc.code != "constraint_conflict":
-                            raise
-                if not covered:
-                    raise QueryError(
-                        "unsupported",
-                        "/queries",
-                        "query exceeds the current product's supported pairs",
-                        {"reason": "mapping_coverage_gap", "query_index": qi},
-                    )
-            check_filter(q.get("native", {}).get("grib", {}))
-            if {"member", "member_role"} & q.keys() and self.numbering is None:
-                unsupported(
-                    "canonical member selection needs an exact numbering contract",
-                    query_index=qi,
+            native = q.get("native", {})
+            if set(native) - {"grib"}:
+                raise QueryError(
+                    "unsupported", "/native", "file source accepts GRIB keys"
                 )
-            mappings = self._mappings(query)
-            branches = []
-            if "parameter" in q:
-                if not mappings:
-                    raise QueryError(
-                        "unsupported",
-                        "/queries",
-                        "no exact GRIB mapping covers this parameter",
-                        {"reason": "mapping_coverage_gap", "query_index": qi},
-                    )
-                cover = []
-                for resource, mapping in mappings:
-                    native = thaw(mapping["native"]["match"])
-                    check_filter(native)
-                    for duty, rule in mapping["native"].get("translate", {}).items():
-                        validate_rule(rule, backend="grib2", responsibility=duty)
-                    condition = thaw(mapping["when"])
-                    if "native" in condition:
-                        unsupported(
-                            "native predicates in mapping.when need a composed finite path",
-                            query_index=qi,
-                        )
-                    if "time" in mapping["applies_to"]:
-                        condition = constrain_query(
-                            condition, {"time": thaw(mapping["applies_to"]["time"])}
-                        ).to_dict()
-                    # Parameter identity is exact; descendant mappings are never inherited.
-                    condition = {"parameter": mapping["parameter_id"], **condition}
-                    cover.append(condition)
-                    branches.append(
-                        dict(
-                            index=len(branches),
-                            backend="grib2",
-                            scope={
-                                k: thaw(v) for k, v in mapping["applies_to"].items()
-                            },
-                            candidate_filter=native,
-                            residual={**q},
-                            basis=[
-                                dict(
-                                    kind="mapping",
-                                    resource={"kind": "mappings", "id": resource["id"]},
-                                    mapping=mapping["id"],
-                                ),
-                                dict(
-                                    kind="definition",
-                                    resource={
-                                        "kind": "parameters",
-                                        "id": configuration.resources.parameters["id"],
-                                    },
-                                    parameter_id=mapping["parameter_id"],
-                                ),
-                            ],
-                        )
-                    )
-                # A compact predicate containing the whole Query proves coverage
-                # without enumerating open coordinates. Otherwise require a finite
-                # effective expansion with each row covered; never infer from files.
-                proven = False
-                for condition in cover:
-                    try:
-                        if constrain_query(query, condition).to_dict() == q:
-                            proven = True
-                    except QueryError as exc:
-                        if exc.code != "constraint_conflict":
-                            raise
-                if not proven:
-                    rows = expand_queries(
-                        [query],
-                        max_expansion=configuration.execution_defaults["max_expansion"],
-                        member_roles=thaw(configuration.member_roles),
-                        cemc=configuration.cemc_member_roles,
-                    )
-                    identities = []
-                    for row in rows:
-                        identity = row.to_dict()
-                        if "member" in identity:
-                            role = configuration.member_role(identity["member"])
-                            if role is not None:
-                                identity.setdefault("member_role", role)
-                        identities.append(identity)
-                    proven = all(
-                        any(matches(identity, c) for c in cover)
-                        for identity in identities
-                    )
-                if not proven:
-                    raise QueryError(
-                        "unsupported",
-                        "/queries",
-                        "mapping predicates do not cover the requested conditions",
-                        {"reason": "mapping_coverage_gap", "query_index": qi},
-                    )
-            else:
-                branches = [
-                    dict(
-                        index=0,
-                        backend="grib2",
-                        scope={},
-                        candidate_filter=q.get("native", {}).get("grib", {}),
-                        residual=q,
-                        basis=[
-                            dict(
-                                kind="builtin",
-                                responsibility="vertical",
-                                rule="grib.fixed_surfaces",
-                            ),
-                            dict(
-                                kind="builtin", responsibility="time", rule="grib.time"
-                            ),
-                        ],
-                    )
-                ]
+            filters = native.get("grib", {})
+            check_filter(filters)
+            if {"member", "member_role"} & q.keys() and self.numbering is None:
+                raise QueryError(
+                    "unsupported", "/member", "use the native GRIB member keys"
+                )
             translations.append(
                 dict(
                     query_index=qi,
                     coverage=dict(
                         status="passed",
-                        message="Exhaustive explicit-file acquisition with exact returned Query verification",
+                        message="Scan original GRIB records with native predicates",
                     ),
-                    branches=branches,
-                    checks=[
+                    branches=[
                         dict(
-                            code="context_resolved",
-                            status="passed",
-                            message="Explicit configuration frozen; no product identity inferred",
-                        ),
-                        dict(
-                            code="complete_retrieval_supported",
-                            status="passed",
-                            message="Full local message iteration without persistent indexes",
-                        ),
-                        dict(
-                            code="return_metadata_sufficient",
-                            status="pending",
-                            message="Native template and metadata are checked during acquisition",
-                        ),
+                            index=0,
+                            backend="grib2",
+                            scope={},
+                            candidate_filter=filters,
+                            residual=q,
+                            basis=[],
+                        )
                     ],
+                    checks=[],
                 )
             )
-        expected = (
-            expected_from_domain(
-                queries,
-                self.expected_domain,
-                configuration,
-                identity_fields=self.identity_fields,
-            )
-            if self.expected_domain is not None
-            else tuple(None for _ in queries)
-        )
-        return Plan(tuple(translations), expected)
+        return Plan(tuple(translations), tuple(None for _ in queries))
 
     def start(self, plan):
         return GribScan(self, plan)
 
     def close(self):
-        pass  # Per-execution file handles and per-load message handles are scoped.
-
-    def mapping(self, branch):
-        basis = next((b for b in branch["basis"] if b["kind"] == "mapping"), None)
-        if basis is None:
-            return None
-        resource = next(
-            r
-            for r in self.configuration.resources.mappings
-            if r["id"] == basis["resource"]["id"]
-        )
-        return next(m for m in resource["mappings"] if m["id"] == basis["mapping"])
+        pass
 
 
 class GribScan:
@@ -483,11 +315,22 @@ class GribScan:
         import eccodes
 
         self.context["origins"] = {
-            "adapter": software_origin("grib.standard-and-cemc-v12.6-finite-v1"),
+            "adapter": software_origin("grib.native"),
             "native_library": "eccodes=" + eccodes.codes_get_api_version(),
         }
         self._iterator = None
         self.checks = {}
+        self.keys = (
+            NATIVE_KEYS
+            | GRID_INTEGER_KEYS
+            | STATISTIC_EVIDENCE_KEYS
+            | {
+                k
+                for t in plan.translations
+                for branch in t["branches"]
+                for k in branch["candidate_filter"]
+            }
+        )
 
     def __iter__(self):
         self._iterator = self._fields()
@@ -506,6 +349,7 @@ class GribScan:
         ]
         for qi, b in branches:
             yield BranchEvent(qi, b["index"], "started")
+        grids = {}
         for snapshot in self.snapshots:
             snapshot.verify()
             try:
@@ -520,129 +364,54 @@ class GribScan:
                 try:
                     for header in iterator:
                         snapshot.verify()
-                        metadata = _metadata(header.handle)
-                        # Gather only finite raw candidates; known absent native
-                        # predicates are ordinary non-matches, not unknown keys.
-                        selected = [
+                        metadata = _metadata(header.handle, keys=self.keys)
+                        native = {k: v for k, v in metadata.items() if v is not None}
+                        candidates = [
                             (qi, b)
                             for qi, b in branches
-                            if native_matches(metadata, b["candidate_filter"])
-                            and native_matches(
-                                metadata,
-                                b["residual"].get("native", {}).get("grib", {}),
-                            )
+                            if native_matches(native, b["candidate_filter"])
                         ]
-                        if not selected:
+                        if not candidates:
                             continue
-                        grib.parameter_encoding(metadata)
-                        vertical = grib.fixed_surfaces(
-                            metadata,
-                            vertical_definition=self.backend.vertical_definition,
+                        identity, interval = _coordinates(
+                            native, self.backend.numbering, self.backend.configuration
                         )
-                        times, interval = grib.time_fields(metadata)
-                        members = (
-                            {}
-                            if self.backend.numbering is None
-                            and all(
-                                self.backend.mapping(b) is None for _, b in selected
-                            )
-                            else grib.member(
-                                metadata,
-                                self.backend.configuration,
-                                numbering=self.backend.numbering,
-                            )
+                        identity["native"] = {"grib": native}
+                        links = [
+                            (qi, b["index"])
+                            for qi, b in candidates
+                            if matches(identity, thaw(b["residual"]))
+                        ]
+                        if not links:
+                            continue
+                        grid_id = eccodes.codes_get_string(
+                            header.handle, "md5GridSection"
                         )
-                        base = {**vertical, **times, **members}
-                        interpretations = []
-                        for qi, branch in selected:
-                            mapping = self.backend.mapping(branch)
-                            if (
-                                mapping is not None
-                                and "time" in mapping["applies_to"]
-                                and not matches(
-                                    base, {"time": thaw(mapping["applies_to"]["time"])}
-                                )
-                            ):
-                                continue
-                            if mapping is not None and not matches(
-                                base,
-                                {
-                                    k: v
-                                    for k, v in mapping["when"].items()
-                                    if k != "parameter"
-                                },
-                            ):
-                                continue
-                            identity, meta = self._interpret(
-                                base, metadata, mapping, interval
-                            )
-                            matching = next(
-                                (
-                                    item
-                                    for item in interpretations
-                                    if item[0] == identity and item[1] == meta
-                                ),
-                                None,
-                            )
-                            if matching is not None:
-                                matching[2].append((qi, branch["index"]))
-                            else:
-                                interpretations.append(
-                                    [identity, meta, [(qi, branch["index"])]]
-                                )
-                        if len(interpretations) > 1:
-                            raise QueryError(
-                                "invalid_config",
-                                "/mappings",
-                                "one native record has conflicting active interpretations",
-                                {"reason": "ambiguous_mapping"},
-                            )
-                        if not interpretations:
-                            continue
-                        identity, meta, links = interpretations[0]
-                        # Canonical residuals are known before any grid arrays.
-                        # Large meshes must not be decoded for unselected levels
-                        # or times. Core still verifies the complete Query.
-                        remaining_links = []
-                        for qi, bi in links:
-                            residual = thaw(
-                                self.plan.translations[qi]["branches"][bi]["residual"]
-                            )
-                            statistics = residual.pop("statistics", None)
-                            if matches(identity, residual) and (
-                                statistics is None or meta.get("statistics") == statistics
-                            ):
-                                remaining_links.append((qi, bi))
-                        if not remaining_links:
-                            continue
-                        links = remaining_links
-                        grid, lat, lon, shape = _grid(header.handle)
+                        if grid_id not in grids:
+                            grids[grid_id] = _grid(header.handle, grid_id)
+                        grid, coords, dims, shape = grids[grid_id]
                         offset = header.offset
-                        meta.update(
+                        signature, name = _variable(native, identity)
+                        meta = dict(
                             source={
                                 "path": str(snapshot.path),
                                 "offset": offset,
                                 "fingerprint": list(snapshot.fingerprint),
                             },
-                            native_fields={
-                                k: v for k, v in metadata.items() if v is not None
-                            },
+                            native_fields=native,
+                            native_variable=signature,
+                            native_name=name,
+                            vertical_definition={"id": "WMO.GRIB2.fixed-surfaces"},
                         )
-                        for qi, _ in links:
-                            self.checks[qi] = [
-                                dict(
-                                    code="return_metadata_sufficient",
-                                    status="passed",
-                                    message="All acquired target candidates used for interpretation were verified",
-                                )
-                            ]
+                        if interval is not None:
+                            meta["statistical_interval"] = interval
                         yield FieldReference(
                             repr((snapshot.fingerprint, offset)),
                             Query(identity),
                             meta,
                             grid,
-                            lambda s=snapshot, o=offset, la=lat, lo=lon, sh=shape: (
-                                _load(s, o, la, lo, sh)
+                            lambda s=snapshot, o=offset, c=coords, d=dims, sh=shape: (
+                                _load(s, o, c, d, sh)
                             ),
                             tuple(links),
                         )
@@ -666,216 +435,52 @@ class GribScan:
         for qi, b in branches:
             yield BranchEvent(qi, b["index"], "exhausted")
 
-    def _interpret(self, base, native, mapping, interval):
-        source_unit = grib.source_value_unit(native)
-        if mapping is None:
-            return {
-                **base,
-                "native": {"grib": {k: v for k, v in native.items() if v is not None}},
-            }, dict(
-                source_unit=source_unit,
-                unit=source_unit,
-                vertical_definition=self.backend.vertical_definition
-                or {"id": "WMO.GRIB2.fixed-surfaces"},
-            )
-        parameter = self.backend.configuration.resources.parameter(
-            mapping["parameter_id"]
-        )
-        quantity_kind = self.backend.quantity_kinds.get(parameter["parameter_id"])
-        unit_origin = None
-        if quantity_kind == "water_equivalent_precipitation":
-            declared_native = native.get("parameterUnits")
-            if declared_native not in {None, "", "unknown", "~"}:
-                if source_unit is None:
-                    source_unit = declared_native
-                    unit_origin = (
-                        "native.parameterUnits; units is an ecCodes absence placeholder"
-                    )
-                else:
-                    value_unit(
-                        source_unit,
-                        source_unit,
-                        {
-                            "rule": "common.value_unit",
-                            "config": {"source_unit": declared_native},
-                        },
-                    )
-        fixed = parameter["fixed_conditions"]
-        if not matches(base, {k: v for k, v in fixed.items() if k != "statistics"}):
-            metadata_error(
-                "fixed_definition_mismatch",
-                "native field violates its mapped fixed definition",
-            )
-        unit_rule = (
-            mapping["native"]
-            .get("translate", {})
-            .get("unit", {"rule": "common.value_unit"})
-        )
-        if parameter["parameter_id"] == "cedarkit.zs":
-            terrain_unit = cemc_grib.terrain_source_unit(
-                native,
-                context=self.backend.configuration.report_context()["source"],
-                parameter_id=parameter["parameter_id"],
-                source_unit=unit_rule.get("config", {}).get("source_unit"),
-            )
-            if terrain_unit is not None:
-                source_unit = terrain_unit
-                unit_origin = (
-                    "CEMC.current.ORIG.ZS: producer original case7 and reviewed product Gpm declaration; "
-                    "ecCodes units=m is the surface-orography concept view; "
-                    "raw units/parameterUnits retained in native_fields"
-                )
-        if parameter["parameter_id"] == "cedarkit.sweatidx":
-            context = self.backend.configuration.report_context()["source"]
-            score_unit = cemc_grib.sweat_source_unit(
-                native,
-                context=context,
-                parameter_id=parameter["parameter_id"],
-                source_unit=unit_rule.get("config", {}).get("source_unit"),
-            )
-            if score_unit is not None:
-                source_unit = score_unit
-                product, row = (
-                    ("GFS", 49)
-                    if context["dataset"] == "cma_gfs_gmf"
-                    else ("MESO-3KM", 38)
-                )
-                unit_origin = (
-                    f"CEMC.{product}.current.SWEAT: producer named score, business row{row} "
-                    "explicitly no unit; Numeric is a derived view; raw views retained"
-                )
-        probability = native["productDefinitionTemplateNumber"] in {5, 9}
-        object_unit = native.get("parameterUnits") if probability else None
-        # ecCodes parameterUnits uses this SI spelling while units uses m s**-1.
-        # This finite spelling equivalence does not infer a parameter identity.
-        object_unit = {"m s-1": "m/s"}.get(object_unit, object_unit)
-        if probability and not unit_rule.get("config", {}).get("source_unit"):
-            raise QueryError(
-                "invalid_config",
-                "/mappings/native/translate/unit",
-                "probability field value unit needs explicit encoding evidence",
-                {"reason": "missing_context"},
-            )
-        if probability and object_unit in {None, "", "unknown", "~"}:
-            metadata_error(
-                "missing_native_metadata",
-                "probability threshold has no native parameter unit",
-                missing_fields=["parameterUnits"],
-            )
-        stats = grib.statistics(
-            native,
-            fixed,
-            base,
-            interval,
-            resources=self.backend.configuration.resources,
-            product=self.backend.configuration.product,
-            object_unit=object_unit,
-        )
-        requirement = value_unit(
-            # Probability template parameter units describe the event object;
-            # its packed field scale is a separate, explicitly declared fact.
-            None if probability else source_unit,
-            parameter["unit"],
-            thaw(unit_rule),
-            quantity_kind=quantity_kind,
-        )
-        return {
-            **base,
-            "parameter": parameter["parameter_id"],
-            "native": {"grib": {k: v for k, v in native.items() if v is not None}},
-        }, dict(
-            parameter_id=parameter["parameter_id"],
-            parameter_name=parameter["name"],
-            fixed_conditions=thaw(fixed),
-            source_unit=requirement.source,
-            unit=parameter["unit"],
-            statistics=stats,
-            **({"statistical_interval": interval} if interval is not None else {}),
-            **({"source_unit_basis": {"origin": unit_origin}} if unit_origin else {}),
-            **(
-                {
-                    "source_unit_basis": {
-                        "profile": "CEMC.grib_util.v12.6.operational-instantaneous",
-                        "elementcode": 144,
-                        "source": "paraNum.h:541; producer soil-water encoding",
-                        "eccodes_derived_unit": native.get("units"),
-                    }
-                }
-                if cemc_grib.value_unit(native) is not None
-                else {}
-            ),
-            **(
-                {
-                    "probability_unit_basis": {
-                        "threshold_unit": object_unit,
-                        "threshold_origin": "native.parameterUnits",
-                        "field_unit": requirement.source,
-                        "field_origin": "mapping.common.value_unit.source_unit",
-                    }
-                }
-                if probability
-                else {}
-            ),
-            vertical_definition=self.backend.vertical_definition
-            or {"id": "WMO.GRIB2.fixed-surfaces"},
-            **(
-                {"description": parameter["description"]}
-                if "description" in parameter
-                else {}
-            ),
-            **(
-                {
-                    "quantity_kind": self.backend.quantity_kinds[
-                        parameter["parameter_id"]
-                    ]
-                }
-                if parameter["parameter_id"] in self.backend.quantity_kinds
-                else {}
-            ),
-        )
 
-
-def _grid(handle):
+def _grid(handle, definition):
     import eccodes
 
-    grid = grib.grid_structure(
-        _metadata(
-            handle,
-            keys=(
-                "gridType",
-                "jPointsAreConsecutive",
-                "alternativeRowScanning",
-                "Ni",
-                "Nj",
-                "numberOfDataPoints",
-            ),
-        )
-    )
-    ni, nj = grid["Ni"], grid["Nj"]
-    points = ni * nj
+    # Keep the ecCodes scan order. Independent regular axes use a 2-D
+    # representation. Other geometries keep one coordinate pair per point.
     lat = eccodes.codes_get_double_array(handle, "latitudes")
     lon = eccodes.codes_get_double_array(handle, "longitudes")
+    points = eccodes.codes_get_long(handle, "numberOfDataPoints")
     if lat.size != points or lon.size != points:
         metadata_error(
-            "inconsistent_native_metadata",
-            "grid coordinates and point count disagree",
+            "inconsistent_native_metadata", "grid coordinates and point count disagree"
         )
     if not np.isfinite(lat).all() or not np.isfinite(lon).all():
         metadata_error(
-            "inconsistent_native_metadata",
-            "decoded grid coordinates must be finite",
+            "inconsistent_native_metadata", "grid coordinates must be finite"
         )
-    lat, lon = lat.reshape(nj, ni), lon.reshape(nj, ni)
-    if not np.all(lat == lat[:, 0, None]) or not np.all(lon == lon[0, None, :]):
-        metadata_error(
-            "unsupported_native_encoding",
-            "grid does not have independent regular latitude/longitude axes",
+    grid = {"definition": definition, "points": points}
+    dimensions = _metadata(handle, keys=("Ni", "Nj"))
+    ni, nj = dimensions["Ni"], dimensions["Nj"]
+    if (
+        ni
+        and nj
+        and ni * nj == points
+        and not (
+            eccodes.codes_get_long(handle, "jPointsAreConsecutive")
+            or eccodes.codes_get_long(handle, "alternativeRowScanning")
         )
-    grid["definition"] = eccodes.codes_get_string(handle, "md5GridSection")
-    return grid, lat[:, 0].copy(), lon[0].copy(), (nj, ni)
+    ):
+        lat2, lon2 = lat.reshape(nj, ni), lon.reshape(nj, ni)
+        if np.all(lat2 == lat2[:, :1]) and np.all(lon2 == lon2[:1, :]):
+            return (
+                grid,
+                {"latitude": lat2[:, 0].copy(), "longitude": lon2[0].copy()},
+                ("latitude", "longitude"),
+                (nj, ni),
+            )
+    return (
+        grid,
+        {"latitude": ("point", lat), "longitude": ("point", lon)},
+        ("point",),
+        (points,),
+    )
 
 
-def _load(snapshot, offset, lat, lon, shape):
+def _load(snapshot, offset, coords, dims, shape):
     import eccodes
     from reki.grib_io import load_message_at_offset
 
@@ -886,16 +491,8 @@ def _load(snapshot, offset, lat, lon, shape):
                 "decode_failed", "", "record offset no longer identifies a message"
             )
         try:
-            record_io_event("value_decode_count")
-            values = eccodes.codes_get_double_array(handle, "values").reshape(shape)
-            if eccodes.codes_get_long(handle, "bitmapPresent"):
-                bitmap = eccodes.codes_get_long_array(handle, "bitmap").reshape(shape)
-                values = np.where(bitmap, values, np.nan)
-            return xr.DataArray(
-                values,
-                dims=("latitude", "longitude"),
-                coords={"latitude": lat, "longitude": lon},
-            )
+            values = decode_values(handle).reshape(shape)
+            return xr.DataArray(values, dims=dims, coords=coords)
         except eccodes.CodesInternalError as exc:
             raise SourceError(
                 "decode_failed", "", "ecCodes value decoding failed"

@@ -76,4 +76,23 @@ def test_indexing_requires_an_explicit_cli_opt_in(tmp_path):
 def test_catalog_commands_remain_available():
     result = CliRunner().invoke(cli, ["catalog", "--help"])
     assert result.exit_code == 0
-    assert "resolve" in result.output
+    assert "show" in result.output and "list" in result.output
+
+
+def test_native_request_cli_can_explain_and_read(tmp_path):
+    path = tmp_path / "fields.grib"
+    _write(path)
+    request = tmp_path / "request.json"
+    request.write_text(json.dumps({
+        "api_version": "cedarkit.request/v1",
+        "source": {"kind": "file", "path": path.name},
+        "queries": [{"native": {"grib": {"parameterNumber": 0}}, "level": 850}],
+    }))
+    runner = CliRunner()
+    result = runner.invoke(cli, ["request", "explain", str(request)])
+    assert result.exit_code == 0, result.output
+    assert len(json.loads(result.output)["effective_queries"]) == 1
+    out = tmp_path / "raw.nc"
+    result = runner.invoke(cli, ["request", "read", str(request), str(out)])
+    assert result.exit_code == 0, result.output
+    assert out.is_file() and json.loads(result.output)["overall"]["field_count"] == 1

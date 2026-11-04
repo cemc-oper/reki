@@ -1,17 +1,14 @@
 """Assemble actual fields into an in-memory Dataset, without re-running queries."""
 
-from decimal import Decimal
 import numpy as np
 import xarray as xr
 
 from cedarkit_query import QueryError
 from cedarkit_query.normalize import (
-    unit_name,
     time_seconds,
     duration_seconds,
 )
 from reki.catalog.model import thaw
-from reki.translation.common import value_unit
 from .core import key
 
 _VERTICAL = (
@@ -28,27 +25,6 @@ def _error(code, message, **context):
     raise QueryError(
         code, "", message, {"operation": "to_xarray", "stage": "assembly", **context}
     )
-
-
-def _number(value):
-    text = format(Decimal(str(value)), "f")
-    return text.rstrip("0").rstrip(".") if "." in text else text
-
-
-def _layer_name(name, layer):
-    bottom, top = layer["bottom"], layer["top"]
-
-    def boundary(v):
-        return v["type"] + (
-            "_" + _number(v["value"]) + v.get("unit", "") if "value" in v else ""
-        )
-
-    if bottom["type"] == top["type"] and "value" in bottom and "value" in top:
-        return (
-            f"{name}__layer__{bottom['type']}__bottom_{_number(bottom['value'])}{bottom.get('unit', '')}"
-            f"__top_{_number(top['value'])}{top.get('unit', '')}"
-        )
-    return f"{name}__layer__bottom_{boundary(bottom)}__top_{boundary(top)}"
 
 
 def _nanoseconds(value, time=False):
@@ -76,70 +52,22 @@ def _coordinates(identity):
 def _variable(field):
     identity = field.identity.to_dict()
     meta = thaw(field.metadata)
-    parameter = identity.get("parameter")
-    # Native selection is allowed without fabricated parameter IDs or names.
-    if parameter is not None:
-        if meta.get("parameter_id") != parameter or not meta.get("parameter_name"):
-            _error("unsupported", "backend lacks exact canonical parameter metadata")
-    name = meta.get("parameter_name")
-    layer = identity.get("layer")
-    fixed_layer = meta.get("fixed_conditions", {}).get("layer")
-    if layer and layer != fixed_layer and name:
-        name = _layer_name(name, layer)
-    semantics = {
-        k: v
-        for k, v in identity.items()
-        if k
-        not in {*_AXES, "valid_time", "member_role", "level", "level_unit", "native"}
-    }
-    if parameter is None:
-        # Unregistered native fields have no proven shared business variable.
-        # Preserve native distinctions rather than merging different quantities.
-        semantics["native"] = identity.get("native", {})
-    if "statistics" in meta:
-        semantics["statistics"] = meta["statistics"]
-    # Numeric level varies along a compatible coordinate; layer remains variable identity.
-    return key(semantics), name, identity, meta
+    return key(meta["native_variable"]), meta["native_name"], identity, meta
 
 
 def _attrs(identity, meta):
-    attrs = {}
-    for src, target in (
-        ("parameter_id", "cedarkit_parameter_id"),
-        ("parameter_name", "cedarkit_parameter_name"),
-        ("description", "long_name"),
-        ("standard_name", "standard_name"),
-    ):
-        if src in meta:
-            if (
-                src in {"parameter_id", "parameter_name"}
-                and "parameter" not in identity
-            ):
-                continue
-            attrs[target] = meta[src]
+    attrs = {f"GRIB_{k}": v for k, v in meta["native_variable"].items()}
     if "layer" in identity:
         for side, endpoint in identity["layer"].items():
             for k, v in endpoint.items():
-                attrs[f"layer_{side}_{'value' if k == 'value' else k}"] = v
+                attrs[f"layer_{side}_{k}"] = v
     elif identity.get("level_type") not in _VERTICAL and "level_type" in identity:
         attrs["level_type"] = identity["level_type"]
-    target = meta.get("unit")
-    if target:
-        attrs["units"] = unit_name(target)
     return attrs
 
 
-def _values(field, meta):
+def _values(field):
     field._owner._ensure_open()
-    source, target = meta.get("source_unit"), meta.get("unit")
-    if not source or not target:
-        _error(
-            "unsupported", "source and business value units require explicit evidence"
-        )
-    try:
-        conversion = value_unit(source, target, quantity_kind=meta.get("quantity_kind"))
-    except QueryError as exc:
-        _error(exc.code, exc.message, **dict(exc.context))
     array = field._reference.load()
     if not isinstance(array, xr.DataArray) or not array.dims:
         _error("unsupported", "backend must return a spatial DataArray")
@@ -155,13 +83,11 @@ def _values(field, meta):
         )
     attrs = {} if grid_mapping is None else {"grid_mapping": grid_mapping}
     array.attrs = {}
-    if (conversion.scale, conversion.offset) != (1, 0):
-        array = array * float(conversion.scale) + float(conversion.offset)
     array.attrs = attrs
     return array
 
 
-def assemble(fields, report, rename, configuration):
+def assemble(fields, report, rename):
     groups, names, positions, grids, vertical, roles = {}, {}, set(), [], {}, {}
     for field in fields:
         semantic, name, identity, meta = _variable(field)
@@ -170,13 +96,13 @@ def assemble(fields, report, rename, configuration):
         )
         if group["name"] != name or group["attrs"] != _attrs(identity, meta):
             _error(
-                "duplicate_field", "inconsistent canonical metadata within one variable"
+                "duplicate_field", "inconsistent native metadata within one variable"
             )
         coords = _coordinates(identity)
         pos = (semantic, key({k: str(v) for k, v in coords.items()}))
         if pos in positions:
             _error(
-                "duplicate_field", "different records occupy the same business position"
+                "duplicate_field", "different records occupy the same native position"
             )
         positions.add(pos)
         if not field._reference.grid:
@@ -206,7 +132,7 @@ def assemble(fields, report, rename, configuration):
             if name in names and names[name] != semantic:
                 _error(
                     "multiple_variables",
-                    "different business variables have the same default name",
+                    "different native variables have the same default name",
                     name=name,
                 )
             names[name] = semantic
@@ -215,14 +141,13 @@ def assemble(fields, report, rename, configuration):
         if len(groups) != 1:
             _error(
                 "multiple_variables",
-                "string rename requires exactly one business variable",
+                "string rename requires exactly one native variable",
             )
         targets = {g: rename for g in groups}
     elif rename is None or isinstance(rename, dict):
         rename = {} if rename is None else rename
-        missing_names = _missing_names(report, configuration)
         for source in rename:
-            if source not in names and source not in missing_names:
+            if source not in names:
                 _error(
                     "invalid_query",
                     "rename contains an unknown source name",
@@ -246,7 +171,7 @@ def assemble(fields, report, rename, configuration):
         for field, identity, meta, coords in group["rows"]:
             if set(coords) != applicable:
                 _error("duplicate_field", "variable mixes incompatible applicable axes")
-            array = _values(field, meta)
+            array = _values(field)
             if projection_attrs is None:
                 projection_attrs = dict(array.attrs)
             elif projection_attrs != array.attrs:
@@ -341,22 +266,3 @@ def assemble(fields, report, rename, configuration):
     for array in ds.data_vars.values():
         array.attrs["cedarkit_query_report"] = snapshot
     return ds.load().copy(deep=True)
-
-
-def _missing_names(report, configuration):
-    # Missing variables have no actual Field; only resource-backed canonical names
-    # can be recognized. Parameter IDs must not be treated as business names.
-    names = set()
-    if configuration.resources is None:
-        return names
-    for missing in report.overall["missing"]:
-        identity = thaw(missing["selection"])
-        if "parameter" not in identity:
-            continue
-        p = configuration.resources.parameter(identity["parameter"])
-        name = p["name"]
-        layer = identity.get("layer")
-        if layer and layer != p["fixed_conditions"].get("layer"):
-            name = _layer_name(name, layer)
-        names.add(name)
-    return names

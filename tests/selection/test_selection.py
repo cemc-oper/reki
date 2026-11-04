@@ -55,9 +55,7 @@ def test_construction_and_explain_no_business_io(factory, q):
 def test_union_intersection_origins_and_aliases(factory, q):
     other = changed(q, level=500, step="PT12H")
     source, backend, _ = factory([q, other], [q, other])
-    selected = source.sel([changed(q, parameter="t"), q, other]).sel(
-        level_type="pressure", level=500
-    )
+    selected = source.sel([q, q, other]).sel(level_type="pressure", level=500)
     info = selected.explain()
     assert len(info.effective_queries) == 1
     assert [dict(o) for o in info.effective_queries[0]["origins"]] == [
@@ -66,7 +64,7 @@ def test_union_intersection_origins_and_aliases(factory, q):
     ]
     assert len(selected.all()) == 1
     assert backend.loads == 0
-    duplicate = source.sel([changed(q, parameter="t"), q]).explain()
+    duplicate = source.sel([q, q]).explain()
     assert [dict(o) for o in duplicate.effective_queries[0]["origins"]] == [
         dict(step_index=0, query_index=0),
         dict(step_index=0, query_index=1),
@@ -192,7 +190,7 @@ def test_candidate_and_empty_residual_never_replace_full_query(factory, q):
     mismatch = changed(q, level=500)
     source, _, _ = factory([mismatch, q], [q])
     assert source.sel(q).one().identity.level == 850
-    assert not matches(Query(parameter="synthetic.t"), q)
+    assert not matches(Query(native={"grib": {"shortName": "t"}}), q)
     source, _, _ = factory([q], [q], residual={"member": 2})
     assert len(source.sel(q).all()) == 0
 
@@ -334,53 +332,12 @@ def test_dynamic_plan_refinement_is_terminal_only(factory, q):
     assert backend.starts == 1 and backend.loads == 0
 
 
-def test_plan_basis_links_and_context_injection_are_rejected(factory, q):
-    from reki.selection.backend import Plan
-    from reki.catalog.model import thaw
-
-    source, backend, _ = factory([q], [q])
-    ordinary = backend.plan
-
-    def invalid(queries, configuration):
-        p = ordinary(queries, configuration)
-        data = thaw(p.translations)
-        data[0]["branches"][0]["basis"] = [
-            dict(kind="mapping", resource=dict(kind="mappings", id="ABSENT"))
-        ]
-        return Plan(tuple(data), p.expected)
-
-    backend.plan = invalid
-    with pytest.raises(QueryError):
-        source.sel(q)
-    assert backend.starts == 0
-    backend.plan = ordinary
-    start = backend.start
-
-    def invalid_context(plan):
-        scan = start(plan)
-        scan.context = {"client": "SYNTHETIC-secret"}
-        return scan
-
-    backend.start = invalid_context
-    with pytest.raises(QueryError) as exc:
-        source.sel(q).all()
-    assert "SYNTHETIC-secret" not in json.dumps(exc.value.to_dict())
-
-
-def test_duplicate_reference_mutation_and_fixed_metadata_are_source_errors(factory, q):
+def test_duplicate_reference_mutation_is_source_error(factory, q):
     source, backend, refs = factory([q], [q])
     backend.records = [refs[0], replace(refs[0], grid={"id": "changed"})]
     with pytest.raises(SourceError) as exc:
         source.sel(q).all()
     assert exc.value.context["reason"] == "inconsistent_native_metadata"
-    backend.records = [
-        replace(
-            refs[0], metadata={**dict(refs[0].metadata), "parameter_name": "invented"}
-        )
-    ]
-    with pytest.raises(SourceError) as exc:
-        source.sel(q).all()
-    assert exc.value.context["reason"] == "fixed_definition_mismatch"
 
 
 def test_error_origin_and_readonly_source_configuration(factory, q):
@@ -430,17 +387,6 @@ def test_one_stops_on_second_distinct_record_unless_required(factory, q):
     with pytest.raises(SourceError) as exc:
         source.sel(q).one(completeness="required")
     assert exc.value is failure
-
-
-def test_documented_public_inspection_example(tmp_path, monkeypatch):
-    from pathlib import Path
-
-    document = (
-        Path(__file__).parents[2] / "doc/source/development/architecture/query-core.md"
-    )
-    snippet = document.read_text().split("```python\n", 1)[1].split("```", 1)[0]
-    monkeypatch.chdir(tmp_path)
-    exec(compile(snippet, str(document), "exec"), {})
 
 
 def test_partial_chained_vertical_selector_uses_established_type(factory, q):

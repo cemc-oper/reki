@@ -33,31 +33,6 @@ _EXPORTS = {
     "normalize_data_array": (".core", "normalize_data_array"),
     "validate_data_array": (".core", "validate_data_array"),
     "load_catalog": (".catalog", "load_catalog"),
-    "CmadaasRequest": (".cmadaas_request", "CmadaasRequest"),
-    "CmadaasRequestError": (".cmadaas_request", "CmadaasRequestError"),
-    "CmadaasNameNotMappedError": (".cmadaas_request", "CmadaasNameNotMappedError"),
-    "CmadaasRequestConflictError": (".cmadaas_request", "CmadaasRequestConflictError"),
-    "bind_cmadaas_request": (".cmadaas_request", "bind_cmadaas_request"),
-    "ExternalNameResolution": (".readers.grib.config", "ExternalNameResolution"),
-    "ParameterAmbiguityError": (".readers.grib.config", "ParameterAmbiguityError"),
-    "ParameterConditionConflictError": (
-        ".readers.grib.config",
-        "ParameterConditionConflictError",
-    ),
-    "ParameterExternalNameNotMappedError": (
-        ".readers.grib.config",
-        "ParameterExternalNameNotMappedError",
-    ),
-    "ParameterNamespaceNotFoundError": (
-        ".readers.grib.config",
-        "ParameterNamespaceNotFoundError",
-    ),
-    "ParameterNotFoundError": (".readers.grib.config", "ParameterNotFoundError"),
-    "ParameterRecord": (".readers.grib.config", "ParameterRecord"),
-    "ParameterResolutionError": (".readers.grib.config", "ParameterResolutionError"),
-    "ResolvedParameter": (".readers.grib.config", "ResolvedParameter"),
-    "resolve_external_name": (".readers.grib.config", "resolve_external_name"),
-    "resolve_parameter": (".readers.grib.config", "resolve_parameter"),
     "operator": (".operator", None),
 }
 

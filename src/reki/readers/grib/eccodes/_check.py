@@ -62,7 +62,6 @@ def get_parameter_conditions(
 ) -> dict[str, Union[int, float, str]]:
     if parameter is None:
         return dict()
-    # parameter = _convert_parameter(parameter)
     if isinstance(parameter, str):
         return {
             "shortName": parameter

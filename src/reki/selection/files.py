@@ -69,10 +69,7 @@ def discover_paths(configuration, queries=()):
                     )
                 # An omitted lead selects existing files for the explicit origin;
                 # validation sample leads are never used as a discovery domain.
-                if "step" not in row.to_dict() and _template_fields(template) & {
-                    "forecast_hour",
-                    "forecast_hour_label",
-                }:
+                if "*" in values.values():
                     try:
                         for found in root.glob(template.format(**values)):
                             if not found.resolve().is_relative_to(root):
@@ -153,11 +150,14 @@ def _template_values(template, query):
             values.update(forecast_hour=hour, forecast_hour_label=f"{hour:03d}")
     if "member_3digit" in fields:
         member = query.get("member")
-        if type(member) is not int or not 0 <= member <= 999:
+        if member is None:
+            values["member_3digit"] = "*"
+        elif type(member) is not int or not 0 <= member <= 999:
             raise QueryError(
                 "unsupported", "/queries", "member template needs a member in 0..999"
             )
-        values["member_3digit"] = f"{member:03d}"
+        else:
+            values["member_3digit"] = f"{member:03d}"
     return values
 
 

@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import eccodes
+import numpy as np
 
 from reki.diagnostics import record_io_event
 
@@ -83,3 +84,32 @@ def load_message_at_offset(path: str | Path, offset: int, *, headers_only=False)
             file_handle, headers_only=headers_only
         )
     return message
+
+
+def decode_values(message, *, missing_value=None, fill_value=np.nan):
+    """Decode in scan order, using encoded missingness instead of value equality."""
+    bitmap = eccodes.codes_get_long(message, "bitmapPresent")
+    complex_missing = (
+        not bitmap
+        and eccodes.codes_is_defined(message, "missingValueManagementUsed")
+        and eccodes.codes_get_long(message, "missingValueManagementUsed") in {1, 2}
+    )
+    if complex_missing and fill_value is not None:
+        eccodes.codes_set_double(message, "missingValue", float("nan"))
+    elif missing_value is not None:
+        eccodes.codes_set_double(message, "missingValue", missing_value)
+    record_io_event("value_decode_count")
+    values = eccodes.codes_get_double_array(message, "values")
+    return fill_missing(message, values, fill_value)
+
+
+def fill_missing(message, values, fill_value):
+    if fill_value is None:
+        return values
+    if eccodes.codes_get_long(message, "bitmapPresent"):
+        bitmap = eccodes.codes_get_long_array(message, "bitmap").reshape(values.shape)
+        return np.where(bitmap, values, fill_value)
+    if eccodes.codes_is_defined(message, "missingValueManagementUsed"):
+        if eccodes.codes_get_long(message, "missingValueManagementUsed") in {1, 2}:
+            return np.where(np.isnan(values), fill_value, values)
+    return values

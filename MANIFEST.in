@@ -4,6 +4,4 @@ recursive-include tests/selection *.py
 recursive-include tests/translation *.py
 recursive-include tests/selection/fixtures *.json
 include doc/source/development/architecture/query-core.md
-include doc/source/development/architecture/finite-rules.md
 recursive-include src/reki/data_finder/conf *
-recursive-include src/reki/readers/grib/config *.yaml *.md

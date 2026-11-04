@@ -23,7 +23,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-    "cedarkit-query>=0.1,<0.2",
+    "cedarkit-query>=0.2,<0.3",
     "pyyaml",
     "jinja2",
     "numpy",
@@ -101,9 +101,8 @@ namespaces = false
 include-package-data = false
 
 [tool.setuptools.package-data]
-"reki.catalog" = ["builtin/catalog-v1.json", "builtin/current-gfs*.json", "builtin/current-meso3*.json", "builtin/current-meso1*.json", "builtin/current-tym*.json", "builtin/current-geps*.json", "builtin/current-reps*.json"]
+"reki.catalog" = ["builtin/catalog-v1.json", "builtin/current-gfs.json", "builtin/current-meso3.json", "builtin/current-meso1.json", "builtin/current-tym.json", "builtin/current-geps.json", "builtin/current-reps.json"]
 "reki.data_finder" = ["README.md", "conf/**/*.yaml"]
-"reki.readers.grib.config" = ["*.yaml", "*.md"]
 
 [tool.setuptools_scm]
 version_file = "src/reki/_version.py"

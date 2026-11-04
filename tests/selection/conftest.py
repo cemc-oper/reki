@@ -1,7 +1,6 @@
 """All fixtures are SYNTHETIC. No business/native/backend acceptance is implied."""
 
 from dataclasses import replace
-import json
 
 import numpy as np
 import pytest
@@ -9,7 +8,6 @@ import xarray as xr
 
 from cedarkit_query import normalize_query
 from reki.catalog import plan_source_binding
-from reki.catalog.model import thaw
 from reki.selection.backend import Plan, FieldReference
 from reki.selection.core import construct_source, matches
 
@@ -21,7 +19,7 @@ def identity(**changes):
     return normalize_query(
         {
             **dict(
-                parameter="synthetic.t",
+                native={"grib": {"shortName": "t"}},
                 level_type="pressure",
                 level=850,
                 time=TIME,
@@ -106,18 +104,6 @@ class ControlledBackend:
 
 @pytest.fixture
 def factory(tmp_path):
-    params = dict(
-        api_version="cedarkit.parameters/v1",
-        id="SYNTHETIC.parameters",
-        version="1",
-        parameters=[
-            dict(parameter_id="synthetic.t", name="t", unit="K"),
-            dict(parameter_id="synthetic.u", name="u", unit="m/s"),
-            dict(parameter_id="synthetic.st", name="st", unit="K"),
-        ],
-    )
-    path = tmp_path / "parameters.json"
-    path.write_text(json.dumps(params))
     dummy = tmp_path / "SYNTHETIC.not-grib"
     dummy.write_bytes(b"NOT A BUSINESS FILE; NEVER DECODED")
 
@@ -135,17 +121,7 @@ def factory(tmp_path):
         no_resources=False,
         extra_parameters=(),
     ):
-        if extra_parameters:
-            path.write_text(
-                json.dumps(
-                    {
-                        **params,
-                        "parameters": params["parameters"] + list(extra_parameters),
-                    }
-                )
-            )
-        ctx = {} if no_resources else dict(parameter_registry={"path": str(path)})
-        ctx.update(context or {})
+        ctx = context or {}
         configuration = plan_source_binding(
             dict(kind="file", path=str(dummy)), context=ctx
         )
@@ -155,24 +131,20 @@ def factory(tmp_path):
         refs = []
         for i, query in enumerate(identities):
             q = normalize_query(query)
-            p = (
-                None
-                if no_resources or "parameter" not in q.to_dict()
-                else configuration.resources.parameter(q.parameter)
-            )
+            native = q.to_dict().get("native", {}).get("grib", {})
+            name = native.get("shortName", "raw")
             meta = dict(
-                source_unit="K",
-                unit="K",
+                native_name=name,
+                native_variable={
+                    **native,
+                    **{
+                        k: str(q.to_dict()[k])
+                        for k in ("layer", "level_type")
+                        if k in q.to_dict()
+                    },
+                },
                 vertical_definition={"id": "SYNTHETIC.pressure-v1"},
             )
-            if p:
-                meta.update(
-                    parameter_id=p["parameter_id"],
-                    parameter_name=p["name"],
-                    unit=p["unit"],
-                    source_unit=p["unit"],
-                    fixed_conditions=thaw(p["fixed_conditions"]),
-                )
             meta.update(metadata or {})
 
             def load(i=i):

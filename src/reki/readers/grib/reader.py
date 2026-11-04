@@ -31,7 +31,7 @@ from reki.core.field_query import field_query_from_kwargs
 from reki.core.source_spec import redact
 
 from .common import fix_level_type
-from ._header_metadata import parameter_names_from_message, time_metadata_from_message
+from ._header_metadata import time_metadata_from_message
 
 GRIB_MAGIC = b"GRIB"
 
@@ -475,9 +475,8 @@ class GribReader(Reader):
     def _header_matches(self, message):
         from .eccodes._check import _check_message
         from .eccodes._level import _fix_level
-        from reki.readers.grib.common._parameter import convert_parameter
         filters = self._filters_from_query()
-        parameter = convert_parameter(filters.pop("parameter", None))
+        parameter = filters.pop("parameter", None)
         level_type = filters.pop("level_type", None)
         level = filters.pop("level", None)
         for option in ("count", "level_dim", "field_name", "show_progress", "lazy", "with_index"):
@@ -531,9 +530,6 @@ class GribReader(Reader):
         # metadata.  Unknown extra keys deliberately do a header scan fallback.
         query = self._query
         parameter = query.parameter
-        if isinstance(parameter, str):
-            from reki.readers.grib.common._parameter import convert_parameter
-            parameter = convert_parameter(parameter)
         if isinstance(parameter, dict):
             if any(metadata.extra.get(key) != value for key, value in parameter.items()):
                 return False
@@ -572,7 +568,6 @@ class GribReader(Reader):
         from .eccodes._check import _check_message
         from .eccodes._level import _fix_level
         from .eccodes._scan import iter_headers
-        from reki.readers.grib.common._parameter import convert_parameter
 
         filters = self._filters_from_query()
         count = filters.pop("count", None)
@@ -591,7 +586,6 @@ class GribReader(Reader):
         fixed_level_type, level_dim = _fix_level(level_type, level_dim)
         if field_name is None and isinstance(parameter, str):
             field_name = parameter
-        parameter = convert_parameter(parameter)
         first_found = False
         for header in iter_headers(self.path, headers_only=True):
                 if not _check_message(header.handle, parameter, fixed_level_type, level, **filters):
@@ -709,16 +703,14 @@ class GribReader(Reader):
         from .eccodes._xarray import create_data_array_from_message
         from .eccodes._scan import iter_headers
         from reki.readers.grib.common import MISSING_VALUE
-        from reki.readers.grib.common._parameter import convert_parameter
 
         fixed_level_type, _ = _fix_level(level_type, None)
-        converted_parameter = convert_parameter(parameter)
 
         messages = []
         offsets = []
         for header in iter_headers(self.path, headers_only=True):
             if not _check_message(
-                    header.handle, converted_parameter, fixed_level_type, level,
+                    header.handle, parameter, fixed_level_type, level,
                     **filters,
             ):
                 continue
@@ -921,7 +913,6 @@ def _metadata_from_message(message, ordinal, offset, path):
         "layer_top": get("topLevel"),
         "layer_bottom": get("bottomLevel"),
     }
-    extras.update(parameter_names_from_message(message))
     # ECMWF IFS writes the ENS control as an ``oper/fc`` message without a
     # native ``number`` key.  Expose it as member 0 so metadata and xarray
     # use the same public control/member convention.

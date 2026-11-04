@@ -2,7 +2,6 @@ from typing import Dict, List, Union, Tuple
 
 import numpy as np
 
-from reki.readers.grib.common import convert_parameter
 
 
 def _fill_parameter(
@@ -10,7 +9,6 @@ def _fill_parameter(
         filter_by_keys: Dict,
         read_keys: List
 ) -> Tuple[Dict, List]:
-    parameter = convert_parameter(parameter)
 
     if isinstance(parameter, str):
         filter_by_keys["shortName"] = parameter
