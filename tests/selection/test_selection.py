@@ -78,8 +78,14 @@ def test_empty_intersection_does_not_hide_later_invalid(factory, q):
     assert len(selected.all()) == 0
     assert backend.starts == 0
     assert not selected.to_xarray().data_vars
-    with pytest.raises(QueryError):
+    with pytest.raises(QueryError) as caught:
         selected.sel(parameter="not-registered")
+    assert (caught.value.code, caught.value.path) == (
+        "unsupported",
+        "/queries/0/parameter",
+    )
+    assert caught.value.context["reason"] == "translation_unavailable"
+    assert backend.starts == 0
     with pytest.raises(QueryError):
         selected.sel(member=-1)
 

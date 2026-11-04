@@ -73,6 +73,7 @@ def _selection_error(exc, origins, *, query_index=None):
     path = exc.path
     context = thaw(exc.context)
     query_fields = {
+        "parameter",
         "level_type",
         "level",
         "level_unit",
@@ -896,6 +897,13 @@ def _needs_vertical_type(query):
 def _prepare_input(query, configuration):
     scope = configuration.scope.to_dict()
     raw = query.to_dict()
+    if "parameter" in raw or "parameter" in scope:
+        raise QueryError(
+            "unsupported",
+            "/parameter" if "parameter" in raw else "/context/scope/parameter",
+            "business parameter execution requires a bound mapping",
+            {"reason": "translation_unavailable"},
+        )
     if (
         "member_role" in raw
         and "member" not in raw
