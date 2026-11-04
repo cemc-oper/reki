@@ -6,7 +6,75 @@
         "CMA-GFS",
         "cma_gfs"
       ],
-      "id": "cma_gfs_gmf"
+      "id": "cma_gfs_gmf",
+      "local_layout": [
+        "DATA/NAFP/NMC/GRAPES-GFS-GLB/{year}/{date_label}/Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-GFS-GLB-{forecast_hour_label}00.grib2"
+      ],
+      "mappings": {
+        "grib2": {
+          "builtin": "reki.mappings.cma-gfs.current",
+          "sha256": "ef8ebdd3745ee3f46763edc6d4bd2a6531f68df3e0b177313ecdf0d9692a9dc5",
+          "version": "16"
+        }
+      },
+      "parameter_registry": {
+        "builtin": "reki.parameters.cma-gfs.current",
+        "sha256": "381e5df1e4d5778e00f2d0cd81e0efc8d43fd51ff80d2816c64cfc6afb8be2fb",
+        "version": "11"
+      },
+      "products": [
+        {
+          "evidence": [
+            "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-36/headers-gfs-006-det.json",
+            "doc/2026-11-04-stage1.2-query-reki/task-01-coverage.md#首批本地-gfs-两例"
+          ],
+          "expected_domain": [
+            {
+              "level": 850,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.t",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            }
+          ],
+          "id": "orig",
+          "methods": [],
+          "populations": [],
+          "provides": [
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.t"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m"
+            }
+          ],
+          "scope": {},
+          "sources": [
+            {
+              "id": "cmadaas-disk",
+              "kind": "local"
+            },
+            {
+              "id": "explicit-file",
+              "kind": "file"
+            }
+          ],
+          "version": "current"
+        }
+      ]
     },
     {
       "aliases": [
@@ -115,5 +183,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "26"
+  "version": "27"
 }

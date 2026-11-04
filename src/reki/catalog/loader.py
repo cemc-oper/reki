@@ -13,6 +13,10 @@ from .model import LoadedResource, freeze
 BUILTINS = MappingProxyType(
     {
         "reki.catalog": Path(__file__).with_name("builtin") / "catalog-v1.json",
+        "reki.parameters.cma-gfs.current": Path(__file__).with_name("builtin")
+        / "current-gfs-parameters.json",
+        "reki.mappings.cma-gfs.current": Path(__file__).with_name("builtin")
+        / "current-gfs-mappings.json",
     }
 )
 
@@ -56,11 +60,17 @@ def load_context(value=None, *, base_dir=None):
 
 
 def load_resource(reference, kind, *, base_dir=None, pointer="/resource"):
-    if kind != "catalog":
+    if kind not in {"catalog", "parameters", "mappings"}:
+        raise ValueError(f"unknown resource kind: {kind}")
+    try:
+        ref = Context({"catalog": reference}, base_dir=base_dir).to_dict()["catalog"]
+    except QueryError as exc:
         raise QueryError(
-            "invalid_config", pointer, "only catalog resources are supported"
-        )
-    ref = Context({"catalog": reference}, base_dir=base_dir).to_dict()["catalog"]
+            exc.code,
+            pointer + exc.path.removeprefix("/catalog"),
+            exc.message,
+            dict(exc.context),
+        ) from exc
     if "builtin" in ref:
         path = BUILTINS.get(ref["builtin"])
         if path is None:

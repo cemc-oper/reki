@@ -56,6 +56,9 @@ class SourceConfiguration:
     origins: Mapping
     layout: object = None
     member_numbering: Mapping | None = None
+    parameters: Mapping | None = None
+    mappings: tuple = ()
+    product: Mapping | None = None
 
     def member_role(self, member):
         if type(member) is not int or member < 0:

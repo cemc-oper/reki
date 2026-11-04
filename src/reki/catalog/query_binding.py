@@ -3,11 +3,18 @@
 from pathlib import Path
 from string import Formatter
 
-from cedarkit_query import Query, QueryError, Request
+from cedarkit_query import (
+    Query,
+    QueryError,
+    Request,
+    intersect_scopes,
+    validate_resource_set,
+)
+from cedarkit_query.resources import effective_parameters
 
+from .current import current_registration
 from .loader import load_context, load_resource
 from .model import SourceConfiguration, freeze
-from .current import current_registration
 
 
 def _missing(path, message):
@@ -65,6 +72,66 @@ def _layout(value):
     return tuple(value)
 
 
+def _bind_resources(ctx, dataset, catalog, kind, origins, definitions):
+    parameter_ref = ctx.get("parameter_registry", dataset.get("parameter_registry"))
+    references = {
+        backend: (ref, origin)
+        for owner, origin in ((dataset, "dataset"), (ctx, "context"))
+        for backend, ref in owner.get("mappings", {}).items()
+    }
+    products = [
+        product
+        for product in dataset.get("products", ())
+        if any(source["kind"] == kind for source in product["sources"])
+    ]
+    if parameter_ref is None and not references and not products:
+        return None, (), None
+    if parameter_ref is None:
+        _missing(
+            "/context/parameter_registry", "the selected resources require parameters"
+        )
+    if len(products) > 1:
+        _missing("/source/dataset", "source must bind one unambiguous product version")
+    if not products and references:
+        _missing("/source/dataset", "mapping resources require a catalog product")
+    origin = "context" if "parameter_registry" in ctx else "dataset"
+    parameters = load_resource(
+        parameter_ref,
+        "parameters",
+        base_dir=catalog.base_dir,
+        pointer="/context/parameter_registry",
+    )
+    origins["parameter_registry"] = origin
+    definitions.append(freeze(parameters.snapshot("parameter_registry")))
+    if not products:
+        return freeze(effective_parameters(parameters.value)), (), None
+
+    mappings = []
+    for backend, (ref, origin) in sorted(references.items()):
+        loaded = load_resource(
+            ref,
+            "mappings",
+            base_dir=catalog.base_dir,
+            pointer="/context/mappings/" + backend,
+        )
+        if loaded.value.backend != backend:
+            raise QueryError(
+                "invalid_config",
+                "/context/mappings/" + backend,
+                "mapping resource backend mismatch",
+            )
+        definitions.append(freeze(loaded.snapshot("mappings", backend=backend)))
+        origins["mappings." + backend] = origin
+        mappings.append(loaded.value)
+    effective = validate_resource_set(
+        parameters.value,
+        mappings,
+        catalog.value,
+        dataset["id"],
+    )
+    return freeze(effective), tuple(mappings), freeze(products[0])
+
+
 def plan_source_binding(source, *, context=None, base_dir=None, client=None):
     """Resolve dataset aliases and file layouts before any discovery."""
     source = Request.from_dict(
@@ -100,12 +167,30 @@ def plan_source_binding(source, *, context=None, base_dir=None, client=None):
     layout = None
     if source["kind"] == "local":
         layout = _layout(
-            (registration or {}).get("local_layout") or dataset.get("local_layout")
+            dataset.get("local_layout") or (registration or {}).get("local_layout")
         )
 
     execution = {"completeness": "available", "max_expansion": 10000}
     roles = {}
     origins = {"catalog": "context" if "catalog" in ctx else "builtin"}
+    definitions = [freeze(catalog.snapshot("catalog"))]
+    parameters, mappings, product = _bind_resources(
+        ctx,
+        dataset,
+        catalog,
+        source["kind"],
+        origins,
+        definitions,
+    )
+    scope = Query(ctx.get("scope", {}))
+    if product is not None:
+        scope = intersect_scopes(scope, product["scope"])
+        if scope is None:
+            raise QueryError(
+                "constraint_conflict",
+                "/context/scope",
+                "context and product scopes are disjoint",
+            )
     for name in execution:
         origins[f"execution.{name}"] = "library"
     for values, origin in ((dataset, "dataset"), (ctx, "context")):
@@ -132,12 +217,15 @@ def plan_source_binding(source, *, context=None, base_dir=None, client=None):
     origins["member_roles.default"] = "CEMC" if cemc else "unknown"
     return SourceConfiguration(
         freeze(source),
-        Query(ctx.get("scope", {})),
+        scope,
         freeze(execution),
         freeze(roles),
         cemc,
-        (freeze(catalog.snapshot("catalog")),),
+        tuple(definitions),
         freeze(origins),
         layout,
         member_numbering,
+        parameters,
+        mappings,
+        product,
     )

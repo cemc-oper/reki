@@ -1,0 +1,26 @@
+{
+  "api_version": "cedarkit.parameters/v1",
+  "id": "cedarkit.parameters.cma-gfs.current",
+  "parameters": [
+    {
+      "description": "Temperature",
+      "description_cn": "温度",
+      "name": "t",
+      "parameter_id": "cedarkit.t",
+      "unit": "K"
+    },
+    {
+      "description": "Temperature at 2 meters height",
+      "description_cn": "2米温度",
+      "fixed_conditions": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      },
+      "name": "t2m",
+      "parameter_id": "cedarkit.t2m",
+      "parent": "cedarkit.t"
+    }
+  ],
+  "version": "11"
+}
