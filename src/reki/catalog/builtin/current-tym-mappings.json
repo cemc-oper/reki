@@ -5551,8 +5551,113 @@
       "when": {
         "level_type": "surface"
       }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "grib_util_v12.6:paraNum.h#case134",
+        "stage1.2/task-06b-priority-carriers/qflx-reconstruction.jsonl",
+        "stage1.2/task-06b-priority-carriers/producer-evidence.md",
+        "round-36/headers-tym-000-det.json#sha256=a7469c79568618cde8bbc3c01f0241e70e59bcaf77f56947db0fa8674d9d2ee5"
+      ],
+      "id": "qflx.instantaneous.analysis",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 1,
+          "parameterCategory": 1,
+          "parameterNumber": 224,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "g/(cm.hPa.s)"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.qflx",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "grib_util_v12.6:paraNum.h#case134",
+        "stage1.2/task-06b-priority-carriers/qflx-reconstruction.jsonl",
+        "stage1.2/task-06b-priority-carriers/producer-evidence.md",
+        "round-36/headers-tym-006-det.json#sha256=68be95677be7f24e8a6cbcb244e3631452d203c0f03f69e5d5227a7eb2395602",
+        "round-36/headers-tym-048-det.json#sha256=a22d18edc89f5c9496b6634b5c53ef7b5facae2b2e53039515f3b626215c6a39"
+      ],
+      "id": "qflx.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 1,
+          "parameterCategory": 1,
+          "parameterNumber": 224,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "g/(cm.hPa.s)"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.qflx",
+      "when": {
+        "level_type": "pressure"
+      }
     }
   ],
   "tables": [],
-  "version": "11"
+  "version": "12"
 }

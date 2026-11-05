@@ -1229,7 +1229,14 @@
       "name": "zs",
       "parameter_id": "cedarkit.zs",
       "parent": "cedarkit.h.any"
+    },
+    {
+      "description": "Moisture flux",
+      "description_cn": "水汽通量",
+      "name": "qflx",
+      "parameter_id": "cedarkit.qflx",
+      "unit": "g/(cm.hPa.s)"
     }
   ],
-  "version": "13"
+  "version": "14"
 }

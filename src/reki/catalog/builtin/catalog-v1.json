@@ -13,14 +13,14 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-gfs.current",
-          "sha256": "3b0383cba0fc82a6fe018f4c500961507b96edd084d07cf468fb4ecfacc8d6e8",
-          "version": "18"
+          "sha256": "fed280b3de91dee9369cdedf29a52050b0550ef5bfac6854a0b148c035ec5ad7",
+          "version": "19"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cma-gfs.current",
-        "sha256": "d78dcdcd839264c1365e579b42739c4e81c7009c0f7b6c729d3ef3d83b3b10e6",
-        "version": "13"
+        "sha256": "d82b22c845529cd39a9de920fb450936969a3ef7ca8a191d773216a39fe30642",
+        "version": "14"
       },
       "products": [
         {
@@ -28,7 +28,8 @@
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-36/headers-gfs-006-det.json",
             "doc/2026-11-04-stage1.2-query-reki/task-01-coverage.md#首批本地-gfs-两例",
             "stage1.2/task-06/orig-batch-1",
-            "stage1.2/task-06B/deterministic-orig"
+            "stage1.2/task-06B/deterministic-orig",
+            "stage1.2/task-06b-priority-carriers/qflx"
           ],
           "expected_domain": [
             {
@@ -546,6 +547,10 @@
             {
               "level_type": "surface",
               "parameter": "cedarkit.zs"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qflx"
             }
           ],
           "scope": {},
@@ -576,20 +581,21 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-meso3.current",
-          "sha256": "53f07f6035c47328d4aba7a93d9728ce30c5697ce14f9c3dace0049ef7acb506",
-          "version": "12"
+          "sha256": "2364850959fd862c31b8afe9491c8bd9aaf3c0993372aed893c0dc48685f7ac8",
+          "version": "13"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cma-meso3.current",
-        "sha256": "cfef16be474e870e217201c43be0ec8f0b1257210f0e263fabd85b1e1392e416",
-        "version": "9"
+        "sha256": "5ca2afcd4c45217707d8531cf9c240476038fa771219e5d177769b9fa56ab03f",
+        "version": "10"
       },
       "products": [
         {
           "evidence": [
             "stage1.2/task-06/orig-batch-1",
-            "stage1.2/task-06B/deterministic-orig"
+            "stage1.2/task-06B/deterministic-orig",
+            "stage1.2/task-06b-priority-carriers/qflx"
           ],
           "id": "orig",
           "methods": [],
@@ -1104,6 +1110,10 @@
             {
               "level_type": "surface",
               "parameter": "cedarkit.zs"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qflx"
             }
           ],
           "scope": {},
@@ -1542,20 +1552,21 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-tym.current",
-          "sha256": "e217cb7baf2e359701161f7693da592242c2d84c502b3bed0ec33b0bfdf216d9",
-          "version": "11"
+          "sha256": "959ebac11abdb2a9ecd26b0bac1b026178bd6ffa1a7957b6fbfa70c57b73c627",
+          "version": "12"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cma-tym.current",
-        "sha256": "0e105e98b5f22590e244318e759fba4d1dc11daa5ae3188b70ea46d728ddf1bb",
-        "version": "8"
+        "sha256": "3360430a860fd89b0f10172ae8e6543566ce8025da6e3d3c8ae83e65f6964596",
+        "version": "9"
       },
       "products": [
         {
           "evidence": [
             "stage1.2/task-06/orig-batch-1",
-            "stage1.2/task-06B/deterministic-orig"
+            "stage1.2/task-06B/deterministic-orig",
+            "stage1.2/task-06b-priority-carriers/qflx"
           ],
           "id": "orig",
           "methods": [],
@@ -1975,6 +1986,10 @@
             {
               "level_type": "surface",
               "parameter": "cedarkit.zs"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qflx"
             }
           ],
           "scope": {},
@@ -2619,5 +2634,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "29"
+  "version": "30"
 }
