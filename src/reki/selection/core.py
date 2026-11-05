@@ -303,6 +303,12 @@ def from_source(source, *, context=None, client=None):
             configuration,
             GribBackend(configuration, numbering=configuration.member_numbering),
         )
+    if configuration.source["kind"] == "cmadaas" and configuration.product is not None:
+        from reki.translation.cmadaas_backend import CmadaasBackend
+
+        return construct_source(
+            configuration, CmadaasBackend(configuration, client=client)
+        )
     return construct_source(configuration)
 
 

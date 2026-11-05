@@ -12,6 +12,7 @@ processing``。先通过 source 定位数据，再用查询和元数据确定字
    finding/index
    grib/index
    public-query
+   cmadaas-query
    query-cli
    loading/index
    processing/index

@@ -1,0 +1,1387 @@
+{
+  "api_version": "cedarkit.mappings/v1",
+  "backend": "cmadaas",
+  "id": "cedarkit.mappings.cmadaas.task07a",
+  "mappings": [
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "candidate-07a"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-ana-row-5"
+      ],
+      "id": "S-gfs-ana.t2m",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_cmadaas",
+        "product": "forecast",
+        "product_version": "candidate-07a"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-fcst-row-24"
+      ],
+      "id": "S-gfs-fcst.t2m",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "step": [
+          "PT3H",
+          "PT6H",
+          "PT9H",
+          "PT12H",
+          "PT15H",
+          "PT18H",
+          "PT21H",
+          "PT24H",
+          "PT27H",
+          "PT30H",
+          "PT33H",
+          "PT36H",
+          "PT39H",
+          "PT42H",
+          "PT45H",
+          "PT48H",
+          "PT51H",
+          "PT54H",
+          "PT57H",
+          "PT60H",
+          "PT63H",
+          "PT66H",
+          "PT69H",
+          "PT72H",
+          "PT75H",
+          "PT78H",
+          "PT81H",
+          "PT84H",
+          "PT87H",
+          "PT90H",
+          "PT93H",
+          "PT96H",
+          "PT99H",
+          "PT102H",
+          "PT105H",
+          "PT108H",
+          "PT111H",
+          "PT114H",
+          "PT117H",
+          "PT120H",
+          "PT126H",
+          "PT132H",
+          "PT138H",
+          "PT144H",
+          "PT150H",
+          "PT156H",
+          "PT162H",
+          "PT168H",
+          "PT174H",
+          "PT180H",
+          "PT186H",
+          "PT192H",
+          "PT198H",
+          "PT204H",
+          "PT210H",
+          "PT216H",
+          "PT222H",
+          "PT228H",
+          "PT234H",
+          "PT240H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_cmadaas",
+        "product": "forecast",
+        "product_version": "candidate-07a"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-fcst-row-18",
+        "T07/frozen-parameter-mappings.md",
+        "T13/verification.md"
+      ],
+      "id": "S-gfs-fcst.frozen.TEM",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t",
+      "when": {
+        "level_type": "surface",
+        "step": "PT24H",
+        "time": "2026-08-30T00:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_cmadaas",
+        "product": "forecast",
+        "product_version": "candidate-07a"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-fcst-row-93",
+        "T07/frozen-parameter-mappings.md",
+        "T13/verification.md"
+      ],
+      "id": "S-gfs-fcst.frozen.GPH",
+      "native": {
+        "match": {
+          "fcstEle": "GPH",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "Gpm"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.h.any",
+      "when": {
+        "level_type": "surface",
+        "step": "PT24H",
+        "time": "2026-08-30T00:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_cmadaas",
+        "product": "forecast",
+        "product_version": "candidate-07a"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-fcst-row-85",
+        "T07/frozen-parameter-mappings.md",
+        "T13/verification.md"
+      ],
+      "id": "S-gfs-fcst.frozen.CPE",
+      "native": {
+        "match": {
+          "fcstEle": "CPE",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainc.any",
+      "when": {
+        "level_type": "surface",
+        "step": "PT24H",
+        "time": "2026-08-30T00:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_cmadaas",
+        "product": "forecast",
+        "product_version": "candidate-07a"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-fcst-row-78",
+        "T07/frozen-parameter-mappings.md",
+        "T13/verification.md"
+      ],
+      "id": "S-gfs-fcst.frozen.LPE",
+      "native": {
+        "match": {
+          "fcstEle": "LPE",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainnc.any",
+      "when": {
+        "level_type": "surface",
+        "step": "PT24H",
+        "time": "2026-08-30T00:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "candidate-07a"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-ana-row-17"
+      ],
+      "id": "S-meso3-ana.t2m",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "candidate-07a"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-17"
+      ],
+      "id": "S-meso3-fcst.t2m",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "step": [
+          "PT1H",
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "candidate-07a"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso1-ana-row-1"
+      ],
+      "id": "S-meso1-ana.t2m",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "candidate-07a"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso1-fcst-row-28"
+      ],
+      "id": "S-meso1-fcst.t2m",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "step": [
+          "PT1H",
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "candidate-07a"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-ana-row-14"
+      ],
+      "id": "S-tym-ana.t2m",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "candidate-07a"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-84"
+      ],
+      "id": "S-tym-fcst.t2m",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "step": [
+          "PT1H",
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_geps_control_cmadaas",
+        "product": "forecast",
+        "product_version": "candidate-07a"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-geps-ctl-row-3"
+      ],
+      "id": "S-geps-ctl.t2m",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "member": {
+            "rule": "cmadaas.member_field"
+          },
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "step": [
+          "PT0H",
+          "PT6H",
+          "PT12H",
+          "PT18H",
+          "PT24H",
+          "PT30H",
+          "PT36H",
+          "PT42H",
+          "PT48H",
+          "PT54H",
+          "PT60H",
+          "PT66H",
+          "PT72H",
+          "PT78H",
+          "PT84H",
+          "PT90H",
+          "PT96H",
+          "PT102H",
+          "PT108H",
+          "PT114H",
+          "PT120H",
+          "PT126H",
+          "PT132H",
+          "PT138H",
+          "PT144H",
+          "PT150H",
+          "PT156H",
+          "PT162H",
+          "PT168H",
+          "PT174H",
+          "PT180H",
+          "PT186H",
+          "PT192H",
+          "PT198H",
+          "PT204H",
+          "PT210H",
+          "PT216H",
+          "PT222H",
+          "PT228H",
+          "PT234H",
+          "PT240H",
+          "PT246H",
+          "PT252H",
+          "PT258H",
+          "PT264H",
+          "PT270H",
+          "PT276H",
+          "PT282H",
+          "PT288H",
+          "PT294H",
+          "PT300H",
+          "PT306H",
+          "PT312H",
+          "PT318H",
+          "PT324H",
+          "PT330H",
+          "PT336H",
+          "PT342H",
+          "PT348H",
+          "PT354H",
+          "PT360H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_geps_perturbation_cmadaas",
+        "product": "forecast",
+        "product_version": "candidate-07a"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-geps-pert-row-4"
+      ],
+      "id": "S-geps-pert.t2m",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "member": {
+            "rule": "cmadaas.member_field"
+          },
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "step": [
+          "PT0H",
+          "PT6H",
+          "PT12H",
+          "PT18H",
+          "PT24H",
+          "PT30H",
+          "PT36H",
+          "PT42H",
+          "PT48H",
+          "PT54H",
+          "PT60H",
+          "PT66H",
+          "PT72H",
+          "PT78H",
+          "PT84H",
+          "PT90H",
+          "PT96H",
+          "PT102H",
+          "PT108H",
+          "PT114H",
+          "PT120H",
+          "PT126H",
+          "PT132H",
+          "PT138H",
+          "PT144H",
+          "PT150H",
+          "PT156H",
+          "PT162H",
+          "PT168H",
+          "PT174H",
+          "PT180H",
+          "PT186H",
+          "PT192H",
+          "PT198H",
+          "PT204H",
+          "PT210H",
+          "PT216H",
+          "PT222H",
+          "PT228H",
+          "PT234H",
+          "PT240H",
+          "PT246H",
+          "PT252H",
+          "PT258H",
+          "PT264H",
+          "PT270H",
+          "PT276H",
+          "PT282H",
+          "PT288H",
+          "PT294H",
+          "PT300H",
+          "PT306H",
+          "PT312H",
+          "PT318H",
+          "PT324H",
+          "PT330H",
+          "PT336H",
+          "PT342H",
+          "PT348H",
+          "PT354H",
+          "PT360H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps_control_cmadaas",
+        "product": "forecast",
+        "product_version": "candidate-07a"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-reps-ctl-row-28"
+      ],
+      "id": "S-reps-ctl.t2m",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "member": {
+            "rule": "cmadaas.member_field"
+          },
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "step": [
+          "PT0H",
+          "PT1H",
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps_perturbation_cmadaas",
+        "product": "forecast",
+        "product_version": "candidate-07a"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-reps-pert-row-35"
+      ],
+      "id": "S-reps-pert.t2m",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "member": {
+            "rule": "cmadaas.member_field"
+          },
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "step": [
+          "PT0H",
+          "PT1H",
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H"
+        ]
+      }
+    }
+  ],
+  "tables": [
+    {
+      "applies_to": {},
+      "evidence": [
+        "task-01-coverage.md#十二类公共天擎服务",
+        "T07/frozen-parameter-mappings.md"
+      ],
+      "id": "cmadaas.levels",
+      "key_kind": "level_type_and_level",
+      "rows": [
+        {
+          "canonical": {
+            "level": 2,
+            "level_type": "height_above_ground",
+            "level_unit": "m"
+          },
+          "id": "2m",
+          "native": {
+            "level": "2",
+            "level_type": "103"
+          }
+        },
+        {
+          "canonical": {
+            "level_type": "surface"
+          },
+          "id": "surface",
+          "native": {
+            "level": "0",
+            "level_type": "1"
+          }
+        }
+      ]
+    }
+  ],
+  "version": "1"
+}

@@ -82,3 +82,7 @@ For a mounted CEMC original product, use `{"kind": "local", "dataset": "cma_gfs_
 `one()` requires a unique original message. `all()` returns each matching field in source order. Assemble fields on a compatible grid with `to_xarray()`; inspect individual fields when grids differ. Original scalar metadata is available from each Field. Legacy message readers still accept an ecCodes shortName, a native key mapping or a record count.
 
 See [native field queries](doc/source/guide/public-query.md).
+
+## CMADaaS public query candidates
+
+The optional `reki[cmadaas]` dependency supports named scalar grid requests through the shared source API. Task 07A packages an explicitly selected offline candidate catalog for twelve CEMC services. It includes one `cedarkit.t2m` mapping per service and four historical GFS surface cases. See [the service candidate guide](doc/source/guide/cmadaas-query.md) for the selection context and verification limits. Actual service versions, time zones, authorization and numeric values remain subject to task 07B acceptance.

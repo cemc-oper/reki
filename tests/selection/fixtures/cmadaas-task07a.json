@@ -1,0 +1,730 @@
+[
+  {
+    "code": "TEM",
+    "context": {
+      "catalog": {
+        "builtin": "reki.catalog.cmadaas.task07a"
+      }
+    },
+    "expected_interface": "getNafpAnaEleGridInRectByTimeAndLevel",
+    "expected_params": {
+      "dataCode": "NAFP_ANA_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "TEM",
+      "fcstLevel": "2",
+      "levelType": "103",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20260830000000"
+    },
+    "id": "S-gfs-ana",
+    "query": {
+      "parameter": "cedarkit.t2m",
+      "step": "PT0H",
+      "time": "2026-08-30T00:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        280.0,
+        281.0,
+        null
+      ],
+      [
+        283.0,
+        284.0,
+        285.0
+      ]
+    ]
+  },
+  {
+    "code": "TEM",
+    "context": {
+      "catalog": {
+        "builtin": "reki.catalog.cmadaas.task07a"
+      }
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "TEM",
+      "fcstLevel": "2",
+      "levelType": "103",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20260830000000",
+      "validTime": "6"
+    },
+    "id": "S-gfs-fcst",
+    "query": {
+      "parameter": "cedarkit.t2m",
+      "step": "PT6H",
+      "time": "2026-08-30T00:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        281.0,
+        282.0,
+        null
+      ],
+      [
+        284.0,
+        285.0,
+        286.0
+      ]
+    ]
+  },
+  {
+    "code": "TEM",
+    "context": {
+      "catalog": {
+        "builtin": "reki.catalog.cmadaas.task07a"
+      }
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "TEM",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20260830000000",
+      "validTime": "24"
+    },
+    "id": "S-GFS-TEM",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.t",
+      "step": "PT24H",
+      "time": "2026-08-30T00:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        282.0,
+        283.0,
+        null
+      ],
+      [
+        285.0,
+        286.0,
+        287.0
+      ]
+    ]
+  },
+  {
+    "code": "GPH",
+    "context": {
+      "catalog": {
+        "builtin": "reki.catalog.cmadaas.task07a"
+      }
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "GPH",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20260830000000",
+      "validTime": "24"
+    },
+    "id": "S-GFS-GPH",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.h.any",
+      "step": "PT24H",
+      "time": "2026-08-30T00:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "Gpm",
+    "unit": "Gpm",
+    "values": [
+      [
+        0.0,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code": "CPE",
+    "context": {
+      "catalog": {
+        "builtin": "reki.catalog.cmadaas.task07a"
+      }
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "CPE",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20260830000000",
+      "validTime": "24"
+    },
+    "id": "S-GFS-CPE",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rainc.any",
+      "step": "PT24H",
+      "time": "2026-08-30T00:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg/m2",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code": "LPE",
+    "context": {
+      "catalog": {
+        "builtin": "reki.catalog.cmadaas.task07a"
+      }
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "LPE",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20260830000000",
+      "validTime": "24"
+    },
+    "id": "S-GFS-LPE",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rainnc.any",
+      "step": "PT24H",
+      "time": "2026-08-30T00:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg/m2",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code": "TEM",
+    "context": {
+      "catalog": {
+        "builtin": "reki.catalog.cmadaas.task07a"
+      }
+    },
+    "expected_interface": "getNafpAnaEleGridInRectByTimeAndLevel",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_ANA_3KM",
+      "fcstEle": "TEM",
+      "fcstLevel": "2",
+      "levelType": "103",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20260830000000"
+    },
+    "id": "S-meso3-ana",
+    "query": {
+      "parameter": "cedarkit.t2m",
+      "step": "PT0H",
+      "time": "2026-08-30T00:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        286.0,
+        287.0,
+        null
+      ],
+      [
+        289.0,
+        290.0,
+        291.0
+      ]
+    ]
+  },
+  {
+    "code": "TEM",
+    "context": {
+      "catalog": {
+        "builtin": "reki.catalog.cmadaas.task07a"
+      }
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TEM",
+      "fcstLevel": "2",
+      "levelType": "103",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20260830000000",
+      "validTime": "6"
+    },
+    "id": "S-meso3-fcst",
+    "query": {
+      "parameter": "cedarkit.t2m",
+      "step": "PT6H",
+      "time": "2026-08-30T00:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        287.0,
+        288.0,
+        null
+      ],
+      [
+        290.0,
+        291.0,
+        292.0
+      ]
+    ]
+  },
+  {
+    "code": "TEM",
+    "context": {
+      "catalog": {
+        "builtin": "reki.catalog.cmadaas.task07a"
+      }
+    },
+    "expected_interface": "getNafpAnaEleGridInRectByTimeAndLevel",
+    "expected_params": {
+      "dataCode": "NAFP_CEMC_MESO_ANA_1KM",
+      "fcstEle": "TEM",
+      "fcstLevel": "2",
+      "levelType": "103",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20260830000000"
+    },
+    "id": "S-meso1-ana",
+    "query": {
+      "parameter": "cedarkit.t2m",
+      "step": "PT0H",
+      "time": "2026-08-30T00:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_1km_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        288.0,
+        289.0,
+        null
+      ],
+      [
+        291.0,
+        292.0,
+        293.0
+      ]
+    ]
+  },
+  {
+    "code": "TEM",
+    "context": {
+      "catalog": {
+        "builtin": "reki.catalog.cmadaas.task07a"
+      }
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_CEMC_MESO_FOR_1KM",
+      "fcstEle": "TEM",
+      "fcstLevel": "2",
+      "levelType": "103",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20260830000000",
+      "validTime": "6"
+    },
+    "id": "S-meso1-fcst",
+    "query": {
+      "parameter": "cedarkit.t2m",
+      "step": "PT6H",
+      "time": "2026-08-30T00:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_1km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        289.0,
+        290.0,
+        null
+      ],
+      [
+        292.0,
+        293.0,
+        294.0
+      ]
+    ]
+  },
+  {
+    "code": "TEM",
+    "context": {
+      "catalog": {
+        "builtin": "reki.catalog.cmadaas.task07a"
+      }
+    },
+    "expected_interface": "getNafpAnaEleGridInRectByTimeAndLevel",
+    "expected_params": {
+      "dataCode": "NAFP_ANA_CMA_TYM_0P09_ASI",
+      "fcstEle": "TEM",
+      "fcstLevel": "2",
+      "levelType": "103",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20260830000000"
+    },
+    "id": "S-tym-ana",
+    "query": {
+      "parameter": "cedarkit.t2m",
+      "step": "PT0H",
+      "time": "2026-08-30T00:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        290.0,
+        291.0,
+        null
+      ],
+      [
+        293.0,
+        294.0,
+        295.0
+      ]
+    ]
+  },
+  {
+    "code": "TEM",
+    "context": {
+      "catalog": {
+        "builtin": "reki.catalog.cmadaas.task07a"
+      }
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "TEM",
+      "fcstLevel": "2",
+      "levelType": "103",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20260830000000",
+      "validTime": "6"
+    },
+    "id": "S-tym-fcst",
+    "query": {
+      "parameter": "cedarkit.t2m",
+      "step": "PT6H",
+      "time": "2026-08-30T00:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        291.0,
+        292.0,
+        null
+      ],
+      [
+        294.0,
+        295.0,
+        296.0
+      ]
+    ]
+  },
+  {
+    "code": "TEM",
+    "context": {
+      "catalog": {
+        "builtin": "reki.catalog.cmadaas.task07a"
+      }
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_NWPC_CMAGEPS_GLB_HOR12_D0P5_CONTROL",
+      "fcstEle": "TEM",
+      "fcstLevel": "2",
+      "fcstMember": 0,
+      "levelType": "103",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20260830000000",
+      "validTime": "6"
+    },
+    "id": "S-geps-ctl",
+    "query": {
+      "member": 0,
+      "parameter": "cedarkit.t2m",
+      "step": "PT6H",
+      "time": "2026-08-30T00:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_geps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        292.0,
+        293.0,
+        null
+      ],
+      [
+        295.0,
+        296.0,
+        297.0
+      ]
+    ]
+  },
+  {
+    "code": "TEM",
+    "context": {
+      "catalog": {
+        "builtin": "reki.catalog.cmadaas.task07a"
+      }
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_NWPC_CMAGEPS_GLB_HOR12_D0P5_DIS",
+      "fcstEle": "TEM",
+      "fcstLevel": "2",
+      "fcstMember": 1,
+      "levelType": "103",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20260830000000",
+      "validTime": "6"
+    },
+    "id": "S-geps-pert",
+    "query": {
+      "member": 1,
+      "parameter": "cedarkit.t2m",
+      "step": "PT6H",
+      "time": "2026-08-30T00:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_geps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        293.0,
+        294.0,
+        null
+      ],
+      [
+        296.0,
+        297.0,
+        298.0
+      ]
+    ]
+  },
+  {
+    "code": "TEM",
+    "context": {
+      "catalog": {
+        "builtin": "reki.catalog.cmadaas.task07a"
+      }
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "TEM",
+      "fcstLevel": "2",
+      "fcstMember": 0,
+      "levelType": "103",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20260830000000",
+      "validTime": "6"
+    },
+    "id": "S-reps-ctl",
+    "query": {
+      "member": 0,
+      "parameter": "cedarkit.t2m",
+      "step": "PT6H",
+      "time": "2026-08-30T00:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        294.0,
+        295.0,
+        null
+      ],
+      [
+        297.0,
+        298.0,
+        299.0
+      ]
+    ]
+  },
+  {
+    "code": "TEM",
+    "context": {
+      "catalog": {
+        "builtin": "reki.catalog.cmadaas.task07a"
+      }
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "TEM",
+      "fcstLevel": "2",
+      "fcstMember": 1,
+      "levelType": "103",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20260830000000",
+      "validTime": "6"
+    },
+    "id": "S-reps-pert",
+    "query": {
+      "member": 1,
+      "parameter": "cedarkit.t2m",
+      "step": "PT6H",
+      "time": "2026-08-30T00:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        295.0,
+        296.0,
+        null
+      ],
+      [
+        298.0,
+        299.0,
+        300.0
+      ]
+    ]
+  }
+]
