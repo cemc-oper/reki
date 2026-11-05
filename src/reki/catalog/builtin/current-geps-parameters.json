@@ -177,7 +177,307 @@
       "name": "v10m",
       "parameter_id": "cedarkit.v10m",
       "parent": "cedarkit.v"
+    },
+    {
+      "description": "Best lifted index",
+      "description_cn": "最优抬升指数",
+      "name": "bli",
+      "parameter_id": "cedarkit.bli",
+      "unit": "K"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "cape",
+      "parameter_id": "cedarkit.cape",
+      "parent": "cedarkit.cape.any"
+    },
+    {
+      "description": "Convective available potential energy",
+      "description_cn": "对流有效位能",
+      "name": "cape",
+      "parameter_id": "cedarkit.cape.any",
+      "unit": "J/kg"
+    },
+    {
+      "aliases": [
+        "c_dbz",
+        "cr"
+      ],
+      "description": "Composite radar reflectivity",
+      "description_cn": "雷达组合反射率",
+      "name": "cdbz",
+      "parameter_id": "cedarkit.cdbz",
+      "unit": "dbz"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "cin",
+      "parameter_id": "cedarkit.cin",
+      "parent": "cedarkit.cin.any"
+    },
+    {
+      "description": "Convective inhibition",
+      "description_cn": "对流抑制能量",
+      "name": "cin",
+      "parameter_id": "cedarkit.cin.any",
+      "unit": "J/kg"
+    },
+    {
+      "description": "Down convective available potential energy",
+      "description_cn": "下沉对流有效位能",
+      "name": "dcape",
+      "parameter_id": "cedarkit.dcape",
+      "unit": "J/kg"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "pressure",
+        "level_unit": "hPa"
+      },
+      "name": "h",
+      "parameter_id": "cedarkit.h",
+      "parent": "cedarkit.h.any"
+    },
+    {
+      "description": "Geopotential height",
+      "description_cn": "位势高度",
+      "name": "h",
+      "parameter_id": "cedarkit.h.any",
+      "unit": "Gpm"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "entire_atmosphere"
+      },
+      "name": "pwat",
+      "parameter_id": "cedarkit.pwat",
+      "parent": "cedarkit.pwat.any"
+    },
+    {
+      "description": "Precipitable water",
+      "description_cn": "整层可降水量",
+      "name": "pwat",
+      "parameter_id": "cedarkit.pwat.any",
+      "unit": "kg/m2"
+    },
+    {
+      "description": "Specific humidity",
+      "description_cn": "比湿",
+      "name": "q",
+      "parameter_id": "cedarkit.q",
+      "unit": "kg/kg"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time"
+        }
+      },
+      "name": "rainc",
+      "parameter_id": "cedarkit.rainc",
+      "parent": "cedarkit.rainc.any"
+    },
+    {
+      "description": "Convective precipitation",
+      "description_cn": "对流性降水",
+      "name": "rainc",
+      "parameter_id": "cedarkit.rainc.any",
+      "unit": "mm"
+    },
+    {
+      "aliases": [
+        "ACPCP",
+        "rainc-since-initialization"
+      ],
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "rainc",
+      "parameter_id": "cedarkit.rainc.since-initialization",
+      "parent": "cedarkit.rainc"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time"
+        }
+      },
+      "name": "rainnc",
+      "parameter_id": "cedarkit.rainnc",
+      "parent": "cedarkit.rainnc.any"
+    },
+    {
+      "description": "Large scale precipitation",
+      "description_cn": "大尺度降水",
+      "name": "rainnc",
+      "parameter_id": "cedarkit.rainnc.any",
+      "unit": "mm"
+    },
+    {
+      "aliases": [
+        "NCPCP",
+        "rainnc-since-initialization"
+      ],
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "rainnc",
+      "parameter_id": "cedarkit.rainnc.since-initialization",
+      "parent": "cedarkit.rainnc"
+    },
+    {
+      "description": "Relative humidity at 2 meters height",
+      "description_cn": "2米相对湿度",
+      "fixed_conditions": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      },
+      "name": "rh2m",
+      "parameter_id": "cedarkit.rh2m",
+      "parent": "cedarkit.rh"
+    },
+    {
+      "aliases": [
+        "asnow",
+        "snow"
+      ],
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "sf",
+      "parameter_id": "cedarkit.sf",
+      "parent": "cedarkit.sf.any"
+    },
+    {
+      "description": "Total snowfall",
+      "description_cn": "降雪",
+      "name": "sf",
+      "parameter_id": "cedarkit.sf.any",
+      "unit": "m"
+    },
+    {
+      "aliases": [
+        "vwsh"
+      ],
+      "description": "Vertical speed shear",
+      "description_cn": "垂直风切变",
+      "name": "shr",
+      "parameter_id": "cedarkit.shr",
+      "unit": "s-1"
+    },
+    {
+      "description_cn": "0-1km垂直风切变",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 0
+          },
+          "top": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 1000
+          }
+        }
+      },
+      "name": "shr(0-1000)",
+      "parameter_id": "cedarkit.shr-0-1000",
+      "parent": "cedarkit.shr"
+    },
+    {
+      "description_cn": "0-3km垂直风切变",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 0
+          },
+          "top": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 3000
+          }
+        }
+      },
+      "name": "shr(0-3000)",
+      "parameter_id": "cedarkit.shr-0-3000",
+      "parent": "cedarkit.shr"
+    },
+    {
+      "description_cn": "0-6km垂直风切变",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 0
+          },
+          "top": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 6000
+          }
+        }
+      },
+      "name": "shr(0-6000)",
+      "parameter_id": "cedarkit.shr-0-6000",
+      "parent": "cedarkit.shr"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "vis",
+      "parameter_id": "cedarkit.vis",
+      "parent": "cedarkit.vis.any"
+    },
+    {
+      "description": "Visibility",
+      "description_cn": "能见度",
+      "name": "vis",
+      "parameter_id": "cedarkit.vis.any",
+      "unit": "m"
+    },
+    {
+      "description": "Terrain",
+      "description_cn": "地形高度",
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "zs",
+      "parameter_id": "cedarkit.zs",
+      "parent": "cedarkit.h.any"
     }
   ],
-  "version": "5"
+  "version": "6"
 }

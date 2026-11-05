@@ -359,10 +359,18 @@ def _observed_units(native, scope, pid, declared):
         return {declared}  # The producer overloads SPFH on two soil surfaces.
     if native.get("localTablesVersion") != 0:
         return units
-    if carrier == (0, 0, 3, 5, 1, 255) and (
+    terrain = (
+        carrier == (0, 0, 3, 5, 1, 255)
+        and dataset in {"cma_gfs_gmf", "cma_meso_1km", "cma_meso_3km", "cma_tym"}
+    ) or (
+        carrier == (1, 0, 3, 5, 1, 255)
+        and dataset == "cma_geps"
+        and native.get("numberOfForecastsInEnsemble") == 31
+        and native.get("typeOfGeneratingProcess") == 4
+    )
+    if terrain and (
         pid == "cedarkit.zs"
         and declared == "Gpm"
-        and dataset in {"cma_gfs_gmf", "cma_meso_1km", "cma_meso_3km", "cma_tym"}
         and (decoder, table) == ("m", "Gpm")
     ):
         return {declared}

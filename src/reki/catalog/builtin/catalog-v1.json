@@ -2018,19 +2018,20 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-geps.current",
-          "sha256": "3b5c3fb773811c652fb32bf17079783ffa0bbc7199d2bbf2d1c0631c95209084",
-          "version": "8"
+          "sha256": "86f0c92308bfda9d589a7e377649728b8f764355b6e5f40ac5f0622bc7cb782e",
+          "version": "9"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cma-geps.current",
-        "sha256": "15fbb02cd48e96fff84b0b115267b944e1b71fe554a8e7b93ba57887310fb540",
-        "version": "5"
+        "sha256": "767dba673ebae8dc8b51bbd82e7ba5d2a68c40a31388293dc2c20cbebbcaffa4",
+        "version": "6"
       },
       "products": [
         {
           "evidence": [
-            "stage1.2/task-06/orig-batch-1"
+            "stage1.2/task-06/orig-batch-1",
+            "stage1.2/task-06C/member-orig"
           ],
           "id": "orig",
           "methods": [],
@@ -2323,6 +2324,270 @@
               },
               "member_role": "perturbation",
               "parameter": "cedarkit.v10m"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "control",
+              "parameter": "cedarkit.bli"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.bli"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "control",
+              "parameter": "cedarkit.cape"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.cape"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "control",
+              "parameter": "cedarkit.cdbz"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.cdbz"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "control",
+              "parameter": "cedarkit.cin"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.cin"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "control",
+              "parameter": "cedarkit.dcape"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.dcape"
+            },
+            {
+              "level_type": "pressure",
+              "member_role": "control",
+              "parameter": "cedarkit.h"
+            },
+            {
+              "level_type": "pressure",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.h"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member_role": "control",
+              "parameter": "cedarkit.pwat"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat"
+            },
+            {
+              "level_type": "pressure",
+              "member": 0,
+              "member_role": "control",
+              "parameter": "cedarkit.q"
+            },
+            {
+              "level_type": "pressure",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 1
+                }
+              },
+              "member_role": "perturbation",
+              "parameter": "cedarkit.q"
+            },
+            {
+              "level_type": "surface",
+              "member": 0,
+              "member_role": "control",
+              "parameter": "cedarkit.rainc.since-initialization"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 1
+                }
+              },
+              "member_role": "perturbation",
+              "parameter": "cedarkit.rainc.since-initialization"
+            },
+            {
+              "level_type": "surface",
+              "member": 0,
+              "member_role": "control",
+              "parameter": "cedarkit.rainnc.since-initialization"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 30,
+                  "every": 1,
+                  "start": 1
+                }
+              },
+              "member_role": "perturbation",
+              "parameter": "cedarkit.rainnc.since-initialization"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "member_role": "control",
+              "parameter": "cedarkit.rh2m"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.rh2m"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "control",
+              "parameter": "cedarkit.sf"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.sf"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "member_role": "control",
+              "parameter": "cedarkit.shr-0-1000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "member_role": "perturbation",
+              "parameter": "cedarkit.shr-0-1000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 3000
+                }
+              },
+              "member_role": "control",
+              "parameter": "cedarkit.shr-0-3000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 3000
+                }
+              },
+              "member_role": "perturbation",
+              "parameter": "cedarkit.shr-0-3000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 6000
+                }
+              },
+              "member_role": "control",
+              "parameter": "cedarkit.shr-0-6000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 6000
+                }
+              },
+              "member_role": "perturbation",
+              "parameter": "cedarkit.shr-0-6000"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "control",
+              "parameter": "cedarkit.vis"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.vis"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "control",
+              "parameter": "cedarkit.zs"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.zs"
             }
           ],
           "scope": {},
@@ -2351,19 +2616,20 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-reps.current",
-          "sha256": "228dcd3a3237f905ce48a9ab36c18304e4652671019093ea982f71793459f5e3",
-          "version": "7"
+          "sha256": "004d36b69a20a904b17247bbb63891f89e3ecdf051940a412832d018f2a68872",
+          "version": "8"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cma-reps.current",
-        "sha256": "184fb0a3fb509d517ecbb9353bbdf4d212195dff0505a94865dff1d8f68854e0",
-        "version": "4"
+        "sha256": "5dc8cf8b751d1982a506cd5b115d69ab9aec9ed3d6d8d8a00f60a75c02f51859",
+        "version": "5"
       },
       "products": [
         {
           "evidence": [
-            "stage1.2/task-06/orig-batch-1"
+            "stage1.2/task-06/orig-batch-1",
+            "stage1.2/task-06C/member-orig"
           ],
           "id": "orig",
           "methods": [],
@@ -2542,6 +2808,234 @@
               },
               "member_role": "perturbation",
               "parameter": "cedarkit.v10m"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "control",
+              "parameter": "cedarkit.bli"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.bli"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "control",
+              "parameter": "cedarkit.cape"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.cape"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "control",
+              "parameter": "cedarkit.cdbz"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.cdbz"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "control",
+              "parameter": "cedarkit.cin"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.cin"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "control",
+              "parameter": "cedarkit.dcape"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.dcape"
+            },
+            {
+              "level_type": "pressure",
+              "member_role": "control",
+              "parameter": "cedarkit.h"
+            },
+            {
+              "level_type": "pressure",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.h"
+            },
+            {
+              "level_type": "pressure",
+              "member_role": "control",
+              "parameter": "cedarkit.qc"
+            },
+            {
+              "level_type": "pressure",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.qc"
+            },
+            {
+              "level_type": "surface",
+              "member": 0,
+              "member_role": "control",
+              "parameter": "cedarkit.rainc.since-initialization"
+            },
+            {
+              "level_type": "surface",
+              "member": {
+                "range": {
+                  "end": 14,
+                  "every": 1,
+                  "start": 1
+                }
+              },
+              "member_role": "perturbation",
+              "parameter": "cedarkit.rainc.since-initialization"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "member_role": "control",
+              "parameter": "cedarkit.rh2m"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.rh2m"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "control",
+              "parameter": "cedarkit.sd"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.sd"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "member_role": "control",
+              "parameter": "cedarkit.shr-0-1000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "member_role": "perturbation",
+              "parameter": "cedarkit.shr-0-1000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 3000
+                }
+              },
+              "member_role": "control",
+              "parameter": "cedarkit.shr-0-3000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 3000
+                }
+              },
+              "member_role": "perturbation",
+              "parameter": "cedarkit.shr-0-3000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 6000
+                }
+              },
+              "member_role": "control",
+              "parameter": "cedarkit.shr-0-6000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 6000
+                }
+              },
+              "member_role": "perturbation",
+              "parameter": "cedarkit.shr-0-6000"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "control",
+              "parameter": "cedarkit.ts"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.ts"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "control",
+              "parameter": "cedarkit.vis"
+            },
+            {
+              "level_type": "surface",
+              "member_role": "perturbation",
+              "parameter": "cedarkit.vis"
             }
           ],
           "scope": {},
@@ -2634,5 +3128,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "30"
+  "version": "31"
 }
