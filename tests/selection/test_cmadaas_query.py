@@ -2,6 +2,7 @@
 
 import json
 from pathlib import Path
+from urllib.parse import urlencode
 
 import numpy as np
 import pytest
@@ -26,6 +27,9 @@ CASES = json.loads(
 GFS = next(case for case in CASES if case["id"] == "S-gfs-fcst")
 TIME = "2026-08-30T00:00:00Z"
 CONTEXT = {"catalog": {"builtin": "reki.catalog.cmadaas.task07a"}}
+LIVE_CASES = json.loads(
+    (Path(__file__).parent / "fixtures/cmadaas-task07b.json").read_bytes()
+)
 
 
 class ControlledClient:
@@ -53,6 +57,29 @@ class ControlledClient:
 
     def close(self):
         self.closes += 1
+
+
+@pytest.mark.parametrize("case", LIVE_CASES, ids=lambda c: c["id"])
+def test_default_service_resources_bind_the_sixteen_accepted_cases(case):
+    def headers(response, params):
+        response.user_element_name = f"{params['fcstEle']}_{params['levelType']}"
+        response.request.request_params = urlencode(
+            {k.lower(): v for k, v in params.items()}
+        )
+        if case["id"].startswith("S-reps-"):
+            response.user_element_name = response.units = ""
+            response.request.request_params = ""
+
+    client = ControlledClient(case, mutate=headers)
+    with from_source(case["source"], client=client) as source:
+        field = source.sel(case["query"]).one(completeness="required")
+        (variable,) = field.to_xarray().data_vars
+        assert field.to_xarray()[variable].attrs["units"] == case["unit"]
+        assert field.report.overall["status"] == "complete"
+        assert client.calls == [(case["expected_interface"], case["expected_params"])]
+        assert field.metadata["source_unit_basis"] == (
+            "mapping" if case["id"].startswith("S-reps-") else "response"
+        )
 
 
 @pytest.mark.parametrize("case", CASES, ids=lambda c: c["id"])
@@ -252,6 +279,7 @@ def test_all_nan_field_and_absent_field_are_distinct():
     [
         (1001, "service_error"),
         (-1004, "authentication_failed"),
+        (-4001, "permission_denied"),
         (-10003, "decode_failed"),
         (-10001, "timeout"),
     ],
@@ -279,6 +307,7 @@ def test_owned_client_is_created_only_at_execution_and_closed(monkeypatch, tmp_p
     config = tmp_path / "synthetic-config.yaml"
     config.write_text("SYNTHETIC CONFIGURATION")
     client, calls = (ControlledClient(), [])
+    client.log_policy = "full"
 
     def create(path, injected):
         calls.append(path)
@@ -294,6 +323,7 @@ def test_owned_client_is_created_only_at_execution_and_closed(monkeypatch, tmp_p
         selected.one()
         assert calls == [str(config)]
     assert client.closes == 1
+    assert client.log_policy == "summary"
 
 
 def test_gfs_four_frozen_parameters_share_a_dataset():
@@ -436,6 +466,111 @@ def test_member_service_boundaries_are_static(dataset, member):
     assert not client.calls
 
 
+@pytest.mark.parametrize("name", ["TEM", "TEM_103"])
+def test_service_element_name_checks_code_and_level_type(name):
+    client = ControlledClient(mutate=lambda r, p: setattr(r, "user_element_name", name))
+    with from_source(GFS["source"], client=client, context=CONTEXT) as source:
+        field = source.sel(GFS["query"]).one()
+        assert field.metadata["response_element"] == name
+
+
+@pytest.mark.parametrize(
+    "problem", [None, "wrong_time", "wrong_member", "missing", "duplicate"]
+)
+def test_server_request_echo_is_checked_independently(problem):
+    def change(response, params):
+        echoed = {k.lower(): str(v) for k, v in params.items()}
+        if problem == "wrong_time":
+            echoed["time"] = "20260830060000"
+        elif problem == "wrong_member":
+            echoed["fcstmember"] = "2"
+        elif problem == "missing":
+            echoed.pop("fcstele")
+        response.request.request_params = urlencode(echoed)
+        if problem == "duplicate":
+            response.request.request_params += "&time=20260830000000"
+
+    case = next(c for c in CASES if c["id"] == "S-geps-pert")
+    with from_source(
+        case["source"], client=ControlledClient(case, mutate=change), context=CONTEXT
+    ) as source:
+        selected = source.sel(case["query"])
+        if problem is None:
+            field = selected.one()
+            assert field.metadata["server_request_echo"]["fcstMember"] == "1"
+        else:
+            with pytest.raises(SourceError) as caught:
+                selected.one()
+            assert caught.value.context["reason"] == "inconsistent_native_metadata"
+
+
+def _reps_context(tmp_path):
+    from reki.catalog import load_resource
+
+    catalog = load_resource(CONTEXT["catalog"], "catalog").value.to_dict()
+    dataset = next(
+        d for d in catalog["datasets"] if d["id"] == "cma_reps_control_cmadaas"
+    )
+    dataset["products"][0]["sources"][0]["interface_contract"]["id"] = (
+        "cmadaas.grid-array2d.reps.member"
+    )
+    path = tmp_path / "reviewed-reps.json"
+    path.write_text(json.dumps(catalog))
+    return {"catalog": {"path": str(path)}}
+
+
+@pytest.mark.parametrize("reviewed", [False, True])
+def test_reps_missing_headers_and_one_cell_overlap_require_reviewed_contract(
+    tmp_path, reviewed
+):
+    case = next(c for c in CASES if c["id"] == "S-reps-ctl")
+
+    def change(response, params):
+        response.user_element_name = response.units = ""
+        response.lons = [116.95, 116.98, 117.01]
+
+    context = _reps_context(tmp_path) if reviewed else CONTEXT
+    with from_source(
+        case["source"], client=ControlledClient(case, mutate=change), context=context
+    ) as source:
+        if reviewed:
+            field = source.sel(case["query"]).one()
+            assert field.metadata["response_unit"] == ""
+            assert field.metadata["source_unit_basis"] == "mapping"
+            assert field.to_xarray().t2m.attrs["units"] == "K"
+            np.testing.assert_array_equal(
+                field.to_xarray().longitude, [116.95, 116.98, 117.01]
+            )
+        else:
+            with pytest.raises(SourceError):
+                source.sel(case["query"]).one()
+
+
+@pytest.mark.parametrize("problem", ["element", "unit", "extent"])
+def test_reviewed_reps_contract_still_rejects_conflicting_headers_and_grid(
+    tmp_path, problem
+):
+    case = next(c for c in CASES if c["id"] == "S-reps-ctl")
+
+    def change(response, params):
+        if problem == "element":
+            response.user_element_name = "TEM_100"
+        elif problem == "unit":
+            response.units = "m"
+        else:
+            response.lons = [118.0, 118.03, 118.06]
+
+    with (
+        from_source(
+            case["source"],
+            client=ControlledClient(case, mutate=change),
+            context=_reps_context(tmp_path),
+        ) as source,
+        pytest.raises(SourceError),
+    ):
+        source.sel(case["query"]).one()
+
+
 def test_unit_conversion_uses_the_reviewed_response_unit(tmp_path):
     client = ControlledClient()
     config = plan_source_binding(GFS["source"], client=client, context=CONTEXT)
@@ -510,18 +645,16 @@ def test_assembly_requires_compatible_grids():
     assert caught.value.code == "incompatible_grid"
 
 
-def test_default_catalog_keeps_unverified_service_binding_pending():
+def test_default_catalog_uses_the_verified_service_binding():
     client = ControlledClient()
     with from_source(GFS["source"], client=client) as source:
-        selected = source.sel({})
-        assert (
-            selected.explain().analysis["translations"][0]["coverage"]["status"]
-            == "pending"
-        )
-        with pytest.raises(QueryError) as caught:
-            selected.all()
-    assert caught.value.code == "unsupported"
-    assert not client.calls
+        selected = source.sel(GFS["query"])
+        explanation = selected.explain()
+        assert explanation.analysis["translations"][0]["coverage"]["status"] == "passed"
+        assert not client.calls
+        field = selected.one(completeness="required")
+        assert field.to_xarray().t2m.attrs["units"] == "K"
+        assert field.report.context["source"]["product_version"] == "service-20261105"
 
 
 @pytest.mark.parametrize(

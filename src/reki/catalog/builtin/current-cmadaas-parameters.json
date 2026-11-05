@@ -1,0 +1,76 @@
+{
+  "api_version": "cedarkit.parameters/v1",
+  "id": "cedarkit.parameters.cmadaas",
+  "parameters": [
+    {
+      "description": "Temperature",
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "instantaneous",
+          "over": "time"
+        }
+      },
+      "name": "t",
+      "parameter_id": "cedarkit.t",
+      "unit": "K"
+    },
+    {
+      "fixed_conditions": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      },
+      "name": "t2m",
+      "parameter_id": "cedarkit.t2m",
+      "parent": "cedarkit.t"
+    },
+    {
+      "description": "Geopotential height",
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "instantaneous",
+          "over": "time"
+        }
+      },
+      "name": "h",
+      "parameter_id": "cedarkit.h.any",
+      "unit": "Gpm"
+    },
+    {
+      "description": "Convective precipitation over 24 hours",
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT24H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "rainc",
+      "parameter_id": "cedarkit.rainc.any",
+      "unit": "mm"
+    },
+    {
+      "description": "Large-scale precipitation over 24 hours",
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT24H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "rainnc",
+      "parameter_id": "cedarkit.rainnc.any",
+      "unit": "mm"
+    }
+  ],
+  "version": "1"
+}

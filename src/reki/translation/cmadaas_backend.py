@@ -3,7 +3,9 @@
 from collections import defaultdict
 from collections.abc import Mapping
 from datetime import UTC, datetime
+from decimal import Decimal, InvalidOperation
 from hashlib import sha256
+from urllib.parse import parse_qsl
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 import numpy as np
@@ -22,7 +24,9 @@ _CONTRACTS = {
     "cmadaas.grid-array2d.analysis": (True, False),
     "cmadaas.grid-array2d.forecast": (False, False),
     "cmadaas.grid-array2d.forecast.member": (False, True),
+    "cmadaas.grid-array2d.reps.member": (False, True),
 }
+_REPS_CONTRACT = "cmadaas.grid-array2d.reps.member"
 _RULES = {
     "vertical": "cmadaas.vertical_table",
     "time": "cmadaas.time_fields",
@@ -368,6 +372,8 @@ class CmadaasBackend:
                 self.client = get_or_create_client(
                     self.configuration.source["config"], None
                 )
+                if hasattr(self.client, "log_policy"):
+                    self.client.log_policy = "summary"
             except (ImportError, OSError, ValueError) as exc:
                 raise SourceError(
                     "io_error", "/source/config", "CMADaaS client initialization failed"
@@ -386,7 +392,47 @@ class CmadaasBackend:
                 close()
 
 
-def _acquire(client, candidate):
+def _server_echo(response, params):
+    raw = getattr(response.request, "request_params", "")
+    if not raw:
+        return {}
+    rows = parse_qsl(raw, keep_blank_values=True)
+    names = [name.lower() for name, value in rows]
+    if not rows or len(set(names)) != len(names):
+        metadata_error(
+            "inconsistent_native_metadata", "server request echo is malformed"
+        )
+    echo = {name.lower(): value for name, value in rows}
+    numeric = {
+        "leveltype",
+        "fcstlevel",
+        "validtime",
+        "fcstmember",
+        "minlat",
+        "maxlat",
+        "minlon",
+        "maxlon",
+    }
+    for name, expected in params.items():
+        actual = echo.get(name.lower())
+        try:
+            equal = (
+                actual is not None and Decimal(actual) == Decimal(str(expected))
+                if name.lower() in numeric
+                else actual == str(expected)
+            )
+        except InvalidOperation:
+            equal = False
+        if not equal:
+            metadata_error(
+                "inconsistent_native_metadata",
+                "server request echo differs",
+                fields={name: actual},
+            )
+    return {name: echo[name.lower()] for name in params}
+
+
+def _acquire(client, candidate, *, reps=False):
     from requests import RequestException, Timeout
 
     interface = candidate["interface_id"]
@@ -401,9 +447,11 @@ def _acquire(client, candidate):
         info = getattr(response, "request", None)
         code = getattr(info, "error_code", None)
         cause = getattr(info, "cause", None)
-        classification = {-1004: "authentication_failed", -10003: "decode_failed"}.get(
-            code, "service_error"
-        )
+        classification = {
+            -1004: "authentication_failed",
+            -4001: "permission_denied",
+            -10003: "decode_failed",
+        }.get(code, "service_error")
         if code == -10001:
             classification = (
                 "timeout" if isinstance(cause, (Timeout, TimeoutError)) else "io_error"
@@ -473,7 +521,11 @@ def _acquire(client, candidate):
         metadata_error(
             "inconsistent_native_metadata", "empty grid has inconsistent dimensions"
         )
-    if response.user_element_name != params["fcstEle"]:
+    echo = _server_echo(response, params)
+    accepted = {params["fcstEle"], f"{params['fcstEle']}_{params['levelType']}"}
+    if reps:
+        accepted.add("")
+    if response.user_element_name not in accepted:
         metadata_error(
             "inconsistent_native_metadata",
             "response element differs",
@@ -487,6 +539,8 @@ def _acquire(client, candidate):
         ) from exc
     if not isinstance(array, xr.DataArray) or array.dims != ("latitude", "longitude"):
         raise SourceError("decode_failed", "", "CMADaaS scalar grid required")
+    array.attrs["response_element"] = response.user_element_name
+    array.attrs["server_request_echo"] = echo
     for name in ("latitude", "longitude"):
         values = array[name].values
         if (
@@ -498,20 +552,21 @@ def _acquire(client, candidate):
             metadata_error(
                 "inconsistent_native_metadata", "grid coordinates are invalid"
             )
-    if _RECTANGLE <= params.keys() and not (
-        np.all(
-            (array.latitude.values >= float(params["minLat"]))
-            & (array.latitude.values <= float(params["maxLat"]))
-        )
-        and np.all(
-            (array.longitude.values >= float(params["minLon"]))
-            & (array.longitude.values <= float(params["maxLon"]))
-        )
-    ):
-        metadata_error(
-            "inconsistent_native_metadata",
-            "grid lies outside the requested rectangle",
-        )
+    if _RECTANGLE <= params.keys():
+        for axis, low, high in (
+            (array.latitude.values, params["minLat"], params["maxLat"]),
+            (array.longitude.values, params["minLon"], params["maxLon"]),
+        ):
+            pad = float(np.max(np.abs(np.diff(axis)))) if reps and len(axis) > 1 else 0
+            if not (
+                np.all(axis >= float(low) - pad)
+                and np.all(axis <= float(high) + pad)
+                and np.any((axis >= float(low)) & (axis <= float(high)))
+            ):
+                metadata_error(
+                    "inconsistent_native_metadata",
+                    "grid lies outside the requested rectangle",
+                )
     if (
         not np.issubdtype(array.dtype, np.number)
         or np.iscomplexobj(array.values)
@@ -560,7 +615,10 @@ class CmadaasScan:
             links = tuple((qi, b["index"]) for qi, b in entries)
             for qi, bi in links:
                 yield BranchEvent(qi, bi, "started")
-            array = _acquire(self.backend.client, thaw(branch["candidate_filter"]))
+            reps = self.backend.service["interface_contract"]["id"] == _REPS_CONTRACT
+            array = _acquire(
+                self.backend.client, thaw(branch["candidate_filter"]), reps=reps
+            )
             if array is not None:
                 identity = thaw(branch["residual"])
                 pid = identity["parameter"]
@@ -572,7 +630,14 @@ class CmadaasScan:
                     "source_unit"
                 ]
                 raw_unit = array.attrs.get("units")
-                unit = _unit({"kg.m-2": "kg/m2", "gpm": "Gpm"}.get(raw_unit, raw_unit))
+                unit_basis = "mapping" if reps and not raw_unit else "response"
+                unit = (
+                    _unit(declared)
+                    if unit_basis == "mapping"
+                    else _unit(
+                        {"kg.m-2": "kg/m2", "gpm": "Gpm"}.get(raw_unit, raw_unit)
+                    )
+                )
                 if unit != _unit(declared):
                     metadata_error(
                         "inconsistent_native_metadata",
@@ -600,6 +665,9 @@ class CmadaasScan:
                     "source_unit": unit,
                     "mapping_ids": [mapping["id"]],
                     "response_unit": raw_unit,
+                    "source_unit_basis": unit_basis,
+                    "response_element": array.attrs["response_element"],
+                    "server_request_echo": array.attrs["server_request_echo"],
                     "source": {"request": source, "response_sha256": response_sha},
                     "vertical_definition": {"id": "cmadaas.levels"},
                 }
@@ -634,6 +702,6 @@ class CmadaasScan:
                 {
                     "code": "return_metadata_sufficient",
                     "status": "passed",
-                    "message": "Returned element, unit, dimensions and coordinates were checked",
+                    "message": "Response headers and grid checked against the pinned interface contract; the REPS contract uses the mapped unit when its response header is empty",
                 },
             ]

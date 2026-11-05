@@ -16,6 +16,10 @@ BUILTINS = MappingProxyType(
         "reki.catalog": _BUILTIN_DIR / "catalog-v1.json",
         "reki.catalog.cmadaas.task07a": _BUILTIN_DIR / "cmadaas-task07a-catalog.json",
         **{
+            f"reki.{kind}.cmadaas.current": _BUILTIN_DIR / f"current-cmadaas-{kind}.json"
+            for kind in ("parameters", "mappings")
+        },
+        **{
             f"reki.{kind}.cmadaas.task07a": _BUILTIN_DIR
             / f"cmadaas-task07a-{kind}.json"
             for kind in ("parameters", "mappings")

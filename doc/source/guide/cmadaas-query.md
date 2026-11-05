@@ -1,6 +1,33 @@
-# CMADaaS public query candidates
+# CMADaaS public queries
 
-Task 07A provides scalar grid execution for twelve historical CEMC service registrations. Install the `cmadaas` extra and select the dedicated candidate catalog explicitly. The default catalog keeps the existing local GRIB bindings and leaves its unverified service declarations pending.
+The default v33 catalog contains twelve live service bindings verified in task 07B. Install `reki[cmadaas]`, configure `~/.config/cedarkit.yaml` or `CEDARKIT_CONFIG`, and select the dataset directly:
+
+```python
+from reki import from_source
+
+with from_source({"kind": "cmadaas", "dataset": "cma_gfs_gmf_cmadaas"}) as source:
+    field = source.sel(
+        parameter="cedarkit.t2m",
+        time="2026-08-30T00:00:00Z",
+        step="PT6H",
+    ).one(completeness="required")
+    dataset = field.to_xarray()
+    report = field.report
+```
+
+The accepted samples cover each service's 2 m TEM field and the four GFS surface TEM, GPH, CPE and LPE cases. Twelve cases retain their task 07A interface and time. GFS and TYM analysis use the forecast-style interface with `validTime=0`, which is the actual supported binding for those dataCodes. REPS uses the verified 2026-11-04 06 UTC cycle instead of the unavailable historical 00 cycle. The independent expected domains contain these sixteen sample cells. Other permitted times retain `unchecked` completeness until their own expected domains are registered.
+
+The source version `service-20261105` identifies the reviewed binding revision. It does not claim an official model release. UTC request association was checked against the matching original GRIB reference times and forecast hours. GFS returned 0.125° spacing despite its obsolete 0.25° product metadata. Actual response grids, source units and original fields are the evidence for these samples.
+
+Returned names may be the requested element or the exact `element_levelType` identifier, such as `TEM_103`. Nonempty server `requestParams` are checked independently against all native business parameters and retained as a filtered `server_request_echo`. Copied client metadata remains request association evidence.
+
+The reviewed `cmadaas.grid-array2d.reps.member` contract preserves REPS responses whose unit, element name and server request echo are empty. Its K source unit comes from the pinned, original-field-verified mapping and is labelled `source_unit_basis="mapping"`; empty response headers remain empty in field metadata. A contradictory nonempty header still fails. REPS may include a neighboring grid point within one grid cell of the fixed rectangle; coordinates and values are retained. GEPS and REPS control services accept member 0; their perturbation domains were checked with scalar requests for all members 1–30 and 1–14, plus rejected boundary members.
+
+Use the client candidate bundled with the task 07B acceptance artifacts. It corrects accumulated float32 header-step rounding within the declared endpoint precision bound, preserving explicit coordinate axes, field values and raw header fields. The source's owned MUSIC client uses summary logging. Injected clients retain their caller's configuration and ownership.
+
+## Task 07A offline candidate
+
+Task 07A provides an independently replayable offline candidate for twelve historical CEMC service registrations. Select this dedicated candidate catalog explicitly to reproduce its original controlled contracts. The current default catalog uses the separately verified task 07B bindings described above.
 
 ```python
 from reki import from_source

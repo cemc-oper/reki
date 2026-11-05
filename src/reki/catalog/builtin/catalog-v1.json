@@ -3063,75 +3063,1511 @@
         "CMA-GFS-CMADaaS",
         "CMA-GFS-FORECAST-CMADaaS"
       ],
-      "id": "cma_gfs_gmf_cmadaas"
+      "id": "cma_gfs_gmf_cmadaas",
+      "mappings": {
+        "cmadaas": {
+          "builtin": "reki.mappings.cmadaas.current",
+          "sha256": "6e406e630e34acac36419301ffefcd6425a296539bf2b364447b06ed5c6e3173",
+          "version": "1"
+        }
+      },
+      "parameter_registry": {
+        "builtin": "reki.parameters.cmadaas.current",
+        "sha256": "ff6738ea7481f235213b8b548c63f3f4abecc9734d51550c5e6216379b0b3b14",
+        "version": "1"
+      },
+      "products": [
+        {
+          "evidence": [
+            "I01/coverage-draft.json#S-gfs-fcst-row-24",
+            "stage1.2/task-07b;service-20261105-is-binding-revision-not-producer-release",
+            "S-gfs-fcst:response-sha256:0edcd94d71a77037f430426202fd578e4247e2d00dd67be7d4df1f608bed968d",
+            "S-GFS-TEM:response-sha256:b241329f35955c8fcbb0889a946cc60a87c57f12b3c591c73f7ded229d9ae0ae",
+            "S-GFS-GPH:response-sha256:7cd43f5f98f270b11c4112d5bc3e0e9d8d5a94f8f34386e4e05ee9f7f75312c2",
+            "S-GFS-CPE:response-sha256:f5e314976d1be06bb08e3372ab51cfd924edb2c121d9dfa0a1faf08783cabf7f",
+            "S-GFS-LPE:response-sha256:0f89f98acff449ea0d254e9800ae4fcd23ea0c5665f88845079d25600881f8d6"
+          ],
+          "expected_domain": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": "PT6H",
+              "time": "2026-08-30T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.t",
+              "step": "PT24H",
+              "time": "2026-08-30T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.h.any",
+              "step": "PT24H",
+              "time": "2026-08-30T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rainc.any",
+              "step": "PT24H",
+              "time": "2026-08-30T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rainnc.any",
+              "step": "PT24H",
+              "time": "2026-08-30T00:00:00Z"
+            }
+          ],
+          "id": "forecast",
+          "methods": [],
+          "populations": [],
+          "provides": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": [
+                "PT3H",
+                "PT6H",
+                "PT9H",
+                "PT12H",
+                "PT15H",
+                "PT18H",
+                "PT21H",
+                "PT24H",
+                "PT27H",
+                "PT30H",
+                "PT33H",
+                "PT36H",
+                "PT39H",
+                "PT42H",
+                "PT45H",
+                "PT48H",
+                "PT51H",
+                "PT54H",
+                "PT57H",
+                "PT60H",
+                "PT63H",
+                "PT66H",
+                "PT69H",
+                "PT72H",
+                "PT75H",
+                "PT78H",
+                "PT81H",
+                "PT84H",
+                "PT87H",
+                "PT90H",
+                "PT93H",
+                "PT96H",
+                "PT99H",
+                "PT102H",
+                "PT105H",
+                "PT108H",
+                "PT111H",
+                "PT114H",
+                "PT117H",
+                "PT120H",
+                "PT126H",
+                "PT132H",
+                "PT138H",
+                "PT144H",
+                "PT150H",
+                "PT156H",
+                "PT162H",
+                "PT168H",
+                "PT174H",
+                "PT180H",
+                "PT186H",
+                "PT192H",
+                "PT198H",
+                "PT204H",
+                "PT210H",
+                "PT216H",
+                "PT222H",
+                "PT228H",
+                "PT234H",
+                "PT240H"
+              ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.t",
+              "step": "PT24H",
+              "time": "2026-08-30T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.h.any",
+              "step": "PT24H",
+              "time": "2026-08-30T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rainc.any",
+              "step": "PT24H",
+              "time": "2026-08-30T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rainnc.any",
+              "step": "PT24H",
+              "time": "2026-08-30T00:00:00Z"
+            }
+          ],
+          "scope": {},
+          "sources": [
+            {
+              "data_code": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+              "id": "S-gfs-fcst",
+              "interface_contract": {
+                "id": "cmadaas.grid-array2d.forecast",
+                "version": 1
+              },
+              "kind": "cmadaas",
+              "time_zone": "UTC"
+            }
+          ],
+          "version": "service-20261105"
+        }
+      ]
     },
     {
       "aliases": [
         "CMA-GFS-ANALYSIS-CMADaaS"
       ],
-      "id": "cma_gfs_gmf_analysis_cmadaas"
+      "id": "cma_gfs_gmf_analysis_cmadaas",
+      "mappings": {
+        "cmadaas": {
+          "builtin": "reki.mappings.cmadaas.current",
+          "sha256": "6e406e630e34acac36419301ffefcd6425a296539bf2b364447b06ed5c6e3173",
+          "version": "1"
+        }
+      },
+      "parameter_registry": {
+        "builtin": "reki.parameters.cmadaas.current",
+        "sha256": "ff6738ea7481f235213b8b548c63f3f4abecc9734d51550c5e6216379b0b3b14",
+        "version": "1"
+      },
+      "products": [
+        {
+          "evidence": [
+            "I01/coverage-draft.json#S-gfs-ana-row-5",
+            "stage1.2/task-07b;service-20261105-is-binding-revision-not-producer-release",
+            "S-gfs-ana:response-sha256:871924ac43744cbec35a08e973202fb95d9a80037c24d8544323b03f8f2d9991"
+          ],
+          "expected_domain": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": "PT0H",
+              "time": "2026-08-30T00:00:00Z"
+            }
+          ],
+          "id": "analysis",
+          "methods": [],
+          "populations": [],
+          "provides": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": [
+                "PT0H"
+              ]
+            }
+          ],
+          "scope": {
+            "step": "PT0H"
+          },
+          "sources": [
+            {
+              "data_code": "NAFP_ANA_FTM_GRAPES_GFS_25KM_GLB",
+              "id": "S-gfs-ana",
+              "interface_contract": {
+                "id": "cmadaas.grid-array2d.forecast",
+                "version": 1
+              },
+              "kind": "cmadaas",
+              "time_zone": "UTC"
+            }
+          ],
+          "version": "service-20261105"
+        }
+      ]
     },
     {
       "aliases": [
         "CMA-MESO-3KM-ANALYSIS-CMADaaS"
       ],
-      "id": "cma_meso_3km_analysis_cmadaas"
+      "id": "cma_meso_3km_analysis_cmadaas",
+      "mappings": {
+        "cmadaas": {
+          "builtin": "reki.mappings.cmadaas.current",
+          "sha256": "6e406e630e34acac36419301ffefcd6425a296539bf2b364447b06ed5c6e3173",
+          "version": "1"
+        }
+      },
+      "parameter_registry": {
+        "builtin": "reki.parameters.cmadaas.current",
+        "sha256": "ff6738ea7481f235213b8b548c63f3f4abecc9734d51550c5e6216379b0b3b14",
+        "version": "1"
+      },
+      "products": [
+        {
+          "evidence": [
+            "I01/coverage-draft.json#S-meso3-ana-row-17",
+            "stage1.2/task-07b;service-20261105-is-binding-revision-not-producer-release",
+            "S-meso3-ana:response-sha256:0758ea6f98042d6934cba3fc3b467f3611f43f09476c7492b9a09a54a62bbb1d"
+          ],
+          "expected_domain": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": "PT0H",
+              "time": "2026-08-30T00:00:00Z"
+            }
+          ],
+          "id": "analysis",
+          "methods": [],
+          "populations": [],
+          "provides": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": [
+                "PT0H"
+              ]
+            }
+          ],
+          "scope": {
+            "step": "PT0H"
+          },
+          "sources": [
+            {
+              "data_code": "NAFP_GRAPES_MESO_ANA_3KM",
+              "id": "S-meso3-ana",
+              "interface_contract": {
+                "id": "cmadaas.grid-array2d.analysis",
+                "version": 1
+              },
+              "kind": "cmadaas",
+              "time_zone": "UTC"
+            }
+          ],
+          "version": "service-20261105"
+        }
+      ]
     },
     {
       "aliases": [
         "CMA-MESO-3KM-FORECAST-CMADaaS"
       ],
-      "id": "cma_meso_3km_forecast_cmadaas"
+      "id": "cma_meso_3km_forecast_cmadaas",
+      "mappings": {
+        "cmadaas": {
+          "builtin": "reki.mappings.cmadaas.current",
+          "sha256": "6e406e630e34acac36419301ffefcd6425a296539bf2b364447b06ed5c6e3173",
+          "version": "1"
+        }
+      },
+      "parameter_registry": {
+        "builtin": "reki.parameters.cmadaas.current",
+        "sha256": "ff6738ea7481f235213b8b548c63f3f4abecc9734d51550c5e6216379b0b3b14",
+        "version": "1"
+      },
+      "products": [
+        {
+          "evidence": [
+            "I01/coverage-draft.json#S-meso3-fcst-row-17",
+            "stage1.2/task-07b;service-20261105-is-binding-revision-not-producer-release",
+            "S-meso3-fcst:response-sha256:6ec8f16e9bb6eb7d60f3221bb859e15e5ce984b394a6ec5beb2dd9b3102fdf59"
+          ],
+          "expected_domain": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": "PT6H",
+              "time": "2026-08-30T00:00:00Z"
+            }
+          ],
+          "id": "forecast",
+          "methods": [],
+          "populations": [],
+          "provides": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": [
+                "PT1H",
+                "PT2H",
+                "PT3H",
+                "PT4H",
+                "PT5H",
+                "PT6H",
+                "PT7H",
+                "PT8H",
+                "PT9H",
+                "PT10H",
+                "PT11H",
+                "PT12H",
+                "PT13H",
+                "PT14H",
+                "PT15H",
+                "PT16H",
+                "PT17H",
+                "PT18H",
+                "PT19H",
+                "PT20H",
+                "PT21H",
+                "PT22H",
+                "PT23H",
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H"
+              ]
+            }
+          ],
+          "scope": {},
+          "sources": [
+            {
+              "data_code": "NAFP_GRAPES_MESO_FOR_3KM",
+              "id": "S-meso3-fcst",
+              "interface_contract": {
+                "id": "cmadaas.grid-array2d.forecast",
+                "version": 1
+              },
+              "kind": "cmadaas",
+              "time_zone": "UTC"
+            }
+          ],
+          "version": "service-20261105"
+        }
+      ]
     },
     {
       "aliases": [
         "CMA-MESO-1KM-ANALYSIS-CMADaaS"
       ],
-      "id": "cma_meso_1km_analysis_cmadaas"
+      "id": "cma_meso_1km_analysis_cmadaas",
+      "mappings": {
+        "cmadaas": {
+          "builtin": "reki.mappings.cmadaas.current",
+          "sha256": "6e406e630e34acac36419301ffefcd6425a296539bf2b364447b06ed5c6e3173",
+          "version": "1"
+        }
+      },
+      "parameter_registry": {
+        "builtin": "reki.parameters.cmadaas.current",
+        "sha256": "ff6738ea7481f235213b8b548c63f3f4abecc9734d51550c5e6216379b0b3b14",
+        "version": "1"
+      },
+      "products": [
+        {
+          "evidence": [
+            "I01/coverage-draft.json#S-meso1-ana-row-1",
+            "stage1.2/task-07b;service-20261105-is-binding-revision-not-producer-release",
+            "S-meso1-ana:response-sha256:7c15d13ff545cf082325265c09a254f2b1893b6eb9ec62df1c485c2406657e30"
+          ],
+          "expected_domain": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": "PT0H",
+              "time": "2026-08-30T00:00:00Z"
+            }
+          ],
+          "id": "analysis",
+          "methods": [],
+          "populations": [],
+          "provides": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": [
+                "PT0H"
+              ]
+            }
+          ],
+          "scope": {
+            "step": "PT0H"
+          },
+          "sources": [
+            {
+              "data_code": "NAFP_CEMC_MESO_ANA_1KM",
+              "id": "S-meso1-ana",
+              "interface_contract": {
+                "id": "cmadaas.grid-array2d.analysis",
+                "version": 1
+              },
+              "kind": "cmadaas",
+              "time_zone": "UTC"
+            }
+          ],
+          "version": "service-20261105"
+        }
+      ]
     },
     {
       "aliases": [
         "CMA-MESO-1KM-FORECAST-CMADaaS"
       ],
-      "id": "cma_meso_1km_forecast_cmadaas"
+      "id": "cma_meso_1km_forecast_cmadaas",
+      "mappings": {
+        "cmadaas": {
+          "builtin": "reki.mappings.cmadaas.current",
+          "sha256": "6e406e630e34acac36419301ffefcd6425a296539bf2b364447b06ed5c6e3173",
+          "version": "1"
+        }
+      },
+      "parameter_registry": {
+        "builtin": "reki.parameters.cmadaas.current",
+        "sha256": "ff6738ea7481f235213b8b548c63f3f4abecc9734d51550c5e6216379b0b3b14",
+        "version": "1"
+      },
+      "products": [
+        {
+          "evidence": [
+            "I01/coverage-draft.json#S-meso1-fcst-row-28",
+            "stage1.2/task-07b;service-20261105-is-binding-revision-not-producer-release",
+            "S-meso1-fcst:response-sha256:c499b43a9bf69392089678db28be029e3b27d10c7cf83151cbcce664c6edce52"
+          ],
+          "expected_domain": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": "PT6H",
+              "time": "2026-08-30T00:00:00Z"
+            }
+          ],
+          "id": "forecast",
+          "methods": [],
+          "populations": [],
+          "provides": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": [
+                "PT1H",
+                "PT2H",
+                "PT3H",
+                "PT4H",
+                "PT5H",
+                "PT6H",
+                "PT7H",
+                "PT8H",
+                "PT9H",
+                "PT10H",
+                "PT11H",
+                "PT12H",
+                "PT13H",
+                "PT14H",
+                "PT15H",
+                "PT16H",
+                "PT17H",
+                "PT18H",
+                "PT19H",
+                "PT20H",
+                "PT21H",
+                "PT22H",
+                "PT23H",
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H"
+              ]
+            }
+          ],
+          "scope": {},
+          "sources": [
+            {
+              "data_code": "NAFP_CEMC_MESO_FOR_1KM",
+              "id": "S-meso1-fcst",
+              "interface_contract": {
+                "id": "cmadaas.grid-array2d.forecast",
+                "version": 1
+              },
+              "kind": "cmadaas",
+              "time_zone": "UTC"
+            }
+          ],
+          "version": "service-20261105"
+        }
+      ]
     },
     {
       "aliases": [
         "CMA-TYM-ANALYSIS-CMADaaS"
       ],
-      "id": "cma_tym_analysis_cmadaas"
+      "id": "cma_tym_analysis_cmadaas",
+      "mappings": {
+        "cmadaas": {
+          "builtin": "reki.mappings.cmadaas.current",
+          "sha256": "6e406e630e34acac36419301ffefcd6425a296539bf2b364447b06ed5c6e3173",
+          "version": "1"
+        }
+      },
+      "parameter_registry": {
+        "builtin": "reki.parameters.cmadaas.current",
+        "sha256": "ff6738ea7481f235213b8b548c63f3f4abecc9734d51550c5e6216379b0b3b14",
+        "version": "1"
+      },
+      "products": [
+        {
+          "evidence": [
+            "I01/coverage-draft.json#S-tym-ana-row-14",
+            "stage1.2/task-07b;service-20261105-is-binding-revision-not-producer-release",
+            "S-tym-ana:response-sha256:ceaab0b22066ad45d961360911b827807737829cb67385cf61db6340ea1059e9"
+          ],
+          "expected_domain": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": "PT0H",
+              "time": "2026-08-30T00:00:00Z"
+            }
+          ],
+          "id": "analysis",
+          "methods": [],
+          "populations": [],
+          "provides": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": [
+                "PT0H"
+              ]
+            }
+          ],
+          "scope": {
+            "step": "PT0H"
+          },
+          "sources": [
+            {
+              "data_code": "NAFP_ANA_CMA_TYM_0P09_ASI",
+              "id": "S-tym-ana",
+              "interface_contract": {
+                "id": "cmadaas.grid-array2d.forecast",
+                "version": 1
+              },
+              "kind": "cmadaas",
+              "time_zone": "UTC"
+            }
+          ],
+          "version": "service-20261105"
+        }
+      ]
     },
     {
       "aliases": [
         "CMA-TYM-FORECAST-CMADaaS"
       ],
-      "id": "cma_tym_forecast_cmadaas"
+      "id": "cma_tym_forecast_cmadaas",
+      "mappings": {
+        "cmadaas": {
+          "builtin": "reki.mappings.cmadaas.current",
+          "sha256": "6e406e630e34acac36419301ffefcd6425a296539bf2b364447b06ed5c6e3173",
+          "version": "1"
+        }
+      },
+      "parameter_registry": {
+        "builtin": "reki.parameters.cmadaas.current",
+        "sha256": "ff6738ea7481f235213b8b548c63f3f4abecc9734d51550c5e6216379b0b3b14",
+        "version": "1"
+      },
+      "products": [
+        {
+          "evidence": [
+            "I01/coverage-draft.json#S-tym-fcst-row-84",
+            "stage1.2/task-07b;service-20261105-is-binding-revision-not-producer-release",
+            "S-tym-fcst:response-sha256:298e96cc62c2d3a46968dd73dfd9ecdaa8ce9ae837a57d12c0a9f1b4d4a25fce"
+          ],
+          "expected_domain": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": "PT6H",
+              "time": "2026-08-30T00:00:00Z"
+            }
+          ],
+          "id": "forecast",
+          "methods": [],
+          "populations": [],
+          "provides": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": [
+                "PT1H",
+                "PT2H",
+                "PT3H",
+                "PT4H",
+                "PT5H",
+                "PT6H",
+                "PT7H",
+                "PT8H",
+                "PT9H",
+                "PT10H",
+                "PT11H",
+                "PT12H",
+                "PT13H",
+                "PT14H",
+                "PT15H",
+                "PT16H",
+                "PT17H",
+                "PT18H",
+                "PT19H",
+                "PT20H",
+                "PT21H",
+                "PT22H",
+                "PT23H",
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H",
+                "PT37H",
+                "PT38H",
+                "PT39H",
+                "PT40H",
+                "PT41H",
+                "PT42H",
+                "PT43H",
+                "PT44H",
+                "PT45H",
+                "PT46H",
+                "PT47H",
+                "PT48H",
+                "PT49H",
+                "PT50H",
+                "PT51H",
+                "PT52H",
+                "PT53H",
+                "PT54H",
+                "PT55H",
+                "PT56H",
+                "PT57H",
+                "PT58H",
+                "PT59H",
+                "PT60H",
+                "PT61H",
+                "PT62H",
+                "PT63H",
+                "PT64H",
+                "PT65H",
+                "PT66H",
+                "PT67H",
+                "PT68H",
+                "PT69H",
+                "PT70H",
+                "PT71H",
+                "PT72H",
+                "PT73H",
+                "PT74H",
+                "PT75H",
+                "PT76H",
+                "PT77H",
+                "PT78H",
+                "PT79H",
+                "PT80H",
+                "PT81H",
+                "PT82H",
+                "PT83H",
+                "PT84H",
+                "PT85H",
+                "PT86H",
+                "PT87H",
+                "PT88H",
+                "PT89H",
+                "PT90H",
+                "PT91H",
+                "PT92H",
+                "PT93H",
+                "PT94H",
+                "PT95H",
+                "PT96H",
+                "PT97H",
+                "PT98H",
+                "PT99H",
+                "PT100H",
+                "PT101H",
+                "PT102H",
+                "PT103H",
+                "PT104H",
+                "PT105H",
+                "PT106H",
+                "PT107H",
+                "PT108H",
+                "PT109H",
+                "PT110H",
+                "PT111H",
+                "PT112H",
+                "PT113H",
+                "PT114H",
+                "PT115H",
+                "PT116H",
+                "PT117H",
+                "PT118H",
+                "PT119H",
+                "PT120H"
+              ]
+            }
+          ],
+          "scope": {},
+          "sources": [
+            {
+              "data_code": "NAFP_FOR_CMA_TYM_0P09_ASI",
+              "id": "S-tym-fcst",
+              "interface_contract": {
+                "id": "cmadaas.grid-array2d.forecast",
+                "version": 1
+              },
+              "kind": "cmadaas",
+              "time_zone": "UTC"
+            }
+          ],
+          "version": "service-20261105"
+        }
+      ]
     },
     {
       "aliases": [
         "CMA-GEPS-CONTROL-CMADaaS"
       ],
-      "id": "cma_geps_control_cmadaas"
+      "id": "cma_geps_control_cmadaas",
+      "mappings": {
+        "cmadaas": {
+          "builtin": "reki.mappings.cmadaas.current",
+          "sha256": "6e406e630e34acac36419301ffefcd6425a296539bf2b364447b06ed5c6e3173",
+          "version": "1"
+        }
+      },
+      "member_roles": {
+        "0": "control",
+        "1": "perturbation",
+        "10": "perturbation",
+        "11": "perturbation",
+        "12": "perturbation",
+        "13": "perturbation",
+        "14": "perturbation",
+        "15": "perturbation",
+        "16": "perturbation",
+        "17": "perturbation",
+        "18": "perturbation",
+        "19": "perturbation",
+        "2": "perturbation",
+        "20": "perturbation",
+        "21": "perturbation",
+        "22": "perturbation",
+        "23": "perturbation",
+        "24": "perturbation",
+        "25": "perturbation",
+        "26": "perturbation",
+        "27": "perturbation",
+        "28": "perturbation",
+        "29": "perturbation",
+        "3": "perturbation",
+        "30": "perturbation",
+        "4": "perturbation",
+        "5": "perturbation",
+        "6": "perturbation",
+        "7": "perturbation",
+        "8": "perturbation",
+        "9": "perturbation"
+      },
+      "parameter_registry": {
+        "builtin": "reki.parameters.cmadaas.current",
+        "sha256": "ff6738ea7481f235213b8b548c63f3f4abecc9734d51550c5e6216379b0b3b14",
+        "version": "1"
+      },
+      "products": [
+        {
+          "evidence": [
+            "I01/coverage-draft.json#S-geps-ctl-row-3",
+            "stage1.2/task-07b;service-20261105-is-binding-revision-not-producer-release",
+            "S-geps-ctl:response-sha256:ff42ea6d30ed010de54eb9a267cc47af2965ab9011d6006a4fac63e82527ffc6"
+          ],
+          "expected_domain": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "member": 0,
+              "member_role": "control",
+              "parameter": "cedarkit.t2m",
+              "step": "PT6H",
+              "time": "2026-08-30T00:00:00Z"
+            }
+          ],
+          "id": "forecast",
+          "methods": [],
+          "populations": [],
+          "provides": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": [
+                "PT0H",
+                "PT6H",
+                "PT12H",
+                "PT18H",
+                "PT24H",
+                "PT30H",
+                "PT36H",
+                "PT42H",
+                "PT48H",
+                "PT54H",
+                "PT60H",
+                "PT66H",
+                "PT72H",
+                "PT78H",
+                "PT84H",
+                "PT90H",
+                "PT96H",
+                "PT102H",
+                "PT108H",
+                "PT114H",
+                "PT120H",
+                "PT126H",
+                "PT132H",
+                "PT138H",
+                "PT144H",
+                "PT150H",
+                "PT156H",
+                "PT162H",
+                "PT168H",
+                "PT174H",
+                "PT180H",
+                "PT186H",
+                "PT192H",
+                "PT198H",
+                "PT204H",
+                "PT210H",
+                "PT216H",
+                "PT222H",
+                "PT228H",
+                "PT234H",
+                "PT240H",
+                "PT246H",
+                "PT252H",
+                "PT258H",
+                "PT264H",
+                "PT270H",
+                "PT276H",
+                "PT282H",
+                "PT288H",
+                "PT294H",
+                "PT300H",
+                "PT306H",
+                "PT312H",
+                "PT318H",
+                "PT324H",
+                "PT330H",
+                "PT336H",
+                "PT342H",
+                "PT348H",
+                "PT354H",
+                "PT360H"
+              ]
+            }
+          ],
+          "scope": {
+            "member": 0,
+            "member_role": "control"
+          },
+          "sources": [
+            {
+              "data_code": "NAFP_NWPC_CMAGEPS_GLB_HOR12_D0P5_CONTROL",
+              "id": "S-geps-ctl",
+              "interface_contract": {
+                "id": "cmadaas.grid-array2d.forecast.member",
+                "version": 1
+              },
+              "kind": "cmadaas",
+              "time_zone": "UTC"
+            }
+          ],
+          "version": "service-20261105"
+        }
+      ]
     },
     {
       "aliases": [
         "CMA-GEPS-PERTURBATION-CMADaaS"
       ],
-      "id": "cma_geps_perturbation_cmadaas"
+      "id": "cma_geps_perturbation_cmadaas",
+      "mappings": {
+        "cmadaas": {
+          "builtin": "reki.mappings.cmadaas.current",
+          "sha256": "6e406e630e34acac36419301ffefcd6425a296539bf2b364447b06ed5c6e3173",
+          "version": "1"
+        }
+      },
+      "member_roles": {
+        "0": "control",
+        "1": "perturbation",
+        "10": "perturbation",
+        "11": "perturbation",
+        "12": "perturbation",
+        "13": "perturbation",
+        "14": "perturbation",
+        "15": "perturbation",
+        "16": "perturbation",
+        "17": "perturbation",
+        "18": "perturbation",
+        "19": "perturbation",
+        "2": "perturbation",
+        "20": "perturbation",
+        "21": "perturbation",
+        "22": "perturbation",
+        "23": "perturbation",
+        "24": "perturbation",
+        "25": "perturbation",
+        "26": "perturbation",
+        "27": "perturbation",
+        "28": "perturbation",
+        "29": "perturbation",
+        "3": "perturbation",
+        "30": "perturbation",
+        "4": "perturbation",
+        "5": "perturbation",
+        "6": "perturbation",
+        "7": "perturbation",
+        "8": "perturbation",
+        "9": "perturbation"
+      },
+      "parameter_registry": {
+        "builtin": "reki.parameters.cmadaas.current",
+        "sha256": "ff6738ea7481f235213b8b548c63f3f4abecc9734d51550c5e6216379b0b3b14",
+        "version": "1"
+      },
+      "products": [
+        {
+          "evidence": [
+            "I01/coverage-draft.json#S-geps-pert-row-4",
+            "stage1.2/task-07b;service-20261105-is-binding-revision-not-producer-release",
+            "S-geps-pert:response-sha256:1c401f6d25a570be6025e2bb5aa3331ff311b83867ca20c9d90c13e21383a0ef"
+          ],
+          "expected_domain": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "member": 1,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.t2m",
+              "step": "PT6H",
+              "time": "2026-08-30T00:00:00Z"
+            }
+          ],
+          "id": "forecast",
+          "methods": [],
+          "populations": [],
+          "provides": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": [
+                "PT0H",
+                "PT6H",
+                "PT12H",
+                "PT18H",
+                "PT24H",
+                "PT30H",
+                "PT36H",
+                "PT42H",
+                "PT48H",
+                "PT54H",
+                "PT60H",
+                "PT66H",
+                "PT72H",
+                "PT78H",
+                "PT84H",
+                "PT90H",
+                "PT96H",
+                "PT102H",
+                "PT108H",
+                "PT114H",
+                "PT120H",
+                "PT126H",
+                "PT132H",
+                "PT138H",
+                "PT144H",
+                "PT150H",
+                "PT156H",
+                "PT162H",
+                "PT168H",
+                "PT174H",
+                "PT180H",
+                "PT186H",
+                "PT192H",
+                "PT198H",
+                "PT204H",
+                "PT210H",
+                "PT216H",
+                "PT222H",
+                "PT228H",
+                "PT234H",
+                "PT240H",
+                "PT246H",
+                "PT252H",
+                "PT258H",
+                "PT264H",
+                "PT270H",
+                "PT276H",
+                "PT282H",
+                "PT288H",
+                "PT294H",
+                "PT300H",
+                "PT306H",
+                "PT312H",
+                "PT318H",
+                "PT324H",
+                "PT330H",
+                "PT336H",
+                "PT342H",
+                "PT348H",
+                "PT354H",
+                "PT360H"
+              ]
+            }
+          ],
+          "scope": {
+            "member": {
+              "range": {
+                "end": 30,
+                "every": 1,
+                "start": 1
+              }
+            },
+            "member_role": "perturbation"
+          },
+          "sources": [
+            {
+              "data_code": "NAFP_NWPC_CMAGEPS_GLB_HOR12_D0P5_DIS",
+              "id": "S-geps-pert",
+              "interface_contract": {
+                "id": "cmadaas.grid-array2d.forecast.member",
+                "version": 1
+              },
+              "kind": "cmadaas",
+              "time_zone": "UTC"
+            }
+          ],
+          "version": "service-20261105"
+        }
+      ]
     },
     {
       "aliases": [
         "CMA-REPS-CONTROL-CMADaaS"
       ],
-      "id": "cma_reps_control_cmadaas"
+      "id": "cma_reps_control_cmadaas",
+      "mappings": {
+        "cmadaas": {
+          "builtin": "reki.mappings.cmadaas.current",
+          "sha256": "6e406e630e34acac36419301ffefcd6425a296539bf2b364447b06ed5c6e3173",
+          "version": "1"
+        }
+      },
+      "member_roles": {
+        "0": "control",
+        "1": "perturbation",
+        "10": "perturbation",
+        "11": "perturbation",
+        "12": "perturbation",
+        "13": "perturbation",
+        "14": "perturbation",
+        "2": "perturbation",
+        "3": "perturbation",
+        "4": "perturbation",
+        "5": "perturbation",
+        "6": "perturbation",
+        "7": "perturbation",
+        "8": "perturbation",
+        "9": "perturbation"
+      },
+      "parameter_registry": {
+        "builtin": "reki.parameters.cmadaas.current",
+        "sha256": "ff6738ea7481f235213b8b548c63f3f4abecc9734d51550c5e6216379b0b3b14",
+        "version": "1"
+      },
+      "products": [
+        {
+          "evidence": [
+            "I01/coverage-draft.json#S-reps-ctl-row-28",
+            "stage1.2/task-07b;service-20261105-is-binding-revision-not-producer-release",
+            "S-reps-ctl:response-sha256:a6cbc34a17b961bb004bf7775ee8a7baa342c259892c4b5d16f449b32d5c32e7"
+          ],
+          "expected_domain": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "member": 0,
+              "member_role": "control",
+              "parameter": "cedarkit.t2m",
+              "step": "PT6H",
+              "time": "2026-11-04T06:00:00Z"
+            }
+          ],
+          "id": "forecast",
+          "methods": [],
+          "populations": [],
+          "provides": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": [
+                "PT0H",
+                "PT1H",
+                "PT2H",
+                "PT3H",
+                "PT4H",
+                "PT5H",
+                "PT6H",
+                "PT7H",
+                "PT8H",
+                "PT9H",
+                "PT10H",
+                "PT11H",
+                "PT12H",
+                "PT13H",
+                "PT14H",
+                "PT15H",
+                "PT16H",
+                "PT17H",
+                "PT18H",
+                "PT19H",
+                "PT20H",
+                "PT21H",
+                "PT22H",
+                "PT23H",
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H",
+                "PT37H",
+                "PT38H",
+                "PT39H",
+                "PT40H",
+                "PT41H",
+                "PT42H",
+                "PT43H",
+                "PT44H",
+                "PT45H",
+                "PT46H",
+                "PT47H",
+                "PT48H",
+                "PT49H",
+                "PT50H",
+                "PT51H",
+                "PT52H",
+                "PT53H",
+                "PT54H",
+                "PT55H",
+                "PT56H",
+                "PT57H",
+                "PT58H",
+                "PT59H",
+                "PT60H",
+                "PT61H",
+                "PT62H",
+                "PT63H",
+                "PT64H",
+                "PT65H",
+                "PT66H",
+                "PT67H",
+                "PT68H",
+                "PT69H",
+                "PT70H",
+                "PT71H",
+                "PT72H",
+                "PT73H",
+                "PT74H",
+                "PT75H",
+                "PT76H",
+                "PT77H",
+                "PT78H",
+                "PT79H",
+                "PT80H",
+                "PT81H",
+                "PT82H",
+                "PT83H",
+                "PT84H"
+              ]
+            }
+          ],
+          "scope": {
+            "member": 0,
+            "member_role": "control"
+          },
+          "sources": [
+            {
+              "data_code": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+              "id": "S-reps-ctl",
+              "interface_contract": {
+                "id": "cmadaas.grid-array2d.reps.member",
+                "version": 1
+              },
+              "kind": "cmadaas",
+              "time_zone": "UTC"
+            }
+          ],
+          "version": "service-20261105"
+        }
+      ]
     },
     {
       "aliases": [
         "CMA-REPS-PERTURBATION-CMADaaS"
       ],
-      "id": "cma_reps_perturbation_cmadaas"
+      "id": "cma_reps_perturbation_cmadaas",
+      "mappings": {
+        "cmadaas": {
+          "builtin": "reki.mappings.cmadaas.current",
+          "sha256": "6e406e630e34acac36419301ffefcd6425a296539bf2b364447b06ed5c6e3173",
+          "version": "1"
+        }
+      },
+      "member_roles": {
+        "0": "control",
+        "1": "perturbation",
+        "10": "perturbation",
+        "11": "perturbation",
+        "12": "perturbation",
+        "13": "perturbation",
+        "14": "perturbation",
+        "2": "perturbation",
+        "3": "perturbation",
+        "4": "perturbation",
+        "5": "perturbation",
+        "6": "perturbation",
+        "7": "perturbation",
+        "8": "perturbation",
+        "9": "perturbation"
+      },
+      "parameter_registry": {
+        "builtin": "reki.parameters.cmadaas.current",
+        "sha256": "ff6738ea7481f235213b8b548c63f3f4abecc9734d51550c5e6216379b0b3b14",
+        "version": "1"
+      },
+      "products": [
+        {
+          "evidence": [
+            "I01/coverage-draft.json#S-reps-pert-row-35",
+            "stage1.2/task-07b;service-20261105-is-binding-revision-not-producer-release",
+            "S-reps-pert:response-sha256:113e9fdbf68ceebac488d1f5092744f335805011a39fad52902edc662b7c713b"
+          ],
+          "expected_domain": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "member": 1,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.t2m",
+              "step": "PT6H",
+              "time": "2026-11-04T06:00:00Z"
+            }
+          ],
+          "id": "forecast",
+          "methods": [],
+          "populations": [],
+          "provides": [
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.t2m",
+              "step": [
+                "PT0H",
+                "PT1H",
+                "PT2H",
+                "PT3H",
+                "PT4H",
+                "PT5H",
+                "PT6H",
+                "PT7H",
+                "PT8H",
+                "PT9H",
+                "PT10H",
+                "PT11H",
+                "PT12H",
+                "PT13H",
+                "PT14H",
+                "PT15H",
+                "PT16H",
+                "PT17H",
+                "PT18H",
+                "PT19H",
+                "PT20H",
+                "PT21H",
+                "PT22H",
+                "PT23H",
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H",
+                "PT37H",
+                "PT38H",
+                "PT39H",
+                "PT40H",
+                "PT41H",
+                "PT42H",
+                "PT43H",
+                "PT44H",
+                "PT45H",
+                "PT46H",
+                "PT47H",
+                "PT48H",
+                "PT49H",
+                "PT50H",
+                "PT51H",
+                "PT52H",
+                "PT53H",
+                "PT54H",
+                "PT55H",
+                "PT56H",
+                "PT57H",
+                "PT58H",
+                "PT59H",
+                "PT60H",
+                "PT61H",
+                "PT62H",
+                "PT63H",
+                "PT64H",
+                "PT65H",
+                "PT66H",
+                "PT67H",
+                "PT68H",
+                "PT69H",
+                "PT70H",
+                "PT71H",
+                "PT72H",
+                "PT73H",
+                "PT74H",
+                "PT75H",
+                "PT76H",
+                "PT77H",
+                "PT78H",
+                "PT79H",
+                "PT80H",
+                "PT81H",
+                "PT82H",
+                "PT83H",
+                "PT84H"
+              ]
+            }
+          ],
+          "scope": {
+            "member": {
+              "range": {
+                "end": 14,
+                "every": 1,
+                "start": 1
+              }
+            },
+            "member_role": "perturbation"
+          },
+          "sources": [
+            {
+              "data_code": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+              "id": "S-reps-pert",
+              "interface_contract": {
+                "id": "cmadaas.grid-array2d.reps.member",
+                "version": 1
+              },
+              "kind": "cmadaas",
+              "time_zone": "UTC"
+            }
+          ],
+          "version": "service-20261105"
+        }
+      ]
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "32"
+  "version": "33"
 }

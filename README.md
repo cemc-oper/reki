@@ -83,6 +83,6 @@ For a mounted CEMC original product, use `{"kind": "local", "dataset": "cma_gfs_
 
 See [native field queries](doc/source/guide/public-query.md).
 
-## CMADaaS public query candidates
+## CMADaaS public queries
 
-The optional `reki[cmadaas]` dependency supports named scalar grid requests through the shared source API. Task 07A packages an explicitly selected offline candidate catalog for twelve CEMC services. It includes one `cedarkit.t2m` mapping per service and four historical GFS surface cases. See [the service candidate guide](doc/source/guide/cmadaas-query.md) for the selection context and verification limits. Actual service versions, time zones, authorization and numeric values remain subject to task 07B acceptance.
+The optional `reki[cmadaas]` dependency supports named scalar grid requests through the shared source API. The default v33 catalog binds twelve CEMC services verified in task 07B, with one `cedarkit.t2m` mapping per service and four historical GFS surface cases. Configure the MUSIC connection in CedarKit YAML and use `from_source({"kind": "cmadaas", "dataset": "cma_gfs_gmf_cmadaas"})`. See [the service query guide](doc/source/guide/cmadaas-query.md) for accepted samples, response contracts and unit provenance. The task 07A offline candidate remains explicitly selectable for replay.
