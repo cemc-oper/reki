@@ -3067,14 +3067,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "3b2a6a743aeed6fd0b75005a96fe0bce180e58962d1de0f907f26fe93b4825b4",
-          "version": "3"
+          "sha256": "ae373861c0379ed0dd7af753d6de0b952df6a879a9fdf78c109751f4d478d624",
+          "version": "4"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "7f81f13b4e588e78506612452be895f9491c00de89a67d132fc2be3a3b110830",
-        "version": "3"
+        "sha256": "ddccb2d638e4cc665fcffbb58bd12bc5391aee01be6d2622149bd4222d6eb62e",
+        "version": "4"
       },
       "products": [
         {
@@ -9260,14 +9260,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "3b2a6a743aeed6fd0b75005a96fe0bce180e58962d1de0f907f26fe93b4825b4",
-          "version": "3"
+          "sha256": "ae373861c0379ed0dd7af753d6de0b952df6a879a9fdf78c109751f4d478d624",
+          "version": "4"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "7f81f13b4e588e78506612452be895f9491c00de89a67d132fc2be3a3b110830",
-        "version": "3"
+        "sha256": "ddccb2d638e4cc665fcffbb58bd12bc5391aee01be6d2622149bd4222d6eb62e",
+        "version": "4"
       },
       "products": [
         {
@@ -10868,14 +10868,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "3b2a6a743aeed6fd0b75005a96fe0bce180e58962d1de0f907f26fe93b4825b4",
-          "version": "3"
+          "sha256": "ae373861c0379ed0dd7af753d6de0b952df6a879a9fdf78c109751f4d478d624",
+          "version": "4"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "7f81f13b4e588e78506612452be895f9491c00de89a67d132fc2be3a3b110830",
-        "version": "3"
+        "sha256": "ddccb2d638e4cc665fcffbb58bd12bc5391aee01be6d2622149bd4222d6eb62e",
+        "version": "4"
       },
       "products": [
         {
@@ -12064,14 +12064,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "3b2a6a743aeed6fd0b75005a96fe0bce180e58962d1de0f907f26fe93b4825b4",
-          "version": "3"
+          "sha256": "ae373861c0379ed0dd7af753d6de0b952df6a879a9fdf78c109751f4d478d624",
+          "version": "4"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "7f81f13b4e588e78506612452be895f9491c00de89a67d132fc2be3a3b110830",
-        "version": "3"
+        "sha256": "ddccb2d638e4cc665fcffbb58bd12bc5391aee01be6d2622149bd4222d6eb62e",
+        "version": "4"
       },
       "products": [
         {
@@ -14784,14 +14784,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "3b2a6a743aeed6fd0b75005a96fe0bce180e58962d1de0f907f26fe93b4825b4",
-          "version": "3"
+          "sha256": "ae373861c0379ed0dd7af753d6de0b952df6a879a9fdf78c109751f4d478d624",
+          "version": "4"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "7f81f13b4e588e78506612452be895f9491c00de89a67d132fc2be3a3b110830",
-        "version": "3"
+        "sha256": "ddccb2d638e4cc665fcffbb58bd12bc5391aee01be6d2622149bd4222d6eb62e",
+        "version": "4"
       },
       "products": [
         {
@@ -14835,7 +14835,12 @@
             "stage1.2/task-07c/originals.jsonl#S-meso1-ana-row-96",
             "stage1.2/task-07c/originals.jsonl#S-meso1-ana-row-100",
             "stage1.2/task-07c/originals.jsonl#S-meso1-ana-row-101",
-            "stage1.2/task-07c/originals.jsonl#S-meso1-ana-row-102"
+            "stage1.2/task-07c/originals.jsonl#S-meso1-ana-row-102",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-ana-row-7",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-ana-row-8",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-ana-row-82",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-ana-row-87",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-ana-row-98"
           ],
           "expected_domain": [
             {
@@ -15169,6 +15174,43 @@
             {
               "level_type": "surface",
               "parameter": "cedarkit.pblh",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.since-initialization",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.since-initialization",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level": 850,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.dbz",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.precitype",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.pwat",
               "step": "PT0S",
               "time": "2026-11-02T12:00:00Z",
               "valid_time": "2026-11-02T12:00:00Z"
@@ -15787,6 +15829,63 @@
               "step": [
                 "PT0H"
               ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.since-initialization",
+              "step": [
+                "PT0H"
+              ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.since-initialization",
+              "step": [
+                "PT0H"
+              ]
+            },
+            {
+              "level": [
+                100.0,
+                200.0,
+                300.0,
+                350.0,
+                400.0,
+                450.0,
+                500.0,
+                550.0,
+                600.0,
+                650.0,
+                700.0,
+                750.0,
+                800.0,
+                850.0,
+                900.0,
+                925.0,
+                950.0,
+                975.0,
+                1000.0
+              ],
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.dbz",
+              "step": [
+                "PT0H"
+              ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.precitype",
+              "step": [
+                "PT0H"
+              ]
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.pwat",
+              "step": [
+                "PT0H"
+              ]
             }
           ],
           "scope": {
@@ -15816,14 +15915,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "3b2a6a743aeed6fd0b75005a96fe0bce180e58962d1de0f907f26fe93b4825b4",
-          "version": "3"
+          "sha256": "ae373861c0379ed0dd7af753d6de0b952df6a879a9fdf78c109751f4d478d624",
+          "version": "4"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "7f81f13b4e588e78506612452be895f9491c00de89a67d132fc2be3a3b110830",
-        "version": "3"
+        "sha256": "ddccb2d638e4cc665fcffbb58bd12bc5391aee01be6d2622149bd4222d6eb62e",
+        "version": "4"
       },
       "products": [
         {
@@ -15867,7 +15966,22 @@
             "stage1.2/task-07c/originals.jsonl#S-meso1-fcst-row-105",
             "stage1.2/task-07c/originals.jsonl#S-meso1-fcst-row-108",
             "stage1.2/task-07c/originals.jsonl#S-meso1-fcst-row-110",
-            "stage1.2/task-07c/originals.jsonl#S-meso1-fcst-row-116"
+            "stage1.2/task-07c/originals.jsonl#S-meso1-fcst-row-116",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-6",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-25",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-104",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-112",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-115",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-30",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-33",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-44",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-45",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-46",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-47",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-50",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-55",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-56",
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-58"
           ],
           "expected_domain": [
             {
@@ -16204,6 +16318,257 @@
               "step": "PT21600S",
               "time": "2026-11-02T12:00:00Z",
               "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.since-initialization",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.since-initialization",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.since-initialization",
+              "step": "PT129600S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-06T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.since-initialization",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.since-initialization",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.since-initialization",
+              "step": "PT129600S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-06T00:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.pwat",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.pwat",
+              "step": "PT129600S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-06T00:00:00Z"
+            },
+            {
+              "level": 850,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.dbz",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level": 850,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.dbz",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level": 850,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.dbz",
+              "step": "PT129600S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-06T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.precitype",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.precitype",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.precitype",
+              "step": "PT129600S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-06T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.1h",
+              "step": "PT7200S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-04T14:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.1h",
+              "step": "PT129600S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-06T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.1h",
+              "step": "PT7200S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-04T14:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.1h",
+              "step": "PT129600S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-06T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.24h",
+              "step": "PT90000S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-05T13:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.24h",
+              "step": "PT129600S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-06T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.12h",
+              "step": "PT46800S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-05T01:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.12h",
+              "step": "PT129600S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-06T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.6h",
+              "step": "PT21600S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-04T18:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.6h",
+              "step": "PT129600S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-06T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.3h",
+              "step": "PT10800S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-04T15:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.3h",
+              "step": "PT129600S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-06T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.6h",
+              "step": "PT25200S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-04T19:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.6h",
+              "step": "PT129600S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-06T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.12h",
+              "step": "PT43200S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-05T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.12h",
+              "step": "PT129600S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-06T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.3h",
+              "step": "PT14400S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-04T16:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.3h",
+              "step": "PT129600S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-06T00:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.24h",
+              "step": "PT86400S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-05T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.24h",
+              "step": "PT129600S",
+              "time": "2026-11-04T12:00:00Z",
+              "valid_time": "2026-11-06T00:00:00Z"
             }
           ],
           "id": "forecast",
@@ -18185,6 +18550,930 @@
                 "PT35H",
                 "PT36H"
               ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.since-initialization",
+              "step": [
+                "PT1H",
+                "PT2H",
+                "PT3H",
+                "PT4H",
+                "PT5H",
+                "PT6H",
+                "PT7H",
+                "PT8H",
+                "PT9H",
+                "PT10H",
+                "PT11H",
+                "PT12H",
+                "PT13H",
+                "PT14H",
+                "PT15H",
+                "PT16H",
+                "PT17H",
+                "PT18H",
+                "PT19H",
+                "PT20H",
+                "PT21H",
+                "PT22H",
+                "PT23H",
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H"
+              ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.since-initialization",
+              "step": [
+                "PT1H",
+                "PT2H",
+                "PT3H",
+                "PT4H",
+                "PT5H",
+                "PT6H",
+                "PT7H",
+                "PT8H",
+                "PT9H",
+                "PT10H",
+                "PT11H",
+                "PT12H",
+                "PT13H",
+                "PT14H",
+                "PT15H",
+                "PT16H",
+                "PT17H",
+                "PT18H",
+                "PT19H",
+                "PT20H",
+                "PT21H",
+                "PT22H",
+                "PT23H",
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H"
+              ]
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.pwat",
+              "step": [
+                "PT1H",
+                "PT2H",
+                "PT3H",
+                "PT4H",
+                "PT5H",
+                "PT6H",
+                "PT7H",
+                "PT8H",
+                "PT9H",
+                "PT10H",
+                "PT11H",
+                "PT12H",
+                "PT13H",
+                "PT14H",
+                "PT15H",
+                "PT16H",
+                "PT17H",
+                "PT18H",
+                "PT19H",
+                "PT20H",
+                "PT21H",
+                "PT22H",
+                "PT23H",
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H"
+              ]
+            },
+            {
+              "level": [
+                100.0,
+                200.0,
+                300.0,
+                350.0,
+                400.0,
+                450.0,
+                500.0,
+                550.0,
+                600.0,
+                650.0,
+                700.0,
+                750.0,
+                800.0,
+                850.0,
+                900.0,
+                925.0,
+                950.0,
+                975.0,
+                1000.0
+              ],
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.dbz",
+              "step": [
+                "PT1H",
+                "PT2H",
+                "PT3H",
+                "PT4H",
+                "PT5H",
+                "PT6H",
+                "PT7H",
+                "PT8H",
+                "PT9H",
+                "PT10H",
+                "PT11H",
+                "PT12H",
+                "PT13H",
+                "PT14H",
+                "PT15H",
+                "PT16H",
+                "PT17H",
+                "PT18H",
+                "PT19H",
+                "PT20H",
+                "PT21H",
+                "PT22H",
+                "PT23H",
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H"
+              ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.precitype",
+              "step": [
+                "PT1H",
+                "PT2H",
+                "PT3H",
+                "PT4H",
+                "PT5H",
+                "PT6H",
+                "PT7H",
+                "PT8H",
+                "PT9H",
+                "PT10H",
+                "PT11H",
+                "PT12H",
+                "PT13H",
+                "PT14H",
+                "PT15H",
+                "PT16H",
+                "PT17H",
+                "PT18H",
+                "PT19H",
+                "PT20H",
+                "PT21H",
+                "PT22H",
+                "PT23H",
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H"
+              ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.1h",
+              "step": [
+                "PT2H",
+                "PT3H",
+                "PT4H",
+                "PT5H",
+                "PT6H",
+                "PT7H",
+                "PT8H",
+                "PT9H",
+                "PT10H",
+                "PT11H",
+                "PT12H",
+                "PT13H",
+                "PT14H",
+                "PT15H",
+                "PT16H",
+                "PT17H",
+                "PT18H",
+                "PT19H",
+                "PT20H",
+                "PT21H",
+                "PT22H",
+                "PT23H",
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H",
+                "PT37H",
+                "PT38H",
+                "PT39H",
+                "PT40H",
+                "PT41H",
+                "PT42H",
+                "PT43H",
+                "PT44H",
+                "PT45H",
+                "PT46H",
+                "PT47H",
+                "PT48H",
+                "PT49H",
+                "PT50H",
+                "PT51H",
+                "PT52H",
+                "PT53H",
+                "PT54H",
+                "PT55H",
+                "PT56H",
+                "PT57H",
+                "PT58H",
+                "PT59H",
+                "PT60H",
+                "PT61H",
+                "PT62H",
+                "PT63H",
+                "PT64H",
+                "PT65H",
+                "PT66H",
+                "PT67H",
+                "PT68H",
+                "PT69H",
+                "PT70H",
+                "PT71H",
+                "PT72H"
+              ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.1h",
+              "step": [
+                "PT2H",
+                "PT3H",
+                "PT4H",
+                "PT5H",
+                "PT6H",
+                "PT7H",
+                "PT8H",
+                "PT9H",
+                "PT10H",
+                "PT11H",
+                "PT12H",
+                "PT13H",
+                "PT14H",
+                "PT15H",
+                "PT16H",
+                "PT17H",
+                "PT18H",
+                "PT19H",
+                "PT20H",
+                "PT21H",
+                "PT22H",
+                "PT23H",
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H",
+                "PT37H",
+                "PT38H",
+                "PT39H",
+                "PT40H",
+                "PT41H",
+                "PT42H",
+                "PT43H",
+                "PT44H",
+                "PT45H",
+                "PT46H",
+                "PT47H",
+                "PT48H",
+                "PT49H",
+                "PT50H",
+                "PT51H",
+                "PT52H",
+                "PT53H",
+                "PT54H",
+                "PT55H",
+                "PT56H",
+                "PT57H",
+                "PT58H",
+                "PT59H",
+                "PT60H",
+                "PT61H",
+                "PT62H",
+                "PT63H",
+                "PT64H",
+                "PT65H",
+                "PT66H",
+                "PT67H",
+                "PT68H",
+                "PT69H",
+                "PT70H",
+                "PT71H",
+                "PT72H"
+              ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.24h",
+              "step": [
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H",
+                "PT37H",
+                "PT38H",
+                "PT39H",
+                "PT40H",
+                "PT41H",
+                "PT42H",
+                "PT43H",
+                "PT44H",
+                "PT45H",
+                "PT46H",
+                "PT47H",
+                "PT48H",
+                "PT49H",
+                "PT50H",
+                "PT51H",
+                "PT52H",
+                "PT53H",
+                "PT54H",
+                "PT55H",
+                "PT56H",
+                "PT57H",
+                "PT58H",
+                "PT59H",
+                "PT60H",
+                "PT61H",
+                "PT62H",
+                "PT63H",
+                "PT64H",
+                "PT65H",
+                "PT66H",
+                "PT67H",
+                "PT68H",
+                "PT69H",
+                "PT70H",
+                "PT71H",
+                "PT72H"
+              ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.12h",
+              "step": [
+                "PT13H",
+                "PT14H",
+                "PT15H",
+                "PT16H",
+                "PT17H",
+                "PT18H",
+                "PT19H",
+                "PT20H",
+                "PT21H",
+                "PT22H",
+                "PT23H",
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H",
+                "PT37H",
+                "PT38H",
+                "PT39H",
+                "PT40H",
+                "PT41H",
+                "PT42H",
+                "PT43H",
+                "PT44H",
+                "PT45H",
+                "PT46H",
+                "PT47H",
+                "PT48H",
+                "PT49H",
+                "PT50H",
+                "PT51H",
+                "PT52H",
+                "PT53H",
+                "PT54H",
+                "PT55H",
+                "PT56H",
+                "PT57H",
+                "PT58H",
+                "PT59H",
+                "PT60H",
+                "PT61H",
+                "PT62H",
+                "PT63H",
+                "PT64H",
+                "PT65H",
+                "PT66H",
+                "PT67H",
+                "PT68H",
+                "PT69H",
+                "PT70H",
+                "PT71H",
+                "PT72H"
+              ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.6h",
+              "step": [
+                "PT6H",
+                "PT7H",
+                "PT8H",
+                "PT9H",
+                "PT10H",
+                "PT11H",
+                "PT12H",
+                "PT13H",
+                "PT14H",
+                "PT15H",
+                "PT16H",
+                "PT17H",
+                "PT18H",
+                "PT19H",
+                "PT20H",
+                "PT21H",
+                "PT22H",
+                "PT23H",
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H",
+                "PT37H",
+                "PT38H",
+                "PT39H",
+                "PT40H",
+                "PT41H",
+                "PT42H",
+                "PT43H",
+                "PT44H",
+                "PT45H",
+                "PT46H",
+                "PT47H",
+                "PT48H",
+                "PT49H",
+                "PT50H",
+                "PT51H",
+                "PT52H",
+                "PT53H",
+                "PT54H",
+                "PT55H",
+                "PT56H",
+                "PT57H",
+                "PT58H",
+                "PT59H",
+                "PT60H",
+                "PT61H",
+                "PT62H",
+                "PT63H",
+                "PT64H",
+                "PT65H",
+                "PT66H",
+                "PT67H",
+                "PT68H",
+                "PT69H",
+                "PT70H",
+                "PT71H",
+                "PT72H"
+              ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.3h",
+              "step": [
+                "PT3H",
+                "PT4H",
+                "PT5H",
+                "PT6H",
+                "PT7H",
+                "PT8H",
+                "PT9H",
+                "PT10H",
+                "PT11H",
+                "PT12H",
+                "PT13H",
+                "PT14H",
+                "PT15H",
+                "PT16H",
+                "PT17H",
+                "PT18H",
+                "PT19H",
+                "PT20H",
+                "PT21H",
+                "PT22H",
+                "PT23H",
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H",
+                "PT37H",
+                "PT38H",
+                "PT39H",
+                "PT40H",
+                "PT41H",
+                "PT42H",
+                "PT43H",
+                "PT44H",
+                "PT45H",
+                "PT46H",
+                "PT47H",
+                "PT48H",
+                "PT49H",
+                "PT50H",
+                "PT51H",
+                "PT52H",
+                "PT53H",
+                "PT54H",
+                "PT55H",
+                "PT56H",
+                "PT57H",
+                "PT58H",
+                "PT59H",
+                "PT60H",
+                "PT61H",
+                "PT62H",
+                "PT63H",
+                "PT64H",
+                "PT65H",
+                "PT66H",
+                "PT67H",
+                "PT68H",
+                "PT69H",
+                "PT70H",
+                "PT71H",
+                "PT72H"
+              ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.6h",
+              "step": [
+                "PT7H",
+                "PT8H",
+                "PT9H",
+                "PT10H",
+                "PT11H",
+                "PT12H",
+                "PT13H",
+                "PT14H",
+                "PT15H",
+                "PT16H",
+                "PT17H",
+                "PT18H",
+                "PT19H",
+                "PT20H",
+                "PT21H",
+                "PT22H",
+                "PT23H",
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H",
+                "PT37H",
+                "PT38H",
+                "PT39H",
+                "PT40H",
+                "PT41H",
+                "PT42H",
+                "PT43H",
+                "PT44H",
+                "PT45H",
+                "PT46H",
+                "PT47H",
+                "PT48H",
+                "PT49H",
+                "PT50H",
+                "PT51H",
+                "PT52H",
+                "PT53H",
+                "PT54H",
+                "PT55H",
+                "PT56H",
+                "PT57H",
+                "PT58H",
+                "PT59H",
+                "PT60H",
+                "PT61H",
+                "PT62H",
+                "PT63H",
+                "PT64H",
+                "PT65H",
+                "PT66H",
+                "PT67H",
+                "PT68H",
+                "PT69H",
+                "PT70H",
+                "PT71H",
+                "PT72H"
+              ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.12h",
+              "step": [
+                "PT12H",
+                "PT13H",
+                "PT14H",
+                "PT15H",
+                "PT16H",
+                "PT17H",
+                "PT18H",
+                "PT19H",
+                "PT20H",
+                "PT21H",
+                "PT22H",
+                "PT23H",
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H",
+                "PT37H",
+                "PT38H",
+                "PT39H",
+                "PT40H",
+                "PT41H",
+                "PT42H",
+                "PT43H",
+                "PT44H",
+                "PT45H",
+                "PT46H",
+                "PT47H",
+                "PT48H",
+                "PT49H",
+                "PT50H",
+                "PT51H",
+                "PT52H",
+                "PT53H",
+                "PT54H",
+                "PT55H",
+                "PT56H",
+                "PT57H",
+                "PT58H",
+                "PT59H",
+                "PT60H",
+                "PT61H",
+                "PT62H",
+                "PT63H",
+                "PT64H",
+                "PT65H",
+                "PT66H",
+                "PT67H",
+                "PT68H",
+                "PT69H",
+                "PT70H",
+                "PT71H",
+                "PT72H"
+              ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sf.3h",
+              "step": [
+                "PT4H",
+                "PT5H",
+                "PT6H",
+                "PT7H",
+                "PT8H",
+                "PT9H",
+                "PT10H",
+                "PT11H",
+                "PT12H",
+                "PT13H",
+                "PT14H",
+                "PT15H",
+                "PT16H",
+                "PT17H",
+                "PT18H",
+                "PT19H",
+                "PT20H",
+                "PT21H",
+                "PT22H",
+                "PT23H",
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H",
+                "PT37H",
+                "PT38H",
+                "PT39H",
+                "PT40H",
+                "PT41H",
+                "PT42H",
+                "PT43H",
+                "PT44H",
+                "PT45H",
+                "PT46H",
+                "PT47H",
+                "PT48H",
+                "PT49H",
+                "PT50H",
+                "PT51H",
+                "PT52H",
+                "PT53H",
+                "PT54H",
+                "PT55H",
+                "PT56H",
+                "PT57H",
+                "PT58H",
+                "PT59H",
+                "PT60H",
+                "PT61H",
+                "PT62H",
+                "PT63H",
+                "PT64H",
+                "PT65H",
+                "PT66H",
+                "PT67H",
+                "PT68H",
+                "PT69H",
+                "PT70H",
+                "PT71H",
+                "PT72H"
+              ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rain.24h",
+              "step": [
+                "PT24H",
+                "PT25H",
+                "PT26H",
+                "PT27H",
+                "PT28H",
+                "PT29H",
+                "PT30H",
+                "PT31H",
+                "PT32H",
+                "PT33H",
+                "PT34H",
+                "PT35H",
+                "PT36H",
+                "PT37H",
+                "PT38H",
+                "PT39H",
+                "PT40H",
+                "PT41H",
+                "PT42H",
+                "PT43H",
+                "PT44H",
+                "PT45H",
+                "PT46H",
+                "PT47H",
+                "PT48H",
+                "PT49H",
+                "PT50H",
+                "PT51H",
+                "PT52H",
+                "PT53H",
+                "PT54H",
+                "PT55H",
+                "PT56H",
+                "PT57H",
+                "PT58H",
+                "PT59H",
+                "PT60H",
+                "PT61H",
+                "PT62H",
+                "PT63H",
+                "PT64H",
+                "PT65H",
+                "PT66H",
+                "PT67H",
+                "PT68H",
+                "PT69H",
+                "PT70H",
+                "PT71H",
+                "PT72H"
+              ]
             }
           ],
           "scope": {},
@@ -18194,7 +19483,7 @@
               "id": "S-meso1-fcst",
               "interface_contract": {
                 "id": "cmadaas.grid-array2d.forecast",
-                "version": 2
+                "version": 4
               },
               "kind": "cmadaas",
               "time_zone": "UTC"
@@ -18212,14 +19501,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "3b2a6a743aeed6fd0b75005a96fe0bce180e58962d1de0f907f26fe93b4825b4",
-          "version": "3"
+          "sha256": "ae373861c0379ed0dd7af753d6de0b952df6a879a9fdf78c109751f4d478d624",
+          "version": "4"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "7f81f13b4e588e78506612452be895f9491c00de89a67d132fc2be3a3b110830",
-        "version": "3"
+        "sha256": "ddccb2d638e4cc665fcffbb58bd12bc5391aee01be6d2622149bd4222d6eb62e",
+        "version": "4"
       },
       "products": [
         {
@@ -19292,14 +20581,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "3b2a6a743aeed6fd0b75005a96fe0bce180e58962d1de0f907f26fe93b4825b4",
-          "version": "3"
+          "sha256": "ae373861c0379ed0dd7af753d6de0b952df6a879a9fdf78c109751f4d478d624",
+          "version": "4"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "7f81f13b4e588e78506612452be895f9491c00de89a67d132fc2be3a3b110830",
-        "version": "3"
+        "sha256": "ddccb2d638e4cc665fcffbb58bd12bc5391aee01be6d2622149bd4222d6eb62e",
+        "version": "4"
       },
       "products": [
         {
@@ -24416,8 +25705,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "3b2a6a743aeed6fd0b75005a96fe0bce180e58962d1de0f907f26fe93b4825b4",
-          "version": "3"
+          "sha256": "ae373861c0379ed0dd7af753d6de0b952df6a879a9fdf78c109751f4d478d624",
+          "version": "4"
         }
       },
       "member_roles": {
@@ -24455,8 +25744,8 @@
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "7f81f13b4e588e78506612452be895f9491c00de89a67d132fc2be3a3b110830",
-        "version": "3"
+        "sha256": "ddccb2d638e4cc665fcffbb58bd12bc5391aee01be6d2622149bd4222d6eb62e",
+        "version": "4"
       },
       "products": [
         {
@@ -26142,8 +27431,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "3b2a6a743aeed6fd0b75005a96fe0bce180e58962d1de0f907f26fe93b4825b4",
-          "version": "3"
+          "sha256": "ae373861c0379ed0dd7af753d6de0b952df6a879a9fdf78c109751f4d478d624",
+          "version": "4"
         }
       },
       "member_roles": {
@@ -26181,8 +27470,8 @@
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "7f81f13b4e588e78506612452be895f9491c00de89a67d132fc2be3a3b110830",
-        "version": "3"
+        "sha256": "ddccb2d638e4cc665fcffbb58bd12bc5391aee01be6d2622149bd4222d6eb62e",
+        "version": "4"
       },
       "products": [
         {
@@ -27445,8 +28734,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "3b2a6a743aeed6fd0b75005a96fe0bce180e58962d1de0f907f26fe93b4825b4",
-          "version": "3"
+          "sha256": "ae373861c0379ed0dd7af753d6de0b952df6a879a9fdf78c109751f4d478d624",
+          "version": "4"
         }
       },
       "member_roles": {
@@ -27468,8 +28757,8 @@
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "7f81f13b4e588e78506612452be895f9491c00de89a67d132fc2be3a3b110830",
-        "version": "3"
+        "sha256": "ddccb2d638e4cc665fcffbb58bd12bc5391aee01be6d2622149bd4222d6eb62e",
+        "version": "4"
       },
       "products": [
         {
@@ -29261,8 +30550,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "3b2a6a743aeed6fd0b75005a96fe0bce180e58962d1de0f907f26fe93b4825b4",
-          "version": "3"
+          "sha256": "ae373861c0379ed0dd7af753d6de0b952df6a879a9fdf78c109751f4d478d624",
+          "version": "4"
         }
       },
       "member_roles": {
@@ -29284,8 +30573,8 @@
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "7f81f13b4e588e78506612452be895f9491c00de89a67d132fc2be3a3b110830",
-        "version": "3"
+        "sha256": "ddccb2d638e4cc665fcffbb58bd12bc5391aee01be6d2622149bd4222d6eb62e",
+        "version": "4"
       },
       "products": [
         {
@@ -31389,5 +32678,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "35"
+  "version": "36"
 }

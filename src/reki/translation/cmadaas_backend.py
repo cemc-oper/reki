@@ -24,7 +24,8 @@ from reki.selection.backend import BranchEvent, FieldReference, Plan, is_concret
 from reki.selection.core import key
 
 from .common import metadata_error, software_origin
-from .grib_mapping import _conversion, _covered, _unit, expected_cells
+from .grib_mapping import _conversion, _covered, expected_cells
+from .grib_mapping import _unit as _grib_unit
 
 _CONTRACTS = {
     "cmadaas.grid-array2d.analysis": (True, False),
@@ -41,6 +42,11 @@ _RULES = {
     "unit": "common.value_unit",
 }
 _RECTANGLE = {"minLat", "maxLat", "minLon", "maxLon"}
+_CODE_TABLE_UNITS = {"(Code.table.4.201)", "(Code table 4.201)"}
+
+
+def _unit(value):
+    return "1" if value in _CODE_TABLE_UNITS else _grib_unit(value)
 
 
 def _unsupported(message, *, reason="translation_unavailable"):
@@ -59,7 +65,7 @@ def _contract(configuration):
         )
     source = thaw(sources[0])
     contract = source["interface_contract"]
-    if contract["version"] not in (1, 2, 3) or contract["id"] not in _CONTRACTS:
+    if contract["version"] not in (1, 2, 3, 4) or contract["id"] not in _CONTRACTS:
         _unsupported("CMADaaS interface contract is not registered")
     try:
         zone = ZoneInfo(source["time_zone"])
@@ -105,10 +111,10 @@ def _unit_offset(source, target, pid, data_code, *, index=None):
             *{
                 f"cedarkit.{kind}.{hours}h"
                 for kind in ("rain", "rainc", "rainnc")
-                for hours in (3, 6, 12, 24)
+                for hours in (1, 3, 6, 12, 24)
             },
         }
-        and data_code == "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB"
+        and data_code in {"NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB", "NAFP_CEMC_MESO_FOR_1KM"}
     )
     return (
         0.0 if water_equivalent else _conversion(source, target, pid=pid, index=index)
@@ -127,18 +133,28 @@ def _derived_response(mapping, service, definition):
     period = stats.get("period") or mapping["native"]["translate"]["statistics"].get(
         "config", {}
     ).get("period", {})
+    contract = service["interface_contract"]
+    operation = stats.get("operation", "instantaneous")
+    valid_statistic = (
+        operation == "accumulation"
+        and stats.get("over") == "time"
+        and period.get("kind")
+        in (
+            {"trailing"}
+            if contract["version"] == 3
+            else {"trailing", "since_initialization"}
+        )
+    ) or (contract["version"] == 4 and operation == "instantaneous" and not period)
     if (
         profile != "derived_grid"
-        or service["interface_contract"]
-        != {"id": "cmadaas.grid-array2d.forecast", "version": 3}
-        or stats.get("operation") != "accumulation"
-        or stats.get("over") != "time"
-        or period.get("kind") != "trailing"
+        or contract["id"] != "cmadaas.grid-array2d.forecast"
+        or contract["version"] not in (3, 4)
+        or not valid_statistic
     ):
         raise QueryError(
             "invalid_config",
             "/mappings",
-            "derived response profile needs the reviewed v3 trailing-accumulation contract",
+            "reviewed grid profile needs the v3 trailing or v4 processed forecast contract",
         )
     return True
 
@@ -185,13 +201,16 @@ def _statistical_interval(definition, mapping, identity, analysis):
                 "instantaneous field cannot declare an accumulation period",
             )
         return None
-    if (
-        analysis
-        or stats.get("operation") != "accumulation"
-        or stats.get("over") != "time"
-    ):
+    if stats.get("operation") != "accumulation" or stats.get("over") != "time":
         _unsupported("service statistics need a reviewed accumulation contract")
     period = fixed or declared or {}
+    if analysis and (
+        period.get("kind") != "since_initialization"
+        or duration_seconds(identity["step"]) != 0
+    ):
+        _unsupported(
+            "analysis accumulation requires a reviewed zero initialization window"
+        )
     if period.get("kind") == "since_initialization":
         start = identity["time"]
     elif period.get("kind") == "trailing":
@@ -759,7 +778,8 @@ class CmadaasScan:
                     reps
                     or derived
                     or (
-                        self.backend.service["interface_contract"]["version"] in (2, 3)
+                        self.backend.service["interface_contract"]["version"]
+                        in (2, 3, 4)
                         and bool(array.attrs["server_request_echo"])
                     )
                 )
@@ -787,6 +807,16 @@ class CmadaasScan:
                         "response unit contradicts the mapping",
                         fields={"units": raw_unit},
                     )
+                categorical = (
+                    raw_unit in _CODE_TABLE_UNITS or declared in _CODE_TABLE_UNITS
+                )
+                if categorical:
+                    finite_values = array.values[np.isfinite(array.values)]
+                    if not np.all(finite_values == np.rint(finite_values)):
+                        metadata_error(
+                            "inconsistent_native_metadata",
+                            "categorical grid contains noninteger codes",
+                        )
                 target = _unit(definition["unit"])
                 offset = _unit_offset(
                     unit, target, pid, branch["candidate_filter"]["dataCode"]
@@ -808,6 +838,12 @@ class CmadaasScan:
                     "mapping_ids": [mapping["id"]],
                     "response_unit": raw_unit,
                     "source_unit_basis": unit_basis,
+                    **(
+                        {"code_table": "WMO GRIB2 4.201"}
+                        if raw_unit in _CODE_TABLE_UNITS
+                        or declared in _CODE_TABLE_UNITS
+                        else {}
+                    ),
                     **({"response_profile": "derived_grid"} if derived else {}),
                     "response_element": array.attrs["response_element"],
                     "server_request_echo": array.attrs["server_request_echo"],

@@ -271,6 +271,20 @@
       "unit": "K"
     },
     {
+      "description": "Precipitation type; WMO GRIB2 code table 4.201",
+      "description_cn": "降水相态；WMO GRIB2 代码表 4.201",
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "instantaneous",
+          "over": "time"
+        }
+      },
+      "name": "precitype",
+      "parameter_id": "cedarkit.precitype",
+      "unit": "1"
+    },
+    {
       "aliases": [
         "psfc"
       ],
@@ -435,6 +449,21 @@
       },
       "name": "rain12h",
       "parameter_id": "cedarkit.rain.12h",
+      "parent": "cedarkit.rain"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT1H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "rain1h",
+      "parameter_id": "cedarkit.rain.1h",
       "parent": "cedarkit.rain"
     },
     {
@@ -768,6 +797,21 @@
       },
       "name": "sf12h",
       "parameter_id": "cedarkit.sf.12h",
+      "parent": "cedarkit.sf"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT1H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "sf1h",
+      "parameter_id": "cedarkit.sf.1h",
       "parent": "cedarkit.sf"
     },
     {
@@ -1175,5 +1219,5 @@
       "unit": "m"
     }
   ],
-  "version": "3"
+  "version": "4"
 }

@@ -93,6 +93,8 @@ def _attrs(identity, meta):
         }
         if "description" in meta:
             attrs["long_name"] = meta["description"]
+        if "code_table" in meta:
+            attrs["code_table"] = meta["code_table"]
     else:
         attrs = {f"GRIB_{k}": v for k, v in meta["native_variable"].items()}
     if "layer" in identity:

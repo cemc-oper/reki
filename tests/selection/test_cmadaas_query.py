@@ -795,6 +795,9 @@ def test_generic_service_parameter_keeps_vertical_ambiguity_explicit():
 ACCUMULATION_CASES = json.loads(
     (Path(__file__).parent / "fixtures/cmadaas-task07e1.json").read_bytes()
 )
+MESO1_CASES = json.loads(
+    (Path(__file__).parent / "fixtures/cmadaas-task07e2.json").read_bytes()
+)
 
 
 def accumulation_client(case):
@@ -809,7 +812,9 @@ def accumulation_client(case):
     return ControlledClient(case, mutate=headers)
 
 
-@pytest.mark.parametrize("case", ACCUMULATION_CASES, ids=lambda c: c["id"])
+@pytest.mark.parametrize(
+    "case", ACCUMULATION_CASES + MESO1_CASES, ids=lambda c: c["id"]
+)
 def test_reviewed_accumulation_windows_and_instantaneous_identities(case):
     from datetime import datetime, timedelta
 
@@ -825,6 +830,9 @@ def test_reviewed_accumulation_windows_and_instantaneous_identities(case):
             dataset[name].values.reshape(2, 3), case["values"]
         )
         assert dataset[name].attrs["units"] == case["unit"]
+        if case.get("code_table"):
+            assert field.metadata["code_table"] == case["code_table"]
+            assert dataset[name].attrs["code_table"] == case["code_table"]
         assert client.calls == [(case["expected_interface"], case["expected_params"])]
         if case["interval_hours"] is not None:
             time = datetime.fromisoformat(case["query"]["time"])
@@ -887,3 +895,70 @@ def test_derived_profile_and_period_are_explicit_reviewed_contracts(problem, tmp
                 source.sel(case["query"]).explain()
             assert caught.value.code == "invalid_config"
             assert not client.calls
+
+
+@pytest.mark.parametrize(
+    "code", ["rain.since-initialization", "sf.since-initialization"]
+)
+def test_meso1_analysis_initialization_requires_a_zero_field(code):
+    case = next(c for c in MESO1_CASES if c["mapping_id"].endswith(code))
+    client = accumulation_client({**case, "values": [[0, 0, 0], [0, 1, 0]]})
+    with from_source(case["source"], client=client) as source:
+        with pytest.raises(SourceError) as caught:
+            source.sel(case["query"]).one()
+        assert caught.value.context["reason"] == "invalid_statistics_metadata"
+
+
+@pytest.mark.parametrize("processed", [False, True])
+def test_precipitation_type_rejects_noninteger_codes(processed):
+    case = next(
+        c for c in MESO1_CASES if c["code_table"] and c["derived_response"] == processed
+    )
+    client = accumulation_client({**case, "values": [[0, 1, 3], [5, 8, 0.5]]})
+    with from_source(case["source"], client=client) as source:
+        with pytest.raises(SourceError) as caught:
+            source.sel(case["query"]).one()
+        assert caught.value.context["reason"] == "inconsistent_native_metadata"
+
+
+@pytest.mark.parametrize(
+    "parameter", ["cedarkit.pwat", "cedarkit.rain.since-initialization"]
+)
+@pytest.mark.parametrize("problem", ["contract", "profile"])
+def test_processed_instantaneous_and_cumulative_grids_require_explicit_v4_review(
+    parameter, problem, tmp_path
+):
+    case = next(
+        c
+        for c in MESO1_CASES
+        if c["derived_response"] and c["query"]["parameter"] == parameter
+    )
+    client = accumulation_client(case)
+    context = {}
+    if problem == "contract":
+        catalog = load_catalog().to_dict()
+        dataset = next(
+            d for d in catalog["datasets"] if d["id"] == case["source"]["dataset"]
+        )
+        dataset["products"][0]["sources"][0]["interface_contract"]["version"] = 3
+        path = tmp_path / "catalog.json"
+        path.write_text(json.dumps(catalog))
+        context["catalog"] = {"path": str(path)}
+    else:
+        config = plan_source_binding(case["source"], client=client)
+        mappings = config.mappings[0].to_dict()
+        row = next(r for r in mappings["mappings"] if r["id"] == case["mapping_id"])
+        del row["native"]["translate"]["statistics"]["config"]["response_profile"]
+        path = tmp_path / "mappings.json"
+        path.write_text(json.dumps(mappings))
+        context["mappings"] = {"cmadaas": {"path": str(path)}}
+    with from_source(case["source"], context=context, client=client) as source:
+        if problem == "contract":
+            with pytest.raises(QueryError) as caught:
+                source.sel(case["query"]).explain()
+            assert caught.value.code == "invalid_config"
+            assert not client.calls
+        else:
+            with pytest.raises(SourceError) as caught:
+                source.sel(case["query"]).one()
+            assert caught.value.context["reason"] == "inconsistent_native_metadata"
