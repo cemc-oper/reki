@@ -13,21 +13,22 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-gfs.current",
-          "sha256": "77514f36ef8809775ded05ac5d08f8c7c9e3478fa2cd0c8929b732c6d8e7d312",
-          "version": "17"
+          "sha256": "3b0383cba0fc82a6fe018f4c500961507b96edd084d07cf468fb4ecfacc8d6e8",
+          "version": "18"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cma-gfs.current",
-        "sha256": "1b445c5d7bb5e0c168d620ad8ec18d861b66f5b7b48f53771846daa8826ec040",
-        "version": "12"
+        "sha256": "d78dcdcd839264c1365e579b42739c4e81c7009c0f7b6c729d3ef3d83b3b10e6",
+        "version": "13"
       },
       "products": [
         {
           "evidence": [
             "doc/2026-10-13-stage1.1-query-reki/evidence/I06/round-36/headers-gfs-006-det.json",
             "doc/2026-11-04-stage1.2-query-reki/task-01-coverage.md#首批本地-gfs-两例",
-            "stage1.2/task-06/orig-batch-1"
+            "stage1.2/task-06/orig-batch-1",
+            "stage1.2/task-06B/deterministic-orig"
           ],
           "expected_domain": [
             {
@@ -230,6 +231,321 @@
               "level_type": "height_above_ground",
               "level_unit": "m",
               "parameter": "cedarkit.v10m"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.albedo"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.bli"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cape"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.cc"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cdbz"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ceiling"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cin"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.dbz"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.dcape"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.div"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.fogh"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.gdlwc.since-initialization"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.graupel"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.gsw.since-initialization"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.gswc.since-initialization"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.gulwc.since-initialization"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.guswc.since-initialization"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.h"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht0"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.pblh"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.pli"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.pwat"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.q"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.q2m"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qc"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qi"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qr"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qs"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rainc.since-initialization"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rainnc.since-initialization"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.rh2m"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sd"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "parameter": "cedarkit.shr-0-1000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 3000
+                }
+              },
+              "parameter": "cedarkit.shr-0-3000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 6000
+                }
+              },
+              "parameter": "cedarkit.shr-0-6000"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.si"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0
+                }
+              },
+              "parameter": "cedarkit.sw-0-10"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.4
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                }
+              },
+              "parameter": "cedarkit.sw-10-40"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 2
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1
+                }
+              },
+              "parameter": "cedarkit.sw-100-200"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.4
+                }
+              },
+              "parameter": "cedarkit.sw-40-100"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sweatidx"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.tcw"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.td"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.td2m"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.theta-se"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.tiw"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ts"
+            },
+            {
+              "level_type": "atmosphere_top",
+              "parameter": "cedarkit.tsw.since-initialization"
+            },
+            {
+              "level_type": "atmosphere_top",
+              "parameter": "cedarkit.tswc.since-initialization"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.ttd"
+            },
+            {
+              "level_type": "atmosphere_top",
+              "parameter": "cedarkit.tulwc.since-initialization"
+            },
+            {
+              "level_type": "atmosphere_top",
+              "parameter": "cedarkit.tuswc.since-initialization"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.tvw"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.vis"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.vor"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.w"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.znt"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.zs"
             }
           ],
           "scope": {},
@@ -260,19 +576,20 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-meso3.current",
-          "sha256": "ec2af3e700e58e1051e1c4894435a8042f36d58b14a198733c9df0182b8ba05c",
-          "version": "11"
+          "sha256": "53f07f6035c47328d4aba7a93d9728ce30c5697ce14f9c3dace0049ef7acb506",
+          "version": "12"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cma-meso3.current",
-        "sha256": "a80093a4ac573a5f9df4b4c65022e71bf99c022199153f96871e07fc465366e8",
-        "version": "8"
+        "sha256": "cfef16be474e870e217201c43be0ec8f0b1257210f0e263fabd85b1e1392e416",
+        "version": "9"
       },
       "products": [
         {
           "evidence": [
-            "stage1.2/task-06/orig-batch-1"
+            "stage1.2/task-06/orig-batch-1",
+            "stage1.2/task-06B/deterministic-orig"
           ],
           "id": "orig",
           "methods": [],
@@ -412,6 +729,381 @@
               "level_type": "height_above_ground",
               "level_unit": "m",
               "parameter": "cedarkit.v10m"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.bli"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cape"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.cc"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cdbz"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cdbzmax-1"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ceiling"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cin"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.dbz"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.dcape"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.div"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.echotop"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.graupel"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.h"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht0"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht2"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.pblh"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.pli"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.pwat"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.q"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.q2m"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qc"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.qfxsfc"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qi"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qr"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qs"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.rh2m"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "parameter": "cedarkit.shr-0-1000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 3000
+                }
+              },
+              "parameter": "cedarkit.shr-0-3000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 6000
+                }
+              },
+              "parameter": "cedarkit.shr-0-6000"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.si"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "parameter": "cedarkit.srh-0-1000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 3000
+                }
+              },
+              "parameter": "cedarkit.srh-0-3000"
+            },
+            {
+              "layer": [
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.3
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.1
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.6
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.3
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 1
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.6
+                  }
+                }
+              ],
+              "parameter": "cedarkit.st"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0
+                }
+              },
+              "parameter": "cedarkit.sw-0-10"
+            },
+            {
+              "layer": [
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.3
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.1
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.6
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.3
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 1
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.6
+                  }
+                }
+              ],
+              "parameter": "cedarkit.sw"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.sweatidx"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.tcw"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.td"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.td2m"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.theta-se"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.tiw"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ts"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.ttd"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.tti"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.tvw"
+            },
+            {
+              "level": 10,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.u10mmax-1"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 2000
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 5000
+                }
+              },
+              "parameter": "cedarkit.uhmax-2000-5000"
+            },
+            {
+              "level": 10,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.v10mmax-1"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.vis"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.vor"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.w"
+            },
+            {
+              "level": 1000,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.wmax-1"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.zs"
             }
           ],
           "scope": {},
@@ -440,19 +1132,20 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-meso1.current",
-          "sha256": "e74185bcb7dd600b958acbfcf2156920bea2a8e700381283c26363e3c1e7c24f",
-          "version": "10"
+          "sha256": "d8a20aa20f477d4dae708a2669ca5b0809dff2d7d25002527d5c627e22ca37a6",
+          "version": "11"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cma-meso1.current",
-        "sha256": "e4cebf89cac75776b7f88f2c9d114be1e33bb5f9c95fda5ba7075819c09bab7e",
-        "version": "7"
+        "sha256": "c6538602512a63282023b8ca34ae72115f6348754899ee3fb59ba234325e70c2",
+        "version": "8"
       },
       "products": [
         {
           "evidence": [
-            "stage1.2/task-06/orig-batch-1"
+            "stage1.2/task-06/orig-batch-1",
+            "stage1.2/task-06B/deterministic-orig"
           ],
           "id": "orig",
           "methods": [],
@@ -577,6 +1270,250 @@
               "level_type": "height_above_ground",
               "level_unit": "m",
               "parameter": "cedarkit.v10m"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.bli"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cape"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.cc"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cdbz"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cdbzmax-1"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cin"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.dbz"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.dcape"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.div"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.echotop"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.graupel"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.h"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht0"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht2"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.pblh"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.pli"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.q"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.q2m"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qc"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qi"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qr"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qs"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.rh2m"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "parameter": "cedarkit.shr-0-1000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 3000
+                }
+              },
+              "parameter": "cedarkit.shr-0-3000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 6000
+                }
+              },
+              "parameter": "cedarkit.shr-0-6000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "parameter": "cedarkit.srh-0-1000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 3000
+                }
+              },
+              "parameter": "cedarkit.srh-0-3000"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.td"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.td2m"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.theta-se"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.tiw"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ts"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.ttd"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.tvw"
+            },
+            {
+              "level": 10,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.u10mmax-1"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 2000
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 5000
+                }
+              },
+              "parameter": "cedarkit.uhmax-2000-5000"
+            },
+            {
+              "level": 10,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.v10mmax-1"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.vis"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.w"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.wmax-1"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.zs"
             }
           ],
           "scope": {},
@@ -605,19 +1542,20 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-tym.current",
-          "sha256": "890e952b7aae1e8a679fbfcac74b68d47ac4325125556e2566bc4563143ee51d",
-          "version": "10"
+          "sha256": "e217cb7baf2e359701161f7693da592242c2d84c502b3bed0ec33b0bfdf216d9",
+          "version": "11"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cma-tym.current",
-        "sha256": "8cffe9b0b7d57e018aa2c277b90fef1e8aeb387c9435e31ae82823dd12b5bd13",
-        "version": "7"
+        "sha256": "0e105e98b5f22590e244318e759fba4d1dc11daa5ae3188b70ea46d728ddf1bb",
+        "version": "8"
       },
       "products": [
         {
           "evidence": [
-            "stage1.2/task-06/orig-batch-1"
+            "stage1.2/task-06/orig-batch-1",
+            "stage1.2/task-06B/deterministic-orig"
           ],
           "id": "orig",
           "methods": [],
@@ -705,6 +1643,338 @@
               "level_type": "height_above_ground",
               "level_unit": "m",
               "parameter": "cedarkit.v10m"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.bli"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cape"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.cc"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cdbz"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cin"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.div"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.fogh"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.graupel"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.h"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.pwat"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.q"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.q2m"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qc"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.qfxsfc"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qi"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qr"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.qs"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rainc.since-initialization"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.rainnc.since-initialization"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.rh2m"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "parameter": "cedarkit.shr-0-1000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 3000
+                }
+              },
+              "parameter": "cedarkit.shr-0-3000"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 6000
+                }
+              },
+              "parameter": "cedarkit.shr-0-6000"
+            },
+            {
+              "layer": [
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.3
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.1
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.6
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.3
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 1
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.6
+                  }
+                }
+              ],
+              "parameter": "cedarkit.st"
+            },
+            {
+              "layer": [
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.1
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.1
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0
+                  }
+                }
+              ],
+              "parameter": "cedarkit.sw-0-10"
+            },
+            {
+              "layer": [
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.3
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.1
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.6
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.3
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 1
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.6
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.3
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.1
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.6
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.3
+                  }
+                },
+                {
+                  "bottom": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 1
+                  },
+                  "top": {
+                    "type": "depth_below_land",
+                    "unit": "m",
+                    "value": 0.6
+                  }
+                }
+              ],
+              "parameter": "cedarkit.sw"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.td"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.td2m"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.theta-se"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ts"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.ttd"
+            },
+            {
+              "level": 10,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.u10mmax-1"
+            },
+            {
+              "level": 10,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.v10mmax-1"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.vis"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.vor"
+            },
+            {
+              "level_type": "pressure",
+              "parameter": "cedarkit.w"
+            },
+            {
+              "level": 1000,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.wmax-1"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.zs"
             }
           ],
           "scope": {},
@@ -1349,5 +2619,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "28"
+  "version": "29"
 }

@@ -7,6 +7,7 @@ import pytest
 import eccodes
 
 from cedarkit_query import SourceError
+from reki import from_source
 from reki.catalog import plan_source_binding
 from reki.selection.core import construct_source
 from reki.translation.grib_backend import GribBackend
@@ -292,6 +293,64 @@ def test_encoded_signed_interval_start_has_nonnegative_result_step(
         identity["step"] == "PT0S" and identity["native"]["grib"]["forecastTime"] == -1
     )
     assert len(fields.to_xarray(rename="synthetic_interval").data_vars) == 1
+
+
+@pytest.mark.parametrize("window", [1, 2])
+def test_named_trailing_window_checks_the_encoded_bounds(write_grib, tmp_path, window):
+    path = write_grib(
+        records=[
+            {
+                "productDefinitionTemplateNumber": 8,
+                "centre": 38,
+                "subCentre": 0,
+                "tablesVersion": 4,
+                "localTablesVersion": 0,
+                "productionStatusOfProcessedData": 0,
+                "significanceOfReferenceTime": 1,
+                "typeOfProcessedData": 1,
+                "typeOfGeneratingProcess": 2,
+                "discipline": 0,
+                "parameterCategory": 2,
+                "parameterNumber": 2,
+                "typeOfFirstFixedSurface": 103,
+                "scaledValueOfFirstFixedSurface": 10,
+                "forecastTime": 6 - window,
+                "typeOfStatisticalProcessing": 2,
+                "numberOfTimeRange": 1,
+                "typeOfTimeIncrement": 2,
+                "indicatorOfUnitForTimeRange": 1,
+                "lengthOfTimeRange": window,
+                "yearOfEndOfOverallTimeInterval": 2026,
+                "monthOfEndOfOverallTimeInterval": 1,
+                "dayOfEndOfOverallTimeInterval": 1,
+                "hourOfEndOfOverallTimeInterval": 6,
+                "minuteOfEndOfOverallTimeInterval": 0,
+                "secondOfEndOfOverallTimeInterval": 0,
+            }
+        ]
+    )
+    source = {"kind": "file", "path": str(path), "dataset": "cma_meso_1km"}
+    mappings = plan_source_binding(source).mappings[0].to_dict()
+    row = next(r for r in mappings["mappings"] if r["id"] == "u10mmax-1.forecast")
+    row["native"]["match"].pop("lengthOfTimeRange")
+    resource = tmp_path / "trailing-mappings.json"
+    resource.write_text(json.dumps(mappings))
+    with from_source(
+        source, context={"mappings": {"grib2": {"path": str(resource)}}}
+    ) as owner:
+        selection = owner.sel(
+            parameter="cedarkit.u10mmax-1", time="2026-01-01T00:00:00Z", step="PT6H"
+        )
+        if window == 2:
+            with pytest.raises(SourceError) as caught:
+                selection.one()
+            assert caught.value.context["reason"] == "fixed_definition_mismatch"
+        else:
+            field = selection.one()
+            assert field.metadata["statistical_interval"] == {
+                "start": "2026-01-01T05:00:00Z",
+                "end": "2026-01-01T06:00:00Z",
+            }
 
 
 @pytest.mark.parametrize(

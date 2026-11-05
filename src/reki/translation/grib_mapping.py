@@ -7,7 +7,7 @@ from cedarkit_query import (
     intersect_scopes,
     normalize_query,
 )
-from cedarkit_query.normalize import _contains
+from cedarkit_query.normalize import _contains, duration_seconds, time_seconds
 
 from reki.catalog.model import thaw
 from reki.selection.backend import is_concrete
@@ -104,6 +104,7 @@ def named_branches(query, index, config, mappings):
             rules = row["native"].get("translate", {})
             template = filters.get("productDefinitionTemplateNumber")
             statistics = definition["fixed_conditions"].get("statistics", {})
+            period = statistics.get("period", {}).get("kind")
             if template in {0, 8} and {"member", "member_role"} & query.keys():
                 _error(
                     index,
@@ -120,8 +121,7 @@ def named_branches(query, index, config, mappings):
                     template in {8, 11}
                     and (
                         statistics.get("operation") not in grib.TIME_OPERATIONS
-                        or statistics.get("period", {}).get("kind")
-                        != "since_initialization"
+                        or period not in {"since_initialization", "trailing"}
                     )
                 )
                 or (
@@ -140,8 +140,9 @@ def named_branches(query, index, config, mappings):
                     "typeOfStatisticalProcessing": grib.TIME_OPERATIONS[
                         statistics["operation"]
                     ],
-                    "forecastTime": 0,
                 }
+                if period == "since_initialization":
+                    statistical["forecastTime"] = 0
                 compatible = intersect_scopes(
                     {"native": {"grib": filters}}, {"native": {"grib": statistical}}
                 )
@@ -276,6 +277,13 @@ def _unit(value):
         "m s**-1": "m/s",
         "kg m-2": "kg/m2",
         "kg m**-2": "kg/m2",
+        "kg kg-1": "kg/kg",
+        "kg kg**-1": "kg/kg",
+        "J kg-1": "J/kg",
+        "J m**-2": "J/m2",
+        "m**2 s**-2": "m2/s2",
+        "gpm": "Gpm",
+        "s**-1": "s-1",
     }.get(value, value)
 
 
@@ -285,8 +293,17 @@ def _conversion(source, target, *, pid, index=None):
         return 0.0
     if {source, target} == {"K", "degC"}:
         return -273.15 if source == "K" else 273.15
-    if (source, target, pid) == ("kg/m2", "mm", "cedarkit.rain.since-initialization"):
+    if (source, target) == ("kg/m2", "mm") and pid in {
+        "cedarkit.rain.since-initialization",
+        "cedarkit.rainc.since-initialization",
+        "cedarkit.rainnc.since-initialization",
+    }:
         return 0.0  # Reviewed water-equivalent precipitation convention.
+    if (source, target) == ("m2/s2", "J/kg") and pid in {
+        "cedarkit.srh-0-1000",
+        "cedarkit.srh-0-3000",
+    }:
+        return 0.0
     if index is not None:
         _error(
             index, "translation_unavailable", "no reviewed GRIB field unit conversion"
@@ -294,6 +311,84 @@ def _conversion(source, target, *, pid, index=None):
     metadata_error(
         "unsupported_native_encoding", "no reviewed GRIB field unit conversion"
     )
+
+
+def _observed_units(native, scope, pid, declared):
+    decoder = _unit(native.get("units"))
+    table = _unit(native.get("parameterUnits"))
+    if table != "1" and table == str(native.get("parameterNumber")):
+        table = None  # ecCodes repeats the code for a table entry without a unit.
+    units = {decoder, table} - {None, "", "unknown", "~"}
+    if (scope.get("product"), scope.get("product_version")) != ("orig", "current"):
+        return units
+
+    # The reviewed CEMC producer declarations resolve these exact decoder views.
+    dataset = scope["dataset"]
+    carrier = tuple(
+        native.get(key)
+        for key in (
+            "productDefinitionTemplateNumber",
+            "discipline",
+            "parameterCategory",
+            "parameterNumber",
+            "typeOfFirstFixedSurface",
+            "typeOfSecondFixedSurface",
+        )
+    )
+    if (
+        native.get("edition") != 2
+        or native.get("centre") != 38
+        or native.get("tablesVersion") != 4
+        or native.get("subCentre") != 0
+        or native.get("productionStatusOfProcessedData") != 0
+    ):
+        return units
+    if carrier == (0, 0, 1, 0, 106, 106) and (
+        pid in {
+            "cedarkit.sw",
+            "cedarkit.sw-0-10",
+            "cedarkit.sw-10-40",
+            "cedarkit.sw-40-100",
+            "cedarkit.sw-100-200",
+        }
+        and declared == "m3/m3"
+        and native.get("localTablesVersion") in {0, 1}
+        and dataset in {"cma_gfs_gmf", "cma_meso_3km", "cma_tym"}
+        and (decoder, table) == ("kg/kg", "kg/kg")
+    ):
+        return {declared}  # The producer overloads SPFH on two soil surfaces.
+    if native.get("localTablesVersion") != 0:
+        return units
+    if carrier == (0, 0, 3, 5, 1, 255) and (
+        pid == "cedarkit.zs"
+        and declared == "Gpm"
+        and dataset in {"cma_gfs_gmf", "cma_meso_1km", "cma_meso_3km", "cma_tym"}
+        and (decoder, table) == ("m", "Gpm")
+    ):
+        return {declared}
+    if carrier == (0, 0, 7, 5, 1, 255) and (
+        pid == "cedarkit.sweatidx"
+        and declared == "1"
+        and dataset in {"cma_gfs_gmf", "cma_meso_3km"}
+        and (decoder, table) == ("Numeric", "Numeric")
+    ):
+        return {declared}
+    if carrier in {(8, 0, 4, 9, 1, 255), (8, 0, 4, 9, 8, 255)} and (
+        pid in {"cedarkit.gsw.since-initialization", "cedarkit.tsw.since-initialization"}
+        and declared == "J/m2"
+        and dataset == "cma_gfs_gmf"
+        and native.get("typeOfStatisticalProcessing") == 1
+        and (decoder, table) == ("J/m2", "W m-2")
+    ):
+        return {declared}  # The base table describes the flux, not its integral.
+    if carrier == (0, 0, 7, 8, 103, 103) and (
+        pid in {"cedarkit.srh-0-1000", "cedarkit.srh-0-3000"}
+        and declared == "m2/s2"
+        and dataset in {"cma_meso_1km", "cma_meso_3km"}
+        and (decoder, table) == ("m2/s2", "J/kg")
+    ):
+        return {declared}
+    return units
 
 
 def interpret_named(native, candidates, config, mappings):
@@ -325,11 +420,18 @@ def interpret_named(native, candidates, config, mappings):
         )
     pid = pids.pop()
     definition = config.parameters[pid]
-    if interval is not None and interval["start"] != times["time"]:
-        metadata_error(
-            "fixed_definition_mismatch",
-            "the observed accumulation does not start at the reference time",
-        )
+    if interval is not None:
+        period = definition["fixed_conditions"]["statistics"]["period"]
+        if period["kind"] == "since_initialization":
+            correct_window = interval["start"] == times["time"]
+        else:
+            length = time_seconds(interval["end"]) - time_seconds(interval["start"])
+            correct_window = length == duration_seconds(period["duration"])
+        if not correct_window:
+            metadata_error(
+                "fixed_definition_mismatch",
+                "the observed statistical interval disagrees with the fixed period",
+            )
     source_unit = None
     mapping_ids = set()
     for _, branch in selected:
@@ -343,8 +445,7 @@ def interpret_named(native, candidates, config, mappings):
             .get("config", {})
             .get("source_unit")
         )
-        observed = {_unit(native.get(k)) for k in ("units", "parameterUnits")}
-        observed.difference_update({None, "", "unknown", "~"})
+        observed = _observed_units(native, branch["scope"], pid, _unit(declared))
         if declared is not None:
             observed.add(_unit(declared))
         if not observed:

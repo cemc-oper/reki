@@ -8,7 +8,8 @@ from tempfile import TemporaryDirectory
 
 import eccodes
 import numpy as np
-from cedarkit_query import normalize_query
+from cedarkit_query import QueryReport, normalize_query
+from cedarkit_query.normalize import duration_seconds, time_seconds
 from reki import from_source
 
 
@@ -129,6 +130,34 @@ def verify(case, sample, *, mounted=False):
             "Dataset parameter differs",
         )
         require(data.attrs["units"] == case["unit"], "Dataset unit differs")
+        report = field.report
+        require(report.overall["field_count"] == 1, "report field count differs")
+        require(
+            QueryReport.from_json(dataset.attrs["cedarkit_query_report"]) == report,
+            "Dataset report differs",
+        )
+        for key, seconds in (
+            ("time", time_seconds(query["time"])),
+            ("valid_time", time_seconds(query["valid_time"])),
+            ("step", duration_seconds(query["step"])),
+        ):
+            require(
+                dataset[key].values.astype("int64").item()
+                == int(seconds * 1_000_000_000),
+                f"Dataset {key} differs",
+            )
+        if "level" in query:
+            require(
+                dataset[query["level_type"]].values.item() == query["level"],
+                "Dataset vertical coordinate differs",
+            )
+        if "layer" in query:
+            for side, endpoint in query["layer"].items():
+                for key, value in endpoint.items():
+                    require(
+                        data.attrs[f"layer_{side}_{key}"] == value,
+                        "Dataset layer metadata differs",
+                    )
         indices = {
             d: 0 for d in data.dims if d not in {"latitude", "longitude", "point"}
         }
@@ -155,7 +184,8 @@ def verify(case, sample, *, mounted=False):
             "source_kind": source["kind"],
             "unit": case["unit"],
             "interval": case["interval"],
-            "definitions": field.report.to_dict()["context"]["definitions"],
+            "report_status": report.overall["status"],
+            "definitions": report.to_dict()["context"]["definitions"],
             **actual,
         }
 
