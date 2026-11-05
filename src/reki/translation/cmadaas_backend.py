@@ -97,6 +97,14 @@ def _table_vertical(mapping, tables, identity, configuration):
         _unsupported(
             "joint service level is missing or ambiguous", reason="mapping_coverage_gap"
         )
+    vertical_keys = {"level_type", "level", "level_unit", "layer"}
+    if not vertical_keys.intersection(
+        applicable[0]["canonical"]
+    ) and vertical_keys.intersection(identity):
+        _unsupported(
+            "this product-specific parameter encodes its vertical identity",
+            reason="mapping_coverage_gap",
+        )
     return applicable[0]["native"]
 
 
@@ -114,7 +122,12 @@ def _unit_offset(source, target, pid, data_code, *, index=None):
                 for hours in (1, 3, 6, 12, 24)
             },
         }
-        and data_code in {"NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB", "NAFP_CEMC_MESO_FOR_1KM"}
+        and data_code
+        in {
+            "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+            "NAFP_CEMC_MESO_FOR_1KM",
+            "NAFP_GRAPES_MESO_FOR_3KM",
+        }
     )
     return (
         0.0 if water_equivalent else _conversion(source, target, pid=pid, index=index)

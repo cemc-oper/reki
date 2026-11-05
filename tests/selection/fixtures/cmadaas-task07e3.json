@@ -1,0 +1,2195 @@
+[
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpAnaEleGridInRectByTimeAndLevel",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_ANA_3KM",
+      "fcstEle": "TOSN",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000"
+    },
+    "id": "S-meso3-ana-row-16-h000",
+    "interval_hours": [
+      0,
+      0
+    ],
+    "mapping_id": "S-meso3-ana-row-16.sf.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.since-initialization",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "m",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpAnaEleGridInRectByTimeAndLevel",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_ANA_3KM",
+      "fcstEle": "TPE",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000"
+    },
+    "id": "S-meso3-ana-row-25-h000",
+    "interval_hours": [
+      0,
+      0
+    ],
+    "mapping_id": "S-meso3-ana-row-25.rain.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.since-initialization",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpAnaEleGridInRectByTimeAndLevel",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_ANA_3KM",
+      "fcstEle": "RCSN",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000"
+    },
+    "id": "S-meso3-ana-row-47-h000",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-ana-row-47.risfc",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.risfc",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "1",
+    "values": [
+      [
+        -0.25,
+        0.0,
+        1.0
+      ],
+      [
+        2.0,
+        -3.0,
+        4.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpAnaEleGridInRectByTimeAndLevel",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_ANA_3KM",
+      "fcstEle": "RCSN_166",
+      "fcstLevel": "0",
+      "levelType": "166",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000"
+    },
+    "id": "S-meso3-ana-row-48-h000",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-ana-row-48.ripbl",
+    "query": {
+      "parameter": "cedarkit.ripbl",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "1",
+    "values": [
+      [
+        -0.25,
+        0.0,
+        1.0
+      ],
+      [
+        2.0,
+        -3.0,
+        4.0
+      ]
+    ]
+  },
+  {
+    "code_table": "WMO GRIB2 4.201",
+    "derived_response": false,
+    "expected_interface": "getNafpAnaEleGridInRectByTimeAndLevel",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_ANA_3KM",
+      "fcstEle": "PRTY",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000"
+    },
+    "id": "S-meso3-ana-row-94-h000",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-ana-row-94.precitype",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.precitype",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "(Code.table.4.201)",
+    "unit": "1",
+    "values": [
+      [
+        0.0,
+        1.0,
+        3.0
+      ],
+      [
+        5.0,
+        8.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpAnaEleGridInRectByTimeAndLevel",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_ANA_3KM",
+      "fcstEle": "PRE",
+      "fcstLevel": "0",
+      "levelType": "10",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000"
+    },
+    "id": "S-meso3-ana-row-97-h000",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-ana-row-97.pwat",
+    "query": {
+      "level_type": "entire_atmosphere",
+      "parameter": "cedarkit.pwat",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "kg/m2",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpAnaEleGridInRectByTimeAndLevel",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_ANA_3KM",
+      "fcstEle": "RAR",
+      "fcstLevel": "850",
+      "levelType": "100",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000"
+    },
+    "id": "S-meso3-ana-row-105-h000",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-ana-row-105.dbz",
+    "query": {
+      "level": 850,
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.dbz",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "dbz",
+    "values": [
+      [
+        -30.0,
+        -30.0,
+        -30.0
+      ],
+      [
+        -30.0,
+        -30.0,
+        -30.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TOSN",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-meso3-fcst-row-27-h006",
+    "interval_hours": [
+      0,
+      6
+    ],
+    "mapping_id": "S-meso3-fcst-row-27.sf.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.since-initialization",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "m",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TOSN",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "24"
+    },
+    "id": "S-meso3-fcst-row-27-h024",
+    "interval_hours": [
+      0,
+      24
+    ],
+    "mapping_id": "S-meso3-fcst-row-27.sf.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.since-initialization",
+      "step": "PT24H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "m",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TPE",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-meso3-fcst-row-30-h006",
+    "interval_hours": [
+      0,
+      6
+    ],
+    "mapping_id": "S-meso3-fcst-row-30.rain.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.since-initialization",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TPE",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "24"
+    },
+    "id": "S-meso3-fcst-row-30-h024",
+    "interval_hours": [
+      0,
+      24
+    ],
+    "mapping_id": "S-meso3-fcst-row-30.rain.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.since-initialization",
+      "step": "PT24H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": "WMO GRIB2 4.201",
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "PRTY",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-meso3-fcst-row-106-h006",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-fcst-row-106.precitype",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.precitype",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "(Code.table.4.201)",
+    "unit": "1",
+    "values": [
+      [
+        0.0,
+        1.0,
+        3.0
+      ],
+      [
+        5.0,
+        8.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": "WMO GRIB2 4.201",
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "PRTY",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "24"
+    },
+    "id": "S-meso3-fcst-row-106-h024",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-fcst-row-106.precitype",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.precitype",
+      "step": "PT24H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "(Code.table.4.201)",
+    "unit": "1",
+    "values": [
+      [
+        0.0,
+        1.0,
+        3.0
+      ],
+      [
+        5.0,
+        8.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "RCSN",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-meso3-fcst-row-114-h006",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-fcst-row-114.risfc",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.risfc",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "1",
+    "values": [
+      [
+        -0.25,
+        0.0,
+        1.0
+      ],
+      [
+        2.0,
+        -3.0,
+        4.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "RCSN",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "24"
+    },
+    "id": "S-meso3-fcst-row-114-h024",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-fcst-row-114.risfc",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.risfc",
+      "step": "PT24H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "1",
+    "values": [
+      [
+        -0.25,
+        0.0,
+        1.0
+      ],
+      [
+        2.0,
+        -3.0,
+        4.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "RAR",
+      "fcstLevel": "850",
+      "levelType": "100",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-meso3-fcst-row-117-h006",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-fcst-row-117.dbz",
+    "query": {
+      "level": 850,
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.dbz",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "dbz",
+    "values": [
+      [
+        -30.0,
+        -30.0,
+        -30.0
+      ],
+      [
+        -30.0,
+        -30.0,
+        -30.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "RAR",
+      "fcstLevel": "850",
+      "levelType": "100",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "24"
+    },
+    "id": "S-meso3-fcst-row-117-h024",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-fcst-row-117.dbz",
+    "query": {
+      "level": 850,
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.dbz",
+      "step": "PT24H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "dbz",
+    "values": [
+      [
+        -30.0,
+        -30.0,
+        -30.0
+      ],
+      [
+        -30.0,
+        -30.0,
+        -30.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "PRE",
+      "fcstLevel": "0",
+      "levelType": "10",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-meso3-fcst-row-118-h006",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-fcst-row-118.pwat",
+    "query": {
+      "level_type": "entire_atmosphere",
+      "parameter": "cedarkit.pwat",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "kg/m2",
+    "values": [
+      [
+        5.794260025024414,
+        5.104259967803955,
+        6.424260139465332
+      ],
+      [
+        5.364260196685791,
+        7.534260272979736,
+        9.324260711669922
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "PRE",
+      "fcstLevel": "0",
+      "levelType": "10",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "24"
+    },
+    "id": "S-meso3-fcst-row-118-h024",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-fcst-row-118.pwat",
+    "query": {
+      "level_type": "entire_atmosphere",
+      "parameter": "cedarkit.pwat",
+      "step": "PT24H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "kg/m2",
+    "values": [
+      [
+        4.667240619659424,
+        4.587240695953369,
+        6.217240810394287
+      ],
+      [
+        4.297240734100342,
+        7.14724063873291,
+        8.347240447998047
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "RCSN_166",
+      "fcstLevel": "0",
+      "levelType": "166",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-meso3-fcst-row-120-h006",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-fcst-row-120.ripbl",
+    "query": {
+      "parameter": "cedarkit.ripbl",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "1",
+    "values": [
+      [
+        -0.25,
+        0.0,
+        1.0
+      ],
+      [
+        2.0,
+        -3.0,
+        4.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "RCSN_166",
+      "fcstLevel": "0",
+      "levelType": "166",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "24"
+    },
+    "id": "S-meso3-fcst-row-120-h024",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-fcst-row-120.ripbl",
+    "query": {
+      "parameter": "cedarkit.ripbl",
+      "step": "PT24H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "1",
+    "values": [
+      [
+        -0.25,
+        0.0,
+        1.0
+      ],
+      [
+        2.0,
+        -3.0,
+        4.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TPE01",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "2"
+    },
+    "id": "S-meso3-fcst-row-33-h002-recent",
+    "interval_hours": [
+      1,
+      2
+    ],
+    "mapping_id": "S-meso3-fcst-row-33.rain.1h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.1h",
+      "step": "PT2H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TPE01",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "36"
+    },
+    "id": "S-meso3-fcst-row-33-h036-recent",
+    "interval_hours": [
+      35,
+      36
+    ],
+    "mapping_id": "S-meso3-fcst-row-33.rain.1h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.1h",
+      "step": "PT36H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TOSN01",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "2"
+    },
+    "id": "S-meso3-fcst-row-34-h002-recent",
+    "interval_hours": [
+      1,
+      2
+    ],
+    "mapping_id": "S-meso3-fcst-row-34.sf.1h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.1h",
+      "step": "PT2H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TOSN01",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "36"
+    },
+    "id": "S-meso3-fcst-row-34-h036-recent",
+    "interval_hours": [
+      35,
+      36
+    ],
+    "mapping_id": "S-meso3-fcst-row-34.sf.1h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.1h",
+      "step": "PT36H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TOSN06",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "7"
+    },
+    "id": "S-meso3-fcst-row-46-h007-recent",
+    "interval_hours": [
+      1,
+      7
+    ],
+    "mapping_id": "S-meso3-fcst-row-46.sf.6h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.6h",
+      "step": "PT7H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TOSN06",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "36"
+    },
+    "id": "S-meso3-fcst-row-46-h036-recent",
+    "interval_hours": [
+      30,
+      36
+    ],
+    "mapping_id": "S-meso3-fcst-row-46.sf.6h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.6h",
+      "step": "PT36H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TOSN03",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "4"
+    },
+    "id": "S-meso3-fcst-row-47-h004-recent",
+    "interval_hours": [
+      1,
+      4
+    ],
+    "mapping_id": "S-meso3-fcst-row-47.sf.3h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.3h",
+      "step": "PT4H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TOSN03",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "36"
+    },
+    "id": "S-meso3-fcst-row-47-h036-recent",
+    "interval_hours": [
+      33,
+      36
+    ],
+    "mapping_id": "S-meso3-fcst-row-47.sf.3h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.3h",
+      "step": "PT36H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TOSN24",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "25"
+    },
+    "id": "S-meso3-fcst-row-48-h025-recent",
+    "interval_hours": [
+      1,
+      25
+    ],
+    "mapping_id": "S-meso3-fcst-row-48.sf.24h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.24h",
+      "step": "PT25H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TOSN24",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "36"
+    },
+    "id": "S-meso3-fcst-row-48-h036-recent",
+    "interval_hours": [
+      12,
+      36
+    ],
+    "mapping_id": "S-meso3-fcst-row-48.sf.24h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.24h",
+      "step": "PT36H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TOSN12",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "13"
+    },
+    "id": "S-meso3-fcst-row-49-h013-recent",
+    "interval_hours": [
+      1,
+      13
+    ],
+    "mapping_id": "S-meso3-fcst-row-49.sf.12h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.12h",
+      "step": "PT13H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TOSN12",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "36"
+    },
+    "id": "S-meso3-fcst-row-49-h036-recent",
+    "interval_hours": [
+      24,
+      36
+    ],
+    "mapping_id": "S-meso3-fcst-row-49.sf.12h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.12h",
+      "step": "PT36H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TPE24",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "24"
+    },
+    "id": "S-meso3-fcst-row-54-h024-recent",
+    "interval_hours": [
+      0,
+      24
+    ],
+    "mapping_id": "S-meso3-fcst-row-54.rain.24h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.24h",
+      "step": "PT24H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TPE24",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "36"
+    },
+    "id": "S-meso3-fcst-row-54-h036-recent",
+    "interval_hours": [
+      12,
+      36
+    ],
+    "mapping_id": "S-meso3-fcst-row-54.rain.24h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.24h",
+      "step": "PT36H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TPE03",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "3"
+    },
+    "id": "S-meso3-fcst-row-57-h003-recent",
+    "interval_hours": [
+      0,
+      3
+    ],
+    "mapping_id": "S-meso3-fcst-row-57.rain.3h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.3h",
+      "step": "PT3H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TPE03",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "36"
+    },
+    "id": "S-meso3-fcst-row-57-h036-recent",
+    "interval_hours": [
+      33,
+      36
+    ],
+    "mapping_id": "S-meso3-fcst-row-57.rain.3h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.3h",
+      "step": "PT36H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TPE12",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "12"
+    },
+    "id": "S-meso3-fcst-row-59-h012-recent",
+    "interval_hours": [
+      0,
+      12
+    ],
+    "mapping_id": "S-meso3-fcst-row-59.rain.12h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.12h",
+      "step": "PT12H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TPE12",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "36"
+    },
+    "id": "S-meso3-fcst-row-59-h036-recent",
+    "interval_hours": [
+      24,
+      36
+    ],
+    "mapping_id": "S-meso3-fcst-row-59.rain.12h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.12h",
+      "step": "PT36H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TPE06",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "6"
+    },
+    "id": "S-meso3-fcst-row-60-h006-recent",
+    "interval_hours": [
+      0,
+      6
+    ],
+    "mapping_id": "S-meso3-fcst-row-60.rain.6h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.6h",
+      "step": "PT6H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TPE06",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "36"
+    },
+    "id": "S-meso3-fcst-row-60-h036-recent",
+    "interval_hours": [
+      30,
+      36
+    ],
+    "mapping_id": "S-meso3-fcst-row-60.rain.6h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.6h",
+      "step": "PT36H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "RCSN",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "24"
+    },
+    "id": "S-meso3-fcst-row-114-h024-recent",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-fcst-row-114.risfc",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.risfc",
+      "step": "PT24H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "1",
+    "values": [
+      [
+        -0.25,
+        0.0,
+        1.0
+      ],
+      [
+        2.0,
+        -3.0,
+        4.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "RCSN_166",
+      "fcstLevel": "0",
+      "levelType": "166",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "24"
+    },
+    "id": "S-meso3-fcst-row-120-h024-recent",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-fcst-row-120.ripbl",
+    "query": {
+      "parameter": "cedarkit.ripbl",
+      "step": "PT24H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "1",
+    "values": [
+      [
+        -0.25,
+        0.0,
+        1.0
+      ],
+      [
+        2.0,
+        -3.0,
+        4.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TOSN",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "36"
+    },
+    "id": "S-meso3-fcst-row-27-h036-recent-direct",
+    "interval_hours": [
+      0,
+      36
+    ],
+    "mapping_id": "S-meso3-fcst-row-27.sf.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.since-initialization",
+      "step": "PT36H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TPE",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "36"
+    },
+    "id": "S-meso3-fcst-row-30-h036-recent-direct",
+    "interval_hours": [
+      0,
+      36
+    ],
+    "mapping_id": "S-meso3-fcst-row-30.rain.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.since-initialization",
+      "step": "PT36H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": "WMO GRIB2 4.201",
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "PRTY",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "36"
+    },
+    "id": "S-meso3-fcst-row-106-h036-recent-direct",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-fcst-row-106.precitype",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.precitype",
+      "step": "PT36H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "1",
+    "values": [
+      [
+        0.0,
+        1.0,
+        3.0
+      ],
+      [
+        5.0,
+        8.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "RAR",
+      "fcstLevel": "850",
+      "levelType": "100",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "36"
+    },
+    "id": "S-meso3-fcst-row-117-h036-recent-direct",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-fcst-row-117.dbz",
+    "query": {
+      "level": 850,
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.dbz",
+      "step": "PT36H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "dbz",
+    "values": [
+      [
+        -30.0,
+        -30.0,
+        -30.0
+      ],
+      [
+        -30.0,
+        -30.0,
+        -30.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "PRE",
+      "fcstLevel": "0",
+      "levelType": "10",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "36"
+    },
+    "id": "S-meso3-fcst-row-118-h036-recent-direct",
+    "interval_hours": null,
+    "mapping_id": "S-meso3-fcst-row-118.pwat",
+    "query": {
+      "level_type": "entire_atmosphere",
+      "parameter": "cedarkit.pwat",
+      "step": "PT36H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "kg/m2",
+    "values": [
+      [
+        3.6409835815429688,
+        2.9209835529327393,
+        3.490983486175537
+      ],
+      [
+        4.960983753204346,
+        6.410983085632324,
+        6.5309834480285645
+      ]
+    ]
+  }
+]

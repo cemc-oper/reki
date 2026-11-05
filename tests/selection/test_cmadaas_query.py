@@ -799,6 +799,10 @@ MESO1_CASES = json.loads(
     (Path(__file__).parent / "fixtures/cmadaas-task07e2.json").read_bytes()
 )
 
+MESO3_CASES = json.loads(
+    (Path(__file__).parent / "fixtures/cmadaas-task07e3.json").read_bytes()
+)
+
 
 def accumulation_client(case):
     def headers(response, params):
@@ -813,7 +817,7 @@ def accumulation_client(case):
 
 
 @pytest.mark.parametrize(
-    "case", ACCUMULATION_CASES + MESO1_CASES, ids=lambda c: c["id"]
+    "case", ACCUMULATION_CASES + MESO1_CASES + MESO3_CASES, ids=lambda c: c["id"]
 )
 def test_reviewed_accumulation_windows_and_instantaneous_identities(case):
     from datetime import datetime, timedelta
@@ -962,3 +966,20 @@ def test_processed_instantaneous_and_cumulative_grids_require_explicit_v4_review
             with pytest.raises(SourceError) as caught:
                 source.sel(case["query"]).one()
             assert caught.value.context["reason"] == "inconsistent_native_metadata"
+
+
+@pytest.mark.parametrize(
+    "vertical",
+    [
+        {"level_type": "surface"},
+        {"layer": {"bottom": {"type": "surface"}, "top": {"type": "atmosphere_top"}}},
+    ],
+)
+def test_meso3_pbl_identity_rejects_an_invented_vertical_selector(vertical):
+    case = next(c for c in MESO3_CASES if c["query"]["parameter"] == "cedarkit.ripbl")
+    client = accumulation_client(case)
+    with from_source(case["source"], client=client) as source:
+        with pytest.raises(QueryError) as caught:
+            source.sel({**case["query"], **vertical}).explain()
+        assert caught.value.context["reason"] == "mapping_coverage_gap"
+    assert not client.calls

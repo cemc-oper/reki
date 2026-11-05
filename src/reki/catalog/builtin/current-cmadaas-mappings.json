@@ -43333,6 +43333,2166 @@
           "PT72H"
         ]
       }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-ana-row-16",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-ana-row-16",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-ana-row-16"
+      ],
+      "id": "S-meso3-ana-row-16.sf.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "TOSN",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-ana-row-25",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-ana-row-25",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-ana-row-25"
+      ],
+      "id": "S-meso3-ana-row-25.rain.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "TPE",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-ana-row-47",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-ana-row-47",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-ana-row-47"
+      ],
+      "id": "S-meso3-ana-row-47.risfc",
+      "native": {
+        "match": {
+          "fcstEle": "RCSN",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "1"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.risfc",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-ana-row-48",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-ana-row-48",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-ana-row-48"
+      ],
+      "id": "S-meso3-ana-row-48.ripbl",
+      "native": {
+        "match": {
+          "fcstEle": "RCSN_166",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "1"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels.meso3-pbl"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.ripbl",
+      "when": {
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-ana-row-94",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-ana-row-94",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-ana-row-94"
+      ],
+      "id": "S-meso3-ana-row-94.precitype",
+      "native": {
+        "match": {
+          "fcstEle": "PRTY",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "(Code table 4.201)"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.precitype",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-ana-row-97",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-ana-row-97",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-ana-row-97"
+      ],
+      "id": "S-meso3-ana-row-97.pwat",
+      "native": {
+        "match": {
+          "fcstEle": "PRE",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.pwat",
+      "when": {
+        "level_type": "entire_atmosphere",
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-ana-row-105",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-ana-row-105",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-ana-row-105"
+      ],
+      "id": "S-meso3-ana-row-105.dbz",
+      "native": {
+        "match": {
+          "fcstEle": "RAR",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "dbz"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.dbz",
+      "when": {
+        "level": [
+          100.0,
+          200.0,
+          300.0,
+          350.0,
+          400.0,
+          450.0,
+          500.0,
+          550.0,
+          600.0,
+          650.0,
+          700.0,
+          750.0,
+          800.0,
+          850.0,
+          900.0,
+          925.0,
+          950.0,
+          975.0,
+          1000.0
+        ],
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-27",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-27",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-fcst-row-27"
+      ],
+      "id": "S-meso3-fcst-row-27.sf.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "TOSN",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT1H",
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-30",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-30",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-fcst-row-30"
+      ],
+      "id": "S-meso3-fcst-row-30.rain.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "TPE",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT1H",
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-106",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-106",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-fcst-row-106"
+      ],
+      "id": "S-meso3-fcst-row-106.precitype",
+      "native": {
+        "match": {
+          "fcstEle": "PRTY",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "(Code table 4.201)"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.precitype",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT1H",
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-114",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-114",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-fcst-row-114"
+      ],
+      "id": "S-meso3-fcst-row-114.risfc",
+      "native": {
+        "match": {
+          "fcstEle": "RCSN",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "1"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.risfc",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT1H",
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-117",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-117",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-fcst-row-117"
+      ],
+      "id": "S-meso3-fcst-row-117.dbz",
+      "native": {
+        "match": {
+          "fcstEle": "RAR",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "dbz"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.dbz",
+      "when": {
+        "level": [
+          100.0,
+          200.0,
+          300.0,
+          350.0,
+          400.0,
+          450.0,
+          500.0,
+          550.0,
+          600.0,
+          650.0,
+          700.0,
+          750.0,
+          800.0,
+          850.0,
+          900.0,
+          925.0,
+          950.0,
+          975.0,
+          1000.0
+        ],
+        "level_type": "pressure",
+        "level_unit": "hPa",
+        "step": [
+          "PT1H",
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-118",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-118",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-fcst-row-118"
+      ],
+      "id": "S-meso3-fcst-row-118.pwat",
+      "native": {
+        "match": {
+          "fcstEle": "PRE",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.pwat",
+      "when": {
+        "level_type": "entire_atmosphere",
+        "step": [
+          "PT1H",
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-120",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-120",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-fcst-row-120"
+      ],
+      "id": "S-meso3-fcst-row-120.ripbl",
+      "native": {
+        "match": {
+          "fcstEle": "RCSN_166",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "1"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels.meso3-pbl"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.ripbl",
+      "when": {
+        "step": [
+          "PT1H",
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-33",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-33",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-fcst-row-33"
+      ],
+      "id": "S-meso3-fcst-row-33.rain.1h",
+      "native": {
+        "match": {
+          "fcstEle": "TPE01",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.1h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-34",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-34",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-fcst-row-34"
+      ],
+      "id": "S-meso3-fcst-row-34.sf.1h",
+      "native": {
+        "match": {
+          "fcstEle": "TOSN01",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf.1h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-46",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-46",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-fcst-row-46"
+      ],
+      "id": "S-meso3-fcst-row-46.sf.6h",
+      "native": {
+        "match": {
+          "fcstEle": "TOSN06",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf.6h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-47",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-47",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-fcst-row-47"
+      ],
+      "id": "S-meso3-fcst-row-47.sf.3h",
+      "native": {
+        "match": {
+          "fcstEle": "TOSN03",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf.3h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-48",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-48",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-fcst-row-48"
+      ],
+      "id": "S-meso3-fcst-row-48.sf.24h",
+      "native": {
+        "match": {
+          "fcstEle": "TOSN24",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf.24h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-49",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-49",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-fcst-row-49"
+      ],
+      "id": "S-meso3-fcst-row-49.sf.12h",
+      "native": {
+        "match": {
+          "fcstEle": "TOSN12",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf.12h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-54",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-54",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-fcst-row-54"
+      ],
+      "id": "S-meso3-fcst-row-54.rain.24h",
+      "native": {
+        "match": {
+          "fcstEle": "TPE24",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.24h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-57",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-57",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-fcst-row-57"
+      ],
+      "id": "S-meso3-fcst-row-57.rain.3h",
+      "native": {
+        "match": {
+          "fcstEle": "TPE03",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.3h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-59",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-59",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-fcst-row-59"
+      ],
+      "id": "S-meso3-fcst-row-59.rain.12h",
+      "native": {
+        "match": {
+          "fcstEle": "TPE12",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.12h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-60",
+        "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-60",
+        "stage1.2/task-07e3/accepted-samples/cases.json#S-meso3-fcst-row-60"
+      ],
+      "id": "S-meso3-fcst-row-60.rain.6h",
+      "native": {
+        "match": {
+          "fcstEle": "TPE06",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.6h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H"
+        ]
+      }
     }
   ],
   "tables": [
@@ -43927,7 +46087,34 @@
           }
         }
       ]
+    },
+    {
+      "applies_to": {
+        "dataset": [
+          "cma_meso_3km_analysis_cmadaas",
+          "cma_meso_3km_forecast_cmadaas"
+        ]
+      },
+      "evidence": [
+        "Product-specific ripbl identity encodes its PBL vertical meaning; no numeric height or whole-atmosphere level is inferred."
+      ],
+      "id": "cmadaas.levels.meso3-pbl",
+      "key_kind": "level_type_and_level",
+      "rows": [
+        {
+          "canonical": {},
+          "evidence": [
+            "stage1.2/task-06h/identity-review.json#meso3:24",
+            "stage1.2/task-07e3/originals.jsonl"
+          ],
+          "id": "pbl-166",
+          "native": {
+            "level": "0",
+            "level_type": "166"
+          }
+        }
+      ]
     }
   ],
-  "version": "4"
+  "version": "5"
 }

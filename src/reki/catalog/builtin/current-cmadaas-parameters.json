@@ -748,6 +748,37 @@
       "unit": "%"
     },
     {
+      "description": "Richardson number",
+      "name": "ri",
+      "parameter_id": "cedarkit.ri",
+      "unit": "1"
+    },
+    {
+      "description": "Planetary boundary layer Richardson number",
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "instantaneous",
+          "over": "time"
+        }
+      },
+      "name": "ripbl",
+      "parameter_id": "cedarkit.ripbl",
+      "parent": "cedarkit.ri"
+    },
+    {
+      "description": "Surface-layer Richardson number",
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "instantaneous",
+          "over": "time"
+        }
+      },
+      "name": "risfc",
+      "parameter_id": "cedarkit.risfc",
+      "parent": "cedarkit.ri"
+    },
+    {
       "fixed_conditions": {
         "level_type": "surface"
       },
@@ -1219,5 +1250,5 @@
       "unit": "m"
     }
   ],
-  "version": "4"
+  "version": "5"
 }
