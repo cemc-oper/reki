@@ -1,0 +1,393 @@
+[
+  {
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "TEM",
+      "fcstLevel": "850",
+      "levelType": "100",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-gfs-fcst-row-23",
+    "mapping_id": "S-gfs-fcst-row-23.t",
+    "query": {
+      "level": 850,
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.t",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "K",
+    "system": "gfs",
+    "unit": "K",
+    "values": [
+      [
+        1.0,
+        2.0,
+        3.0
+      ],
+      [
+        4.0,
+        5.0,
+        6.0
+      ]
+    ]
+  },
+  {
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "SHU",
+      "fcstLevel": "2",
+      "levelType": "103",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-gfs-fcst-row-101",
+    "mapping_id": "S-gfs-fcst-row-101.q",
+    "query": {
+      "level": 2.0,
+      "level_type": "height_above_ground",
+      "level_unit": "m",
+      "parameter": "cedarkit.q",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg/kg",
+    "system": "gfs",
+    "unit": "kg/kg",
+    "values": [
+      [
+        1.0,
+        2.0,
+        3.0
+      ],
+      [
+        4.0,
+        5.0,
+        6.0
+      ]
+    ]
+  },
+  {
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "TCC",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-gfs-fcst-row-11",
+    "mapping_id": "S-gfs-fcst-row-11.tcc",
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "surface"
+        },
+        "top": {
+          "type": "atmosphere_top"
+        }
+      },
+      "parameter": "cedarkit.tcc",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "%",
+    "system": "gfs",
+    "unit": "%",
+    "values": [
+      [
+        1.0,
+        2.0,
+        3.0
+      ],
+      [
+        4.0,
+        5.0,
+        6.0
+      ]
+    ]
+  },
+  {
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_ANA_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "GPH",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "id": "S-gfs-ana-row-79",
+    "mapping_id": "S-gfs-ana-row-79.h.any",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.h.any",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "gpm",
+    "system": "gfs",
+    "unit": "Gpm",
+    "values": [
+      [
+        1.0,
+        2.0,
+        3.0
+      ],
+      [
+        4.0,
+        5.0,
+        6.0
+      ]
+    ]
+  },
+  {
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "PRS",
+      "fcstLevel": "1",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-meso3-fcst-row-107",
+    "mapping_id": "S-meso3-fcst-row-107.ps",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.ps",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "Pa",
+    "system": "meso3",
+    "unit": "Pa",
+    "values": [
+      [
+        1.0,
+        2.0,
+        3.0
+      ],
+      [
+        4.0,
+        5.0,
+        6.0
+      ]
+    ]
+  },
+  {
+    "expected_interface": "getNafpEleGridByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_NWPC_CMAGEPS_GLB_HOR12_D0P5_DIS",
+      "fcstEle": "TEM",
+      "fcstLevel": "850",
+      "fcstMember": 1,
+      "levelType": "100",
+      "time": "20260830000000",
+      "validTime": "6"
+    },
+    "id": "S-geps-pert-row-3",
+    "mapping_id": "S-geps-pert-row-3.t",
+    "query": {
+      "level": 850,
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "member": 1,
+      "parameter": "cedarkit.t",
+      "step": "PT6H",
+      "time": "2026-08-30T00:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_geps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "K",
+    "system": "geps",
+    "unit": "K",
+    "values": [
+      [
+        1.0,
+        2.0,
+        3.0
+      ],
+      [
+        4.0,
+        5.0,
+        6.0
+      ]
+    ]
+  },
+  {
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "SWID",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-gfs-fcst-row-108",
+    "mapping_id": "S-gfs-fcst-row-108.sweatidx",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sweatidx",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "system": "gfs",
+    "unit": "1",
+    "values": [
+      [
+        1.0,
+        2.0,
+        3.0
+      ],
+      [
+        4.0,
+        5.0,
+        6.0
+      ]
+    ]
+  },
+  {
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_ANA_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "TIWV",
+      "fcstLevel": "0",
+      "levelType": "10",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "id": "S-gfs-ana-row-4",
+    "mapping_id": "S-gfs-ana-row-4.tvw",
+    "query": {
+      "level_type": "entire_atmosphere",
+      "parameter": "cedarkit.tvw",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "system": "gfs",
+    "unit": "kg/m2",
+    "values": [
+      [
+        1.0,
+        2.0,
+        3.0
+      ],
+      [
+        4.0,
+        5.0,
+        6.0
+      ]
+    ]
+  },
+  {
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_ANA_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "RVO",
+      "fcstLevel": "850",
+      "levelType": "100",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "id": "S-gfs-ana-row-95",
+    "mapping_id": "S-gfs-ana-row-95.vor",
+    "query": {
+      "level": 850,
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.vor",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "1/s",
+    "system": "gfs",
+    "unit": "s-1",
+    "values": [
+      [
+        1.0,
+        2.0,
+        3.0
+      ],
+      [
+        4.0,
+        5.0,
+        6.0
+      ]
+    ]
+  }
+]

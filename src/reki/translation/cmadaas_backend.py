@@ -10,7 +10,13 @@ from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 import numpy as np
 import xarray as xr
-from cedarkit_query import Query, QueryError, SourceError, expand_queries
+from cedarkit_query import (
+    Query,
+    QueryError,
+    SourceError,
+    constrain_query,
+    expand_queries,
+)
 from cedarkit_query.normalize import _contains, duration_seconds, time_seconds
 
 from reki.catalog.model import thaw
@@ -53,7 +59,7 @@ def _contract(configuration):
         )
     source = thaw(sources[0])
     contract = source["interface_contract"]
-    if contract["version"] != 1 or contract["id"] not in _CONTRACTS:
+    if contract["version"] not in (1, 2) or contract["id"] not in _CONTRACTS:
         _unsupported("CMADaaS interface contract is not registered")
     try:
         zone = ZoneInfo(source["time_zone"])
@@ -113,7 +119,7 @@ def _request(
         _unsupported("service translation rules are incomplete")
     if rules.get("member", {}).get("config", {}).get("table") is not None:
         _unsupported("this interface contract uses direct member numbers")
-    if "native" in identity or "layer" in identity:
+    if "native" in identity:
         _unsupported("this scalar grid contract accepts reviewed named levels")
     if not {"time", "step"} <= identity.keys() or not is_concrete(identity):
         _unsupported("service requests need scalar reference time and forecast hour")
@@ -234,16 +240,22 @@ class CmadaasBackend:
                 compatible = []
                 for (resource, _), mapping in self.mappings.items():
                     applies = mapping["applies_to"]
+                    if mapping["parameter_id"] != identity.get("parameter"):
+                        continue
+                    try:
+                        resolved = constrain_query(identity, mapping["when"]).to_dict()
+                    except QueryError as exc:
+                        if exc.code == "constraint_conflict":
+                            continue
+                        raise
                     if (
-                        mapping["parameter_id"] == identity.get("parameter")
-                        and all(
+                        all(
                             _contains(applies[k], v, "literal")
                             for k, v in scope.items()
                             if k in applies
                         )
-                        and _covered(identity, mapping["when"])
                         and any(
-                            _covered(identity, p)
+                            _covered(resolved, p)
                             for p in configuration.product["provides"]
                             if p["parameter"] == identity["parameter"]
                         )
@@ -252,13 +264,13 @@ class CmadaasBackend:
                             or _covered(identity, {"time": applies["time"]})
                         )
                     ):
-                        compatible.append((resource, mapping))
+                        compatible.append((resource, mapping, resolved))
                 if len(compatible) != 1:
                     _unsupported(
                         "no unique service mapping covers the query",
                         reason="mapping_coverage_gap",
                     )
-                resource, mapping = compatible[0]
+                resource, mapping, identity = compatible[0]
                 tables = {
                     name: table
                     for (owner, name), table in self.tables.items()
@@ -283,6 +295,7 @@ class CmadaasBackend:
                         "valid_time",
                         "level_type",
                         "level",
+                        "layer",
                         "member",
                         "member_role",
                     )
@@ -361,7 +374,14 @@ class CmadaasBackend:
                     ],
                 }
             )
-            expected.append(expected_cells(query.to_dict(), configuration))
+            domains = [expected_cells(b["residual"], configuration) for b in branches]
+            expected.append(
+                None
+                if any(domain is None for domain in domains)
+                else tuple(
+                    {key(cell): cell for domain in domains for cell in domain}.values()
+                )
+            )
         return Plan(tuple(translations), tuple(expected))
 
     def start(self, plan):
@@ -630,12 +650,26 @@ class CmadaasScan:
                     "source_unit"
                 ]
                 raw_unit = array.attrs.get("units")
-                unit_basis = "mapping" if reps and not raw_unit else "response"
+                mapped_unit = reps or (
+                    self.backend.service["interface_contract"]["version"] == 2
+                    and bool(array.attrs["server_request_echo"])
+                )
+                unit_basis = (
+                    "mapping" if mapped_unit and raw_unit in (None, "") else "response"
+                )
                 unit = (
                     _unit(declared)
                     if unit_basis == "mapping"
                     else _unit(
-                        {"kg.m-2": "kg/m2", "gpm": "Gpm"}.get(raw_unit, raw_unit)
+                        {
+                            "kg.m-2": "kg/m2",
+                            "gpm": "Gpm",
+                            "1/s": "s-1",
+                            "Pa.s-1": "Pa/s",
+                            "dBZ": "dbz",
+                            "dB": "dbz",
+                            "Numeric": "1",
+                        }.get(raw_unit, raw_unit)
                     )
                 )
                 if unit != _unit(declared):
@@ -669,7 +703,11 @@ class CmadaasScan:
                     "response_element": array.attrs["response_element"],
                     "server_request_echo": array.attrs["server_request_echo"],
                     "source": {"request": source, "response_sha256": response_sha},
-                    "vertical_definition": {"id": "cmadaas.levels"},
+                    "vertical_definition": {
+                        "id": mapping["native"]["translate"]["vertical"]["config"][
+                            "table"
+                        ]
+                    },
                 }
                 if (
                     definition["fixed_conditions"]
@@ -702,6 +740,6 @@ class CmadaasScan:
                 {
                     "code": "return_metadata_sufficient",
                     "status": "passed",
-                    "message": "Response headers and grid checked against the pinned interface contract; the REPS contract uses the mapped unit when its response header is empty",
+                    "message": "Response headers and grid checked against the pinned interface contract; the reviewed contract records the mapped unit when its response header is empty",
                 },
             ]

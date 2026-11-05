@@ -519,6 +519,45 @@ def _reps_context(tmp_path):
     return {"catalog": {"path": str(path)}}
 
 
+@pytest.mark.parametrize(
+    "version,echo,accepted", [(1, True, False), (2, True, True), (2, False, False)]
+)
+def test_mapped_missing_unit_requires_v2_and_verified_server_echo(
+    tmp_path, version, echo, accepted
+):
+    from reki.catalog import load_resource
+
+    catalog = load_resource(CONTEXT["catalog"], "catalog").value.to_dict()
+    dataset = next(
+        d for d in catalog["datasets"] if d["id"] == GFS["source"]["dataset"]
+    )
+    dataset["products"][0]["sources"][0]["interface_contract"]["version"] = version
+    path = tmp_path / "unit-contract.json"
+    path.write_text(json.dumps(catalog))
+
+    def change(response, params):
+        response.units = ""
+        if echo:
+            response.request.request_params = urlencode(
+                {k.lower(): v for k, v in params.items()}
+            )
+
+    client = ControlledClient(mutate=change)
+    with from_source(
+        GFS["source"], client=client, context={"catalog": {"path": str(path)}}
+    ) as source:
+        selection = source.sel(GFS["query"])
+        if accepted:
+            field = selection.one()
+            assert field.metadata["source_unit_basis"] == "mapping"
+            assert field.metadata["response_unit"] == ""
+            assert field.to_xarray().t2m.attrs["units"] == "K"
+        else:
+            with pytest.raises(SourceError) as caught:
+                selection.one()
+            assert caught.value.context["reason"] == "inconsistent_native_metadata"
+
+
 @pytest.mark.parametrize("reviewed", [False, True])
 def test_reps_missing_headers_and_one_cell_overlap_require_reviewed_contract(
     tmp_path, reviewed
@@ -684,4 +723,63 @@ def test_invalid_service_mapping_fails_before_io(problem, tmp_path):
         pytest.raises(QueryError),
     ):
         source.sel(GFS["query"])
+    assert not client.calls
+
+
+INSTANT_CASES = json.loads(
+    (Path(__file__).parent / "fixtures/cmadaas-task07c.json").read_bytes()
+)
+
+
+@pytest.mark.parametrize("case", INSTANT_CASES, ids=lambda c: c["id"])
+def test_instantaneous_service_verticals_and_unit_provenance(case):
+    def headers(response, params):
+        response.user_element_name = f"{params['fcstEle']}_{params['levelType']}"
+        response.request.request_params = urlencode(params)
+        if case["query"]["parameter"] == "cedarkit.sweatidx":
+            response.units = "Numeric"
+
+    query = dict(case["query"])
+    if query.get("level_type") == "pressure":
+        query.update(level=85000, level_unit="Pa")
+    elif "layer" in query:
+        query.pop("layer")
+    elif query.get("parameter") == "cedarkit.h.any":
+        query.pop("level_type")
+    client = ControlledClient(case, mutate=headers)
+    with from_source(case["source"], client=client) as source:
+        selection = source.sel(query)
+        selection.explain()
+        assert not client.calls
+        field = selection.one(completeness="required")
+        dataset = field.to_xarray()
+        (name,) = dataset.data_vars
+        assert dataset[name].attrs["units"] == case["unit"]
+        assert field.report.overall["status"] == "complete"
+        assert client.calls == [(case["expected_interface"], case["expected_params"])]
+        if "layer" in case["query"]:
+            assert field.identity.to_dict()["layer"] == case["query"]["layer"]
+            assert (
+                field.metadata["vertical_definition"]["id"]
+                == "cmadaas.levels.column-layer"
+            )
+        else:
+            assert field.identity.level_type == case["query"]["level_type"]
+        assert field.metadata["source_unit_basis"] == (
+            "response" if case["source_unit"] or name == "sweatidx" else "mapping"
+        )
+
+
+def test_generic_service_parameter_keeps_vertical_ambiguity_explicit():
+    case = next(c for c in INSTANT_CASES if c["query"]["parameter"] == "cedarkit.q")
+    query = {
+        k: v
+        for k, v in case["query"].items()
+        if k not in {"level_type", "level", "level_unit"}
+    }
+    client = ControlledClient(case)
+    with from_source(case["source"], client=client) as source:
+        with pytest.raises(QueryError) as caught:
+            source.sel(query).explain()
+        assert caught.value.context["reason"] == "mapping_coverage_gap"
     assert not client.calls
