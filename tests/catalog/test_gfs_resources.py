@@ -35,7 +35,7 @@ def test_packaged_gfs_snapshots_bind_frozen_requests(tmp_path):
     assert (plan.product["id"], plan.product["version"]) == ("orig", "current")
     assert plan.layout[0].endswith("-{forecast_hour_label}00.grib2")
     assert plan.parameters["cedarkit.t2m"]["unit"] == "K"
-    assert set(plan.parameters) == {"cedarkit.t", "cedarkit.t2m"}
+    assert {"cedarkit.t", "cedarkit.t2m"} <= plan.parameters.keys()
     expected = prepare_queries(plan.product["expected_domain"], plan.parameters)
     actual = prepare_queries(request.queries, plan.parameters)
     assert actual == expected
@@ -59,9 +59,9 @@ def test_packaged_gfs_snapshots_bind_frozen_requests(tmp_path):
             .to_dict()["context"]
         )
     assert [(r["role"], r["version"]) for r in facts["definitions"]] == [
-        ("catalog", "27"),
-        ("parameter_registry", "11"),
-        ("mappings", "16"),
+        ("catalog", "28"),
+        ("parameter_registry", "12"),
+        ("mappings", "17"),
     ]
     assert all(len(row["sha256"]) == 64 for row in facts["definitions"])
 
@@ -125,13 +125,15 @@ def test_reject_resource_pins_without_fallback(role, field, bad):
         ("unknown_parameter", "/parameter_id"),
         ("wrong_product_version", "/applies_to"),
         ("duplicate_scope", "/native/match"),
-        ("missing_mapping", "/provides/0"),
+        ("missing_mapping", "/provides/"),
     ],
 )
 def test_reject_incompatible_mappings(tmp_path, problem, path):
     plan = plan_source_binding(SOURCE)
     data = plan.mappings[0].to_dict()
-    first = data["mappings"][0]
+    first = next(
+        row for row in data["mappings"] if row["id"] == "t2m.operational.instantaneous"
+    )
     if problem == "unknown_parameter":
         first["parameter_id"] = "unknown"
     elif problem == "wrong_product_version":
@@ -149,7 +151,7 @@ def test_reject_incompatible_mappings(tmp_path, problem, path):
             SOURCE, context={"mappings": {"grib2": {"path": str(resource)}}}
         )
     assert caught.value.code == "invalid_config"
-    assert caught.value.path.endswith(path)
+    assert path in caught.value.path
 
 
 def test_catalog_relative_defaults_take_precedence_over_builtins(tmp_path):
@@ -167,3 +169,28 @@ def test_catalog_relative_defaults_take_precedence_over_builtins(tmp_path):
     assert plan.definitions[1]["reference"]["path"] == str(
         tmp_path / "current-gfs-parameters.json"
     )
+
+
+@pytest.mark.parametrize("dataset,last_member", [("cma_geps", 30), ("cma_reps", 14)])
+def test_reviewed_member_bounds_are_planned_without_discovery(
+    tmp_path, dataset, last_member
+):
+    source = {"kind": "local", "dataset": dataset, "root": str(tmp_path)}
+    with from_source(source) as reader:
+        analysis = (
+            reader.sel(
+                parameter="cedarkit.t2m",
+                **TIME,
+                member={"range": {"start": 0, "end": last_member, "every": 1}},
+            )
+            .explain()
+            .to_dict()["analysis"]
+        )
+        assert analysis["expansion_count"] == last_member + 1
+        assert {
+            branch["residual"]["member_role"]
+            for translation in analysis["translations"]
+            for branch in translation["branches"]
+        } == {"control", "perturbation"}
+        with pytest.raises(QueryError, match="no reviewed GRIB mapping"):
+            reader.sel(parameter="cedarkit.t2m", **TIME, member=last_member + 1)

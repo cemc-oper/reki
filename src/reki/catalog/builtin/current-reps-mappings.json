@@ -1,0 +1,2427 @@
+{
+  "api_version": "cedarkit.mappings/v1",
+  "backend": "grib2",
+  "id": "cedarkit.grib2.cma-reps.current",
+  "mappings": [
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#psl.current.member.forecast.control",
+        "round-36/headers-reps-006-0.json#sha256=852998fc488060115340f0a97898b76303780c69212d989c5c53aa0c6332359b",
+        "round-36/headers-reps-048-0.json#sha256=bb9154af69e95920f5c54d689f34e33ceb146200c36b98a190f361d63580104c"
+      ],
+      "id": "psl.current.member.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 101,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "Pa"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.psl",
+      "when": {
+        "level_type": "mean_sea_level",
+        "member": 0,
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#psl.current.member.forecast.perturbation",
+        "round-36/headers-reps-006-1.json#sha256=2c436f81fe62c6744cf1c273447a2fc1638422f9dea3f8430fa29ea775a5e9a6",
+        "round-36/headers-reps-006-14.json#sha256=2a576a1e18971ebf902289a81e7a82b1d5f4a0cd4b33a3a34bfecdc451361a1e",
+        "round-36/headers-reps-006-2.json#sha256=f9f3078191a10af094b16514ba6cfa8919fade014c3b596c6e74b3010b024c52",
+        "round-36/headers-reps-048-1.json#sha256=7da004acf614a2f1437b89cadc4ce1544c3678a788429613d076f1e375367ec5",
+        "round-36/headers-reps-048-14.json#sha256=2c4747cd1586052ed96b6f996a0fa96a6d186562ad455ce7ad05c5d8e88192f7",
+        "round-36/headers-reps-048-2.json#sha256=0082ede4247ebdebb7fbf7d62f042b963264af981874892dddf0163320d77218"
+      ],
+      "id": "psl.current.member.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 101,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "Pa"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.psl",
+      "when": {
+        "level_type": "mean_sea_level",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#psl.current.member.initial.control",
+        "round-36/headers-reps-000-0.json#sha256=83e1fd1e1c6ab33c0d71e1767e1b460ab78e1a16ed2f61de296f35e9e0eb84b6"
+      ],
+      "id": "psl.current.member.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 101,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "Pa"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.psl",
+      "when": {
+        "level_type": "mean_sea_level",
+        "member": 0,
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#psl.current.member.initial.perturbation",
+        "round-36/headers-reps-000-1.json#sha256=02377009a7f3b20f2a1030c768d1aa07ceda26a88191173e67c8059099659a84",
+        "round-36/headers-reps-000-14.json#sha256=f10efeff0441089dbdb4b8398517924ea36b4f4c195f9847174e4f7035d70aac",
+        "round-36/headers-reps-000-2.json#sha256=4569923becffdd4abbc8aafa3d4232dc6c82f5dacc69cecec4672eba3f5cf7e9"
+      ],
+      "id": "psl.current.member.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 101,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "Pa"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.psl",
+      "when": {
+        "level_type": "mean_sea_level",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#rain.since-initialization.forecast.control",
+        "round-36/headers-reps-006-0.json#sha256=852998fc488060115340f0a97898b76303780c69212d989c5c53aa0c6332359b",
+        "round-36/headers-reps-048-0.json#sha256=bb9154af69e95920f5c54d689f34e33ceb146200c36b98a190f361d63580104c"
+      ],
+      "id": "rain.since-initialization.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "member": 0,
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#rain.since-initialization.forecast.perturbation",
+        "round-36/headers-reps-006-1.json#sha256=2c436f81fe62c6744cf1c273447a2fc1638422f9dea3f8430fa29ea775a5e9a6",
+        "round-36/headers-reps-006-14.json#sha256=2a576a1e18971ebf902289a81e7a82b1d5f4a0cd4b33a3a34bfecdc451361a1e",
+        "round-36/headers-reps-006-2.json#sha256=f9f3078191a10af094b16514ba6cfa8919fade014c3b596c6e74b3010b024c52",
+        "round-36/headers-reps-048-1.json#sha256=7da004acf614a2f1437b89cadc4ce1544c3678a788429613d076f1e375367ec5",
+        "round-36/headers-reps-048-14.json#sha256=2c4747cd1586052ed96b6f996a0fa96a6d186562ad455ce7ad05c5d8e88192f7",
+        "round-36/headers-reps-048-2.json#sha256=0082ede4247ebdebb7fbf7d62f042b963264af981874892dddf0163320d77218"
+      ],
+      "id": "rain.since-initialization.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#rain.since-initialization.initial.control",
+        "round-36/headers-reps-000-0.json#sha256=83e1fd1e1c6ab33c0d71e1767e1b460ab78e1a16ed2f61de296f35e9e0eb84b6"
+      ],
+      "id": "rain.since-initialization.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "member": 0,
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#rain.since-initialization.initial.perturbation",
+        "round-36/headers-reps-000-1.json#sha256=02377009a7f3b20f2a1030c768d1aa07ceda26a88191173e67c8059099659a84",
+        "round-36/headers-reps-000-14.json#sha256=f10efeff0441089dbdb4b8398517924ea36b4f4c195f9847174e4f7035d70aac",
+        "round-36/headers-reps-000-2.json#sha256=4569923becffdd4abbc8aafa3d4232dc6c82f5dacc69cecec4672eba3f5cf7e9"
+      ],
+      "id": "rain.since-initialization.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#rh.current.member.forecast.control",
+        "round-36/headers-reps-006-0.json#sha256=852998fc488060115340f0a97898b76303780c69212d989c5c53aa0c6332359b",
+        "round-36/headers-reps-048-0.json#sha256=bb9154af69e95920f5c54d689f34e33ceb146200c36b98a190f361d63580104c"
+      ],
+      "id": "rh.current.member.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rh",
+      "when": {
+        "level_type": "pressure",
+        "member": 0,
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#rh.current.member.forecast.perturbation",
+        "round-36/headers-reps-006-1.json#sha256=2c436f81fe62c6744cf1c273447a2fc1638422f9dea3f8430fa29ea775a5e9a6",
+        "round-36/headers-reps-006-14.json#sha256=2a576a1e18971ebf902289a81e7a82b1d5f4a0cd4b33a3a34bfecdc451361a1e",
+        "round-36/headers-reps-006-2.json#sha256=f9f3078191a10af094b16514ba6cfa8919fade014c3b596c6e74b3010b024c52",
+        "round-36/headers-reps-048-1.json#sha256=7da004acf614a2f1437b89cadc4ce1544c3678a788429613d076f1e375367ec5",
+        "round-36/headers-reps-048-14.json#sha256=2c4747cd1586052ed96b6f996a0fa96a6d186562ad455ce7ad05c5d8e88192f7",
+        "round-36/headers-reps-048-2.json#sha256=0082ede4247ebdebb7fbf7d62f042b963264af981874892dddf0163320d77218"
+      ],
+      "id": "rh.current.member.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rh",
+      "when": {
+        "level_type": "pressure",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#rh.current.member.initial.control",
+        "round-36/headers-reps-000-0.json#sha256=83e1fd1e1c6ab33c0d71e1767e1b460ab78e1a16ed2f61de296f35e9e0eb84b6"
+      ],
+      "id": "rh.current.member.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rh",
+      "when": {
+        "level_type": "pressure",
+        "member": 0,
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#rh.current.member.initial.perturbation",
+        "round-36/headers-reps-000-1.json#sha256=02377009a7f3b20f2a1030c768d1aa07ceda26a88191173e67c8059099659a84",
+        "round-36/headers-reps-000-14.json#sha256=f10efeff0441089dbdb4b8398517924ea36b4f4c195f9847174e4f7035d70aac",
+        "round-36/headers-reps-000-2.json#sha256=4569923becffdd4abbc8aafa3d4232dc6c82f5dacc69cecec4672eba3f5cf7e9"
+      ],
+      "id": "rh.current.member.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rh",
+      "when": {
+        "level_type": "pressure",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#t.current.member.forecast.control",
+        "round-36/headers-reps-006-0.json#sha256=852998fc488060115340f0a97898b76303780c69212d989c5c53aa0c6332359b",
+        "round-36/headers-reps-048-0.json#sha256=bb9154af69e95920f5c54d689f34e33ceb146200c36b98a190f361d63580104c"
+      ],
+      "id": "t.current.member.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t",
+      "when": {
+        "level_type": "pressure",
+        "member": 0,
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#t.current.member.forecast.perturbation",
+        "round-36/headers-reps-006-1.json#sha256=2c436f81fe62c6744cf1c273447a2fc1638422f9dea3f8430fa29ea775a5e9a6",
+        "round-36/headers-reps-006-14.json#sha256=2a576a1e18971ebf902289a81e7a82b1d5f4a0cd4b33a3a34bfecdc451361a1e",
+        "round-36/headers-reps-006-2.json#sha256=f9f3078191a10af094b16514ba6cfa8919fade014c3b596c6e74b3010b024c52",
+        "round-36/headers-reps-048-1.json#sha256=7da004acf614a2f1437b89cadc4ce1544c3678a788429613d076f1e375367ec5",
+        "round-36/headers-reps-048-14.json#sha256=2c4747cd1586052ed96b6f996a0fa96a6d186562ad455ce7ad05c5d8e88192f7",
+        "round-36/headers-reps-048-2.json#sha256=0082ede4247ebdebb7fbf7d62f042b963264af981874892dddf0163320d77218"
+      ],
+      "id": "t.current.member.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t",
+      "when": {
+        "level_type": "pressure",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#t.current.member.initial.control",
+        "round-36/headers-reps-000-0.json#sha256=83e1fd1e1c6ab33c0d71e1767e1b460ab78e1a16ed2f61de296f35e9e0eb84b6"
+      ],
+      "id": "t.current.member.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t",
+      "when": {
+        "level_type": "pressure",
+        "member": 0,
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#t.current.member.initial.perturbation",
+        "round-36/headers-reps-000-1.json#sha256=02377009a7f3b20f2a1030c768d1aa07ceda26a88191173e67c8059099659a84",
+        "round-36/headers-reps-000-14.json#sha256=f10efeff0441089dbdb4b8398517924ea36b4f4c195f9847174e4f7035d70aac",
+        "round-36/headers-reps-000-2.json#sha256=4569923becffdd4abbc8aafa3d4232dc6c82f5dacc69cecec4672eba3f5cf7e9"
+      ],
+      "id": "t.current.member.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t",
+      "when": {
+        "level_type": "pressure",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#t2m.current.member.forecast.control",
+        "round-36/headers-reps-006-0.json#sha256=852998fc488060115340f0a97898b76303780c69212d989c5c53aa0c6332359b",
+        "round-36/headers-reps-048-0.json#sha256=bb9154af69e95920f5c54d689f34e33ceb146200c36b98a190f361d63580104c"
+      ],
+      "id": "t2m.current.member.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": 0,
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#t2m.current.member.forecast.perturbation",
+        "round-36/headers-reps-006-1.json#sha256=2c436f81fe62c6744cf1c273447a2fc1638422f9dea3f8430fa29ea775a5e9a6",
+        "round-36/headers-reps-006-14.json#sha256=2a576a1e18971ebf902289a81e7a82b1d5f4a0cd4b33a3a34bfecdc451361a1e",
+        "round-36/headers-reps-006-2.json#sha256=f9f3078191a10af094b16514ba6cfa8919fade014c3b596c6e74b3010b024c52",
+        "round-36/headers-reps-048-1.json#sha256=7da004acf614a2f1437b89cadc4ce1544c3678a788429613d076f1e375367ec5",
+        "round-36/headers-reps-048-14.json#sha256=2c4747cd1586052ed96b6f996a0fa96a6d186562ad455ce7ad05c5d8e88192f7",
+        "round-36/headers-reps-048-2.json#sha256=0082ede4247ebdebb7fbf7d62f042b963264af981874892dddf0163320d77218"
+      ],
+      "id": "t2m.current.member.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#t2m.current.member.initial.control",
+        "round-36/headers-reps-000-0.json#sha256=83e1fd1e1c6ab33c0d71e1767e1b460ab78e1a16ed2f61de296f35e9e0eb84b6"
+      ],
+      "id": "t2m.current.member.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": 0,
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#t2m.current.member.initial.perturbation",
+        "round-36/headers-reps-000-1.json#sha256=02377009a7f3b20f2a1030c768d1aa07ceda26a88191173e67c8059099659a84",
+        "round-36/headers-reps-000-14.json#sha256=f10efeff0441089dbdb4b8398517924ea36b4f4c195f9847174e4f7035d70aac",
+        "round-36/headers-reps-000-2.json#sha256=4569923becffdd4abbc8aafa3d4232dc6c82f5dacc69cecec4672eba3f5cf7e9"
+      ],
+      "id": "t2m.current.member.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#u.current.member.forecast.control",
+        "round-36/headers-reps-006-0.json#sha256=852998fc488060115340f0a97898b76303780c69212d989c5c53aa0c6332359b",
+        "round-36/headers-reps-048-0.json#sha256=bb9154af69e95920f5c54d689f34e33ceb146200c36b98a190f361d63580104c"
+      ],
+      "id": "u.current.member.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u",
+      "when": {
+        "level_type": "pressure",
+        "member": 0,
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#u.current.member.forecast.perturbation",
+        "round-36/headers-reps-006-1.json#sha256=2c436f81fe62c6744cf1c273447a2fc1638422f9dea3f8430fa29ea775a5e9a6",
+        "round-36/headers-reps-006-14.json#sha256=2a576a1e18971ebf902289a81e7a82b1d5f4a0cd4b33a3a34bfecdc451361a1e",
+        "round-36/headers-reps-006-2.json#sha256=f9f3078191a10af094b16514ba6cfa8919fade014c3b596c6e74b3010b024c52",
+        "round-36/headers-reps-048-1.json#sha256=7da004acf614a2f1437b89cadc4ce1544c3678a788429613d076f1e375367ec5",
+        "round-36/headers-reps-048-14.json#sha256=2c4747cd1586052ed96b6f996a0fa96a6d186562ad455ce7ad05c5d8e88192f7",
+        "round-36/headers-reps-048-2.json#sha256=0082ede4247ebdebb7fbf7d62f042b963264af981874892dddf0163320d77218"
+      ],
+      "id": "u.current.member.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u",
+      "when": {
+        "level_type": "pressure",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#u.current.member.initial.control",
+        "round-36/headers-reps-000-0.json#sha256=83e1fd1e1c6ab33c0d71e1767e1b460ab78e1a16ed2f61de296f35e9e0eb84b6"
+      ],
+      "id": "u.current.member.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u",
+      "when": {
+        "level_type": "pressure",
+        "member": 0,
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#u.current.member.initial.perturbation",
+        "round-36/headers-reps-000-1.json#sha256=02377009a7f3b20f2a1030c768d1aa07ceda26a88191173e67c8059099659a84",
+        "round-36/headers-reps-000-14.json#sha256=f10efeff0441089dbdb4b8398517924ea36b4f4c195f9847174e4f7035d70aac",
+        "round-36/headers-reps-000-2.json#sha256=4569923becffdd4abbc8aafa3d4232dc6c82f5dacc69cecec4672eba3f5cf7e9"
+      ],
+      "id": "u.current.member.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u",
+      "when": {
+        "level_type": "pressure",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#u10m.current.member.forecast.control",
+        "round-36/headers-reps-006-0.json#sha256=852998fc488060115340f0a97898b76303780c69212d989c5c53aa0c6332359b",
+        "round-36/headers-reps-048-0.json#sha256=bb9154af69e95920f5c54d689f34e33ceb146200c36b98a190f361d63580104c"
+      ],
+      "id": "u10m.current.member.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": 0,
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#u10m.current.member.forecast.perturbation",
+        "round-36/headers-reps-006-1.json#sha256=2c436f81fe62c6744cf1c273447a2fc1638422f9dea3f8430fa29ea775a5e9a6",
+        "round-36/headers-reps-006-14.json#sha256=2a576a1e18971ebf902289a81e7a82b1d5f4a0cd4b33a3a34bfecdc451361a1e",
+        "round-36/headers-reps-006-2.json#sha256=f9f3078191a10af094b16514ba6cfa8919fade014c3b596c6e74b3010b024c52",
+        "round-36/headers-reps-048-1.json#sha256=7da004acf614a2f1437b89cadc4ce1544c3678a788429613d076f1e375367ec5",
+        "round-36/headers-reps-048-14.json#sha256=2c4747cd1586052ed96b6f996a0fa96a6d186562ad455ce7ad05c5d8e88192f7",
+        "round-36/headers-reps-048-2.json#sha256=0082ede4247ebdebb7fbf7d62f042b963264af981874892dddf0163320d77218"
+      ],
+      "id": "u10m.current.member.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#u10m.current.member.initial.control",
+        "round-36/headers-reps-000-0.json#sha256=83e1fd1e1c6ab33c0d71e1767e1b460ab78e1a16ed2f61de296f35e9e0eb84b6"
+      ],
+      "id": "u10m.current.member.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": 0,
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#u10m.current.member.initial.perturbation",
+        "round-36/headers-reps-000-1.json#sha256=02377009a7f3b20f2a1030c768d1aa07ceda26a88191173e67c8059099659a84",
+        "round-36/headers-reps-000-14.json#sha256=f10efeff0441089dbdb4b8398517924ea36b4f4c195f9847174e4f7035d70aac",
+        "round-36/headers-reps-000-2.json#sha256=4569923becffdd4abbc8aafa3d4232dc6c82f5dacc69cecec4672eba3f5cf7e9"
+      ],
+      "id": "u10m.current.member.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#v.current.member.forecast.control",
+        "round-36/headers-reps-006-0.json#sha256=852998fc488060115340f0a97898b76303780c69212d989c5c53aa0c6332359b",
+        "round-36/headers-reps-048-0.json#sha256=bb9154af69e95920f5c54d689f34e33ceb146200c36b98a190f361d63580104c"
+      ],
+      "id": "v.current.member.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v",
+      "when": {
+        "level_type": "pressure",
+        "member": 0,
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#v.current.member.forecast.perturbation",
+        "round-36/headers-reps-006-1.json#sha256=2c436f81fe62c6744cf1c273447a2fc1638422f9dea3f8430fa29ea775a5e9a6",
+        "round-36/headers-reps-006-14.json#sha256=2a576a1e18971ebf902289a81e7a82b1d5f4a0cd4b33a3a34bfecdc451361a1e",
+        "round-36/headers-reps-006-2.json#sha256=f9f3078191a10af094b16514ba6cfa8919fade014c3b596c6e74b3010b024c52",
+        "round-36/headers-reps-048-1.json#sha256=7da004acf614a2f1437b89cadc4ce1544c3678a788429613d076f1e375367ec5",
+        "round-36/headers-reps-048-14.json#sha256=2c4747cd1586052ed96b6f996a0fa96a6d186562ad455ce7ad05c5d8e88192f7",
+        "round-36/headers-reps-048-2.json#sha256=0082ede4247ebdebb7fbf7d62f042b963264af981874892dddf0163320d77218"
+      ],
+      "id": "v.current.member.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v",
+      "when": {
+        "level_type": "pressure",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#v.current.member.initial.control",
+        "round-36/headers-reps-000-0.json#sha256=83e1fd1e1c6ab33c0d71e1767e1b460ab78e1a16ed2f61de296f35e9e0eb84b6"
+      ],
+      "id": "v.current.member.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v",
+      "when": {
+        "level_type": "pressure",
+        "member": 0,
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#v.current.member.initial.perturbation",
+        "round-36/headers-reps-000-1.json#sha256=02377009a7f3b20f2a1030c768d1aa07ceda26a88191173e67c8059099659a84",
+        "round-36/headers-reps-000-14.json#sha256=f10efeff0441089dbdb4b8398517924ea36b4f4c195f9847174e4f7035d70aac",
+        "round-36/headers-reps-000-2.json#sha256=4569923becffdd4abbc8aafa3d4232dc6c82f5dacc69cecec4672eba3f5cf7e9"
+      ],
+      "id": "v.current.member.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v",
+      "when": {
+        "level_type": "pressure",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#v10m.current.member.forecast.control",
+        "round-36/headers-reps-006-0.json#sha256=852998fc488060115340f0a97898b76303780c69212d989c5c53aa0c6332359b",
+        "round-36/headers-reps-048-0.json#sha256=bb9154af69e95920f5c54d689f34e33ceb146200c36b98a190f361d63580104c"
+      ],
+      "id": "v10m.current.member.forecast.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": 0,
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#v10m.current.member.forecast.perturbation",
+        "round-36/headers-reps-006-1.json#sha256=2c436f81fe62c6744cf1c273447a2fc1638422f9dea3f8430fa29ea775a5e9a6",
+        "round-36/headers-reps-006-14.json#sha256=2a576a1e18971ebf902289a81e7a82b1d5f4a0cd4b33a3a34bfecdc451361a1e",
+        "round-36/headers-reps-006-2.json#sha256=f9f3078191a10af094b16514ba6cfa8919fade014c3b596c6e74b3010b024c52",
+        "round-36/headers-reps-048-1.json#sha256=7da004acf614a2f1437b89cadc4ce1544c3678a788429613d076f1e375367ec5",
+        "round-36/headers-reps-048-14.json#sha256=2c4747cd1586052ed96b6f996a0fa96a6d186562ad455ce7ad05c5d8e88192f7",
+        "round-36/headers-reps-048-2.json#sha256=0082ede4247ebdebb7fbf7d62f042b963264af981874892dddf0163320d77218"
+      ],
+      "id": "v10m.current.member.forecast.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#v10m.current.member.initial.control",
+        "round-36/headers-reps-000-0.json#sha256=83e1fd1e1c6ab33c0d71e1767e1b460ab78e1a16ed2f61de296f35e9e0eb84b6"
+      ],
+      "id": "v10m.current.member.initial.control",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": 0,
+        "member_role": "control"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-reps-mappings.json#v10m.current.member.initial.perturbation",
+        "round-36/headers-reps-000-1.json#sha256=02377009a7f3b20f2a1030c768d1aa07ceda26a88191173e67c8059099659a84",
+        "round-36/headers-reps-000-14.json#sha256=f10efeff0441089dbdb4b8398517924ea36b4f4c195f9847174e4f7035d70aac",
+        "round-36/headers-reps-000-2.json#sha256=4569923becffdd4abbc8aafa3d4232dc6c82f5dacc69cecec4672eba3f5cf7e9"
+      ],
+      "id": "v10m.current.member.initial.perturbation",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": [
+            2,
+            3
+          ],
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "member": {
+          "range": {
+            "end": 14,
+            "every": 1,
+            "start": 1
+          }
+        },
+        "member_role": "perturbation"
+      }
+    }
+  ],
+  "tables": [],
+  "version": "7"
+}

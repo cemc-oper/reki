@@ -291,7 +291,12 @@ def test_overlapping_mapping_is_ambiguous_before_scan(dataset, tmp_path):
     source, _, _ = dataset
     with from_source(source) as owner:
         resource = owner.configuration.mappings[0].to_dict()
-    alternate = json.loads(json.dumps(resource["mappings"][0]))
+    base_mapping = next(
+        row
+        for row in resource["mappings"]
+        if row["id"] == "t.operational.instantaneous"
+    )
+    alternate = json.loads(json.dumps(base_mapping))
     alternate["id"] = "overlapping-temperature"
     alternate["native"]["match"].pop("tablesVersion")
     resource["mappings"].append(alternate)

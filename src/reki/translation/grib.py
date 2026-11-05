@@ -257,3 +257,31 @@ def time_fields(meta):
         }
     ).to_dict()
     return result, interval
+
+
+TIME_OPERATIONS = {"mean": 0, "accumulation": 1, "maximum": 2, "minimum": 3}
+
+
+def member_fields(meta, configuration):
+    kind = integer(
+        meta, "typeOfEnsembleForecast", maximum=254, reason="invalid_member_metadata"
+    )
+    number = integer(
+        meta, "perturbationNumber", maximum=254, reason="invalid_member_metadata"
+    )
+    member = configuration.member_numbering.get((kind, number))
+    if member is None:
+        metadata_error(
+            "unmapped_native_value",
+            "member has no reviewed numbering",
+            fields={"typeOfEnsembleForecast": kind, "perturbationNumber": number},
+        )
+    role = configuration.member_role(member)
+    expected = "control" if kind in {0, 1, 5} else "perturbation"
+    if role != expected:
+        metadata_error(
+            "inconsistent_native_metadata",
+            "member role contradicts the native code",
+            fields={"typeOfEnsembleForecast": kind, "perturbationNumber": number},
+        )
+    return {"member": member, "member_role": role}

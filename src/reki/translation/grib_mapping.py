@@ -20,6 +20,7 @@ _RULES = {
     "vertical": "grib.fixed_surfaces",
     "time": "grib.time",
     "statistics": "grib.statistics",
+    "member": "grib.member",
     "unit": "common.value_unit",
 }
 
@@ -103,7 +104,7 @@ def named_branches(query, index, config, mappings):
             rules = row["native"].get("translate", {})
             template = filters.get("productDefinitionTemplateNumber")
             statistics = definition["fixed_conditions"].get("statistics", {})
-            if template == 0 and {"member", "member_role"} & query.keys():
+            if template in {0, 8} and {"member", "member_role"} & query.keys():
                 _error(
                     index,
                     "fixed_condition_conflict",
@@ -113,18 +114,48 @@ def named_branches(query, index, config, mappings):
                 )
             if (
                 any(_RULES.get(duty) != rule["rule"] for duty, rule in rules.items())
-                or template != 0
-                or statistics.get("operation", "instantaneous") != "instantaneous"
+                or template not in {0, 1, 8, 11}
+                or (template in {1, 11} and config.member_numbering is None)
+                or (
+                    template in {8, 11}
+                    and (
+                        statistics.get("operation") not in grib.TIME_OPERATIONS
+                        or statistics.get("period", {}).get("kind")
+                        != "since_initialization"
+                    )
+                )
+                or (
+                    template in {0, 1}
+                    and statistics.get("operation", "instantaneous") != "instantaneous"
+                )
                 or statistics.get("over", "time") != "time"
             ):
                 _error(
                     index,
                     "translation_unavailable",
-                    "named GRIB binding requires a reviewed deterministic instantaneous path",
+                    "named GRIB binding requires a reviewed template, member and statistic path",
                 )
+            if template in {8, 11}:
+                statistical = {
+                    "typeOfStatisticalProcessing": grib.TIME_OPERATIONS[
+                        statistics["operation"]
+                    ],
+                    "forecastTime": 0,
+                }
+                compatible = intersect_scopes(
+                    {"native": {"grib": filters}}, {"native": {"grib": statistical}}
+                )
+                if compatible is None:
+                    native_conflict = True
+                    continue
+                filters = compatible.native["grib"]
+                if selectors:
+                    narrowed = {name: thaw(filters[name]) for name in selectors}
+                    native_conflict |= narrowed != selectors
+                    residual["native"] = {"grib": narrowed}
             declared_unit = rules.get("unit", {}).get("config", {}).get("source_unit")
             if declared_unit is not None:
-                _conversion(declared_unit, definition["unit"], index=index)
+                _conversion(declared_unit, definition["unit"], pid=pid, index=index)
             basis = [
                 {
                     "kind": "mapping",
@@ -181,12 +212,26 @@ def named_branches(query, index, config, mappings):
             field="native/grib",
         )
     if not any(_covered(query, b["residual"]) for b in branches):
+        inputs = [query]
+        if config.member_numbering and "member" not in query:
+            members = sorted(set(config.member_numbering.values()))
+            if "member_role" in query:
+                members = [
+                    m
+                    for m in members
+                    if _contains(query["member_role"], config.member_role(m), "literal")
+                ]
+            if members:
+                inputs = [{**query, "member": members}]
         rows = expand_queries(
-            [query], max_expansion=config.execution_defaults["max_expansion"]
+            inputs, max_expansion=config.execution_defaults["max_expansion"]
         )
+        effective = [row.to_dict() for row in rows]
+        for row in effective:
+            if type(row.get("member")) is int and config.member_numbering:
+                row.setdefault("member_role", config.member_role(row["member"]))
         if not all(
-            any(_covered(row.to_dict(), b["residual"]) for b in branches)
-            for row in rows
+            any(_covered(row, b["residual"]) for b in branches) for row in effective
         ):
             if native_conflict:
                 _error(
@@ -223,17 +268,25 @@ def expected_cells(query, config):
 
 
 def _unit(value):
-    return {"kelvin": "K", "Celsius": "degC", "degrees_Celsius": "degC"}.get(
-        value, value
-    )
+    return {
+        "kelvin": "K",
+        "Celsius": "degC",
+        "degrees_Celsius": "degC",
+        "m s-1": "m/s",
+        "m s**-1": "m/s",
+        "kg m-2": "kg/m2",
+        "kg m**-2": "kg/m2",
+    }.get(value, value)
 
 
-def _conversion(source, target, *, index=None):
+def _conversion(source, target, *, pid, index=None):
     source, target = _unit(source), _unit(target)
     if source == target:
         return 0.0
     if {source, target} == {"K", "degC"}:
         return -273.15 if source == "K" else 273.15
+    if (source, target, pid) == ("kg/m2", "mm", "cedarkit.rain.since-initialization"):
+        return 0.0  # Reviewed water-equivalent precipitation convention.
     if index is not None:
         _error(
             index, "translation_unavailable", "no reviewed GRIB field unit conversion"
@@ -245,7 +298,7 @@ def _conversion(source, target, *, index=None):
 
 def interpret_named(native, candidates, config, mappings):
     """Interpret target candidates strictly and recheck each complete residual."""
-    times, _ = grib.time_fields(native)
+    times, interval = grib.time_fields(native)
     candidates = [
         (qi, branch)
         for qi, branch in candidates
@@ -254,6 +307,8 @@ def interpret_named(native, candidates, config, mappings):
     if not candidates:
         return None, (), {}, 0.0
     identity = {**grib.fixed_surfaces(native), **times, "native": {"grib": native}}
+    if native["productDefinitionTemplateNumber"] in {1, 11}:
+        identity.update(grib.member_fields(native, config))
     selected = []
     for qi, branch in candidates:
         pid = branch["residual"]["parameter"]
@@ -270,6 +325,11 @@ def interpret_named(native, candidates, config, mappings):
         )
     pid = pids.pop()
     definition = config.parameters[pid]
+    if interval is not None and interval["start"] != times["time"]:
+        metadata_error(
+            "fixed_definition_mismatch",
+            "the observed accumulation does not start at the reference time",
+        )
     source_unit = None
     mapping_ids = set()
     for _, branch in selected:
@@ -318,11 +378,13 @@ def interpret_named(native, candidates, config, mappings):
     }
     if "layer" in definition["fixed_conditions"]:
         meta["fixed_layer"] = thaw(definition["fixed_conditions"]["layer"])
+    if interval is not None:
+        meta["statistical_interval"] = interval
     if "description" in definition:
         meta["description"] = definition["description"]
     return (
         {**identity, "parameter": pid},
         tuple((qi, branch["index"]) for qi, branch in selected),
         meta,
-        _conversion(source_unit, target),
+        _conversion(source_unit, target, pid=pid),
     )

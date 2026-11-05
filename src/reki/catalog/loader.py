@@ -9,14 +9,17 @@ from cedarkit_query import Context, QueryError, SourceError, load_value
 
 from .model import LoadedResource, freeze
 
-# Resource defaults are activated only by an explicitly registered dataset.
+# Defaults are activated only by an explicitly registered dataset.
+_BUILTIN_DIR = Path(__file__).with_name("builtin")
 BUILTINS = MappingProxyType(
     {
-        "reki.catalog": Path(__file__).with_name("builtin") / "catalog-v1.json",
-        "reki.parameters.cma-gfs.current": Path(__file__).with_name("builtin")
-        / "current-gfs-parameters.json",
-        "reki.mappings.cma-gfs.current": Path(__file__).with_name("builtin")
-        / "current-gfs-mappings.json",
+        "reki.catalog": _BUILTIN_DIR / "catalog-v1.json",
+        **{
+            f"reki.{kind}.cma-{system}.current": _BUILTIN_DIR
+            / f"current-{system}-{kind}.json"
+            for system in ("gfs", "meso1", "meso3", "tym", "geps", "reps")
+            for kind in ("parameters", "mappings")
+        },
     }
 )
 

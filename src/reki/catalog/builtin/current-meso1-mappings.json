@@ -1,0 +1,1809 @@
+{
+  "api_version": "cedarkit.mappings/v1",
+  "backend": "grib2",
+  "id": "cedarkit.grib2.cma-meso-1km.current",
+  "mappings": [
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#hcc.instantaneous.forecast",
+        "round-36/headers-meso1-006-det.json#sha256=abb672e0f165c7d5cfe9dee9feeb65c45c864894384d691e38e1b04800210306",
+        "round-36/headers-meso1-048-det.json#sha256=5242bdfb6dc83e7402e11b6e0ad6325ea7ada3007058ee3a1b93073b27d82be7"
+      ],
+      "id": "hcc.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 5,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 8
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.hcc",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "surface"
+          },
+          "top": {
+            "type": "atmosphere_top"
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#hcc.instantaneous.initial",
+        "round-36/headers-meso1-000-det.json#sha256=e0faf8ab897cb84845894b1f4ce89e985ffe97605e8e4e5419eca69f35ae698d"
+      ],
+      "id": "hcc.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 5,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 8
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.hcc",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "surface"
+          },
+          "top": {
+            "type": "atmosphere_top"
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#lcc.instantaneous.forecast",
+        "round-36/headers-meso1-006-det.json#sha256=abb672e0f165c7d5cfe9dee9feeb65c45c864894384d691e38e1b04800210306",
+        "round-36/headers-meso1-048-det.json#sha256=5242bdfb6dc83e7402e11b6e0ad6325ea7ada3007058ee3a1b93073b27d82be7"
+      ],
+      "id": "lcc.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 8
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.lcc",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "surface"
+          },
+          "top": {
+            "type": "atmosphere_top"
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#lcc.instantaneous.initial",
+        "round-36/headers-meso1-000-det.json#sha256=e0faf8ab897cb84845894b1f4ce89e985ffe97605e8e4e5419eca69f35ae698d"
+      ],
+      "id": "lcc.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 8
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.lcc",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "surface"
+          },
+          "top": {
+            "type": "atmosphere_top"
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#mcc.instantaneous.forecast",
+        "round-36/headers-meso1-006-det.json#sha256=abb672e0f165c7d5cfe9dee9feeb65c45c864894384d691e38e1b04800210306",
+        "round-36/headers-meso1-048-det.json#sha256=5242bdfb6dc83e7402e11b6e0ad6325ea7ada3007058ee3a1b93073b27d82be7"
+      ],
+      "id": "mcc.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 4,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 8
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.mcc",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "surface"
+          },
+          "top": {
+            "type": "atmosphere_top"
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#mcc.instantaneous.initial",
+        "round-36/headers-meso1-000-det.json#sha256=e0faf8ab897cb84845894b1f4ce89e985ffe97605e8e4e5419eca69f35ae698d"
+      ],
+      "id": "mcc.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 4,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 8
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.mcc",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "surface"
+          },
+          "top": {
+            "type": "atmosphere_top"
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#ps.operational.instantaneous.analysis",
+        "round-36/headers-meso1-000-det.json#sha256=e0faf8ab897cb84845894b1f4ce89e985ffe97605e8e4e5419eca69f35ae698d"
+      ],
+      "id": "ps.operational.instantaneous.analysis",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "Pa"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.ps",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#ps.operational.instantaneous.forecast",
+        "round-36/headers-meso1-006-det.json#sha256=abb672e0f165c7d5cfe9dee9feeb65c45c864894384d691e38e1b04800210306",
+        "round-36/headers-meso1-048-det.json#sha256=5242bdfb6dc83e7402e11b6e0ad6325ea7ada3007058ee3a1b93073b27d82be7"
+      ],
+      "id": "ps.operational.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "Pa"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.ps",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#psl.operational.instantaneous.analysis",
+        "round-36/headers-meso1-000-det.json#sha256=e0faf8ab897cb84845894b1f4ce89e985ffe97605e8e4e5419eca69f35ae698d"
+      ],
+      "id": "psl.operational.instantaneous.analysis",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 101,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "Pa"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.psl",
+      "when": {
+        "level_type": "mean_sea_level"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#psl.operational.instantaneous.forecast",
+        "round-36/headers-meso1-006-det.json#sha256=abb672e0f165c7d5cfe9dee9feeb65c45c864894384d691e38e1b04800210306",
+        "round-36/headers-meso1-048-det.json#sha256=5242bdfb6dc83e7402e11b6e0ad6325ea7ada3007058ee3a1b93073b27d82be7"
+      ],
+      "id": "psl.operational.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 101,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "Pa"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.psl",
+      "when": {
+        "level_type": "mean_sea_level"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#rain.since-initialization.forecast",
+        "round-36/headers-meso1-006-det.json#sha256=abb672e0f165c7d5cfe9dee9feeb65c45c864894384d691e38e1b04800210306",
+        "round-36/headers-meso1-048-det.json#sha256=5242bdfb6dc83e7402e11b6e0ad6325ea7ada3007058ee3a1b93073b27d82be7"
+      ],
+      "id": "rain.since-initialization.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#rain.since-initialization.initial",
+        "round-36/headers-meso1-000-det.json#sha256=e0faf8ab897cb84845894b1f4ce89e985ffe97605e8e4e5419eca69f35ae698d"
+      ],
+      "id": "rain.since-initialization.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "when": {
+        "level_type": "surface"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#rh.operational.instantaneous.analysis",
+        "round-36/headers-meso1-000-det.json#sha256=e0faf8ab897cb84845894b1f4ce89e985ffe97605e8e4e5419eca69f35ae698d"
+      ],
+      "id": "rh.operational.instantaneous.analysis",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rh",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#rh.operational.instantaneous.forecast",
+        "round-36/headers-meso1-006-det.json#sha256=abb672e0f165c7d5cfe9dee9feeb65c45c864894384d691e38e1b04800210306",
+        "round-36/headers-meso1-048-det.json#sha256=5242bdfb6dc83e7402e11b6e0ad6325ea7ada3007058ee3a1b93073b27d82be7"
+      ],
+      "id": "rh.operational.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rh",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#t.operational.instantaneous.analysis",
+        "round-36/headers-meso1-000-det.json#sha256=e0faf8ab897cb84845894b1f4ce89e985ffe97605e8e4e5419eca69f35ae698d"
+      ],
+      "id": "t.operational.instantaneous.analysis",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#t.operational.instantaneous.forecast",
+        "round-36/headers-meso1-006-det.json#sha256=abb672e0f165c7d5cfe9dee9feeb65c45c864894384d691e38e1b04800210306",
+        "round-36/headers-meso1-048-det.json#sha256=5242bdfb6dc83e7402e11b6e0ad6325ea7ada3007058ee3a1b93073b27d82be7"
+      ],
+      "id": "t.operational.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#t2m.operational.instantaneous.analysis",
+        "round-36/headers-meso1-000-det.json#sha256=e0faf8ab897cb84845894b1f4ce89e985ffe97605e8e4e5419eca69f35ae698d"
+      ],
+      "id": "t2m.operational.instantaneous.analysis",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#t2m.operational.instantaneous.forecast",
+        "round-36/headers-meso1-006-det.json#sha256=abb672e0f165c7d5cfe9dee9feeb65c45c864894384d691e38e1b04800210306",
+        "round-36/headers-meso1-048-det.json#sha256=5242bdfb6dc83e7402e11b6e0ad6325ea7ada3007058ee3a1b93073b27d82be7"
+      ],
+      "id": "t2m.operational.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#tcc.instantaneous.forecast",
+        "round-36/headers-meso1-006-det.json#sha256=abb672e0f165c7d5cfe9dee9feeb65c45c864894384d691e38e1b04800210306",
+        "round-36/headers-meso1-048-det.json#sha256=5242bdfb6dc83e7402e11b6e0ad6325ea7ada3007058ee3a1b93073b27d82be7"
+      ],
+      "id": "tcc.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 8
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.tcc",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "surface"
+          },
+          "top": {
+            "type": "atmosphere_top"
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#tcc.instantaneous.initial",
+        "round-36/headers-meso1-000-det.json#sha256=e0faf8ab897cb84845894b1f4ce89e985ffe97605e8e4e5419eca69f35ae698d"
+      ],
+      "id": "tcc.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 6,
+          "parameterNumber": 1,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 8
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "%"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.tcc",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "surface"
+          },
+          "top": {
+            "type": "atmosphere_top"
+          }
+        }
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#u.agl.analysis",
+        "round-36/headers-meso1-000-det.json#sha256=e0faf8ab897cb84845894b1f4ce89e985ffe97605e8e4e5419eca69f35ae698d"
+      ],
+      "id": "u.agl.analysis",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u",
+      "when": {
+        "level": [
+          30,
+          50,
+          70,
+          100,
+          120,
+          140,
+          160,
+          180,
+          200
+        ],
+        "level_type": "height_above_ground"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#u.agl.forecast",
+        "round-36/headers-meso1-006-det.json#sha256=abb672e0f165c7d5cfe9dee9feeb65c45c864894384d691e38e1b04800210306",
+        "round-36/headers-meso1-048-det.json#sha256=5242bdfb6dc83e7402e11b6e0ad6325ea7ada3007058ee3a1b93073b27d82be7"
+      ],
+      "id": "u.agl.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u",
+      "when": {
+        "level": [
+          30,
+          50,
+          70,
+          100,
+          120,
+          140,
+          160,
+          180,
+          200
+        ],
+        "level_type": "height_above_ground"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#u.operational.instantaneous.analysis",
+        "round-36/headers-meso1-000-det.json#sha256=e0faf8ab897cb84845894b1f4ce89e985ffe97605e8e4e5419eca69f35ae698d"
+      ],
+      "id": "u.operational.instantaneous.analysis",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#u.operational.instantaneous.forecast",
+        "round-36/headers-meso1-006-det.json#sha256=abb672e0f165c7d5cfe9dee9feeb65c45c864894384d691e38e1b04800210306",
+        "round-36/headers-meso1-048-det.json#sha256=5242bdfb6dc83e7402e11b6e0ad6325ea7ada3007058ee3a1b93073b27d82be7"
+      ],
+      "id": "u.operational.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#u10m.operational.instantaneous.analysis",
+        "round-36/headers-meso1-000-det.json#sha256=e0faf8ab897cb84845894b1f4ce89e985ffe97605e8e4e5419eca69f35ae698d"
+      ],
+      "id": "u10m.operational.instantaneous.analysis",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#u10m.operational.instantaneous.forecast",
+        "round-36/headers-meso1-006-det.json#sha256=abb672e0f165c7d5cfe9dee9feeb65c45c864894384d691e38e1b04800210306",
+        "round-36/headers-meso1-048-det.json#sha256=5242bdfb6dc83e7402e11b6e0ad6325ea7ada3007058ee3a1b93073b27d82be7"
+      ],
+      "id": "u10m.operational.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#v.agl.analysis",
+        "round-36/headers-meso1-000-det.json#sha256=e0faf8ab897cb84845894b1f4ce89e985ffe97605e8e4e5419eca69f35ae698d"
+      ],
+      "id": "v.agl.analysis",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v",
+      "when": {
+        "level": [
+          30,
+          50,
+          70,
+          100,
+          120,
+          140,
+          160,
+          180,
+          200
+        ],
+        "level_type": "height_above_ground"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#v.agl.forecast",
+        "round-36/headers-meso1-006-det.json#sha256=abb672e0f165c7d5cfe9dee9feeb65c45c864894384d691e38e1b04800210306",
+        "round-36/headers-meso1-048-det.json#sha256=5242bdfb6dc83e7402e11b6e0ad6325ea7ada3007058ee3a1b93073b27d82be7"
+      ],
+      "id": "v.agl.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v",
+      "when": {
+        "level": [
+          30,
+          50,
+          70,
+          100,
+          120,
+          140,
+          160,
+          180,
+          200
+        ],
+        "level_type": "height_above_ground"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#v.operational.instantaneous.analysis",
+        "round-36/headers-meso1-000-det.json#sha256=e0faf8ab897cb84845894b1f4ce89e985ffe97605e8e4e5419eca69f35ae698d"
+      ],
+      "id": "v.operational.instantaneous.analysis",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#v.operational.instantaneous.forecast",
+        "round-36/headers-meso1-006-det.json#sha256=abb672e0f165c7d5cfe9dee9feeb65c45c864894384d691e38e1b04800210306",
+        "round-36/headers-meso1-048-det.json#sha256=5242bdfb6dc83e7402e11b6e0ad6325ea7ada3007058ee3a1b93073b27d82be7"
+      ],
+      "id": "v.operational.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 100,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v",
+      "when": {
+        "level_type": "pressure"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#v10m.operational.instantaneous.analysis",
+        "round-36/headers-meso1-000-det.json#sha256=e0faf8ab897cb84845894b1f4ce89e985ffe97605e8e4e5419eca69f35ae698d"
+      ],
+      "id": "v10m.operational.instantaneous.analysis",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "reki@5023d7e15f231ade263e34ca98728be1b8b9840a:current-meso1-mappings.json#v10m.operational.instantaneous.forecast",
+        "round-36/headers-meso1-006-det.json#sha256=abb672e0f165c7d5cfe9dee9feeb65c45c864894384d691e38e1b04800210306",
+        "round-36/headers-meso1-048-det.json#sha256=5242bdfb6dc83e7402e11b6e0ad6325ea7ada3007058ee3a1b93073b27d82be7"
+      ],
+      "id": "v10m.operational.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 103,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      }
+    }
+  ],
+  "tables": [],
+  "version": "10"
+}
