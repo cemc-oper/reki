@@ -1,0 +1,1406 @@
+[
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_ANA_CMA_TYM_0P09_ASI",
+      "fcstEle": "TPE",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "id": "S-tym-ana-row-9-h000",
+    "interval_hours": [
+      0,
+      0
+    ],
+    "mapping_id": "S-tym-ana-row-9.rain.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.since-initialization",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_ANA_CMA_TYM_0P09_ASI",
+      "fcstEle": "TOSN",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "id": "S-tym-ana-row-15-h000",
+    "interval_hours": [
+      0,
+      0
+    ],
+    "mapping_id": "S-tym-ana-row-15.sf.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.since-initialization",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "m",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_ANA_CMA_TYM_0P09_ASI",
+      "fcstEle": "LPE",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "id": "S-tym-ana-row-41-h000",
+    "interval_hours": [
+      0,
+      0
+    ],
+    "mapping_id": "S-tym-ana-row-41.rainnc.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rainnc.since-initialization",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_ANA_CMA_TYM_0P09_ASI",
+      "fcstEle": "CPE",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "id": "S-tym-ana-row-51-h000",
+    "interval_hours": [
+      0,
+      0
+    ],
+    "mapping_id": "S-tym-ana-row-51.rainc.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rainc.since-initialization",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_ANA_CMA_TYM_0P09_ASI",
+      "fcstEle": "PRE",
+      "fcstLevel": "0",
+      "levelType": "10",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "id": "S-tym-ana-row-69-h000",
+    "interval_hours": null,
+    "mapping_id": "S-tym-ana-row-69.pwat",
+    "query": {
+      "level_type": "entire_atmosphere",
+      "parameter": "cedarkit.pwat",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "kg/m2",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "LPE",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-tym-fcst-row-50-h006",
+    "interval_hours": [
+      0,
+      6
+    ],
+    "mapping_id": "S-tym-fcst-row-50.rainnc.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rainnc.since-initialization",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "PRE",
+      "fcstLevel": "0",
+      "levelType": "10",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-tym-fcst-row-56-h006",
+    "interval_hours": null,
+    "mapping_id": "S-tym-fcst-row-56.pwat",
+    "query": {
+      "level_type": "entire_atmosphere",
+      "parameter": "cedarkit.pwat",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "kg/m2",
+    "values": [
+      [
+        5.336656093597412,
+        5.446655750274658,
+        6.6266560554504395
+      ],
+      [
+        4.426656246185303,
+        7.706655979156494,
+        8.976655960083008
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "CPE",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-tym-fcst-row-62-h006",
+    "interval_hours": [
+      0,
+      6
+    ],
+    "mapping_id": "S-tym-fcst-row-62.rainc.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rainc.since-initialization",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "TOSN",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-tym-fcst-row-82-h006",
+    "interval_hours": [
+      0,
+      6
+    ],
+    "mapping_id": "S-tym-fcst-row-82.sf.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.since-initialization",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "m",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "TPE",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-tym-fcst-row-83-h006",
+    "interval_hours": [
+      0,
+      6
+    ],
+    "mapping_id": "S-tym-fcst-row-83.rain.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.since-initialization",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "LPE03",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "3"
+    },
+    "id": "S-tym-fcst-row-1-h003-recent",
+    "interval_hours": [
+      0,
+      3
+    ],
+    "mapping_id": "S-tym-fcst-row-1.rainnc.3h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rainnc.3h",
+      "step": "PT3H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        3.999999989900971e-06,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "LPE06",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "6"
+    },
+    "id": "S-tym-fcst-row-2-h006-recent",
+    "interval_hours": [
+      0,
+      6
+    ],
+    "mapping_id": "S-tym-fcst-row-2.rainnc.6h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rainnc.6h",
+      "step": "PT6H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "CPE24",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "24"
+    },
+    "id": "S-tym-fcst-row-3-h024-recent",
+    "interval_hours": [
+      0,
+      24
+    ],
+    "mapping_id": "S-tym-fcst-row-3.rainc.24h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rainc.24h",
+      "step": "PT24H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "CPE06",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "6"
+    },
+    "id": "S-tym-fcst-row-4-h006-recent",
+    "interval_hours": [
+      0,
+      6
+    ],
+    "mapping_id": "S-tym-fcst-row-4.rainc.6h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rainc.6h",
+      "step": "PT6H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "CPE12",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "12"
+    },
+    "id": "S-tym-fcst-row-5-h012-recent",
+    "interval_hours": [
+      0,
+      12
+    ],
+    "mapping_id": "S-tym-fcst-row-5.rainc.12h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rainc.12h",
+      "step": "PT12H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "CPE03",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "3"
+    },
+    "id": "S-tym-fcst-row-6-h003-recent",
+    "interval_hours": [
+      0,
+      3
+    ],
+    "mapping_id": "S-tym-fcst-row-6.rainc.3h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rainc.3h",
+      "step": "PT3H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "TOSN12",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "13"
+    },
+    "id": "S-tym-fcst-row-7-h013-recent",
+    "interval_hours": [
+      1,
+      13
+    ],
+    "mapping_id": "S-tym-fcst-row-7.sf.12h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.12h",
+      "step": "PT13H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "TOSN24",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "25"
+    },
+    "id": "S-tym-fcst-row-8-h025-recent",
+    "interval_hours": [
+      1,
+      25
+    ],
+    "mapping_id": "S-tym-fcst-row-8.sf.24h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.24h",
+      "step": "PT25H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "TOSN06",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "7"
+    },
+    "id": "S-tym-fcst-row-9-h007-recent",
+    "interval_hours": [
+      1,
+      7
+    ],
+    "mapping_id": "S-tym-fcst-row-9.sf.6h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.6h",
+      "step": "PT7H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "LPE24",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "24"
+    },
+    "id": "S-tym-fcst-row-10-h024-recent",
+    "interval_hours": [
+      0,
+      24
+    ],
+    "mapping_id": "S-tym-fcst-row-10.rainnc.24h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rainnc.24h",
+      "step": "PT24H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "TOSN03",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "4"
+    },
+    "id": "S-tym-fcst-row-11-h004-recent",
+    "interval_hours": [
+      1,
+      4
+    ],
+    "mapping_id": "S-tym-fcst-row-11.sf.3h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.3h",
+      "step": "PT4H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "LPE12",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "12"
+    },
+    "id": "S-tym-fcst-row-12-h012-recent",
+    "interval_hours": [
+      0,
+      12
+    ],
+    "mapping_id": "S-tym-fcst-row-12.rainnc.12h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rainnc.12h",
+      "step": "PT12H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "TOSN01",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "2"
+    },
+    "id": "S-tym-fcst-row-25-h002-recent",
+    "interval_hours": [
+      1,
+      2
+    ],
+    "mapping_id": "S-tym-fcst-row-25.sf.1h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.1h",
+      "step": "PT2H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "TPE01",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "2"
+    },
+    "id": "S-tym-fcst-row-26-h002-recent",
+    "interval_hours": [
+      1,
+      2
+    ],
+    "mapping_id": "S-tym-fcst-row-26.rain.1h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.1h",
+      "step": "PT2H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        1.9999999949504854e-06,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "LPE01",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "2"
+    },
+    "id": "S-tym-fcst-row-27-h002-recent",
+    "interval_hours": [
+      1,
+      2
+    ],
+    "mapping_id": "S-tym-fcst-row-27.rainnc.1h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rainnc.1h",
+      "step": "PT2H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        1.9999999949504854e-06,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "CPE01",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "2"
+    },
+    "id": "S-tym-fcst-row-29-h002-recent",
+    "interval_hours": [
+      1,
+      2
+    ],
+    "mapping_id": "S-tym-fcst-row-29.rainc.1h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rainc.1h",
+      "step": "PT2H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "TPE24",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "24"
+    },
+    "id": "S-tym-fcst-row-39-h024-recent",
+    "interval_hours": [
+      0,
+      24
+    ],
+    "mapping_id": "S-tym-fcst-row-39.rain.24h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.24h",
+      "step": "PT24H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "TPE06",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "6"
+    },
+    "id": "S-tym-fcst-row-40-h006-recent",
+    "interval_hours": [
+      0,
+      6
+    ],
+    "mapping_id": "S-tym-fcst-row-40.rain.6h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.6h",
+      "step": "PT6H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "TPE12",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "12"
+    },
+    "id": "S-tym-fcst-row-41-h012-recent",
+    "interval_hours": [
+      0,
+      12
+    ],
+    "mapping_id": "S-tym-fcst-row-41.rain.12h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.12h",
+      "step": "PT12H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "TPE03",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "3"
+    },
+    "id": "S-tym-fcst-row-42-h003-recent",
+    "interval_hours": [
+      0,
+      3
+    ],
+    "mapping_id": "S-tym-fcst-row-42.rain.3h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.3h",
+      "step": "PT3H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        3.999999989900971e-06,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  }
+]

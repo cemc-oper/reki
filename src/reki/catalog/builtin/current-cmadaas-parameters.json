@@ -569,6 +569,21 @@
           "operation": "accumulation",
           "over": "time",
           "period": {
+            "duration": "PT1H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "rainc1h",
+      "parameter_id": "cedarkit.rainc.1h",
+      "parent": "cedarkit.rainc"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
             "duration": "PT24H",
             "kind": "trailing"
           }
@@ -660,6 +675,21 @@
       },
       "name": "rainnc12h",
       "parameter_id": "cedarkit.rainnc.12h",
+      "parent": "cedarkit.rainnc"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT1H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "rainnc1h",
+      "parameter_id": "cedarkit.rainnc.1h",
       "parent": "cedarkit.rainnc"
     },
     {
@@ -1250,5 +1280,5 @@
       "unit": "m"
     }
   ],
-  "version": "5"
+  "version": "6"
 }

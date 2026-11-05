@@ -45493,6 +45493,4384 @@
           "PT72H"
         ]
       }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-ana-row-9",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-ana-row-9",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-ana-row-9"
+      ],
+      "id": "S-tym-ana-row-9.rain.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "TPE",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-ana-row-15",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-ana-row-15",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-ana-row-15"
+      ],
+      "id": "S-tym-ana-row-15.sf.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "TOSN",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-ana-row-41",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-ana-row-41",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-ana-row-41"
+      ],
+      "id": "S-tym-ana-row-41.rainnc.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "LPE",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainnc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-ana-row-51",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-ana-row-51",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-ana-row-51"
+      ],
+      "id": "S-tym-ana-row-51.rainc.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "CPE",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-ana-row-69",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-ana-row-69",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-ana-row-69"
+      ],
+      "id": "S-tym-ana-row-69.pwat",
+      "native": {
+        "match": {
+          "fcstEle": "PRE",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.pwat",
+      "when": {
+        "level_type": "entire_atmosphere",
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-50",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-50",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-50"
+      ],
+      "id": "S-tym-fcst-row-50.rainnc.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "LPE",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainnc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT1H",
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-56",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-56",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-56"
+      ],
+      "id": "S-tym-fcst-row-56.pwat",
+      "native": {
+        "match": {
+          "fcstEle": "PRE",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.pwat",
+      "when": {
+        "level_type": "entire_atmosphere",
+        "step": [
+          "PT1H",
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-62",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-62",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-62"
+      ],
+      "id": "S-tym-fcst-row-62.rainc.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "CPE",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainc.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT1H",
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-82",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-82",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-82"
+      ],
+      "id": "S-tym-fcst-row-82.sf.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "TOSN",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT1H",
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-83",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-83",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-83"
+      ],
+      "id": "S-tym-fcst-row-83.rain.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "TPE",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT1H",
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-1",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-1",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-1"
+      ],
+      "id": "S-tym-fcst-row-1.rainnc.3h",
+      "native": {
+        "match": {
+          "fcstEle": "LPE03",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainnc.3h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-2",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-2",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-2"
+      ],
+      "id": "S-tym-fcst-row-2.rainnc.6h",
+      "native": {
+        "match": {
+          "fcstEle": "LPE06",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainnc.6h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-3",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-3",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-3"
+      ],
+      "id": "S-tym-fcst-row-3.rainc.24h",
+      "native": {
+        "match": {
+          "fcstEle": "CPE24",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainc.24h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-4",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-4",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-4"
+      ],
+      "id": "S-tym-fcst-row-4.rainc.6h",
+      "native": {
+        "match": {
+          "fcstEle": "CPE06",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainc.6h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-5",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-5",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-5"
+      ],
+      "id": "S-tym-fcst-row-5.rainc.12h",
+      "native": {
+        "match": {
+          "fcstEle": "CPE12",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainc.12h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-6",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-6",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-6"
+      ],
+      "id": "S-tym-fcst-row-6.rainc.3h",
+      "native": {
+        "match": {
+          "fcstEle": "CPE03",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainc.3h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-7",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-7",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-7"
+      ],
+      "id": "S-tym-fcst-row-7.sf.12h",
+      "native": {
+        "match": {
+          "fcstEle": "TOSN12",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf.12h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-8",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-8",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-8"
+      ],
+      "id": "S-tym-fcst-row-8.sf.24h",
+      "native": {
+        "match": {
+          "fcstEle": "TOSN24",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf.24h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-9",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-9",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-9"
+      ],
+      "id": "S-tym-fcst-row-9.sf.6h",
+      "native": {
+        "match": {
+          "fcstEle": "TOSN06",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf.6h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-10",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-10",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-10"
+      ],
+      "id": "S-tym-fcst-row-10.rainnc.24h",
+      "native": {
+        "match": {
+          "fcstEle": "LPE24",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainnc.24h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-11",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-11",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-11"
+      ],
+      "id": "S-tym-fcst-row-11.sf.3h",
+      "native": {
+        "match": {
+          "fcstEle": "TOSN03",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf.3h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-12",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-12",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-12"
+      ],
+      "id": "S-tym-fcst-row-12.rainnc.12h",
+      "native": {
+        "match": {
+          "fcstEle": "LPE12",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainnc.12h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-25",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-25",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-25"
+      ],
+      "id": "S-tym-fcst-row-25.sf.1h",
+      "native": {
+        "match": {
+          "fcstEle": "TOSN01",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf.1h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-26",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-26",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-26"
+      ],
+      "id": "S-tym-fcst-row-26.rain.1h",
+      "native": {
+        "match": {
+          "fcstEle": "TPE01",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.1h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-27",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-27",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-27"
+      ],
+      "id": "S-tym-fcst-row-27.rainnc.1h",
+      "native": {
+        "match": {
+          "fcstEle": "LPE01",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainnc.1h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-29",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-29",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-29"
+      ],
+      "id": "S-tym-fcst-row-29.rainc.1h",
+      "native": {
+        "match": {
+          "fcstEle": "CPE01",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rainc.1h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT2H",
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-39",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-39",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-39"
+      ],
+      "id": "S-tym-fcst-row-39.rain.24h",
+      "native": {
+        "match": {
+          "fcstEle": "TPE24",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.24h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-40",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-40",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-40"
+      ],
+      "id": "S-tym-fcst-row-40.rain.6h",
+      "native": {
+        "match": {
+          "fcstEle": "TPE06",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.6h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-41",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-41",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-41"
+      ],
+      "id": "S-tym-fcst-row-41.rain.12h",
+      "native": {
+        "match": {
+          "fcstEle": "TPE12",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.12h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-42",
+        "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-42",
+        "stage1.2/task-07e4/accepted-samples/cases.json#S-tym-fcst-row-42"
+      ],
+      "id": "S-tym-fcst-row-42.rain.3h",
+      "native": {
+        "match": {
+          "fcstEle": "TPE03",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "config": {
+              "response_profile": "derived_grid"
+            },
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.rain.3h",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT3H",
+          "PT4H",
+          "PT5H",
+          "PT6H",
+          "PT7H",
+          "PT8H",
+          "PT9H",
+          "PT10H",
+          "PT11H",
+          "PT12H",
+          "PT13H",
+          "PT14H",
+          "PT15H",
+          "PT16H",
+          "PT17H",
+          "PT18H",
+          "PT19H",
+          "PT20H",
+          "PT21H",
+          "PT22H",
+          "PT23H",
+          "PT24H",
+          "PT25H",
+          "PT26H",
+          "PT27H",
+          "PT28H",
+          "PT29H",
+          "PT30H",
+          "PT31H",
+          "PT32H",
+          "PT33H",
+          "PT34H",
+          "PT35H",
+          "PT36H",
+          "PT37H",
+          "PT38H",
+          "PT39H",
+          "PT40H",
+          "PT41H",
+          "PT42H",
+          "PT43H",
+          "PT44H",
+          "PT45H",
+          "PT46H",
+          "PT47H",
+          "PT48H",
+          "PT49H",
+          "PT50H",
+          "PT51H",
+          "PT52H",
+          "PT53H",
+          "PT54H",
+          "PT55H",
+          "PT56H",
+          "PT57H",
+          "PT58H",
+          "PT59H",
+          "PT60H",
+          "PT61H",
+          "PT62H",
+          "PT63H",
+          "PT64H",
+          "PT65H",
+          "PT66H",
+          "PT67H",
+          "PT68H",
+          "PT69H",
+          "PT70H",
+          "PT71H",
+          "PT72H",
+          "PT73H",
+          "PT74H",
+          "PT75H",
+          "PT76H",
+          "PT77H",
+          "PT78H",
+          "PT79H",
+          "PT80H",
+          "PT81H",
+          "PT82H",
+          "PT83H",
+          "PT84H",
+          "PT85H",
+          "PT86H",
+          "PT87H",
+          "PT88H",
+          "PT89H",
+          "PT90H",
+          "PT91H",
+          "PT92H",
+          "PT93H",
+          "PT94H",
+          "PT95H",
+          "PT96H",
+          "PT97H",
+          "PT98H",
+          "PT99H",
+          "PT100H",
+          "PT101H",
+          "PT102H",
+          "PT103H",
+          "PT104H",
+          "PT105H",
+          "PT106H",
+          "PT107H",
+          "PT108H",
+          "PT109H",
+          "PT110H",
+          "PT111H",
+          "PT112H",
+          "PT113H",
+          "PT114H",
+          "PT115H",
+          "PT116H",
+          "PT117H",
+          "PT118H",
+          "PT119H",
+          "PT120H"
+        ]
+      }
     }
   ],
   "tables": [
@@ -46116,5 +50494,5 @@
       ]
     }
   ],
-  "version": "5"
+  "version": "6"
 }

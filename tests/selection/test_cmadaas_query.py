@@ -803,6 +803,10 @@ MESO3_CASES = json.loads(
     (Path(__file__).parent / "fixtures/cmadaas-task07e3.json").read_bytes()
 )
 
+TYM_CASES = json.loads(
+    (Path(__file__).parent / "fixtures/cmadaas-task07e4.json").read_bytes()
+)
+
 
 def accumulation_client(case):
     def headers(response, params):
@@ -817,7 +821,9 @@ def accumulation_client(case):
 
 
 @pytest.mark.parametrize(
-    "case", ACCUMULATION_CASES + MESO1_CASES + MESO3_CASES, ids=lambda c: c["id"]
+    "case",
+    ACCUMULATION_CASES + MESO1_CASES + MESO3_CASES + TYM_CASES,
+    ids=lambda c: c["id"],
 )
 def test_reviewed_accumulation_windows_and_instantaneous_identities(case):
     from datetime import datetime, timedelta

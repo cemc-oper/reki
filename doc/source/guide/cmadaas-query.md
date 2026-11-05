@@ -1,6 +1,6 @@
 # CMADaaS public queries
 
-The default v37 catalog contains twelve live service bindings, retaining task 07B's sixteen mappings and adding 374 instantaneous mappings from task 07C, 26 GFS mappings from task 07E1 and 20 MESO-1KM mappings from task 07E2 and 24 MESO-3KM mappings covering 25 task 07E3 rows, all checked against real responses and original messages. Install `reki[cmadaas]`, configure `~/.config/cedarkit.yaml` or `CEDARKIT_CONFIG`, and select the dataset directly:
+The default v38 catalog contains twelve live service bindings, retaining task 07B's sixteen mappings and adding 374 instantaneous mappings from task 07C, 26 GFS mappings from task 07E1 and 20 MESO-1KM mappings from task 07E2 and 24 MESO-3KM mappings covering 25 task 07E3 rows and 30 TYM mappings from task 07E4, all checked against real responses and original messages. Install `reki[cmadaas]`, configure `~/.config/cedarkit.yaml` or `CEDARKIT_CONFIG`, and select the dataset directly:
 
 ```python
 from reki import from_source
@@ -27,7 +27,7 @@ Use the client candidate bundled with the task 07B acceptance artifacts. It corr
 
 ## Additional instantaneous fields
 
-The public service parameter and mapping resources are version 5. The 99 parameter definitions and 460 mappings cover reviewed pressure levels, surface and 10 m fields, mean sea level, entire-atmosphere columns, cloud layers and diagnostic instantaneous fields. A unique reviewed mapping can supply its fixed vertical identity; an underspecified generic parameter with multiple applicable vertical mappings remains ambiguous. Pressure queries accept equivalent Pa and hPa declarations.
+The public service parameter and mapping resources are version 6. The 101 parameter definitions and 490 mappings cover reviewed pressure levels, surface and 10 m fields, mean sea level, entire-atmosphere columns, cloud layers and diagnostic instantaneous fields. A unique reviewed mapping can supply its fixed vertical identity; an underspecified generic parameter with multiple applicable vertical mappings remains ambiguous. Pressure queries accept equivalent Pa and hPa declarations.
 
 ```python
 with from_source({"kind": "cmadaas", "dataset": "cma_gfs_gmf_cmadaas"}) as source:
@@ -45,7 +45,7 @@ Non-REPS interface contract version 2 allows an empty response unit to use the p
 
 Published level and lead-time domains follow the reviewed per-product historical inventory; the finite expected domains cover only the independently verified cells. Other supported levels, times and members retain `unchecked` completeness. Most mappings retain the fixed 39–41°N, 115–117°E rectangle. The GEPS perturbation pressure TEM mapping explicitly uses the full-grid interface: its accepted 2026-08-30 00 UTC, +6 h, member 1 field is the original 720 × 1440 grid. No implicit cropping or regridding is performed; combining incompatible grids retains the usual structured error.
 
-The remaining 552 historical rows are explicitly assigned to follow-up tasks: service availability (07D), precipitation and accumulation identities (07E4–07E13), time statistics and fluxes (07F), soil and cloud vertical identities (07G), and other diagnostics, units and aliases (07H). PRE and suffixed accumulation codes retain their own review obligations. A service error never becomes an empty accepted field or an expanded coverage claim.
+The remaining 522 historical rows are explicitly assigned to follow-up tasks: service availability (07D), precipitation and accumulation identities (07E5–07E13), time statistics and fluxes (07F), soil and cloud vertical identities (07G), and other diagnostics, units and aliases (07H). PRE and suffixed accumulation codes retain their own review obligations. A service error never becomes an empty accepted field or an expanded coverage claim.
 
 ## GFS accumulation and related identities (task 07E1)
 
@@ -109,6 +109,25 @@ with from_source({"kind": "cmadaas", "dataset": "cma_meso_3km_forecast_cmadaas"}
 ```
 
 Forty-eight finite sample cells are registered. The historical RCSN row with level type 0 and no level/lead domain remains in 07E11 pending corrected service-domain evidence. PRE_5MIN_1 has real service values matching the native one-hour maximum candidate, but its inner five-minute alignment and the model's mm/5min amount-versus-rate declaration remain in 07E12; no simple five-minute accumulation is substituted. PC's hPa product row versus Pa model declaration remains in 07E13. Published mappings do not depend on these follow-ups.
+
+## TYM precipitation windows and precipitable water (task 07E4)
+
+Task 07E4 publishes all 30 TYM historical rows: since-initialization total, convective and large-scale precipitation and snowfall, their 1/3/6/12/24-hour trailing windows, and instantaneous entire-atmosphere precipitable water PRE. The new one-hour identities are `cedarkit.rainc.1h` and `cedarkit.rainnc.1h`. Precipitation retains the reviewed kg/m2-to-mm numeric convention; snowfall retains m; PRE uses `cedarkit.pwat` in kg/m2. Native accumulation windows use the original hour-unit indicators and were checked against both original endpoints, including nonzero regions for every window family.
+
+```python
+with from_source({"kind": "cmadaas", "dataset": "cma_tym_forecast_cmadaas"}) as source:
+    field = source.sel(
+        parameter="cedarkit.rainc.1h",
+        time="2026-11-04T12:00:00Z",
+        step="PT36H",
+    ).one(completeness="required")
+    dataset = field.to_xarray()
+    report = field.report
+```
+
+TYM analysis retains its verified forecast-style interface with `validTime=0`; its four initialization accumulations are zero-length zero fields. Reviewed processed forecast mappings use the existing v4 response profile, preserving empty headers, mapped unit provenance and actual coordinates. Sixty finite samples are registered. Other permitted cells remain `unchecked`; no implicit regridding or substitute lead is used.
+
+All 30 rows have accepted samples. LPE01 and LPE12 at 2026-11-04 12 UTC +36h still return service code -1, although +24h and their tested boundary leads are readable. Those two specific availability cells are independently assigned to task 07E14 and excluded from verified expected domains; Python, JSON and YAML preserve `service_error` with `service_code=-1`. These cells do not count as unaccepted historical rows or gate the published mappings. Catalog v38 contains 490 mappings covering 491 historical rows, with 522 historical rows remaining.
 
 ## Task 07A offline candidate
 
