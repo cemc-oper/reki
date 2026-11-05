@@ -96,6 +96,19 @@
       "unit": "J/kg"
     },
     {
+      "description": "Radar reflectivity",
+      "description_cn": "雷达反射率",
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "instantaneous",
+          "over": "time"
+        }
+      },
+      "name": "dbz",
+      "parameter_id": "cedarkit.dbz",
+      "unit": "dbz"
+    },
+    {
       "description": "Down convective available potential energy",
       "description_cn": "下沉对流有效位能",
       "fixed_conditions": {
@@ -306,6 +319,27 @@
       "unit": "Pa"
     },
     {
+      "fixed_conditions": {
+        "level_type": "entire_atmosphere"
+      },
+      "name": "pwat",
+      "parameter_id": "cedarkit.pwat",
+      "parent": "cedarkit.pwat.any"
+    },
+    {
+      "description": "Precipitable water",
+      "description_cn": "整层可降水量",
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "instantaneous",
+          "over": "time"
+        }
+      },
+      "name": "pwat",
+      "parameter_id": "cedarkit.pwat.any",
+      "unit": "kg/m2"
+    },
+    {
       "description": "Specific humidity",
       "description_cn": "比湿",
       "fixed_conditions": {
@@ -374,9 +408,37 @@
       "unit": "kg/kg"
     },
     {
-      "description": "Convective precipitation over 24 hours",
+      "aliases": [
+        "apcp"
+      ],
       "fixed_conditions": {
         "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time"
+        }
+      },
+      "name": "rain",
+      "parameter_id": "cedarkit.rain",
+      "parent": "cedarkit.rain.any"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT12H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "rain12h",
+      "parameter_id": "cedarkit.rain.12h",
+      "parent": "cedarkit.rain"
+    },
+    {
+      "fixed_conditions": {
         "statistics": {
           "operation": "accumulation",
           "over": "time",
@@ -385,15 +447,194 @@
             "kind": "trailing"
           }
         }
+      },
+      "name": "rain24h",
+      "parameter_id": "cedarkit.rain.24h",
+      "parent": "cedarkit.rain"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT3H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "rain3h",
+      "parameter_id": "cedarkit.rain.3h",
+      "parent": "cedarkit.rain"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT6H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "rain6h",
+      "parameter_id": "cedarkit.rain.6h",
+      "parent": "cedarkit.rain"
+    },
+    {
+      "description": "Total precipitation",
+      "description_cn": "总累计降水",
+      "name": "rain",
+      "parameter_id": "cedarkit.rain.any",
+      "unit": "mm"
+    },
+    {
+      "aliases": [
+        "APCP",
+        "rain-since-initialization"
+      ],
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "rain",
+      "parameter_id": "cedarkit.rain.since-initialization",
+      "parent": "cedarkit.rain"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time"
+        }
+      },
+      "name": "rainc",
+      "parameter_id": "cedarkit.rainc",
+      "parent": "cedarkit.rainc.any"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT12H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "rainc12h",
+      "parameter_id": "cedarkit.rainc.12h",
+      "parent": "cedarkit.rainc"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT24H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "rainc24h",
+      "parameter_id": "cedarkit.rainc.24h",
+      "parent": "cedarkit.rainc"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT3H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "rainc3h",
+      "parameter_id": "cedarkit.rainc.3h",
+      "parent": "cedarkit.rainc"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT6H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "rainc6h",
+      "parameter_id": "cedarkit.rainc.6h",
+      "parent": "cedarkit.rainc"
+    },
+    {
+      "description": "Convective precipitation",
+      "fixed_conditions": {
+        "level_type": "surface"
       },
       "name": "rainc",
       "parameter_id": "cedarkit.rainc.any",
       "unit": "mm"
     },
     {
-      "description": "Large-scale precipitation over 24 hours",
+      "aliases": [
+        "ACPCP",
+        "rainc-since-initialization"
+      ],
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "rainc",
+      "parameter_id": "cedarkit.rainc.since-initialization",
+      "parent": "cedarkit.rainc"
+    },
+    {
       "fixed_conditions": {
         "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time"
+        }
+      },
+      "name": "rainnc",
+      "parameter_id": "cedarkit.rainnc",
+      "parent": "cedarkit.rainnc.any"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT12H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "rainnc12h",
+      "parameter_id": "cedarkit.rainnc.12h",
+      "parent": "cedarkit.rainnc"
+    },
+    {
+      "fixed_conditions": {
         "statistics": {
           "operation": "accumulation",
           "over": "time",
@@ -403,9 +644,66 @@
           }
         }
       },
+      "name": "rainnc24h",
+      "parameter_id": "cedarkit.rainnc.24h",
+      "parent": "cedarkit.rainnc"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT3H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "rainnc3h",
+      "parameter_id": "cedarkit.rainnc.3h",
+      "parent": "cedarkit.rainnc"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT6H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "rainnc6h",
+      "parameter_id": "cedarkit.rainnc.6h",
+      "parent": "cedarkit.rainnc"
+    },
+    {
+      "description": "Large scale precipitation",
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
       "name": "rainnc",
       "parameter_id": "cedarkit.rainnc.any",
       "unit": "mm"
+    },
+    {
+      "aliases": [
+        "NCPCP",
+        "rainnc-since-initialization"
+      ],
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "rainnc",
+      "parameter_id": "cedarkit.rainnc.since-initialization",
+      "parent": "cedarkit.rainnc"
     },
     {
       "description": "Relative humidity",
@@ -440,6 +738,103 @@
       "name": "sd",
       "parameter_id": "cedarkit.sd.any",
       "unit": "m"
+    },
+    {
+      "aliases": [
+        "snow",
+        "asnow"
+      ],
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time"
+        }
+      },
+      "name": "sf",
+      "parameter_id": "cedarkit.sf",
+      "parent": "cedarkit.sf.any"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT12H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "sf12h",
+      "parameter_id": "cedarkit.sf.12h",
+      "parent": "cedarkit.sf"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT24H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "sf24h",
+      "parameter_id": "cedarkit.sf.24h",
+      "parent": "cedarkit.sf"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT3H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "sf3h",
+      "parameter_id": "cedarkit.sf.3h",
+      "parent": "cedarkit.sf"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "duration": "PT6H",
+            "kind": "trailing"
+          }
+        }
+      },
+      "name": "sf6h",
+      "parameter_id": "cedarkit.sf.6h",
+      "parent": "cedarkit.sf"
+    },
+    {
+      "description": "Snowfall",
+      "description_cn": "累计降雪量",
+      "name": "sf",
+      "parameter_id": "cedarkit.sf.any",
+      "unit": "m"
+    },
+    {
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "sf",
+      "parameter_id": "cedarkit.sf.since-initialization",
+      "parent": "cedarkit.sf"
     },
     {
       "fixed_conditions": {
@@ -780,5 +1175,5 @@
       "unit": "m"
     }
   ],
-  "version": "2"
+  "version": "3"
 }

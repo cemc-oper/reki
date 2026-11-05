@@ -1,0 +1,320 @@
+[
+  {
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_ANA_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "TPE",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "id": "S-gfs-ana-row-2-h000",
+    "interval_hours": [
+      0,
+      0
+    ],
+    "mapping_id": "S-gfs-ana-row-2.rain.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.since-initialization",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "mm",
+    "values": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "TPE",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "48"
+    },
+    "id": "S-gfs-fcst-row-19-h048",
+    "interval_hours": [
+      0,
+      48
+    ],
+    "mapping_id": "S-gfs-fcst-row-19.rain.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rain.since-initialization",
+      "step": "PT48H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "mm",
+    "values": [
+      [
+        -1.6e-05,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "TOSN",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "48"
+    },
+    "id": "S-gfs-fcst-row-20-h048",
+    "interval_hours": [
+      0,
+      48
+    ],
+    "mapping_id": "S-gfs-fcst-row-20.sf.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.sf.since-initialization",
+      "step": "PT48H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "m",
+    "unit": "m",
+    "values": [
+      [
+        -1.6e-05,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "PRE",
+      "fcstLevel": "0",
+      "levelType": "10",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-gfs-fcst-row-130-h006",
+    "interval_hours": null,
+    "mapping_id": "S-gfs-fcst-row-130.pwat",
+    "query": {
+      "level_type": "entire_atmosphere",
+      "parameter": "cedarkit.pwat",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "kg/m2",
+    "values": [
+      [
+        -1.6e-05,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "RAR",
+      "fcstLevel": "850",
+      "levelType": "100",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "id": "S-gfs-fcst-row-123-h006",
+    "interval_hours": null,
+    "mapping_id": "S-gfs-fcst-row-123.dbz",
+    "query": {
+      "level": 850,
+      "level_type": "pressure",
+      "level_unit": "hPa",
+      "parameter": "cedarkit.dbz",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "dbz",
+    "values": [
+      [
+        -1.6e-05,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "CPE03",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "48"
+    },
+    "id": "S-gfs-fcst-row-54-h048-recent",
+    "interval_hours": [
+      45,
+      48
+    ],
+    "mapping_id": "S-gfs-fcst-row-54.rainc.3h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rainc.3h",
+      "step": "PT48H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        -1.6e-05,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "derived_response": true,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "LPE24",
+      "fcstLevel": "0",
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104120000",
+      "validTime": "27"
+    },
+    "id": "S-gfs-fcst-row-63-h027-availability",
+    "interval_hours": [
+      3,
+      27
+    ],
+    "mapping_id": "S-gfs-fcst-row-63.rainnc.24h",
+    "query": {
+      "level_type": "surface",
+      "parameter": "cedarkit.rainnc.24h",
+      "step": "PT27H",
+      "time": "2026-11-04T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        -1.6e-05,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  }
+]

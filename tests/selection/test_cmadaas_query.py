@@ -18,7 +18,7 @@ from cedarkit_query import (
 from nuwe_cmadaas.music import CMADaaSClient, GridArray2D
 from nuwe_cmadaas.music.data import RequestInfo
 from reki import from_source
-from reki.catalog import plan_source_binding
+from reki.catalog import load_catalog, plan_source_binding
 from requests import Timeout
 
 CASES = json.loads(
@@ -520,7 +520,14 @@ def _reps_context(tmp_path):
 
 
 @pytest.mark.parametrize(
-    "version,echo,accepted", [(1, True, False), (2, True, True), (2, False, False)]
+    "version,echo,accepted",
+    [
+        (1, True, False),
+        (2, True, True),
+        (2, False, False),
+        (3, True, True),
+        (3, False, False),
+    ],
 )
 def test_mapped_missing_unit_requires_v2_and_verified_server_echo(
     tmp_path, version, echo, accepted
@@ -783,3 +790,100 @@ def test_generic_service_parameter_keeps_vertical_ambiguity_explicit():
             source.sel(query).explain()
         assert caught.value.context["reason"] == "mapping_coverage_gap"
     assert not client.calls
+
+
+ACCUMULATION_CASES = json.loads(
+    (Path(__file__).parent / "fixtures/cmadaas-task07e1.json").read_bytes()
+)
+
+
+def accumulation_client(case):
+    def headers(response, params):
+        response.request.request_params = urlencode(params)
+        if case["derived_response"]:
+            response.request.request_params = response.user_element_name = (
+                response.units
+            ) = ""
+            response.lats = [38.938, 40.938]
+
+    return ControlledClient(case, mutate=headers)
+
+
+@pytest.mark.parametrize("case", ACCUMULATION_CASES, ids=lambda c: c["id"])
+def test_reviewed_accumulation_windows_and_instantaneous_identities(case):
+    from datetime import datetime, timedelta
+
+    client = accumulation_client(case)
+    with from_source(case["source"], client=client) as source:
+        selection = source.sel(case["query"])
+        selection.explain()
+        assert not client.calls
+        field = selection.one(completeness="required")
+        dataset = field.to_xarray()
+        (name,) = dataset.data_vars
+        np.testing.assert_array_equal(
+            dataset[name].values.reshape(2, 3), case["values"]
+        )
+        assert dataset[name].attrs["units"] == case["unit"]
+        assert client.calls == [(case["expected_interface"], case["expected_params"])]
+        if case["interval_hours"] is not None:
+            time = datetime.fromisoformat(case["query"]["time"])
+            assert field.metadata["statistical_interval"] == {
+                key: (time + timedelta(hours=hour)).isoformat().replace("+00:00", "Z")
+                for key, hour in zip(
+                    ("start", "end"), case["interval_hours"], strict=True
+                )
+            }
+        else:
+            assert "statistical_interval" not in field.metadata
+        if case["derived_response"]:
+            assert field.metadata["response_profile"] == "derived_grid"
+            assert field.metadata["source_unit_basis"] == "mapping"
+            assert field.metadata["response_unit"] == ""
+            assert field.metadata["server_request_echo"] == {}
+            assert dataset.latitude.values.tolist() == [38.938, 40.938]
+        assert field.report.overall["status"] == "complete"
+
+
+def test_zero_length_service_accumulation_rejects_nonzero_data():
+    case = ACCUMULATION_CASES[0]
+    client = accumulation_client({**case, "values": [[0.0, 0.0, 0.0], [0.0, 1.0, 0.0]]})
+    with from_source(case["source"], client=client) as source:
+        with pytest.raises(SourceError) as caught:
+            source.sel(case["query"]).one()
+        assert caught.value.context["reason"] == "invalid_statistics_metadata"
+
+
+@pytest.mark.parametrize("problem", ["contract", "period", "equivalent_period"])
+def test_derived_profile_and_period_are_explicit_reviewed_contracts(problem, tmp_path):
+    case = next(c for c in ACCUMULATION_CASES if c["derived_response"])
+    client = accumulation_client(case)
+    config = plan_source_binding(case["source"], client=client)
+    context = {}
+    if problem == "contract":
+        catalog = load_catalog().to_dict()
+        dataset = next(
+            d for d in catalog["datasets"] if d["id"] == case["source"]["dataset"]
+        )
+        dataset["products"][0]["sources"][0]["interface_contract"]["version"] = 2
+        path = tmp_path / "catalog.json"
+        path.write_text(json.dumps(catalog))
+        context["catalog"] = {"path": str(path)}
+    else:
+        mappings = config.mappings[0].to_dict()
+        row = next(r for r in mappings["mappings"] if r["id"] == case["mapping_id"])
+        row["native"]["translate"]["statistics"]["config"]["period"] = {
+            "kind": "trailing",
+            "duration": "PT6H" if problem == "period" else "PT180M",
+        }
+        path = tmp_path / "mappings.json"
+        path.write_text(json.dumps(mappings))
+        context["mappings"] = {"cmadaas": {"path": str(path)}}
+    with from_source(case["source"], context=context, client=client) as source:
+        if problem == "equivalent_period":
+            source.sel(case["query"]).one(completeness="required")
+        else:
+            with pytest.raises(QueryError) as caught:
+                source.sel(case["query"]).explain()
+            assert caught.value.code == "invalid_config"
+            assert not client.calls

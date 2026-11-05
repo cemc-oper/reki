@@ -1,6 +1,6 @@
 # CMADaaS public queries
 
-The default v34 catalog contains twelve live service bindings, retaining task 07B's sixteen mappings and adding 374 original-message-verified instantaneous mappings from task 07C. Install `reki[cmadaas]`, configure `~/.config/cedarkit.yaml` or `CEDARKIT_CONFIG`, and select the dataset directly:
+The default v35 catalog contains twelve live service bindings, retaining task 07B's sixteen mappings and adding 374 original-message-verified instantaneous mappings from task 07C. Install `reki[cmadaas]`, configure `~/.config/cedarkit.yaml` or `CEDARKIT_CONFIG`, and select the dataset directly:
 
 ```python
 from reki import from_source
@@ -27,7 +27,7 @@ Use the client candidate bundled with the task 07B acceptance artifacts. It corr
 
 ## Additional instantaneous fields
 
-The public service parameter and mapping resources are version 2. The 64 parameter definitions and 390 mappings cover reviewed pressure levels, surface and 10 m fields, mean sea level, entire-atmosphere columns, cloud layers and diagnostic instantaneous fields. A unique reviewed mapping can supply its fixed vertical identity; an underspecified generic parameter with multiple applicable vertical mappings remains ambiguous. Pressure queries accept equivalent Pa and hPa declarations.
+The public service parameter and mapping resources are version 3. The 93 parameter definitions and 416 mappings cover reviewed pressure levels, surface and 10 m fields, mean sea level, entire-atmosphere columns, cloud layers and diagnostic instantaneous fields. A unique reviewed mapping can supply its fixed vertical identity; an underspecified generic parameter with multiple applicable vertical mappings remains ambiguous. Pressure queries accept equivalent Pa and hPa declarations.
 
 ```python
 with from_source({"kind": "cmadaas", "dataset": "cma_gfs_gmf_cmadaas"}) as source:
@@ -46,6 +46,27 @@ Non-REPS interface contract version 2 allows an empty response unit to use the p
 Published level and lead-time domains follow the reviewed per-product historical inventory; the finite expected domains cover only the independently verified cells. Other supported levels, times and members retain `unchecked` completeness. Most mappings retain the fixed 39–41°N, 115–117°E rectangle. The GEPS perturbation pressure TEM mapping explicitly uses the full-grid interface: its accepted 2026-08-30 00 UTC, +6 h, member 1 field is the original 720 × 1440 grid. No implicit cropping or regridding is performed; combining incompatible grids retains the usual structured error.
 
 The remaining 623 historical rows are explicitly assigned to follow-up tasks: service availability (07D), precipitation and accumulation identities (07E), time statistics and fluxes (07F), soil and cloud vertical identities (07G), and other diagnostics, units and aliases (07H). PRE and suffixed accumulation codes retain their own review obligations. A service error never becomes an empty accepted field or an expanded coverage claim.
+
+## GFS accumulation and related identities (task 07E1)
+
+Task 07E1 adds 26 mappings from its 28 GFS historical rows. PRE binds to `cedarkit.pwat`, the instantaneous entire-atmosphere precipitable-water field in kg/m2; RAR binds to `cedarkit.dbz` on pressure levels. Unsuffixed TPE, CPE, LPE and TOSN use explicit since-initialization identities. Snowfall retains the service's m values and the original message's m parameter units. The two PC rows remain outside named mappings pending Pa/hPa evidence; their native pressure carrier remains readable.
+
+```python
+with from_source({"kind": "cmadaas", "dataset": "cma_gfs_gmf_cmadaas"}) as source:
+    field = source.sel(
+        parameter="cedarkit.rain.24h",
+        time="2026-11-04T12:00:00Z",
+        step="PT48H",
+    ).one(completeness="required")
+    dataset = field.to_xarray()
+    interval = field.metadata["statistical_interval"]  # 2026-11-05 12 UTC to 2026-11-06 12 UTC
+```
+
+The 3, 6, 12 and 24-hour suffix mappings use trailing-window identities such as `cedarkit.rainc.3h` and `cedarkit.sf.12h`. The reported interval begins at the valid time minus the declared duration. Since-initialization intervals begin at the reference time, including a verified zero-length initialization field; nonzero values in such a field are rejected. Reviewed precipitation water-equivalent conversion from kg/m2 to mm preserves values. Small negative differences caused by source packing are retained.
+
+Only suffix mappings explicitly marked `cmadaas.statistics_fields.config.response_profile="derived_grid"` use the GFS forecast version 3 response contract. That profile preserves empty names, units and server echoes, takes source units from the reviewed mapping, and accepts neighboring boundary grid points. Request association and mapping provenance remain explicit. Reported coordinates retain the service's rounded values; the original-message audit uses their declared 0.001-degree precision bound. Ordinary mappings keep their existing header and echo checks. A mapping may declare its accumulation operation and period for a generic family; a declaration conflicting with fixed parameter semantics fails. The two earlier CPE/LPE mappings retain their original 24-hour results and stable IDs.
+
+Fifty-three additional finite sample cells are registered. Suffix fields were available in the 2026-11-04 cycle while the tested 2026-11-02 requests had no records; LPE24 was available at some leads while +48 h failed. Historical permissible domains and finite verified availability remain separate. This candidate requires `cedarkit-query>=0.2.1,<0.3` for the explicit operation, period and response-profile mapping configuration.
 
 ## Task 07A offline candidate
 

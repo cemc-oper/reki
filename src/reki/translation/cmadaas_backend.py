@@ -59,7 +59,7 @@ def _contract(configuration):
         )
     source = thaw(sources[0])
     contract = source["interface_contract"]
-    if contract["version"] not in (1, 2) or contract["id"] not in _CONTRACTS:
+    if contract["version"] not in (1, 2, 3) or contract["id"] not in _CONTRACTS:
         _unsupported("CMADaaS interface contract is not registered")
     try:
         zone = ZoneInfo(source["time_zone"])
@@ -98,12 +98,118 @@ def _unit_offset(source, target, pid, data_code, *, index=None):
     water_equivalent = (
         source == "kg/m2"
         and target == "mm"
-        and pid in {"cedarkit.rainc.any", "cedarkit.rainnc.any"}
+        and pid
+        in {
+            "cedarkit.rainc.any",
+            "cedarkit.rainnc.any",
+            *{
+                f"cedarkit.{kind}.{hours}h"
+                for kind in ("rain", "rainc", "rainnc")
+                for hours in (3, 6, 12, 24)
+            },
+        }
         and data_code == "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB"
     )
     return (
         0.0 if water_equivalent else _conversion(source, target, pid=pid, index=index)
     )
+
+
+def _derived_response(mapping, service, definition):
+    profile = (
+        mapping["native"]["translate"]["statistics"]
+        .get("config", {})
+        .get("response_profile")
+    )
+    if profile is None:
+        return False
+    stats = definition["fixed_conditions"].get("statistics", {})
+    period = stats.get("period") or mapping["native"]["translate"]["statistics"].get(
+        "config", {}
+    ).get("period", {})
+    if (
+        profile != "derived_grid"
+        or service["interface_contract"]
+        != {"id": "cmadaas.grid-array2d.forecast", "version": 3}
+        or stats.get("operation") != "accumulation"
+        or stats.get("over") != "time"
+        or period.get("kind") != "trailing"
+    ):
+        raise QueryError(
+            "invalid_config",
+            "/mappings",
+            "derived response profile needs the reviewed v3 trailing-accumulation contract",
+        )
+    return True
+
+
+def _statistical_interval(definition, mapping, identity, analysis):
+    stats = definition["fixed_conditions"].get("statistics", {})
+    rule_config = mapping["native"]["translate"]["statistics"].get("config", {})
+    operation = rule_config.get("operation")
+    if operation is not None:
+        if (
+            stats.get("operation", operation) != operation
+            or stats.get("over", "time") != "time"
+        ):
+            raise QueryError(
+                "invalid_config",
+                "/mappings",
+                "service operation conflicts with the parameter definition",
+            )
+        stats = {**stats, "operation": operation, "over": "time"}
+    declared = (
+        mapping["native"]["translate"]["statistics"].get("config", {}).get("period")
+    )
+    fixed = stats.get("period")
+    if (
+        declared is not None
+        and fixed is not None
+        and (
+            declared["kind"] != fixed["kind"]
+            or declared["kind"] == "trailing"
+            and duration_seconds(declared["duration"])
+            != duration_seconds(fixed["duration"])
+        )
+    ):
+        raise QueryError(
+            "invalid_config",
+            "/mappings",
+            "service period conflicts with the parameter definition",
+        )
+    if stats.get("operation", "instantaneous") == "instantaneous":
+        if declared is not None:
+            raise QueryError(
+                "invalid_config",
+                "/mappings",
+                "instantaneous field cannot declare an accumulation period",
+            )
+        return None
+    if (
+        analysis
+        or stats.get("operation") != "accumulation"
+        or stats.get("over") != "time"
+    ):
+        _unsupported("service statistics need a reviewed accumulation contract")
+    period = fixed or declared or {}
+    if period.get("kind") == "since_initialization":
+        start = identity["time"]
+    elif period.get("kind") == "trailing":
+        duration = duration_seconds(period["duration"])
+        if (
+            duration <= 0
+            or duration % 3600
+            or duration > duration_seconds(identity["step"])
+        ):
+            _unsupported(
+                "service accumulation needs positive whole hours within the forecast lead"
+            )
+        start = datetime.fromtimestamp(
+            int(time_seconds(identity["valid_time"]) - duration), UTC
+        ).strftime("%Y-%m-%dT%H:%M:%SZ")
+    else:
+        _unsupported("service accumulation needs an explicit reviewed time window")
+    return {"start": start, "end": identity["valid_time"]}
 
 
 def _request(
@@ -167,18 +273,8 @@ def _request(
         service["data_code"],
         index=index,
     )
-    stats = definition["fixed_conditions"].get("statistics", {})
-    operation = stats.get("operation", "instantaneous")
-    if operation != "instantaneous":
-        period = stats.get("period", {})
-        if (
-            analysis
-            or operation != "accumulation"
-            or stats.get("over") != "time"
-            or period.get("kind") != "trailing"
-            or duration_seconds(period["duration"]) != seconds
-        ):
-            _unsupported("service accumulation needs the reviewed complete time window")
+    _statistical_interval(definition, mapping, identity, analysis)
+    _derived_response(mapping, service, definition)
     date = datetime.fromtimestamp(int(instant), UTC).astimezone(zone)
     params = {
         "dataCode": service["data_code"],
@@ -452,7 +548,7 @@ def _server_echo(response, params):
     return {name: echo[name.lower()] for name in params}
 
 
-def _acquire(client, candidate, *, reps=False):
+def _acquire(client, candidate, *, reps=False, derived=False):
     from requests import RequestException, Timeout
 
     interface = candidate["interface_id"]
@@ -543,7 +639,7 @@ def _acquire(client, candidate, *, reps=False):
         )
     echo = _server_echo(response, params)
     accepted = {params["fcstEle"], f"{params['fcstEle']}_{params['levelType']}"}
-    if reps:
+    if reps or derived:
         accepted.add("")
     if response.user_element_name not in accepted:
         metadata_error(
@@ -577,7 +673,11 @@ def _acquire(client, candidate, *, reps=False):
             (array.latitude.values, params["minLat"], params["maxLat"]),
             (array.longitude.values, params["minLon"], params["maxLon"]),
         ):
-            pad = float(np.max(np.abs(np.diff(axis)))) if reps and len(axis) > 1 else 0
+            pad = (
+                float(np.max(np.abs(np.diff(axis))))
+                if (reps or derived) and len(axis) > 1
+                else 0
+            )
             if not (
                 np.all(axis >= float(low) - pad)
                 and np.all(axis <= float(high) + pad)
@@ -635,24 +735,33 @@ class CmadaasScan:
             links = tuple((qi, b["index"]) for qi, b in entries)
             for qi, bi in links:
                 yield BranchEvent(qi, bi, "started")
+            pid = branch["residual"]["parameter"]
+            resource = branch["basis"][0]
+            mapping = self.backend.mappings[
+                resource["resource"]["id"], resource["mapping"]
+            ]
+            definition = self.backend.configuration.parameters[pid]
+            derived = _derived_response(mapping, self.backend.service, definition)
             reps = self.backend.service["interface_contract"]["id"] == _REPS_CONTRACT
             array = _acquire(
-                self.backend.client, thaw(branch["candidate_filter"]), reps=reps
+                self.backend.client,
+                thaw(branch["candidate_filter"]),
+                reps=reps,
+                derived=derived,
             )
             if array is not None:
                 identity = thaw(branch["residual"])
-                pid = identity["parameter"]
-                resource = branch["basis"][0]
-                mapping = self.backend.mappings[
-                    resource["resource"]["id"], resource["mapping"]
-                ]
                 declared = mapping["native"]["translate"]["unit"]["config"][
                     "source_unit"
                 ]
                 raw_unit = array.attrs.get("units")
-                mapped_unit = reps or (
-                    self.backend.service["interface_contract"]["version"] == 2
-                    and bool(array.attrs["server_request_echo"])
+                mapped_unit = (
+                    reps
+                    or derived
+                    or (
+                        self.backend.service["interface_contract"]["version"] in (2, 3)
+                        and bool(array.attrs["server_request_echo"])
+                    )
                 )
                 unit_basis = (
                     "mapping" if mapped_unit and raw_unit in (None, "") else "response"
@@ -678,7 +787,6 @@ class CmadaasScan:
                         "response unit contradicts the mapping",
                         fields={"units": raw_unit},
                     )
-                definition = self.backend.configuration.parameters[pid]
                 target = _unit(definition["unit"])
                 offset = _unit_offset(
                     unit, target, pid, branch["candidate_filter"]["dataCode"]
@@ -700,6 +808,7 @@ class CmadaasScan:
                     "mapping_ids": [mapping["id"]],
                     "response_unit": raw_unit,
                     "source_unit_basis": unit_basis,
+                    **({"response_profile": "derived_grid"} if derived else {}),
                     "response_element": array.attrs["response_element"],
                     "server_request_echo": array.attrs["server_request_echo"],
                     "source": {"request": source, "response_sha256": response_sha},
@@ -709,16 +818,18 @@ class CmadaasScan:
                         ]
                     },
                 }
-                if (
-                    definition["fixed_conditions"]
-                    .get("statistics", {})
-                    .get("operation")
-                    == "accumulation"
-                ):
-                    metadata["statistical_interval"] = {
-                        "start": identity["time"],
-                        "end": identity["valid_time"],
-                    }
+                interval = _statistical_interval(
+                    definition, mapping, identity, self.backend.analysis
+                )
+                if interval is not None:
+                    if interval["start"] == interval["end"] and np.any(
+                        np.isfinite(array.values) & (array.values != 0)
+                    ):
+                        metadata_error(
+                            "invalid_statistics_metadata",
+                            "zero-length accumulation contains nonzero values",
+                        )
+                    metadata["statistical_interval"] = interval
                 values = array + offset if offset else array
                 yield FieldReference(
                     "cmadaas:" + sha256(key(source).encode()).hexdigest(),
