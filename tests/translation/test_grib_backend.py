@@ -2,6 +2,7 @@
 
 import json
 from dataclasses import replace
+from datetime import datetime, timedelta
 import numpy as np
 import pytest
 import eccodes
@@ -420,3 +421,86 @@ def test_unregistered_native_codes_and_unmasked_sentinel_are_readable(configured
         assert "level_type" not in field.identity.to_dict()
         array = field.to_xarray(rename="raw").raw
         np.testing.assert_array_equal(array.values.ravel(), [-3.5, 9999, 0, 7])
+
+
+@pytest.fixture(params=[0, 6, 48])
+def slhf_record(request):
+    hour = request.param
+    end = datetime(2026, 1, 1) + timedelta(hours=hour)
+    return {
+        "productDefinitionTemplateNumber": 8,
+        "centre": 38,
+        "subCentre": 0,
+        "tablesVersion": 4,
+        "localTablesVersion": 0,
+        "productionStatusOfProcessedData": 0,
+        "significanceOfReferenceTime": int(hour > 0),
+        "typeOfProcessedData": int(hour > 0),
+        "typeOfGeneratingProcess": 2 if hour else 0,
+        "discipline": 0,
+        "parameterCategory": 0,
+        "parameterNumber": 10,
+        "typeOfFirstFixedSurface": 1,
+        "typeOfSecondFixedSurface": 255,
+        "indicatorOfUnitOfTimeRange": 1,
+        "forecastTime": 0,
+        "typeOfStatisticalProcessing": 1,
+        "numberOfTimeRange": 1,
+        "typeOfTimeIncrement": 2,
+        "indicatorOfUnitForTimeRange": 1,
+        "lengthOfTimeRange": hour,
+        "yearOfEndOfOverallTimeInterval": end.year,
+        "monthOfEndOfOverallTimeInterval": end.month,
+        "dayOfEndOfOverallTimeInterval": end.day,
+        "hourOfEndOfOverallTimeInterval": end.hour,
+        "minuteOfEndOfOverallTimeInterval": 0,
+        "secondOfEndOfOverallTimeInterval": 0,
+        "values": np.array([-120.0, 0.0, 80.0, 1000.0]) if hour else np.zeros(4),
+    }
+
+
+def test_slhf_accumulated_energy_preserves_native_values(write_grib, slhf_record):
+    path = write_grib(records=[slhf_record])
+    hour = slhf_record["lengthOfTimeRange"]
+    with from_source(
+        {"kind": "file", "path": str(path), "dataset": "cma_gfs_gmf"}
+    ) as source:
+        field = source.sel(
+            parameter="cedarkit.slhf", time="2026-01-01T00:00:00Z", step=f"PT{hour}H"
+        ).one()
+        assert field.metadata["statistical_interval"] == {
+            "start": "2026-01-01T00:00:00Z",
+            "end": field.identity.valid_time,
+        }
+        assert field.metadata["source_unit"] == "J/m2"
+        assert field.metadata["native_fields"]["units"] == "J m**-2"
+        assert field.metadata["native_fields"]["parameterUnits"] == "W m-2"
+        dataset = field.to_xarray()
+        assert dataset.slhf.attrs["units"] == "J/m2"
+        assert dataset.slhf.dims == ("time", "step", "latitude", "longitude")
+        np.testing.assert_array_equal(
+            dataset.slhf.values.reshape(-1), slhf_record["values"]
+        )
+        native = source.sel(
+            native={"grib": {"parameterCategory": 0, "parameterNumber": 10}}
+        ).one()
+        np.testing.assert_array_equal(
+            native.to_xarray(rename="raw").raw.values, dataset.slhf.values
+        )
+
+
+def test_slhf_unit_review_rejects_a_different_carrier(write_grib, slhf_record, tmp_path):
+    path = write_grib(records=[{**slhf_record, "parameterNumber": 11}])
+    source = {"kind": "file", "path": str(path), "dataset": "cma_gfs_gmf"}
+    mappings = plan_source_binding(source).mappings[0].to_dict()
+    for mapping in mappings["mappings"]:
+        if mapping["parameter_id"] == "cedarkit.slhf":
+            mapping["native"]["match"]["parameterNumber"] = 11
+    resource = tmp_path / "slhf-mappings.json"
+    resource.write_text(json.dumps(mappings))
+    with from_source(
+        source, context={"mappings": {"grib2": {"path": str(resource)}}}
+    ) as owner:
+        with pytest.raises(SourceError) as caught:
+            owner.sel(parameter="cedarkit.slhf").one()
+    assert caught.value.context["reason"] == "inconsistent_native_metadata"

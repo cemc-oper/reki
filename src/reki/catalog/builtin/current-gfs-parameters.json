@@ -1236,7 +1236,24 @@
       "name": "qflx",
       "parameter_id": "cedarkit.qflx",
       "unit": "g/(cm.hPa.s)"
+    },
+    {
+      "description": "Surface latent heat accumulated since initialization",
+      "description_cn": "地表潜热从起报累计",
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "slhf",
+      "parameter_id": "cedarkit.slhf",
+      "unit": "J/m2"
     }
   ],
-  "version": "14"
+  "version": "15"
 }

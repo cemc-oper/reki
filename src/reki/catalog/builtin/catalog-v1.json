@@ -13,14 +13,14 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-gfs.current",
-          "sha256": "fed280b3de91dee9369cdedf29a52050b0550ef5bfac6854a0b148c035ec5ad7",
-          "version": "19"
+          "sha256": "734070cae6dcf55f9ad874ad4b22d6960c9056a92133e11bee8ed7b15b347bf8",
+          "version": "20"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cma-gfs.current",
-        "sha256": "d82b22c845529cd39a9de920fb450936969a3ef7ca8a191d773216a39fe30642",
-        "version": "14"
+        "sha256": "a22af7aaacbbde834c007b2ab95343985c141bebd460734d5bcb02e8bd54b21d",
+        "version": "15"
       },
       "products": [
         {
@@ -29,7 +29,8 @@
             "doc/2026-11-04-stage1.2-query-reki/task-01-coverage.md#首批本地-gfs-两例",
             "stage1.2/task-06/orig-batch-1",
             "stage1.2/task-06B/deterministic-orig",
-            "stage1.2/task-06b-priority-carriers/qflx"
+            "stage1.2/task-06b-priority-carriers/qflx",
+            "stage1.2/task-06I/gfs-slhf"
           ],
           "expected_domain": [
             {
@@ -551,6 +552,10 @@
             {
               "level_type": "pressure",
               "parameter": "cedarkit.qflx"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.slhf"
             }
           ],
           "scope": {},
@@ -3128,5 +3133,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "31"
+  "version": "32"
 }

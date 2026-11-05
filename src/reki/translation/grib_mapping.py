@@ -381,14 +381,18 @@ def _observed_units(native, scope, pid, declared):
         and (decoder, table) == ("Numeric", "Numeric")
     ):
         return {declared}
-    if carrier in {(8, 0, 4, 9, 1, 255), (8, 0, 4, 9, 8, 255)} and (
-        pid in {"cedarkit.gsw.since-initialization", "cedarkit.tsw.since-initialization"}
-        and declared == "J/m2"
+    integrated_energy = {
+        "cedarkit.gsw.since-initialization": (8, 0, 4, 9, 1, 255),
+        "cedarkit.tsw.since-initialization": (8, 0, 4, 9, 8, 255),
+        "cedarkit.slhf": (8, 0, 0, 10, 1, 255),
+    }
+    if carrier == integrated_energy.get(pid) and (
+        declared == "J/m2"
         and dataset == "cma_gfs_gmf"
         and native.get("typeOfStatisticalProcessing") == 1
         and (decoder, table) == ("J/m2", "W m-2")
     ):
-        return {declared}  # The base table describes the flux, not its integral.
+        return {declared}  # The reviewed producer declares accumulated energy.
     if carrier == (0, 0, 7, 8, 103, 103) and (
         pid in {"cedarkit.srh-0-1000", "cedarkit.srh-0-3000"}
         and declared == "m2/s2"
