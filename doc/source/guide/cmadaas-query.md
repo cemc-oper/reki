@@ -1,6 +1,6 @@
 # CMADaaS public queries
 
-The default v38 catalog contains twelve live service bindings, retaining task 07B's sixteen mappings and adding 374 instantaneous mappings from task 07C, 26 GFS mappings from task 07E1 and 20 MESO-1KM mappings from task 07E2 and 24 MESO-3KM mappings covering 25 task 07E3 rows and 30 TYM mappings from task 07E4, all checked against real responses and original messages. Install `reki[cmadaas]`, configure `~/.config/cedarkit.yaml` or `CEDARKIT_CONFIG`, and select the dataset directly:
+The default v39 catalog contains twelve live service bindings, retaining task 07B's sixteen mappings and adding 374 instantaneous mappings from task 07C, 26 GFS mappings from task 07E1 and 20 MESO-1KM mappings from task 07E2 and 24 MESO-3KM mappings covering 25 task 07E3 rows and 30 TYM mappings from task 07E4 and two GEPS precipitable-water mappings from task 07E5, all checked against real responses and original messages. Install `reki[cmadaas]`, configure `~/.config/cedarkit.yaml` or `CEDARKIT_CONFIG`, and select the dataset directly:
 
 ```python
 from reki import from_source
@@ -27,7 +27,7 @@ Use the client candidate bundled with the task 07B acceptance artifacts. It corr
 
 ## Additional instantaneous fields
 
-The public service parameter and mapping resources are version 6. The 101 parameter definitions and 490 mappings cover reviewed pressure levels, surface and 10 m fields, mean sea level, entire-atmosphere columns, cloud layers and diagnostic instantaneous fields. A unique reviewed mapping can supply its fixed vertical identity; an underspecified generic parameter with multiple applicable vertical mappings remains ambiguous. Pressure queries accept equivalent Pa and hPa declarations.
+The public service parameter resource remains version 6 and the mapping resource is version 7. The 101 parameter definitions and 492 mappings cover reviewed pressure levels, surface and 10 m fields, mean sea level, entire-atmosphere columns, cloud layers and diagnostic instantaneous fields. A unique reviewed mapping can supply its fixed vertical identity; an underspecified generic parameter with multiple applicable vertical mappings remains ambiguous. Pressure queries accept equivalent Pa and hPa declarations.
 
 ```python
 with from_source({"kind": "cmadaas", "dataset": "cma_gfs_gmf_cmadaas"}) as source:
@@ -180,3 +180,33 @@ Python, JSON and YAML use the same source, context and Query contract:
 Only the finite independent fixture cells have verified expected domains. Other permitted selectors retain `unchecked` completeness; `required` cannot infer a product-wide domain from successful requests. Reports preserve resource pins, candidate interface parameters, request association checks and checked response units and grids. MUSIC copies time, lead, vertical and member metadata from the request. Reports label this evidence `request_association`. Actual server provenance requires separate online evidence.
 
 Execution validates the returned element, unit, grid dimensions and coordinates before assembly. Empty grids produce no field, while a grid containing only missing values remains a field. Truncated payloads, service errors, authentication failures and timeouts retain separate structured errors. Duplicate branches share one scalar request during an execution. Repeated terminal operations reacquire responses.
+
+
+## GEPS precipitable water and member identity (task 07E5)
+
+Task 07E5 publishes the control and perturbation PRE rows as instantaneous entire-atmosphere `cedarkit.pwat` in kg/m2. These two new mappings explicitly cover the verified 2026-11-02 12 UTC reference cycle and the historical six-hour lead grid through +360h. Only 43 cells are registered as verified expected cells: members 0, 1, 2 and 30 at +0/+6/+24/+48h and the remaining perturbation members 3–29 at +24h. Other allowed leads remain unchecked. Control member 0 and all perturbation members 1–30 were compared with their own original GRIB messages; no ensemble statistics are inferred.
+
+```python
+from pathlib import Path
+
+source_spec = {
+    "kind": "cmadaas",
+    "dataset": "cma_geps_perturbation_cmadaas",
+    "config": str(Path.home() / ".config/cedarkit.yaml"),
+}
+with from_source(source_spec) as source:
+    fields = source.sel({
+        "parameter": "cedarkit.pwat",
+        "time": "2026-11-02T12:00:00Z",
+        "step": "PT24H",
+        "level_type": "entire_atmosphere",
+        "member": list(range(1, 31)),
+    }).all(completeness="required")
+    dataset = fields.to_xarray()
+```
+
+The native control selector is `levelType=10, fcstLevel=0`; the perturbation service requires `fcstLevel=1`. A dataset-scoped joint vertical table handles this service alias. The original physical level is the entire atmosphere, with no numeric vertical coordinate. Dataset member values and `member_role` retain their exact control/perturbation identities; PRE has no accumulation interval.
+
+The 2026-11-04 12 UTC responses use an incorrect 720-point row stride for original 1440-point rows. Rectangle values refer to other physical locations, and full responses truncate the original array. Both new mappings reject that unverified cycle before I/O with `unsupported/mapping_coverage_gap`. The existing member interface contracts and response-header checks remain in force.
+
+Six TPE/CPE/LPE historical rows are assigned to independent task 07E15: native ensemble accumulation carriers and [0, lead] windows are verified, but service bindings fail or return invalid grids. Two CSWE rows belong to 07E16 until their snowfall-rate-water-equivalent carrier and units are established; neither accumulated snowfall nor a local hail index supplies that proof. Task 07E17 separately tracks 64 invalid recent grid cells and does not add historical-row obligations. Earlier TYM availability task 07E14 remains separate. Current catalog v39 has 492 mappings covering 493 historical rows, with 520 rows remaining.

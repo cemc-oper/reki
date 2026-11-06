@@ -49871,6 +49871,271 @@
           "PT120H"
         ]
       }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_geps_control_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-geps-ctl-row-24",
+        "stage1.2/task-07e5/originals.jsonl#S-geps-ctl-row-24",
+        "stage1.2/task-07e5/accepted-samples/cases.json#S-geps-ctl-row-24"
+      ],
+      "id": "S-geps-ctl-row-24.pwat",
+      "native": {
+        "match": {
+          "fcstEle": "PRE",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "member": {
+            "rule": "cmadaas.member_field"
+          },
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.pwat",
+      "when": {
+        "level_type": "entire_atmosphere",
+        "member": [
+          0
+        ],
+        "member_role": "control",
+        "step": [
+          "PT0H",
+          "PT6H",
+          "PT12H",
+          "PT18H",
+          "PT24H",
+          "PT30H",
+          "PT36H",
+          "PT42H",
+          "PT48H",
+          "PT54H",
+          "PT60H",
+          "PT66H",
+          "PT72H",
+          "PT78H",
+          "PT84H",
+          "PT90H",
+          "PT96H",
+          "PT102H",
+          "PT108H",
+          "PT114H",
+          "PT120H",
+          "PT126H",
+          "PT132H",
+          "PT138H",
+          "PT144H",
+          "PT150H",
+          "PT156H",
+          "PT162H",
+          "PT168H",
+          "PT174H",
+          "PT180H",
+          "PT186H",
+          "PT192H",
+          "PT198H",
+          "PT204H",
+          "PT210H",
+          "PT216H",
+          "PT222H",
+          "PT228H",
+          "PT234H",
+          "PT240H",
+          "PT246H",
+          "PT252H",
+          "PT258H",
+          "PT264H",
+          "PT270H",
+          "PT276H",
+          "PT282H",
+          "PT288H",
+          "PT294H",
+          "PT300H",
+          "PT306H",
+          "PT312H",
+          "PT318H",
+          "PT324H",
+          "PT330H",
+          "PT336H",
+          "PT342H",
+          "PT348H",
+          "PT354H",
+          "PT360H"
+        ],
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_geps_perturbation_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-geps-pert-row-28",
+        "stage1.2/task-07e5/originals.jsonl#S-geps-pert-row-28",
+        "stage1.2/task-07e5/accepted-samples/cases.json#S-geps-pert-row-28"
+      ],
+      "id": "S-geps-pert-row-28.pwat",
+      "native": {
+        "match": {
+          "fcstEle": "PRE",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "member": {
+            "rule": "cmadaas.member_field"
+          },
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels.geps-pert-pwat"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.pwat",
+      "when": {
+        "level_type": "entire_atmosphere",
+        "member": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30
+        ],
+        "member_role": "perturbation",
+        "step": [
+          "PT0H",
+          "PT6H",
+          "PT12H",
+          "PT18H",
+          "PT24H",
+          "PT30H",
+          "PT36H",
+          "PT42H",
+          "PT48H",
+          "PT54H",
+          "PT60H",
+          "PT66H",
+          "PT72H",
+          "PT78H",
+          "PT84H",
+          "PT90H",
+          "PT96H",
+          "PT102H",
+          "PT108H",
+          "PT114H",
+          "PT120H",
+          "PT126H",
+          "PT132H",
+          "PT138H",
+          "PT144H",
+          "PT150H",
+          "PT156H",
+          "PT162H",
+          "PT168H",
+          "PT174H",
+          "PT180H",
+          "PT186H",
+          "PT192H",
+          "PT198H",
+          "PT204H",
+          "PT210H",
+          "PT216H",
+          "PT222H",
+          "PT228H",
+          "PT234H",
+          "PT240H",
+          "PT246H",
+          "PT252H",
+          "PT258H",
+          "PT264H",
+          "PT270H",
+          "PT276H",
+          "PT282H",
+          "PT288H",
+          "PT294H",
+          "PT300H",
+          "PT306H",
+          "PT312H",
+          "PT318H",
+          "PT324H",
+          "PT330H",
+          "PT336H",
+          "PT342H",
+          "PT348H",
+          "PT354H",
+          "PT360H"
+        ],
+        "time": "2026-11-02T12:00:00Z"
+      }
     }
   ],
   "tables": [
@@ -50492,7 +50757,30 @@
           }
         }
       ]
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_geps_perturbation_cmadaas"
+      },
+      "evidence": [
+        "stage1.2/task-07e5/originals.jsonl",
+        "stage1.2/task-07e5/recovery/results.jsonl"
+      ],
+      "id": "cmadaas.levels.geps-pert-pwat",
+      "key_kind": "level_type_and_level",
+      "rows": [
+        {
+          "canonical": {
+            "level_type": "entire_atmosphere"
+          },
+          "id": "entire-atmosphere-service-selector-1",
+          "native": {
+            "level": "1",
+            "level_type": "10"
+          }
+        }
+      ]
     }
   ],
-  "version": "6"
+  "version": "7"
 }

@@ -808,6 +808,11 @@ TYM_CASES = json.loads(
 )
 
 
+GEPS_CASES = json.loads(
+    (Path(__file__).parent / "fixtures/cmadaas-task07e5.json").read_bytes()
+)
+
+
 def accumulation_client(case):
     def headers(response, params):
         response.request.request_params = urlencode(params)
@@ -822,7 +827,7 @@ def accumulation_client(case):
 
 @pytest.mark.parametrize(
     "case",
-    ACCUMULATION_CASES + MESO1_CASES + MESO3_CASES + TYM_CASES,
+    ACCUMULATION_CASES + MESO1_CASES + MESO3_CASES + TYM_CASES + GEPS_CASES,
     ids=lambda c: c["id"],
 )
 def test_reviewed_accumulation_windows_and_instantaneous_identities(case):
@@ -840,6 +845,13 @@ def test_reviewed_accumulation_windows_and_instantaneous_identities(case):
             dataset[name].values.reshape(2, 3), case["values"]
         )
         assert dataset[name].attrs["units"] == case["unit"]
+        if case in GEPS_CASES:
+            member = case["query"]["member"]
+            assert dataset.member.item() == member
+            assert dataset.member_role.item() == (
+                "control" if member == 0 else "perturbation"
+            )
+            assert "level" not in dataset.coords
         if case.get("code_table"):
             assert field.metadata["code_table"] == case["code_table"]
             assert dataset[name].attrs["code_table"] == case["code_table"]
@@ -989,3 +1001,14 @@ def test_meso3_pbl_identity_rejects_an_invented_vertical_selector(vertical):
             source.sel({**case["query"], **vertical}).explain()
         assert caught.value.context["reason"] == "mapping_coverage_gap"
     assert not client.calls
+
+
+@pytest.mark.parametrize("case", [GEPS_CASES[0], GEPS_CASES[-1]], ids=lambda c: c["id"])
+def test_geps_pwat_rejects_unverified_reference_cycles_before_io(case):
+    client = accumulation_client(case)
+    query = {**case["query"], "time": "2026-11-04T12:00:00Z"}
+    with from_source(case["source"], client=client) as source:
+        with pytest.raises(QueryError) as caught:
+            source.sel(query).explain()
+        assert caught.value.context["reason"] == "mapping_coverage_gap"
+        assert not client.calls

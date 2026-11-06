@@ -1,0 +1,370 @@
+[
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_NWPC_CMAGEPS_GLB_HOR12_D0P5_CONTROL",
+      "fcstEle": "PRE",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "10",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "id": "S-geps-ctl-row-24-h000-m000",
+    "interval_hours": null,
+    "mapping_id": "S-geps-ctl-row-24.pwat",
+    "query": {
+      "level_type": "entire_atmosphere",
+      "member": 0,
+      "parameter": "cedarkit.pwat",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_geps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "kg/m2",
+    "values": [
+      [
+        0.0,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_NWPC_CMAGEPS_GLB_HOR12_D0P5_CONTROL",
+      "fcstEle": "PRE",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "10",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "24"
+    },
+    "id": "S-geps-ctl-row-24-h024-m000",
+    "interval_hours": null,
+    "mapping_id": "S-geps-ctl-row-24.pwat",
+    "query": {
+      "level_type": "entire_atmosphere",
+      "member": 0,
+      "parameter": "cedarkit.pwat",
+      "step": "PT24H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_geps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "kg/m2",
+    "values": [
+      [
+        0.0,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_NWPC_CMAGEPS_GLB_HOR12_D0P5_DIS",
+      "fcstEle": "PRE",
+      "fcstLevel": "1",
+      "fcstMember": 1,
+      "levelType": "10",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "id": "S-geps-pert-row-28-h000-m001-level1",
+    "interval_hours": null,
+    "mapping_id": "S-geps-pert-row-28.pwat",
+    "query": {
+      "level_type": "entire_atmosphere",
+      "member": 1,
+      "parameter": "cedarkit.pwat",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_geps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "kg/m2",
+    "values": [
+      [
+        1.0,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_NWPC_CMAGEPS_GLB_HOR12_D0P5_DIS",
+      "fcstEle": "PRE",
+      "fcstLevel": "1",
+      "fcstMember": 1,
+      "levelType": "10",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "24"
+    },
+    "id": "S-geps-pert-row-28-h024-m001-level1",
+    "interval_hours": null,
+    "mapping_id": "S-geps-pert-row-28.pwat",
+    "query": {
+      "level_type": "entire_atmosphere",
+      "member": 1,
+      "parameter": "cedarkit.pwat",
+      "step": "PT24H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_geps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "kg/m2",
+    "values": [
+      [
+        1.0,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_NWPC_CMAGEPS_GLB_HOR12_D0P5_DIS",
+      "fcstEle": "PRE",
+      "fcstLevel": "1",
+      "fcstMember": 2,
+      "levelType": "10",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "id": "S-geps-pert-row-28-h000-m002-level1",
+    "interval_hours": null,
+    "mapping_id": "S-geps-pert-row-28.pwat",
+    "query": {
+      "level_type": "entire_atmosphere",
+      "member": 2,
+      "parameter": "cedarkit.pwat",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_geps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "kg/m2",
+    "values": [
+      [
+        2.0,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_NWPC_CMAGEPS_GLB_HOR12_D0P5_DIS",
+      "fcstEle": "PRE",
+      "fcstLevel": "1",
+      "fcstMember": 2,
+      "levelType": "10",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "24"
+    },
+    "id": "S-geps-pert-row-28-h024-m002-level1",
+    "interval_hours": null,
+    "mapping_id": "S-geps-pert-row-28.pwat",
+    "query": {
+      "level_type": "entire_atmosphere",
+      "member": 2,
+      "parameter": "cedarkit.pwat",
+      "step": "PT24H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_geps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "kg/m2",
+    "values": [
+      [
+        2.0,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_NWPC_CMAGEPS_GLB_HOR12_D0P5_DIS",
+      "fcstEle": "PRE",
+      "fcstLevel": "1",
+      "fcstMember": 30,
+      "levelType": "10",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "id": "S-geps-pert-row-28-h000-m030-level1",
+    "interval_hours": null,
+    "mapping_id": "S-geps-pert-row-28.pwat",
+    "query": {
+      "level_type": "entire_atmosphere",
+      "member": 30,
+      "parameter": "cedarkit.pwat",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_geps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "kg/m2",
+    "values": [
+      [
+        30.0,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_NWPC_CMAGEPS_GLB_HOR12_D0P5_DIS",
+      "fcstEle": "PRE",
+      "fcstLevel": "1",
+      "fcstMember": 30,
+      "levelType": "10",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "24"
+    },
+    "id": "S-geps-pert-row-28-h024-m030-level1",
+    "interval_hours": null,
+    "mapping_id": "S-geps-pert-row-28.pwat",
+    "query": {
+      "level_type": "entire_atmosphere",
+      "member": 30,
+      "parameter": "cedarkit.pwat",
+      "step": "PT24H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "source": {
+      "dataset": "cma_geps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "kg.m-2",
+    "unit": "kg/m2",
+    "values": [
+      [
+        30.0,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  }
+]

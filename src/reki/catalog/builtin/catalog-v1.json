@@ -3067,8 +3067,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "01aff214eb583fee4c073a359190e0cf81bdcc257922facc87d7d4e9aa2c0d5c",
-          "version": "6"
+          "sha256": "786986ea4a3465ea8c7a59d16d21ee590b08e990a6c1906ffbb6b9b2d503d50c",
+          "version": "7"
         }
       },
       "parameter_registry": {
@@ -9260,8 +9260,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "01aff214eb583fee4c073a359190e0cf81bdcc257922facc87d7d4e9aa2c0d5c",
-          "version": "6"
+          "sha256": "786986ea4a3465ea8c7a59d16d21ee590b08e990a6c1906ffbb6b9b2d503d50c",
+          "version": "7"
         }
       },
       "parameter_registry": {
@@ -10868,8 +10868,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "01aff214eb583fee4c073a359190e0cf81bdcc257922facc87d7d4e9aa2c0d5c",
-          "version": "6"
+          "sha256": "786986ea4a3465ea8c7a59d16d21ee590b08e990a6c1906ffbb6b9b2d503d50c",
+          "version": "7"
         }
       },
       "parameter_registry": {
@@ -12191,8 +12191,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "01aff214eb583fee4c073a359190e0cf81bdcc257922facc87d7d4e9aa2c0d5c",
-          "version": "6"
+          "sha256": "786986ea4a3465ea8c7a59d16d21ee590b08e990a6c1906ffbb6b9b2d503d50c",
+          "version": "7"
         }
       },
       "parameter_registry": {
@@ -16225,8 +16225,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "01aff214eb583fee4c073a359190e0cf81bdcc257922facc87d7d4e9aa2c0d5c",
-          "version": "6"
+          "sha256": "786986ea4a3465ea8c7a59d16d21ee590b08e990a6c1906ffbb6b9b2d503d50c",
+          "version": "7"
         }
       },
       "parameter_registry": {
@@ -17356,8 +17356,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "01aff214eb583fee4c073a359190e0cf81bdcc257922facc87d7d4e9aa2c0d5c",
-          "version": "6"
+          "sha256": "786986ea4a3465ea8c7a59d16d21ee590b08e990a6c1906ffbb6b9b2d503d50c",
+          "version": "7"
         }
       },
       "parameter_registry": {
@@ -20942,8 +20942,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "01aff214eb583fee4c073a359190e0cf81bdcc257922facc87d7d4e9aa2c0d5c",
-          "version": "6"
+          "sha256": "786986ea4a3465ea8c7a59d16d21ee590b08e990a6c1906ffbb6b9b2d503d50c",
+          "version": "7"
         }
       },
       "parameter_registry": {
@@ -22097,8 +22097,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "01aff214eb583fee4c073a359190e0cf81bdcc257922facc87d7d4e9aa2c0d5c",
-          "version": "6"
+          "sha256": "786986ea4a3465ea8c7a59d16d21ee590b08e990a6c1906ffbb6b9b2d503d50c",
+          "version": "7"
         }
       },
       "parameter_registry": {
@@ -30609,8 +30609,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "01aff214eb583fee4c073a359190e0cf81bdcc257922facc87d7d4e9aa2c0d5c",
-          "version": "6"
+          "sha256": "786986ea4a3465ea8c7a59d16d21ee590b08e990a6c1906ffbb6b9b2d503d50c",
+          "version": "7"
         }
       },
       "member_roles": {
@@ -30673,7 +30673,8 @@
             "stage1.2/task-07c/originals.jsonl#S-geps-ctl-row-25",
             "stage1.2/task-07c/originals.jsonl#S-geps-ctl-row-26",
             "stage1.2/task-07c/originals.jsonl#S-geps-ctl-row-27",
-            "stage1.2/task-07c/originals.jsonl#S-geps-ctl-row-31"
+            "stage1.2/task-07c/originals.jsonl#S-geps-ctl-row-31",
+            "stage1.2/task-07e5/originals.jsonl#S-geps-ctl-row-24"
           ],
           "expected_domain": [
             {
@@ -30877,6 +30878,42 @@
               "step": "PT21600S",
               "time": "2026-11-02T12:00:00Z",
               "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 0,
+              "member_role": "control",
+              "parameter": "cedarkit.pwat",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 0,
+              "member_role": "control",
+              "parameter": "cedarkit.pwat",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 0,
+              "member_role": "control",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 0,
+              "member_role": "control",
+              "parameter": "cedarkit.pwat",
+              "step": "PT172800S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-04T12:00:00Z"
             }
           ],
           "id": "forecast",
@@ -32305,6 +32342,78 @@
                 "PT354H",
                 "PT360H"
               ]
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": [
+                0
+              ],
+              "member_role": "control",
+              "parameter": "cedarkit.pwat",
+              "step": [
+                "PT0H",
+                "PT6H",
+                "PT12H",
+                "PT18H",
+                "PT24H",
+                "PT30H",
+                "PT36H",
+                "PT42H",
+                "PT48H",
+                "PT54H",
+                "PT60H",
+                "PT66H",
+                "PT72H",
+                "PT78H",
+                "PT84H",
+                "PT90H",
+                "PT96H",
+                "PT102H",
+                "PT108H",
+                "PT114H",
+                "PT120H",
+                "PT126H",
+                "PT132H",
+                "PT138H",
+                "PT144H",
+                "PT150H",
+                "PT156H",
+                "PT162H",
+                "PT168H",
+                "PT174H",
+                "PT180H",
+                "PT186H",
+                "PT192H",
+                "PT198H",
+                "PT204H",
+                "PT210H",
+                "PT216H",
+                "PT222H",
+                "PT228H",
+                "PT234H",
+                "PT240H",
+                "PT246H",
+                "PT252H",
+                "PT258H",
+                "PT264H",
+                "PT270H",
+                "PT276H",
+                "PT282H",
+                "PT288H",
+                "PT294H",
+                "PT300H",
+                "PT306H",
+                "PT312H",
+                "PT318H",
+                "PT324H",
+                "PT330H",
+                "PT336H",
+                "PT342H",
+                "PT348H",
+                "PT354H",
+                "PT360H"
+              ],
+              "time": "2026-11-02T12:00:00Z"
             }
           ],
           "scope": {
@@ -32335,8 +32444,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "01aff214eb583fee4c073a359190e0cf81bdcc257922facc87d7d4e9aa2c0d5c",
-          "version": "6"
+          "sha256": "786986ea4a3465ea8c7a59d16d21ee590b08e990a6c1906ffbb6b9b2d503d50c",
+          "version": "7"
         }
       },
       "member_roles": {
@@ -32391,7 +32500,8 @@
             "stage1.2/task-07c/originals.jsonl#S-geps-pert-row-10",
             "stage1.2/task-07c/originals.jsonl#S-geps-pert-row-15",
             "stage1.2/task-07c/originals.jsonl#S-geps-pert-row-16",
-            "stage1.2/task-07c/originals.jsonl#S-geps-pert-row-19"
+            "stage1.2/task-07c/originals.jsonl#S-geps-pert-row-19",
+            "stage1.2/task-07e5/originals.jsonl#S-geps-pert-row-28"
           ],
           "expected_domain": [
             {
@@ -32502,6 +32612,357 @@
               "step": "PT21600S",
               "time": "2026-08-30T00:00:00Z",
               "valid_time": "2026-08-30T06:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 1,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 1,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 1,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 1,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT172800S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-04T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 2,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 2,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 2,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 2,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT172800S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-04T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 30,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 30,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 30,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 30,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT172800S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-04T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 3,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 4,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 5,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 6,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 7,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 8,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 9,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 10,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 11,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 12,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 13,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 14,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 15,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 16,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 17,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 18,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 19,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 20,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 21,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 22,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 23,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 24,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 25,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 26,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 27,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 28,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": 29,
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": "PT86400S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-03T12:00:00Z"
             }
           ],
           "id": "forecast",
@@ -33602,6 +34063,107 @@
                 "PT354H",
                 "PT360H"
               ]
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "member": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30
+              ],
+              "member_role": "perturbation",
+              "parameter": "cedarkit.pwat",
+              "step": [
+                "PT0H",
+                "PT6H",
+                "PT12H",
+                "PT18H",
+                "PT24H",
+                "PT30H",
+                "PT36H",
+                "PT42H",
+                "PT48H",
+                "PT54H",
+                "PT60H",
+                "PT66H",
+                "PT72H",
+                "PT78H",
+                "PT84H",
+                "PT90H",
+                "PT96H",
+                "PT102H",
+                "PT108H",
+                "PT114H",
+                "PT120H",
+                "PT126H",
+                "PT132H",
+                "PT138H",
+                "PT144H",
+                "PT150H",
+                "PT156H",
+                "PT162H",
+                "PT168H",
+                "PT174H",
+                "PT180H",
+                "PT186H",
+                "PT192H",
+                "PT198H",
+                "PT204H",
+                "PT210H",
+                "PT216H",
+                "PT222H",
+                "PT228H",
+                "PT234H",
+                "PT240H",
+                "PT246H",
+                "PT252H",
+                "PT258H",
+                "PT264H",
+                "PT270H",
+                "PT276H",
+                "PT282H",
+                "PT288H",
+                "PT294H",
+                "PT300H",
+                "PT306H",
+                "PT312H",
+                "PT318H",
+                "PT324H",
+                "PT330H",
+                "PT336H",
+                "PT342H",
+                "PT348H",
+                "PT354H",
+                "PT360H"
+              ],
+              "time": "2026-11-02T12:00:00Z"
             }
           ],
           "scope": {
@@ -33638,8 +34200,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "01aff214eb583fee4c073a359190e0cf81bdcc257922facc87d7d4e9aa2c0d5c",
-          "version": "6"
+          "sha256": "786986ea4a3465ea8c7a59d16d21ee590b08e990a6c1906ffbb6b9b2d503d50c",
+          "version": "7"
         }
       },
       "member_roles": {
@@ -35454,8 +36016,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "01aff214eb583fee4c073a359190e0cf81bdcc257922facc87d7d4e9aa2c0d5c",
-          "version": "6"
+          "sha256": "786986ea4a3465ea8c7a59d16d21ee590b08e990a6c1906ffbb6b9b2d503d50c",
+          "version": "7"
         }
       },
       "member_roles": {
@@ -37582,5 +38144,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "38"
+  "version": "39"
 }
