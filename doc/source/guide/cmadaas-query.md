@@ -1,6 +1,6 @@
 # CMADaaS public queries
 
-The default v39 catalog contains twelve live service bindings, retaining task 07B's sixteen mappings and adding 374 instantaneous mappings from task 07C, 26 GFS mappings from task 07E1 and 20 MESO-1KM mappings from task 07E2 and 24 MESO-3KM mappings covering 25 task 07E3 rows and 30 TYM mappings from task 07E4 and two GEPS precipitable-water mappings from task 07E5, all checked against real responses and original messages. Install `reki[cmadaas]`, configure `~/.config/cedarkit.yaml` or `CEDARKIT_CONFIG`, and select the dataset directly:
+The default v40 catalog contains twelve live service bindings, retaining task 07B's sixteen mappings and adding 374 instantaneous mappings from task 07C, 26 GFS mappings from task 07E1 and 20 MESO-1KM mappings from task 07E2 and 24 MESO-3KM mappings covering 25 task 07E3 rows and 30 TYM mappings from task 07E4 and two GEPS precipitable-water mappings from task 07E5 and 36 REPS precipitation and snowfall mappings from task 07E6, all checked against real responses and original messages. Install `reki[cmadaas]`, configure `~/.config/cedarkit.yaml` or `CEDARKIT_CONFIG`, and select the dataset directly:
 
 ```python
 from reki import from_source
@@ -27,7 +27,7 @@ Use the client candidate bundled with the task 07B acceptance artifacts. It corr
 
 ## Additional instantaneous fields
 
-The public service parameter resource remains version 6 and the mapping resource is version 7. The 101 parameter definitions and 492 mappings cover reviewed pressure levels, surface and 10 m fields, mean sea level, entire-atmosphere columns, cloud layers and diagnostic instantaneous fields. A unique reviewed mapping can supply its fixed vertical identity; an underspecified generic parameter with multiple applicable vertical mappings remains ambiguous. Pressure queries accept equivalent Pa and hPa declarations.
+The public service parameter resource remains version 6 and the mapping resource is version 8. The 101 parameter definitions and 528 mappings cover reviewed pressure levels, surface and 10 m fields, mean sea level, entire-atmosphere columns, cloud layers and diagnostic instantaneous fields. A unique reviewed mapping can supply its fixed vertical identity; an underspecified generic parameter with multiple applicable vertical mappings remains ambiguous. Pressure queries accept equivalent Pa and hPa declarations.
 
 ```python
 with from_source({"kind": "cmadaas", "dataset": "cma_gfs_gmf_cmadaas"}) as source:
@@ -209,4 +209,36 @@ The native control selector is `levelType=10, fcstLevel=0`; the perturbation ser
 
 The 2026-11-04 12 UTC responses use an incorrect 720-point row stride for original 1440-point rows. Rectangle values refer to other physical locations, and full responses truncate the original array. Both new mappings reject that unverified cycle before I/O with `unsupported/mapping_coverage_gap`. The existing member interface contracts and response-header checks remain in force.
 
-Six TPE/CPE/LPE historical rows are assigned to independent task 07E15: native ensemble accumulation carriers and [0, lead] windows are verified, but service bindings fail or return invalid grids. Two CSWE rows belong to 07E16 until their snowfall-rate-water-equivalent carrier and units are established; neither accumulated snowfall nor a local hail index supplies that proof. Task 07E17 separately tracks 64 invalid recent grid cells and does not add historical-row obligations. Earlier TYM availability task 07E14 remains separate. Current catalog v39 has 492 mappings covering 493 historical rows, with 520 rows remaining.
+Six TPE/CPE/LPE historical rows are assigned to independent task 07E15: native ensemble accumulation carriers and [0, lead] windows are verified, but service bindings fail or return invalid grids. Two CSWE rows belong to 07E16 until their snowfall-rate-water-equivalent carrier and units are established; neither accumulated snowfall nor a local hail index supplies that proof. Task 07E17 separately tracks 64 invalid recent grid cells and does not add historical-row obligations. Earlier TYM availability task 07E14 remains separate. Task 07E5 delivered catalog v39 with 492 mappings covering 493 historical rows, with 520 rows remaining at that handoff.
+
+
+## REPS precipitation, snowfall and windows (task 07E6)
+
+Task 07E6 publishes all 36 REPS historical rows: control and perturbation TPE, CPE and TOSN, each with since-initialization accumulation and 1/3/6/12/24-hour trailing variants. TPE uses `cedarkit.rain`, CPE uses `cedarkit.rainc`, and TOSN uses `cedarkit.sf`, followed by `.since-initialization` or the corresponding hour suffix. Rainfall retains native kg/m2 water-equivalent values as mm; snowfall retains native m. The reviewed conversion is restricted to the two REPS dataCodes, and conflicting nonempty response units still fail.
+
+```python
+from pathlib import Path
+from reki import from_source
+
+source_spec = {
+    "kind": "cmadaas",
+    "dataset": "cma_reps_perturbation_cmadaas",
+    "config": str(Path.home() / ".config/cedarkit.yaml"),
+}
+with from_source(source_spec) as source:
+    fields = source.sel({
+        "parameter": "cedarkit.rain.since-initialization",
+        "time": "2026-11-04T06:00:00Z",
+        "step": "PT48H",
+        "member": list(range(1, 15)),
+    }).all(completeness="required")
+    dataset = fields.to_xarray()
+```
+
+All members 0–14 were compared with their own native TPE/CPE/TOSN messages at +48h. Member 0 is control; 1–14 are perturbations. Native `numberOfForecastsInEnsemble=0` is retained and does not define the product's member count. The existing reviewed REPS member contract v1 and joint surface selector remain unchanged. Empty response names, units and server echoes remain empty; the pinned mapping supplies the reviewed source unit with `source_unit_basis="mapping"` when needed.
+
+Since-initialization fields use original PDT11 accumulations from zero to the requested lead. Each trailing window was compared with the two corresponding native cumulative endpoints, including a nonzero region for every one of the 36 rows. Native forecast-hour-zero fields are also verified; the four TPE/CPE mappings explicitly include those sampled initialization cells even though the historical metadata starts at hour one.
+
+The finite expected domains add 163 successfully verified sample cells from 2026-11-02/04/05 06 UTC, including the complete member sets for all three accumulation families at +48h. Other allowed cells remain unchecked. Service availability differs by reference cycle, element, lead and member: 419 sampled cells return structured service errors and are excluded from verified expected domains. Independent task 07E18 tracks those cells without adding historical-row obligations or gating the 36 published mappings. Existing tasks 07E14 and 07E17 retain their separate availability and grid-cell ledgers.
+
+Catalog v40 pins parameter v6 and mapping v8, retaining all 101 definitions, 492 prior mappings and five joint vertical tables. The resulting 528 mappings cover 529 historical service rows, with 484 rows remaining. Query/Request v1 and the query and client packages are unchanged.

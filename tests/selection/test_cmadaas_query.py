@@ -813,9 +813,16 @@ GEPS_CASES = json.loads(
 )
 
 
+REPS_CASES = json.loads(
+    (Path(__file__).parent / "fixtures/cmadaas-task07e6.json").read_bytes()
+)
+
+
 def accumulation_client(case):
     def headers(response, params):
         response.request.request_params = urlencode(params)
+        if case.get("reps_response"):
+            response.request.request_params = response.user_element_name = response.units = ""
         if case["derived_response"]:
             response.request.request_params = response.user_element_name = (
                 response.units
@@ -827,7 +834,7 @@ def accumulation_client(case):
 
 @pytest.mark.parametrize(
     "case",
-    ACCUMULATION_CASES + MESO1_CASES + MESO3_CASES + TYM_CASES + GEPS_CASES,
+    ACCUMULATION_CASES + MESO1_CASES + MESO3_CASES + TYM_CASES + GEPS_CASES + REPS_CASES,
     ids=lambda c: c["id"],
 )
 def test_reviewed_accumulation_windows_and_instantaneous_identities(case):
@@ -845,13 +852,17 @@ def test_reviewed_accumulation_windows_and_instantaneous_identities(case):
             dataset[name].values.reshape(2, 3), case["values"]
         )
         assert dataset[name].attrs["units"] == case["unit"]
-        if case in GEPS_CASES:
+        if case in GEPS_CASES or case in REPS_CASES:
             member = case["query"]["member"]
             assert dataset.member.item() == member
             assert dataset.member_role.item() == (
                 "control" if member == 0 else "perturbation"
             )
             assert "level" not in dataset.coords
+        if case.get("reps_response"):
+            assert field.metadata["source_unit_basis"] == "mapping"
+            assert field.metadata["response_unit"] == ""
+            assert field.metadata["server_request_echo"] == {}
         if case.get("code_table"):
             assert field.metadata["code_table"] == case["code_table"]
             assert dataset[name].attrs["code_table"] == case["code_table"]
@@ -1012,3 +1023,14 @@ def test_geps_pwat_rejects_unverified_reference_cycles_before_io(case):
             source.sel(query).explain()
         assert caught.value.context["reason"] == "mapping_coverage_gap"
         assert not client.calls
+
+
+@pytest.mark.parametrize("family", ["rain", "sf"])
+def test_reps_precipitation_rejects_a_conflicting_nonempty_unit(family):
+    case = next(c for c in REPS_CASES if c["query"]["parameter"].startswith(f"cedarkit.{family}."))
+    client = accumulation_client(case)
+    client.mutate = lambda response, params: setattr(response, "units", "K")
+    with from_source(case["source"], client=client) as source:
+        with pytest.raises(SourceError) as caught:
+            source.sel(case["query"]).one()
+        assert caught.value.context["reason"] == "inconsistent_native_metadata"

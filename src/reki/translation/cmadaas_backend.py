@@ -128,6 +128,8 @@ def _unit_offset(source, target, pid, data_code, *, index=None):
             "NAFP_CEMC_MESO_FOR_1KM",
             "NAFP_GRAPES_MESO_FOR_3KM",
             "NAFP_FOR_CMA_TYM_0P09_ASI",
+            "NAFP_GRAPESREPS_FOR_FTM_CHN",
+            "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
         }
     )
     return (

@@ -1,0 +1,1802 @@
+[
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "TOSN24",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-ctl-row-1-h048-m000",
+    "interval_hours": [
+      24,
+      48
+    ],
+    "mapping_id": "S-reps-ctl-row-1.sf.24h",
+    "query": {
+      "level_type": "surface",
+      "member": 0,
+      "parameter": "cedarkit.sf.24h",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "TOSN03",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261105060000",
+      "validTime": "3"
+    },
+    "id": "S-reps-ctl-row-10-h003-m000-later",
+    "interval_hours": [
+      0,
+      3
+    ],
+    "mapping_id": "S-reps-ctl-row-10.sf.3h",
+    "query": {
+      "level_type": "surface",
+      "member": 0,
+      "parameter": "cedarkit.sf.3h",
+      "step": "PT3H",
+      "time": "2026-11-05T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "CPE24",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-ctl-row-11-h048-m000",
+    "interval_hours": [
+      24,
+      48
+    ],
+    "mapping_id": "S-reps-ctl-row-11.rainc.24h",
+    "query": {
+      "level_type": "surface",
+      "member": 0,
+      "parameter": "cedarkit.rainc.24h",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "TOSN06",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261105060000",
+      "validTime": "24"
+    },
+    "id": "S-reps-ctl-row-12-h024-m000-extra",
+    "interval_hours": [
+      18,
+      24
+    ],
+    "mapping_id": "S-reps-ctl-row-12.sf.6h",
+    "query": {
+      "level_type": "surface",
+      "member": 0,
+      "parameter": "cedarkit.sf.6h",
+      "step": "PT24H",
+      "time": "2026-11-05T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "TOSN01",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261105060000",
+      "validTime": "24"
+    },
+    "id": "S-reps-ctl-row-13-h024-m000-extra",
+    "interval_hours": [
+      23,
+      24
+    ],
+    "mapping_id": "S-reps-ctl-row-13.sf.1h",
+    "query": {
+      "level_type": "surface",
+      "member": 0,
+      "parameter": "cedarkit.sf.1h",
+      "step": "PT24H",
+      "time": "2026-11-05T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "CPE01",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261105060000",
+      "validTime": "24"
+    },
+    "id": "S-reps-ctl-row-14-h024-m000-extra",
+    "interval_hours": [
+      23,
+      24
+    ],
+    "mapping_id": "S-reps-ctl-row-14.rainc.1h",
+    "query": {
+      "level_type": "surface",
+      "member": 0,
+      "parameter": "cedarkit.rainc.1h",
+      "step": "PT24H",
+      "time": "2026-11-05T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "TPE01",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261105060000",
+      "validTime": "24"
+    },
+    "id": "S-reps-ctl-row-15-h024-m000-extra",
+    "interval_hours": [
+      23,
+      24
+    ],
+    "mapping_id": "S-reps-ctl-row-15.rain.1h",
+    "query": {
+      "level_type": "surface",
+      "member": 0,
+      "parameter": "cedarkit.rain.1h",
+      "step": "PT24H",
+      "time": "2026-11-05T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "TOSN12",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-ctl-row-2-h048-m000",
+    "interval_hours": [
+      36,
+      48
+    ],
+    "mapping_id": "S-reps-ctl-row-2.sf.12h",
+    "query": {
+      "level_type": "surface",
+      "member": 0,
+      "parameter": "cedarkit.sf.12h",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "TPE03",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261105060000",
+      "validTime": "3"
+    },
+    "id": "S-reps-ctl-row-3-h003-m000-later",
+    "interval_hours": [
+      0,
+      3
+    ],
+    "mapping_id": "S-reps-ctl-row-3.rain.3h",
+    "query": {
+      "level_type": "surface",
+      "member": 0,
+      "parameter": "cedarkit.rain.3h",
+      "step": "PT3H",
+      "time": "2026-11-05T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "TPE",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-ctl-row-30-h048-m000",
+    "interval_hours": [
+      0,
+      48
+    ],
+    "mapping_id": "S-reps-ctl-row-30.rain.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "member": 0,
+      "parameter": "cedarkit.rain.since-initialization",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "CPE",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-ctl-row-31-h048-m000",
+    "interval_hours": [
+      0,
+      48
+    ],
+    "mapping_id": "S-reps-ctl-row-31.rainc.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "member": 0,
+      "parameter": "cedarkit.rainc.since-initialization",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "TPE12",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-ctl-row-4-h048-m000",
+    "interval_hours": [
+      36,
+      48
+    ],
+    "mapping_id": "S-reps-ctl-row-4.rain.12h",
+    "query": {
+      "level_type": "surface",
+      "member": 0,
+      "parameter": "cedarkit.rain.12h",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "TOSN",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-ctl-row-41-h048-m000",
+    "interval_hours": [
+      0,
+      48
+    ],
+    "mapping_id": "S-reps-ctl-row-41.sf.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "member": 0,
+      "parameter": "cedarkit.sf.since-initialization",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "TPE06",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261105060000",
+      "validTime": "24"
+    },
+    "id": "S-reps-ctl-row-5-h024-m000-extra",
+    "interval_hours": [
+      18,
+      24
+    ],
+    "mapping_id": "S-reps-ctl-row-5.rain.6h",
+    "query": {
+      "level_type": "surface",
+      "member": 0,
+      "parameter": "cedarkit.rain.6h",
+      "step": "PT24H",
+      "time": "2026-11-05T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "TPE24",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-ctl-row-6-h048-m000",
+    "interval_hours": [
+      24,
+      48
+    ],
+    "mapping_id": "S-reps-ctl-row-6.rain.24h",
+    "query": {
+      "level_type": "surface",
+      "member": 0,
+      "parameter": "cedarkit.rain.24h",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "CPE06",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261105060000",
+      "validTime": "24"
+    },
+    "id": "S-reps-ctl-row-7-h024-m000-extra",
+    "interval_hours": [
+      18,
+      24
+    ],
+    "mapping_id": "S-reps-ctl-row-7.rainc.6h",
+    "query": {
+      "level_type": "surface",
+      "member": 0,
+      "parameter": "cedarkit.rainc.6h",
+      "step": "PT24H",
+      "time": "2026-11-05T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "CPE03",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261105060000",
+      "validTime": "3"
+    },
+    "id": "S-reps-ctl-row-8-h003-m000-later",
+    "interval_hours": [
+      0,
+      3
+    ],
+    "mapping_id": "S-reps-ctl-row-8.rainc.3h",
+    "query": {
+      "level_type": "surface",
+      "member": 0,
+      "parameter": "cedarkit.rainc.3h",
+      "step": "PT3H",
+      "time": "2026-11-05T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_CHN",
+      "fcstEle": "CPE12",
+      "fcstLevel": "0",
+      "fcstMember": 0,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-ctl-row-9-h048-m000",
+    "interval_hours": [
+      36,
+      48
+    ],
+    "mapping_id": "S-reps-ctl-row-9.rainc.12h",
+    "query": {
+      "level_type": "surface",
+      "member": 0,
+      "parameter": "cedarkit.rainc.12h",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_control_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        5.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "TOSN24",
+      "fcstLevel": "0",
+      "fcstMember": 14,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-pert-row-1-h048-m014",
+    "interval_hours": [
+      24,
+      48
+    ],
+    "mapping_id": "S-reps-pert-row-1.sf.24h",
+    "query": {
+      "level_type": "surface",
+      "member": 14,
+      "parameter": "cedarkit.sf.24h",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        19.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "TOSN03",
+      "fcstLevel": "0",
+      "fcstMember": 14,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-pert-row-10-h048-m014",
+    "interval_hours": [
+      45,
+      48
+    ],
+    "mapping_id": "S-reps-pert-row-10.sf.3h",
+    "query": {
+      "level_type": "surface",
+      "member": 14,
+      "parameter": "cedarkit.sf.3h",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        19.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "TPE06",
+      "fcstLevel": "0",
+      "fcstMember": 1,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261105060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-pert-row-11-h048-m001-later",
+    "interval_hours": [
+      42,
+      48
+    ],
+    "mapping_id": "S-reps-pert-row-11.rain.6h",
+    "query": {
+      "level_type": "surface",
+      "member": 1,
+      "parameter": "cedarkit.rain.6h",
+      "step": "PT48H",
+      "time": "2026-11-05T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        6.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "CPE03",
+      "fcstLevel": "0",
+      "fcstMember": 14,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-pert-row-12-h048-m014",
+    "interval_hours": [
+      45,
+      48
+    ],
+    "mapping_id": "S-reps-pert-row-12.rainc.3h",
+    "query": {
+      "level_type": "surface",
+      "member": 14,
+      "parameter": "cedarkit.rainc.3h",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        19.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "TOSN01",
+      "fcstLevel": "0",
+      "fcstMember": 14,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-pert-row-13-h048-m014",
+    "interval_hours": [
+      47,
+      48
+    ],
+    "mapping_id": "S-reps-pert-row-13.sf.1h",
+    "query": {
+      "level_type": "surface",
+      "member": 14,
+      "parameter": "cedarkit.sf.1h",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        19.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "TPE01",
+      "fcstLevel": "0",
+      "fcstMember": 14,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-pert-row-14-h048-m014",
+    "interval_hours": [
+      47,
+      48
+    ],
+    "mapping_id": "S-reps-pert-row-14.rain.1h",
+    "query": {
+      "level_type": "surface",
+      "member": 14,
+      "parameter": "cedarkit.rain.1h",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        19.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "CPE01",
+      "fcstLevel": "0",
+      "fcstMember": 14,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-pert-row-18-h048-m014",
+    "interval_hours": [
+      47,
+      48
+    ],
+    "mapping_id": "S-reps-pert-row-18.rainc.1h",
+    "query": {
+      "level_type": "surface",
+      "member": 14,
+      "parameter": "cedarkit.rainc.1h",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        19.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "TPE03",
+      "fcstLevel": "0",
+      "fcstMember": 14,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-pert-row-2-h048-m014",
+    "interval_hours": [
+      45,
+      48
+    ],
+    "mapping_id": "S-reps-pert-row-2.rain.3h",
+    "query": {
+      "level_type": "surface",
+      "member": 14,
+      "parameter": "cedarkit.rain.3h",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        19.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "CPE24",
+      "fcstLevel": "0",
+      "fcstMember": 14,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-pert-row-21-h048-m014",
+    "interval_hours": [
+      24,
+      48
+    ],
+    "mapping_id": "S-reps-pert-row-21.rainc.24h",
+    "query": {
+      "level_type": "surface",
+      "member": 14,
+      "parameter": "cedarkit.rainc.24h",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        19.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "TPE",
+      "fcstLevel": "0",
+      "fcstMember": 1,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-pert-row-28-h048-m001",
+    "interval_hours": [
+      0,
+      48
+    ],
+    "mapping_id": "S-reps-pert-row-28.rain.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "member": 1,
+      "parameter": "cedarkit.rain.since-initialization",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        6.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "TOSN06",
+      "fcstLevel": "0",
+      "fcstMember": 1,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261105060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-pert-row-3-h048-m001-later",
+    "interval_hours": [
+      42,
+      48
+    ],
+    "mapping_id": "S-reps-pert-row-3.sf.6h",
+    "query": {
+      "level_type": "surface",
+      "member": 1,
+      "parameter": "cedarkit.sf.6h",
+      "step": "PT48H",
+      "time": "2026-11-05T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        6.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "CPE",
+      "fcstLevel": "0",
+      "fcstMember": 1,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-pert-row-36-h048-m001",
+    "interval_hours": [
+      0,
+      48
+    ],
+    "mapping_id": "S-reps-pert-row-36.rainc.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "member": 1,
+      "parameter": "cedarkit.rainc.since-initialization",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        6.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "TPE12",
+      "fcstLevel": "0",
+      "fcstMember": 14,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261105060000",
+      "validTime": "24"
+    },
+    "id": "S-reps-pert-row-4-h024-m014-extra",
+    "interval_hours": [
+      12,
+      24
+    ],
+    "mapping_id": "S-reps-pert-row-4.rain.12h",
+    "query": {
+      "level_type": "surface",
+      "member": 14,
+      "parameter": "cedarkit.rain.12h",
+      "step": "PT24H",
+      "time": "2026-11-05T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        19.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "TOSN",
+      "fcstLevel": "0",
+      "fcstMember": 1,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-pert-row-47-h048-m001",
+    "interval_hours": [
+      0,
+      48
+    ],
+    "mapping_id": "S-reps-pert-row-47.sf.since-initialization",
+    "query": {
+      "level_type": "surface",
+      "member": 1,
+      "parameter": "cedarkit.sf.since-initialization",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        6.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "TPE24",
+      "fcstLevel": "0",
+      "fcstMember": 14,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261104060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-pert-row-5-h048-m014",
+    "interval_hours": [
+      24,
+      48
+    ],
+    "mapping_id": "S-reps-pert-row-5.rain.24h",
+    "query": {
+      "level_type": "surface",
+      "member": 14,
+      "parameter": "cedarkit.rain.24h",
+      "step": "PT48H",
+      "time": "2026-11-04T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        19.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "TOSN12",
+      "fcstLevel": "0",
+      "fcstMember": 14,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261105060000",
+      "validTime": "24"
+    },
+    "id": "S-reps-pert-row-6-h024-m014-extra",
+    "interval_hours": [
+      12,
+      24
+    ],
+    "mapping_id": "S-reps-pert-row-6.sf.12h",
+    "query": {
+      "level_type": "surface",
+      "member": 14,
+      "parameter": "cedarkit.sf.12h",
+      "step": "PT24H",
+      "time": "2026-11-05T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "m",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        19.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "CPE06",
+      "fcstLevel": "0",
+      "fcstMember": 1,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261105060000",
+      "validTime": "48"
+    },
+    "id": "S-reps-pert-row-7-h048-m001-later",
+    "interval_hours": [
+      42,
+      48
+    ],
+    "mapping_id": "S-reps-pert-row-7.rainc.6h",
+    "query": {
+      "level_type": "surface",
+      "member": 1,
+      "parameter": "cedarkit.rainc.6h",
+      "step": "PT48H",
+      "time": "2026-11-05T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        6.0
+      ]
+    ]
+  },
+  {
+    "code_table": null,
+    "derived_response": false,
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtimeAndFcstMember",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPESREPS_FOR_FTM_DIS_CHN",
+      "fcstEle": "CPE12",
+      "fcstLevel": "0",
+      "fcstMember": 14,
+      "levelType": "1",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261105060000",
+      "validTime": "24"
+    },
+    "id": "S-reps-pert-row-8-h024-m014-extra",
+    "interval_hours": [
+      12,
+      24
+    ],
+    "mapping_id": "S-reps-pert-row-8.rainc.12h",
+    "query": {
+      "level_type": "surface",
+      "member": 14,
+      "parameter": "cedarkit.rainc.12h",
+      "step": "PT24H",
+      "time": "2026-11-05T06:00:00Z"
+    },
+    "reps_response": true,
+    "source": {
+      "dataset": "cma_reps_perturbation_cmadaas",
+      "kind": "cmadaas"
+    },
+    "source_unit": "",
+    "unit": "mm",
+    "values": [
+      [
+        0.1,
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        4.0,
+        19.0
+      ]
+    ]
+  }
+]
