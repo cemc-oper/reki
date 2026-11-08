@@ -755,7 +755,22 @@
       "name": "zs",
       "parameter_id": "cedarkit.zs",
       "parent": "cedarkit.h.any"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "entire_atmosphere"
+      },
+      "name": "pwat",
+      "parameter_id": "cedarkit.pwat",
+      "parent": "cedarkit.pwat.any"
+    },
+    {
+      "description": "Precipitable water",
+      "description_cn": "整层可降水量",
+      "name": "pwat",
+      "parameter_id": "cedarkit.pwat.any",
+      "unit": "kg/m2"
     }
   ],
-  "version": "8"
+  "version": "9"
 }

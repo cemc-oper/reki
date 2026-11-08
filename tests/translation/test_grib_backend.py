@@ -504,3 +504,123 @@ def test_slhf_unit_review_rejects_a_different_carrier(write_grib, slhf_record, t
         with pytest.raises(SourceError) as caught:
             owner.sel(parameter="cedarkit.slhf").one()
     assert caught.value.context["reason"] == "inconsistent_native_metadata"
+
+
+@pytest.fixture
+def meso1_pwat_record():
+    def make(hour=6, **overrides):
+        return {
+            "centre": 38,
+            "subCentre": 0,
+            "tablesVersion": 4,
+            "localTablesVersion": 0,
+            "productionStatusOfProcessedData": 0,
+            "significanceOfReferenceTime": int(hour > 0),
+            "typeOfProcessedData": int(hour > 0),
+            "typeOfGeneratingProcess": 2 if hour else 0,
+            "dataDate": 20261102,
+            "dataTime": 1200,
+            "productDefinitionTemplateNumber": 0,
+            "discipline": 0,
+            "parameterCategory": 1,
+            "parameterNumber": 3,
+            "typeOfFirstFixedSurface": 10,
+            "typeOfSecondFixedSurface": 255,
+            "indicatorOfUnitOfTimeRange": 0,
+            "forecastTime": hour * 60,
+            "values": np.array([0.0, 2.0, 15.0, 31.0]) if hour else np.zeros(4),
+            **overrides,
+        }
+    return make
+
+
+@pytest.mark.parametrize("hour", [0, 6, 48])
+def test_meso1_pwat_preserves_mass_per_area_and_entire_atmosphere(
+    write_grib, meso1_pwat_record, hour
+):
+    record = meso1_pwat_record(hour)
+    path = write_grib(records=[record])
+    with from_source({"kind": "file", "path": str(path), "dataset": "cma_meso_1km"}) as source:
+        field = source.sel(parameter="cedarkit.pwat", time="2026-11-02T12:00:00Z", step=f"PT{hour}H").one()
+        assert field.identity.level_type == "entire_atmosphere"
+        assert field.metadata["source_unit"] == "kg/m2"
+        assert field.metadata["mapping_ids"] == (f"pwat.instantaneous.{'forecast' if hour else 'initial'}",)
+        dataset = field.to_xarray()
+        assert dataset.pwat.attrs["units"] == "kg/m2"
+        assert dataset.pwat.dims == ("time", "step", "latitude", "longitude")
+        assert "entire_atmosphere" not in dataset.coords
+        assert field.report.overall["status"] == "unchecked"
+        assert any(reason["code"] == "expected_set_unknown" for reason in field.report.overall["reasons"])
+        np.testing.assert_array_equal(dataset.pwat.values.ravel(), record["values"])
+
+
+@pytest.mark.parametrize("query", [
+    {"time": "2026-11-02T12:00:00Z", "step": "PT12H"},
+    {"time": "2026-11-03T12:00:00Z", "step": "PT6H"},
+])
+def test_meso1_pwat_rejects_unreviewed_time_scope_before_io(
+    write_grib, meso1_pwat_record, monkeypatch, query
+):
+    from cedarkit_query import QueryError
+
+    path = write_grib(records=[meso1_pwat_record()])
+    def unexpected_read(*_args, **_kwargs):
+        raise AssertionError("unreviewed scope reached native I/O")
+    monkeypatch.setattr(eccodes, "codes_grib_new_from_file", unexpected_read)
+    with from_source({"kind": "file", "path": str(path), "dataset": "cma_meso_1km"}) as source:
+        with pytest.raises(QueryError) as caught:
+            source.sel(parameter="cedarkit.pwat", **query).one()
+    assert caught.value.code == "unsupported"
+    assert caught.value.context["reason"] in {"translation_unavailable", "mapping_coverage_gap"}
+
+
+def test_meso1_pwat_rejects_surface_refinement(write_grib, meso1_pwat_record):
+    from cedarkit_query import QueryError
+
+    path = write_grib(records=[meso1_pwat_record()])
+    with from_source({"kind": "file", "path": str(path), "dataset": "cma_meso_1km"}) as source:
+        with pytest.raises(QueryError) as caught:
+            source.sel(parameter="cedarkit.pwat", level_type="surface").one()
+    assert caught.value.code == "constraint_conflict"
+
+
+def test_meso1_pwat_rejects_humidity_units_on_a_misbound_carrier(
+    write_grib, meso1_pwat_record, tmp_path
+):
+    path = write_grib(records=[meso1_pwat_record(parameterNumber=0)])
+    source = {"kind": "file", "path": str(path), "dataset": "cma_meso_1km"}
+    resource = plan_source_binding(source).mappings[0].to_dict()
+    for mapping in resource["mappings"]:
+        if mapping["parameter_id"] == "cedarkit.pwat":
+            mapping["native"]["match"]["parameterNumber"] = 0
+    config = tmp_path / "misbound-pwat.json"
+    config.write_text(json.dumps(resource))
+    with from_source(source, context={"mappings": {"grib2": {"path": str(config)}}}) as owner:
+        with pytest.raises(SourceError) as caught:
+            owner.sel(parameter="cedarkit.pwat", time="2026-11-02T12:00:00Z", step="PT6H").one()
+    assert caught.value.context["reason"] == "inconsistent_native_metadata"
+
+
+def test_meso1_pwat_keeps_bitmap_missing_values_and_source_ownership(
+    write_grib, meso1_pwat_record
+):
+    path = write_grib(records=[meso1_pwat_record(bitmapPresent=1, missingValue=9999, values=[1, 9999, 3, 0])])
+    with from_source({"kind": "file", "path": str(path), "dataset": "cma_meso_1km"}) as source:
+        field = source.sel(parameter="cedarkit.pwat", time="2026-11-02T12:00:00Z", step="PT6H").one()
+        array = field.to_xarray().pwat
+        np.testing.assert_array_equal(np.isnan(array.values.ravel()), [False, True, False, False])
+        np.testing.assert_array_equal(array.values.ravel()[[0, 2, 3]], [1, 3, 0])
+    assert np.isnan(array.values.ravel()[1])
+    with pytest.raises(SourceError):
+        field.to_xarray()
+
+
+def test_meso1_pwat_required_does_not_invent_an_expected_domain(
+    write_grib, meso1_pwat_record
+):
+    from cedarkit_query import CompletenessError
+
+    path = write_grib(records=[meso1_pwat_record()])
+    with from_source({"kind": "file", "path": str(path), "dataset": "cma_meso_1km"}) as source:
+        with pytest.raises(CompletenessError):
+            source.sel(parameter="cedarkit.pwat", time="2026-11-02T12:00:00Z", step="PT6H").one(completeness="required")

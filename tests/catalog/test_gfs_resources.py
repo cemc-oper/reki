@@ -59,7 +59,7 @@ def test_packaged_gfs_snapshots_bind_frozen_requests(tmp_path):
             .to_dict()["context"]
         )
     assert [(r["role"], r["version"]) for r in facts["definitions"]] == [
-        ("catalog", "40"),
+        ("catalog", "41"),
         ("parameter_registry", "15"),
         ("mappings", "20"),
     ]

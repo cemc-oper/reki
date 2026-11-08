@@ -1147,20 +1147,21 @@
       "mappings": {
         "grib2": {
           "builtin": "reki.mappings.cma-meso1.current",
-          "sha256": "d8a20aa20f477d4dae708a2669ca5b0809dff2d7d25002527d5c627e22ca37a6",
-          "version": "11"
+          "sha256": "cadabd50cb74c3fe91457609a4974ff9f9f72cca582d0741fd2d01b4b027ad62",
+          "version": "12"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cma-meso1.current",
-        "sha256": "c6538602512a63282023b8ca34ae72115f6348754899ee3fb59ba234325e70c2",
-        "version": "8"
+        "sha256": "0ac40324a25bbb37cee54a3ebda2dc0f6378a78a7eeb5693506385d446ed7c24",
+        "version": "9"
       },
       "products": [
         {
           "evidence": [
             "stage1.2/task-06/orig-batch-1",
-            "stage1.2/task-06B/deterministic-orig"
+            "stage1.2/task-06B/deterministic-orig",
+            "stage1.2/task-n04b-01/meso1:02"
           ],
           "id": "orig",
           "methods": [],
@@ -1529,6 +1530,16 @@
             {
               "level_type": "surface",
               "parameter": "cedarkit.zs"
+            },
+            {
+              "level_type": "entire_atmosphere",
+              "parameter": "cedarkit.pwat",
+              "step": [
+                "PT0H",
+                "PT6H",
+                "PT48H"
+              ],
+              "time": "2026-11-02T12:00:00Z"
             }
           ],
           "scope": {},
@@ -42665,5 +42676,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "40"
+  "version": "41"
 }

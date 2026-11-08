@@ -5999,8 +5999,133 @@
       "when": {
         "level_type": "surface"
       }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "stage1.2/task-06h/identity-review.json#meso1:02",
+        "stage1.2/task-n04a/adjudication.json#meso1:02",
+        "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-104-h006",
+        "stage1.2/task-07e2/named-live-final.jsonl#S-meso1-fcst-row-104-h006",
+        "stage1.2/task-n04a/input-audit.json#meso1:02/h0/sha256=27d3491dbe2b47e116676ce5d41024ff0d9a56469235031a408c5a454afef8bc"
+      ],
+      "id": "pwat.instantaneous.initial",
+      "native": {
+        "match": {
+          "centre": 38,
+          "dataDate": 20261102,
+          "dataTime": 1200,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": 0,
+          "indicatorOfUnitOfTimeRange": 0,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 10,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.pwat",
+      "when": {
+        "level_type": "entire_atmosphere",
+        "step": "PT0H"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_1km",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "stage1.2/task-06h/identity-review.json#meso1:02",
+        "stage1.2/task-n04a/adjudication.json#meso1:02",
+        "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-104-h006",
+        "stage1.2/task-07e2/named-live-final.jsonl#S-meso1-fcst-row-104-h006",
+        "stage1.2/task-n04a/input-audit.json#meso1:02/h6/sha256=66f760fef6aa2ae299f5c7ad73b2edbfb22956f173340338fdee72983db18f00",
+        "stage1.2/task-n04a/input-audit.json#meso1:02/h48/sha256=4aa6d9fe39117771dd57a504d82dae9c5eb7cf4b6e271e67996577122e708647"
+      ],
+      "id": "pwat.instantaneous.forecast",
+      "native": {
+        "match": {
+          "centre": 38,
+          "dataDate": 20261102,
+          "dataTime": 1200,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": [
+            360,
+            2880
+          ],
+          "indicatorOfUnitOfTimeRange": 0,
+          "localTablesVersion": 0,
+          "parameterCategory": 1,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 10,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "kg/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.pwat",
+      "when": {
+        "level_type": "entire_atmosphere",
+        "step": [
+          "PT6H",
+          "PT48H"
+        ]
+      }
     }
   ],
   "tables": [],
-  "version": "11"
+  "version": "12"
 }
