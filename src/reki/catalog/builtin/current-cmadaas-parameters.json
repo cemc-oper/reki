@@ -1295,7 +1295,43 @@
       "name": "slhf",
       "parameter_id": "cedarkit.slhf",
       "unit": "J/m2"
+    },
+    {
+      "aliases": [
+        "ssr"
+      ],
+      "description": "Time-integrated net short-wave radiation",
+      "description_cn": "净短波辐射时间积分量",
+      "fixed_conditions": {
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "gsw",
+      "parameter_id": "cedarkit.gsw",
+      "unit": "J/m2"
+    },
+    {
+      "description": "Time-integrated net short-wave radiation at the top of atmosphere",
+      "description_cn": "大气顶净短波辐射时间积分量",
+      "fixed_conditions": {
+        "level_type": "atmosphere_top",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "tsw",
+      "parameter_id": "cedarkit.tsw",
+      "parent": "cedarkit.gsw"
     }
   ],
-  "version": "7"
+  "version": "8"
 }

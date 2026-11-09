@@ -54916,6 +54916,218 @@
         ],
         "time": "2026-11-02T12:00:00Z"
       }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-ana-row-107",
+        "stage1.2/task-n06-02/inputs/ref/package/grib_util_v12.6/include/paraNum.h#case111",
+        "stage1.2/task-n06-02/originals/manifest.json",
+        "stage1.2/task-n06-02/results/scientific-source.json"
+      ],
+      "id": "S-gfs-ana.gsw.energy.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "NSRF",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.gsw",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT0H"
+        ],
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-ana-row-108",
+        "stage1.2/task-n06-02/inputs/ref/package/grib_util_v12.6/include/paraNum.h#case111",
+        "stage1.2/task-n06-02/originals/manifest.json",
+        "stage1.2/task-n06-02/results/scientific-source.json"
+      ],
+      "id": "S-gfs-ana.tsw.energy.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "NSRF",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.tsw",
+      "when": {
+        "level_type": "atmosphere_top",
+        "step": [
+          "PT0H"
+        ],
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-fcst-row-119",
+        "stage1.2/task-n06-02/inputs/ref/package/grib_util_v12.6/include/paraNum.h#case111",
+        "stage1.2/task-n06-02/originals/manifest.json",
+        "stage1.2/task-n06-02/results/scientific-source.json"
+      ],
+      "id": "S-gfs-fcst.gsw.energy.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "NSRF",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.gsw",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT3H",
+          "PT6H",
+          "PT48H"
+        ],
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-fcst-row-122",
+        "stage1.2/task-n06-02/inputs/ref/package/grib_util_v12.6/include/paraNum.h#case111",
+        "stage1.2/task-n06-02/originals/manifest.json",
+        "stage1.2/task-n06-02/results/scientific-source.json"
+      ],
+      "id": "S-gfs-fcst.tsw.energy.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "NSRF",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.tsw",
+      "when": {
+        "level_type": "atmosphere_top",
+        "step": [
+          "PT3H",
+          "PT6H",
+          "PT48H"
+        ],
+        "time": "2026-11-02T12:00:00Z"
+      }
     }
   ],
   "tables": [
@@ -54923,7 +55135,8 @@
       "applies_to": {},
       "evidence": [
         "task-01-coverage.md#十二类公共天擎服务",
-        "T07/frozen-parameter-mappings.md"
+        "T07/frozen-parameter-mappings.md",
+        "stage1.2/task-n06-02/originals/manifest.json#NSRF-8"
       ],
       "id": "cmadaas.levels",
       "key_kind": "level_type_and_level",
@@ -55461,6 +55674,16 @@
             "level": "10",
             "level_type": "103"
           }
+        },
+        {
+          "canonical": {
+            "level_type": "atmosphere_top"
+          },
+          "id": "atmosphere-top",
+          "native": {
+            "level": "0",
+            "level_type": "8"
+          }
         }
       ]
     },
@@ -55562,5 +55785,5 @@
       ]
     }
   ],
-  "version": "9"
+  "version": "10"
 }

@@ -141,9 +141,16 @@ def _unit_response_profile(mapping, service, definition):
     """Identify the reviewed interpretation without widening the unit schema."""
     config = mapping["native"]["translate"]["unit"].get("config", {})
     fixed = definition["fixed_conditions"]
+    reviewed = {
+        "cedarkit.slhf": ("NLHF", "surface", "gfs_nlhf_accumulated_energy"),
+        "cedarkit.gsw": ("NSRF", "surface", "gfs_nsrf_accumulated_energy"),
+        "cedarkit.tsw": ("NSRF", "atmosphere_top", "gfs_nsrf_accumulated_energy"),
+    }.get(mapping["parameter_id"])
+    if reviewed is None:
+        return None
+    element, level_type, profile = reviewed
     if (
-        mapping["parameter_id"] == "cedarkit.slhf"
-        and mapping["native"]["match"].get("fcstEle") == "NLHF"
+        mapping["native"]["match"].get("fcstEle") == element
         and (
             service["data_code"],
             service["interface_contract"]["id"],
@@ -153,13 +160,13 @@ def _unit_response_profile(mapping, service, definition):
             ("NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB", "cmadaas.grid-array2d.forecast", 3),
         }
         and config.get("source_unit") == definition["unit"] == "J/m2"
-        and fixed.get("level_type") == "surface"
+        and fixed.get("level_type", mapping.get("when", {}).get("level_type")) == level_type
         and fixed.get("statistics") == {
             "operation": "accumulation", "over": "time",
             "period": {"kind": "since_initialization"},
         }
     ):
-        return "gfs_nlhf_accumulated_energy"
+        return profile
     return None
 
 
@@ -325,9 +332,9 @@ def _request(
             raise QueryError("invalid_config", "/mappings", "invalid rectangle bounds")
     definition = configuration.parameters[identity["parameter"]]
     if _unit_response_profile(mapping, service, definition) and native_level != {
-        "level_type": "1", "level": "0"
+        "level_type": "8" if identity["parameter"] == "cedarkit.tsw" else "1", "level": "0"
     }:
-        raise QueryError("invalid_config", "/mappings", "GFS NLHF unit profile requires native surface 1/0")
+        raise QueryError("invalid_config", "/mappings", "GFS energy unit profile requires its reviewed native boundary")
     declared_unit = rules["unit"].get("config", {}).get("source_unit")
     if not isinstance(declared_unit, str):
         raise QueryError("invalid_config", "/mappings", "service source unit required")
@@ -822,7 +829,7 @@ class CmadaasScan:
                 raw_unit = array.attrs.get("units")
                 unit_profile = _unit_response_profile(mapping, self.backend.service, definition)
                 if unit_profile and raw_unit in (None, ""):
-                    metadata_error("missing_native_metadata", "Reviewed NLHF response unit is absent")
+                    metadata_error("missing_native_metadata", "Reviewed GFS energy response unit is absent")
                 mapped_unit = (
                     reps
                     or derived
@@ -850,7 +857,7 @@ class CmadaasScan:
                         }.get(raw_unit, raw_unit)
                     )
                 )
-                # N06-01: these two products label accumulated J/m2 values W.m-2.
+                # N06-01/02: reviewed GFS energy responses label J/m2 values W.m-2.
                 # Keep the original declaration and explicit interpretation; no
                 # division by duration, scaling or sign conversion is applied.
                 if unit_profile and raw_unit == "W.m-2":
