@@ -137,6 +137,32 @@ def _unit_offset(source, target, pid, data_code, *, index=None):
     )
 
 
+def _unit_response_profile(mapping, service, definition):
+    """Identify the reviewed interpretation without widening the unit schema."""
+    config = mapping["native"]["translate"]["unit"].get("config", {})
+    fixed = definition["fixed_conditions"]
+    if (
+        mapping["parameter_id"] == "cedarkit.slhf"
+        and mapping["native"]["match"].get("fcstEle") == "NLHF"
+        and (
+            service["data_code"],
+            service["interface_contract"]["id"],
+            service["interface_contract"]["version"],
+        ) in {
+            ("NAFP_ANA_FTM_GRAPES_GFS_25KM_GLB", "cmadaas.grid-array2d.forecast", 2),
+            ("NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB", "cmadaas.grid-array2d.forecast", 3),
+        }
+        and config.get("source_unit") == definition["unit"] == "J/m2"
+        and fixed.get("level_type") == "surface"
+        and fixed.get("statistics") == {
+            "operation": "accumulation", "over": "time",
+            "period": {"kind": "since_initialization"},
+        }
+    ):
+        return "gfs_nlhf_accumulated_energy"
+    return None
+
+
 def _derived_response(mapping, service, definition):
     profile = (
         mapping["native"]["translate"]["statistics"]
@@ -298,6 +324,10 @@ def _request(
         if not (-90 <= south <= north <= 90 and -180 <= west <= east <= 360):
             raise QueryError("invalid_config", "/mappings", "invalid rectangle bounds")
     definition = configuration.parameters[identity["parameter"]]
+    if _unit_response_profile(mapping, service, definition) and native_level != {
+        "level_type": "1", "level": "0"
+    }:
+        raise QueryError("invalid_config", "/mappings", "GFS NLHF unit profile requires native surface 1/0")
     declared_unit = rules["unit"].get("config", {}).get("source_unit")
     if not isinstance(declared_unit, str):
         raise QueryError("invalid_config", "/mappings", "service source unit required")
@@ -790,6 +820,9 @@ class CmadaasScan:
                     "source_unit"
                 ]
                 raw_unit = array.attrs.get("units")
+                unit_profile = _unit_response_profile(mapping, self.backend.service, definition)
+                if unit_profile and raw_unit in (None, ""):
+                    metadata_error("missing_native_metadata", "Reviewed NLHF response unit is absent")
                 mapped_unit = (
                     reps
                     or derived
@@ -817,6 +850,11 @@ class CmadaasScan:
                         }.get(raw_unit, raw_unit)
                     )
                 )
+                # N06-01: these two products label accumulated J/m2 values W.m-2.
+                # Keep the original declaration and explicit interpretation; no
+                # division by duration, scaling or sign conversion is applied.
+                if unit_profile and raw_unit == "W.m-2":
+                    unit, unit_basis = "J/m2", "product_contract"
                 if unit != _unit(declared):
                     metadata_error(
                         "inconsistent_native_metadata",
@@ -854,6 +892,7 @@ class CmadaasScan:
                     "mapping_ids": [mapping["id"]],
                     "response_unit": raw_unit,
                     "source_unit_basis": unit_basis,
+                    **({"response_unit_profile": unit_profile} if unit_profile else {}),
                     **(
                         {"code_table": "WMO GRIB2 4.201"}
                         if raw_unit in _CODE_TABLE_UNITS

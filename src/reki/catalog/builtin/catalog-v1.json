@@ -3078,14 +3078,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "98fb58eebb658edb22a2c9ba977007079d4a34381ef255a5afd92fac51584cfd",
-          "version": "8"
+          "sha256": "87aa357c3496933d9d7e72c0da16d8ae2e7af8a4a0352c37df72fe48e7a84eb1",
+          "version": "9"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "059083f3cd698eb71c17dbd877486758d75d2aa21b0bc6bac28fd0c2d757948e",
-        "version": "6"
+        "sha256": "5c8ee3b97ab91b16636d8be67e81f33788b0ffc638f693c10c6bd4c3ca81271b",
+        "version": "7"
       },
       "products": [
         {
@@ -3161,7 +3161,8 @@
             "stage1.2/task-07e1/originals.jsonl#S-gfs-fcst-row-62",
             "stage1.2/task-07e1/originals.jsonl#S-gfs-fcst-row-64",
             "stage1.2/task-07e1/originals.jsonl#S-gfs-fcst-row-65",
-            "stage1.2/task-07e1/originals.jsonl#S-gfs-fcst-row-63"
+            "stage1.2/task-07e1/originals.jsonl#S-gfs-fcst-row-63",
+            "stage1.2/task-n06-01#S-gfs-fcst-row-98"
           ],
           "expected_domain": [
             {
@@ -3917,6 +3918,27 @@
               "step": "PT259200S",
               "time": "2026-11-04T12:00:00Z",
               "valid_time": "2026-11-07T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.slhf",
+              "step": "PT10800S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T15:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.slhf",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.slhf",
+              "step": "PT172800S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-04T12:00:00Z"
             }
           ],
           "id": "forecast",
@@ -9244,6 +9266,16 @@
                 "PT237H",
                 "PT240H"
               ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.slhf",
+              "step": [
+                "PT3H",
+                "PT6H",
+                "PT48H"
+              ],
+              "time": "2026-11-02T12:00:00Z"
             }
           ],
           "scope": {},
@@ -9271,14 +9303,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "98fb58eebb658edb22a2c9ba977007079d4a34381ef255a5afd92fac51584cfd",
-          "version": "8"
+          "sha256": "87aa357c3496933d9d7e72c0da16d8ae2e7af8a4a0352c37df72fe48e7a84eb1",
+          "version": "9"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "059083f3cd698eb71c17dbd877486758d75d2aa21b0bc6bac28fd0c2d757948e",
-        "version": "6"
+        "sha256": "5c8ee3b97ab91b16636d8be67e81f33788b0ffc638f693c10c6bd4c3ca81271b",
+        "version": "7"
       },
       "products": [
         {
@@ -9338,7 +9370,8 @@
             "stage1.2/task-07e1/originals.jsonl#S-gfs-ana-row-63",
             "stage1.2/task-07e1/originals.jsonl#S-gfs-ana-row-72",
             "stage1.2/task-07e1/originals.jsonl#S-gfs-ana-row-88",
-            "stage1.2/task-07e1/originals.jsonl#S-gfs-ana-row-89"
+            "stage1.2/task-07e1/originals.jsonl#S-gfs-ana-row-89",
+            "stage1.2/task-n06-01#S-gfs-ana-row-102"
           ],
           "expected_domain": [
             {
@@ -9790,6 +9823,13 @@
             {
               "level_type": "entire_atmosphere",
               "parameter": "cedarkit.pwat",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.slhf",
               "step": "PT0S",
               "time": "2026-11-02T12:00:00Z",
               "valid_time": "2026-11-02T12:00:00Z"
@@ -10850,6 +10890,14 @@
               "step": [
                 "PT0H"
               ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.slhf",
+              "step": [
+                "PT0H"
+              ],
+              "time": "2026-11-02T12:00:00Z"
             }
           ],
           "scope": {
@@ -10879,14 +10927,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "98fb58eebb658edb22a2c9ba977007079d4a34381ef255a5afd92fac51584cfd",
-          "version": "8"
+          "sha256": "87aa357c3496933d9d7e72c0da16d8ae2e7af8a4a0352c37df72fe48e7a84eb1",
+          "version": "9"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "059083f3cd698eb71c17dbd877486758d75d2aa21b0bc6bac28fd0c2d757948e",
-        "version": "6"
+        "sha256": "5c8ee3b97ab91b16636d8be67e81f33788b0ffc638f693c10c6bd4c3ca81271b",
+        "version": "7"
       },
       "products": [
         {
@@ -12202,14 +12250,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "98fb58eebb658edb22a2c9ba977007079d4a34381ef255a5afd92fac51584cfd",
-          "version": "8"
+          "sha256": "87aa357c3496933d9d7e72c0da16d8ae2e7af8a4a0352c37df72fe48e7a84eb1",
+          "version": "9"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "059083f3cd698eb71c17dbd877486758d75d2aa21b0bc6bac28fd0c2d757948e",
-        "version": "6"
+        "sha256": "5c8ee3b97ab91b16636d8be67e81f33788b0ffc638f693c10c6bd4c3ca81271b",
+        "version": "7"
       },
       "products": [
         {
@@ -16236,14 +16284,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "98fb58eebb658edb22a2c9ba977007079d4a34381ef255a5afd92fac51584cfd",
-          "version": "8"
+          "sha256": "87aa357c3496933d9d7e72c0da16d8ae2e7af8a4a0352c37df72fe48e7a84eb1",
+          "version": "9"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "059083f3cd698eb71c17dbd877486758d75d2aa21b0bc6bac28fd0c2d757948e",
-        "version": "6"
+        "sha256": "5c8ee3b97ab91b16636d8be67e81f33788b0ffc638f693c10c6bd4c3ca81271b",
+        "version": "7"
       },
       "products": [
         {
@@ -17367,14 +17415,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "98fb58eebb658edb22a2c9ba977007079d4a34381ef255a5afd92fac51584cfd",
-          "version": "8"
+          "sha256": "87aa357c3496933d9d7e72c0da16d8ae2e7af8a4a0352c37df72fe48e7a84eb1",
+          "version": "9"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "059083f3cd698eb71c17dbd877486758d75d2aa21b0bc6bac28fd0c2d757948e",
-        "version": "6"
+        "sha256": "5c8ee3b97ab91b16636d8be67e81f33788b0ffc638f693c10c6bd4c3ca81271b",
+        "version": "7"
       },
       "products": [
         {
@@ -20953,14 +21001,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "98fb58eebb658edb22a2c9ba977007079d4a34381ef255a5afd92fac51584cfd",
-          "version": "8"
+          "sha256": "87aa357c3496933d9d7e72c0da16d8ae2e7af8a4a0352c37df72fe48e7a84eb1",
+          "version": "9"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "059083f3cd698eb71c17dbd877486758d75d2aa21b0bc6bac28fd0c2d757948e",
-        "version": "6"
+        "sha256": "5c8ee3b97ab91b16636d8be67e81f33788b0ffc638f693c10c6bd4c3ca81271b",
+        "version": "7"
       },
       "products": [
         {
@@ -22108,14 +22156,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "98fb58eebb658edb22a2c9ba977007079d4a34381ef255a5afd92fac51584cfd",
-          "version": "8"
+          "sha256": "87aa357c3496933d9d7e72c0da16d8ae2e7af8a4a0352c37df72fe48e7a84eb1",
+          "version": "9"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "059083f3cd698eb71c17dbd877486758d75d2aa21b0bc6bac28fd0c2d757948e",
-        "version": "6"
+        "sha256": "5c8ee3b97ab91b16636d8be67e81f33788b0ffc638f693c10c6bd4c3ca81271b",
+        "version": "7"
       },
       "products": [
         {
@@ -30620,8 +30668,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "98fb58eebb658edb22a2c9ba977007079d4a34381ef255a5afd92fac51584cfd",
-          "version": "8"
+          "sha256": "87aa357c3496933d9d7e72c0da16d8ae2e7af8a4a0352c37df72fe48e7a84eb1",
+          "version": "9"
         }
       },
       "member_roles": {
@@ -30659,8 +30707,8 @@
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "059083f3cd698eb71c17dbd877486758d75d2aa21b0bc6bac28fd0c2d757948e",
-        "version": "6"
+        "sha256": "5c8ee3b97ab91b16636d8be67e81f33788b0ffc638f693c10c6bd4c3ca81271b",
+        "version": "7"
       },
       "products": [
         {
@@ -32455,8 +32503,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "98fb58eebb658edb22a2c9ba977007079d4a34381ef255a5afd92fac51584cfd",
-          "version": "8"
+          "sha256": "87aa357c3496933d9d7e72c0da16d8ae2e7af8a4a0352c37df72fe48e7a84eb1",
+          "version": "9"
         }
       },
       "member_roles": {
@@ -32494,8 +32542,8 @@
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "059083f3cd698eb71c17dbd877486758d75d2aa21b0bc6bac28fd0c2d757948e",
-        "version": "6"
+        "sha256": "5c8ee3b97ab91b16636d8be67e81f33788b0ffc638f693c10c6bd4c3ca81271b",
+        "version": "7"
       },
       "products": [
         {
@@ -34211,8 +34259,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "98fb58eebb658edb22a2c9ba977007079d4a34381ef255a5afd92fac51584cfd",
-          "version": "8"
+          "sha256": "87aa357c3496933d9d7e72c0da16d8ae2e7af8a4a0352c37df72fe48e7a84eb1",
+          "version": "9"
         }
       },
       "member_roles": {
@@ -34234,8 +34282,8 @@
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "059083f3cd698eb71c17dbd877486758d75d2aa21b0bc6bac28fd0c2d757948e",
-        "version": "6"
+        "sha256": "5c8ee3b97ab91b16636d8be67e81f33788b0ffc638f693c10c6bd4c3ca81271b",
+        "version": "7"
       },
       "products": [
         {
@@ -37932,8 +37980,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "98fb58eebb658edb22a2c9ba977007079d4a34381ef255a5afd92fac51584cfd",
-          "version": "8"
+          "sha256": "87aa357c3496933d9d7e72c0da16d8ae2e7af8a4a0352c37df72fe48e7a84eb1",
+          "version": "9"
         }
       },
       "member_roles": {
@@ -37955,8 +38003,8 @@
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "059083f3cd698eb71c17dbd877486758d75d2aa21b0bc6bac28fd0c2d757948e",
-        "version": "6"
+        "sha256": "5c8ee3b97ab91b16636d8be67e81f33788b0ffc638f693c10c6bd4c3ca81271b",
+        "version": "7"
       },
       "products": [
         {
@@ -42676,5 +42724,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "41"
+  "version": "42"
 }

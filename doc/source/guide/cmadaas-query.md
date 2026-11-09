@@ -242,3 +242,21 @@ Since-initialization fields use original PDT11 accumulations from zero to the re
 The finite expected domains add 163 successfully verified sample cells from 2026-11-02/04/05 06 UTC, including the complete member sets for all three accumulation families at +48h. Other allowed cells remain unchecked. Service availability differs by reference cycle, element, lead and member: 419 sampled cells return structured service errors and are excluded from verified expected domains. Independent task 07E18 tracks those cells without adding historical-row obligations or gating the 36 published mappings. Existing tasks 07E14 and 07E17 retain their separate availability and grid-cell ledgers.
 
 Catalog v40 pins parameter v6 and mapping v8, retaining all 101 definitions, 492 prior mappings and five joint vertical tables. The resulting 528 mappings cover 529 historical service rows, with 484 rows remaining. Query/Request v1 and the query and client packages are unchanged.
+
+## Reviewed GFS NLHF accumulated energy
+
+The N06-01 binding adds `cedarkit.slhf` to the GFS analysis and forecast services. Its source-specific meaning is surface latent heat accumulated since initialization in `J/m2`. The accepted cells are limited to 2026-11-02 12 UTC: analysis lead zero and forecast leads 3, 6 and 48 hours, over the existing 39–41°N / 115–117°E rectangle. Other cycles and leads are outside this reviewed binding; forecast lead zero is not advertised.
+
+```python
+from reki import from_source
+
+with from_source({"kind": "cmadaas", "dataset": "cma_gfs_gmf_cmadaas"}) as source:
+    field = source.sel(parameter="cedarkit.slhf", time="2026-11-02T12:00:00Z", step="PT6H").one(completeness="required")
+    dataset = field.to_xarray()
+    raw_unit = field.metadata["response_unit"]
+    unit_basis = field.metadata["source_unit_basis"]
+```
+
+The actual response labels these values `W.m-2`. Same-product GRIB 0/0/10, surface, PDT 8 accumulation records and the reviewed producer declarations establish that the stored values are accumulated energy. The service grids match those original energy values within the existing float32 rounding bound. No division by elapsed seconds, sign change or numerical scaling is applied. Field metadata retains the raw `response_unit`, `source_unit="J/m2"`, `source_unit_basis="product_contract"` and `response_unit_profile="gfs_nlhf_accumulated_energy"`. Missing or other conflicting response units still fail. The interpretation is limited to these two dataCodes, their registered contracts, the NLHF element and the fixed surface accumulation identity; it is not a generic unit alias or a new Query/schema option.
+
+The distinction between time-integrated energy and a rate also agrees with the [ecCodes parameter 147 description](https://codes.ecmwf.int/grib/param-db/147), whose recommended GRIB2 encoding uses this surface parameter and accumulation operation. The CEMC product evidence and same-field comparisons determine this binding; another centre's sign convention or availability is not inferred. The analysis zero field is an initialization value, not an observation of zero physical heat transfer. Only the four independently verified cells enter the finite expected domain.
