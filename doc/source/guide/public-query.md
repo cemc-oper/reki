@@ -37,3 +37,13 @@ These cells have no independent expected domain: available reads report
 `unchecked` with `expected_set_unknown`, and `completeness="required"` does not
 turn them into complete observations. Other cycles/leads and surface refinements
 are outside this reviewed binding.
+
+## Encoded value precision
+
+For GRIB simple packing and lossless JPEG packing, field metadata exposes
+`value_encoding` with the bit count, binary/decimal scales and half encoded
+quantization step in the decoded value's unit. Constant fields have zero
+quantization error. This evidence does not add native query keys, change decoded
+values or assert a producer's physical uncertainty. The guarded precipitation
+workflow can use it to retain small endpoint differences while rejecting larger
+decreases; unsupported packing does not receive this precision declaration.

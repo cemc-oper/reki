@@ -624,3 +624,13 @@ def test_meso1_pwat_required_does_not_invent_an_expected_domain(
     with from_source({"kind": "file", "path": str(path), "dataset": "cma_meso_1km"}) as source:
         with pytest.raises(CompletenessError):
             source.sel(parameter="cedarkit.pwat", time="2026-11-02T12:00:00Z", step="PT6H").one(completeness="required")
+
+
+def test_lossless_grib_preserves_value_quantization_evidence(write_grib, meso1_pwat_record):
+    path = write_grib(records=[meso1_pwat_record()])
+    with from_source({"kind": "file", "path": str(path), "dataset": "cma_meso_1km"}) as source:
+        field = source.sel(parameter="cedarkit.pwat", time="2026-11-02T12:00:00Z", step="PT6H").one()
+        encoding = field.metadata["value_encoding"]
+        assert encoding["unit"] == "kg/m2"
+        assert encoding["quantization_error"] == pytest.approx(0.5 * 2**encoding["binary_scale_factor"] * 10**(-encoding["decimal_scale_factor"]))
+        assert "binaryScaleFactor" not in field.identity.to_dict().get("native", {}).get("grib", {})

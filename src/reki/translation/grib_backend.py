@@ -459,6 +459,25 @@ class GribScan:
                         )
                         if interval is not None:
                             meta["statistical_interval"] = interval
+                        # Evidence in decoded-value units; no new native selectors.
+                        packing = native.get("packingType")
+                        if packing in {"grid_simple", "grid_jpeg"} and (
+                            packing != "grid_jpeg"
+                            or eccodes.codes_get_long(header.handle, "typeOfCompressionUsed") == 0
+                        ):
+                            bits = eccodes.codes_get_long(header.handle, "bitsPerValue")
+                            binary = eccodes.codes_get_long(header.handle, "binaryScaleFactor")
+                            decimal = eccodes.codes_get_long(header.handle, "decimalScaleFactor")
+                            if -1022 <= binary <= 1022 and -300 <= decimal <= 300:
+                                meta["value_encoding"] = {
+                                    "packing_type": packing,
+                                    "bits_per_value": bits,
+                                    "binary_scale_factor": binary,
+                                    "decimal_scale_factor": decimal,
+                                    "quantization_error": 0.0 if bits == 0 else 0.5 * 2.0**binary * 10.0**(-decimal),
+                                    "unit": named_meta.get("unit"),
+                                    "basis": "half encoded quantization step; lossless packing",
+                                }
                         yield FieldReference(
                             repr((snapshot.fingerprint, offset)),
                             Query(identity),
