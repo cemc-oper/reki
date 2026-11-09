@@ -16,7 +16,7 @@ kernelspec:
 
 :::{important}
 本页属于**旧 API（兼容层）**文档，介绍 `reki.format.grib` 命名空间下的
-接口。这些接口保持可用，旧代码无需修改；新代码请使用新 API
+接口。这些函数按本页限定范围保留；已退出的引擎、索引与旧模型须迁移。新代码请使用公共 API
 （`from_source()` / `sel()` / `to_xarray()`），见
 {doc}`/guide/grib/index`、{doc}`/guide/grib/parameters`、
 {doc}`/guide/grib/levels`。新旧接口的对应关系见
@@ -30,7 +30,7 @@ kernelspec:
 - `parameter`：要素名（字符串或 GRIB 键字典）
 - `level_type`：层次类型（字符串或 GRIB 键字典）
 - `level`：层次值
-- `engine`：解码引擎，`"eccodes"`（默认）或 `"cfgrib"`
+- `engine`：解码引擎，仅 `"eccodes"`；显式 `"cfgrib"` 报 unsupported
 - `**kwargs`：任意 GRIB 键作为附加筛选条件
 
 本页示例使用内置 `test` 数据源的 **ecmwf_ifs** 冻结数据集
@@ -39,9 +39,9 @@ kernelspec:
 除标注外均可执行：
 
 ```{code-cell} ipython3
-from reki import from_source
+from reki.sources import get_source
 
-file_path = from_source("test", "ecmwf_ifs").mutate().path
+file_path = get_source("test", "ecmwf_ifs").mutate().path
 print(file_path)
 ```
 
@@ -122,6 +122,7 @@ field = load_field_from_file(
 `heightAboveGround` 的编码值）：
 
 ```{code-cell} ipython3
+t2m = load_field_from_file(file_path, parameter="2t", level_type="heightAboveGround", level=2)
 t2m_dict = load_field_from_file(
     file_path,
     parameter="2t",
@@ -173,7 +174,7 @@ bool((t2m_first == t2m).all())
 
 ### 多层次检索
 
-`reki.format.grib.load_fields_from_file()` 基于 cfgrib，
+`reki.format.grib.load_fields_from_file()` 使用 ecCodes 与公共 v1 组织／报告，
 `level` 传入列表可一次加载多个层次，返回带层次维的
 `xarray.Dataset`：
 
@@ -260,3 +261,15 @@ eccodes.codes_release(message)
 **ecmwf_ifs 数据集包含修改后的 ECMWF IFS 开放数据**，© ECMWF，
 按 CC-BY-4.0 许可使用。完整署名见 {doc}`/quick-start/test-data`。
 :::
+
+## 当前保护边界
+
+高频单文件保留原序与首匹配、部分层列表、原生坐标／单位／命名及 lazy，不强加报告。
+低频多文件 DataArray / 单文件 Dataset 使用公共维度、去重、冲突和网格规则；
+level=None / "all" 不加层值限制，多文件 field_name 只重命名单变量，显式 level_dim
+或 lazy=True 报 unsupported。零匹配分别返回 None / 携带报告的空 Dataset。
+
+低频报告为 cedarkit_query_report JSON；额外原生过滤条件记录在 adapter provenance，
+不扩展公共 schema。cfgrib 命名路径已删除。with_index True / 字符串只在调用处发出
+一次 FutureWarning，False 无提示，索引路径零访问。消息 / 字节返回原生顺序与所有权，
+count 为一基物理序号且优先于条件。来源与查询错误使用公共 SourceError / QueryError。

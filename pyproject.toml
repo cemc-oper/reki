@@ -33,7 +33,6 @@ dependencies = [
     "click",
     "tqdm",
     "requests",
-    "cfgrib",
     "eccodes",
     # Keep the binary library in the runtime dependencies while reki promises
     # turnkey GRIB support. Move this to an optional extra if system/Conda

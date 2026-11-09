@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from reki import FieldQuery
+from reki.core.field_query import _ReaderQuery as FieldQuery
 from reki.readers.grib.reader import GribReader
 
 

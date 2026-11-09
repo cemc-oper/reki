@@ -101,7 +101,7 @@ def test_metadata_selection_is_lazy_and_values_coordinates_are_independent(
         ds.raw.values.reshape(2, 2), [[280.0, 281.0], [282.0, 283.0]]
     )
     assert ds.raw.dims == ("time", "step", "pressure", "latitude", "longitude")
-    assert ds.pressure.values[0] == 850 and "units" not in ds.raw.attrs
+    assert ds.pressure.values[0] == 850 and ds.raw.attrs["units"] == "K"
     assert len(loads) == 1
     source.close()
     assert ds.raw.values.flat[0] == 280.0

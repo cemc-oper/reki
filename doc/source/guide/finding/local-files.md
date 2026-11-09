@@ -1,50 +1,16 @@
----
-jupytext:
-  text_representation:
-    extension: .md
-    format_name: myst
-    format_version: 0.13
-kernelspec:
-  display_name: Python 3
-  language: python
-  name: python3
----
-
 # 打开本地文件
 
-当调用方已经拥有一个确定路径时，用 `file` source。下面从冻结 IFS 文件开始，完整地
-选择并加载 2 米温度；这与快速开始的 `test` source 得到相同的 reader，只是路径由调用
-方负责。
-
-```{code-cell} ipython3
-import os
-from pathlib import Path
-
-from reki import from_source
-
-path = Path(os.environ["REKI_TEST_DATA_DIR"]) / "ifs_eastasia_2026090712_f024.grib2"
-reader = from_source("file", path)
-field = reader.sel(parameter="2t", level_type="heightAboveGround", level=2).first()
-assert field is not None
-data = field.to_xarray()
-assert data.shape == (241, 361)
-data.name, data.dims
-```
-
-`file` 不会展开 glob，也不猜测时次。若路径不存在，先检查 `Path(path).is_file()`；不要把
-不存在的路径误当作零匹配字段。
-
-对于多个已有文件，用 `file-pattern` 明确描述文件名模板和时次。该 source 只渲染路径，
-直到读取器被访问才打开文件：
+路径由调用方显式提供，不需要先登记具名参数或产品。单文件、文件列表与有序 glob
+均是公开 file 来源的候选范围；元数据与原始参数键用于区别实际报文。
 
 ```python
 from reki import from_source
 
-reader = from_source(
-    "file-pattern", "/srv/ifs/{start_time_label}", "ifs_f{forecast_hour_label}.grib2",
-    start_time="2026090712", forecast_time="24h",
-)
+with from_source({"kind": "file", "path": "/data/original.grib2"}) as source:
+    field = source.sel(native={"grib": {"shortName": "2t"}}, level_type="height_above_ground", level=2).one()
+    data = field.to_xarray(rename="t2m").t2m.squeeze(drop=True)
 ```
 
-模板只支持受限的起报和时效字段；实际文件布局与命名由部署决定。多个文件的字段合并和
-基数规则见 {doc}`/guide/grib/multiple-fields`。
+来源不存在报 SourceError(resource_not_found)，不能当作正常无匹配。local 来源的目录
+模板、时次和成员发现由 dataset 的已登记布局负责，部署 root 属于上下文，不写进业务
+资源。来源范围、重复与公共组织见 {doc}`/guide/public-query`。

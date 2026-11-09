@@ -8,11 +8,9 @@ from _helpers import open_ifs
 from reki.operator import extract_region
 
 
-source = open_ifs()
-assert "2t" in source.unique("parameter")
-field = source.sel(parameter="2t", level_type="heightAboveGround", level=2).first()
-assert field is not None
-data = field.to_xarray()
+with open_ifs() as source:
+    field = source.sel(native={"grib": {"shortName": "2t"}}, level_type="height_above_ground", level=2).one()
+    data = field.to_xarray(rename="2t")["2t"].squeeze(drop=True)
 assert data.name == "2t"
 assert data.shape == (241, 361)
 subset = extract_region(data, 105, 125, 25, 45)

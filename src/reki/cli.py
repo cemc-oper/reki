@@ -17,8 +17,7 @@ from reki.catalog import load_catalog
 from reki.catalog.current import current_registration
 from reki.catalog.loader import load_resource
 from reki.diagnostics import collect_io_metrics
-from reki import from_source
-from reki.core import UnsupportedOperationError
+from reki.sources import from_source
 from reki.query_cli import request
 
 
@@ -71,13 +70,13 @@ def show_catalog(dataset_id):
 
 def _index_options(command):
     command = click.option("--index-dir", type=click.Path(file_okay=False, path_type=str),
-                           help="Directory used for GRIB metadata indexes.")(command)
+                           help="Retired index directory option; no directory is accessed.")(command)
     command = click.option("--refresh-index", is_flag=True,
-                           help="Rebuild the metadata index before reading.")(command)
+                           help="Retired; requesting index refresh is unsupported.")(command)
     command = click.option("--read-only-index", is_flag=True,
-                           help="Use an existing valid index without building one.")(command)
+                           help="Retired; requesting index reads is unsupported.")(command)
     command = click.option("--use-index", is_flag=True,
-                           help="Read or build a metadata index.")(command)
+                           help="Retired; requesting an index is unsupported.")(command)
     return click.option("--no-index", is_flag=True,
                         help="Do not read or write a metadata index.")(command)
 
@@ -200,7 +199,7 @@ def _emit_inspect(reader, metrics, as_json):
             "summary": reader.summary(),
             "metrics": metrics.snapshot().to_dict(),
         }
-    except UnsupportedOperationError as exc:
+    except QueryError as exc:
         raise ExplorationError(str(exc), EXIT_UNSUPPORTED) from exc
     if as_json:
         click.echo(json.dumps(result, ensure_ascii=False, sort_keys=True,
@@ -248,7 +247,7 @@ def _list_fields(path, parameter, level_type, level, step, step_type, time_range
             reader._unsupported("metadata")
         return reader.sel(**_query_from_options(parameter, level_type, level, step, step_type,
                                                 time_range, member, extra)).all()
-    except UnsupportedOperationError as exc:
+    except QueryError as exc:
         raise ExplorationError(str(exc), EXIT_UNSUPPORTED) from exc
     except (OSError, ValueError) as exc:
         code = EXIT_INDEX_FAILURE if refresh_index else EXIT_UNSUPPORTED

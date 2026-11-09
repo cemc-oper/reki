@@ -32,6 +32,33 @@ def _check_message(
     -------
     bool
     """
+    # Historical Python time arguments are header predicates, not ecCodes key
+    # names and not a second public Query representation.
+    aliases = {"start_time": "start_time", "forecast_time": "step", "valid_time": "valid_time"}
+    if aliases.keys() & kwargs.keys():
+        import pandas as pd
+        from cedarkit_query import QueryError
+        from reki.readers.grib._header_metadata import time_metadata_from_message
+        times = time_metadata_from_message(message_id)
+        kwargs = dict(kwargs)
+        for alias, key in aliases.items():
+            value = kwargs.pop(alias, None)
+            if value is None:
+                continue
+            try:
+                if alias == "forecast_time":
+                    expected = pd.Timedelta(value)
+                else:
+                    expected = (pd.to_datetime(value, format="%Y%m%d%H")
+                                if isinstance(value, str) and len(value) == 10 and value.isdigit()
+                                else pd.Timestamp(value))
+                    if expected.tzinfo is not None:
+                        expected = expected.tz_convert("UTC").tz_localize(None)
+            except (ValueError, TypeError) as exc:
+                raise QueryError("invalid_query", "/" + alias, "Invalid legacy time argument") from exc
+            if times[key] != expected:
+                return False
+
     conditions = dict()
 
     parameter_conditions = get_parameter_conditions(parameter)

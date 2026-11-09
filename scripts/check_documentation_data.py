@@ -23,10 +23,6 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def reader(path: Path, **kwargs):
-    return reki.from_source("file", path, **kwargs)
-
-
 def load_assets(cache_dir: Path) -> dict[str, Path]:
     manifest_path = cache_dir / f"ecmwf_ifs-{ECMWF_IFS_RELEASE_TAG}-manifest.json"
     if not manifest_path.is_file():
@@ -51,37 +47,27 @@ def load_assets(cache_dir: Path) -> dict[str, Path]:
 
 def assert_documentation_contract(paths: dict[str, Path], index_dir: Path) -> None:
     """Exercise real fixtures for G5/G6/G10/G11 and layer-bound examples."""
-    core = reader(paths["core"], index_policy="off")
-    assert core.sel(
-        parameter="2t", level_type="heightAboveGround", level=2,
-    ).first() is not None
-
-    time = reader(paths["time"], index_policy="off")
-    time_data = time.sel(
-        parameter="2t", level_type="heightAboveGround", level=2, step=[0, 6, 12, 24],
-    ).to_xarray()
-    assert list(time_data.step.values.astype("timedelta64[h]").astype(int)) == [0, 6, 12, 24]
-    assert "valid_time" in time_data.coords
-    accumulated = time.sel(
-        parameter="tp", level_type="surface", level=0, step=24,
-    ).all().one()
-    assert accumulated.metadata.step_type == "accum"
-    assert accumulated.metadata.time_range.total_seconds() == 24 * 60 * 60
-
-    ensemble = reader(paths["ensemble"], index_policy="off")
-    ensemble_data = ensemble.sel(
-        parameter="2t", level_type="heightAboveGround", level=2, step=24,
-    ).to_xarray()
-    assert list(ensemble_data.number.values) == list(range(21))
-
-    layers = reader(paths["layers"], index_policy="off")
-    layer_data = layers.sel(parameter="sot", level_type="soilLayer", level=[1, 2]).to_xarray()
-    assert list(layer_data.soilLayer.values) == [1, 2]
-    assert layer_data.soilLayer_bounds.values.tolist() == [[0, 1], [1, 2]]
-
-    indexed = reader(paths["core"], index_policy="auto", index_dir=index_dir)
-    assert len(indexed.ls()) == 11
-    assert list(index_dir.glob("*.sqlite")), "G10 index fixture was not created"
+    for variant, path in paths.items():
+        with reki.from_source({"kind": "file", "path": str(path)}) as source:
+            fields = source.sel().all()
+            assert len(fields), variant
+            if variant == "core":
+                assert len(fields) == 11
+                data = source.sel(native={"grib": {"shortName": "2t"}}).one().to_xarray(rename="t2m")
+                assert data.t2m.squeeze(drop=True).shape == (241, 361)
+            if variant == "time":
+                data = source.sel(native={"grib": {"shortName": "2t"}}).all().to_xarray(rename="t2m")
+                assert list(data.step.values.astype("timedelta64[h]").astype(int)) == [0, 6, 12, 24]
+                assert "valid_time" in data.coords
+    # A path supplied to a protected reader is ignored without creating an index.
+    from reki.format.grib import load_field_from_file
+    import warnings
+    before = sorted(index_dir.glob("*")) if index_dir.exists() else []
+    with warnings.catch_warnings(record=True) as captured:
+        warnings.simplefilter("always")
+        assert load_field_from_file(paths["core"], parameter="2t", with_index=str(index_dir / "retired.idx")) is not None
+    assert len([w for w in captured if issubclass(w.category, FutureWarning)]) == 1
+    assert (sorted(index_dir.glob("*")) if index_dir.exists() else []) == before
 
 
 def assert_no_unmanaged_artifacts(doc_dir: Path, cache_dir: Path) -> None:

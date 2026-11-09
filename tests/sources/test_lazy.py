@@ -1,5 +1,6 @@
 """Tests for source-level laziness (LazySource / from_source_lazily)."""
 
+from reki import sources as named_sources
 import numpy as np
 import pytest
 
@@ -50,13 +51,13 @@ def restore_registry():
 class TestLazilyParameter:
     def test_returns_lazy_source_without_running_pipeline(self):
         register("counting", CountingSource)
-        src = reki.from_source("counting", lazily=True)
+        src = named_sources.from_source("counting", lazily=True)
         assert isinstance(src, LazySource)
         assert CountingSource.events == []
 
     def test_first_access_runs_pipeline_once(self):
         register("counting", CountingSource)
-        src = reki.from_source("counting", lazily=True)
+        src = named_sources.from_source("counting", lazily=True)
         assert src.to_xarray() == "data"
         assert CountingSource.events == ["init", "mutate"]
         # second access uses the cached object
@@ -65,7 +66,7 @@ class TestLazilyParameter:
 
     def test_repr_does_not_trigger_pipeline(self):
         register("counting", CountingSource)
-        src = reki.from_source("counting", lazily=True)
+        src = named_sources.from_source("counting", lazily=True)
         assert "pending" in repr(src)
         assert CountingSource.events == []
         src.to_xarray()
@@ -75,41 +76,41 @@ class TestLazilyParameter:
 class TestFromSourceLazily:
     def test_defers_construction(self):
         register("counting", CountingSource)
-        src = reki.from_source_lazily("counting")
+        src = named_sources.from_source_lazily("counting")
         assert isinstance(src, LazySource)
         assert CountingSource.events == []
         assert src.to_xarray() == "data"
         assert CountingSource.events == ["init", "mutate"]
 
     def test_exported_at_top_level(self):
-        assert reki.from_source_lazily is not None
+        assert named_sources.from_source_lazily is not None
 
 
 class TestRemoteSourcesAreLazyByDefault:
     def test_remote_source_does_not_fire_at_from_source(self):
         register("fake-remote", RemoteSource)
-        src = reki.from_source("fake-remote")
+        src = named_sources.from_source("fake-remote")
         assert isinstance(src, LazySource)
 
     def test_remote_error_surfaces_on_access(self):
         register("fake-remote", RemoteSource)
-        src = reki.from_source("fake-remote")
+        src = named_sources.from_source("fake-remote")
         with pytest.raises(RuntimeError, match="remote request fired"):
             src.to_xarray()
 
     def test_url_source_is_lazy_by_default(self):
-        src = reki.from_source("url", "https://example.com/data.grib2")
+        src = named_sources.from_source("url", "https://example.com/data.grib2")
         assert isinstance(src, LazySource)
 
     def test_cmadaas_source_is_lazy_by_default(self):
-        src = reki.from_source("cmadaas", interface_id="x", params={})
+        src = named_sources.from_source("cmadaas", interface_id="x", params={})
         assert isinstance(src, LazySource)
 
     def test_local_sources_stay_eager(self, grib2_gfs_basic_file_path):
         from reki.readers.grib.reader import GribReader
 
-        reader = reki.from_source("file", grib2_gfs_basic_file_path)
+        reader = named_sources.from_source("file", grib2_gfs_basic_file_path)
         assert isinstance(reader, GribReader)
 
-        src = reki.from_source("memory", np.arange(3))
+        src = named_sources.from_source("memory", np.arange(3))
         assert not isinstance(src, LazySource)

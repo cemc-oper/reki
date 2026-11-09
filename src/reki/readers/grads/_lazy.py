@@ -35,7 +35,13 @@ def load_record_values(
     the y axis, which is a view): no data is read until the array is
     actually indexed.
     """
-    values = np.memmap(path, dtype=dtype, mode="r", offset=offset, shape=shape)
+    from reki._legacy import reader_errors
+    from cedarkit_query import SourceError
+    with reader_errors(path, "read_grads_values"):
+        try:
+            values = np.memmap(path, dtype=dtype, mode="r", offset=offset, shape=shape)
+        except ValueError as exc:
+            raise SourceError("decode_failed", "/source", "GrADS record is truncated", {"resource": str(path)}) from exc
     if flip_y:
         values = np.flip(values, 0)
     return values

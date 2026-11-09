@@ -8,6 +8,8 @@ import eccodes
 import numpy as np
 
 from reki.diagnostics import record_io_event
+from reki._legacy import reader_errors
+from cedarkit_query import SourceError
 
 
 @dataclass
@@ -38,7 +40,7 @@ class GribHeader:
 def open_grib_file(path):
     """Open a data file at the reki-owned observable boundary."""
     record_io_event("file_open_count")
-    with open(path, "rb") as handle:
+    with reader_errors(path, "read_grib"), open(path, "rb", buffering=0) as handle:
         yield handle
 
 
@@ -62,6 +64,8 @@ def iter_headers(path: str | Path, *, headers_only=True):
                     headers_only=headers_only,
                 )
                 if message is None:
+                    if ordinal == 0 and file_handle.seek(0, 2):
+                        raise SourceError("decode_failed", "/source/path", "Nonempty input contains no GRIB messages", {"resource": str(path)})
                     return
                 record_io_event("grib_header_scan_count")
                 length = None

@@ -2,7 +2,9 @@ import eccodes
 import pandas as pd
 import pytest
 
-from reki import DataNotFoundError, FieldList, FieldQuery
+from cedarkit_query import QueryError
+from reki.core.field_list import _ReaderFields as FieldList
+from reki.core.field_query import _ReaderQuery as FieldQuery
 from reki.diagnostics import collect_io_metrics
 from reki.readers.grib.reader import GribReader
 
@@ -79,22 +81,10 @@ def test_all_off_keeps_metadata_scan_without_index(tmp_path):
     assert len(fields) == 2
 
 
-def test_hot_index_first_and_one_avoid_header_scans(tmp_path):
-    path = tmp_path / "fields.grib"
-    root = tmp_path / "index"
-    _write(path)
-    # Build once, then use a new reader to model independent queries.
-    GribReader(None, path, index_policy="auto", index_dir=root).all()
-    with collect_io_metrics() as metrics:
-        reader = GribReader(None, path, index_policy="auto", index_dir=root)
-        assert reader.sel(level=850).first().metadata.level == 850
-        # ``t`` resolves to the native discipline/category/number triplet;
-        # that projection must be present in indexed metadata as well.
-        assert reader.sel(parameter="t", level_type="pl", level=500).one().metadata.level == 500
-        snapshot = metrics.snapshot()
-    assert snapshot["index_hit_count"] == 2
-    assert snapshot["grib_header_scan_count"] == 0
-    assert snapshot["value_decode_count"] == 0
+@pytest.mark.parametrize("policy", ["auto", "readonly", "refresh"])
+def test_retired_index_policy_is_explicitly_rejected(tmp_path,policy):
+    with pytest.raises(QueryError, match="retired"):
+        GribReader(None,tmp_path/"missing.grib2",index_policy=policy)
 
 
 def test_exploration_is_metadata_only_and_json_safe(tmp_path):
@@ -118,7 +108,7 @@ def test_exploration_is_metadata_only_and_json_safe(tmp_path):
         reader.where("level == 850")
 
 
-def test_forecast_metadata_matches_between_scan_and_hot_index(tmp_path):
+def test_forecast_metadata_matches_between_independent_scans(tmp_path):
     path = tmp_path / "timed.grib"
     root = tmp_path / "index"
     _write_timed_field(path)
@@ -127,11 +117,11 @@ def test_forecast_metadata_matches_between_scan_and_hot_index(tmp_path):
         scanned = GribReader(None, path, index_policy="off").all().one().metadata
         assert metrics.snapshot()["value_decode_count"] == 0
 
-    # Build then reopen so the second access must project metadata from SQLite.
-    GribReader(None, path, index_policy="auto", index_dir=root).all()
+    # A fresh scan must preserve the same header metadata without an index.
+    GribReader(None, path, index_policy="off", index_dir=root).all()
     with collect_io_metrics() as metrics:
-        indexed = GribReader(None, path, index_policy="auto", index_dir=root).all().one().metadata
-        assert metrics.snapshot()["grib_header_scan_count"] == 0
+        indexed = GribReader(None, path, index_policy="off", index_dir=root).all().one().metadata
+        assert metrics.snapshot()["grib_header_scan_count"] == 1
         assert metrics.snapshot()["value_decode_count"] == 0
 
     expected = {
@@ -159,7 +149,7 @@ def test_refining_a_step_query_preserves_public_fieldlist_merge(tmp_path):
     assert selected.to_xarray().name == "t"
 
 
-def test_scan_and_index_preserve_native_fixed_surfaces(tmp_path):
+def test_independent_scans_preserve_native_fixed_surfaces(tmp_path):
     path = tmp_path / "soil.grib"
     root = tmp_path / "index"
     _write_soil_layer(path)
@@ -169,8 +159,8 @@ def test_scan_and_index_preserve_native_fixed_surfaces(tmp_path):
     assert "wgrib2_name" not in scanned.metadata.extra
     assert scanned.to_xarray().name == scanned.metadata.parameter
 
-    GribReader(None, path, index_policy="auto", index_dir=root).all()
-    indexed = GribReader(None, path, index_policy="auto", index_dir=root).all().one()
+    GribReader(None, path, index_policy="off", index_dir=root).all()
+    indexed = GribReader(None, path, index_policy="off", index_dir=root).all().one()
     assert indexed.metadata.extra == scanned.metadata.extra
 
 
@@ -185,7 +175,7 @@ def test_fetch_many_uses_one_metadata_scan_and_preserves_duplicates(tmp_path):
         assert metrics.snapshot()["grib_header_scan_count"] == 2
         assert metrics.snapshot()["value_decode_count"] == 0
     collected = reader.fetch_many([{"level": 100}, {"level": 850}], cardinality="one", errors="collect")
-    assert isinstance(collected[0].error, DataNotFoundError)
+    assert isinstance(collected[0].error, QueryError) and collected[0].error.code == "no_match"
     assert collected[0].position == 0
 
 
@@ -193,7 +183,7 @@ def test_fetch_many_with_unindexed_extra_uses_one_header_pass(tmp_path):
     path = tmp_path / "fields.grib"
     _write(path)
     with collect_io_metrics() as metrics:
-        results = GribReader(None, path, index_policy="auto", index_dir=tmp_path / "index").fetch_many(
+        results = GribReader(None, path, index_policy="off", index_dir=tmp_path / "index").fetch_many(
             [{"discipline": 0, "level": 850}, {"discipline": 0, "level": 500}],
             cardinality="one",
         )

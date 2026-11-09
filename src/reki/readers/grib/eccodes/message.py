@@ -83,21 +83,15 @@ def load_message_from_file(
     >>> eccodes.codes_release(t)
 
     """
+    from contextlib import closing
     if count is not None:
         return _load_message_from_file_by_count(file_path, count)
-
     fixed_level_type, _ = _fix_level(level_type, None)
-
-    for header in iter_headers(file_path, headers_only=False):
-        if not _check_message(header.handle, parameter, fixed_level_type, level, **kwargs):
-            continue
-        return header.detach()
-
-            # # clone message
-            # new_message_id = eccodes.codes_clone(message_id)
-            # eccodes.codes_release(message_id)
-            # return new_message_id
-        return None
+    with closing(iter_headers(file_path, headers_only=False)) as headers:
+        for header in headers:
+            if _check_message(header.handle, parameter, fixed_level_type, level, **kwargs):
+                return header.detach()
+    return None
 
 
 def load_messages_from_file(
@@ -136,27 +130,31 @@ def load_messages_from_file(
     typing.List or None:
         a list of message number or None if no message is found.
     """
+    from contextlib import closing
     fixed_level_type, _ = _fix_level(level_type, None)
-
-
     messages = []
-
-    # print("count...")
-    # with open(file_path, "rb") as f:
-    #     total_count = eccodes.codes_count_in_file(f)
-    #     print(total_count)
-    # print("count..done")
-
-    for header in iter_headers(file_path, headers_only=False):
-        if _check_message(header.handle, parameter, fixed_level_type, level, **kwargs):
-            messages.append(header.detach())
-    return messages or None
+    try:
+        with closing(iter_headers(file_path, headers_only=False)) as headers:
+            for header in headers:
+                if _check_message(header.handle, parameter, fixed_level_type, level, **kwargs):
+                    messages.append(header.detach())
+        return messages or None
+    except BaseException:
+        for message in messages:
+            eccodes.codes_release(message)
+        raise
 
 
 def _load_message_from_file_by_count(file_path, count):
+    from contextlib import closing
+    from numbers import Integral
+    from cedarkit_query import QueryError
+    if isinstance(count, bool) or not isinstance(count, Integral):
+        raise QueryError("invalid_query", "/count", "count must be an integer physical message number")
     if count < 1:
         return None
-    for header in iter_headers(file_path, headers_only=False):
-        if header.ordinal + 1 == count:
-            return header.detach()
+    with closing(iter_headers(file_path, headers_only=False)) as headers:
+        for header in headers:
+            if header.ordinal + 1 == count:
+                return header.detach()
     return None

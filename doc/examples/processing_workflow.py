@@ -8,9 +8,9 @@ from _helpers import open_ifs
 from reki.operator import extract_point, extract_region, interpolate_grid, sample_nearest
 
 
-field = open_ifs().sel(parameter="2t", level_type="heightAboveGround", level=2).first()
-assert field is not None
-data = field.to_xarray()
+with open_ifs() as source:
+    field = source.sel(native={"grib": {"shortName": "2t"}}, level_type="height_above_ground", level=2).one()
+    data = field.to_xarray(rename="2t")["2t"].squeeze(drop=True)
 subset = extract_region(data, 105, 125, 25, 45)
 assert subset.shape == (81, 81)
 coarse = sample_nearest(subset, longitude_step=2, latitude_step=2)

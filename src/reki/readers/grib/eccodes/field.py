@@ -1,4 +1,4 @@
-import typing
+from contextlib import closing
 from typing import Union, List, Dict, Optional
 from pathlib import Path
 
@@ -10,8 +10,7 @@ from tqdm import tqdm
 from ._level import _fix_level
 from ._check import _check_message
 from ._lazy import lazy_values, concat_lazy_arrays
-from ._xarray import create_data_array_from_message, get_level_coordinate_name
-from reki._util import _load_first_variable
+from ._xarray import create_data_array_from_message
 from reki.readers.grib.common import MISSING_VALUE
 from ._scan import iter_headers
 
@@ -176,181 +175,53 @@ def load_field_from_file(
             units:                           K
 
     """
-    messages = []
-    offsets = []
+    from reki._legacy import check_engine, ignore_index, reader_errors
 
+    check_engine(kwargs.pop("engine", "eccodes"))
+    ignore_index(kwargs.pop("with_index", False))
+    messages, offsets = [], []
     fixed_level_type, fixed_level_dim = _fix_level(level_type, level_dim)
-
     if field_name is None and isinstance(parameter, str):
         field_name = parameter
-
-
-    if show_progress:
-        with open(file_path, "rb") as f:
-            total_count = eccodes.codes_count_in_file(f)
-
-    if show_progress:
-        pbar = tqdm(total=total_count, desc="Filtering")
     try:
-        for header in iter_headers(file_path, headers_only=lazy):
-            if show_progress:
-                pbar.update(1)
-            if not _check_message(header.handle, parameter, fixed_level_type, level, **kwargs):
-                continue
-            messages.append(header.detach())
-            offsets.append(header.offset)
-            if not (isinstance(level, typing.List) or level == "all"):
-                break
-    finally:
-        if show_progress:
-            pbar.close()
-
-    if len(messages) == 0:
-        return None
-
-    if len(messages) == 1:
-        message_id = messages[0]
-        values = None
-        if lazy:
-            values = lazy_values(
-                file_path,
-                offsets[0],
-                (
-                    eccodes.codes_get(message_id, "Nj"),
-                    eccodes.codes_get(message_id, "Ni"),
-                ),
-                MISSING_VALUE,
-                np.nan,
-            )
-        data = create_data_array_from_message(
-            message_id,
-            level_dim_name=fixed_level_dim,
-            field_name=field_name,
-            values=values,
-        )
-        eccodes.codes_release(message_id)
-        return data
-
-    if len(messages) > 1:
-        if show_progress:
-            pbar = tqdm(
-                total=len(messages),
-                desc="Decoding",
-            )
-
-        def creat_array(i_message):
-            i, message = i_message
-            values = None
+        with reader_errors(file_path, "load_field_from_file"), closing(iter_headers(file_path, headers_only=lazy)) as headers, tqdm(disable=not show_progress, unit="message") as progress:
+            for header in headers:
+                progress.update(1)
+                if not _check_message(header.handle, parameter, fixed_level_type, level, **kwargs):
+                    continue
+                messages.append(header.detach())
+                offsets.append(header.offset)
+                if not (isinstance(level, list) or level == "all"):
+                    break
+            if not messages:
+                return None
+            arrays = []
+            for message, offset in zip(messages, offsets):
+                values = None
+                if lazy:
+                    shape = (eccodes.codes_get(message, "Nj"), eccodes.codes_get(message, "Ni"))
+                    values = lazy_values(file_path, offset, shape, MISSING_VALUE, np.nan)
+                arrays.append(create_data_array_from_message(
+                    message, level_dim_name=fixed_level_dim, field_name=field_name, values=values,
+                ))
+            if len(arrays) == 1:
+                return arrays[0]
+            level_dim_name = fixed_level_dim or (level_type if isinstance(level_type, str) else None)
+            if level_dim_name is None:
+                level_dim_name = next(k for k in arrays[0].coords if k not in {"time", "step", "valid_time", "latitude", "longitude", "number"})
             if lazy:
-                values = lazy_values(
-                    file_path,
-                    offsets[i],
-                    (
-                        eccodes.codes_get(message, "Nj"),
-                        eccodes.codes_get(message, "Ni"),
-                    ),
-                    MISSING_VALUE,
-                    np.nan,
-                )
-            array = create_data_array_from_message(
-                message,
-                level_dim_name=fixed_level_dim,
-                field_name=field_name,
-                values=values,
-            )
-            if show_progress:
-                pbar.update(1)
-            return array
-
-        xarray_messages = [creat_array(m) for m in enumerate(messages)]
-        for m in messages:
-            eccodes.codes_release(m)
-        if show_progress:
-            pbar.close()
-
-        if level_dim is None:
-            if isinstance(level_type, str):
-                level_dim_name = level_type
-            elif isinstance(level_type, typing.Dict):
-                level_dim_name = get_level_coordinate_name(xarray_messages[0])
-            else:
-                raise ValueError(f"level_type is not supported: {level_type}")
-        elif isinstance(level_dim, str):
-            level_dim_name = level_dim
-        else:
-            raise ValueError(f"level_type is not supported: {level_type}")
-
-        if show_progress:
-            print("Packing...")
-
-        if lazy:
-            # ``xr.concat`` would materialize lazy arrays, so stack the
-            # per-message offsets into one lazy array instead: only the
-            # messages selected on the level dimension are decoded.
-            data = concat_lazy_arrays(xarray_messages, level_dim_name)
-            if data is not None:
-                return data
-
-        data = xr.concat(xarray_messages, level_dim_name)
-        return data
-
-    return None
+                result = concat_lazy_arrays(arrays, level_dim_name)
+                if result is not None:
+                    return result
+            return xr.concat(arrays, level_dim_name, coords="different", compat="equals")
+    finally:
+        for message in messages:
+            eccodes.codes_release(message)
 
 
-def load_field_from_files(
-        file_list: List,
-        parameter: Union[str, Dict],
-        level_type: Union[str, Dict],
-        level: Optional[Union[int, float, List, Dict]],
-        level_dim: Optional[str] = None,
-        show_progress: bool = False,
-        lazy: bool = False,
-        **kwargs
-) -> Optional[xr.DataArray]:
-    """
-    Load one field from multiply files.
 
-    Parameters
-    ----------
-    file_list: typing.List
-        file list.
-    parameter: str or typing.Dict
-        see ``load_field_from_file``
-    level_type: str or typing.Dict
-        see ``load_field_from_file``
-    level: int or float or typing.List or None
-        see ``load_field_from_file``
-    level_dim: str or None
-        level dimension name.
-    show_progress: bool
-        see ``load_field_from_file``
-    lazy: bool
-        see ``load_field_from_file``
-
-    Returns
-    -------
-    xr.DataArray or None:
-        xr.DataArray if found, or None if not.
-
-    """
-    field_list = []
-    for file_path in file_list:
-        print(file_path)
-        field = load_field_from_file(
-            file_path,
-            parameter=parameter,
-            level_type=level_type,
-            level=level,
-            level_dim=level_dim,
-            show_progress=show_progress,
-            lazy=lazy,
-            **kwargs
-        )
-        field_list.append(field)
-
-    data_set = xr.combine_by_coords(
-        [f.expand_dims(["time", "step"]).to_dataset() for f in field_list]
-    )
-    data = _load_first_variable(data_set)
-    data = data.transpose("time", "step", ...)
-    return data
+def load_field_from_files(file_list, parameter, level_type, level, level_dim=None,
+                          show_progress=False, lazy=False, **kwargs):
+    from .._legacy_collection import load_field_from_files as load_collection
+    return load_collection(file_list, parameter, level_type, level,
+                           level_dim=level_dim, show_progress=show_progress, lazy=lazy, **kwargs)

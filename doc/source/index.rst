@@ -29,13 +29,10 @@ reki 提供以下功能：
 
     from reki import from_source
 
-    source = from_source("test", "ecmwf_ifs")
-    field = source.sel(
-        parameter="2t",
-        level_type="heightAboveGround",
-        level=2,
-    ).first()
-    t2m = field.to_xarray()
+    with from_source({"kind": "file", "path": "original.grib2"}) as source:
+        field = source.sel(native={"grib": {"shortName": "2t"}},
+                           level_type="height_above_ground", level=2).one()
+        t2m = field.to_xarray(rename="t2m").t2m.squeeze(drop=True)
 
 完整示例见 :doc:`/quick-start/first-workflow`。
 

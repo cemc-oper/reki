@@ -58,7 +58,7 @@ def test_query_is_bounded_and_has_a_no_match_exit_code(tmp_path):
     assert conflict.exit_code == 2
 
 
-def test_indexing_requires_an_explicit_cli_opt_in(tmp_path):
+def test_retired_cli_index_is_rejected_without_io(tmp_path):
     path = tmp_path / "fields.grib"
     index_dir = tmp_path / "indexes"
     _write(path)
@@ -69,8 +69,8 @@ def test_indexing_requires_an_explicit_cli_opt_in(tmp_path):
     assert not index_dir.exists()
 
     enabled = runner.invoke(cli, ["inspect", str(path), "--use-index", "--index-dir", str(index_dir), "--json"])
-    assert enabled.exit_code == 0, enabled.output
-    assert list(index_dir.glob("*.sqlite"))
+    assert enabled.exit_code == 4 and "unsupported" in enabled.output
+    assert not index_dir.exists()
 
 
 def test_catalog_commands_remain_available():

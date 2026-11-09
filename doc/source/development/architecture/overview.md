@@ -1,16 +1,13 @@
 # 架构概览
 
-reki 将“在哪里找数据”和“怎样读取数据”分离：source 负责定位，reader 负责格式识别，
-core 模型保存查询与 metadata，operator 只处理规范化数组。
+公开构造仅接受声明式 source mapping，并使用 cedarkit-query 的唯一 v1 Query / Request。
 
 ```text
-SourceSpec / from_source → Source mutate → reader dispatch → FieldList / Field
-                                                        → xarray → operator
+source declaration + context → QuerySource → selection → Fields / Field
+                                           → report / metadata → Dataset → operator
 ```
 
-扩展 source 或 reader 前先阅读 {doc}`source-reader-pipeline`；处理层不能反向依赖
-GRIB 私有实现。常见失败是把远程 I/O 放在 source 构造函数中，导致惰性边界失效。
-相应公开类型见 {doc}`../api/sources`、{doc}`../api/readers` 和 {doc}`../api/core`。
-从用户视角验证该边界时，先运行 {doc}`/quick-start/first-workflow`，再按
-{doc}`/guide/finding/index`、{doc}`/guide/grib/index` 和 {doc}`/guide/processing/index`
-进入具体任务；这些页面不依赖架构私有模块。
+metadata 定位与值解码分离；实际范围、来源与证据由报告保存。受保护高频旧函数直接走
+原生 ecCodes 内核以保留 first-match / lazy 行为；低频适配复用公共组织和冲突检查。
+内部命名格式 / 插件分派仍用私有记录，不对外提供旧 SourceSpec / FieldQuery 协议窗口。
+API 见 {doc}`../api/top-level`，格式边界见 {doc}`grib-reader-and-index`。

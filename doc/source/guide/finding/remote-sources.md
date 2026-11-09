@@ -1,21 +1,17 @@
-# 远程与服务 source
+# 远程与服务来源
 
-`url` 从一个明确的 URL 读取，`cmadaas` 通过 CMADaaS MUSIC 服务请求数据。二者的网络、
-凭据、可用产品和限流均取决于部署，因而不能作为可重复文档单元的前提。
+当前公共服务来源使用声明式 CMADaaS dataset，连接及凭据来自调用方配置；实际请求在读取
+时发生，explain 不访问服务。已接受范围、单位与响应错误见 {doc}`/guide/cmadaas-query`。
 
 ```python
 from reki import from_source
 
-remote = from_source("url", "https://host.example/forecast.grib2")
-service = from_source(
-    "cmadaas", interface_id="getNafpEleGrid",
-    params={"dataCode": "YOUR_PRODUCT", "time": "2026090712"},
-)
+with from_source({"kind": "cmadaas", "dataset": "cma_gfs_gmf_cmadaas"}) as source:
+    selected = source.sel(parameter="cedarkit.t2m", time="2026-11-02T12:00:00Z", step="PT6H")
+    explanation = selected.explain()
 ```
 
-建立 source 不等于请求已经成功：在 `ls()`、`metadata()`、`sel()` 或转换方法首次需要
-数据时，捕获网络、认证和服务端异常。日志中不要输出 token、password、完整请求头或
-`SourceSpec` 的未脱敏原始内容。
-
-需要延后整个 source 构建流程时传 `lazily=True`，其可执行的内存示例见 {doc}`new-api`。
-在接入服务前，先用 {doc}`/quick-start/first-workflow` 的冻结数据确认查询和处理逻辑。
+原 URL/named-plugin 工厂属于内部格式分派机制，不是公开 QuerySource 的 URL 支持承诺。
+旧位置式 `from_source("url", ...)`、旧 CMADaaS 参数绑定及 `lazily=True` 来源构造已退出。
+不要在日志中输出 token、password 或完整认证配置。来源访问、认证、超时和服务错误
+由可靠底层异常分类为 `SourceError`，不能当作正常缺场处理。

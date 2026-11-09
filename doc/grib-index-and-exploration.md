@@ -1,3 +1,5 @@
+> 历史实现记录：索引及旧模型已于 N09F 退出当前读取链。现行行为见 source/guide/migration.md；本页不作为当前 API 指南。
+
 # GRIB 元数据索引与数据探索
 
 ecCodes GRIB reader 可以持久化仅包含元数据的 SQLite 索引。索引用于加快字段

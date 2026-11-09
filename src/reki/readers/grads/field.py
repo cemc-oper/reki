@@ -11,7 +11,7 @@ from .grads_data_handler import GradsDataHandler, GradsRecordHandler
 from ._lazy import lazy_record_values, concat_lazy_arrays
 
 
-def load_field_from_file(
+def _load_field_from_file(
         file_path: Union[str, Path],
         parameter: str,
         level_type: Optional[str] = None,
@@ -306,6 +306,24 @@ def load_field_from_file(
     return data
 
 
+
+def load_field_from_file(file_path, parameter, level_type=None, level=None, level_dim=None,
+                         latitude_direction="degree_north", valid_time=None, forecast_time=None,
+                         lazy=False, **kwargs):
+    """Read a GrADS field with format-specific selection and typed source errors."""
+    from reki._legacy import reader_errors
+    from cedarkit_query import QueryError, SourceError
+    if latitude_direction not in {"degree_north", "degree_south"}:
+        raise QueryError("invalid_query", "/latitude_direction", "Unsupported latitude direction")
+    with reader_errors(file_path, "load_grads"):
+        try:
+            return _load_field_from_file(
+                file_path, parameter, level_type, level, level_dim,
+                latitude_direction, valid_time, forecast_time, lazy=lazy, **kwargs,
+            )
+        except (ValueError, EOFError) as exc:
+            raise SourceError("decode_failed", "/source", "GrADS decoding failed", {"resource": str(file_path)}) from exc
+
 def check_record(
         record: dict,
         parameter: str,
@@ -393,7 +411,7 @@ def create_data_array_from_record(
 
     if grads_ctl.start_time is not None and grads_ctl.forecast_time is not None:
         coords["start_time"] = grads_ctl.start_time
-        coords["forecast_time"] = grads_ctl.forecast_time
+        coords["forecast_time"] = record.record_info["forecast_time"]
 
     # dims
     dims = ("latitude", "longitude")

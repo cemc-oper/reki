@@ -80,6 +80,9 @@ class GradsCtlParser(object):
             self.cur_no += 1
 
         self._parse_ctl_file_name()
+        if self.grads_ctl.start_time is not None:
+            for record in self.grads_ctl.record:
+                record["forecast_time"] = record["valid_time"] - self.grads_ctl.start_time
 
         return self.grads_ctl
 
@@ -96,14 +99,14 @@ class GradsCtlParser(object):
                 file_name = ctl_file_name[ctl_file_name.index("_")+1:]
                 # check for GRAPES MESO:
                 #   post.ctl_201408111202900
-                if re.match(r"[0-9]{15}", file_name):
+                if re.fullmatch(r"[0-9]{15}", file_name):
                     self.grads_ctl.start_time = pd.to_datetime(file_name[:10], format="%Y%m%d%H")
-                    self.grads_ctl.forecast_time = pd.Timedelta(hours=int(file_name[11:14]))
+                    self.grads_ctl.forecast_time = pd.Timedelta(hours=int(file_name[10:13]), minutes=int(file_name[13:15]))
                 # check for GRAPES GFS:
                 #   post.ctl_2014081112_001
-                elif re.match(r"[0-9]{10}_[0-9]{3}", file_name):
+                elif re.fullmatch(r"[0-9]{10}_[0-9]{3}", file_name):
                     self.grads_ctl.start_time = pd.to_datetime(file_name[:10], format="%Y%m%d%H")
-                    self.grads_ctl.forecast_time = pd.Timedelta(hours=int(file_name[12:]))
+                    self.grads_ctl.forecast_time = pd.Timedelta(hours=int(file_name[11:]))
                 else:
                     logger.warning("We can't recognize ctl file name. ")
 

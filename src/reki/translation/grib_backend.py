@@ -383,6 +383,9 @@ class GribScan:
                 try:
                     for header in iterator:
                         snapshot.verify()
+                        legacy_filter = getattr(self.backend, "_legacy_filter", None)
+                        if legacy_filter is not None and not legacy_filter(header.handle):
+                            continue
                         metadata = _metadata(header.handle, keys=self.keys)
                         native = {k: v for k, v in metadata.items() if v is not None}
                         candidates = [

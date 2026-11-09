@@ -1,17 +1,17 @@
-"""The small immutable lazy field collection public API."""
+"""Private metadata collection for named format-reader dispatch."""
 
 from collections.abc import Sequence
 
 import pandas as pd
 
-from .errors import DataNotFoundError, MultipleFieldsMatchedError
-from .field_query import FieldQuery, field_query_from_kwargs
+from .errors import QueryError
+from .field_query import _ReaderQuery, field_query_from_kwargs
 
 
-class FieldList(Sequence):
+class _ReaderFields(Sequence):
     def __init__(self, fields=(), *, query=None, source_summary="<unknown source>", merge=None):
         self._fields = tuple(fields)
-        self._query = query or FieldQuery()
+        self._query = query or _ReaderQuery()
         self._source_summary = source_summary
         self._merge = merge
 
@@ -48,25 +48,25 @@ class FieldList(Sequence):
 
     def one(self):
         if not self._fields:
-            raise DataNotFoundError(self._query, self._source_summary, 0)
+            raise QueryError("no_match", "", "No fields matched", {"operation": "one", "match_count": 0})
         if len(self._fields) > 1:
-            raise MultipleFieldsMatchedError(self._query, self._source_summary, len(self._fields))
+            raise QueryError("multiple_matches", "", "Multiple fields matched", {"operation": "one", "match_count": len(self._fields)})
         return self._fields[0]
 
-    def one_or_none(self):
+    def _one_or_none(self):
         return None if not self._fields else self.one()
 
     def sel(self, query=None, /, **kwargs):
-        if query is not None and not isinstance(query, FieldQuery):
-            raise TypeError("the positional argument to sel() must be a FieldQuery")
+        if query is not None and not isinstance(query, _ReaderQuery):
+            raise TypeError("the positional argument to sel() must be a _ReaderQuery")
         if query is not None and kwargs:
-            raise TypeError("FieldQuery and keyword filters cannot be mixed")
+            raise TypeError("_ReaderQuery and keyword filters cannot be mixed")
         query = self._query.merge(query or field_query_from_kwargs(kwargs))
         return type(self)((field for field in self if _matches(field.metadata, query)),
                           query=query, source_summary=self._source_summary, merge=self._merge)
 
     def where(self, query=None, /, **kwargs):
-        """Safely filter metadata using a :class:`FieldQuery` or key values."""
+        """Safely filter metadata using a :class:`_ReaderQuery` or key values."""
         return self.sel(query, **kwargs)
 
     def metadata(self, keys=None):
@@ -149,7 +149,7 @@ class FieldList(Sequence):
             f"{field.metadata.parameter}@{field.metadata.level_type}:{field.metadata.level}"
             for field in self[:10]
         )
-        text = f"FieldList({len(self)} fields, {sources} sources; {preview})"
+        text = f"_ReaderFields({len(self)} fields, {sources} sources; {preview})"
         return text if len(text) <= 2000 else text[:1997] + "..."
 
 
@@ -165,7 +165,7 @@ def _matches(metadata, query):
         # ``step`` is accepted as a convenient GRIB query condition but is
         # represented in public metadata as a Timedelta, rather than an
         # implementation-specific extra key.  Preserve it when refining an
-        # already selected FieldList.
+        # already selected _ReaderFields.
         if key == "step":
             actual = metadata.step
             values = expected if isinstance(expected, tuple) else (expected,)

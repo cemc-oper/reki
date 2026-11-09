@@ -13,4 +13,5 @@ grib-reader-and-index
 catalog-and-plugins
 xarray-contract
 diagnostics-and-errors
+ensemble-products
 ```

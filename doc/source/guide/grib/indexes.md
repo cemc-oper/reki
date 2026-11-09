@@ -1,35 +1,14 @@
----
-jupytext:
-  text_representation: {extension: .md, format_name: myst}
-kernelspec: {display_name: Python 3, language: python, name: python3}
----
+# 索引退出
 
-# Metadata index
+公共 v1 查询不读写持久索引。受保护旧读取函数保留 with_index 调用形式：省略或 False
+无提示，True / 原有合法路径字符串发出一次定位到外部调用方的 FutureWarning 后继续读取。
+被忽略的索引路径不会被 stat、读取、创建、更新或删除，也不检查存在性或可写性。
 
-对同一 GRIB 文件反复做 metadata 查询时，可用持久 SQLite index 避免重复头扫描。index 是
-可再建的 metadata 加速层，不保存已解码的网格值；源文件指纹改变时会自动失效。
+```python
+from reki.format.grib import load_field_from_file
 
-```{code-cell} ipython3
-from pathlib import Path
-from tempfile import TemporaryDirectory
-
-from reki import from_source
-
-temporary_index = TemporaryDirectory()
-cache = Path(temporary_index.name)
-test_reader = from_source("test", "ecmwf_ifs")
-reader = from_source("file", test_reader.path, index_policy="auto", index_dir=cache)
-fields = reader.sel(parameter="t", level_type="isobaricInhPa").all()
-assert {field.metadata.level for field in fields} == {500, 850}
-assert list(cache.glob("*.sqlite"))
+field = load_field_from_file("original.grib2", parameter="t", with_index=False)
 ```
 
-`readonly` 适用于不可写环境：若没有有效 index，它会失败而不是悄悄创建文件。`refresh`
-强制重建；`off` 禁用 index，适合一次性的查询或诊断。
-
-```{code-cell} ipython3
-readonly = from_source("file", test_reader.path, index_policy="readonly", index_dir=cache)
-assert readonly.sel(parameter="gh", level=500).all().one().metadata.parameter == "gh"
-```
-
-含原生 GRIB 键的查询会回退到头扫描，保证不会因 index 缺少非标准键而得到错误结果。
+旧资料探索 CLI 的启用 / 只读 / refresh 选项报 unsupported；普通扫描继续工作。
+内部历史 IndexStore 模块不作为公开缓存协议，不能据其仍在源码中推断读取入口使用索引。

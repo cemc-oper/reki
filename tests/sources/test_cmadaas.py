@@ -5,6 +5,7 @@ and high-level retrieve functions are monkeypatched. No real MUSIC
 service is involved.
 """
 
+from reki import sources as named_sources
 import sys
 
 import numpy as np
@@ -68,7 +69,7 @@ class TestLowLevelMode:
     def test_grid_array_2d_end_to_end(self):
         client = FakeClient(callAPI_to_gridArray2D=ok_grid())
 
-        field = reki.from_source(
+        field = named_sources.from_source(
             "cmadaas",
             interface_id="getNafpEleGrid",
             params={"dataCode": "NAFP_CMA_GFS_GMF", "fcstEle": "TEM"},
@@ -92,7 +93,7 @@ class TestLowLevelMode:
         )
         client = FakeClient(callAPI_to_array2D=response)
 
-        df = reki.from_source(
+        df = named_sources.from_source(
             "cmadaas", interface_id="getSurfEleGridByTime",
             params={}, client=client, return_type="array2D",
         ).to_pandas()
@@ -170,7 +171,7 @@ class TestHighLevelMode:
             nuwe_cmadaas.model, "retrieve_model_grid", fake_retrieve
         )
 
-        field = reki.from_source(
+        field = named_sources.from_source(
             "cmadaas",
             kind="model_grid",
             data_code="NAFP_CMA_GFS_GMF",
@@ -193,7 +194,7 @@ class TestHighLevelMode:
             nuwe_cmadaas.obs, "retrieve_obs_station", lambda **kw: expected
         )
 
-        df = reki.from_source(
+        df = named_sources.from_source(
             "cmadaas", kind="obs_station", data_code="SURF_CHN_MUL_HOR",
         ).to_pandas()
 
@@ -211,7 +212,7 @@ class TestHighLevelMode:
         # remote sources defer the request to first use, so the error
         # surfaces on access, not at from_source() time
         with pytest.raises(CMADAASError) as exc_info:
-            reki.from_source(
+            named_sources.from_source(
                 "cmadaas", kind="model_grid", data_code="X",
             ).to_xarray()
         assert exc_info.value.code == 1001
@@ -259,7 +260,7 @@ class TestHighLevelMode:
         )
         client = FakeClient()
 
-        reki.from_source(
+        named_sources.from_source(
             "cmadaas", kind="model_grid", data_code="X",
             config="conf.yaml", client=client,
         ).to_xarray()

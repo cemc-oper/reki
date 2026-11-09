@@ -1,3 +1,4 @@
+from reki import sources as named_sources
 import numpy as np
 import pytest
 
@@ -32,30 +33,30 @@ def restore_registry():
 
 def test_from_source_runs_mutate_until_fixed_point():
     register("mutating", MutatingSource)
-    src = reki.from_source("mutating", steps=3)
+    src = named_sources.from_source("mutating", steps=3)
     assert isinstance(src, MutatingSource)
     assert src.steps == 0
 
 
 def test_from_source_returns_converged_source():
-    src = reki.from_source("memory", np.arange(3))
+    src = named_sources.from_source("memory", np.arange(3))
     assert src.mutate() is src
 
 
 def test_from_source_is_exported_at_top_level():
-    assert reki.from_source is not None
+    assert named_sources.from_source is not None
     assert reki.register is not None
     assert reki.Source is Source
 
 
 def test_from_source_unknown_name():
     with pytest.raises(ValueError, match="Unknown source"):
-        reki.from_source("no-such-source")
+        named_sources.from_source("no-such-source")
 
 
 def test_from_source_lazily_returns_lazy_source():
     from reki.sources import LazySource
 
-    src = reki.from_source("memory", np.arange(3), lazily=True)
+    src = named_sources.from_source("memory", np.arange(3), lazily=True)
     assert isinstance(src, LazySource)
     np.testing.assert_array_equal(src.to_numpy(), np.arange(3))

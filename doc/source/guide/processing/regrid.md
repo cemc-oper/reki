@@ -18,13 +18,12 @@ kernelspec:
 
 ```{code-cell} ipython3
 from reki import from_source
+from reki.sources import get_source
 from reki.operator import extract_region, interpolate_grid
 
-field = from_source("test", "ecmwf_ifs").sel(
-    parameter="2t", level_type="heightAboveGround", level=2,
-).first()
-assert field is not None
-data = field.to_xarray()
+file_path = get_source("test", "ecmwf_ifs").mutate().path
+with from_source({"kind": "file", "path": str(file_path)}) as source:
+    data = source.sel(native={"grib": {"shortName": "2t"}}, level_type="height_above_ground", level=2).one().to_xarray(rename="t2m").t2m.squeeze(drop=True)
 target = extract_region(data, 105, 125, 25, 45).isel(
     latitude=slice(None, None, 8), longitude=slice(None, None, 8),
 )

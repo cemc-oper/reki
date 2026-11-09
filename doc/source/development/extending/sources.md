@@ -1,4 +1,7 @@
-# 扩展 source
+# 扩展内部格式 source
+
+这里描述内部格式／插件分派机制，不是公开 v1 QuerySource 的扩展协议。公共 source
+构造只接受声明式 mapping；不要把本页的命名工厂替换为 reki.from_source。
 
 实现 `Source` 子类，声明稳定名称并仅保存构造参数；在 `mutate()` 中将其转换为更具体的
 source，或在 `to_data_object()` 中返回对象。第三方包通过 `reki.sources` entry point
@@ -17,7 +20,7 @@ third-party entry point → source class → mutate → FileSource / custom obje
 生产 source 可在 `mutate()` 返回 `FileSource` 或在 `to_data_object()` 返回专用数据对象：
 
 ```python
-from reki import Source, from_source, register
+from reki.sources import Source, from_source, register
 
 
 class DemoSource(Source):

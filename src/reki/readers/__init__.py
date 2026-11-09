@@ -50,8 +50,8 @@ class Reader:
         return ReaderCapabilities()
 
     def _unsupported(self, operation):
-        from reki.core.errors import UnsupportedOperationError
-        raise UnsupportedOperationError(self, operation)
+        from cedarkit_query import QueryError
+        raise QueryError("unsupported", "", f"{type(self).__name__} does not support {operation}()")
 
     def all(self):
         self._unsupported("all")

@@ -5,6 +5,7 @@ these tests cover the source's mutate chain and its discovery through
 the built-in directory scan.
 """
 
+from reki import sources as named_sources
 import hashlib
 import json
 from pathlib import Path
@@ -152,7 +153,7 @@ class TestDiscovery:
         from reki.readers.grib.reader import GribReader
         from reki.sources import LazySource
 
-        data = reki.from_source("test", "gfs", output_dir=tmp_path)
+        data = named_sources.from_source("test", "gfs", output_dir=tmp_path)
 
         assert isinstance(data, LazySource)
         assert isinstance(data._ensure(), GribReader)
@@ -161,7 +162,7 @@ class TestDiscovery:
         from reki.readers.grib.reader import GribReader
         from reki.sources import LazySource
 
-        data = reki.from_source("test", "ecmwf_ifs", output_dir=tmp_path)
+        data = named_sources.from_source("test", "ecmwf_ifs", output_dir=tmp_path)
 
         assert isinstance(data, LazySource)
         assert isinstance(data._ensure(), GribReader)

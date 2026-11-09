@@ -1,3 +1,4 @@
+from reki import sources as named_sources
 import numpy as np
 import pandas as pd
 import pytest
@@ -80,6 +81,6 @@ def test_ndarray_3d_to_pandas_raises():
 
 
 def test_from_source_memory(data_array):
-    src = reki.from_source("memory", data_array)
+    src = named_sources.from_source("memory", data_array)
     assert isinstance(src, MemorySource)
     assert src.to_xarray() is data_array

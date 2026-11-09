@@ -97,6 +97,9 @@ def _attrs(identity, meta):
             attrs["code_table"] = meta["code_table"]
     else:
         attrs = {f"GRIB_{k}": v for k, v in meta["native_variable"].items()}
+        units = meta.get("native_fields", {}).get("units")
+        if units is not None:
+            attrs["units"] = units
     if "layer" in identity:
         for side, endpoint in identity["layer"].items():
             for k, v in endpoint.items():

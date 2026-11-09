@@ -1,14 +1,12 @@
-# GRIB reader 与 index
+# GRIB 扫描与索引边界
 
-GRIB 先扫描 header，选择匹配消息，再在 `to_xarray()` 时延迟解码 values。持久 index
-保存 metadata 而非数组值，并以文件指纹、schema 和锁保证可重建性。
+公开来源与受保护函数仅使用 ecCodes 头扫描与按需值解码，不再访问持久索引。
 
 ```text
-GRIB file → header scan → metadata / index hit → query match → lazy decode → DataArray
-                         ↘ stale/corrupt → lock → rebuild
+GRIB file → header scan → select native records → decode → native array / public Dataset
 ```
 
-index 的扩展边界是内部模块，不能作为稳定 public API。失败模式包括只读 index 缺失、
-文件改变、锁超时和 decoder 不兼容；调用者应选择明确 index policy。公开 reader 与参数
-接口见 {doc}`../api/grib`；用户行为见 {doc}`/guide/grib/index`，反复 metadata 查询的
-index 策略见 {doc}`/guide/grib/indexes`。本文只解释 scan/index 实现与失效边界。
+高频旧函数保存路径和所选报文偏移，lazy=True 在值访问时才解码。低频集合在来源关闭前
+生成独立内存结果。with_index True / 字符串只发一次 FutureWarning，路径零访问；旧 CLI
+显式索引策略报 unsupported。内部历史 IndexStore 不是公开 API 或正在使用的缓存层。
+读取与格式行为见 {doc}`/guide/legacy_grib`。

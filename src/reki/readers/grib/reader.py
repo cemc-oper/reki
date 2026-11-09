@@ -10,7 +10,7 @@ and the filter conditions. The file is scanned when ``first()`` or
 - ``to_xarray()``: a single match gives an ``xr.DataArray``; multiple
   matches are fully scanned and merged by coordinates into an
   ``xr.Dataset`` (or a list of datasets, one per hypercube, following
-  the conventions of ``cfgrib.open_datasets``).
+  native coordinate grouping).
 """
 
 from collections.abc import Mapping
@@ -24,8 +24,7 @@ import xarray as xr
 from reki.readers import Reader
 from reki.readers.capabilities import ReaderCapabilities
 from reki.core import (
-    FieldQuery, FieldMetadata, FieldList, DataNotFoundError,
-    MultipleFieldsMatchedError,
+    _ReaderQuery, _ReaderMetadata, _ReaderFields, QueryError,
 )
 from reki.core.field_query import field_query_from_kwargs
 from reki.core.source_spec import redact
@@ -42,11 +41,11 @@ _NON_LEVEL_COORDS = frozenset(
 
 
 def _coerce_query(query):
-    if isinstance(query, FieldQuery):
+    if isinstance(query, _ReaderQuery):
         return query
     if isinstance(query, Mapping):
         return field_query_from_kwargs(query)
-    raise TypeError("each fetch_many query must be a FieldQuery or mapping")
+    raise TypeError("each fetch_many query must be a _ReaderQuery or mapping")
 
 
 class GribField:
@@ -81,7 +80,7 @@ class GribField:
 class BatchQueryFailure:
     """A per-position query error returned by ``fetch_many(errors='collect')``."""
     position: int
-    query: FieldQuery
+    query: _ReaderQuery
     error: Exception
     match_count: int | None
 
@@ -96,7 +95,7 @@ class GribReader(Reader):
     path
         path of the GRIB file.
     engine
-        decoding engine, ``"eccodes"`` (default) or ``"cfgrib"``.
+        decoding engine, only ``"eccodes"``.
     filters
         initial filter conditions, see ``sel()``.
     """
@@ -113,11 +112,11 @@ class GribReader(Reader):
             **kwargs,
     ):
         super().__init__(source, path)
-        if engine not in ("eccodes", "cfgrib"):
-            raise ValueError(f"engine {engine} is not supported")
+        from reki._legacy import check_engine
+        check_engine(engine)
         self.engine = engine
-        if index_policy not in {"auto", "off", "readonly", "refresh"}:
-            raise ValueError("index_policy must be auto, off, readonly, or refresh")
+        if index_policy != "off":
+            raise QueryError("unsupported", "/index_policy", "GRIB indexes have been retired")
         self.index_policy = index_policy
         self.index_dir = index_dir
         self.index_lock_timeout = index_lock_timeout
@@ -132,7 +131,7 @@ class GribReader(Reader):
     def capabilities(self):
         return ReaderCapabilities(metadata=self.engine == "eccodes",
                                   field_list=self.engine == "eccodes",
-                                  index=self.engine == "eccodes",
+                                  index=False,
                                   fetch_many=self.engine == "eccodes")
 
     def __repr__(self):
@@ -143,7 +142,7 @@ class GribReader(Reader):
 
     def sel(
             self,
-            query: FieldQuery = None,
+            query: _ReaderQuery = None,
             /,
             **kwargs,
     ) -> "GribReader":
@@ -166,12 +165,12 @@ class GribReader(Reader):
             extra GRIB keys used as filter conditions (eccodes engine),
             and engine options: ``level_dim``, ``field_name``,
             ``show_progress``, ``lazy`` (eccodes), ``with_index``
-            (cfgrib).
+            (not supported).
         """
-        if query is not None and not isinstance(query, FieldQuery):
-            raise TypeError("the positional argument to sel() must be a FieldQuery")
+        if query is not None and not isinstance(query, _ReaderQuery):
+            raise TypeError("the positional argument to sel() must be a _ReaderQuery")
         if query is not None and kwargs:
-            raise TypeError("FieldQuery and keyword filters cannot be mixed")
+            raise TypeError("_ReaderQuery and keyword filters cannot be mixed")
         query = query if query is not None else field_query_from_kwargs(kwargs)
         query = self._query.merge(query)
         # Keep the public query representation while constructing a derived
@@ -190,16 +189,16 @@ class GribReader(Reader):
             index_lock_timeout=self.index_lock_timeout,
         )
 
-    def all(self) -> FieldList:
+    def all(self) -> _ReaderFields:
         """Return all matching fields as lazy references, without decoding values."""
         if self.engine != "eccodes":
-            raise NotImplementedError("FieldList is currently available with engine='eccodes' only")
-        fields = self._indexed_fields()
-        return FieldList(fields, query=self._query, source_summary=self._source_summary(),
+            raise NotImplementedError("_ReaderFields is currently available with engine='eccodes' only")
+        fields = self._metadata_fields()
+        return _ReaderFields(fields, query=self._query, source_summary=self._source_summary(),
                          merge=_merge_arrays)
 
     def where(self, query=None, /, **kwargs):
-        """Return a metadata-only FieldList filtered without expression evaluation."""
+        """Return a metadata-only _ReaderFields filtered without expression evaluation."""
         return self.all().where(query, **kwargs)
 
     def metadata(self, keys=None):
@@ -237,8 +236,8 @@ class GribReader(Reader):
             cardinalities = list(cardinality)
             if len(cardinalities) != len(queries):
                 raise ValueError("cardinality must have one value per query")
-        if set(cardinalities) - {"all", "first", "one", "one_or_none"}:
-            raise ValueError("cardinality must be all, first, one, or one_or_none")
+        if set(cardinalities) - {"all", "first", "one"}:
+            raise ValueError("cardinality must be all, first, or one")
         normalized = [_coerce_query(query) for query in queries]
         cache = {}
         results = []
@@ -248,7 +247,7 @@ class GribReader(Reader):
         scanned = self._batch_scan(normalized) if (self._query.extra or any(query.extra for query in normalized)) else None
         fields = None if scanned is not None else self.all()
         for position, (query, mode) in enumerate(zip(normalized, cardinalities)):
-            # FieldQuery intentionally permits mapping-valued conditions,
+            # _ReaderQuery intentionally permits mapping-valued conditions,
             # which are not hashable.  Its bounded canonical repr is stable
             # because construction freezes mappings and sequences.
             key = (repr(query), mode)
@@ -257,10 +256,10 @@ class GribReader(Reader):
                     selected = scanned[repr(query)] if scanned is not None else fields.where(query)
                     cache[key] = getattr(selected, mode)()
                 results.append(cache[key])
-            except (DataNotFoundError, MultipleFieldsMatchedError) as error:
+            except QueryError as error:
                 if errors == "raise":
                     raise
-                results.append(BatchQueryFailure(position, query, error, error.match_count))
+                results.append(BatchQueryFailure(position, query, error, error.context.get("match_count")))
         return results
 
     def first(self) -> Optional[GribField]:
@@ -275,14 +274,6 @@ class GribReader(Reader):
         GribField or None
             the first matching field (file order), or None if not found.
         """
-        # Keep the legacy early-stop scanner for the explicit no-index
-        # policy.  Every other ecCodes policy can serve cardinality from the
-        # metadata index and decode only the selected offset.  In particular,
-        # a warm index must not turn ten ``first()`` calls into ten full
-        # header scans.
-        if self.engine == "eccodes" and self.index_policy != "off" and not self._query.extra:
-            return self.all().first()
-
         filters = self._filters_from_query()
         count = filters.pop("count", None)
         if count is not None:
@@ -292,21 +283,8 @@ class GribReader(Reader):
         parameter = filters.pop("parameter", None)
         level = filters.pop("level", None)
 
-        if self.engine == "eccodes":
-            from .eccodes import load_field_from_file
-        else:
-            from .cfgrib import load_field_from_file
-
-        try:
-            data = load_field_from_file(
-                self.path, parameter, level_type, level, **filters
-            )
-        except IndexError:
-            # cfgrib's first-variable helper raises on an empty filtered
-            # Dataset.  The public first() contract has always been None.
-            if self.engine != "cfgrib":
-                raise
-            data = None
+        from .eccodes import load_field_from_file
+        data = load_field_from_file(self.path, parameter, level_type, level, **filters)
         return None if data is None else GribField(data)
 
     def one(self) -> GribField:
@@ -314,7 +292,7 @@ class GribReader(Reader):
         result = self._unique_field(required=True)
         return result
 
-    def one_or_none(self) -> Optional[GribField]:
+    def _one_or_none(self) -> Optional[GribField]:
         """Return the unique match, or ``None`` when there is no match."""
         return self._unique_field(required=False)
 
@@ -326,9 +304,7 @@ class GribReader(Reader):
         lazy
             eccodes engine: defer values decoding to data access
             (see ``load_field_from_file``). May also be given through
-            ``sel()`` as an engine option. The cfgrib engine reads
-            through its on-disk index on demand by nature and ignores
-            this option.
+            ``sel()`` as an engine option.
         **kwargs
             additional filter conditions (merged with those from
             ``sel()``).
@@ -336,15 +312,14 @@ class GribReader(Reader):
         Returns
         -------
         None
-            if no message matches (eccodes engine; the cfgrib engine
-            follows cfgrib/xarray behaviour for empty filters).
+            if no message matches.
         xr.DataArray
             if exactly one message matches.
         xr.Dataset
             if multiple messages match a single hypercube.
         list of xr.Dataset
             if the matches span multiple hypercubes (grouped by level
-            type, following ``cfgrib.open_datasets``).
+            type).
         """
         filters = {**self._filters_from_query(), **kwargs}
         count = filters.pop("count", None)
@@ -354,7 +329,7 @@ class GribReader(Reader):
 
         if self.engine == "eccodes":
             return self._to_xarray_eccodes(filters, lazy=lazy)
-        return self._to_xarray_cfgrib(filters)
+        raise QueryError("unsupported", "/engine", "Only ecCodes is supported")
 
     def __len__(self):
         raise NotImplementedError(
@@ -385,7 +360,7 @@ class GribReader(Reader):
             if value is not None:
                 # Existing kernels expect lists, while the public query is immutable.
                 filters[key] = thaw(value)
-        # FieldQuery uses source-neutral names.  GRIB backends retain their
+        # _ReaderQuery uses source-neutral names.  GRIB backends retain their
         # native key spellings at this boundary only.
         if "step_type" in filters:
             filters["stepType"] = filters.pop("step_type")
@@ -399,37 +374,14 @@ class GribReader(Reader):
     def _source_summary(self):
         return f"GRIB source {os.path.basename(str(self.path))!r}"
 
-    def _indexed_fields(self):
+    def _metadata_fields(self):
         """Read valid metadata index or make one scan fallback; no values decode."""
-        # v1 deliberately does not index arbitrary FieldQuery.extra keys.
+        # v1 deliberately does not index arbitrary _ReaderQuery.extra keys.
         # Verify them against headers rather than turning a valid match into an
         # empty index result.
         if self._query.extra:
             return self._scan_fields()
-        rows = None
-        if self.index_policy != "off":
-            from .index import IndexStore, IndexBuildError
-            store = IndexStore(self.path, index_dir=self.index_dir,
-                               lock_timeout=self.index_lock_timeout)
-            try:
-                connection = (store.build(refresh=self.index_policy == "refresh")
-                              if self.index_policy in {"auto", "refresh"}
-                              else store.open_valid())
-                if connection is not None:
-                    rows = connection.execute(
-                        "SELECT ordinal, offset, short_name, level_type, level_real, "
-                        "start_time_ns, step_ns, valid_time_ns, time_range_ns, "
-                        "step_type, member, ni, nj, dtype, grid_type, extra_metadata_json, "
-                        "discipline, parameter_category, parameter_number "
-                        "FROM fields ORDER BY ordinal"
-                    ).fetchall()
-                    connection.close()
-            except (IndexBuildError, OSError):
-                if self.index_policy == "refresh":
-                    raise
-        if rows is None:
-            return self._scan_fields()
-        return [self._field_from_index_row(row) for row in rows if self._matches_query(self._metadata_from_index_row(row))]
+        return self._scan_fields()
 
     def _scan_fields(self):
         from .eccodes._scan import iter_headers
@@ -467,7 +419,7 @@ class GribReader(Reader):
                         )
                     matches[key].append(candidate._field_reference(metadata))
         return {
-            key: FieldList(values, query=unique[key], source_summary=self._source_summary(),
+            key: _ReaderFields(values, query=unique[key], source_summary=self._source_summary(),
                            merge=_merge_arrays)
             for key, values in matches.items()
         }
@@ -484,33 +436,6 @@ class GribReader(Reader):
         fixed_level_type, _ = _fix_level(level_type, None)
         return _check_message(message, parameter, fixed_level_type, level, **filters)
 
-    def _field_from_index_row(self, row):
-        return self._field_reference(self._metadata_from_index_row(row))
-
-    def _metadata_from_index_row(self, row):
-        (ordinal, offset, parameter, level_type, level,
-         start_time_ns, step_ns, valid_time_ns, time_range_ns,
-         step_type, member, ni, nj,
-         dtype, grid_type, extra, discipline, parameter_category, parameter_number) = row
-        import json
-        extra = json.loads(extra)
-        extra.update({
-            key: value for key, value in {
-                "discipline": discipline, "parameterCategory": parameter_category,
-                "parameterNumber": parameter_number, "parameter_match": "short_name",
-            }.items() if value is not None
-        })
-        return FieldMetadata(ordinal, offset, parameter, _public_level_type(level_type), level,
-                             start_time=(pd.Timestamp(start_time_ns) if start_time_ns is not None else None),
-                             step=(pd.Timedelta(step_ns, unit="ns") if step_ns is not None else None),
-                             valid_time=(pd.Timestamp(valid_time_ns) if valid_time_ns is not None else None),
-                             step_type=step_type,
-                             time_range=(pd.Timedelta(time_range_ns, unit="ns") if time_range_ns is not None else None),
-                             member=member,
-                             shape=(nj, ni) if ni is not None and nj is not None else None,
-                             dtype=dtype, grid_type=grid_type,
-                             source=os.path.basename(str(self.path)), extra=extra)
-
     def _field_reference(self, metadata):
         def loader(**kwargs):
             from .eccodes._decode import load_message_at_offset
@@ -526,7 +451,7 @@ class GribReader(Reader):
         return GribField(metadata=metadata, loader=loader)
 
     def _matches_query(self, metadata):
-        # Reuse FieldList's public selection semantics for indexed and scanned
+        # Reuse _ReaderFields's public selection semantics for indexed and scanned
         # metadata.  Unknown extra keys deliberately do a header scan fallback.
         query = self._query
         parameter = query.parameter
@@ -542,29 +467,13 @@ class GribReader(Reader):
                 metadata.level_type, _native_level_type(metadata.level_type)}:
             return False
         from reki.core.field_list import _matches
-        return _matches(metadata, FieldQuery(
+        return _matches(metadata, _ReaderQuery(
             level=query.level, step_type=query.step_type,
             time_range=query.time_range, member=query.member, extra=query.extra,
         ))
 
     def _unique_field(self, required: bool):
         """Check cardinality from ecCodes headers and decode at most one field."""
-        if self.engine != "eccodes":
-            # cfgrib has no message iterator API.  Decode the first field for
-            # compatibility and use its datasets to detect obvious ambiguity.
-            value = self.to_xarray()
-            if value is None:
-                if required:
-                    raise DataNotFoundError(self._query, self._source_summary(), 0)
-                return None
-            if isinstance(value, (xr.Dataset, list)):
-                raise MultipleFieldsMatchedError(self._query, self._source_summary(), 2)
-            return GribField(value)
-
-        if self.index_policy != "off" and not self._query.extra:
-            fields = self.all()
-            return fields.one() if required else fields.one_or_none()
-
         from .eccodes._check import _check_message
         from .eccodes._level import _fix_level
         from .eccodes._scan import iter_headers
@@ -574,7 +483,7 @@ class GribReader(Reader):
         if count is not None:
             field = self._first_by_count(count)
             if field is None and required:
-                raise DataNotFoundError(self._query, self._source_summary(), 0)
+                raise QueryError("no_match", "", "No fields matched", {"operation": "one", "match_count": 0})
             return field
         parameter = filters.pop("parameter", None)
         level_type = filters.pop("level_type", None)
@@ -591,11 +500,11 @@ class GribReader(Reader):
                 if not _check_message(header.handle, parameter, fixed_level_type, level, **filters):
                     continue
                 if first_found:
-                    raise MultipleFieldsMatchedError(self._query, self._source_summary(), 2)
+                    raise QueryError("multiple_matches", "", "At least two fields matched", {"operation": "one", "match_count_lower_bound": 2})
                 first_found = True
         if not first_found:
             if required:
-                raise DataNotFoundError(self._query, self._source_summary(), 0)
+                raise QueryError("no_match", "", "No fields matched", {"operation": "one", "match_count": 0})
             return None
         # Header handles cannot safely decode values. Re-open only the known
         # unique field after cardinality is proven, so a multiple match never
@@ -744,73 +653,10 @@ class GribReader(Reader):
                 eccodes.codes_release(message)
         return arrays
 
-    def _to_xarray_cfgrib(self, filters: Dict):
-        import cfgrib
-
-        from .cfgrib._util import (
-            _fill_index_path,
-            _fill_level_type,
-            _fill_level_value,
-            _fill_parameter,
-        )
-
-        filters = dict(filters)
-        parameter = filters.pop("parameter", None)
-        level_type = filters.pop("level_type", None)
-        level = filters.pop("level", None)
-        with_index = filters.pop("with_index", False)
-        for option in ("level_dim", "field_name", "show_progress", "lazy"):
-            filters.pop(option, None)
-        # remaining keys are extra GRIB keys used as filter conditions
-
-        filter_by_keys = dict(filters)
-        read_keys = []
-
-        if parameter is not None:
-            _fill_parameter(parameter, filter_by_keys, read_keys)
-        if level_type is not None:
-            level_type = fix_level_type(level_type, engine="cfgrib")
-            _fill_level_type(level_type, filter_by_keys, read_keys)
-        if level is not None and level != "all":
-            if isinstance(level, list):
-                filter_by_keys["level"] = level
-            else:
-                _fill_level_value(level, filter_by_keys, read_keys)
-
-        backend_kwargs = {"filter_by_keys": filter_by_keys}
-        if len(read_keys) > 0:
-            backend_kwargs["read_keys"] = read_keys
-        _fill_index_path(with_index, backend_kwargs)
-
-        # cfgrib.open_datasets groups incompatible hypercubes into
-        # separate datasets (xarray no longer provides open_datasets).
-        try:
-            datasets = cfgrib.open_datasets(
-                self.path, backend_kwargs=backend_kwargs
-            )
-        except KeyError as error:
-            # cfgrib raises KeyError('paramId') for an empty filtered index.
-            # Normalize that engine detail to the public no-match contract.
-            if error.args != ("paramId",):
-                raise
-            return None
-        # an empty filter result yields a single empty dataset
-        datasets = [ds for ds in datasets if ds.data_vars or ds.dims]
-        if not datasets:
-            return None
-        if len(datasets) > 1:
-            return datasets
-
-        data_set = datasets[0]
-        if len(data_set.data_vars) == 1:
-            data = data_set[list(data_set.data_vars)[0]]
-            if data.ndim <= 2:
-                return data
-        return data_set
 
 
 def _merge_arrays(arrays: List[xr.DataArray]):
-    """Merge decoded fields following cfgrib/xarray conventions."""
+    """Merge decoded fields by native coordinates."""
     from .eccodes._lazy import concat_lazy_arrays
 
     if not arrays:
@@ -918,7 +764,7 @@ def _metadata_from_message(message, ordinal, offset, path):
     # use the same public control/member convention.
     native_member = get("number")
     member = 0 if native_member is None and get("dataType") == "fc" else native_member
-    return FieldMetadata(
+    return _ReaderMetadata(
         index=ordinal, offset=offset, parameter=get("shortName"),
         level_type=_public_level_type(get("typeOfLevel")), level=get("level"),
         start_time=time_metadata["start_time"], step=time_metadata["step"],

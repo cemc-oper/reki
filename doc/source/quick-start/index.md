@@ -43,12 +43,12 @@ uv add reki
 uv run reki-test-data download ecmwf_ifs
 ```
 
-下载完成后，继续运行 {doc}`first-workflow`。示例会使用内置的 `test` source：
+下载完成后，继续运行 {doc}`first-workflow`。示例将测试资料工具取得的路径传给公开 file 来源：
 
 ```python
 from reki import from_source
 
-source = from_source("test", "ecmwf_ifs")
+source = from_source({"kind": "file", "path": "/data/ifs_eastasia_2026090712_f024.grib2"})
 ```
 
 ## 按目标继续阅读

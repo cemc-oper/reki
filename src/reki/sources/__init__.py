@@ -1,4 +1,6 @@
-"""Data sources and the unified entry point ``from_source()``.
+"""Named source-factory machinery for format dispatch.
+
+The public v1 Query constructor is ``reki.from_source(declaration)``.
 
 A *source* knows where the data comes from. Sources are looked up by name
 and combined in three ways, by descending priority (following the design
@@ -14,7 +16,7 @@ import os
 from importlib import import_module
 from importlib.metadata import entry_points
 
-from reki.core import Source, SourceSpec
+from reki.core import Source, _SourceSpec
 from reki.diagnostics import record_io_event
 
 __all__ = [
@@ -105,15 +107,15 @@ class SourceMaker:
 get_source = SourceMaker()
 
 
-def source_capability(source_spec: SourceSpec):
+def source_capability(source_spec: _SourceSpec):
     """Return a source-declared dispatch capability without remote I/O.
 
     Sources that require runtime bindings merely to be constructed (such as
     ``local``) have no pre-binding descriptor and return ``None``.  The
     provider then retains its established selectable-reader behavior.
     """
-    if not isinstance(source_spec, SourceSpec):
-        raise TypeError("source_spec must be a SourceSpec")
+    if not isinstance(source_spec, _SourceSpec):
+        raise TypeError("source_spec must be a _SourceSpec")
     try:
         source = get_source(source_spec.name, *source_spec.args, **source_spec.kwargs)
     except TypeError:
@@ -183,17 +185,17 @@ def _build(name: str, args, kwargs):
 
 
 def _source_arguments(name, args, kwargs):
-    """Resolve the public string/SourceSpec forms into one construction form."""
-    if not isinstance(name, SourceSpec):
+    """Resolve the public string/_SourceSpec forms into one construction form."""
+    if not isinstance(name, _SourceSpec):
         return name, args, kwargs, str(name)
     if args:
-        raise TypeError("SourceSpec cannot be combined with positional arguments")
+        raise TypeError("_SourceSpec cannot be combined with positional arguments")
     merged = dict(name.kwargs)
     merged.update(kwargs)
     return name.name, name.args, merged, repr(name)
 
 
-def from_source(name: str | SourceSpec, *args, lazily: bool = False, **kwargs) -> Source:
+def from_source(name: str | _SourceSpec, *args, lazily: bool = False, **kwargs) -> Source:
     """Create a source by name and mutate it into the most concrete source.
 
     The source class is looked up by :data:`SourceMaker`, instantiated
@@ -232,12 +234,12 @@ def from_source(name: str | SourceSpec, *args, lazily: bool = False, **kwargs) -
     Source or Reader or LazySource
         the unified data object, or a lazy proxy for it.
     """
-    is_spec = isinstance(name, SourceSpec)
+    is_spec = isinstance(name, _SourceSpec)
     name, args, kwargs, description = _source_arguments(name, args, kwargs)
     if lazily:
         # Preserve legacy support for in-memory arbitrary objects (arrays,
-        # file handles, ...); SourceSpec deliberately remains serializable.
-        return from_source_lazily(SourceSpec(name, args, kwargs) if is_spec else name, *(() if is_spec else args), **({} if is_spec else kwargs))
+        # file handles, ...); _SourceSpec deliberately remains serializable.
+        return from_source_lazily(_SourceSpec(name, args, kwargs) if is_spec else name, *(() if is_spec else args), **({} if is_spec else kwargs))
 
     record_io_event("source_resolve_count")
     src = get_source(name, *args, **kwargs)
@@ -249,7 +251,7 @@ def from_source(name: str | SourceSpec, *args, lazily: bool = False, **kwargs) -
     return _mutate_and_convert(src)
 
 
-def from_source_lazily(name: str | SourceSpec, *args, **kwargs) -> LazySource:
+def from_source_lazily(name: str | _SourceSpec, *args, **kwargs) -> LazySource:
     """Lazy variant of :func:`from_source`.
 
     Returns a :class:`LazySource` proxy; source construction, the

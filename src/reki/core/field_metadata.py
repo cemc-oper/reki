@@ -15,7 +15,7 @@ def _freeze_extra(value):
 
 
 @dataclass(frozen=True)
-class FieldMetadata:
+class _ReaderMetadata:
     index: int
     offset: int | None
     parameter: str | None

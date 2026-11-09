@@ -1,7 +1,7 @@
 """reki ``test`` source: fetch well-known test datasets through reki.
 
 Built-in source discovered by the directory scan of
-``reki/sources/{name}.py``; ``reki.from_source("test", "ecmwf_ifs", ...)``
+``reki/sources/{name}.py``; ``reki.sources.get_source("test", "ecmwf_ifs", ...)``
 works out of the box. This is a test-support facility for reki's test
 suite and examples — it is not an operational data channel.
 

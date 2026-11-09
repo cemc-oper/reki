@@ -1,94 +1,33 @@
----
-orphan: true
----
-
 # 公开 API 清单
 
-> T0-2 基线，2026-09-07。此清单定义 T4 API 参考的审计范围，而不是由 autodoc
-> 根据名称自动发现的列表。`推荐` 表示新的规范导入路径；`兼容` 表示项目仍承诺的旧路径；
-> `实验性`/`待确认` 必须经维护者确认后才承诺长期兼容。
+2026-11-09 N09F 更新。顶层 source mapping 与 cedarkit-query v1 是唯一公共查询协议。
+旧 SourceSpec / FieldQuery / FieldMetadata / FieldList、旧异常和 one_or_none 已退出；
+cfgrib 命名路径与依赖已删除，不提供提示模块或别名。
 
-“目标页面”是目标信息架构中的页面，T4 创建后应将每个条目链接到实际锚点。测试列是
-现有覆盖证据或应补的最小示例，不能代替 API 文档。
+下表由源码的显式 __all__（根模块为显式惰性导出表）审计。受保护 format 函数保留各自
+已有导出；内部 reki.sources 命名工厂、Source / Reader 和插件辅助工具用于格式分派及测试
+资料获取，不作为第二套 v1 QuerySource 构造协议，也不承诺旧模型的稳定性。
 
-## 判定规则
+| 符号 | 导入路径 | API 页 |
+| --- | --- | --- |
+| `from_source`, `Query`, `Request`, `QueryError`, `SourceError`, `CompletenessError`, `QueryReport`, `QueryExplanation`, `register`, `Source`, `ReaderCapabilities`, `normalize_data_array`, `validate_data_array`, `load_catalog`, `operator` | `reki` | top-level |
+| `Source`, `QueryError`, `SourceError`, `normalize_data_array`, `validate_data_array`, `DataArrayContractWarning`, `DataArrayContractError`, `DataArrayContractIssue` | `reki.core` | core |
+| `Source`, `LazySource`, `from_source`, `from_source_lazily`, `get_source`, `source_capability`, `register`, `SourceMaker` | `reki.sources` | sources |
+| `Reader`, `ReaderCapabilities`, `reader`, `UnknownReader` | `reki.readers` | readers |
+| `Catalog`, `LoadedResource`, `SourceConfiguration`, `load_catalog`, `load_context`, `load_resource`, `plan_source_binding` | `reki.catalog` | catalog |
+| `load_field_from_file`, `load_fields_from_file`, `fix_level_type`, `load_message_from_file`, `load_messages_from_file` | `reki.format.grib` | legacy |
+| `fix_level_type`, `MISSING_VALUE` | `reki.format.grib.common` | legacy |
+| `load_message_from_file`, `load_messages_from_file`, `load_field_from_file`, `load_field_from_files`, `load_bytes_from_file`, `create_message_from_bytes`, `create_messages_from_bytes`, `create_data_array_from_message` | `reki.format.grib.eccodes` | legacy |
+| `load_bytes_from_file`, `create_message_from_bytes`, `create_messages_from_bytes` | `reki.format.grib.eccodes.bytes` | legacy |
+| `extract_region`, `interpolate_grid` | `reki.format.grib.eccodes.operator` | legacy |
+| `load_field_from_file` | `reki.format.grads` | legacy |
+| `load_field_from_file` | `reki.format.netcdf` | legacy |
+| `load_table_from_file`, `load_nwpc_obs_from_file`, `NWPC_OBS_CONFIG` | `reki.format.table` | legacy |
 
-1. 顶层及子包 `__all__` 是明确的受支持导出；顶层重导出以 `reki.__all__` 为准。
-2. 旧 `reki.data_finder` 和 `reki.format.*` 的显式导出属于兼容面。
-3. 具有面向用户命令或被公开工厂/模块明确返回的类，列为推荐或待确认；仅仅未以下划线开头不足以成为公开 API。
-4. `reki.readers.grib.index` 明确自称 internal，即使有 `__all__` 也不加入长期公开 API；其功能应在架构页说明。
+Field / Fields / QuerySource 从公开查询返回，身份、QueryReport 与 QueryExplanation
+遵循 v1 schema。xarray Dataset 为公共组织出口；规范名、原生单位与坐标不能混用。
+历史 IndexStore 仅为内部残留模块，读取链不访问它。受保护函数的精确行为见
+{doc}`/guide/legacy_grib`，source 声明见 {doc}`/guide/public-query`。
 
-## 顶层 `reki`
-
-| 符号 | 规范导入路径 | 稳定性 | 目标页面 | 证据 |
-| --- | --- | --- | --- | --- |
-| `from_source`, `from_source_lazily`, `register`, `source_capability`, `Source` | `reki` | 推荐 | `development/api/top-level.md`、`sources.md` | `tests/sources/test_from_source.py`、`test_source_maker.py`、`test_lazy.py` |
-| `SourceSpec`, `FieldQuery`, `FieldMetadata`, `FieldList` | `reki` | 推荐 | `top-level.md`、`core.md` | `tests/core/test_source_spec.py`、`test_field_query.py`、`test_field_list_core.py` |
-| `ReaderCapabilities` | `reki` | 推荐 | `top-level.md`、`readers.md` | `tests/readers/test_readers.py` |
-| `DataNotFoundError`, `MultipleFieldsMatchedError`, `UnsupportedOperationError` | `reki` | 推荐 | `top-level.md`、`core.md` | `tests/readers/test_grib_cardinality.py`、`test_readers.py` |
-| `normalize_data_array`, `validate_data_array` | `reki` | 推荐 | `top-level.md`、`core.md` | `tests/core/test_xarray_contract.py` |
-| `load_catalog` | `reki` | 推荐 | `top-level.md`、`catalog.md` | `tests/catalog/test_catalog.py` |
-| `operator` | `reki.operator` | 推荐（模块） | `development/api/operators.md` | `tests/operator/test_module_boundary.py` |
-
-## 核心模型与来源
-
-| 符号 | 规范导入路径 | 稳定性 | 目标页面 | 证据 |
-| --- | --- | --- | --- | --- |
-| `Source`, `SourceSpec`, `FieldQuery`, `FieldMetadata`, `FieldList` | `reki.core` | 推荐 | `development/api/core.md` | `tests/core/test_source_spec.py`、`test_field_query.py`、`test_field_list_core.py` |
-| `QueryError`, `DataNotFoundError`, `MultipleFieldsMatchedError`, `UnsupportedOperationError` | `reki.core` | 推荐 | `core.md` | `tests/core/test_field_query.py`、`tests/readers/test_grib_cardinality.py` |
-| `normalize_data_array`, `validate_data_array`, `DataArrayContractWarning`, `DataArrayContractError`, `DataArrayContractIssue` | `reki.core` | 推荐 | `core.md` | `tests/core/test_xarray_contract.py` |
-| `Source`, `LazySource`, `SourceMaker`, `from_source`, `from_source_lazily`, `get_source`, `source_capability`, `register` | `reki.sources` | 推荐 | `development/api/sources.md` | `tests/sources/test_from_source.py`、`test_source_maker.py`、`test_lazy.py` |
-| `TestSource`, `FileSource`, `FilePatternSource`, `LocalSource`, `UrlSource`, `MemorySource`, `CmadaasSource` | `reki.sources.test`, `.file`, `.file_pattern`, `.local`, `.url`, `.memory`, `.cmadaas` | 推荐的内置 source 类型 | `sources.md` | 相应 `tests/sources/test_*.py` |
-| `SourceCapability` | `reki.sources.cmadaas` | 待确认（未由包重导出） | `sources.md`、`cmadaas.md` | `tests/sources/test_cmadaas.py` |
-
-## 读取器与 GRIB
-
-| 符号 | 规范导入路径 | 稳定性 | 目标页面 | 证据 |
-| --- | --- | --- | --- | --- |
-| `Reader`, `ReaderCapabilities`, `reader`, `UnknownReader` | `reki.readers` | 推荐 | `development/api/readers.md` | `tests/readers/test_readers.py`、`test_other_readers.py` |
-| `GribReader`, `GribField`, `load_fields_from_file`, `fix_level_type`, `load_message_from_file`, `load_messages_from_file` | `reki.readers.grib` | 推荐 | `readers.md`、`grib.md` | `tests/readers/test_grib.py`、`test_grib_query.py`、`test_grib_lazy.py` |
-| `GradsReader`, `load_field_from_file` | `reki.readers.grads` | 推荐 | `readers.md` | `tests/format/grads/test_lazy.py` |
-| `NetCDFReader`, `load_field_from_file` | `reki.readers.netcdf` | 推荐 | `readers.md` | `tests/format/netcdf/test_lazy.py` |
-| `TableReader`, `load_table_from_file`, `load_nwpc_obs_from_file`, `NWPC_OBS_CONFIG` | `reki.readers.table` | 推荐 | `readers.md` | `tests/readers/test_other_readers.py`、`tests/readers/test_query_compatibility.py` |
-| `CmadaasReader` | `reki.readers.cmadaas` | 待确认（未由 `reki.readers` 重导出） | `readers.md`、`cmadaas.md` | `tests/readers/test_cmadaas_reader.py` |
-| `INDEX_SCHEMA_VERSION`, `IndexBuildError`, `IndexStore`, `SourceFingerprint`, `fingerprint_file`, `index_path_for` | `reki.readers.grib.index` | 内部实现（不生成长期 API 页） | `development/architecture/grib-reader-and-index.md` | `tests/readers/grib/test_index_store.py` |
-
-## catalog、operators、diagnostics 与 CMADaaS
-
-| 符号 | 规范导入路径 | 稳定性 | 目标页面 | 证据 |
-| --- | --- | --- | --- | --- |
-| `Catalog`, `CatalogError`, `DatasetRecord`, `ResolvedDataset`, `load_catalog` | `reki.catalog` | 推荐 | `development/api/catalog.md` | `tests/catalog/test_catalog.py` |
-| `extract_region`, `sample_nearest`, `extract_point`, `interpolate_grid` | `reki.operator` | 推荐 | `development/api/operators.md` | `tests/operator/test_extract_region.py`、`test_sample_nearest.py`、`test_extract_point.py`、`test_interpolate_grid.py` |
-| `collect_io_metrics`, `IOMetrics`, `IOMetricsSnapshot` | `reki.diagnostics` | 实验性（模块无 `__all__`，需维护者确认） | `development/api/diagnostics.md` | `tests/diagnostics/test_io_metrics.py` |
-| `build_inventory`; CLI command `cmadaas-inventory` | `reki.cmadaas_inventory`；`reki cmadaas-inventory` | 待确认（命令已注册，Python helper 未重导出） | `cmadaas.md` | `tests/test_cmadaas_inventory.py` |
-
-## 兼容层
-
-| 符号 | 规范导入路径 | 稳定性 | 目标页面 | 证据 |
-| --- | --- | --- | --- | --- |
-| `find_local_file`, `find_local_files`, `get_local_file_name` | `reki.data_finder` | 兼容 | `development/api/legacy.md` | `tests/integration/cma_hpc/data_finder/`（环境专属）；指南示例 |
-| `load_field_from_file`, `load_fields_from_file`, `fix_level_type`, `load_message_from_file`, `load_messages_from_file` | `reki.format.grib` | 兼容 | `legacy.md` | `tests/format/grib/` |
-| `load_field_from_file`, `load_fields_from_file` | `reki.format.grib.cfgrib` | 兼容 | `legacy.md` | `tests/format/grib/` |
-| `fix_level_type`, `MISSING_VALUE` | `reki.format.grib.common` | 兼容 | `legacy.md` | `tests/format/grib/` |
-| `load_message_from_file`, `load_messages_from_file`, `load_field_from_file`, `load_field_from_files`, `load_bytes_from_file`, `create_message_from_bytes`, `create_messages_from_bytes`, `create_data_array_from_message` | `reki.format.grib.eccodes` | 兼容 | `legacy.md` | `tests/format/grib/eccodes/` |
-| `load_bytes_from_file`, `create_message_from_bytes`, `create_messages_from_bytes` | `reki.format.grib.eccodes.bytes` | 兼容 | `legacy.md` | `tests/format/grib/eccodes/` |
-| `extract_region`, `interpolate_grid` | `reki.format.grib.eccodes.operator` | 兼容 | `legacy.md` | `tests/operator/test_module_boundary.py` |
-| `load_field_from_file` | `reki.format.grads`、`reki.format.netcdf` | 兼容 | `legacy.md` | `tests/format/grads/test_lazy.py`、`tests/format/netcdf/test_lazy.py` |
-| `load_table_from_file`, `load_nwpc_obs_from_file`, `NWPC_OBS_CONFIG` | `reki.format.table` | 兼容 | `legacy.md` | `tests/readers/test_other_readers.py`、`tests/readers/test_query_compatibility.py` |
-
-## CLI
-
-| 命令 | 稳定性 | 目标页面 | 证据 |
-| --- | --- | --- | --- |
-| `reki catalog list`, `reki catalog show DATASET_ID`, `reki catalog resolve DATASET_ID` | 推荐 | `development/api/catalog.md` | `tests/test_cli.py`、`tests/catalog/test_catalog.py` |
-| `reki inspect PATH`, `reki ls PATH`, `reki query PATH` | 推荐 | `development/api/readers.md`、`grib.md` | `tests/test_cli.py` |
-| `reki cmadaas-inventory --manifest PATH --root PATH --output PATH` | 待确认 | `development/api/cmadaas.md` | `tests/test_cmadaas_inventory.py` |
-| `reki-finder` | 兼容 | `development/api/legacy.md` | 缺少独立 CLI 测试；T4/T5 补充 |
-| `reki-test-data download DATASET` | 推荐的测试数据工具 | `quick-start/test-data.md` | `tests/sources/test_test_source.py` |
-
-## 已识别的公开路径缺口
-
-1. `reki.data_finder`、`reki.operator`、`reki.diagnostics` 以及多个 reader 子包没有 `__all__`；本清单只采纳其显式导出和已有公开调用点，不能把模块扫描结果视为承诺。
-2. `CmadaasReader`、`SourceCapability`、`build_inventory` 有测试或 CLI/源代码调用点，但未从各自的顶层公共包重导出。维护者应在 T4 前确定是补充规范导出还是将其标为内部。
-3. `reki.readers.grib.index` 有 `__all__`，但模块 docstring 明确标记为 internal；应只从架构页链接，不作为扩展 API 承诺。
-4. 现有 `develop/api/grib.rst` 引用的 `reki.format.grib.eccodes` 是兼容路径；T4 应改用本清单中的 `reki.readers.grib` 规范路径，并另在 `legacy.md` 保留兼容说明。
+`reki request explain/read` 具有当前 v1 原生烟测；历史所有调用方式一致性仍单独跟踪。
+`reki inspect/ls/query` 是独立资料探索工具，显式索引启用报 unsupported。

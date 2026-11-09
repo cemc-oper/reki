@@ -8,7 +8,7 @@ magic probe → None | Reader → deep probe → Reader → metadata / conversio
 ```
 
 实现 capabilities、`sel()`、metadata 及受支持的转换；不支持的操作抛出
-`UnsupportedOperationError`。明确 reader 名称应绕过自动分派。API：
+`QueryError(code="unsupported")`。明确 reader 名称应绕过自动分派。API：
 {doc}`../api/readers`，GRIB 参考见 {doc}`../architecture/grib-reader-and-index`。
 
 ## 最小 factory 骨架

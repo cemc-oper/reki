@@ -1,33 +1,17 @@
----
-jupytext:
-  text_representation: {extension: .md, format_name: myst}
-kernelspec: {display_name: Python 3, language: python, name: python3}
----
-
 # 惰性读取
 
-字段列表和 metadata 探索不会解码网格值。只在选择已收窄后调用 `to_xarray()`，以控制 I/O
-和内存边界。
+公共 `all()` / `one()` 扫描头并定位记录，不提前解码值；Field / Fields 转 xarray 时生成
+独立内存 Dataset。来源关闭前完成转换，不把公共组织误认为旧的 lazy=True DataArray。
 
-```{code-cell} ipython3
-from reki import from_source
-from reki.diagnostics import collect_io_metrics
+受保护高频函数保留按需解码：
 
-with collect_io_metrics() as metrics:
-    reader = from_source("test", "ecmwf_ifs")
-    candidate = reader.sel(
-        parameter="t", level_type="isobaricInhPa", level=850,
-    ).all().one()
-    assert candidate.metadata.shape == (241, 361)
-    assert metrics.snapshot()["value_decode_count"] == 0
-    data = reader.sel(
-        parameter="t", level_type="isobaricInhPa", level=850,
-    ).to_xarray(lazy=True)
-assert data.shape == (241, 361)
-assert metrics.snapshot()["value_decode_count"] == 0
+```python
+from reki.readers.grib.eccodes import load_field_from_file
+
+array = load_field_from_file("original.grib2", parameter="t", level_type="pl", level="all", lazy=True)
+# isel / sel 保持惰性；values 只解码所选报文，原文件必须仍可读。
+values = array.isel(pl=0).values
 ```
 
-调用 `.values`、`numpy.asarray(data)` 或需要实际数值的聚合才会触发计算。若下游不支持
-惰性数组，显式使用 `data.load()`，并确保选择条件已经把数据量限制在可接受范围内。可用
-`collect_io_metrics()` 验证边界：在 context 退出后读取 `metrics.snapshot()`，此时
-`value_decode_count` 会随 `.values` 或 `.load()` 增加。
+这里不需要额外的来源上下文。两个低频集合函数返回独立内存结果；多文件 lazy=True
+明确报 unsupported。NetCDF / GrADS 的原生惰性与关闭规则见各格式页。

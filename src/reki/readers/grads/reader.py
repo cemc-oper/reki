@@ -9,7 +9,7 @@ import os
 from typing import Dict, Optional
 
 from reki.readers import Reader
-from reki.core import FieldQuery
+from reki.core import _ReaderQuery
 from reki.core.field_query import field_query_from_kwargs
 
 from .field import load_field_from_file
@@ -37,14 +37,14 @@ class GradsReader(Reader):
         return filters
 
     def __repr__(self):
-        return f"GradsReader({self.path!r}, filters={self._filters!r})"
+        return f"GradsReader({self.path!r}, filters={self.filters!r})"
 
-    def sel(self, query: FieldQuery = None, /, **kwargs) -> "GradsReader":
+    def sel(self, query: _ReaderQuery = None, /, **kwargs) -> "GradsReader":
         """Return a new reader with more filter conditions (no I/O)."""
-        if query is not None and not isinstance(query, FieldQuery):
-            raise TypeError("the positional argument to sel() must be a FieldQuery")
+        if query is not None and not isinstance(query, _ReaderQuery):
+            raise TypeError("the positional argument to sel() must be a _ReaderQuery")
         if query is not None and kwargs:
-            raise TypeError("FieldQuery and keyword filters cannot be mixed")
+            raise TypeError("_ReaderQuery and keyword filters cannot be mixed")
         query = query if query is not None else field_query_from_kwargs(kwargs)
         merged = self._query.merge(query)
         return GradsReader(self.source, self.path, filters={**dict(merged.extra), **{k: getattr(merged, k) for k in ("parameter", "level_type", "level") if getattr(merged, k) is not None}})

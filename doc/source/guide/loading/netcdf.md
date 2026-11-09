@@ -1,9 +1,18 @@
 # NetCDF
 
-NetCDF reader 使用 xarray 后端打开文件。变量名、维度和坐标通常保留源文件的语义，因而
-与 GRIB 的统一 metadata 不同；NetCDF reader 暂无 `metadata()` 能力，请先查看
-`to_xarray()` 返回的 xarray 对象再编写处理代码。
-可通过 `engine=`、`chunks=` 等 reader 选项选择后端和惰性读取行为。
+受保护函数使用 xarray 后端，保留变量名、坐标、单位和原生惰性存储；不强加公共 GRIB
+维度组织或报告。可以传 engine / chunks 等 xarray 选项。
 
-多变量文件、group 或特殊编码是否可选取取决于 xarray 后端；不支持时不要假定会自动
-转换为 GRIB 风格字段。
+```python
+from reki.readers.netcdf import load_field_from_file
+
+field = load_field_from_file("forecast.nc", parameter="temperature", level_type="level", level=850)
+try:
+    values = field.values
+finally:
+    field.close()
+```
+
+parameter=None 取第一个数据变量；无数据变量、缺变量或层值报 QueryError(no_match)。
+显式 level_type 指定的坐标不存在时为 invalid_query。成功字段携带 Dataset.close 回调，
+选择失败立即关闭 Dataset；调用方任意第三方操作不由 reki 拦截改写异常。

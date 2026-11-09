@@ -1,7 +1,9 @@
 import pytest
 import pandas as pd
 
-from reki import DataNotFoundError, FieldList, FieldMetadata, MultipleFieldsMatchedError
+from cedarkit_query import QueryError
+from reki.core.field_list import _ReaderFields as FieldList
+from reki.core.field_metadata import _ReaderMetadata as FieldMetadata
 
 
 class Field:
@@ -16,9 +18,9 @@ def test_field_list_sequence_selection_cardinality_and_immutability():
     assert len(fields) == 2 and fields[-1] is two and len(fields[:1]) == 1
     assert fields.sel(parameter="t").one() is one
     assert fields.sel(parameter="v").first() is None
-    with pytest.raises(DataNotFoundError):
+    with pytest.raises(QueryError, match="no_match"):
         fields.sel(parameter="v").one()
-    with pytest.raises(MultipleFieldsMatchedError):
+    with pytest.raises(QueryError, match="multiple_matches"):
         fields.one()
     with pytest.raises(TypeError):
         one.metadata.extra["x"] = 1

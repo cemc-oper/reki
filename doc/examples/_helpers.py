@@ -2,11 +2,8 @@
 
 from __future__ import annotations
 
-from contextlib import contextmanager
 import os
 from pathlib import Path
-import tempfile
-from typing import Iterator
 
 import reki
 
@@ -33,16 +30,7 @@ def frozen_ifs_path(variant: str = "core") -> Path:
     return path
 
 
-@contextmanager
-def temporary_index() -> Iterator[Path]:
-    """Yield an isolated index directory that is removed after the example."""
-    with tempfile.TemporaryDirectory(prefix="reki-doc-index-") as directory:
-        yield Path(directory)
 
-
-def open_ifs(variant: str = "core", *, index_policy: str = "off", index_dir: Path | None = None):
-    """Open a frozen local IFS asset with an explicit index policy."""
-    kwargs = {"index_policy": index_policy}
-    if index_dir is not None:
-        kwargs["index_dir"] = index_dir
-    return reki.from_source("file", frozen_ifs_path(variant), **kwargs)
+def open_ifs(variant: str = "core"):
+    """Open a frozen local IFS asset through a public source declaration."""
+    return reki.from_source({"kind": "file", "path": str(frozen_ifs_path(variant))})

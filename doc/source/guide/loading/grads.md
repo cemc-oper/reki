@@ -1,8 +1,14 @@
 # GrADS
 
-GrADS reader 需要 `.ctl` 控制文件及其引用的数据文件。通过 `from_source("file", path)`
-交给 dispatch 识别后，可使用 `sel()` 和 `to_xarray()`；数组会按控制文件中的时间、层次
-和网格定义构造。缺少关联数据文件、非标准控制文件或不支持的选择条件会以读取错误或
-`UnsupportedOperationError` 失败。
+受保护读取函数保留 CTL / 二进制格式的选择和 DataArray 行为，不强加 GRIB 业务组织。
 
-这是本地文件能力；示例应提供自己的固定 `.ctl` 资产，不应假定业务目录存在。
+```python
+from reki.readers.grads import load_field_from_file
+
+field = load_field_from_file("post.ctl_2026110212_006", parameter="gh", level_type="pl", level=850, lazy=True)
+```
+
+缺参数、层次或时间的正常查询返回 None。起报时间可从支持的业务 CTL 文件名推导，
+每条记录的 forecast_time 为其 valid_time 减起报时间；通用 CTL 使用其相对时间定义。
+小端、字节序与 sequential 记录由 CTL 选项控制；原文件必须在惰性访问时仍可读。
+缺资源和损坏数据分别为 SourceError(resource_not_found / decode_failed)，不会作为缺场。

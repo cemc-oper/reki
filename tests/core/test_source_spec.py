@@ -3,7 +3,8 @@ from pathlib import Path
 
 import pytest
 
-from reki import SourceSpec, from_source, from_source_lazily, register
+from reki.core.source_spec import _SourceSpec as SourceSpec
+from reki.sources import from_source, from_source_lazily, register
 from reki.core.source import Source
 
 

@@ -1,4 +1,4 @@
-"""The immutable public description of a requested field."""
+"""Private immutable predicates for named format-reader dispatch."""
 from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, Mapping
@@ -8,7 +8,7 @@ from .source_spec import _freeze, redact
 _STANDARD = frozenset({"parameter", "level_type", "level", "step_type", "time_range", "member"})
 
 @dataclass(frozen=True)
-class FieldQuery:
+class _ReaderQuery:
     parameter: Any = None
     level_type: Any = None
     level: Any = None
@@ -32,9 +32,9 @@ class FieldQuery:
             raise TypeError(f"extra conflicts with standard query fields: {', '.join(sorted(conflict))}")
         object.__setattr__(self, "extra", _freeze(self.extra, "extra"))
 
-    def merge(self, other: "FieldQuery") -> "FieldQuery":
-        if not isinstance(other, FieldQuery):
-            raise TypeError("can only merge a FieldQuery")
+    def merge(self, other: "_ReaderQuery") -> "_ReaderQuery":
+        if not isinstance(other, _ReaderQuery):
+            raise TypeError("can only merge a _ReaderQuery")
         values = {name: getattr(self, name) for name in _STANDARD}
         for name in _STANDARD:
             value = getattr(other, name)
@@ -42,14 +42,14 @@ class FieldQuery:
                 values[name] = value
         extra = dict(self.extra)
         extra.update({k: v for k, v in other.extra.items() if v is not None})
-        return FieldQuery(**values, extra=extra)
+        return _ReaderQuery(**values, extra=extra)
 
     def __repr__(self):
         # A bounded repr keeps errors useful even for generated queries.
-        text = f"FieldQuery(parameter={redact(self.parameter)!r}, level_type={redact(self.level_type)!r}, level={redact(self.level)!r}, extra={redact(self.extra)!r})"
+        text = f"_ReaderQuery(parameter={redact(self.parameter)!r}, level_type={redact(self.level_type)!r}, level={redact(self.level)!r}, extra={redact(self.extra)!r})"
         return text if len(text) <= 500 else text[:497] + "..."
 
-def field_query_from_kwargs(kwargs: Mapping[str, Any]) -> FieldQuery:
+def field_query_from_kwargs(kwargs: Mapping[str, Any]) -> _ReaderQuery:
     values = dict(kwargs)
     standard = {key: values.pop(key) for key in list(values) if key in _STANDARD}
-    return FieldQuery(**standard, extra=values)
+    return _ReaderQuery(**standard, extra=values)

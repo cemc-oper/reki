@@ -5,4 +5,6 @@
 
 .. automodule:: reki.catalog
    :members:
+   :imported-members:
+   :undoc-members:
    :member-order: bysource

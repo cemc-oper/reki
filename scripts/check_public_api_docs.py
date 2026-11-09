@@ -21,14 +21,11 @@ MODULE_PAGES = {
     "reki/sources/__init__.py": "sources.html",
     "reki/readers/__init__.py": "readers.html",
     "reki/catalog/__init__.py": "catalog.html",
-    "reki/readers/grib/config/__init__.py": "grib.html",
     "reki/format/grib/__init__.py": "legacy.html",
-    "reki/format/grib/cfgrib/__init__.py": "legacy.html",
     "reki/format/grib/common/__init__.py": "legacy.html",
     "reki/format/grib/eccodes/__init__.py": "legacy.html",
     "reki/format/grib/eccodes/bytes.py": "legacy.html",
     "reki/format/grib/eccodes/operator/__init__.py": "legacy.html",
-    "reki/format/grib/config/__init__.py": "legacy.html",
     "reki/format/grads/__init__.py": "legacy.html",
     "reki/format/netcdf/__init__.py": "legacy.html",
     "reki/format/table/__init__.py": "legacy.html",
@@ -37,15 +34,28 @@ MODULE_PAGES = {
 
 def exported_names(path: Path) -> list[str]:
     tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+    # The lazy root exports derive __all__ from this explicit, reviewed map.
+    declarations = {
+        target.id: node.value
+        for node in tree.body if isinstance(node, ast.Assign)
+        for target in node.targets if isinstance(target, ast.Name)
+    }
     for node in tree.body:
         if not isinstance(node, ast.Assign):
             continue
         if not any(isinstance(target, ast.Name) and target.id == "__all__" for target in node.targets):
             continue
-        if not isinstance(node.value, (ast.List, ast.Tuple)):
+        value = node.value
+        if (isinstance(value, ast.Call) and isinstance(value.func, ast.Name)
+                and value.func.id == "list" and len(value.args) == 1
+                and isinstance(value.args[0], ast.Name)):
+            declaration = declarations.get(value.args[0].id)
+            if isinstance(declaration, ast.Dict):
+                value = ast.List(elts=declaration.keys)
+        if not isinstance(value, (ast.List, ast.Tuple)):
             raise ValueError(f"{path}: __all__ must be a literal list or tuple")
         values = []
-        for value in node.value.elts:
+        for value in value.elts:
             if not isinstance(value, ast.Constant) or not isinstance(value.value, str):
                 raise ValueError(f"{path}: __all__ contains a non-string value")
             values.append(value.value)

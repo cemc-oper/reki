@@ -1,54 +1,42 @@
+"""Protected NetCDF field selection, retaining xarray's lazy resource lifetime."""
 from pathlib import Path
-from typing import Union, Dict, Optional
-
 import xarray as xr
+from cedarkit_query import QueryError, SourceError
+from reki._legacy import reader_errors
 
-from reki._util import _load_first_variable
 
+def load_field_from_file(file_path, parameter=None, level_type=None, level=None, **kwargs):
+    if parameter is not None and not isinstance(parameter, str):
+        raise QueryError("invalid_query", "/parameter", "NetCDF parameter must be a variable name")
+    engine = kwargs.get("engine")
+    if engine is not None and (engine == "cfgrib" or engine not in xr.backends.list_engines()):
+        raise QueryError("unsupported", "/engine", "The requested NetCDF backend is unavailable")
+    with reader_errors(file_path, "open_netcdf"):
+        try:
+            dataset = xr.open_dataset(file_path, **kwargs)
+        except ValueError as exc:
+            raise SourceError("decode_failed", "/source", "NetCDF decoding failed", {"resource": str(file_path)}) from exc
+    try:
+        if parameter is None:
+            parameter = next(iter(dataset.data_vars), None)
+        if parameter not in dataset.data_vars:
+            raise QueryError("no_match", "/parameter", "NetCDF variable is absent")
+        field = dataset[parameter]
+        coordinate = level_type or "level"
+        if level_type is not None and coordinate not in field.coords:
+            raise QueryError("invalid_query", "/level_type", "Explicit NetCDF level coordinate is absent")
+        if level is not None:
+            if coordinate not in field.coords:
+                raise QueryError("no_match", "/level", "NetCDF level coordinate is absent")
+            try:
+                field = field.sel({coordinate: level})
+            except KeyError as exc:
+                raise QueryError("no_match", "/level", "NetCDF level is absent") from exc
+        field.set_close(dataset.close)
+        return field
+    except BaseException:
+        dataset.close()
+        raise
 
-def load_field_from_file(
-        file_path: str or Path,
-        parameter: Union[str, Dict] = None,
-        level_type: Union[str, Dict] = None,
-        level: Optional[Union[int, float]] = None,
-        **kwargs
-) -> Optional[xr.DataArray]:
-    """
-    Load **one** field from NetCDF file.
-
-    Parameters
-    ----------
-    file_path
-    parameter
-    level_type
-        level type, default is level.
-    level
-    **kwargs
-        other parameters passed to ``xarray.open_dataset`` (e.g.
-        ``engine=``, ``chunks=``). The returned field is lazy by
-        nature: the backend reads from disk on demand, and ``chunks=``
-        is forwarded to dask when it is installed.
-
-    Returns
-    -------
-    DataArray or None:
-        DataArray if found one field, or None if not.
-    """
-    ds = xr.open_dataset(file_path, **kwargs)
-    if parameter is None:
-        field = _load_first_variable(ds)
-    else:
-        field = ds[parameter]
-
-    if level is not None:
-        if level_type is None:
-            level_type = "level"
-        field = field.loc[{
-            level_type: level
-        }]
-
-    return field
-
-from .reader import NetCDFReader, READER  # noqa: E402
 
 from .reader import NetCDFReader, READER  # noqa: E402

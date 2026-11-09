@@ -1,33 +1,14 @@
----
-jupytext:
-  text_representation: {extension: .md, format_name: myst}
-kernelspec: {display_name: Python 3, language: python, name: python3}
----
-
 # 排错
 
-先以 metadata 证实文件内容和查询基数，再解码值。大多数“读不到数据”问题来自参数、层次、
-时效或成员条件不一致。
+先核头信息、来源范围和查询基数，再解码数值。
 
 | 现象 | 检查与处理 |
 | --- | --- |
-| 没有匹配字段 | `ls --json` 或 `reader.ls()` 查看实际 `parameter`、`level_type`、`level`、`step` 和 `member`。|
-| `one()` 报多个匹配 | 增加层次、时效、时间范围或成员条件；不要任意改用 `first()`。|
-| IFS 控制预报未命中 | 使用公共 `member=0`；控制原生没有 `number` 键。|
-| index 只读失败 | 先以 `auto` 建立 index，或改为 `off` 进行一次性头扫描。|
-| cfgrib 没有 `ls()`/`fetch_many()` | 切换到默认 `engine="eccodes"`。|
+| 没有匹配字段 | 读取 all() 的 metadata / report，核参数、层次、时效、成员和选中的实际文件。 |
+| one() 多个匹配 | 细化查询；multiple_matches 不应被当成 no_match。 |
+| 输出冲突 / 网格不同 | 分别检查 duplicate_field / incompatible_grid 和记录来源。 |
+| cfgrib / 旧索引选项 | 已退出，按迁移页使用 ecCodes；不要尝试创建索引绕过。 |
+| 访问、认证、超时或损坏 | 保留 SourceError 的 code / context / 底层异常链，不能伪装成缺场。 |
 
-最小诊断流程如下：
-
-```{code-cell} ipython3
-from reki import from_source
-
-reader = from_source("test", "ecmwf_ifs")
-available = reader.ls(["parameter", "level_type", "level", "step"])
-assert not available.empty
-field = reader.sel(parameter="t", level_type="isobaricInhPa", level=850).one()
-assert field.to_xarray().name == "t"
-```
-
-如果问题仍存在，请记录 `reki inspect --json` 输出、查询条件、引擎、index 策略和完整异常；
-不要在报告中附带不必要的原始数据值。
+公开 Request CLI 当前支持的 explain/read 与 Python 使用相同 Request 结构；历史所有
+调用方式一致性的余项仍须独立补验。报告不应包含凭据或无关原场数值。

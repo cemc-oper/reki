@@ -90,16 +90,10 @@ class TestFirst:
     def test_first_by_count_out_of_range(self, grib_reader):
         assert grib_reader.sel(count=99999).first() is None
 
-    def test_first_with_cfgrib_engine(
-            self, grib_reader, grib2_gfs_basic_file_path
-    ):
-        reader = GribReader(
-            FakeSource(), grib2_gfs_basic_file_path, engine="cfgrib"
-        )
-        field = reader.sel(parameter="2t", level=2).first()
-        assert isinstance(field, GribField)
-        # cfgrib names variables by their CF name
-        assert field.to_xarray().name == "t2m"
+    def test_first_with_cfgrib_engine(self, tmp_path):
+        from cedarkit_query import QueryError
+        with pytest.raises(QueryError, match="unsupported"):
+            GribReader(FakeSource(), tmp_path / "absent.grib2", engine="cfgrib")
 
 
 class TestToXarray:
@@ -132,26 +126,15 @@ class TestToXarray:
             parameter="t", level_type="pl", level=12345
         ).to_xarray() is None
 
-    def test_cfgrib_single_match(self, grib2_gfs_basic_file_path):
-        reader = GribReader(
-            FakeSource(), grib2_gfs_basic_file_path, engine="cfgrib"
-        )
-        data = reader.sel(
-            parameter="2t", level_type="heightAboveGround", level=2
-        ).to_xarray()
-        assert isinstance(data, xr.DataArray)
-        # cfgrib names variables by their CF name
-        assert data.name == "t2m"
+    def test_cfgrib_single_match(self, tmp_path):
+        from cedarkit_query import QueryError
+        with pytest.raises(QueryError, match="unsupported"):
+            GribReader(FakeSource(), tmp_path / "absent.grib2", engine="cfgrib")
 
-    def test_cfgrib_multi_levels(self, grib2_gfs_basic_file_path):
-        reader = GribReader(
-            FakeSource(), grib2_gfs_basic_file_path, engine="cfgrib"
-        )
-        data = reader.sel(
-            parameter="t", level_type="pl", level=[850, 500]
-        ).to_xarray()
-        assert isinstance(data, xr.Dataset)
-        assert "t" in data.data_vars
+    def test_cfgrib_multi_levels(self, tmp_path):
+        from cedarkit_query import QueryError
+        with pytest.raises(QueryError, match="unsupported"):
+            GribReader(FakeSource(), tmp_path / "absent.grib2", engine="cfgrib")
 
 
 class TestUnsupportedCollectionAPI:

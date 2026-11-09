@@ -79,7 +79,7 @@ def redact(value: Any, key_name: str | None = None) -> Any:
 
 
 @dataclass(frozen=True)
-class SourceSpec:
+class _SourceSpec:
     name: str
     args: tuple = ()
     kwargs: Mapping[str, Any] = field(default_factory=dict)
@@ -94,18 +94,18 @@ class SourceSpec:
         object.__setattr__(self, "kwargs", _freeze(self.kwargs, "kwargs"))
 
     @classmethod
-    def from_dict(cls, value: Mapping[str, Any]) -> "SourceSpec":
+    def from_dict(cls, value: Mapping[str, Any]) -> "_SourceSpec":
         if not isinstance(value, Mapping):
-            raise TypeError("SourceSpec input must be a mapping")
+            raise TypeError("_SourceSpec input must be a mapping")
         unknown = set(value) - {"name", "args", "kwargs"}
         if unknown:
-            raise TypeError(f"unknown SourceSpec fields: {', '.join(sorted(unknown))}")
+            raise TypeError(f"unknown _SourceSpec fields: {', '.join(sorted(unknown))}")
         if "name" not in value:
-            raise TypeError("SourceSpec input requires 'name'")
+            raise TypeError("_SourceSpec input requires 'name'")
         return cls(value["name"], tuple(value.get("args", ())), value.get("kwargs", {}))
 
     def normalized_key(self) -> Hashable:
-        return ("SourceSpec", _key(self.name, "name"), _key(self.args, "args"), _key(self.kwargs, "kwargs"))
+        return ("_SourceSpec", _key(self.name, "name"), _key(self.args, "args"), _key(self.kwargs, "kwargs"))
 
     def __repr__(self) -> str:
-        return f"SourceSpec(name={self.name!r}, args={redact(self.args)!r}, kwargs={redact(self.kwargs)!r})"
+        return f"_SourceSpec(name={self.name!r}, args={redact(self.args)!r}, kwargs={redact(self.kwargs)!r})"

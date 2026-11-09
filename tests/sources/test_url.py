@@ -3,6 +3,7 @@
 All HTTP access is mocked; no real network is needed.
 """
 
+from reki import sources as named_sources
 import pytest
 import requests
 import xarray as xr
@@ -182,7 +183,7 @@ class TestFromSourceUrl:
     def test_end_to_end_grib(self, mock_get, tmp_path, grib_message_bytes):
         mock_get.response = FakeResponse(grib_message_bytes)
 
-        data = reki.from_source(
+        data = named_sources.from_source(
             "url", MOCK_URL, download_dir=tmp_path,
         ).to_xarray()
 
@@ -199,7 +200,7 @@ class TestFromSourceUrl:
 
         # the url source is remote, so from_source() defers the
         # download and reader dispatch to first use
-        reader = reki.from_source(
+        reader = named_sources.from_source(
             "url", MOCK_URL, download_dir=tmp_path, reader="grib",
         )._ensure()
 

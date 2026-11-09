@@ -2,7 +2,7 @@
 import eccodes
 import pytest
 
-from reki import DataNotFoundError, MultipleFieldsMatchedError
+from cedarkit_query import QueryError
 from reki.readers.grib.reader import GribReader
 
 
@@ -19,25 +19,25 @@ def _write_messages(path, levels):
                 eccodes.codes_release(message)
 
 
-@pytest.mark.parametrize("engine", ["eccodes", "cfgrib"])
+@pytest.mark.parametrize("engine", ["eccodes"])
 def test_strict_cardinality_matrix(engine, tmp_path):
     path = tmp_path / "fields.grib"
     _write_messages(path, [850, 500])
     base = GribReader(None, path, engine=engine).sel(parameter="t", level_type="pl")
 
     assert base.sel(level=700).first() is None
-    assert base.sel(level=700).one_or_none() is None
-    with pytest.raises(DataNotFoundError) as missing:
+    assert base.sel(level=700)._one_or_none() is None
+    with pytest.raises(QueryError, match="no_match") as missing:
         base.sel(level=700).one()
-    assert missing.value.match_count == 0
+    assert missing.value.context["match_count"] == 0
 
     assert base.sel(level=850).one().to_xarray().name == "t"
-    assert base.sel(level=850).one_or_none().to_xarray().name == "t"
+    assert base.sel(level=850)._one_or_none().to_xarray().name == "t"
 
     assert base.first().to_xarray().name == "t"
-    with pytest.raises(MultipleFieldsMatchedError) as multiple:
+    with pytest.raises(QueryError, match="multiple_matches") as multiple:
         base.one()
-    assert multiple.value.match_count == 2
+    assert multiple.value.context["match_count_lower_bound"] == 2
 
 
 def test_eccodes_multiple_match_stops_at_second_header_without_values_decode(tmp_path, monkeypatch):
@@ -60,6 +60,6 @@ def test_eccodes_multiple_match_stops_at_second_header_without_values_decode(tmp
     # The default policy retains the historical early-stop scanner. Explicit
     # index policies may serve cardinality from metadata instead.
     reader = GribReader(None, path).sel(parameter="t", level_type="pl")
-    with pytest.raises(MultipleFieldsMatchedError):
+    with pytest.raises(QueryError, match="multiple_matches"):
         reader.one()
     assert calls == {"headers": 2, "values": 0}

@@ -1,34 +1,15 @@
----
-jupytext:
-  text_representation: {extension: .md, format_name: myst}
-kernelspec: {display_name: Python 3, language: python, name: python3}
----
-
 # 时间、时效与时间范围
 
-`time` 是起报时间，`step` 是预报时效；`valid_time` 是二者合成的有效时间。不要从
-文件名或字段顺序推断它们，而应直接读取 metadata 或 xarray 坐标。
+公共 `time` 为 UTC 起报时间，`step` 为显式时长，例如 `PT6H`；valid_time 由二者组成。
+统计场另有区间与统计类型，不能把末端时效当作累计长度。身份和原始 GRIB 时钟在
+Field.identity / metadata 中分别保留，未知单位或时钟歧义不能靠文件名猜测。
 
-```{code-cell} ipython3
-from reki import from_source
-
-reader = from_source("test", "ecmwf_ifs", variant="time")
-fields = reader.sel(
-    parameter="2t", level_type="heightAboveGround", level=2, step=[0, 6, 12, 24],
-).all()
-assert len(fields) == 4
-assert {field.metadata.step.total_seconds() / 3600 for field in fields} == {0, 6, 12, 24}
+```python
+selected = source.sel(native={"grib": {"shortName": "t"}}, time="2026-11-02T12:00:00Z", step="PT6H")
+field = selected.one()
+identity = field.identity.to_dict()
 ```
 
-聚合或累计变量还必须检查 GRIB 的时间范围键，不能把单点时效误当作累计区间：
-
-```{code-cell} ipython3
-precipitation = reader.sel(parameter="tp", level_type="surface", level=0, step=24).all().one()
-metadata = precipitation.metadata
-assert metadata.step.total_seconds() / 3600 == 24
-assert metadata.parameter == "tp"
-assert metadata.step_type == "accum"
-assert metadata.time_range.total_seconds() / 3600 == 24
-```
-
-需要带标签数组时，请继续阅读 {doc}`xarray-output`。
+受保护 GRIB 函数的旧 `start_time/forecast_time/valid_time` 是头过滤条件，支持已有
+时间对象与明确时长；起报字符串可用 YYYYmmddHH。它们不增加第二套公共 Query schema。
+实际降水窗口必须有独立端点和生产定义，见 {doc}`/guide/public-query`。

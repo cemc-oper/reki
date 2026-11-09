@@ -67,7 +67,7 @@ intersphinx_mapping = {
 # alias-only references emitted by autodoc. Public symbols remain documented in
 # ``development/api``; each expression is exact so new references still fail.
 nitpick_ignore_regex = [
-    ("py:class", r"(?:Path|DataArray|xr\.DataArray|xr\.Dataset|pd\.DataFrame|FieldQuery|GribField|LazySource|TypeAliasForwardRef|'pathlib\.Path'|'Mapping\[str|Mapping\[str|tuple\[int|reki\.core\.field_list\.FieldList|reki\.core\.field_query\.FieldQuery|reki\.core\.source_spec\.SourceSpec|reki\.readers\.grib\.reader\.GribField|reki\.sources\.LazySource)"),
+    ("py:class", r"(?:Path|DataArray|xr\.DataArray|xr\.Dataset|pd\.DataFrame|_ReaderQuery|GribField|LazySource|TypeAliasForwardRef|'pathlib\.Path'|'Mapping\[str|Mapping\[str|tuple\[int|reki\.core\.field_list\._ReaderFields|reki\.core\.field_query\._ReaderQuery|reki\.core\.source_spec\._SourceSpec|reki\.readers\.grib\.reader\.GribField|reki\.sources\.LazySource)"),
     ("py:data", r"(?:DEFAULT_DOWNLOAD_DIR|SourceMaker)"),
     ("py:func", r"from_source"),
     ("py:mod", r"reki"),

@@ -7,7 +7,7 @@ import xarray as xr
 
 from reki.core import Source
 from reki.readers import UnknownReader, reader
-from reki.core import UnsupportedOperationError
+from cedarkit_query import QueryError
 from reki.readers.grads import GradsReader
 from reki.readers.netcdf import NetCDFReader
 from reki.readers.table import TableReader
@@ -51,7 +51,7 @@ class TestNetCDFReader:
     def test_readers_without_metadata_have_stable_capability_and_error(self, tmp_path):
         r = NetCDFReader(FakeSource(), tmp_path / "data.nc")
         assert not r.capabilities.metadata
-        with pytest.raises(UnsupportedOperationError, match="metadata"):
+        with pytest.raises(QueryError, match="metadata"):
             r.metadata()
     def test_legacy_netcdf_entry_point_is_reader_entry_point(self):
         from reki.format.netcdf import load_field_from_file as legacy

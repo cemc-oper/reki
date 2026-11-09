@@ -1,34 +1,14 @@
----
-jupytext:
-  text_representation: {extension: .md, format_name: myst}
-kernelspec: {display_name: Python 3, language: python, name: python3}
----
-
 # 集合预报
 
-冻结 ensemble 资产包含 IFS 确定性控制预报和 PF 1–20。在公共查询中，控制预报为
-`member=0`；转为 xarray 后，它是 `number=0`。这使控制和扰动成员能在同一成员维上处理。
+公共 Query 使用整数 member 和显式 member_role；二者来自已解析的原始集合身份。
+不把所有确定性预报自动标成控制成员。已接受的 GEPS 控制 0 / 扰动 1–3 子集使用公共
+来源及显式业务成员映射；完整集合分母不由实际到达文件反推。
 
-```{code-cell} ipython3
-from reki import from_source
-
-reader = from_source("test", "ecmwf_ifs", variant="ensemble")
-step_24 = reader.sel(
-    parameter="2t", level_type="heightAboveGround", level=2, step=24,
-).all()
-control = step_24.sel(member=0).one()
-members = step_24.sel(member=list(range(21)))
-assert control.metadata.member == 0
-assert {field.metadata.member for field in members} == set(range(21))
+```python
+fields = source.sel(time="2026-11-02T12:00:00Z", step="PT24H", member=[1, 2, 3]).all()
+dataset = fields.to_xarray()
 ```
 
-集合统计前应固定参数、层次、时效及成员集合：
-
-```{code-cell} ipython3
-data = members.to_xarray()
-assert data.number.values.tolist() == list(range(21))
-ensemble_mean = data.mean("number")
-assert "number" not in ensemble_mean.dims
-```
-
-原生控制消息没有 GRIB `number` 键；不要据此过滤控制消息，使用公共 `member=0` 即可。
+公共输出的数值成员轴为 `member`，角色为独立身份；旧高频原生输出可保留 `number`。
+MAX 是否包含控制成员、缺失策略与逐格有效数属于产品定义，不能由读取函数默认决定。
+集合缺场和歧义遵循普通 QueryError / 完整性契约，不使用旧 one_or_none。

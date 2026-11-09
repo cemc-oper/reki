@@ -16,7 +16,7 @@ class FileSource(Source):
         optional explicit reader: a reader name (e.g. ``"grib"``) or a
         callable. When given, the reader auto-detection is skipped.
     **kwargs
-        extra options forwarded to the reader (e.g. ``engine="cfgrib"``
+        extra options forwarded to the reader (e.g. ``engine="eccodes"``
         for the GRIB reader).
     """
 

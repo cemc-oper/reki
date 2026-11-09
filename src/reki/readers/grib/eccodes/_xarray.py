@@ -210,6 +210,10 @@ def create_data_array_from_message(
     if "eccodes_name" in names:
         data_attrs["eccodes_name"] = names["eccodes_name"]
 
+    # Preserve native units even though they are parameter rather than identity keys.
+    if all_attrs.get("units") not in (None, "undef", "unknown"):
+        data_attrs["GRIB_units"] = all_attrs["units"]
+
     # set units
     if "GRIB_units" in data_attrs:
         data_attrs["units"] = data_attrs["GRIB_units"]
@@ -382,10 +386,10 @@ def get_level_from_attrs(
 
     """
     if level_dim_name == "isobaricInPa":
-        value = math.pow(10, all_attrs["scaleFactorOfFirstFixedSurface"]) * all_attrs["scaledValueOfFirstFixedSurface"]
+        value = math.pow(10, -all_attrs["scaleFactorOfFirstFixedSurface"]) * all_attrs["scaledValueOfFirstFixedSurface"]
         return level_dim_name, value
     elif level_dim_name in ("isobaricInhPa", "pl"):
-        value = math.pow(10, all_attrs["scaleFactorOfFirstFixedSurface"]) * all_attrs["scaledValueOfFirstFixedSurface"]
+        value = math.pow(10, -all_attrs["scaleFactorOfFirstFixedSurface"]) * all_attrs["scaledValueOfFirstFixedSurface"]
         return level_dim_name, value / 100.0
     elif isinstance(level_dim_name, str):
         # TODO: add check for level_type="pl"
