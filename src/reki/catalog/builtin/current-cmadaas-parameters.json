@@ -1448,7 +1448,32 @@
       "name": "tulw",
       "parameter_id": "cedarkit.tulw",
       "parent": "cedarkit.gulw.any"
+    },
+    {
+      "description": "Moisture flux",
+      "description_cn": "水汽通量",
+      "name": "qflx",
+      "parameter_id": "cedarkit.qflx",
+      "unit": "g/(cm.hPa.s)"
+    },
+    {
+      "description": "Surface moisture flux",
+      "description_cn": "地表水汽通量",
+      "name": "qfxsfc",
+      "parameter_id": "cedarkit.qfxsfc.any",
+      "unit": "kg/(m2.s)"
+    },
+    {
+      "aliases": [
+        "qfx"
+      ],
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "qfxsfc",
+      "parameter_id": "cedarkit.qfxsfc",
+      "parent": "cedarkit.qfxsfc.any"
     }
   ],
-  "version": "11"
+  "version": "12"
 }
