@@ -1409,7 +1409,46 @@
       "name": "tusw",
       "parameter_id": "cedarkit.tusw",
       "parent": "cedarkit.gusw.any"
+    },
+    {
+      "description": "Signed time-integrated upward long-wave radiation; retain the reviewed producer values and sign",
+      "description_cn": "向上长波辐射时间积分量（保留本产品原值与原符号）",
+      "name": "gulw",
+      "parameter_id": "cedarkit.gulw.any",
+      "unit": "J/m2"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "gulw",
+      "parameter_id": "cedarkit.gulw",
+      "parent": "cedarkit.gulw.any"
+    },
+    {
+      "description": "Signed time-integrated upward long-wave radiation at the top of atmosphere; retain the reviewed producer values and sign",
+      "description_cn": "大气顶向上长波辐射时间积分量（保留本产品原值与原符号）",
+      "fixed_conditions": {
+        "level_type": "atmosphere_top",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "tulw",
+      "parameter_id": "cedarkit.tulw",
+      "parent": "cedarkit.gulw.any"
     }
   ],
-  "version": "10"
+  "version": "11"
 }

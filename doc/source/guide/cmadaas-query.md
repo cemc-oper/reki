@@ -301,3 +301,9 @@ with from_source({"kind": "cmadaas", "dataset": "cma_gfs_gmf_cmadaas"}) as sourc
 ```
 
 Missing or other conflicting response headers, unreviewed cells and incompatible intervals remain errors. The existing NLHF, NSRF and NWFS interpretations retain their independent evidence and scope. The other102 N06 rows, native95 groups, quality485 cells and four MXT/MNT statistical-window counterexamples remain separate obligations.
+
+### N06-05 GFS ULRF：保留符号的累计能量
+
+GFS CMADaaS `cedarkit.gulw`（地表 1/0）与 `cedarkit.tulw`（大气顶 8/0）仅开放已验的 2026-11-02 12 UTC 分析 0 h 及预报 3/6/48 h、39–41°N / 115–117°E 范围。区间为起报时刻至有效时刻，公开单位为 `J/m2`。生产端 GULW/TULW、case 212 的 `ws/m2` 声明、原始 0/5/4 PDT8 累计场及实际成对响应共同支持这一有限产品解释。
+
+原始 ecCodes 地表标签 `W m**-2`、大气顶 `unknown` 和服务响应 `W.m-2` 均保留；产品专用 `gfs_ulrf_accumulated_energy` 解释不修改通用单位换算或 GRIB 翻译。八场 33,177,600 个原始点和 2,176 个服务点逐点核验，两个分析场为零，六个预报全场为负；原样保留符号，不取反、不裁零、不除时长、不拟合比例，不宣称正值向上或解释物理成因。历史 `w/m2` 与 `gslu` 别名仅用于档案导航，不作为当前定义。其他时次、步长、区域和未审核字段仍在请求或响应边界拒绝。证据见工作区 `task-n06-05`；完整七包与 browser7 组合留待 N10I-06。
