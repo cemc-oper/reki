@@ -285,3 +285,19 @@ with from_source({"kind": "cmadaas", "dataset": "cma_gfs_gmf_cmadaas"}) as sourc
 Only the frozen 2026-11-02 12 UTC cycle, analysis 0h and forecast 3/6/48h, and 39–41°N / 115–117°E are reviewed. Producer GSWC/TSWC declarations, case109 `[ws/m2]`, GRIB `0/4/11` PDT8 accumulation and full original/actual-response comparisons establish the clear-sky identity and energy scale independently of NSRF. The native decoder reports `J m**-2`; named outputs use the equivalent `J/m2`. The `gfs_nwfs_accumulated_energy` response profile retains raw `W.m-2`, `source_unit_basis="product_contract"` and all values without duration division, fitted scaling, sign conversion or clipping. The interpretation remains limited to these GFS contracts, NWFS identities, statistics and native boundaries `1/0` and `8/0`; missing or other conflicting headers still fail.
 
 The original clear-sky top field contains 919 negative +6h to +48h differences beyond the existing sum of endpoint rounding bounds, with minimum -5000 J/m2. These observations are preserved without a nonnegative-increment or causal claim. The categorical top boundary has no numeric height. Unverified cycles/leads and conflicting intervals fail before data access; existing NLHF and NSRF profiles remain independent. This four-row service delivery does not settle the other106 N06 rows, the local native95 groups or the separate quality485 cells.
+
+## Reviewed GFS USRF signed upward short-wave energy
+
+N06-04 independently reviews `cedarkit.gusw` at the surface and `cedarkit.tusw` at the categorical atmospheric top. Their `cedarkit.gusw.any` parent declares signed time-integrated upward short-wave radiation in `J/m2`; the two service definitions fix accumulation since initialization. The frozen scope is 2026-11-02 12 UTC, analysis0h and forecast3/6/48h, over39–41N/115–117E, with native boundaries1/0 and8/0.
+
+Producer GUSW/TUSW declarations, element211 `[ws/m2]`, original0/4/8 PDT8 accumulation windows and actual matching service values support this energy interpretation. Conflicting labels are retained: the native decoder reports `W m**-2` at the surface and `unknown` at the top, the service reports `W.m-2`, and historical unreviewed records claim `w/m2`. The restricted `gfs_usrf_accumulated_energy` service profile records `source_unit_basis="product_contract"` and the raw response unit. Public native reads retain their original decoder labels; this delivery adds no native unit rewrite or general W-to-J alias.
+
+Original upward fields contain large negative values and some small positive values. Named output preserves every value and sign, including the zero-hour initialization, without sign reversal, clipping, duration division or fitted scale. The identity does not impose a positive-up convention, nonnegative increments or a physical cause for the observed signs. GUSW/TUSW IDs from the historical navigation index are reused only for this independently reviewed resource scope; historical units and aliases do not establish current semantics. The TUSW name identifies the top carrier; it is distinct from net-short-wave TSW and clear-sky TSWC.
+
+```python
+with from_source({"kind": "cmadaas", "dataset": "cma_gfs_gmf_cmadaas"}) as source:
+    field = source.sel(parameter="cedarkit.tusw", level_type="atmosphere_top",
+                       time="2026-11-02T12:00:00Z", step="PT6H").one(completeness="required")
+```
+
+Missing or other conflicting response headers, unreviewed cells and incompatible intervals remain errors. The existing NLHF, NSRF and NWFS interpretations retain their independent evidence and scope. The other102 N06 rows, native95 groups, quality485 cells and four MXT/MNT statistical-window counterexamples remain separate obligations.

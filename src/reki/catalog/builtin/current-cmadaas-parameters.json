@@ -1370,7 +1370,46 @@
       "name": "tswc",
       "parameter_id": "cedarkit.tswc",
       "parent": "cedarkit.gswc.any"
+    },
+    {
+      "description": "Signed time-integrated upward short-wave radiation; retain the reviewed producer values and sign",
+      "description_cn": "向上短波辐射时间积分量（保留本产品原值与原符号）",
+      "name": "gusw",
+      "parameter_id": "cedarkit.gusw.any",
+      "unit": "J/m2"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "gusw",
+      "parameter_id": "cedarkit.gusw",
+      "parent": "cedarkit.gusw.any"
+    },
+    {
+      "description": "Signed time-integrated upward short-wave radiation at the top of atmosphere; retain the reviewed producer values and sign",
+      "description_cn": "大气顶向上短波辐射时间积分量（保留本产品原值与原符号）",
+      "fixed_conditions": {
+        "level_type": "atmosphere_top",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "tusw",
+      "parameter_id": "cedarkit.tusw",
+      "parent": "cedarkit.gusw.any"
     }
   ],
-  "version": "9"
+  "version": "10"
 }

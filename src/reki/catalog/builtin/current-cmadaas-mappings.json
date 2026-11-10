@@ -55340,6 +55340,218 @@
         ],
         "time": "2026-11-02T12:00:00Z"
       }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-ana-row-11",
+        "stage1.2/task-n06-04/inputs/ref/package/grib_util_v12.6/include/paraNum.h#case211",
+        "stage1.2/task-n06-04/originals/manifest.json",
+        "stage1.2/task-n06-04/results/scientific-source.json"
+      ],
+      "id": "S-gfs-ana.gusw.energy.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "USRF",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.gusw",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT0H"
+        ],
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-ana-row-14",
+        "stage1.2/task-n06-04/inputs/ref/package/grib_util_v12.6/include/paraNum.h#case211",
+        "stage1.2/task-n06-04/originals/manifest.json",
+        "stage1.2/task-n06-04/results/scientific-source.json"
+      ],
+      "id": "S-gfs-ana.tusw.energy.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "USRF",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.tusw",
+      "when": {
+        "level_type": "atmosphere_top",
+        "step": [
+          "PT0H"
+        ],
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-fcst-row-25",
+        "stage1.2/task-n06-04/inputs/ref/package/grib_util_v12.6/include/paraNum.h#case211",
+        "stage1.2/task-n06-04/originals/manifest.json",
+        "stage1.2/task-n06-04/results/scientific-source.json"
+      ],
+      "id": "S-gfs-fcst.gusw.energy.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "USRF",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.gusw",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT3H",
+          "PT6H",
+          "PT48H"
+        ],
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-fcst-row-26",
+        "stage1.2/task-n06-04/inputs/ref/package/grib_util_v12.6/include/paraNum.h#case211",
+        "stage1.2/task-n06-04/originals/manifest.json",
+        "stage1.2/task-n06-04/results/scientific-source.json"
+      ],
+      "id": "S-gfs-fcst.tusw.energy.since-initialization",
+      "native": {
+        "match": {
+          "fcstEle": "USRF",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.levels"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.tusw",
+      "when": {
+        "level_type": "atmosphere_top",
+        "step": [
+          "PT3H",
+          "PT6H",
+          "PT48H"
+        ],
+        "time": "2026-11-02T12:00:00Z"
+      }
     }
   ],
   "tables": [
@@ -55997,5 +56209,5 @@
       ]
     }
   ],
-  "version": "11"
+  "version": "12"
 }
