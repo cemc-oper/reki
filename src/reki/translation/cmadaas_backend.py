@@ -145,6 +145,8 @@ def _unit_response_profile(mapping, service, definition):
         "cedarkit.slhf": ("NLHF", "surface", "gfs_nlhf_accumulated_energy"),
         "cedarkit.gsw": ("NSRF", "surface", "gfs_nsrf_accumulated_energy"),
         "cedarkit.tsw": ("NSRF", "atmosphere_top", "gfs_nsrf_accumulated_energy"),
+        "cedarkit.gswc": ("NWFS", "surface", "gfs_nwfs_accumulated_energy"),
+        "cedarkit.tswc": ("NWFS", "atmosphere_top", "gfs_nwfs_accumulated_energy"),
     }.get(mapping["parameter_id"])
     if reviewed is None:
         return None
@@ -332,7 +334,7 @@ def _request(
             raise QueryError("invalid_config", "/mappings", "invalid rectangle bounds")
     definition = configuration.parameters[identity["parameter"]]
     if _unit_response_profile(mapping, service, definition) and native_level != {
-        "level_type": "8" if identity["parameter"] == "cedarkit.tsw" else "1", "level": "0"
+        "level_type": "8" if identity["parameter"] in {"cedarkit.tsw", "cedarkit.tswc"} else "1", "level": "0"
     }:
         raise QueryError("invalid_config", "/mappings", "GFS energy unit profile requires its reviewed native boundary")
     declared_unit = rules["unit"].get("config", {}).get("source_unit")
@@ -857,7 +859,7 @@ class CmadaasScan:
                         }.get(raw_unit, raw_unit)
                     )
                 )
-                # N06-01/02: reviewed GFS energy responses label J/m2 values W.m-2.
+                # N06-01/02/03: reviewed GFS energy responses label J/m2 values W.m-2.
                 # Keep the original declaration and explicit interpretation; no
                 # division by duration, scaling or sign conversion is applied.
                 if unit_profile and raw_unit == "W.m-2":

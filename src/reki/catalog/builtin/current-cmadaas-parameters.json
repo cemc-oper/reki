@@ -1331,7 +1331,46 @@
       "name": "tsw",
       "parameter_id": "cedarkit.tsw",
       "parent": "cedarkit.gsw"
+    },
+    {
+      "description": "Time-integrated net short-wave radiation, clear sky",
+      "description_cn": "晴空净短波辐射时间积分量",
+      "name": "gswc",
+      "parameter_id": "cedarkit.gswc.any",
+      "unit": "J/m2"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "gswc",
+      "parameter_id": "cedarkit.gswc",
+      "parent": "cedarkit.gswc.any"
+    },
+    {
+      "description": "Time-integrated net short-wave radiation at the top of atmosphere, clear sky",
+      "description_cn": "大气顶晴空净短波辐射时间积分量",
+      "fixed_conditions": {
+        "level_type": "atmosphere_top",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
+        }
+      },
+      "name": "tswc",
+      "parameter_id": "cedarkit.tswc",
+      "parent": "cedarkit.gswc.any"
     }
   ],
-  "version": "8"
+  "version": "9"
 }

@@ -271,3 +271,17 @@ The reviewed scope is 2026-11-02 12 UTC, analysis lead zero and forecast leads 3
 The frozen top-of-atmosphere original has 963 negative differences between +6h and +48h, reaching -5000 J/m2. These original differences are retained; the binding does not promise nonnegative increments or reconstruct a physical averaging rate. Product identity and energy dimension are supported by the producer GSW/TSW branch and case111, and the statistical encoding is interpreted with [ecCodes table4.10](https://codes.ecmwf.int/grib/format/grib2/ctables/4/10/).
 
 MXT/MNT are not delivered by this batch. Their actual fields match the native samples, but million-point opposite changes contradict the nested extrema interpretation suggested by `[0,h]` headers. The `#3` product text alone is not sufficient to assert trailing three-hour windows, and encoded zero-hour fields do not prove physical zero-temperature extrema. Those four historical rows retain their exact statistical-window evidence gap.
+
+## Reviewed GFS NWFS clear-sky integrated energy
+
+N06-03 independently reviews the clear-sky net short-wave identities `cedarkit.gswc` at `level_type="surface"` and `cedarkit.tswc` at `level_type="atmosphere_top"`. Their common `cedarkit.gswc.any` parent supplies the `J/m2` energy unit; the two service identities fix accumulation since initialization and retain distinct boundaries. For example:
+
+```python
+with from_source({"kind": "cmadaas", "dataset": "cma_gfs_gmf_cmadaas"}) as source:
+    field = source.sel(parameter="cedarkit.tswc", level_type="atmosphere_top",
+                       time="2026-11-02T12:00:00Z", step="PT6H").one(completeness="required")
+```
+
+Only the frozen 2026-11-02 12 UTC cycle, analysis 0h and forecast 3/6/48h, and 39–41°N / 115–117°E are reviewed. Producer GSWC/TSWC declarations, case109 `[ws/m2]`, GRIB `0/4/11` PDT8 accumulation and full original/actual-response comparisons establish the clear-sky identity and energy scale independently of NSRF. The native decoder reports `J m**-2`; named outputs use the equivalent `J/m2`. The `gfs_nwfs_accumulated_energy` response profile retains raw `W.m-2`, `source_unit_basis="product_contract"` and all values without duration division, fitted scaling, sign conversion or clipping. The interpretation remains limited to these GFS contracts, NWFS identities, statistics and native boundaries `1/0` and `8/0`; missing or other conflicting headers still fail.
+
+The original clear-sky top field contains 919 negative +6h to +48h differences beyond the existing sum of endpoint rounding bounds, with minimum -5000 J/m2. These observations are preserved without a nonnegative-increment or causal claim. The categorical top boundary has no numeric height. Unverified cycles/leads and conflicting intervals fail before data access; existing NLHF and NSRF profiles remain independent. This four-row service delivery does not settle the other106 N06 rows, the local native95 groups or the separate quality485 cells.
