@@ -1,0 +1,1059 @@
+[
+  {
+    "id": "S-gfs-fcst-row-21-l5-h006",
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.1
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.0
+        }
+      },
+      "parameter": "cedarkit.st-0-10",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "TEM",
+      "fcstLevel": "5",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-gfs-fcst",
+    "midpoint_m": 0.05
+  },
+  {
+    "id": "S-gfs-fcst-row-21-l25-h006",
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.4
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.1
+        }
+      },
+      "parameter": "cedarkit.st-10-40",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "TEM",
+      "fcstLevel": "25",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-gfs-fcst",
+    "midpoint_m": 0.25
+  },
+  {
+    "id": "S-gfs-fcst-row-21-l70-h006",
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 1.0
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.4
+        }
+      },
+      "parameter": "cedarkit.st-40-100",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "TEM",
+      "fcstLevel": "70",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-gfs-fcst",
+    "midpoint_m": 0.7
+  },
+  {
+    "id": "S-gfs-fcst-row-21-l150-h006",
+    "source": {
+      "dataset": "cma_gfs_gmf_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 2.0
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 1.0
+        }
+      },
+      "parameter": "cedarkit.st-100-200",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "TEM",
+      "fcstLevel": "150",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-gfs-fcst",
+    "midpoint_m": 1.5
+  },
+  {
+    "id": "S-meso3-ana-row-14-l5-h000",
+    "source": {
+      "dataset": "cma_meso_3km_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.1
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.0
+        }
+      },
+      "parameter": "cedarkit.st-0-10",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpAnaEleGridInRectByTimeAndLevel",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_ANA_3KM",
+      "fcstEle": "TEM",
+      "fcstLevel": "5",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-meso3-ana",
+    "midpoint_m": 0.05
+  },
+  {
+    "id": "S-meso3-ana-row-14-l20-h000",
+    "source": {
+      "dataset": "cma_meso_3km_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.3
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.1
+        }
+      },
+      "parameter": "cedarkit.st-10-30",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpAnaEleGridInRectByTimeAndLevel",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_ANA_3KM",
+      "fcstEle": "TEM",
+      "fcstLevel": "20",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-meso3-ana",
+    "midpoint_m": 0.2
+  },
+  {
+    "id": "S-meso3-ana-row-14-l80-h000",
+    "source": {
+      "dataset": "cma_meso_3km_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 1.0
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.6
+        }
+      },
+      "parameter": "cedarkit.st-60-100",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpAnaEleGridInRectByTimeAndLevel",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_ANA_3KM",
+      "fcstEle": "TEM",
+      "fcstLevel": "80",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-meso3-ana",
+    "midpoint_m": 0.8
+  },
+  {
+    "id": "S-meso3-fcst-row-16-l5-h006",
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.1
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.0
+        }
+      },
+      "parameter": "cedarkit.st-0-10",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TEM",
+      "fcstLevel": "5",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-meso3-fcst",
+    "midpoint_m": 0.05
+  },
+  {
+    "id": "S-meso3-fcst-row-16-l20-h006",
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.3
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.1
+        }
+      },
+      "parameter": "cedarkit.st-10-30",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TEM",
+      "fcstLevel": "20",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-meso3-fcst",
+    "midpoint_m": 0.2
+  },
+  {
+    "id": "S-meso3-fcst-row-16-l80-h006",
+    "source": {
+      "dataset": "cma_meso_3km_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 1.0
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.6
+        }
+      },
+      "parameter": "cedarkit.st-60-100",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_GRAPES_MESO_FOR_3KM",
+      "fcstEle": "TEM",
+      "fcstLevel": "80",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-meso3-fcst",
+    "midpoint_m": 0.8
+  },
+  {
+    "id": "S-tym-ana-row-17-l5-h000",
+    "source": {
+      "dataset": "cma_tym_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.1
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.0
+        }
+      },
+      "parameter": "cedarkit.st-0-10",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_ANA_CMA_TYM_0P09_ASI",
+      "fcstEle": "TEM",
+      "fcstLevel": "5",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-tym-ana",
+    "midpoint_m": 0.05
+  },
+  {
+    "id": "S-tym-ana-row-17-l20-h000",
+    "source": {
+      "dataset": "cma_tym_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.3
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.1
+        }
+      },
+      "parameter": "cedarkit.st-10-30",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_ANA_CMA_TYM_0P09_ASI",
+      "fcstEle": "TEM",
+      "fcstLevel": "20",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-tym-ana",
+    "midpoint_m": 0.2
+  },
+  {
+    "id": "S-tym-ana-row-17-l80-h000",
+    "source": {
+      "dataset": "cma_tym_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 1.0
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.6
+        }
+      },
+      "parameter": "cedarkit.st-60-100",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_ANA_CMA_TYM_0P09_ASI",
+      "fcstEle": "TEM",
+      "fcstLevel": "80",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-tym-ana",
+    "midpoint_m": 0.8
+  },
+  {
+    "id": "S-gfs-ana-row-22-l5-h000",
+    "source": {
+      "dataset": "cma_gfs_gmf_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.1
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.0
+        }
+      },
+      "parameter": "cedarkit.st-0-10",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_ANA_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "TEM",
+      "fcstLevel": "5",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-gfs-ana",
+    "midpoint_m": 0.05
+  },
+  {
+    "id": "S-gfs-ana-row-22-l25-h000",
+    "source": {
+      "dataset": "cma_gfs_gmf_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.4
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.1
+        }
+      },
+      "parameter": "cedarkit.st-10-40",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_ANA_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "TEM",
+      "fcstLevel": "25",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-gfs-ana",
+    "midpoint_m": 0.25
+  },
+  {
+    "id": "S-gfs-ana-row-22-l70-h000",
+    "source": {
+      "dataset": "cma_gfs_gmf_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 1.0
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.4
+        }
+      },
+      "parameter": "cedarkit.st-40-100",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_ANA_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "TEM",
+      "fcstLevel": "70",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-gfs-ana",
+    "midpoint_m": 0.7
+  },
+  {
+    "id": "S-gfs-ana-row-22-l150-h000",
+    "source": {
+      "dataset": "cma_gfs_gmf_analysis_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 2.0
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 1.0
+        }
+      },
+      "parameter": "cedarkit.st-100-200",
+      "step": "PT0H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_ANA_FTM_GRAPES_GFS_25KM_GLB",
+      "fcstEle": "TEM",
+      "fcstLevel": "150",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "0"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-gfs-ana",
+    "midpoint_m": 1.5
+  },
+  {
+    "id": "S-tym-fcst-row-74-l5-h006",
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.1
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.0
+        }
+      },
+      "parameter": "cedarkit.st-0-10",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "TEM",
+      "fcstLevel": "5",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-tym-fcst",
+    "midpoint_m": 0.05
+  },
+  {
+    "id": "S-tym-fcst-row-74-l20-h006",
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.3
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.1
+        }
+      },
+      "parameter": "cedarkit.st-10-30",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "TEM",
+      "fcstLevel": "20",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-tym-fcst",
+    "midpoint_m": 0.2
+  },
+  {
+    "id": "S-tym-fcst-row-74-l80-h006",
+    "source": {
+      "dataset": "cma_tym_forecast_cmadaas",
+      "kind": "cmadaas"
+    },
+    "query": {
+      "layer": {
+        "bottom": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 1.0
+        },
+        "top": {
+          "type": "depth_below_land",
+          "unit": "m",
+          "value": 0.6
+        }
+      },
+      "parameter": "cedarkit.st-60-100",
+      "step": "PT6H",
+      "time": "2026-11-02T12:00:00Z"
+    },
+    "expected_interface": "getNafpEleGridInRectByTimeAndLevelAndValidtime",
+    "expected_params": {
+      "dataCode": "NAFP_FOR_CMA_TYM_0P09_ASI",
+      "fcstEle": "TEM",
+      "fcstLevel": "80",
+      "levelType": "106",
+      "maxLat": 41,
+      "maxLon": 117,
+      "minLat": 39,
+      "minLon": 115,
+      "time": "20261102120000",
+      "validTime": "6"
+    },
+    "source_unit": "K",
+    "unit": "K",
+    "values": [
+      [
+        270.0,
+        271.0,
+        272.0
+      ],
+      [
+        273.0,
+        274.0,
+        275.0
+      ]
+    ],
+    "vertical_table": "cmadaas.soil-temperature.S-tym-fcst",
+    "midpoint_m": 0.8
+  }
+]

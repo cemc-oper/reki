@@ -3078,14 +3078,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "62e81ad567986c3cce07a37aecce198a2fcfc8f4ffe18ac5b4dd729409705b9d",
-          "version": "14"
+          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
+          "version": "15"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "270258b3fa619dc5b1d3a76c076cc3ac9c78653cb4bac45ddc5091304b495794",
-        "version": "12"
+        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
+        "version": "13"
       },
       "products": [
         {
@@ -3171,7 +3171,8 @@
             "stage1.2/task-n06-04#S-gfs-fcst-row-26",
             "stage1.2/task-n06-05#S-gfs-fcst-row-29",
             "stage1.2/task-n06-05#S-gfs-fcst-row-30",
-            "stage1.2/task-t02#S-gfs-fcst-row-74"
+            "stage1.2/task-t02#S-gfs-fcst-row-74",
+            "stage1.2/task-t03#S-gfs-fcst-row-21"
           ],
           "expected_domain": [
             {
@@ -4170,6 +4171,78 @@
               "step": "PT172800S",
               "time": "2026-11-02T12:00:00Z",
               "valid_time": "2026-11-04T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0
+                }
+              },
+              "parameter": "cedarkit.st-0-10",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.4
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                }
+              },
+              "parameter": "cedarkit.st-10-40",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.4
+                }
+              },
+              "parameter": "cedarkit.st-40-100",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 2
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1
+                }
+              },
+              "parameter": "cedarkit.st-100-200",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
             }
           ],
           "id": "forecast",
@@ -9629,6 +9702,74 @@
                 "PT48H"
               ],
               "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.0
+                }
+              },
+              "parameter": "cedarkit.st-0-10",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.4
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                }
+              },
+              "parameter": "cedarkit.st-10-40",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1.0
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.4
+                }
+              },
+              "parameter": "cedarkit.st-40-100",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 2.0
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1.0
+                }
+              },
+              "parameter": "cedarkit.st-100-200",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
             }
           ],
           "scope": {},
@@ -9656,14 +9797,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "62e81ad567986c3cce07a37aecce198a2fcfc8f4ffe18ac5b4dd729409705b9d",
-          "version": "14"
+          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
+          "version": "15"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "270258b3fa619dc5b1d3a76c076cc3ac9c78653cb4bac45ddc5091304b495794",
-        "version": "12"
+        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
+        "version": "13"
       },
       "products": [
         {
@@ -9733,7 +9874,8 @@
             "stage1.2/task-n06-04#S-gfs-ana-row-14",
             "stage1.2/task-n06-05#S-gfs-ana-row-1",
             "stage1.2/task-n06-05#S-gfs-ana-row-6",
-            "stage1.2/task-t02#S-gfs-ana-row-103"
+            "stage1.2/task-t02#S-gfs-ana-row-103",
+            "stage1.2/task-t03#S-gfs-ana-row-22"
           ],
           "expected_domain": [
             {
@@ -10275,6 +10417,78 @@
               "level_type": "pressure",
               "level_unit": "hPa",
               "parameter": "cedarkit.qflx",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0
+                }
+              },
+              "parameter": "cedarkit.st-0-10",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.4
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                }
+              },
+              "parameter": "cedarkit.st-10-40",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.4
+                }
+              },
+              "parameter": "cedarkit.st-40-100",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 2
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1
+                }
+              },
+              "parameter": "cedarkit.st-100-200",
               "step": "PT0S",
               "time": "2026-11-02T12:00:00Z",
               "valid_time": "2026-11-02T12:00:00Z"
@@ -11448,6 +11662,74 @@
                 "PT0H"
               ],
               "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.0
+                }
+              },
+              "parameter": "cedarkit.st-0-10",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.4
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                }
+              },
+              "parameter": "cedarkit.st-10-40",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1.0
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.4
+                }
+              },
+              "parameter": "cedarkit.st-40-100",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 2.0
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1.0
+                }
+              },
+              "parameter": "cedarkit.st-100-200",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
             }
           ],
           "scope": {
@@ -11477,14 +11759,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "62e81ad567986c3cce07a37aecce198a2fcfc8f4ffe18ac5b4dd729409705b9d",
-          "version": "14"
+          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
+          "version": "15"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "270258b3fa619dc5b1d3a76c076cc3ac9c78653cb4bac45ddc5091304b495794",
-        "version": "12"
+        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
+        "version": "13"
       },
       "products": [
         {
@@ -11543,7 +11825,8 @@
             "stage1.2/task-07e3/originals.jsonl#S-meso3-ana-row-97",
             "stage1.2/task-07e3/originals.jsonl#S-meso3-ana-row-105",
             "stage1.2/task-t02#S-meso3-ana-row-42",
-            "stage1.2/task-t02#S-meso3-ana-row-64"
+            "stage1.2/task-t02#S-meso3-ana-row-64",
+            "stage1.2/task-t03#S-meso3-ana-row-14"
           ],
           "expected_domain": [
             {
@@ -12007,6 +12290,60 @@
               "level_type": "pressure",
               "level_unit": "hPa",
               "parameter": "cedarkit.qflx",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0
+                }
+              },
+              "parameter": "cedarkit.st-0-10",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.3
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                }
+              },
+              "parameter": "cedarkit.st-10-30",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.6
+                }
+              },
+              "parameter": "cedarkit.st-60-100",
               "step": "PT0S",
               "time": "2026-11-02T12:00:00Z",
               "valid_time": "2026-11-02T12:00:00Z"
@@ -12845,6 +13182,57 @@
                 "PT0H"
               ],
               "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.0
+                }
+              },
+              "parameter": "cedarkit.st-0-10",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.3
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                }
+              },
+              "parameter": "cedarkit.st-10-30",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1.0
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.6
+                }
+              },
+              "parameter": "cedarkit.st-60-100",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
             }
           ],
           "scope": {
@@ -12874,14 +13262,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "62e81ad567986c3cce07a37aecce198a2fcfc8f4ffe18ac5b4dd729409705b9d",
-          "version": "14"
+          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
+          "version": "15"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "270258b3fa619dc5b1d3a76c076cc3ac9c78653cb4bac45ddc5091304b495794",
-        "version": "12"
+        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
+        "version": "13"
       },
       "products": [
         {
@@ -12949,7 +13337,8 @@
             "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-59",
             "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-60",
             "stage1.2/task-t02#S-meso3-fcst-row-102",
-            "stage1.2/task-t02#S-meso3-fcst-row-74"
+            "stage1.2/task-t02#S-meso3-fcst-row-74",
+            "stage1.2/task-t03#S-meso3-fcst-row-16"
           ],
           "expected_domain": [
             {
@@ -13683,6 +14072,60 @@
               "step": "PT172800S",
               "time": "2026-11-02T12:00:00Z",
               "valid_time": "2026-11-04T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0
+                }
+              },
+              "parameter": "cedarkit.st-0-10",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.3
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                }
+              },
+              "parameter": "cedarkit.st-10-30",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.6
+                }
+              },
+              "parameter": "cedarkit.st-60-100",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
             }
           ],
           "id": "forecast",
@@ -16991,6 +17434,57 @@
                 "PT48H"
               ],
               "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.0
+                }
+              },
+              "parameter": "cedarkit.st-0-10",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.3
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                }
+              },
+              "parameter": "cedarkit.st-10-30",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1.0
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.6
+                }
+              },
+              "parameter": "cedarkit.st-60-100",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
             }
           ],
           "scope": {},
@@ -17018,14 +17512,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "62e81ad567986c3cce07a37aecce198a2fcfc8f4ffe18ac5b4dd729409705b9d",
-          "version": "14"
+          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
+          "version": "15"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "270258b3fa619dc5b1d3a76c076cc3ac9c78653cb4bac45ddc5091304b495794",
-        "version": "12"
+        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
+        "version": "13"
       },
       "products": [
         {
@@ -18149,14 +18643,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "62e81ad567986c3cce07a37aecce198a2fcfc8f4ffe18ac5b4dd729409705b9d",
-          "version": "14"
+          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
+          "version": "15"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "270258b3fa619dc5b1d3a76c076cc3ac9c78653cb4bac45ddc5091304b495794",
-        "version": "12"
+        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
+        "version": "13"
       },
       "products": [
         {
@@ -21735,14 +22229,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "62e81ad567986c3cce07a37aecce198a2fcfc8f4ffe18ac5b4dd729409705b9d",
-          "version": "14"
+          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
+          "version": "15"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "270258b3fa619dc5b1d3a76c076cc3ac9c78653cb4bac45ddc5091304b495794",
-        "version": "12"
+        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
+        "version": "13"
       },
       "products": [
         {
@@ -21789,7 +22283,8 @@
             "stage1.2/task-07e4/originals.jsonl#S-tym-ana-row-51",
             "stage1.2/task-07e4/originals.jsonl#S-tym-ana-row-69",
             "stage1.2/task-t02#S-tym-ana-row-58",
-            "stage1.2/task-t02#S-tym-ana-row-65"
+            "stage1.2/task-t02#S-tym-ana-row-65",
+            "stage1.2/task-t03#S-tym-ana-row-17"
           ],
           "expected_domain": [
             {
@@ -22154,6 +22649,60 @@
               "level_type": "pressure",
               "level_unit": "hPa",
               "parameter": "cedarkit.qflx",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0
+                }
+              },
+              "parameter": "cedarkit.st-0-10",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.3
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                }
+              },
+              "parameter": "cedarkit.st-10-30",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.6
+                }
+              },
+              "parameter": "cedarkit.st-60-100",
               "step": "PT0S",
               "time": "2026-11-02T12:00:00Z",
               "valid_time": "2026-11-02T12:00:00Z"
@@ -22923,6 +23472,57 @@
                 "PT0H"
               ],
               "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.0
+                }
+              },
+              "parameter": "cedarkit.st-0-10",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.3
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                }
+              },
+              "parameter": "cedarkit.st-10-30",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1.0
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.6
+                }
+              },
+              "parameter": "cedarkit.st-60-100",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
             }
           ],
           "scope": {
@@ -22952,14 +23552,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "62e81ad567986c3cce07a37aecce198a2fcfc8f4ffe18ac5b4dd729409705b9d",
-          "version": "14"
+          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
+          "version": "15"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "270258b3fa619dc5b1d3a76c076cc3ac9c78653cb4bac45ddc5091304b495794",
-        "version": "12"
+        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
+        "version": "13"
       },
       "products": [
         {
@@ -23026,7 +23626,8 @@
             "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-41",
             "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-42",
             "stage1.2/task-t02#S-tym-fcst-row-58",
-            "stage1.2/task-t02#S-tym-fcst-row-91"
+            "stage1.2/task-t02#S-tym-fcst-row-91",
+            "stage1.2/task-t03#S-tym-fcst-row-74"
           ],
           "expected_domain": [
             {
@@ -23778,6 +24379,60 @@
               "step": "PT172800S",
               "time": "2026-11-02T12:00:00Z",
               "valid_time": "2026-11-04T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0
+                }
+              },
+              "parameter": "cedarkit.st-0-10",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.3
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                }
+              },
+              "parameter": "cedarkit.st-10-30",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.6
+                }
+              },
+              "parameter": "cedarkit.st-60-100",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
             }
           ],
           "id": "forecast",
@@ -31535,6 +32190,57 @@
                 "PT48H"
               ],
               "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.0
+                }
+              },
+              "parameter": "cedarkit.st-0-10",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.3
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.1
+                }
+              },
+              "parameter": "cedarkit.st-10-30",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 1.0
+                },
+                "top": {
+                  "type": "depth_below_land",
+                  "unit": "m",
+                  "value": 0.6
+                }
+              },
+              "parameter": "cedarkit.st-60-100",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
             }
           ],
           "scope": {},
@@ -31562,8 +32268,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "62e81ad567986c3cce07a37aecce198a2fcfc8f4ffe18ac5b4dd729409705b9d",
-          "version": "14"
+          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
+          "version": "15"
         }
       },
       "member_roles": {
@@ -31601,8 +32307,8 @@
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "270258b3fa619dc5b1d3a76c076cc3ac9c78653cb4bac45ddc5091304b495794",
-        "version": "12"
+        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
+        "version": "13"
       },
       "products": [
         {
@@ -33397,8 +34103,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "62e81ad567986c3cce07a37aecce198a2fcfc8f4ffe18ac5b4dd729409705b9d",
-          "version": "14"
+          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
+          "version": "15"
         }
       },
       "member_roles": {
@@ -33436,8 +34142,8 @@
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "270258b3fa619dc5b1d3a76c076cc3ac9c78653cb4bac45ddc5091304b495794",
-        "version": "12"
+        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
+        "version": "13"
       },
       "products": [
         {
@@ -35153,8 +35859,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "62e81ad567986c3cce07a37aecce198a2fcfc8f4ffe18ac5b4dd729409705b9d",
-          "version": "14"
+          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
+          "version": "15"
         }
       },
       "member_roles": {
@@ -35176,8 +35882,8 @@
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "270258b3fa619dc5b1d3a76c076cc3ac9c78653cb4bac45ddc5091304b495794",
-        "version": "12"
+        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
+        "version": "13"
       },
       "products": [
         {
@@ -38874,8 +39580,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "62e81ad567986c3cce07a37aecce198a2fcfc8f4ffe18ac5b4dd729409705b9d",
-          "version": "14"
+          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
+          "version": "15"
         }
       },
       "member_roles": {
@@ -38897,8 +39603,8 @@
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "270258b3fa619dc5b1d3a76c076cc3ac9c78653cb4bac45ddc5091304b495794",
-        "version": "12"
+        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
+        "version": "13"
       },
       "products": [
         {
@@ -43618,5 +44324,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "47"
+  "version": "48"
 }

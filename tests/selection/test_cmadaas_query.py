@@ -777,6 +777,69 @@ def test_instantaneous_service_verticals_and_unit_provenance(case):
         )
 
 
+SOIL_CASES = json.loads(
+    (Path(__file__).parent / "fixtures/cmadaas-task-t03-soil.json").read_bytes()
+)
+
+
+@pytest.mark.parametrize("case", SOIL_CASES, ids=lambda c: c["id"])
+def test_soil_temperature_layers_use_product_joint_keys(case):
+    client = ControlledClient(case)
+    # The parameter fixes a layer; omitting it must retain both boundaries.
+    query = {k: v for k, v in case["query"].items() if k != "layer"}
+    with from_source(case["source"], client=client) as source:
+        selection = source.sel(query)
+        selection.explain()
+        assert not client.calls
+        field = selection.one(completeness="required")
+        assert field.identity.to_dict()["layer"] == case["query"]["layer"]
+        assert field.metadata["vertical_definition"]["id"] == case["vertical_table"]
+        assert field.report.overall["status"] == "complete"
+        dataset = field.to_xarray()
+        (name,) = dataset.data_vars
+        assert dataset[name].attrs["units"] == "K"
+        np.testing.assert_array_equal(
+            dataset[name].values.reshape(2, 3), case["values"]
+        )
+        assert client.calls == [(case["expected_interface"], case["expected_params"])]
+        # A point at the midpoint is a different vertical identity.
+        with pytest.raises(QueryError):
+            source.sel(
+                {
+                    **query,
+                    "level_type": "depth_below_land",
+                    "level": case["midpoint_m"],
+                    "level_unit": "m",
+                }
+            ).explain()
+        assert len(client.calls) == 1
+
+
+@pytest.mark.parametrize(
+    "dataset",
+    [
+        "cma_meso_3km_analysis_cmadaas",
+        "cma_meso_3km_forecast_cmadaas",
+        "cma_tym_analysis_cmadaas",
+        "cma_tym_forecast_cmadaas",
+    ],
+)
+def test_unavailable_soil_layer_has_no_guessed_service_binding(dataset):
+    client = ControlledClient()
+    with from_source({"kind": "cmadaas", "dataset": dataset}, client=client) as source:
+        with pytest.raises(QueryError):
+            source.sel(
+                parameter="cedarkit.t",
+                time="2026-11-02T12:00:00Z",
+                step="PT0H" if "analysis" in dataset else "PT6H",
+                layer={
+                    "top": {"type": "depth_below_land", "value": 0.3, "unit": "m"},
+                    "bottom": {"type": "depth_below_land", "value": 0.6, "unit": "m"},
+                },
+            ).explain()
+    assert not client.calls
+
+
 def test_generic_service_parameter_keeps_vertical_ambiguity_explicit():
     case = next(c for c in INSTANT_CASES if c["query"]["parameter"] == "cedarkit.q")
     query = {

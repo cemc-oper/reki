@@ -1473,7 +1473,127 @@
       "name": "qfxsfc",
       "parameter_id": "cedarkit.qfxsfc",
       "parent": "cedarkit.qfxsfc.any"
+    },
+    {
+      "description_cn": "0-10cm土壤温度",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0
+          }
+        }
+      },
+      "name": "st(0-10)",
+      "parameter_id": "cedarkit.st-0-10",
+      "parent": "cedarkit.t"
+    },
+    {
+      "description_cn": "10-30cm土壤温度",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.3
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          }
+        }
+      },
+      "name": "st(10-30)",
+      "parameter_id": "cedarkit.st-10-30",
+      "parent": "cedarkit.t"
+    },
+    {
+      "description_cn": "10-40cm土壤温度",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.4
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          }
+        }
+      },
+      "name": "st(10-40)",
+      "parameter_id": "cedarkit.st-10-40",
+      "parent": "cedarkit.t"
+    },
+    {
+      "description_cn": "100-200cm土壤温度",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 2
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 1
+          }
+        }
+      },
+      "name": "st(100-200)",
+      "parameter_id": "cedarkit.st-100-200",
+      "parent": "cedarkit.t"
+    },
+    {
+      "description_cn": "40-100cm土壤温度",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 1
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.4
+          }
+        }
+      },
+      "name": "st(40-100)",
+      "parameter_id": "cedarkit.st-40-100",
+      "parent": "cedarkit.t"
+    },
+    {
+      "description_cn": "60-100cm土壤温度",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 1.0
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.6
+          }
+        }
+      },
+      "name": "st(60-100)",
+      "parameter_id": "cedarkit.st-60-100",
+      "parent": "cedarkit.t"
     }
   ],
-  "version": "12"
+  "version": "13"
 }

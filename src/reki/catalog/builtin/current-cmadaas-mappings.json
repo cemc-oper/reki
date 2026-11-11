@@ -56419,6 +56419,1226 @@
         ],
         "time": "2026-11-02T12:00:00Z"
       }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-ana-row-22",
+        "stage1.2/task-t03/accepted-cases.json#S-gfs-ana-row-22-l5-h000",
+        "stage1.2/task-t03/originals/manifest.json#gfs-h000-soil-00",
+        "stage1.2/task-t03/inputs/ref/models/gfs/varname.dat#st"
+      ],
+      "id": "S-gfs-ana-row-22.st-0-10.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-gfs-ana"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-0-10",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.0
+          }
+        },
+        "step": "PT0H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-ana-row-22",
+        "stage1.2/task-t03/accepted-cases.json#S-gfs-ana-row-22-l25-h000",
+        "stage1.2/task-t03/originals/manifest.json#gfs-h000-soil-01",
+        "stage1.2/task-t03/inputs/ref/models/gfs/varname.dat#st"
+      ],
+      "id": "S-gfs-ana-row-22.st-10-40.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-gfs-ana"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-10-40",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.4
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          }
+        },
+        "step": "PT0H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-ana-row-22",
+        "stage1.2/task-t03/accepted-cases.json#S-gfs-ana-row-22-l70-h000",
+        "stage1.2/task-t03/originals/manifest.json#gfs-h000-soil-02",
+        "stage1.2/task-t03/inputs/ref/models/gfs/varname.dat#st"
+      ],
+      "id": "S-gfs-ana-row-22.st-40-100.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-gfs-ana"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-40-100",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 1.0
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.4
+          }
+        },
+        "step": "PT0H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-ana-row-22",
+        "stage1.2/task-t03/accepted-cases.json#S-gfs-ana-row-22-l150-h000",
+        "stage1.2/task-t03/originals/manifest.json#gfs-h000-soil-03",
+        "stage1.2/task-t03/inputs/ref/models/gfs/varname.dat#st"
+      ],
+      "id": "S-gfs-ana-row-22.st-100-200.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-gfs-ana"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-100-200",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 2.0
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 1.0
+          }
+        },
+        "step": "PT0H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-fcst-row-21",
+        "stage1.2/task-t03/accepted-cases.json#S-gfs-fcst-row-21-l5-h006",
+        "stage1.2/task-t03/originals/manifest.json#gfs-h006-soil-00",
+        "stage1.2/task-t03/inputs/ref/models/gfs/varname.dat#st"
+      ],
+      "id": "S-gfs-fcst-row-21.st-0-10.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-gfs-fcst"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-0-10",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.0
+          }
+        },
+        "step": "PT6H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-fcst-row-21",
+        "stage1.2/task-t03/accepted-cases.json#S-gfs-fcst-row-21-l25-h006",
+        "stage1.2/task-t03/originals/manifest.json#gfs-h006-soil-01",
+        "stage1.2/task-t03/inputs/ref/models/gfs/varname.dat#st"
+      ],
+      "id": "S-gfs-fcst-row-21.st-10-40.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-gfs-fcst"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-10-40",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.4
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          }
+        },
+        "step": "PT6H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-fcst-row-21",
+        "stage1.2/task-t03/accepted-cases.json#S-gfs-fcst-row-21-l70-h006",
+        "stage1.2/task-t03/originals/manifest.json#gfs-h006-soil-02",
+        "stage1.2/task-t03/inputs/ref/models/gfs/varname.dat#st"
+      ],
+      "id": "S-gfs-fcst-row-21.st-40-100.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-gfs-fcst"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-40-100",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 1.0
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.4
+          }
+        },
+        "step": "PT6H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-gfs-fcst-row-21",
+        "stage1.2/task-t03/accepted-cases.json#S-gfs-fcst-row-21-l150-h006",
+        "stage1.2/task-t03/originals/manifest.json#gfs-h006-soil-03",
+        "stage1.2/task-t03/inputs/ref/models/gfs/varname.dat#st"
+      ],
+      "id": "S-gfs-fcst-row-21.st-100-200.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-gfs-fcst"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-100-200",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 2.0
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 1.0
+          }
+        },
+        "step": "PT6H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-ana-row-14",
+        "stage1.2/task-t03/accepted-cases.json#S-meso3-ana-row-14-l5-h000",
+        "stage1.2/task-t03/originals/manifest.json#meso3-h000-soil-00",
+        "stage1.2/task-t03/inputs/ref/models/meso_3km/varname.dat#st"
+      ],
+      "id": "S-meso3-ana-row-14.st-0-10.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-meso3-ana"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-0-10",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.0
+          }
+        },
+        "step": "PT0H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-ana-row-14",
+        "stage1.2/task-t03/accepted-cases.json#S-meso3-ana-row-14-l20-h000",
+        "stage1.2/task-t03/originals/manifest.json#meso3-h000-soil-01",
+        "stage1.2/task-t03/inputs/ref/models/meso_3km/varname.dat#st"
+      ],
+      "id": "S-meso3-ana-row-14.st-10-30.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-meso3-ana"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-10-30",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.3
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          }
+        },
+        "step": "PT0H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-ana-row-14",
+        "stage1.2/task-t03/accepted-cases.json#S-meso3-ana-row-14-l80-h000",
+        "stage1.2/task-t03/originals/manifest.json#meso3-h000-soil-03",
+        "stage1.2/task-t03/inputs/ref/models/meso_3km/varname.dat#st"
+      ],
+      "id": "S-meso3-ana-row-14.st-60-100.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-meso3-ana"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-60-100",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 1.0
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.6
+          }
+        },
+        "step": "PT0H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-16",
+        "stage1.2/task-t03/accepted-cases.json#S-meso3-fcst-row-16-l5-h006",
+        "stage1.2/task-t03/originals/manifest.json#meso3-h006-soil-00",
+        "stage1.2/task-t03/inputs/ref/models/meso_3km/varname.dat#st"
+      ],
+      "id": "S-meso3-fcst-row-16.st-0-10.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-meso3-fcst"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-0-10",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.0
+          }
+        },
+        "step": "PT6H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-16",
+        "stage1.2/task-t03/accepted-cases.json#S-meso3-fcst-row-16-l20-h006",
+        "stage1.2/task-t03/originals/manifest.json#meso3-h006-soil-01",
+        "stage1.2/task-t03/inputs/ref/models/meso_3km/varname.dat#st"
+      ],
+      "id": "S-meso3-fcst-row-16.st-10-30.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-meso3-fcst"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-10-30",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.3
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          }
+        },
+        "step": "PT6H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-meso3-fcst-row-16",
+        "stage1.2/task-t03/accepted-cases.json#S-meso3-fcst-row-16-l80-h006",
+        "stage1.2/task-t03/originals/manifest.json#meso3-h006-soil-03",
+        "stage1.2/task-t03/inputs/ref/models/meso_3km/varname.dat#st"
+      ],
+      "id": "S-meso3-fcst-row-16.st-60-100.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-meso3-fcst"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-60-100",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 1.0
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.6
+          }
+        },
+        "step": "PT6H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-ana-row-17",
+        "stage1.2/task-t03/accepted-cases.json#S-tym-ana-row-17-l5-h000",
+        "stage1.2/task-t03/originals/manifest.json#tym-h000-soil-00",
+        "stage1.2/task-t03/inputs/ref/models/tym/varname.dat#st"
+      ],
+      "id": "S-tym-ana-row-17.st-0-10.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-tym-ana"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-0-10",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.0
+          }
+        },
+        "step": "PT0H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-ana-row-17",
+        "stage1.2/task-t03/accepted-cases.json#S-tym-ana-row-17-l20-h000",
+        "stage1.2/task-t03/originals/manifest.json#tym-h000-soil-01",
+        "stage1.2/task-t03/inputs/ref/models/tym/varname.dat#st"
+      ],
+      "id": "S-tym-ana-row-17.st-10-30.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-tym-ana"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-10-30",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.3
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          }
+        },
+        "step": "PT0H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-ana-row-17",
+        "stage1.2/task-t03/accepted-cases.json#S-tym-ana-row-17-l80-h000",
+        "stage1.2/task-t03/originals/manifest.json#tym-h000-soil-03",
+        "stage1.2/task-t03/inputs/ref/models/tym/varname.dat#st"
+      ],
+      "id": "S-tym-ana-row-17.st-60-100.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-tym-ana"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-60-100",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 1.0
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.6
+          }
+        },
+        "step": "PT0H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-74",
+        "stage1.2/task-t03/accepted-cases.json#S-tym-fcst-row-74-l5-h006",
+        "stage1.2/task-t03/originals/manifest.json#tym-h006-soil-00",
+        "stage1.2/task-t03/inputs/ref/models/tym/varname.dat#st"
+      ],
+      "id": "S-tym-fcst-row-74.st-0-10.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-tym-fcst"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-0-10",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.0
+          }
+        },
+        "step": "PT6H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-74",
+        "stage1.2/task-t03/accepted-cases.json#S-tym-fcst-row-74-l20-h006",
+        "stage1.2/task-t03/originals/manifest.json#tym-h006-soil-01",
+        "stage1.2/task-t03/inputs/ref/models/tym/varname.dat#st"
+      ],
+      "id": "S-tym-fcst-row-74.st-10-30.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-tym-fcst"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-10-30",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.3
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.1
+          }
+        },
+        "step": "PT6H",
+        "time": "2026-11-02T12:00:00Z"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105"
+      },
+      "backend": "cmadaas",
+      "evidence": [
+        "I01/coverage-draft.json#S-tym-fcst-row-74",
+        "stage1.2/task-t03/accepted-cases.json#S-tym-fcst-row-74-l80-h006",
+        "stage1.2/task-t03/originals/manifest.json#tym-h006-soil-03",
+        "stage1.2/task-t03/inputs/ref/models/tym/varname.dat#st"
+      ],
+      "id": "S-tym-fcst-row-74.st-60-100.instantaneous",
+      "native": {
+        "match": {
+          "fcstEle": "TEM",
+          "maxLat": 41,
+          "maxLon": 117,
+          "minLat": 39,
+          "minLon": 115
+        },
+        "translate": {
+          "statistics": {
+            "rule": "cmadaas.statistics_fields"
+          },
+          "time": {
+            "rule": "cmadaas.time_fields"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "config": {
+              "table": "cmadaas.soil-temperature.S-tym-fcst"
+            },
+            "rule": "cmadaas.vertical_table"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.st-60-100",
+      "when": {
+        "layer": {
+          "bottom": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 1.0
+          },
+          "top": {
+            "type": "depth_below_land",
+            "unit": "m",
+            "value": 0.6
+          }
+        },
+        "step": "PT6H",
+        "time": "2026-11-02T12:00:00Z"
+      }
     }
   ],
   "tables": [
@@ -57074,7 +58294,529 @@
           }
         }
       ]
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "evidence": [
+        "stage1.2/task-t03/results/survey-source.json",
+        "stage1.2/task-t03/results/survey-additional-source.json",
+        "stage1.2/task-t03/originals/manifest.json"
+      ],
+      "id": "cmadaas.soil-temperature.S-gfs-ana",
+      "key_kind": "level_type_and_level",
+      "rows": [
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.1
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.0
+              }
+            }
+          },
+          "id": "st-0-10",
+          "native": {
+            "level": "5",
+            "level_type": "106"
+          }
+        },
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.4
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.1
+              }
+            }
+          },
+          "id": "st-10-40",
+          "native": {
+            "level": "25",
+            "level_type": "106"
+          }
+        },
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 1.0
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.4
+              }
+            }
+          },
+          "id": "st-40-100",
+          "native": {
+            "level": "70",
+            "level_type": "106"
+          }
+        },
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 2.0
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 1.0
+              }
+            }
+          },
+          "id": "st-100-200",
+          "native": {
+            "level": "150",
+            "level_type": "106"
+          }
+        }
+      ]
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "evidence": [
+        "stage1.2/task-t03/results/survey-source.json",
+        "stage1.2/task-t03/results/survey-additional-source.json",
+        "stage1.2/task-t03/originals/manifest.json"
+      ],
+      "id": "cmadaas.soil-temperature.S-gfs-fcst",
+      "key_kind": "level_type_and_level",
+      "rows": [
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.1
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.0
+              }
+            }
+          },
+          "id": "st-0-10",
+          "native": {
+            "level": "5",
+            "level_type": "106"
+          }
+        },
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.4
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.1
+              }
+            }
+          },
+          "id": "st-10-40",
+          "native": {
+            "level": "25",
+            "level_type": "106"
+          }
+        },
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 1.0
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.4
+              }
+            }
+          },
+          "id": "st-40-100",
+          "native": {
+            "level": "70",
+            "level_type": "106"
+          }
+        },
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 2.0
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 1.0
+              }
+            }
+          },
+          "id": "st-100-200",
+          "native": {
+            "level": "150",
+            "level_type": "106"
+          }
+        }
+      ]
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "evidence": [
+        "stage1.2/task-t03/results/survey-source.json",
+        "stage1.2/task-t03/results/survey-additional-source.json",
+        "stage1.2/task-t03/originals/manifest.json"
+      ],
+      "id": "cmadaas.soil-temperature.S-meso3-ana",
+      "key_kind": "level_type_and_level",
+      "rows": [
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.1
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.0
+              }
+            }
+          },
+          "id": "st-0-10",
+          "native": {
+            "level": "5",
+            "level_type": "106"
+          }
+        },
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.3
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.1
+              }
+            }
+          },
+          "id": "st-10-30",
+          "native": {
+            "level": "20",
+            "level_type": "106"
+          }
+        },
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 1.0
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.6
+              }
+            }
+          },
+          "id": "st-60-100",
+          "native": {
+            "level": "80",
+            "level_type": "106"
+          }
+        }
+      ]
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "evidence": [
+        "stage1.2/task-t03/results/survey-source.json",
+        "stage1.2/task-t03/results/survey-additional-source.json",
+        "stage1.2/task-t03/originals/manifest.json"
+      ],
+      "id": "cmadaas.soil-temperature.S-meso3-fcst",
+      "key_kind": "level_type_and_level",
+      "rows": [
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.1
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.0
+              }
+            }
+          },
+          "id": "st-0-10",
+          "native": {
+            "level": "5",
+            "level_type": "106"
+          }
+        },
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.3
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.1
+              }
+            }
+          },
+          "id": "st-10-30",
+          "native": {
+            "level": "20",
+            "level_type": "106"
+          }
+        },
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 1.0
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.6
+              }
+            }
+          },
+          "id": "st-60-100",
+          "native": {
+            "level": "80",
+            "level_type": "106"
+          }
+        }
+      ]
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_analysis_cmadaas",
+        "product": "analysis",
+        "product_version": "service-20261105",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "evidence": [
+        "stage1.2/task-t03/results/survey-source.json",
+        "stage1.2/task-t03/results/survey-additional-source.json",
+        "stage1.2/task-t03/originals/manifest.json"
+      ],
+      "id": "cmadaas.soil-temperature.S-tym-ana",
+      "key_kind": "level_type_and_level",
+      "rows": [
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.1
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.0
+              }
+            }
+          },
+          "id": "st-0-10",
+          "native": {
+            "level": "5",
+            "level_type": "106"
+          }
+        },
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.3
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.1
+              }
+            }
+          },
+          "id": "st-10-30",
+          "native": {
+            "level": "20",
+            "level_type": "106"
+          }
+        },
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 1.0
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.6
+              }
+            }
+          },
+          "id": "st-60-100",
+          "native": {
+            "level": "80",
+            "level_type": "106"
+          }
+        }
+      ]
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_tym_forecast_cmadaas",
+        "product": "forecast",
+        "product_version": "service-20261105",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "evidence": [
+        "stage1.2/task-t03/results/survey-source.json",
+        "stage1.2/task-t03/results/survey-additional-source.json",
+        "stage1.2/task-t03/originals/manifest.json"
+      ],
+      "id": "cmadaas.soil-temperature.S-tym-fcst",
+      "key_kind": "level_type_and_level",
+      "rows": [
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.1
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.0
+              }
+            }
+          },
+          "id": "st-0-10",
+          "native": {
+            "level": "5",
+            "level_type": "106"
+          }
+        },
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.3
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.1
+              }
+            }
+          },
+          "id": "st-10-30",
+          "native": {
+            "level": "20",
+            "level_type": "106"
+          }
+        },
+        {
+          "canonical": {
+            "layer": {
+              "bottom": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 1.0
+              },
+              "top": {
+                "type": "depth_below_land",
+                "unit": "m",
+                "value": 0.6
+              }
+            }
+          },
+          "id": "st-60-100",
+          "native": {
+            "level": "80",
+            "level_type": "106"
+          }
+        }
+      ]
     }
   ],
-  "version": "14"
+  "version": "15"
 }
