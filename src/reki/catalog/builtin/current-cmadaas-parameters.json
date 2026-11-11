@@ -1593,7 +1593,93 @@
       "name": "st(60-100)",
       "parameter_id": "cedarkit.st-60-100",
       "parent": "cedarkit.t"
+    },
+    {
+      "description": "height of fog top",
+      "description_cn": "雾顶高度",
+      "name": "fogh",
+      "parameter_id": "cedarkit.fogh.any",
+      "unit": "m"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "fogh",
+      "parameter_id": "cedarkit.fogh",
+      "parent": "cedarkit.fogh.any"
+    },
+    {
+      "description": "Cloud cover",
+      "description_cn": "云量",
+      "name": "cc",
+      "parameter_id": "cedarkit.cc",
+      "unit": "%"
+    },
+    {
+      "description": "radar echo top",
+      "description_cn": "雷达回波顶",
+      "name": "echotop",
+      "parameter_id": "cedarkit.echotop",
+      "unit": "m"
+    },
+    {
+      "description": "Storm relative helicity",
+      "description_cn": "风暴螺旋度",
+      "name": "srh",
+      "parameter_id": "cedarkit.srh",
+      "unit": "J/kg"
+    },
+    {
+      "description_cn": "0-1km垂直风暴螺旋度",
+      "fixed_conditions": {
+        "layer": {
+          "bottom": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 0
+          },
+          "top": {
+            "type": "height_above_ground",
+            "unit": "m",
+            "value": 1000
+          }
+        }
+      },
+      "name": "srh(0-1000)",
+      "parameter_id": "cedarkit.srh-0-1000",
+      "parent": "cedarkit.srh"
+    },
+    {
+      "description": "Total totals index",
+      "description_cn": "总指数",
+      "name": "tti",
+      "parameter_id": "cedarkit.tti.any",
+      "unit": "K"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "tti",
+      "parameter_id": "cedarkit.tti",
+      "parent": "cedarkit.tti.any"
+    },
+    {
+      "description": "Height of -20 degree isothermal level",
+      "description_cn": "-20度层高度",
+      "name": "ht2",
+      "parameter_id": "cedarkit.ht2.any",
+      "unit": "m"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "ht2",
+      "parameter_id": "cedarkit.ht2",
+      "parent": "cedarkit.ht2.any"
     }
   ],
-  "version": "13"
+  "version": "14"
 }

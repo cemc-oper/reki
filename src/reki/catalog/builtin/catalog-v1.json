@@ -3078,14 +3078,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
-          "version": "15"
+          "sha256": "2704d29e98bb1e7099f1c4a2b596e3491f6cf7fe2ba78129be366c32bdf59b66",
+          "version": "16"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
-        "version": "13"
+        "sha256": "572c6a7bd17788dbd20b62883d94e94b647b0bdf806b78628975b42f66bc7fcb",
+        "version": "14"
       },
       "products": [
         {
@@ -9797,14 +9797,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
-          "version": "15"
+          "sha256": "2704d29e98bb1e7099f1c4a2b596e3491f6cf7fe2ba78129be366c32bdf59b66",
+          "version": "16"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
-        "version": "13"
+        "sha256": "572c6a7bd17788dbd20b62883d94e94b647b0bdf806b78628975b42f66bc7fcb",
+        "version": "14"
       },
       "products": [
         {
@@ -9875,7 +9875,9 @@
             "stage1.2/task-n06-05#S-gfs-ana-row-1",
             "stage1.2/task-n06-05#S-gfs-ana-row-6",
             "stage1.2/task-t02#S-gfs-ana-row-103",
-            "stage1.2/task-t03#S-gfs-ana-row-22"
+            "stage1.2/task-t03#S-gfs-ana-row-22",
+            "stage1.2/task-t05#S-gfs-ana-row-31",
+            "stage1.2/task-t05#S-gfs-ana-row-70"
           ],
           "expected_domain": [
             {
@@ -10489,6 +10491,22 @@
                 }
               },
               "parameter": "cedarkit.st-100-200",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.fogh",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level": 850,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.cc",
               "step": "PT0S",
               "time": "2026-11-02T12:00:00Z",
               "valid_time": "2026-11-02T12:00:00Z"
@@ -11730,6 +11748,20 @@
               "parameter": "cedarkit.st-100-200",
               "step": "PT0H",
               "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.fogh",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level": 850.0,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.cc",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
             }
           ],
           "scope": {
@@ -11759,14 +11791,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
-          "version": "15"
+          "sha256": "2704d29e98bb1e7099f1c4a2b596e3491f6cf7fe2ba78129be366c32bdf59b66",
+          "version": "16"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
-        "version": "13"
+        "sha256": "572c6a7bd17788dbd20b62883d94e94b647b0bdf806b78628975b42f66bc7fcb",
+        "version": "14"
       },
       "products": [
         {
@@ -11826,7 +11858,13 @@
             "stage1.2/task-07e3/originals.jsonl#S-meso3-ana-row-105",
             "stage1.2/task-t02#S-meso3-ana-row-42",
             "stage1.2/task-t02#S-meso3-ana-row-64",
-            "stage1.2/task-t03#S-meso3-ana-row-14"
+            "stage1.2/task-t03#S-meso3-ana-row-14",
+            "stage1.2/task-t05#S-meso3-ana-row-13",
+            "stage1.2/task-t05#S-meso3-ana-row-41",
+            "stage1.2/task-t05#S-meso3-ana-row-43",
+            "stage1.2/task-t05#S-meso3-ana-row-45",
+            "stage1.2/task-t05#S-meso3-ana-row-67",
+            "stage1.2/task-t05#S-meso3-ana-row-73"
           ],
           "expected_domain": [
             {
@@ -12344,6 +12382,61 @@
                 }
               },
               "parameter": "cedarkit.st-60-100",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.echotop",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "parameter": "cedarkit.srh-0-1000",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.tti",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht2",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cin",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level": 850,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.cc",
               "step": "PT0S",
               "time": "2026-11-02T12:00:00Z",
               "valid_time": "2026-11-02T12:00:00Z"
@@ -13233,6 +13326,55 @@
               "parameter": "cedarkit.st-60-100",
               "step": "PT0H",
               "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.echotop",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "parameter": "cedarkit.srh-0-1000",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.tti",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht2",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cin",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level": 850.0,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.cc",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
             }
           ],
           "scope": {
@@ -13262,14 +13404,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
-          "version": "15"
+          "sha256": "2704d29e98bb1e7099f1c4a2b596e3491f6cf7fe2ba78129be366c32bdf59b66",
+          "version": "16"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
-        "version": "13"
+        "sha256": "572c6a7bd17788dbd20b62883d94e94b647b0bdf806b78628975b42f66bc7fcb",
+        "version": "14"
       },
       "products": [
         {
@@ -13338,7 +13480,14 @@
             "stage1.2/task-07e3/originals.jsonl#S-meso3-fcst-row-60",
             "stage1.2/task-t02#S-meso3-fcst-row-102",
             "stage1.2/task-t02#S-meso3-fcst-row-74",
-            "stage1.2/task-t03#S-meso3-fcst-row-16"
+            "stage1.2/task-t03#S-meso3-fcst-row-16",
+            "stage1.2/task-t05#S-meso3-fcst-row-29",
+            "stage1.2/task-t05#S-meso3-fcst-row-67",
+            "stage1.2/task-t05#S-meso3-fcst-row-73",
+            "stage1.2/task-t05#S-meso3-fcst-row-77",
+            "stage1.2/task-t05#S-meso3-fcst-row-88",
+            "stage1.2/task-t05#S-meso3-fcst-row-89",
+            "stage1.2/task-t05#S-meso3-fcst-row-104"
           ],
           "expected_domain": [
             {
@@ -14123,6 +14272,68 @@
                 }
               },
               "parameter": "cedarkit.st-60-100",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.tti",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht2",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht0",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cin",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level": 850,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.cc",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.echotop",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "parameter": "cedarkit.srh-0-1000",
               "step": "PT21600S",
               "time": "2026-11-02T12:00:00Z",
               "valid_time": "2026-11-02T18:00:00Z"
@@ -17485,6 +17696,61 @@
               "parameter": "cedarkit.st-60-100",
               "step": "PT6H",
               "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.tti",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht2",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht0",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cin",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level": 850.0,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.cc",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.echotop",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "parameter": "cedarkit.srh-0-1000",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
             }
           ],
           "scope": {},
@@ -17512,14 +17778,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
-          "version": "15"
+          "sha256": "2704d29e98bb1e7099f1c4a2b596e3491f6cf7fe2ba78129be366c32bdf59b66",
+          "version": "16"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
-        "version": "13"
+        "sha256": "572c6a7bd17788dbd20b62883d94e94b647b0bdf806b78628975b42f66bc7fcb",
+        "version": "14"
       },
       "products": [
         {
@@ -17568,7 +17834,14 @@
             "stage1.2/task-07e2/originals.jsonl#S-meso1-ana-row-8",
             "stage1.2/task-07e2/originals.jsonl#S-meso1-ana-row-82",
             "stage1.2/task-07e2/originals.jsonl#S-meso1-ana-row-87",
-            "stage1.2/task-07e2/originals.jsonl#S-meso1-ana-row-98"
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-ana-row-98",
+            "stage1.2/task-t05#S-meso1-ana-row-56",
+            "stage1.2/task-t05#S-meso1-ana-row-58",
+            "stage1.2/task-t05#S-meso1-ana-row-59",
+            "stage1.2/task-t05#S-meso1-ana-row-65",
+            "stage1.2/task-t05#S-meso1-ana-row-73",
+            "stage1.2/task-t05#S-meso1-ana-row-74",
+            "stage1.2/task-t05#S-meso1-ana-row-43"
           ],
           "expected_domain": [
             {
@@ -17939,6 +18212,70 @@
             {
               "level_type": "entire_atmosphere",
               "parameter": "cedarkit.pwat",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.echotop",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht2",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht0",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level": 850,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.cc",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.td2m",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cin",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "parameter": "cedarkit.srh-0-1000",
               "step": "PT0S",
               "time": "2026-11-02T12:00:00Z",
               "valid_time": "2026-11-02T12:00:00Z"
@@ -18614,6 +18951,63 @@
               "step": [
                 "PT0H"
               ]
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.echotop",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht2",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht0",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level": 850.0,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.cc",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level": 2.0,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.td2m",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cin",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "parameter": "cedarkit.srh-0-1000",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
             }
           ],
           "scope": {
@@ -18643,14 +19037,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
-          "version": "15"
+          "sha256": "2704d29e98bb1e7099f1c4a2b596e3491f6cf7fe2ba78129be366c32bdf59b66",
+          "version": "16"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
-        "version": "13"
+        "sha256": "572c6a7bd17788dbd20b62883d94e94b647b0bdf806b78628975b42f66bc7fcb",
+        "version": "14"
       },
       "products": [
         {
@@ -18709,7 +19103,13 @@
             "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-50",
             "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-55",
             "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-56",
-            "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-58"
+            "stage1.2/task-07e2/originals.jsonl#S-meso1-fcst-row-58",
+            "stage1.2/task-t05#S-meso1-fcst-row-20",
+            "stage1.2/task-t05#S-meso1-fcst-row-61",
+            "stage1.2/task-t05#S-meso1-fcst-row-70",
+            "stage1.2/task-t05#S-meso1-fcst-row-75",
+            "stage1.2/task-t05#S-meso1-fcst-row-81",
+            "stage1.2/task-t05#S-meso1-fcst-row-83"
           ],
           "expected_domain": [
             {
@@ -19297,6 +19697,61 @@
               "step": "PT129600S",
               "time": "2026-11-04T12:00:00Z",
               "valid_time": "2026-11-06T00:00:00Z"
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "parameter": "cedarkit.srh-0-1000",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht0",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht2",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cin",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level": 2,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.td2m",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.echotop",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
             }
           ],
           "id": "forecast",
@@ -22202,6 +22657,55 @@
                 "PT71H",
                 "PT72H"
               ]
+            },
+            {
+              "layer": {
+                "bottom": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 0
+                },
+                "top": {
+                  "type": "height_above_ground",
+                  "unit": "m",
+                  "value": 1000
+                }
+              },
+              "parameter": "cedarkit.srh-0-1000",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht0",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.ht2",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.cin",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level": 2.0,
+              "level_type": "height_above_ground",
+              "level_unit": "m",
+              "parameter": "cedarkit.td2m",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.echotop",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
             }
           ],
           "scope": {},
@@ -22229,14 +22733,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
-          "version": "15"
+          "sha256": "2704d29e98bb1e7099f1c4a2b596e3491f6cf7fe2ba78129be366c32bdf59b66",
+          "version": "16"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
-        "version": "13"
+        "sha256": "572c6a7bd17788dbd20b62883d94e94b647b0bdf806b78628975b42f66bc7fcb",
+        "version": "14"
       },
       "products": [
         {
@@ -22284,7 +22788,9 @@
             "stage1.2/task-07e4/originals.jsonl#S-tym-ana-row-69",
             "stage1.2/task-t02#S-tym-ana-row-58",
             "stage1.2/task-t02#S-tym-ana-row-65",
-            "stage1.2/task-t03#S-tym-ana-row-17"
+            "stage1.2/task-t03#S-tym-ana-row-17",
+            "stage1.2/task-t05#S-tym-ana-row-35",
+            "stage1.2/task-t05#S-tym-ana-row-45"
           ],
           "expected_domain": [
             {
@@ -22703,6 +23209,22 @@
                 }
               },
               "parameter": "cedarkit.st-60-100",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.fogh",
+              "step": "PT0S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level": 850,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.cc",
               "step": "PT0S",
               "time": "2026-11-02T12:00:00Z",
               "valid_time": "2026-11-02T12:00:00Z"
@@ -23523,6 +24045,20 @@
               "parameter": "cedarkit.st-60-100",
               "step": "PT0H",
               "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.fogh",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level": 850.0,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.cc",
+              "step": "PT0H",
+              "time": "2026-11-02T12:00:00Z"
             }
           ],
           "scope": {
@@ -23552,14 +24088,14 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
-          "version": "15"
+          "sha256": "2704d29e98bb1e7099f1c4a2b596e3491f6cf7fe2ba78129be366c32bdf59b66",
+          "version": "16"
         }
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
-        "version": "13"
+        "sha256": "572c6a7bd17788dbd20b62883d94e94b647b0bdf806b78628975b42f66bc7fcb",
+        "version": "14"
       },
       "products": [
         {
@@ -23627,7 +24163,9 @@
             "stage1.2/task-07e4/originals.jsonl#S-tym-fcst-row-42",
             "stage1.2/task-t02#S-tym-fcst-row-58",
             "stage1.2/task-t02#S-tym-fcst-row-91",
-            "stage1.2/task-t03#S-tym-fcst-row-74"
+            "stage1.2/task-t03#S-tym-fcst-row-74",
+            "stage1.2/task-t05#S-tym-fcst-row-19",
+            "stage1.2/task-t05#S-tym-fcst-row-63"
           ],
           "expected_domain": [
             {
@@ -24430,6 +24968,22 @@
                 }
               },
               "parameter": "cedarkit.st-60-100",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.fogh",
+              "step": "PT21600S",
+              "time": "2026-11-02T12:00:00Z",
+              "valid_time": "2026-11-02T18:00:00Z"
+            },
+            {
+              "level": 850,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.cc",
               "step": "PT21600S",
               "time": "2026-11-02T12:00:00Z",
               "valid_time": "2026-11-02T18:00:00Z"
@@ -32241,6 +32795,20 @@
               "parameter": "cedarkit.st-60-100",
               "step": "PT6H",
               "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level_type": "surface",
+              "parameter": "cedarkit.fogh",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
+            },
+            {
+              "level": 850.0,
+              "level_type": "pressure",
+              "level_unit": "hPa",
+              "parameter": "cedarkit.cc",
+              "step": "PT6H",
+              "time": "2026-11-02T12:00:00Z"
             }
           ],
           "scope": {},
@@ -32268,8 +32836,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
-          "version": "15"
+          "sha256": "2704d29e98bb1e7099f1c4a2b596e3491f6cf7fe2ba78129be366c32bdf59b66",
+          "version": "16"
         }
       },
       "member_roles": {
@@ -32307,8 +32875,8 @@
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
-        "version": "13"
+        "sha256": "572c6a7bd17788dbd20b62883d94e94b647b0bdf806b78628975b42f66bc7fcb",
+        "version": "14"
       },
       "products": [
         {
@@ -34103,8 +34671,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
-          "version": "15"
+          "sha256": "2704d29e98bb1e7099f1c4a2b596e3491f6cf7fe2ba78129be366c32bdf59b66",
+          "version": "16"
         }
       },
       "member_roles": {
@@ -34142,8 +34710,8 @@
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
-        "version": "13"
+        "sha256": "572c6a7bd17788dbd20b62883d94e94b647b0bdf806b78628975b42f66bc7fcb",
+        "version": "14"
       },
       "products": [
         {
@@ -35859,8 +36427,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
-          "version": "15"
+          "sha256": "2704d29e98bb1e7099f1c4a2b596e3491f6cf7fe2ba78129be366c32bdf59b66",
+          "version": "16"
         }
       },
       "member_roles": {
@@ -35882,8 +36450,8 @@
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
-        "version": "13"
+        "sha256": "572c6a7bd17788dbd20b62883d94e94b647b0bdf806b78628975b42f66bc7fcb",
+        "version": "14"
       },
       "products": [
         {
@@ -39580,8 +40148,8 @@
       "mappings": {
         "cmadaas": {
           "builtin": "reki.mappings.cmadaas.current",
-          "sha256": "9150b8c12ffc80085ead792bb9aa2bf6b0a7783f04593e718efa4dcb9cd42c9c",
-          "version": "15"
+          "sha256": "2704d29e98bb1e7099f1c4a2b596e3491f6cf7fe2ba78129be366c32bdf59b66",
+          "version": "16"
         }
       },
       "member_roles": {
@@ -39603,8 +40171,8 @@
       },
       "parameter_registry": {
         "builtin": "reki.parameters.cmadaas.current",
-        "sha256": "3e8fe50701bfcbd82f8d29828c5bf493505b5cb69e7553afd88acc4335a1e2dc",
-        "version": "13"
+        "sha256": "572c6a7bd17788dbd20b62883d94e94b647b0bdf806b78628975b42f66bc7fcb",
+        "version": "14"
       },
       "products": [
         {
@@ -44324,5 +44892,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "48"
+  "version": "49"
 }
