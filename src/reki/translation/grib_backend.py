@@ -1,18 +1,22 @@
 """Locate and decode original GRIB records using ecCodes native keys."""
 
 from collections.abc import Mapping
+from contextlib import ExitStack
+from functools import partial
 from hashlib import sha256
+from threading import Lock
 
 import numpy as np
 import xarray as xr
 
 from cedarkit_query import Query, QueryError, SourceError
 from cedarkit_query.normalize import _contains
+from reki._legacy import reader_errors
 from reki.catalog.model import thaw
 from reki.selection.backend import Plan, FieldReference, BranchEvent
 from reki.selection.core import key as identity_key, matches
 from reki.selection.files import FileSnapshot, discover_paths
-from reki.grib_io import decode_values
+from reki.grib_io import decode_values, open_grib_file
 from . import grib
 from .common import metadata_error, software_origin
 from .grib_mapping import expected_cells, interpret_named, named_branches
@@ -239,6 +243,11 @@ class GribBackend:
     def __init__(self, configuration, *, numbering=None):
         self.configuration = configuration
         self.numbering = numbering
+        self._raw_files = ExitStack()
+        self._raw_stream = None
+        self._raw_snapshot = None
+        self._raw_lock = Lock()
+        self._closed = False
         self.mappings = {
             (resource.id, row["id"]): row
             for resource in configuration.mappings
@@ -299,7 +308,27 @@ class GribBackend:
         return GribScan(self, plan)
 
     def close(self):
-        pass
+        with self._raw_lock:
+            self._closed = True
+            self._raw_files.close()
+            self._raw_stream = self._raw_snapshot = None
+
+    def read_grib_message(self, snapshot, offset, length):
+        def read():
+            if self._raw_snapshot != snapshot:
+                self._raw_files.close()
+                self._raw_stream = self._raw_snapshot = None
+                with ExitStack() as pending:
+                    stream = pending.enter_context(open_grib_file(snapshot.path))
+                    snapshot.verify(stream)
+                    self._raw_files = pending.pop_all()
+                self._raw_stream, self._raw_snapshot = stream, snapshot
+            return _read_grib_message(self._raw_stream, offset, length)
+
+        with self._raw_lock, reader_errors(snapshot.path, "read_grib_message"):
+            if self._closed:
+                raise SourceError("io_error", "/source", "source is closed")
+            return snapshot.load(read)
 
 
 class GribScan:
@@ -361,7 +390,7 @@ class GribScan:
 
     def _fields(self):
         import eccodes
-        from reki.grib_io import iter_headers, open_grib_file
+        from reki.grib_io import iter_headers
 
         branches = [
             (t["query_index"], b) for t in self.plan.translations for b in t["branches"]
@@ -436,7 +465,7 @@ class GribScan:
                             (qi, b["index"])
                             for qi, b in candidates
                             if "parameter" not in b["residual"]
-                            and matches(identity, b["residual"])
+                            and (not b["residual"] or matches(identity, b["residual"]))
                         )
                         if not links:
                             continue
@@ -447,11 +476,14 @@ class GribScan:
                             grids[grid_id] = _grid(header.handle, grid_id)
                         grid, coords, dims, shape = grids[grid_id]
                         offset = header.offset
+                        length = header.message_length
                         signature, name = _variable(native, identity)
                         meta = dict(
                             source={
                                 "path": str(snapshot.path),
                                 "offset": offset,
+                                "ordinal": header.ordinal + 1,
+                                "length": length,
                                 "fingerprint": list(snapshot.fingerprint),
                             },
                             native_fields=native,
@@ -490,6 +522,9 @@ class GribScan:
                                 _load(s, o, c, d, sh, u)
                             ),
                             tuple(links),
+                            read_grib_message=partial(
+                                self.backend.read_grib_message, snapshot, offset, length
+                            ),
                         )
                 finally:
                     iterator.close()
@@ -554,6 +589,24 @@ def _grid(handle, definition):
         ("point",),
         (points,),
     )
+
+
+def _read_grib_message(stream, offset, length):
+    if length is None or length <= 0:
+        raise SourceError(
+            "decode_failed", "", "GRIB message has no positive encoded length"
+        )
+    stream.seek(offset)
+    message = stream.read(length)
+    if (
+        len(message) != length
+        or not message.startswith(b"GRIB")
+        or not message.endswith(b"7777")
+    ):
+        raise SourceError(
+            "decode_failed", "", "record locator no longer identifies a complete GRIB message"
+        )
+    return message
 
 
 def _load(snapshot, offset, coords, dims, shape, unit_offset=0.0):

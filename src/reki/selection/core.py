@@ -641,8 +641,9 @@ class Selection:
                         residual = thaw(
                             plan.translations[qi]["branches"][bi]["residual"]
                         )
-                        if matches(ref.identity, branches[qi]["query"]) and matches(
-                            ref.identity, residual
+                        requested = branches[qi]["query"]
+                        if (not requested or matches(ref.identity, requested)) and (
+                            not residual or matches(ref.identity, residual)
                         ):
                             selected.add(qi)
                     if not selected:
@@ -849,6 +850,16 @@ class Field:
     @property
     def report(self):
         return self._report
+
+    def read_grib_message(self) -> bytes:
+        """Return the original encoded GRIB message for this field."""
+        self._owner._ensure_open()
+        read = self._reference.read_grib_message
+        if read is None:
+            raise SourceError(
+                "unsupported", "/source", "field has no original GRIB message"
+            )
+        return read()
 
     def to_xarray(self, *, rename=None):
         return Fields(self._owner, (self,), self.report).to_xarray(rename=rename)
@@ -1093,7 +1104,8 @@ def _check_member_roles(query, configuration):
 
 def _validate_reference(ref, configuration):
     identity = ref.identity.to_dict()
-    if not matches(identity, configuration.scope):
+    scope = configuration.scope.to_dict()
+    if scope and not matches(identity, scope):
         raise SourceError(
             "metadata_interpretation_failed",
             "",

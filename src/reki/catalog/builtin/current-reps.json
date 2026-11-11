@@ -3,6 +3,9 @@
   "local_layout": [
     "ORIG-DATA/NAFP/CMA-REPS/{beijing_year}/{beijing_date_label}/Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-REPS-CN-{forecast_hour_label}00-m{member_3digit}.grib2"
   ],
+  "local_fallback_layout": [
+    "ORIG-DATA/NAFP/CMA-REPS/{next_beijing_year}/{next_beijing_date_label}/Z_NAFP_C_BABJ_{start_time_label}0000_P_NWPC-GRAPES-REPS-CN-{forecast_hour_label}00-m{member_3digit}.grib2"
+  ],
   "directory_time_zone": "Asia/Shanghai",
   "member_numbering": [
     {

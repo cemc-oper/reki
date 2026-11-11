@@ -5,6 +5,7 @@ from types import SimpleNamespace
 import pytest
 
 from cedarkit_query import QueryError, SourceError
+from reki.catalog import plan_source_binding
 from reki.catalog.model import freeze
 from reki.selection.files import discover_paths, FileSnapshot
 
@@ -79,6 +80,31 @@ def test_local_template_symlink_cannot_escape_root(tmp_path, q):
     )
     with pytest.raises(QueryError):
         discover_paths(config, [q])
+
+
+def test_reps_next_archive_day_keeps_cycle_lead_and_member(tmp_path):
+    config = plan_source_binding(
+        {"kind": "local", "dataset": "cma_reps", "root": str(tmp_path)}
+    )
+    archive = tmp_path / "ORIG-DATA/NAFP/CMA-REPS"
+    prefix = "Z_NAFP_C_BABJ_20261231120000_P_NWPC-GRAPES-REPS-CN"
+    fallback = archive / f"2027/20270101/{prefix}-00600-m001.grib2"
+    fallback.parent.mkdir(parents=True)
+    fallback.write_bytes(b"SYNTHETIC")
+    other_member = fallback.with_name(f"{prefix}-00600-m002.grib2")
+    other_member.write_bytes(b"SYNTHETIC")
+    query = {"time": "2026-12-31T12:00:00Z", "member": 1}
+    assert discover_paths(config, [{**query, "step": "PT6H"}]) == (fallback,)
+    assert discover_paths(config, [query]) == (fallback,)
+
+    primary = archive / f"2026/20261231/{fallback.name}"
+    primary.parent.mkdir(parents=True)
+    primary.write_bytes(b"SYNTHETIC")
+    assert discover_paths(config, [{**query, "step": "PT6H"}]) == (primary,)
+    assert discover_paths(config, [query]) == (primary,)
+    assert discover_paths(config, [{"time": query["time"], "step": "PT6H"}]) == (
+        primary, other_member
+    )
 
 
 def test_file_snapshot_replacement_and_mutation_during_load(tmp_path):

@@ -4,7 +4,11 @@ Open a GRIB file with `reki.from_source({"kind": "file", "path": path})`. Pass `
 
 `first()` returns the first match, `one()` requires one match and `all()` returns all matching fields. `to_xarray(rename="original")` gives a readable variable name for a single native field. Returned values follow the original scan order. Missing points follow GRIB packing and bitmap information. An unrecognized local parameter or fixed-surface code can still be selected by its encoded keys.
 
+To enumerate every message in one file, use `source.sel().all()`. Each returned field has a one-based file ordinal, byte offset and encoded length in `field.metadata["source"]`. The fields are in file order, including repeated native keys at different offsets. While the source is open, call `field.read_grib_message()` on a field to retrieve its original bytes without decoding the values. This method also works on fields selected from `kind="local"`.
+
 Local sources use dataset-specific file layouts. Supply the origin in UTC, and optionally the lead or file member. For multi-record queries, a successful scan is bounded by the selected files. Product-wide completeness requires its own independent domain.
+
+For REPS, `kind="local"` prefers the archive directory for the origin's Beijing date. A matching file in the next Beijing-date directory fills an absent entry. Both directories use the requested UTC origin, lead and member in the filename.
 
 ## Reviewed MESO-1KM column water
 

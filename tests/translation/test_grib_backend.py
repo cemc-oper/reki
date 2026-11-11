@@ -10,6 +10,7 @@ import eccodes
 from cedarkit_query import SourceError
 from reki import from_source
 from reki.catalog import plan_source_binding
+from reki.diagnostics import collect_io_metrics
 from reki.selection.core import construct_source
 from reki.translation.grib_backend import GribBackend
 
@@ -133,6 +134,31 @@ def test_file_replacement_fails_delayed_reference(configured, write_grib):
     with pytest.raises(SourceError) as exc:
         field.to_xarray(rename="raw")
     assert exc.value.context["reason"] == "resource_changed"
+    with pytest.raises(SourceError) as exc:
+        field.read_grib_message()
+    assert exc.value.context["reason"] == "resource_changed"
+
+
+def test_repeated_native_keys_keep_individually_readable_messages(configured):
+    source, path, _ = configured([{}, {}])
+    original = path.read_bytes()
+    with source:
+        fields = source.sel(native={"grib": {"parameterNumber": 0}}).all()
+        assert len(fields) == 2
+        assert fields[0].identity == fields[1].identity
+        offset = 0
+        with collect_io_metrics() as metrics:
+            for ordinal, field in enumerate(fields, 1):
+                locator = field.metadata["source"]
+                length = locator["length"]
+                assert (locator["ordinal"], locator["offset"]) == (ordinal, offset)
+                assert field.read_grib_message() == original[offset:offset + length]
+                offset += length
+            assert fields[0].read_grib_message() == original[:fields[0].metadata["source"]["length"]]
+        assert metrics.snapshot()["file_open_count"] == 1
+        assert offset == len(original)
+    with pytest.raises(SourceError):
+        fields[0].read_grib_message()
 
 
 def test_native_query_does_not_fabricate_business_id(configured):

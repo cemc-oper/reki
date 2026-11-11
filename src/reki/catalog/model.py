@@ -59,6 +59,7 @@ class SourceConfiguration:
     parameters: Mapping | None = None
     mappings: tuple = ()
     product: Mapping | None = None
+    fallback_layout: tuple = ()
 
     def member_role(self, member):
         if type(member) is not int or member < 0:

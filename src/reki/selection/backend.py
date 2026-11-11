@@ -121,6 +121,7 @@ class FieldReference:
     grid: Mapping
     load: Callable
     branches: tuple  # (query_index, branch_index), local to this execution plan
+    read_grib_message: Callable[[], bytes] | None = None
 
     def __post_init__(self):
         if not isinstance(self.record_id, str) or not self.record_id:

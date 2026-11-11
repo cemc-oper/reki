@@ -63,6 +63,8 @@ def _layout(value):
                     "member_3digit",
                     "beijing_date_label",
                     "beijing_year",
+                    "next_beijing_date_label",
+                    "next_beijing_year",
                 }
                 or spec
                 or conversion
@@ -165,11 +167,13 @@ def plan_source_binding(source, *, context=None, base_dir=None, client=None):
             _missing("/source/dataset", "dataset is absent from the selected catalog")
         source["dataset"] = dataset["id"]
         registration = current_registration(catalog, dataset["id"])
-    layout = None
+    layout, fallback_layout = None, ()
     if source["kind"] == "local":
         layout = _layout(
             dataset.get("local_layout") or (registration or {}).get("local_layout")
         )
+        if registration and registration.get("local_fallback_layout"):
+            fallback_layout = _layout(registration["local_fallback_layout"])
 
     execution = {"completeness": "available", "max_expansion": 10000}
     roles = {}
@@ -238,4 +242,5 @@ def plan_source_binding(source, *, context=None, base_dir=None, client=None):
         parameters,
         mappings,
         product,
+        fallback_layout,
     )
