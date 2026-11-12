@@ -672,7 +672,7 @@
     {
       "description": "Updraught helicity",
       "description_cn": "最大上升螺旋度",
-      "name": "uhmax",
+      "name": "cedarkit.uhmax.any",
       "parameter_id": "cedarkit.uhmax.any",
       "unit": "m2/s2"
     },
@@ -767,10 +767,10 @@
     {
       "description": "Precipitable water",
       "description_cn": "整层可降水量",
-      "name": "pwat",
+      "name": "cedarkit.pwat.any",
       "parameter_id": "cedarkit.pwat.any",
       "unit": "kg/m2"
     }
   ],
-  "version": "9"
+  "version": "10"
 }

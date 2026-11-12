@@ -295,7 +295,7 @@
     {
       "description": "Precipitable water",
       "description_cn": "整层可降水量",
-      "name": "pwat",
+      "name": "cedarkit.pwat.any",
       "parameter_id": "cedarkit.pwat.any",
       "unit": "kg/m2"
     },
@@ -732,5 +732,5 @@
       "unit": "g/(cm.hPa.s)"
     }
   ],
-  "version": "9"
+  "version": "10"
 }

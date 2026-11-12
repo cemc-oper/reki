@@ -260,7 +260,7 @@
     {
       "description": "Precipitable water",
       "description_cn": "整层可降水量",
-      "name": "pwat",
+      "name": "cedarkit.pwat.any",
       "parameter_id": "cedarkit.pwat.any",
       "unit": "kg/m2"
     },
@@ -379,7 +379,7 @@
     {
       "description": "Total snowfall",
       "description_cn": "降雪",
-      "name": "sf",
+      "name": "cedarkit.sf.any",
       "parameter_id": "cedarkit.sf.any",
       "unit": "m"
     },
@@ -477,7 +477,22 @@
       "name": "zs",
       "parameter_id": "cedarkit.zs",
       "parent": "cedarkit.h.any"
+    },
+    {
+      "description": "K index",
+      "description_cn": "K指数",
+      "name": "cedarkit.kidx.any",
+      "parameter_id": "cedarkit.kidx.any",
+      "unit": "K"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "mean_sea_level"
+      },
+      "name": "kidx",
+      "parameter_id": "cedarkit.kidx",
+      "parent": "cedarkit.kidx.any"
     }
   ],
-  "version": "6"
+  "version": "7"
 }

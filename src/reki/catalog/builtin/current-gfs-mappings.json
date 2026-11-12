@@ -7859,8 +7859,592 @@
       "when": {
         "level_type": "surface"
       }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-11-11-stage1.3-query-reki/evidence/orig-06/review.json#gfs:19",
+        "doc/2026-11-04-stage1.2-query-reki/evidence/task-n06-04/results/scientific-wheel.json",
+        "stage1.3/ORIG-05/original/35/15#sha256=2a6a3e325139b7211c63814183c88e2b146a0e7b196135577733664324614d7b"
+      ],
+      "id": "gusw.energy.since-initialization.initial.2026110212",
+      "native": {
+        "match": {
+          "centre": 38,
+          "day": 2,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": 0,
+          "hour": 12,
+          "indicatorOfUnitForTimeRange": 1,
+          "indicatorOfUnitOfTimeRange": 1,
+          "lengthOfTimeRange": 0,
+          "localTablesVersion": 0,
+          "minute": 0,
+          "month": 11,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 4,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 1,
+          "typeOfTimeIncrement": 2,
+          "year": 2026
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.gusw",
+      "when": {
+        "level_type": "surface",
+        "step": "PT0H"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-11-11-stage1.3-query-reki/evidence/orig-06/review.json#gfs:19",
+        "doc/2026-11-04-stage1.2-query-reki/evidence/task-n06-04/results/scientific-wheel.json",
+        "stage1.3/ORIG-05/original/36/15#sha256=a8cdb7d4cd800ecb87b4fa7036f6185109253804e1d2f0aec7840b665fd396b8",
+        "stage1.3/ORIG-05/original/37/15#sha256=be581474956b0ac35d742d6c283597694858501bf8682c006b071555c1664561",
+        "stage1.3/ORIG-05/original/47/15#sha256=3f6af549c4a98c795d54e8d5b195a8de9508ee1955f7eddf7c51c7d9e3182c4f"
+      ],
+      "id": "gusw.energy.since-initialization.forecast.2026110212",
+      "native": {
+        "match": {
+          "centre": 38,
+          "day": 2,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": 0,
+          "hour": 12,
+          "indicatorOfUnitForTimeRange": 1,
+          "indicatorOfUnitOfTimeRange": 1,
+          "lengthOfTimeRange": [
+            3,
+            6,
+            48
+          ],
+          "localTablesVersion": 0,
+          "minute": 0,
+          "month": 11,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 4,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 1,
+          "typeOfTimeIncrement": 2,
+          "year": 2026
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.gusw",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT3H",
+          "PT6H",
+          "PT48H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-11-11-stage1.3-query-reki/evidence/orig-06/review.json#gfs:20",
+        "doc/2026-11-04-stage1.2-query-reki/evidence/task-n06-04/results/scientific-wheel.json",
+        "stage1.3/ORIG-05/original/35/17#sha256=d647d3275700e48b0d6f79bc59034b20819ec636eb9e83c49b642baf105dc6d5"
+      ],
+      "id": "tusw.energy.since-initialization.initial.2026110212",
+      "native": {
+        "match": {
+          "centre": 38,
+          "day": 2,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": 0,
+          "hour": 12,
+          "indicatorOfUnitForTimeRange": 1,
+          "indicatorOfUnitOfTimeRange": 1,
+          "lengthOfTimeRange": 0,
+          "localTablesVersion": 0,
+          "minute": 0,
+          "month": 11,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 4,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 8,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 1,
+          "typeOfTimeIncrement": 2,
+          "year": 2026
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.tusw",
+      "when": {
+        "level_type": "atmosphere_top",
+        "step": "PT0H"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-11-11-stage1.3-query-reki/evidence/orig-06/review.json#gfs:20",
+        "doc/2026-11-04-stage1.2-query-reki/evidence/task-n06-04/results/scientific-wheel.json",
+        "stage1.3/ORIG-05/original/36/17#sha256=b4e469d12829a112f03cd53dddcc1c00c26e429fd7e12ee1c57442dead471b8b",
+        "stage1.3/ORIG-05/original/37/17#sha256=4f6bc857d6295831357cb55b2a37a3b03bda3b96b538e467689950afe3ad1705",
+        "stage1.3/ORIG-05/original/47/17#sha256=d7761f380b29ae80b78e2170d111124bf788ec9ab16046ad881756cbfe6f1c5d"
+      ],
+      "id": "tusw.energy.since-initialization.forecast.2026110212",
+      "native": {
+        "match": {
+          "centre": 38,
+          "day": 2,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": 0,
+          "hour": 12,
+          "indicatorOfUnitForTimeRange": 1,
+          "indicatorOfUnitOfTimeRange": 1,
+          "lengthOfTimeRange": [
+            3,
+            6,
+            48
+          ],
+          "localTablesVersion": 0,
+          "minute": 0,
+          "month": 11,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 4,
+          "parameterNumber": 8,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 8,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 1,
+          "typeOfTimeIncrement": 2,
+          "year": 2026
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.tusw",
+      "when": {
+        "level_type": "atmosphere_top",
+        "step": [
+          "PT3H",
+          "PT6H",
+          "PT48H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-11-11-stage1.3-query-reki/evidence/orig-06/review.json#gfs:23",
+        "doc/2026-11-04-stage1.2-query-reki/evidence/task-n06-05/results/scientific-wheel.json",
+        "stage1.3/ORIG-05/original/35/10#sha256=24c76d86fec447db3b0e58fa42652e127bf2cd0695b32394d7477980833f541d"
+      ],
+      "id": "gulw.energy.since-initialization.initial.2026110212",
+      "native": {
+        "match": {
+          "centre": 38,
+          "day": 2,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": 0,
+          "hour": 12,
+          "indicatorOfUnitForTimeRange": 1,
+          "indicatorOfUnitOfTimeRange": 1,
+          "lengthOfTimeRange": 0,
+          "localTablesVersion": 0,
+          "minute": 0,
+          "month": 11,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 5,
+          "parameterNumber": 4,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 1,
+          "typeOfTimeIncrement": 2,
+          "year": 2026
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.gulw",
+      "when": {
+        "level_type": "surface",
+        "step": "PT0H"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-11-11-stage1.3-query-reki/evidence/orig-06/review.json#gfs:23",
+        "doc/2026-11-04-stage1.2-query-reki/evidence/task-n06-05/results/scientific-wheel.json",
+        "stage1.3/ORIG-05/original/36/10#sha256=7d4f6c7676db8b469f3d0a0b2e63a96d6cee0d3a8dda1d1888a11de64c3bd143",
+        "stage1.3/ORIG-05/original/37/10#sha256=bd7b4e14c6e5e87318a06d9f0fa43c503983dac9e7145d8e58d74ec81812c0b7",
+        "stage1.3/ORIG-05/original/47/10#sha256=a1b7a65c1bf44065c648c112c1707854787e766aa13069cfd165bfd9c0589990"
+      ],
+      "id": "gulw.energy.since-initialization.forecast.2026110212",
+      "native": {
+        "match": {
+          "centre": 38,
+          "day": 2,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": 0,
+          "hour": 12,
+          "indicatorOfUnitForTimeRange": 1,
+          "indicatorOfUnitOfTimeRange": 1,
+          "lengthOfTimeRange": [
+            3,
+            6,
+            48
+          ],
+          "localTablesVersion": 0,
+          "minute": 0,
+          "month": 11,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 5,
+          "parameterNumber": 4,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 1,
+          "typeOfTimeIncrement": 2,
+          "year": 2026
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.gulw",
+      "when": {
+        "level_type": "surface",
+        "step": [
+          "PT3H",
+          "PT6H",
+          "PT48H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-11-11-stage1.3-query-reki/evidence/orig-06/review.json#gfs:24",
+        "doc/2026-11-04-stage1.2-query-reki/evidence/task-n06-05/results/scientific-wheel.json",
+        "stage1.3/ORIG-05/original/35/11#sha256=fb846d22b53bc3e7792ef3e92774ec95327b0c0d21cca1a580a30070d241b398"
+      ],
+      "id": "tulw.energy.since-initialization.initial.2026110212",
+      "native": {
+        "match": {
+          "centre": 38,
+          "day": 2,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": 0,
+          "hour": 12,
+          "indicatorOfUnitForTimeRange": 1,
+          "indicatorOfUnitOfTimeRange": 1,
+          "lengthOfTimeRange": 0,
+          "localTablesVersion": 0,
+          "minute": 0,
+          "month": 11,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 5,
+          "parameterNumber": 4,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 8,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 1,
+          "typeOfTimeIncrement": 2,
+          "year": 2026
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.tulw",
+      "when": {
+        "level_type": "atmosphere_top",
+        "step": "PT0H"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "doc/2026-11-11-stage1.3-query-reki/evidence/orig-06/review.json#gfs:24",
+        "doc/2026-11-04-stage1.2-query-reki/evidence/task-n06-05/results/scientific-wheel.json",
+        "stage1.3/ORIG-05/original/36/11#sha256=08049a0af850549b3675d9e2ef050a59c8df188da84a746a4280016b48b8d866",
+        "stage1.3/ORIG-05/original/37/11#sha256=fea9be4eb764c7414b49f949b818a20e934e68b6fc19221dabfa762b1eccdf5f",
+        "stage1.3/ORIG-05/original/47/11#sha256=ec3e22649252503c73e22d6e4a466f041263d4f4454d8fcaf284ca59c19927fd"
+      ],
+      "id": "tulw.energy.since-initialization.forecast.2026110212",
+      "native": {
+        "match": {
+          "centre": 38,
+          "day": 2,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": 0,
+          "hour": 12,
+          "indicatorOfUnitForTimeRange": 1,
+          "indicatorOfUnitOfTimeRange": 1,
+          "lengthOfTimeRange": [
+            3,
+            6,
+            48
+          ],
+          "localTablesVersion": 0,
+          "minute": 0,
+          "month": 11,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 5,
+          "parameterNumber": 4,
+          "productDefinitionTemplateNumber": 8,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 8,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 1,
+          "typeOfTimeIncrement": 2,
+          "year": 2026
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "J/m2"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.tulw",
+      "when": {
+        "level_type": "atmosphere_top",
+        "step": [
+          "PT3H",
+          "PT6H",
+          "PT48H"
+        ]
+      }
     }
   ],
   "tables": [],
-  "version": "20"
+  "version": "21"
 }

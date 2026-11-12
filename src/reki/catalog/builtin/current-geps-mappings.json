@@ -10069,8 +10069,293 @@
         "member_role": "perturbation",
         "step": "PT0S"
       }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_geps",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "stage1.3/ORIG-06/review.json#geps:0-7-2:initial:control",
+        "stage1.3/ORIG-08/original-audit.json#geps:0-7-2:initial:control",
+        "stage1.3/ORIG-05/original/383/101#sha256=f401b13906f3fd2532ef1ee1bb991b4f14a0c1697ccf38748fe5a8ecb3fc331e"
+      ],
+      "id": "kidx.instantaneous.initial.control.2026110212",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": 0,
+          "generatingProcessIdentifier": 128,
+          "indicatorOfUnitOfTimeRange": 1,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 31,
+          "parameterCategory": 7,
+          "parameterNumber": 2,
+          "perturbationNumber": 0,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 101,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.kidx",
+      "when": {
+        "level_type": "mean_sea_level",
+        "member": 0,
+        "member_role": "control",
+        "step": "PT0H"
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_geps",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "stage1.3/ORIG-06/review.json#geps:0-7-2:forecast:control",
+        "stage1.3/ORIG-08/original-audit.json#geps:0-7-2:forecast:control",
+        "stage1.3/ORIG-05/original/414/101#sha256=8aa5072d41016d6056a6d43a261b4d0623c9fcd288826f4a8a90bfdc5eb66405",
+        "stage1.3/ORIG-05/original/476/101#sha256=28800b76582049d82573a867db0069ad2d86e111655338d4f2ce7a1102a884b5"
+      ],
+      "id": "kidx.instantaneous.forecast.control.2026110212",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": [
+            6,
+            48
+          ],
+          "generatingProcessIdentifier": 128,
+          "indicatorOfUnitOfTimeRange": 1,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 31,
+          "parameterCategory": 7,
+          "parameterNumber": 2,
+          "perturbationNumber": 0,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 101,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.kidx",
+      "when": {
+        "level_type": "mean_sea_level",
+        "member": 0,
+        "member_role": "control",
+        "step": [
+          "PT6H",
+          "PT48H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_geps",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "stage1.3/ORIG-06/review.json#geps:0-7-2:forecast:positive",
+        "stage1.3/ORIG-08/original-audit.json#geps:0-7-2:forecast:positive",
+        "stage1.3/ORIG-05/original/415/101#sha256=7ca9c01135f33ef5db91310af75df8df642cb98d7cde7fc3eec883be61790288",
+        "stage1.3/ORIG-05/original/477/101#sha256=a4b38b3c923a41eb5b71fb3ec99ad40e602349e0d3b4294f4073043e25401b10"
+      ],
+      "id": "kidx.instantaneous.forecast.positive.2026110212",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": [
+            6,
+            48
+          ],
+          "generatingProcessIdentifier": 128,
+          "indicatorOfUnitOfTimeRange": 1,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 31,
+          "parameterCategory": 7,
+          "parameterNumber": 2,
+          "perturbationNumber": 1,
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 3,
+          "typeOfFirstFixedSurface": 101,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.kidx",
+      "when": {
+        "level_type": "mean_sea_level",
+        "member": 1,
+        "member_role": "perturbation",
+        "step": [
+          "PT6H",
+          "PT48H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_geps",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "stage1.3/ORIG-06/review.json#geps:0-7-2:forecast:negative",
+        "stage1.3/ORIG-08/original-audit.json#geps:0-7-2:forecast:negative",
+        "stage1.3/ORIG-05/original/416/101#sha256=163de992c3dd250ca8106ffc38f66025850aa6ad7a703ce49ed444eb069b82e1",
+        "stage1.3/ORIG-05/original/444/101#sha256=fe7add6227cea37d0b369c5dc0c0b8a0522f630fd1bd38d0382580f58eb896ab",
+        "stage1.3/ORIG-05/original/478/101#sha256=c28838083b2bd3188daeb6936cad9ec4251fecbb713b5e28be1be154bd80c856",
+        "stage1.3/ORIG-05/original/506/101#sha256=d90d018d6f5a796cfc9ec5ebb21ab7f4570f92cddf7c926a1b1e19a81309413f"
+      ],
+      "id": "kidx.instantaneous.forecast.negative.2026110212",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": [
+            6,
+            48
+          ],
+          "generatingProcessIdentifier": 128,
+          "indicatorOfUnitOfTimeRange": 1,
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 31,
+          "parameterCategory": 7,
+          "parameterNumber": 2,
+          "perturbationNumber": [
+            2,
+            30
+          ],
+          "productDefinitionTemplateNumber": 1,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 2,
+          "typeOfFirstFixedSurface": 101,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.kidx",
+      "when": {
+        "level_type": "mean_sea_level",
+        "member": [
+          2,
+          30
+        ],
+        "member_role": "perturbation",
+        "step": [
+          "PT6H",
+          "PT48H"
+        ]
+      }
     }
   ],
   "tables": [],
-  "version": "9"
+  "version": "10"
 }

@@ -399,7 +399,7 @@
     {
       "description": "Precipitable water",
       "description_cn": "整层可降水量",
-      "name": "pwat",
+      "name": "cedarkit.pwat.any",
       "parameter_id": "cedarkit.pwat.any",
       "unit": "kg/m2"
     },
@@ -840,7 +840,7 @@
     {
       "description": "Updraught helicity",
       "description_cn": "最大上升螺旋度",
-      "name": "uhmax",
+      "name": "cedarkit.uhmax.any",
       "parameter_id": "cedarkit.uhmax.any",
       "unit": "m2/s2"
     },
@@ -939,5 +939,5 @@
       "unit": "g/(cm.hPa.s)"
     }
   ],
-  "version": "10"
+  "version": "11"
 }

@@ -46,7 +46,13 @@ def test_packaged_gfs_snapshots_bind_frozen_requests(tmp_path):
     rows = {m["parameter_id"]: m for m in plan.mappings[0].to_dict()["mappings"]}
     assert rows["cedarkit.t"]["native"]["match"]["typeOfFirstFixedSurface"] == 100
     assert rows["cedarkit.t2m"]["native"]["match"]["typeOfFirstFixedSurface"] == 103
-    assert all("step" not in q for q in plan.product["provides"])
+    radiation_ids = {"cedarkit.gusw", "cedarkit.tusw", "cedarkit.gulw", "cedarkit.tulw"}
+    bounded = [q for q in plan.product["provides"] if "step" in q]
+    assert {q["parameter"] for q in bounded} == radiation_ids
+    assert all(
+        q["time"] == TIME["time"] and tuple(q["step"]) == ("PT0H", "PT3H", "PT6H", "PT48H")
+        for q in bounded
+    )
     assert all(
         "level" not in q
         for q in plan.product["provides"]
@@ -59,9 +65,9 @@ def test_packaged_gfs_snapshots_bind_frozen_requests(tmp_path):
             .to_dict()["context"]
         )
     assert [(r["role"], r["version"]) for r in facts["definitions"]] == [
-        ("catalog", "49"),
-        ("parameter_registry", "15"),
-        ("mappings", "20"),
+        ("catalog", "50"),
+        ("parameter_registry", "16"),
+        ("mappings", "21"),
     ]
     assert all(len(row["sha256"]) == 64 for row in facts["definitions"])
 
