@@ -127,6 +127,42 @@ def test_source_order_and_exact_record_dedup_across_duplicate_paths(
     )
 
 
+def test_local_named_query_discovers_all_member_mapping_branches(write_grib, tmp_path):
+    archive = tmp_path / "DATA/NAFP/NMC/GRAPES-GEPS/2026/20260101"
+    archive.mkdir(parents=True)
+    prefix = "Z_NAFP_C_BABJ_20260101000000_P_NWPC-GRAPES-GEPS-GLB-00600"
+    paths = []
+    for member, kind in ((0, 0), (1, 3), (2, 2)):
+        record = {
+            "centre": 38,
+            "subCentre": 0,
+            "tablesVersion": 4,
+            "localTablesVersion": 0,
+            "productDefinitionTemplateNumber": 1,
+            "productionStatusOfProcessedData": 0,
+            "typeOfGeneratingProcess": 4,
+            "significanceOfReferenceTime": 1,
+            "typeOfProcessedData": 3 if member == 0 else 4,
+            "typeOfEnsembleForecast": kind,
+            "perturbationNumber": member,
+            "numberOfForecastsInEnsemble": 31,
+            "values": np.full(4, 280.0 + member),
+        }
+        paths.append(write_grib(str(archive / f"{prefix}-m{member:03d}.grib2"), records=[record]))
+    with from_source({"kind": "local", "dataset": "cma_geps", "root": str(tmp_path)}) as source:
+        fields = source.sel(
+            parameter="cedarkit.t", time="2026-01-01T00:00:00Z", step="PT6H",
+            level_type="pressure", level=85000, level_unit="Pa", member=[2, 1, 0],
+        ).all()
+        assert [field.identity.member for field in fields] == [0, 1, 2]
+        assert list(fields.report.context["source"]["paths"]) == [str(path) for path in paths]
+        ds = fields.to_xarray()
+        assert ds.member_role.values.tolist() == ["control", "perturbation", "perturbation"]
+        np.testing.assert_array_equal(
+            ds.t.isel(time=0, step=0, pressure=0, latitude=0, longitude=0), [280, 281, 282]
+        )
+
+
 def test_file_replacement_fails_delayed_reference(configured, write_grib):
     source, file, _ = configured()
     field = source.sel(native={"grib": {"parameterNumber": 0}}).one()

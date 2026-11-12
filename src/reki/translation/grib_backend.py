@@ -336,7 +336,11 @@ class GribScan:
         self.backend, self.plan = backend, plan
         self.paths = discover_paths(
             backend.configuration,
-            [t["branches"][0]["residual"] for t in plan.translations],
+            [
+                branch["residual"]
+                for translation in plan.translations
+                for branch in translation["branches"]
+            ],
         )
         self.snapshots = []
         seen_files = set()
