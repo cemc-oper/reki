@@ -13,6 +13,7 @@ from reki.catalog import plan_source_binding
 from reki.diagnostics import collect_io_metrics
 from reki.selection.core import construct_source
 from reki.translation.grib_backend import GribBackend
+from reki.translation.grib_mapping import _observed_units
 
 
 @pytest.fixture
@@ -530,6 +531,38 @@ def test_slhf_unit_review_rejects_a_different_carrier(write_grib, slhf_record, t
         with pytest.raises(SourceError) as caught:
             owner.sel(parameter="cedarkit.slhf").one()
     assert caught.value.context["reason"] == "inconsistent_native_metadata"
+
+
+@pytest.mark.parametrize(
+    ("name", "category", "number", "surface", "decoder", "table"),
+    [
+        ("gusw", 4, 8, 1, "W m**-2", "8"),
+        ("tusw", 4, 8, 8, "unknown", "8"),
+        ("gulw", 5, 4, 1, "W m**-2", "W m-2"),
+        ("tulw", 5, 4, 8, "unknown", "W m-2"),
+    ],
+)
+def test_gfs_upward_energy_review_is_scoped(name, category, number, surface, decoder, table):
+    pid = f"cedarkit.{name}"
+    scope = {"dataset": "cma_gfs_gmf", "product": "orig", "product_version": "current"}
+    native = {
+        "edition": 2, "centre": 38, "subCentre": 0, "tablesVersion": 4,
+        "localTablesVersion": 0, "productionStatusOfProcessedData": 0,
+        "productDefinitionTemplateNumber": 8, "discipline": 0,
+        "parameterCategory": category, "parameterNumber": number,
+        "typeOfFirstFixedSurface": surface, "typeOfSecondFixedSurface": 255,
+        "typeOfStatisticalProcessing": 1, "units": decoder, "parameterUnits": table,
+    }
+    assert _observed_units(native, scope, pid, "J/m2") == {"J/m2"}
+    for changed in (
+        {"typeOfFirstFixedSurface": 8 if surface == 1 else 1},
+        {"typeOfStatisticalProcessing": 0},
+        {"localTablesVersion": 1},
+        {"parameterUnits": "kg/m2"},
+    ):
+        assert "J/m2" not in _observed_units(native | changed, scope, pid, "J/m2")
+    for changed in ({"dataset": "cma_meso_1km"}, {"product_version": "previous"}):
+        assert "J/m2" not in _observed_units(native, scope | changed, pid, "J/m2")
 
 
 @pytest.fixture

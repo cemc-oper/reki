@@ -382,15 +382,18 @@ def _observed_units(native, scope, pid, declared):
     ):
         return {declared}
     integrated_energy = {
-        "cedarkit.gsw.since-initialization": (8, 0, 4, 9, 1, 255),
-        "cedarkit.tsw.since-initialization": (8, 0, 4, 9, 8, 255),
-        "cedarkit.slhf": (8, 0, 0, 10, 1, 255),
+        "cedarkit.gsw.since-initialization": ((8, 0, 4, 9, 1, 255), "J/m2", "W m-2"),
+        "cedarkit.tsw.since-initialization": ((8, 0, 4, 9, 8, 255), "J/m2", "W m-2"),
+        "cedarkit.slhf": ((8, 0, 0, 10, 1, 255), "J/m2", "W m-2"),
+        "cedarkit.gusw": ((8, 0, 4, 8, 1, 255), "W m**-2", None),
+        "cedarkit.tusw": ((8, 0, 4, 8, 8, 255), "unknown", None),
+        "cedarkit.gulw": ((8, 0, 5, 4, 1, 255), "W m**-2", "W m-2"),
+        "cedarkit.tulw": ((8, 0, 5, 4, 8, 255), "unknown", "W m-2"),
     }
-    if carrier == integrated_energy.get(pid) and (
+    if (carrier, decoder, table) == integrated_energy.get(pid) and (
         declared == "J/m2"
         and dataset == "cma_gfs_gmf"
         and native.get("typeOfStatisticalProcessing") == 1
-        and (decoder, table) == ("J/m2", "W m-2")
     ):
         return {declared}  # The reviewed producer declares accumulated energy.
     if carrier == (0, 0, 7, 8, 103, 103) and (
