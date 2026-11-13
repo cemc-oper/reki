@@ -1,5 +1,6 @@
 """Locate and decode original GRIB records using ecCodes native keys."""
 
+from collections import defaultdict
 from collections.abc import Mapping
 from contextlib import ExitStack
 from functools import partial
@@ -16,10 +17,10 @@ from reki.catalog.model import thaw
 from reki.selection.backend import Plan, FieldReference, BranchEvent
 from reki.selection.core import key as identity_key, matches
 from reki.selection.files import FileSnapshot, discover_paths
-from reki.grib_io import decode_values, open_grib_file
+from reki.grib_io import decode_values, iter_grib2_headers, iter_headers, open_grib_file
 from . import grib
 from .common import metadata_error, software_origin
-from .grib_mapping import expected_cells, interpret_named, named_branches
+from .grib_mapping import expected_cells, has_rule, interpret_named, named_branches
 
 INTEGER_KEYS = frozenset(
     {
@@ -90,6 +91,7 @@ STATISTIC_EVIDENCE_KEYS = frozenset(
         "numberOfMissingInStatisticalProcess",
     }
 )
+_TRIPLE = ("discipline", "parameterCategory", "parameterNumber")
 # Raw evidence only; these do not expand the accepted native Query selectors.
 GRID_INTEGER_KEYS = frozenset(
     {
@@ -394,11 +396,24 @@ class GribScan:
 
     def _fields(self):
         import eccodes
-        from reki.grib_io import iter_headers
 
         branches = [
             (t["query_index"], b) for t in self.plan.translations for b in t["branches"]
         ]
+        by_triple, other = defaultdict(list), []
+        for qi, branch in branches:
+            triple = tuple(branch["candidate_filter"].get(k) for k in _TRIPLE)
+            candidates = by_triple[triple] if all(type(k) is int for k in triple) else other
+            candidates.append((qi, branch))
+        scan_headers = iter_headers
+        configuration = self.backend.configuration
+        if (
+            configuration.product
+            and (configuration.product["id"], configuration.product["version"])
+            == ("orig", "current")
+            and any(branch["basis"] and not has_rule(branch, "unit") for _, branch in branches)
+        ):
+            scan_headers = iter_grib2_headers
         for qi, b in branches:
             yield BranchEvent(qi, b["index"], "started")
         grids = {}
@@ -412,7 +427,7 @@ class GribScan:
                             "/source/path",
                             "explicit input is not a GRIB stream",
                         )
-                iterator = iter_headers(snapshot.path)
+                iterator = scan_headers(snapshot.path)
                 try:
                     for header in iterator:
                         snapshot.verify()
@@ -421,9 +436,15 @@ class GribScan:
                             continue
                         metadata = _metadata(header.handle, keys=self.keys)
                         native = {k: v for k, v in metadata.items() if v is not None}
+                        triple = tuple(native.get(k) for k in _TRIPLE)
+                        possible = (
+                            (*by_triple.get(triple, ()), *other)
+                            if all(type(k) is int for k in triple)
+                            else branches
+                        )
                         candidates = [
                             (qi, b)
-                            for qi, b in branches
+                            for qi, b in possible
                             if native_matches(native, b["candidate_filter"])
                         ]
                         if not candidates:
@@ -493,9 +514,10 @@ class GribScan:
                             native_fields=native,
                             native_variable=signature,
                             native_name=name,
-                            vertical_definition={"id": "WMO.GRIB2.fixed-surfaces"},
                             **named_meta,
                         )
+                        if not named_meta or "level_type" in identity or "layer" in identity:
+                            meta["vertical_definition"] = {"id": "WMO.GRIB2.fixed-surfaces"}
                         if interval is not None:
                             meta["statistical_interval"] = interval
                         # Evidence in decoded-value units; no new native selectors.

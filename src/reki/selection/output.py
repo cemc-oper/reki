@@ -89,8 +89,9 @@ def _attrs(identity, meta):
         attrs = {
             "cedarkit_parameter_id": meta["parameter_id"],
             "cedarkit_parameter_name": meta["parameter_name"],
-            "units": meta["unit"],
         }
+        if "unit" in meta:
+            attrs["units"] = meta["unit"]
         if "description" in meta:
             attrs["long_name"] = meta["description"]
         if "code_table" in meta:

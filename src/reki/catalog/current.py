@@ -13,9 +13,15 @@ _PROFILES = {
 }
 
 
-def current_registration(catalog, dataset):
-    """Return the builtin native file layout and optional member numbering."""
+def current_registration(catalog, dataset, *, product=None):
+    """Return the CEMC ORIG layout and member numbering for the catalog."""
     filename = _PROFILES.get(dataset)
-    if catalog.reference.get("builtin") != "reki.catalog" or filename is None:
+    builtin = catalog.reference.get("builtin") == "reki.catalog"
+    current_orig = product and (product["id"], product["version"]) == ("orig", "current")
+    if (
+        filename is None
+        or catalog.value.id != "reki.cemc-catalog"
+        or not (builtin or current_orig)
+    ):
         return None
     return json.loads((Path(__file__).with_name("builtin") / filename).read_text())

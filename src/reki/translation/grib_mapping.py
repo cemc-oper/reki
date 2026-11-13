@@ -38,6 +38,10 @@ def _error(index, reason, message, *, code="unsupported", field="parameter"):
     raise QueryError(code, f"/queries/{index}/{field}", message, {"reason": reason})
 
 
+def has_rule(branch, responsibility):
+    return any(row.get("responsibility") == responsibility for row in branch["basis"])
+
+
 def named_branches(query, index, config, mappings):
     pid = query["parameter"]
     definition = config.parameters[pid]
@@ -51,6 +55,7 @@ def named_branches(query, index, config, mappings):
         if row.get("parameter") == pid
     ]
     branches = []
+    branches_by_mode = {False: [], True: []}
     native_conflict = False
     selectors = query.get("native", {}).get("grib", {})
     for (resource, mapping_id), row in mappings.items():
@@ -102,6 +107,8 @@ def named_branches(query, index, config, mappings):
                 native_conflict |= narrowed != selectors
                 residual["native"] = {"grib": narrowed}
             rules = row["native"].get("translate", {})
+            convert_values = "unit" in rules
+            check_statistic = convert_values or "statistics" in rules
             template = filters.get("productDefinitionTemplateNumber")
             statistics = definition["fixed_conditions"].get("statistics", {})
             period = statistics.get("period", {}).get("kind")
@@ -113,29 +120,25 @@ def named_branches(query, index, config, mappings):
                     code="constraint_conflict",
                     field="member" if "member" in query else "member_role",
                 )
+            operation = statistics.get("operation", "instantaneous")
+            reviewed_statistic = statistics.get("over", "time") == "time" and (
+                operation in grib.TIME_OPERATIONS
+                and period in {"since_initialization", "trailing"}
+                if template in {8, 11}
+                else operation == "instantaneous"
+            )
             if (
                 any(_RULES.get(duty) != rule["rule"] for duty, rule in rules.items())
                 or template not in {0, 1, 8, 11}
                 or (template in {1, 11} and config.member_numbering is None)
-                or (
-                    template in {8, 11}
-                    and (
-                        statistics.get("operation") not in grib.TIME_OPERATIONS
-                        or period not in {"since_initialization", "trailing"}
-                    )
-                )
-                or (
-                    template in {0, 1}
-                    and statistics.get("operation", "instantaneous") != "instantaneous"
-                )
-                or statistics.get("over", "time") != "time"
+                or (check_statistic and not reviewed_statistic)
             ):
                 _error(
                     index,
                     "translation_unavailable",
                     "named GRIB binding requires a reviewed template, member and statistic path",
                 )
-            if template in {8, 11}:
+            if check_statistic and template in {8, 11}:
                 statistical = {
                     "typeOfStatisticalProcessing": grib.TIME_OPERATIONS[
                         statistics["operation"]
@@ -188,11 +191,20 @@ def named_branches(query, index, config, mappings):
                 "residual": residual,
                 "basis": basis,
             }
-            for previous in branches:
+            same_mode = branches_by_mode[convert_values]
+            for previous in same_mode:
+                old_filters = previous["candidate_filter"]
+                # Distinct scalar keys already prove the carrier branches disjoint.
+                if any(
+                    type(old_filters[k]) is type(filters[k]) and old_filters[k] != filters[k]
+                    for k in old_filters.keys() & filters.keys()
+                    if type(filters[k]) in {str, int, float}
+                ):
+                    continue
                 if (
                     intersect_scopes(previous["residual"], residual) is not None
                     and intersect_scopes(
-                        {"native": {"grib": previous["candidate_filter"]}},
+                        {"native": {"grib": old_filters}},
                         {"native": {"grib": filters}},
                     )
                     is not None
@@ -204,6 +216,7 @@ def named_branches(query, index, config, mappings):
                         code="invalid_config",
                     )
             branches.append(branch)
+            same_mode.append(branch)
     if not branches and native_conflict:
         _error(
             index,
@@ -407,7 +420,7 @@ def _observed_units(native, scope, pid, declared):
 
 
 def interpret_named(native, candidates, config, mappings):
-    """Interpret target candidates strictly and recheck each complete residual."""
+    """Recheck complete residuals and apply reviewed translations where available."""
     times, interval = grib.time_fields(native)
     candidates = [
         (qi, branch)
@@ -416,7 +429,12 @@ def interpret_named(native, candidates, config, mappings):
     ]
     if not candidates:
         return None, (), {}, 0.0
-    identity = {**grib.fixed_surfaces(native), **times, "native": {"grib": native}}
+    vertical = {}
+    if any(
+        has_rule(branch, "vertical") or has_rule(branch, "unit") for _, branch in candidates
+    ):
+        vertical = grib.fixed_surfaces(native)
+    identity = {**vertical, **times, "native": {"grib": native}}
     if native["productDefinitionTemplateNumber"] in {1, 11}:
         identity.update(grib.member_fields(native, config))
     selected = []
@@ -435,7 +453,24 @@ def interpret_named(native, candidates, config, mappings):
         )
     pid = pids.pop()
     definition = config.parameters[pid]
+    translated = [(qi, branch) for qi, branch in selected if has_rule(branch, "unit")]
+    applied = translated or selected
+    meta = {
+        "parameter_id": pid,
+        "parameter_name": definition["name"],
+        "mapping_ids": sorted({branch["basis"][0]["mapping"] for _, branch in applied}),
+    }
+    if "layer" in definition["fixed_conditions"]:
+        meta["fixed_layer"] = thaw(definition["fixed_conditions"]["layer"])
     if interval is not None:
+        meta["statistical_interval"] = interval
+    if "description" in definition:
+        meta["description"] = definition["description"]
+    links = tuple((qi, branch["index"]) for qi, branch in selected)
+    identity["parameter"] = pid
+    if interval is not None and (
+        translated or any(has_rule(b, "statistics") for _, b in selected)
+    ):
         period = definition["fixed_conditions"]["statistics"]["period"]
         if period["kind"] == "since_initialization":
             correct_window = interval["start"] == times["time"]
@@ -447,12 +482,13 @@ def interpret_named(native, candidates, config, mappings):
                 "fixed_definition_mismatch",
                 "the observed statistical interval disagrees with the fixed period",
             )
+    if not translated:
+        return identity, links, meta, 0.0
+
     source_unit = None
-    mapping_ids = set()
-    for _, branch in selected:
+    for _, branch in translated:
         basis = branch["basis"][0]
         mapping = mappings[basis["resource"]["id"], basis["mapping"]]
-        mapping_ids.add(mapping["id"])
         declared = (
             mapping["native"]
             .get("translate", {})
@@ -485,22 +521,5 @@ def interpret_named(native, candidates, config, mappings):
             )
         source_unit = unit
     target = _unit(definition["unit"])
-    meta = {
-        "parameter_id": pid,
-        "parameter_name": definition["name"],
-        "unit": target,
-        "source_unit": source_unit,
-        "mapping_ids": sorted(mapping_ids),
-    }
-    if "layer" in definition["fixed_conditions"]:
-        meta["fixed_layer"] = thaw(definition["fixed_conditions"]["layer"])
-    if interval is not None:
-        meta["statistical_interval"] = interval
-    if "description" in definition:
-        meta["description"] = definition["description"]
-    return (
-        {**identity, "parameter": pid},
-        tuple((qi, branch["index"]) for qi, branch in selected),
-        meta,
-        _conversion(source_unit, target, pid=pid),
-    )
+    meta.update(unit=target, source_unit=source_unit)
+    return identity, links, meta, _conversion(source_unit, target, pid=pid)

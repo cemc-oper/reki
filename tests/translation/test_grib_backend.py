@@ -9,7 +9,7 @@ import eccodes
 
 from cedarkit_query import SourceError
 from reki import from_source
-from reki.catalog import plan_source_binding
+from reki.catalog import load_resource, plan_source_binding
 from reki.diagnostics import collect_io_metrics
 from reki.selection.core import construct_source
 from reki.translation.grib_backend import GribBackend
@@ -127,7 +127,10 @@ def test_source_order_and_exact_record_dedup_across_duplicate_paths(
     )
 
 
-def test_local_named_query_discovers_all_member_mapping_branches(write_grib, tmp_path):
+@pytest.mark.parametrize("catalog_path", [False, True])
+def test_local_named_query_discovers_all_member_mapping_branches(
+    write_grib, tmp_path, catalog_path
+):
     archive = tmp_path / "DATA/NAFP/NMC/GRAPES-GEPS/2026/20260101"
     archive.mkdir(parents=True)
     prefix = "Z_NAFP_C_BABJ_20260101000000_P_NWPC-GRAPES-GEPS-GLB-00600"
@@ -149,7 +152,15 @@ def test_local_named_query_discovers_all_member_mapping_branches(write_grib, tmp
             "values": np.full(4, 280.0 + member),
         }
         paths.append(write_grib(str(archive / f"{prefix}-m{member:03d}.grib2"), records=[record]))
-    with from_source({"kind": "local", "dataset": "cma_geps", "root": str(tmp_path)}) as source:
+    context = None
+    if catalog_path:
+        path = tmp_path / "catalog.json"
+        catalog = load_resource({"builtin": "reki.catalog"}, "catalog")
+        path.write_text(json.dumps(catalog.value.to_dict()))
+        context = {"catalog": {"path": str(path)}}
+    with from_source(
+        {"kind": "local", "dataset": "cma_geps", "root": str(tmp_path)}, context=context
+    ) as source:
         fields = source.sel(
             parameter="cedarkit.t", time="2026-01-01T00:00:00Z", step="PT6H",
             level_type="pressure", level=85000, level_unit="Pa", member=[2, 1, 0],
@@ -304,6 +315,69 @@ def test_bitmap_missing_cells_are_values_not_missing_records(configured):
     fields = source.sel(native={"grib": {"parameterNumber": 0}}).all()
     assert len(fields) == 1 and fields.report.overall["field_count"] == 1
     assert fields.to_xarray(rename="raw").raw.isnull().all()
+
+
+def test_named_original_values_keep_untranslated_surface_and_repeated_positions(
+    write_grib, tmp_path
+):
+    settings = {
+        "centre": 38,
+        "discipline": 0,
+        "parameterCategory": 7,
+        "parameterNumber": 12,
+        "typeOfFirstFixedSurface": 166,
+        "bitmapPresent": 1,
+        "missingValue": 9999.0,
+        "values": [9999.0] * 4,
+    }
+    path = write_grib(records=[settings, {**settings, "values": [1.0, 2.0, 3.0, 4.0]}])
+    source = {"kind": "file", "path": str(path), "dataset": "cma_meso_3km"}
+    base = plan_source_binding(source)
+    parameters = load_resource(base.definitions[1]["reference"], "parameters").value.to_dict()
+    mappings = base.mappings[0].to_dict()
+    catalog = load_resource(base.definitions[0]["reference"], "catalog").value.to_dict()
+    pid = "cedarkit.ripbl"
+    parameters["parameters"].append(
+        {"parameter_id": pid, "name": "ripbl", "unit": "1", "fixed_conditions": {}}
+    )
+    mappings["mappings"].append(
+        {
+            "id": "ripbl.native",
+            "parameter_id": pid,
+            "backend": "grib2",
+            "applies_to": {"dataset": source["dataset"], "product": "orig", "product_version": "current"},
+            "when": {},
+            "evidence": [],
+            "native": {
+                "match": {"edition": 2, "discipline": 0, "parameterCategory": 7,
+                          "parameterNumber": 12, "productDefinitionTemplateNumber": 0,
+                          "typeOfFirstFixedSurface": 166},
+                "translate": {"time": {"rule": "grib.time"}},
+            },
+        }
+    )
+    dataset = next(row for row in catalog["datasets"] if row["id"] == source["dataset"])
+    dataset["products"][0]["provides"].append({"parameter": pid})
+    for name, payload in (("catalog", catalog), ("parameters", parameters), ("mappings", mappings)):
+        (tmp_path / f"{name}.json").write_text(json.dumps(payload))
+    context = {
+        "catalog": {"path": str(tmp_path / "catalog.json")},
+        "parameter_registry": {"path": str(tmp_path / "parameters.json")},
+        "mappings": {"grib2": {"path": str(tmp_path / "mappings.json")}},
+    }
+    with collect_io_metrics() as metrics, from_source(source, context=context) as owner:
+        fields = owner.sel(parameter="ripbl", step="PT6H").all()
+        assert len(fields) == 2 and fields[0].identity == fields[1].identity
+        assert metrics.snapshot()["value_decode_count"] == 0
+        assert fields[0].identity.native["grib"]["typeOfFirstFixedSurface"] == 166
+        assert "level_type" not in fields[0].identity.to_dict()
+        first, second = (field.read_grib_message() for field in fields)
+        assert first != second and first + second == path.read_bytes()
+        assert [field.metadata["source"]["offset"] for field in fields] == [0, len(first)]
+        first_values, second_values = (field.to_xarray().ripbl for field in fields)
+        assert first_values.isnull().all()
+        assert "units" not in second_values.attrs
+        np.testing.assert_array_equal(second_values.values.reshape(-1), [1.0, 2.0, 3.0, 4.0])
 
 
 @pytest.mark.parametrize("first,second", [(1, 8), (8, 1)])

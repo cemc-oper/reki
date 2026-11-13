@@ -153,7 +153,6 @@ def plan_source_binding(source, *, context=None, base_dir=None, client=None):
         pointer="/context/catalog",
     )
     dataset = {}
-    registration = None
     if "dataset" in source:
         dataset = next(
             (
@@ -166,14 +165,6 @@ def plan_source_binding(source, *, context=None, base_dir=None, client=None):
         if dataset is None:
             _missing("/source/dataset", "dataset is absent from the selected catalog")
         source["dataset"] = dataset["id"]
-        registration = current_registration(catalog, dataset["id"])
-    layout, fallback_layout = None, ()
-    if source["kind"] == "local":
-        layout = _layout(
-            dataset.get("local_layout") or (registration or {}).get("local_layout")
-        )
-        if registration and registration.get("local_fallback_layout"):
-            fallback_layout = _layout(registration["local_fallback_layout"])
 
     execution = {"completeness": "available", "max_expansion": 10000}
     roles = {}
@@ -187,6 +178,12 @@ def plan_source_binding(source, *, context=None, base_dir=None, client=None):
         origins,
         definitions,
     )
+    registration = current_registration(catalog, dataset.get("id"), product=product) or {}
+    layout, fallback_layout = None, ()
+    if source["kind"] == "local":
+        layout = _layout(dataset.get("local_layout") or registration.get("local_layout"))
+        if registration.get("local_fallback_layout"):
+            fallback_layout = _layout(registration["local_fallback_layout"])
     scope = Query(ctx.get("scope", {}))
     if product is not None:
         scope = intersect_scopes(scope, product["scope"])
@@ -214,7 +211,7 @@ def plan_source_binding(source, *, context=None, base_dir=None, client=None):
         for name, value in values.get("execution", {}).items():
             execution[name] = value
             origins[f"execution.{name}"] = origin
-    numbering = (registration or {}).get("member_numbering")
+    numbering = registration.get("member_numbering")
     member_numbering = (
         None
         if numbering is None
@@ -227,7 +224,7 @@ def plan_source_binding(source, *, context=None, base_dir=None, client=None):
             }
         )
     )
-    cemc = registration is not None
+    cemc = bool(registration)
     origins["member_roles.default"] = "CEMC" if cemc else "unknown"
     return SourceConfiguration(
         freeze(source),

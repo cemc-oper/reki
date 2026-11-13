@@ -37,8 +37,14 @@ def key(value):
 
 def matches(identity, query):
     """Check the complete Query, even when a candidate filter/residual is empty."""
+    raw = query.to_dict() if isinstance(query, Query) else query
+    if not raw:
+        return True
+    identity = identity.to_dict() if isinstance(identity, Query) else identity
+    # Native evidence can be large and cannot constrain a business-only match.
+    if "native" not in raw and "native" in identity:
+        identity = {k: v for k, v in identity.items() if k != "native"}
     identity = normalize_query(identity).to_dict()
-    raw = Query(query).to_dict()
     if (
         "level_type" not in raw
         and "level_type" in identity

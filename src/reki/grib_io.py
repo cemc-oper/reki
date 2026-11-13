@@ -2,6 +2,7 @@
 
 from contextlib import contextmanager
 from dataclasses import dataclass
+from os import fstat
 from pathlib import Path
 
 import eccodes
@@ -51,34 +52,105 @@ def iter_headers(path: str | Path, *, headers_only=True):
     callers may use either ``with header`` or a simple predicate loop.
     """
     with open_grib_file(path) as file_handle:
-        ordinal = 0
-        previous = None
-        try:
-            while True:
-                if previous is not None:
-                    previous.release()
-                    previous = None
-                offset = file_handle.tell()
-                message = eccodes.codes_grib_new_from_file(
-                    file_handle,
-                    headers_only=headers_only,
+        yield from _iter_eccodes_headers(file_handle, path, headers_only=headers_only)
+
+
+def _iter_eccodes_headers(stream, path, *, headers_only=True, ordinal=0):
+    while True:
+        offset = stream.tell()
+        message = eccodes.codes_grib_new_from_file(stream, headers_only=headers_only)
+        if message is None:
+            if ordinal == 0 and stream.seek(0, 2):
+                raise SourceError(
+                    "decode_failed",
+                    "/source/path",
+                    "Nonempty input contains no GRIB messages",
+                    {"resource": str(path)},
                 )
-                if message is None:
-                    if ordinal == 0 and file_handle.seek(0, 2):
-                        raise SourceError("decode_failed", "/source/path", "Nonempty input contains no GRIB messages", {"resource": str(path)})
-                    return
-                record_io_event("grib_header_scan_count")
-                length = None
-                try:
-                    length = eccodes.codes_get(message, "totalLength")
-                except eccodes.KeyValueNotFoundError:
-                    pass
-                previous = GribHeader(ordinal, offset, message, length)
-                yield previous
-                ordinal += 1
-        finally:
-            if previous is not None:
-                previous.release()
+            return
+        record_io_event("grib_header_scan_count")
+        with GribHeader(ordinal, offset, message) as record:
+            try:
+                record.message_length = eccodes.codes_get(message, "totalLength")
+            except eccodes.KeyValueNotFoundError:
+                pass
+            yield record
+        ordinal += 1
+
+
+def iter_grib2_headers(path):
+    """Skip packed values for contiguous single-field GRIB2 messages."""
+    with open_grib_file(path) as stream:
+        size = fstat(stream.fileno()).st_size
+        offset = ordinal = 0
+        prefix = stream.read(min(1024, size))
+        while offset < size:
+            header = _grib2_header(stream, offset, size, prefix)
+            if header is None:
+                break
+            metadata, length = header
+            end = offset + length
+            stream.seek(end - 4)
+            following = stream.read(4 + min(1024, size - end))
+            if following[:4] != b"7777":
+                break
+            try:
+                handle = eccodes.codes_new_from_message(metadata)
+            except eccodes.CodesInternalError:
+                break
+            record_io_event("grib_header_scan_count")
+            with GribHeader(ordinal, offset, handle, length) as record:
+                yield record
+            ordinal += 1
+            offset, prefix = end, following[4:]
+        if offset < size:
+            # Keep ecCodes' regular framing and error handling for other streams.
+            stream.seek(offset)
+            yield from _iter_eccodes_headers(stream, path, ordinal=ordinal)
+
+
+def _grib2_header(stream, offset, size, prefix):
+    if len(prefix) < 16 or prefix[:4] != b"GRIB" or prefix[7] != 2:
+        return None
+    length = int.from_bytes(prefix[8:16], "big")
+    if not 20 <= length <= size - offset:
+        return None
+    cursor, sections = 16, []
+    while cursor + 5 <= length - 4:
+        section = prefix[cursor:cursor + 5]
+        if len(section) != 5:
+            stream.seek(offset + cursor)
+            section = stream.read(5)
+            if len(section) != 5:
+                return None
+        section_length = int.from_bytes(section[:4], "big")
+        sections.append(section[4])
+        if section_length < 5 or cursor + section_length > length - 4:
+            return None
+        if section[4] == 7:
+            break
+        cursor += section_length
+    else:
+        return None
+    if sections not in ([1, 3, 4, 5, 6, 7], [1, 2, 3, 4, 5, 6, 7]):
+        return None
+    if cursor + section_length != length - 4:
+        return None
+    header = prefix[:cursor]
+    if len(header) < cursor:
+        stream.seek(offset + len(header))
+        header += stream.read(cursor - len(header))
+        if len(header) != cursor:
+            return None
+    # Sections 0–6 carry the selection metadata. The locator keeps the real length.
+    return (
+        header[:8]
+        + (cursor + 9).to_bytes(8, "big")
+        + header[16:]
+        + b"\x00\x00\x00\x05\x07"
+        + b"7777",
+        length,
+    )
 
 
 def load_message_at_offset(path: str | Path, offset: int, *, headers_only=False):

@@ -6,6 +6,8 @@ Open a GRIB file with `reki.from_source({"kind": "file", "path": path})`. Pass `
 
 To enumerate every message in one file, use `source.sel().all()`. Each returned field has a one-based file ordinal, byte offset and encoded length in `field.metadata["source"]`. The fields are in file order, including repeated native keys at different offsets. While the source is open, call `field.read_grib_message()` on a field to retrieve its original bytes without decoding the values. This method also works on fields selected from `kind="local"`.
 
+For an exported CEMC ORIG catalog, pass its path in `context={"catalog": {"path": ...}}` and use `source.sel(parameter="cldb").all()` to select cloud base by name. The catalog resolves the product's parameter and mapping files relative to its own location. A named GRIB mapping without a unit rule returns the original decoded values and their missingness. The returned field carries the encoded keys in `field.metadata["native_fields"]` and omits the standard `units` attribute. A vertical rule projects the encoded fixed surfaces into Query coordinates when the mapping declares that interpretation.
+
 Local sources use dataset-specific file layouts. Supply the origin in UTC, and optionally the lead or file member. For multi-record queries, a successful scan is bounded by the selected files. Product-wide completeness requires its own independent domain.
 
 For REPS, `kind="local"` prefers the archive directory for the origin's Beijing date. A matching file in the next Beijing-date directory fills an absent entry. Both directories use the requested UTC origin, lead and member in the filename.
