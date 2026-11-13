@@ -16,14 +16,11 @@
     {
       "description": "Sea level pressure",
       "description_cn": "海平面气压",
-      "name": "psl",
+      "name": "cedarkit.psl.any",
       "parameter_id": "cedarkit.psl.any",
       "unit": "Pa"
     },
     {
-      "aliases": [
-        "apcp"
-      ],
       "fixed_conditions": {
         "level_type": "surface",
         "statistics": {
@@ -31,21 +28,22 @@
           "over": "time"
         }
       },
-      "name": "rain",
+      "name": "cedarkit.rain",
       "parameter_id": "cedarkit.rain",
       "parent": "cedarkit.rain.any"
     },
     {
       "description": "Total precipitation",
       "description_cn": "总累计降水",
-      "name": "rain",
+      "name": "cedarkit.rain.any",
       "parameter_id": "cedarkit.rain.any",
       "unit": "mm"
     },
     {
       "aliases": [
         "APCP",
-        "rain-since-initialization"
+        "rain-since-initialization",
+        "apcp"
       ],
       "fixed_conditions": {
         "statistics": {
@@ -150,7 +148,7 @@
     {
       "description": "Convective available potential energy",
       "description_cn": "对流有效位能",
-      "name": "cape",
+      "name": "cedarkit.cape.any",
       "parameter_id": "cedarkit.cape.any",
       "unit": "J/kg"
     },
@@ -176,7 +174,7 @@
     {
       "description": "Convective inhibition",
       "description_cn": "对流抑制能量",
-      "name": "cin",
+      "name": "cedarkit.cin.any",
       "parameter_id": "cedarkit.cin.any",
       "unit": "J/kg"
     },
@@ -199,7 +197,7 @@
     {
       "description": "Geopotential height",
       "description_cn": "位势高度",
-      "name": "h",
+      "name": "cedarkit.h.any",
       "parameter_id": "cedarkit.h.any",
       "unit": "Gpm"
     },
@@ -221,14 +219,14 @@
           "over": "time"
         }
       },
-      "name": "rainc",
+      "name": "cedarkit.rainc",
       "parameter_id": "cedarkit.rainc",
       "parent": "cedarkit.rainc.any"
     },
     {
       "description": "Convective precipitation",
       "description_cn": "对流性降水",
-      "name": "rainc",
+      "name": "cedarkit.rainc.any",
       "parameter_id": "cedarkit.rainc.any",
       "unit": "mm"
     },
@@ -273,7 +271,7 @@
     {
       "description": "Snow depth",
       "description_cn": "雪深",
-      "name": "sd",
+      "name": "cedarkit.sd.any",
       "parameter_id": "cedarkit.sd.any",
       "unit": "m"
     },
@@ -371,7 +369,7 @@
     {
       "description": "Visibility",
       "description_cn": "能见度",
-      "name": "vis",
+      "name": "cedarkit.vis.any",
       "parameter_id": "cedarkit.vis.any",
       "unit": "m"
     },
@@ -404,7 +402,45 @@
       "name": "cedarkit.pwat.any",
       "parameter_id": "cedarkit.pwat.any",
       "unit": "kg/m2"
+    },
+    {
+      "description": "Wind speed (gust)",
+      "description_cn": "阵风风速",
+      "fixed_conditions": {},
+      "name": "gust",
+      "parameter_id": "cedarkit.gust",
+      "unit": "m/s"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "hi",
+      "parameter_id": "cedarkit.hi",
+      "parent": "cedarkit.hi.any"
+    },
+    {
+      "description": "Hail index",
+      "description_cn": "冰雹指数",
+      "fixed_conditions": {},
+      "name": "cedarkit.hi.any",
+      "parameter_id": "cedarkit.hi.any",
+      "unit": "-"
+    },
+    {
+      "description": "CMA-REPS ORIG SF. Physical meaning and stored unit pending verification.",
+      "description_cn": "CMA-REPS ORIG SF。物理含义和存值单位待证。",
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time"
+        }
+      },
+      "name": "sf",
+      "parameter_id": "cedarkit.sf",
+      "unit": "-"
     }
   ],
-  "version": "6"
+  "version": "8"
 }

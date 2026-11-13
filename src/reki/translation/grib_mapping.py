@@ -58,6 +58,7 @@ def named_branches(query, index, config, mappings):
     branches_by_mode = {False: [], True: []}
     native_conflict = False
     selectors = query.get("native", {}).get("grib", {})
+    members = sorted(set((config.member_numbering or {}).values()))
     for (resource, mapping_id), row in mappings.items():
         if row["parameter_id"] != pid:
             continue
@@ -120,6 +121,11 @@ def named_branches(query, index, config, mappings):
                     code="constraint_conflict",
                     field="member" if "member" in query else "member_role",
                 )
+            if template in {1, 11} and members and "member" in residual:
+                member_domain = intersect_scopes(residual, {"member": members})
+                if member_domain is None:
+                    continue
+                residual = member_domain.to_dict()
             operation = statistics.get("operation", "instantaneous")
             reviewed_statistic = statistics.get("over", "time") == "time" and (
                 operation in grib.TIME_OPERATIONS
@@ -227,8 +233,7 @@ def named_branches(query, index, config, mappings):
         )
     if not any(_covered(query, b["residual"]) for b in branches):
         inputs = [query]
-        if config.member_numbering and "member" not in query:
-            members = sorted(set(config.member_numbering.values()))
+        if members and "member" not in query:
             if "member_role" in query:
                 members = [
                     m

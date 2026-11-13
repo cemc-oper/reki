@@ -37,7 +37,7 @@
     {
       "description": "Surface pressure",
       "description_cn": "地面气压",
-      "name": "ps",
+      "name": "cedarkit.ps.any",
       "parameter_id": "cedarkit.ps.any",
       "unit": "Pa"
     },
@@ -55,14 +55,11 @@
     {
       "description": "Sea level pressure",
       "description_cn": "海平面气压",
-      "name": "psl",
+      "name": "cedarkit.psl.any",
       "parameter_id": "cedarkit.psl.any",
       "unit": "Pa"
     },
     {
-      "aliases": [
-        "apcp"
-      ],
       "fixed_conditions": {
         "level_type": "surface",
         "statistics": {
@@ -70,21 +67,22 @@
           "over": "time"
         }
       },
-      "name": "rain",
+      "name": "cedarkit.rain",
       "parameter_id": "cedarkit.rain",
       "parent": "cedarkit.rain.any"
     },
     {
       "description": "Total precipitation",
       "description_cn": "总累计降水",
-      "name": "rain",
+      "name": "cedarkit.rain.any",
       "parameter_id": "cedarkit.rain.any",
       "unit": "mm"
     },
     {
       "aliases": [
         "APCP",
-        "rain-since-initialization"
+        "rain-since-initialization",
+        "apcp"
       ],
       "fixed_conditions": {
         "statistics": {
@@ -269,7 +267,7 @@
     {
       "description": "Albedo",
       "description_cn": "反照率",
-      "name": "albedo",
+      "name": "cedarkit.albedo.any",
       "parameter_id": "cedarkit.albedo.any",
       "unit": "%"
     },
@@ -291,7 +289,7 @@
     {
       "description": "Convective available potential energy",
       "description_cn": "对流有效位能",
-      "name": "cape",
+      "name": "cedarkit.cape.any",
       "parameter_id": "cedarkit.cape.any",
       "unit": "J/kg"
     },
@@ -331,7 +329,7 @@
     {
       "description": "Convective inhibition",
       "description_cn": "对流抑制能量",
-      "name": "cin",
+      "name": "cedarkit.cin.any",
       "parameter_id": "cedarkit.cin.any",
       "unit": "J/kg"
     },
@@ -367,7 +365,7 @@
     {
       "description": "height of fog top",
       "description_cn": "雾顶高度",
-      "name": "fogh",
+      "name": "cedarkit.fogh.any",
       "parameter_id": "cedarkit.fogh.any",
       "unit": "m"
     },
@@ -375,14 +373,14 @@
       "fixed_conditions": {
         "level_type": "surface"
       },
-      "name": "gdlwc",
+      "name": "cedarkit.gdlwc",
       "parameter_id": "cedarkit.gdlwc",
       "parent": "cedarkit.gdlwc.any"
     },
     {
       "description": "Time-integrated downward long-wave radiation, clear sky",
       "description_cn": "晴空向下长波辐射时间积分量",
-      "name": "gdlwc",
+      "name": "cedarkit.gdlwc.any",
       "parameter_id": "cedarkit.gdlwc.any",
       "unit": "J/m2"
     },
@@ -411,18 +409,16 @@
       "unit": "kg/kg"
     },
     {
-      "aliases": [
-        "ssr"
-      ],
       "description": "Time-integrated net short-wave radiation",
       "description_cn": "净短波辐射时间积分量",
-      "name": "gsw",
+      "name": "cedarkit.gsw",
       "parameter_id": "cedarkit.gsw",
       "unit": "J/m2"
     },
     {
       "aliases": [
-        "gsw-since-initialization"
+        "gsw-since-initialization",
+        "ssr"
       ],
       "fixed_conditions": {
         "level_type": "surface",
@@ -442,14 +438,14 @@
       "fixed_conditions": {
         "level_type": "surface"
       },
-      "name": "gswc",
+      "name": "cedarkit.gswc",
       "parameter_id": "cedarkit.gswc",
       "parent": "cedarkit.gswc.any"
     },
     {
       "description": "Time-integrated net short-wave radiation, clear sky",
       "description_cn": "晴空净短波辐射时间积分量",
-      "name": "gswc",
+      "name": "cedarkit.gswc.any",
       "parameter_id": "cedarkit.gswc.any",
       "unit": "J/m2"
     },
@@ -474,14 +470,14 @@
       "fixed_conditions": {
         "level_type": "surface"
       },
-      "name": "gulwc",
+      "name": "cedarkit.gulwc",
       "parameter_id": "cedarkit.gulwc",
       "parent": "cedarkit.gulwc.any"
     },
     {
       "description": "Time-integrated upward long-wave radiation, clear sky",
       "description_cn": "晴空向上长波辐射时间积分量",
-      "name": "gulwc",
+      "name": "cedarkit.gulwc.any",
       "parameter_id": "cedarkit.gulwc.any",
       "unit": "J/m2"
     },
@@ -506,14 +502,14 @@
       "fixed_conditions": {
         "level_type": "surface"
       },
-      "name": "guswc",
+      "name": "cedarkit.guswc",
       "parameter_id": "cedarkit.guswc",
       "parent": "cedarkit.guswc.any"
     },
     {
       "description": "Time-integrated upward short-wave radiation, clear sky",
       "description_cn": "晴空向上短波辐射时间积分量",
-      "name": "guswc",
+      "name": "cedarkit.guswc.any",
       "parameter_id": "cedarkit.guswc.any",
       "unit": "J/m2"
     },
@@ -546,7 +542,7 @@
     {
       "description": "Geopotential height",
       "description_cn": "位势高度",
-      "name": "h",
+      "name": "cedarkit.h.any",
       "parameter_id": "cedarkit.h.any",
       "unit": "Gpm"
     },
@@ -561,7 +557,7 @@
     {
       "description": "Height of 0 degree isothermal level",
       "description_cn": "0度层高度",
-      "name": "ht0",
+      "name": "cedarkit.ht0.any",
       "parameter_id": "cedarkit.ht0.any",
       "unit": "m"
     },
@@ -576,7 +572,7 @@
     {
       "description": "Planet boundary layer height",
       "description_cn": "边界层高度",
-      "name": "pblh",
+      "name": "cedarkit.pblh.any",
       "parameter_id": "cedarkit.pblh.any",
       "unit": "m"
     },
@@ -591,7 +587,7 @@
     {
       "description": "Parcel lifted index(to 500 hpa)",
       "description_cn": "气块抬升指数",
-      "name": "pli",
+      "name": "cedarkit.pli.any",
       "parameter_id": "cedarkit.pli.any",
       "unit": "K"
     },
@@ -668,14 +664,14 @@
           "over": "time"
         }
       },
-      "name": "rainc",
+      "name": "cedarkit.rainc",
       "parameter_id": "cedarkit.rainc",
       "parent": "cedarkit.rainc.any"
     },
     {
       "description": "Convective precipitation",
       "description_cn": "对流性降水",
-      "name": "rainc",
+      "name": "cedarkit.rainc.any",
       "parameter_id": "cedarkit.rainc.any",
       "unit": "mm"
     },
@@ -705,14 +701,14 @@
           "over": "time"
         }
       },
-      "name": "rainnc",
+      "name": "cedarkit.rainnc",
       "parameter_id": "cedarkit.rainnc",
       "parent": "cedarkit.rainnc.any"
     },
     {
       "description": "Large scale precipitation",
       "description_cn": "大尺度降水",
-      "name": "rainnc",
+      "name": "cedarkit.rainnc.any",
       "parameter_id": "cedarkit.rainnc.any",
       "unit": "mm"
     },
@@ -757,7 +753,7 @@
     {
       "description": "Snow depth",
       "description_cn": "雪深",
-      "name": "sd",
+      "name": "cedarkit.sd.any",
       "parameter_id": "cedarkit.sd.any",
       "unit": "m"
     },
@@ -842,7 +838,7 @@
     {
       "description": "Showalter index",
       "description_cn": "沙氏指数",
-      "name": "si",
+      "name": "cedarkit.si.any",
       "parameter_id": "cedarkit.si.any",
       "unit": "K"
     },
@@ -939,7 +935,8 @@
     },
     {
       "aliases": [
-        "sweat"
+        "sweat",
+        "SWEATX"
       ],
       "fixed_conditions": {
         "level_type": "surface"
@@ -949,12 +946,9 @@
       "parent": "cedarkit.sweatidx.any"
     },
     {
-      "aliases": [
-        "SWEATX"
-      ],
       "description": "Sweat index",
       "description_cn": "强天气胁迫指数",
-      "name": "sweatidx",
+      "name": "cedarkit.sweatidx.any",
       "parameter_id": "cedarkit.sweatidx.any",
       "unit": "1"
     },
@@ -969,7 +963,7 @@
     {
       "description": "Total column integrated cloud water",
       "description_cn": "总柱状云水",
-      "name": "tcw",
+      "name": "cedarkit.tcw.any",
       "parameter_id": "cedarkit.tcw.any",
       "unit": "kg/m2"
     },
@@ -1016,7 +1010,7 @@
     {
       "description": "Total column integrated cloud ice",
       "description_cn": "总柱状云冰",
-      "name": "tiw",
+      "name": "cedarkit.tiw.any",
       "parameter_id": "cedarkit.tiw.any",
       "unit": "kg/m2"
     },
@@ -1043,7 +1037,7 @@
           "over": "time"
         }
       },
-      "name": "tsw",
+      "name": "cedarkit.tsw",
       "parameter_id": "cedarkit.tsw",
       "parent": "cedarkit.gsw"
     },
@@ -1070,7 +1064,7 @@
       "fixed_conditions": {
         "level_type": "atmosphere_top"
       },
-      "name": "tswc",
+      "name": "cedarkit.tswc",
       "parameter_id": "cedarkit.tswc",
       "parent": "cedarkit.gswc.any"
     },
@@ -1104,7 +1098,7 @@
       "fixed_conditions": {
         "level_type": "atmosphere_top"
       },
-      "name": "tulwc",
+      "name": "cedarkit.tulwc",
       "parameter_id": "cedarkit.tulwc",
       "parent": "cedarkit.gulwc.any"
     },
@@ -1131,7 +1125,7 @@
       "fixed_conditions": {
         "level_type": "atmosphere_top"
       },
-      "name": "tuswc",
+      "name": "cedarkit.tuswc",
       "parameter_id": "cedarkit.tuswc",
       "parent": "cedarkit.guswc.any"
     },
@@ -1163,7 +1157,7 @@
     {
       "description": "Total column integrated water vapor",
       "description_cn": "总柱状水汽",
-      "name": "tvw",
+      "name": "cedarkit.tvw.any",
       "parameter_id": "cedarkit.tvw.any",
       "unit": "kg/m2"
     },
@@ -1178,7 +1172,7 @@
     {
       "description": "Visibility",
       "description_cn": "能见度",
-      "name": "vis",
+      "name": "cedarkit.vis.any",
       "parameter_id": "cedarkit.vis.any",
       "unit": "m"
     },
@@ -1201,7 +1195,7 @@
     {
       "description": "Vertical velocity (geometric)",
       "description_cn": "垂直速度",
-      "name": "w",
+      "name": "cedarkit.w.any",
       "parameter_id": "cedarkit.w.any",
       "unit": "m/s"
     },
@@ -1216,7 +1210,7 @@
     {
       "description": "roughness length",
       "description_cn": "粗糙度",
-      "name": "znt",
+      "name": "cedarkit.znt.any",
       "parameter_id": "cedarkit.znt.any",
       "unit": "m"
     },
@@ -1331,7 +1325,358 @@
       "name": "tulw",
       "parameter_id": "cedarkit.tulw",
       "parent": "cedarkit.gulw.any"
+    },
+    {
+      "description": "Radiation bright temperature(infrared channel)",
+      "description_cn": "卫星红外通道模拟亮温",
+      "fixed_conditions": {},
+      "name": "bti",
+      "parameter_id": "cedarkit.bti",
+      "unit": "K"
+    },
+    {
+      "description": "Radiation bright temperature(vapor channel)",
+      "description_cn": "卫星水汽通道模拟亮温",
+      "fixed_conditions": {},
+      "name": "btv",
+      "parameter_id": "cedarkit.btv",
+      "unit": "K"
+    },
+    {
+      "description": "cloud base",
+      "description_cn": "云底高度",
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "cldb",
+      "parameter_id": "cedarkit.cldb",
+      "unit": "m"
+    },
+    {
+      "description": "cloud top",
+      "description_cn": "云顶高度",
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "cldt",
+      "parameter_id": "cedarkit.cldt",
+      "unit": "m"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "fogod",
+      "parameter_id": "cedarkit.fogod",
+      "parent": "cedarkit.fogod.any"
+    },
+    {
+      "description": "fog optical",
+      "description_cn": "光学厚度",
+      "fixed_conditions": {},
+      "name": "cedarkit.fogod.any",
+      "parameter_id": "cedarkit.fogod.any",
+      "unit": "-"
+    },
+    {
+      "description": "CMA-GFS ORIG GLW. Physical meaning and stored unit pending verification.",
+      "description_cn": "CMA-GFS ORIG GLW。物理含义和存值单位待证。",
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time"
+        }
+      },
+      "name": "glw",
+      "parameter_id": "cedarkit.glw",
+      "unit": "-"
+    },
+    {
+      "description": "Wind speed (gust)",
+      "description_cn": "阵风风速",
+      "fixed_conditions": {},
+      "name": "gust",
+      "parameter_id": "cedarkit.gust",
+      "unit": "m/s"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time"
+        }
+      },
+      "name": "hfx",
+      "parameter_id": "cedarkit.hfx",
+      "parent": "cedarkit.hfx.any"
+    },
+    {
+      "description": "Surface heat flux",
+      "description_cn": "地表热通量",
+      "fixed_conditions": {},
+      "name": "cedarkit.hfx.any",
+      "parameter_id": "cedarkit.hfx.any",
+      "unit": "w/m2"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "hi",
+      "parameter_id": "cedarkit.hi",
+      "parent": "cedarkit.hi.any"
+    },
+    {
+      "description": "Hail index",
+      "description_cn": "冰雹指数",
+      "fixed_conditions": {},
+      "name": "cedarkit.hi.any",
+      "parameter_id": "cedarkit.hi.any",
+      "unit": "-"
+    },
+    {
+      "aliases": [
+        "ki"
+      ],
+      "fixed_conditions": {
+        "level_type": "mean_sea_level"
+      },
+      "name": "kidx",
+      "parameter_id": "cedarkit.kidx",
+      "parent": "cedarkit.kidx.any"
+    },
+    {
+      "description": "K index",
+      "description_cn": "K指数",
+      "fixed_conditions": {},
+      "name": "cedarkit.kidx.any",
+      "parameter_id": "cedarkit.kidx.any",
+      "unit": "K"
+    },
+    {
+      "description": "Lightning",
+      "description_cn": "雷电概率",
+      "fixed_conditions": {},
+      "name": "light",
+      "parameter_id": "cedarkit.light",
+      "unit": "-"
+    },
+    {
+      "aliases": [
+        "mn2t"
+      ],
+      "fixed_conditions": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "statistics": {
+          "operation": "minimum",
+          "over": "time"
+        }
+      },
+      "name": "tmin2m",
+      "parameter_id": "cedarkit.mn2t",
+      "parent": "cedarkit.mn2t.any"
+    },
+    {
+      "description": "Minimum of 2 meters high temperature",
+      "description_cn": "2米最低温度",
+      "fixed_conditions": {},
+      "name": "cedarkit.mn2t.any",
+      "parameter_id": "cedarkit.mn2t.any",
+      "unit": "K"
+    },
+    {
+      "description": "Moist potential vorticity(vertical part)",
+      "description_cn": "湿位涡垂直分量",
+      "fixed_conditions": {},
+      "name": "mpv1",
+      "parameter_id": "cedarkit.mpv1",
+      "unit": "1e-6.K.m2/(s.kg)"
+    },
+    {
+      "aliases": [
+        "mx2t"
+      ],
+      "fixed_conditions": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m",
+        "statistics": {
+          "operation": "maximum",
+          "over": "time"
+        }
+      },
+      "name": "tmax2m",
+      "parameter_id": "cedarkit.mx2t",
+      "parent": "cedarkit.mx2t.any"
+    },
+    {
+      "description": "Maximum of 2 meters high temperature",
+      "description_cn": "2米最高温度",
+      "fixed_conditions": {},
+      "name": "cedarkit.mx2t.any",
+      "parameter_id": "cedarkit.mx2t.any",
+      "unit": "K"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "nsss",
+      "parameter_id": "cedarkit.nsss",
+      "parent": "cedarkit.nsss.any"
+    },
+    {
+      "description": "North-south surface wind stress",
+      "description_cn": "南北向风应力",
+      "fixed_conditions": {},
+      "name": "cedarkit.nsss.any",
+      "parameter_id": "cedarkit.nsss.any",
+      "unit": "N/m2"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "pc",
+      "parameter_id": "cedarkit.pc",
+      "parent": "cedarkit.pc.any"
+    },
+    {
+      "description": "Condensation layer pressure",
+      "description_cn": "抬升凝结高度处气压",
+      "fixed_conditions": {},
+      "name": "cedarkit.pc.any",
+      "parameter_id": "cedarkit.pc.any",
+      "unit": "Pa"
+    },
+    {
+      "description": "Precipitation type",
+      "description_cn": "降水相态",
+      "fixed_conditions": {},
+      "name": "precitype",
+      "parameter_id": "cedarkit.precitype",
+      "unit": "-"
+    },
+    {
+      "description": "Moisture flux divergence",
+      "description_cn": "水汽通量散度",
+      "fixed_conditions": {},
+      "name": "qdiv",
+      "parameter_id": "cedarkit.qdiv",
+      "unit": "1e-7.g/(cm2.hpa.s)"
+    },
+    {
+      "description": "Maximum of rh",
+      "description_cn": "最大相对湿度",
+      "fixed_conditions": {},
+      "name": "rhmax",
+      "parameter_id": "cedarkit.rhmax",
+      "unit": "%"
+    },
+    {
+      "description": "Maximum of rh at 2 meters height",
+      "description_cn": "2米最大相对湿度",
+      "fixed_conditions": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      },
+      "name": "rhmax2m",
+      "parameter_id": "cedarkit.rhmax2m",
+      "parent": "cedarkit.rhmax"
+    },
+    {
+      "description": "Minimum of rh",
+      "description_cn": "最小相对湿度",
+      "fixed_conditions": {},
+      "name": "rhmin",
+      "parameter_id": "cedarkit.rhmin",
+      "unit": "%"
+    },
+    {
+      "description": "Minimum of rh at 2 meters height",
+      "description_cn": "2米最小相对湿度",
+      "fixed_conditions": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      },
+      "name": "rhmin2m",
+      "parameter_id": "cedarkit.rhmin2m",
+      "parent": "cedarkit.rhmin"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface",
+        "statistics": {
+          "operation": "accumulation",
+          "over": "time"
+        }
+      },
+      "name": "sf",
+      "parameter_id": "cedarkit.sf",
+      "parent": "cedarkit.sf.any"
+    },
+    {
+      "description": "Snow melt",
+      "description_cn": "降雪",
+      "fixed_conditions": {},
+      "name": "cedarkit.sf.any",
+      "parameter_id": "cedarkit.sf.any",
+      "unit": "m"
+    },
+    {
+      "description": "Temperature advection",
+      "description_cn": "温度平流",
+      "fixed_conditions": {},
+      "name": "tadv",
+      "parameter_id": "cedarkit.tadv",
+      "unit": "1.e-6 k/s"
+    },
+    {
+      "description": "Relative vorticity advection",
+      "description_cn": "涡度平流",
+      "fixed_conditions": {},
+      "name": "voradv",
+      "parameter_id": "cedarkit.voradv",
+      "unit": "1.e-11/(s2)"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "wess",
+      "parameter_id": "cedarkit.wess",
+      "parent": "cedarkit.wess.any"
+    },
+    {
+      "description": "West-east surface wind stress",
+      "description_cn": "东西向风应力",
+      "fixed_conditions": {},
+      "name": "cedarkit.wess.any",
+      "parameter_id": "cedarkit.wess.any",
+      "unit": "N/m2"
+    },
+    {
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "wi",
+      "parameter_id": "cedarkit.wi",
+      "parent": "cedarkit.wi.any"
+    },
+    {
+      "description": "Wind index",
+      "description_cn": "大风指数",
+      "fixed_conditions": {},
+      "name": "cedarkit.wi.any",
+      "parameter_id": "cedarkit.wi.any",
+      "unit": "-"
     }
   ],
-  "version": "16"
+  "version": "18"
 }

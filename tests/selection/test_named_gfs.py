@@ -224,11 +224,6 @@ def test_missing_and_unbounded_expectations_are_distinct(tmp_path):
             "constraint_conflict",
             "fixed_condition_conflict",
         ),
-        (
-            {"parameter": "t", "level_type": "height_above_sea"},
-            "unsupported",
-            "mapping_coverage_gap",
-        ),
     ],
 )
 def test_named_static_errors_do_not_discover_files(dataset, changes, code, reason):
@@ -239,13 +234,22 @@ def test_named_static_errors_do_not_discover_files(dataset, changes, code, reaso
     assert caught.value.context["reason"] == reason
 
 
+def test_named_temperature_uses_encoded_fixed_surface(dataset):
+    source, _, _ = dataset
+    with from_source(source) as owner:
+        fields = owner.sel(parameter="t", level_type="height_above_sea", **TIME).all()
+        assert not fields
+        assert fields.report.overall["status"] == "unchecked"
+
+
 def test_named_unit_conversion_keeps_native_provenance(dataset, tmp_path):
     source, _, _ = dataset
     with from_source(source) as owner:
         from reki.catalog import load_resource
 
+        catalog = load_resource(owner.configuration.definitions[0]["reference"], "catalog")
         registry = load_resource(
-            owner.configuration.definitions[1]["reference"], "parameters"
+            owner.configuration.definitions[1]["reference"], "parameters", base_dir=catalog.base_dir
         ).value.to_dict()
     next(row for row in registry["parameters"] if row["parameter_id"] == "cedarkit.t")[
         "unit"

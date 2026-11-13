@@ -47,12 +47,9 @@ def test_packaged_gfs_snapshots_bind_frozen_requests(tmp_path):
     assert rows["cedarkit.t"]["native"]["match"]["typeOfFirstFixedSurface"] == 100
     assert rows["cedarkit.t2m"]["native"]["match"]["typeOfFirstFixedSurface"] == 103
     radiation_ids = {"cedarkit.gusw", "cedarkit.tusw", "cedarkit.gulw", "cedarkit.tulw"}
-    bounded = [q for q in plan.product["provides"] if "step" in q]
-    assert {q["parameter"] for q in bounded} == radiation_ids
-    assert all(
-        q["time"] == TIME["time"] and tuple(q["step"]) == ("PT0H", "PT3H", "PT6H", "PT48H")
-        for q in bounded
-    )
+    radiation = [q for q in plan.product["provides"] if q["parameter"] in radiation_ids]
+    assert {q["parameter"] for q in radiation} == radiation_ids
+    assert all(q.keys() == {"parameter"} for q in radiation)
     assert all(
         "level" not in q
         for q in plan.product["provides"]
@@ -65,9 +62,9 @@ def test_packaged_gfs_snapshots_bind_frozen_requests(tmp_path):
             .to_dict()["context"]
         )
     assert [(r["role"], r["version"]) for r in facts["definitions"]] == [
-        ("catalog", "50"),
-        ("parameter_registry", "16"),
-        ("mappings", "21"),
+        ("catalog", "52"),
+        ("parameter_registry", "18"),
+        ("mappings", "23"),
     ]
     assert all(len(row["sha256"]) == 64 for row in facts["definitions"])
 
@@ -79,8 +76,13 @@ def test_restore_pinned_snapshots_through_relative_paths(tmp_path):
     context_dir.mkdir()
     snapshot_dir.mkdir()
     references = {}
+    catalog_dir = BUILTINS["reki.catalog"].parent
     for row in builtin.definitions:
-        source = BUILTINS[row["reference"]["builtin"]]
+        reference = row["reference"]
+        if "builtin" in reference:
+            source = BUILTINS[reference["builtin"]]
+        else:
+            source = catalog_dir / reference["path"]
         (snapshot_dir / source.name).write_bytes(source.read_bytes())
         references[row["role"]] = {
             "path": f"../snapshot/{source.name}",
@@ -114,7 +116,10 @@ def test_restore_pinned_snapshots_through_relative_paths(tmp_path):
 def test_reject_resource_pins_without_fallback(role, field, bad):
     plan = plan_source_binding(SOURCE)
     row = next(row for row in plan.definitions if row["role"] == role)
-    ref = {"builtin": row["reference"]["builtin"], field: bad}
+    ref = dict(row["reference"])
+    if "path" in ref:
+        ref["path"] = str(BUILTINS["reki.catalog"].parent / ref["path"])
+    ref[field] = bad
     context = {role: {"grib2": ref} if role == "mappings" else ref}
     with pytest.raises(QueryError) as caught:
         plan_source_binding(SOURCE, context=context)
@@ -149,7 +154,9 @@ def test_reject_incompatible_mappings(tmp_path, problem, path):
         duplicate.update(id="duplicate", applies_to={})
         data["mappings"].append(duplicate)
     else:
-        data["mappings"].remove(first)
+        data["mappings"] = [
+            row for row in data["mappings"] if row["parameter_id"] != first["parameter_id"]
+        ]
     resource = tmp_path / "maps.json"
     resource.write_text(json.dumps(data))
     with pytest.raises(QueryError) as caught:
@@ -163,9 +170,9 @@ def test_reject_incompatible_mappings(tmp_path, problem, path):
 def test_catalog_relative_defaults_take_precedence_over_builtins(tmp_path):
     catalog = load_resource({"builtin": "reki.catalog"}, "catalog").value.to_dict()
     dataset = next(d for d in catalog["datasets"] if d["id"] == "cma_gfs_gmf")
+    catalog_dir = BUILTINS["reki.catalog"].parent
     for ref in (dataset["parameter_registry"], dataset["mappings"]["grib2"]):
-        path = BUILTINS[ref.pop("builtin")]
-        ref["path"] = path.name
+        path = catalog_dir / ref["path"]
         (tmp_path / path.name).write_bytes(path.read_bytes())
     (tmp_path / "catalog.json").write_text(json.dumps(catalog))
     plan = plan_source_binding(
@@ -193,10 +200,15 @@ def test_reviewed_member_bounds_are_planned_without_discovery(
             .to_dict()["analysis"]
         )
         assert analysis["expansion_count"] == last_member + 1
+        branches = [branch for translation in analysis["translations"] for branch in translation["branches"]]
         assert {
-            branch["residual"]["member_role"]
-            for translation in analysis["translations"]
-            for branch in translation["branches"]
+            branch["residual"]["member_role"] for branch in branches
+            if "member_role" in branch["residual"]
         } == {"control", "perturbation"}
-        with pytest.raises(QueryError, match="no reviewed GRIB mapping"):
-            reader.sel(parameter="cedarkit.t2m", **TIME, member=last_member + 1)
+        assert {
+            branch["candidate_filter"]["typeOfEnsembleForecast"]
+            for branch in branches if "member_role" not in branch["residual"]
+        } == {0, 2, 3}
+        for member in (last_member + 1, [0, last_member + 1]):
+            with pytest.raises(QueryError, match="no reviewed GRIB mapping"):
+                reader.sel(parameter="cedarkit.t2m", **TIME, member=member)

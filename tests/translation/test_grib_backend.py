@@ -3,6 +3,7 @@
 import json
 from dataclasses import replace
 from datetime import datetime, timedelta
+from pathlib import Path
 import numpy as np
 import pytest
 import eccodes
@@ -156,7 +157,13 @@ def test_local_named_query_discovers_all_member_mapping_branches(
     if catalog_path:
         path = tmp_path / "catalog.json"
         catalog = load_resource({"builtin": "reki.catalog"}, "catalog")
-        path.write_text(json.dumps(catalog.value.to_dict()))
+        document = catalog.value.to_dict()
+        dataset = next(row for row in document["datasets"] if row["id"] == "cma_geps")
+        for ref in (dataset["parameter_registry"], dataset["mappings"]["grib2"]):
+            if "path" in ref:
+                resource = Path(ref["path"])
+                (tmp_path / resource).write_bytes((catalog.base_dir / resource).read_bytes())
+        path.write_text(json.dumps(document))
         context = {"catalog": {"path": str(path)}}
     with from_source(
         {"kind": "local", "dataset": "cma_geps", "root": str(tmp_path)}, context=context
@@ -333,13 +340,18 @@ def test_named_original_values_keep_untranslated_surface_and_repeated_positions(
     path = write_grib(records=[settings, {**settings, "values": [1.0, 2.0, 3.0, 4.0]}])
     source = {"kind": "file", "path": str(path), "dataset": "cma_meso_3km"}
     base = plan_source_binding(source)
-    parameters = load_resource(base.definitions[1]["reference"], "parameters").value.to_dict()
+    catalog_resource = load_resource(base.definitions[0]["reference"], "catalog")
+    parameters = load_resource(
+        base.definitions[1]["reference"], "parameters", base_dir=catalog_resource.base_dir
+    ).value.to_dict()
     mappings = base.mappings[0].to_dict()
-    catalog = load_resource(base.definitions[0]["reference"], "catalog").value.to_dict()
+    catalog = catalog_resource.value.to_dict()
     pid = "cedarkit.ripbl"
+    parameters["parameters"] = [row for row in parameters["parameters"] if row["parameter_id"] != pid]
     parameters["parameters"].append(
         {"parameter_id": pid, "name": "ripbl", "unit": "1", "fixed_conditions": {}}
     )
+    mappings["mappings"] = [row for row in mappings["mappings"] if row["parameter_id"] != pid]
     mappings["mappings"].append(
         {
             "id": "ripbl.native",
@@ -357,7 +369,9 @@ def test_named_original_values_keep_untranslated_surface_and_repeated_positions(
         }
     )
     dataset = next(row for row in catalog["datasets"] if row["id"] == source["dataset"])
-    dataset["products"][0]["provides"].append({"parameter": pid})
+    provides = dataset["products"][0]["provides"]
+    if {"parameter": pid} not in provides:
+        provides.append({"parameter": pid})
     for name, payload in (("catalog", catalog), ("parameters", parameters), ("mappings", mappings)):
         (tmp_path / f"{name}.json").write_text(json.dumps(payload))
     context = {
@@ -727,20 +741,12 @@ def test_meso1_pwat_preserves_mass_per_area_and_entire_atmosphere(
     {"time": "2026-11-02T12:00:00Z", "step": "PT12H"},
     {"time": "2026-11-03T12:00:00Z", "step": "PT6H"},
 ])
-def test_meso1_pwat_rejects_unreviewed_time_scope_before_io(
-    write_grib, meso1_pwat_record, monkeypatch, query
-):
-    from cedarkit_query import QueryError
-
+def test_meso1_pwat_uses_encoded_time_for_other_orig_files(write_grib, meso1_pwat_record, query):
     path = write_grib(records=[meso1_pwat_record()])
-    def unexpected_read(*_args, **_kwargs):
-        raise AssertionError("unreviewed scope reached native I/O")
-    monkeypatch.setattr(eccodes, "codes_grib_new_from_file", unexpected_read)
     with from_source({"kind": "file", "path": str(path), "dataset": "cma_meso_1km"}) as source:
-        with pytest.raises(QueryError) as caught:
-            source.sel(parameter="cedarkit.pwat", **query).one()
-    assert caught.value.code == "unsupported"
-    assert caught.value.context["reason"] in {"translation_unavailable", "mapping_coverage_gap"}
+        fields = source.sel(parameter="cedarkit.pwat", **query).all()
+        assert not fields
+        assert fields.report.overall["status"] == "unchecked"
 
 
 def test_meso1_pwat_rejects_surface_refinement(write_grib, meso1_pwat_record):
