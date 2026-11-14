@@ -535,6 +535,52 @@ def test_snow_diagnostic_unit_requires_pinned_encoded_bounds(tmp_path, missing_b
         assert caught.value.context["reason"] == "translation_unavailable"
 
 
+def test_tym_uhmax_applies_units_without_projecting_the_encoded_layer(write_grib):
+    record = {
+        "centre": 38,
+        "tablesVersion": 4,
+        "parameterCategory": 7,
+        "parameterNumber": 15,
+        "productDefinitionTemplateNumber": 8,
+        "dataDate": 20261102,
+        "dataTime": 1200,
+        "generatingProcessIdentifier": 15,
+        "typeOfGeneratingProcess": 2,
+        "typeOfProcessedData": 1,
+        "significanceOfReferenceTime": 1,
+        "typeOfFirstFixedSurface": 103,
+        "scaledValueOfFirstFixedSurface": 34464,
+        "typeOfSecondFixedSurface": 103,
+        "scaleFactorOfSecondFixedSurface": 0,
+        "scaledValueOfSecondFixedSurface": 1,
+        "forecastTime": 0,
+        "typeOfStatisticalProcessing": 2,
+        "lengthOfTimeRange": 6,
+        "yearOfEndOfOverallTimeInterval": 2026,
+        "monthOfEndOfOverallTimeInterval": 11,
+        "dayOfEndOfOverallTimeInterval": 2,
+        "hourOfEndOfOverallTimeInterval": 18,
+        "values": [0.0, 1.0, 2.0, 3.0],
+    }
+    path = write_grib(records=[record])
+    with from_source({"kind": "file", "path": str(path), "dataset": "cma_tym"}) as source:
+        field = source.sel(
+            parameter="uhmax",
+            time="2026-11-02T12:00:00Z",
+            step="PT6H",
+            native={"grib": {"scaledValueOfFirstFixedSurface": 34464}},
+        ).one()
+        assert "layer" not in field.identity.to_dict()
+        assert "fixed_layer" not in field.metadata
+        assert field.metadata["statistical_interval"] == {
+            "start": "2026-11-02T12:00:00Z", "end": "2026-11-02T18:00:00Z",
+        }
+        assert field.metadata["native_fields"]["scaledValueOfSecondFixedSurface"] == 1
+        actual = field.to_xarray().uhmax
+        assert actual.attrs["units"] == "m2/s2"
+        np.testing.assert_array_equal(actual.values.flatten(), record["values"])
+
+
 @pytest.mark.parametrize(
     "settings,lat,lon",
     [
