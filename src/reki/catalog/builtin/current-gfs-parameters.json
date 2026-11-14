@@ -1343,8 +1343,8 @@
       "unit": "K"
     },
     {
-      "description": "cloud base",
-      "description_cn": "云底高度",
+      "description": "Cloud base height above model terrain for the reviewed ORIG cycle of 2026-11-02 12 UTC at 0, 6 and 48 h.",
+      "description_cn": "2026-11-02 12 UTC 起报的 ORIG 0／6／48h 已确认云底为距模式地面的高度。",
       "fixed_conditions": {
         "level_type": "surface"
       },
@@ -1353,8 +1353,8 @@
       "unit": "m"
     },
     {
-      "description": "cloud top",
-      "description_cn": "云顶高度",
+      "description": "Cloud top height above model terrain for the reviewed ORIG cycle of 2026-11-02 12 UTC at 0, 6 and 48 h.",
+      "description_cn": "2026-11-02 12 UTC 起报的 ORIG 0／6／48h 已确认云顶为距模式地面的高度。",
       "fixed_conditions": {
         "level_type": "surface"
       },
@@ -1683,5 +1683,5 @@
       "unit": "-"
     }
   ],
-  "version": "19"
+  "version": "20"
 }

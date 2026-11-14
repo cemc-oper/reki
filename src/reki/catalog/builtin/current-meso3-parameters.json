@@ -951,8 +951,8 @@
       "unit": "K"
     },
     {
-      "description": "cloud base",
-      "description_cn": "云底高度",
+      "description": "Cloud base height above model terrain for the reviewed ORIG cycle of 2026-11-02 12 UTC at 0, 6 and 48 h.",
+      "description_cn": "2026-11-02 12 UTC 起报的 ORIG 0／6／48h 已确认云底为距模式地面的高度。",
       "fixed_conditions": {
         "level_type": "surface"
       },
@@ -961,8 +961,8 @@
       "unit": "m"
     },
     {
-      "description": "cloud top",
-      "description_cn": "云顶高度",
+      "description": "Cloud top height above model terrain for the reviewed ORIG cycle of 2026-11-02 12 UTC at 0, 6 and 48 h.",
+      "description_cn": "2026-11-02 12 UTC 起报的 ORIG 0／6／48h 已确认云顶为距模式地面的高度。",
       "fixed_conditions": {
         "level_type": "surface"
       },
@@ -971,8 +971,8 @@
       "unit": "m"
     },
     {
-      "description": "height of maximum of radar reflectivity",
-      "description_cn": "最大雷达回波的高度",
+      "description": "Height of maximum radar reflectivity. In the reviewed ORIG cycle of 2026-11-02 12 UTC, forecast fields at 6 and 48 h give the model geopotential height of the strongest echo over the preceding hour. The 0 h field is initialized to zero.",
+      "description_cn": "最大雷达回波高度。2026-11-02 12 UTC 起报的 ORIG +6／+48h 给出前一小时最强回波所在模式层的绝对位势高度，0h 为初始化零场。",
       "fixed_conditions": {},
       "name": "dbzmaxh",
       "parameter_id": "cedarkit.dbzmaxh",
@@ -1263,5 +1263,5 @@
       "unit": "-"
     }
   ],
-  "version": "13"
+  "version": "14"
 }

@@ -17327,8 +17327,128 @@
           "PT48H"
         ]
       }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "stage1.4/1.4-05/carrier-index.tsv#meso3-033",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04D/historical-status.tsv#meso3:28",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04D/producer-receipts.json#meso3"
+      ],
+      "id": "dbzmaxh.height.initial.2026110212",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": [
+            0
+          ],
+          "generatingProcessIdentifier": 15,
+          "indicatorOfUnitOfTimeRange": 1,
+          "localTablesVersion": 1,
+          "parameterCategory": 16,
+          "parameterNumber": 226,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.dbzmaxh",
+      "when": {
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_meso_3km",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "stage1.4/1.4-05/carrier-index.tsv#meso3-033",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04D/historical-status.tsv#meso3:28",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04D/producer-receipts.json#meso3"
+      ],
+      "id": "dbzmaxh.height.forecast.2026110212",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": [
+            6,
+            48
+          ],
+          "generatingProcessIdentifier": 15,
+          "indicatorOfUnitOfTimeRange": 1,
+          "localTablesVersion": 1,
+          "parameterCategory": 16,
+          "parameterNumber": 226,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.dbzmaxh",
+      "when": {
+        "step": [
+          "PT6H",
+          "PT48H"
+        ]
+      }
     }
   ],
   "tables": [],
-  "version": "16"
+  "version": "17"
 }

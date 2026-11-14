@@ -62,8 +62,8 @@ def test_packaged_gfs_snapshots_bind_frozen_requests(tmp_path):
             .to_dict()["context"]
         )
     assert [(r["role"], r["version"]) for r in facts["definitions"]] == [
-        ("catalog", "54"),
-        ("parameter_registry", "19"),
+        ("catalog", "55"),
+        ("parameter_registry", "20"),
         ("mappings", "25"),
     ]
     assert all(len(row["sha256"]) == 64 for row in facts["definitions"])

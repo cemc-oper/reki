@@ -19,8 +19,8 @@
       },
       "parameter_registry": {
         "path": "current-gfs-parameters.json",
-        "sha256": "ad8d474f1fd551d0f12f04f6a81da77bd21f67c91157f932246207e4ef7bd33b",
-        "version": "19"
+        "sha256": "2667203c29889f16a9d50081ad2d0c1bc975f79f4f77579f8a0cea49f4e0fca9",
+        "version": "20"
       },
       "products": [
         {
@@ -404,14 +404,14 @@
       "mappings": {
         "grib2": {
           "path": "current-meso3-mappings.json",
-          "sha256": "5218f996edf523641250ff5ccd21d83db10004d027853a7ef8693c4476e8332b",
-          "version": "16"
+          "sha256": "a6d6d7772de134b7dd7b594a644a8b319887b5bd902dc9c3796d00896fe434e0",
+          "version": "17"
         }
       },
       "parameter_registry": {
         "path": "current-meso3-parameters.json",
-        "sha256": "175af39c78094967ade1b5f9ec041c66c83f4939309512c75045498a801b49bd",
-        "version": "13"
+        "sha256": "37d7a1e96d6a5412021c4ef9354ab2f934088385e9392bd08841291353d1286f",
+        "version": "14"
       },
       "products": [
         {
@@ -43331,5 +43331,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "54"
+  "version": "55"
 }
