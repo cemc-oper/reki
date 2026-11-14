@@ -19623,8 +19623,129 @@
       },
       "parameter_id": "cedarkit.glw",
       "when": {}
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "stage1.4/1.4-05/carrier-index.tsv#gfs-096",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04/decisions.json#gfs:28",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04/physical-review.json#file-35"
+      ],
+      "id": "kidx.instantaneous.initial.2026110212",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": [
+            0
+          ],
+          "generatingProcessIdentifier": 15,
+          "indicatorOfUnitOfTimeRange": 1,
+          "localTablesVersion": 0,
+          "parameterCategory": 7,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 101,
+          "typeOfGeneratingProcess": 0,
+          "typeOfProcessedData": 0,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.kidx",
+      "when": {
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_gfs_gmf",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T12:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "stage1.4/1.4-05/carrier-index.tsv#gfs-096",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04/decisions.json#gfs:28",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04/physical-review.json#file-37",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04/physical-review.json#file-47"
+      ],
+      "id": "kidx.instantaneous.forecast.2026110212",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": [
+            6,
+            48
+          ],
+          "generatingProcessIdentifier": 15,
+          "indicatorOfUnitOfTimeRange": 1,
+          "localTablesVersion": 0,
+          "parameterCategory": 7,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 0,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfFirstFixedSurface": 101,
+          "typeOfGeneratingProcess": 2,
+          "typeOfProcessedData": 1,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.kidx",
+      "when": {
+        "step": [
+          "PT6H",
+          "PT48H"
+        ]
+      }
     }
   ],
   "tables": [],
-  "version": "23"
+  "version": "24"
 }

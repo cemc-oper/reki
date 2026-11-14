@@ -13,8 +13,8 @@
       "mappings": {
         "grib2": {
           "path": "current-gfs-mappings.json",
-          "sha256": "5d304ed4f13e09bbad9ed5a4e35c9e9b375455c1f734c986669791165af07295",
-          "version": "23"
+          "sha256": "c686d85a738d9e7fb685d684d449e59fbd9b51ee61da694437d96f20d1e1b07b",
+          "version": "24"
         }
       },
       "parameter_registry": {
@@ -404,8 +404,8 @@
       "mappings": {
         "grib2": {
           "path": "current-meso3-mappings.json",
-          "sha256": "3b79b09b97f70d26cb4f0ef07f2f6b9f324d57f9f128182f15b18a00ac02824d",
-          "version": "14"
+          "sha256": "8deed5c281b09e4548a139294db74312e8c8ec0ad51035c5378303abed8a617f",
+          "version": "15"
         }
       },
       "parameter_registry": {
@@ -730,8 +730,8 @@
       "mappings": {
         "grib2": {
           "path": "current-meso1-mappings.json",
-          "sha256": "b21c8a34a200180e452b552c084210862023a4c3301b6e9cc91afbcb84a7e817",
-          "version": "13"
+          "sha256": "6244f75b90bdef5e10dba05f6014833d1e0acd6a3147b056807b2122f8d761e7",
+          "version": "14"
         }
       },
       "parameter_registry": {
@@ -999,8 +999,8 @@
       "mappings": {
         "grib2": {
           "path": "current-tym-mappings.json",
-          "sha256": "fbe9c2b97ee59fc0b8fb46c89d6ff040f2e8262a755bdfbd590eb3c98d32fc10",
-          "version": "13"
+          "sha256": "d8c68ed0c2fed74f9486569ea1e5bf554b552ed4a7cbd9a4dd164724c3e2a13c",
+          "version": "14"
         }
       },
       "parameter_registry": {
@@ -43331,5 +43331,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "52"
+  "version": "53"
 }
