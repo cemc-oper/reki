@@ -923,11 +923,16 @@
       "unit": "mm"
     },
     {
+      "description": "ORIG snowfall (SF). The reviewed 0, 6 and 48 h fields from 2026-11-02 12 UTC represent accumulated large-scale solid precipitation as liquid-water-equivalent depth.",
+      "description_cn": "ORIG 降雪（SF）。2026-11-02 12 UTC 起报的 0／6／48h 已确认为累计大尺度固态降水的液态水当量深度。",
       "fixed_conditions": {
         "level_type": "surface",
         "statistics": {
           "operation": "accumulation",
-          "over": "time"
+          "over": "time",
+          "period": {
+            "kind": "since_initialization"
+          }
         }
       },
       "name": "sf",
@@ -935,8 +940,8 @@
       "parent": "cedarkit.sf.any"
     },
     {
-      "description": "Snow melt",
-      "description_cn": "降雪",
+      "description": "ORIG snowfall (SF)",
+      "description_cn": "ORIG 降雪（SF）",
       "fixed_conditions": {},
       "name": "cedarkit.sf.any",
       "parameter_id": "cedarkit.sf.any",
@@ -1007,5 +1012,5 @@
       "unit": "1.e-6 k/s"
     }
   ],
-  "version": "11"
+  "version": "12"
 }

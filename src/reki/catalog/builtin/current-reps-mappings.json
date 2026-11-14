@@ -16879,8 +16879,480 @@
       },
       "parameter_id": "cedarkit.sf",
       "when": {}
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T06:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "stage1.4/1.4-02/carrier-index.tsv#reps-003",
+        "stage1.4/1.4-06-original-values/README.md#reps-003",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04C/supplement/historical-status.tsv#reps:0-1-29:initial:control",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04C/supplement/production-sources.json#reps",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04C/supplement/reps-diagnostics.json"
+      ],
+      "id": "sf.diagnostic.initial.control.2026110206",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": 0,
+          "generatingProcessIdentifier": 128,
+          "indicatorOfUnitForTimeRange": 1,
+          "indicatorOfUnitOfTimeRange": 1,
+          "lengthOfTimeRange": [
+            0
+          ],
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 1,
+          "parameterNumber": 29,
+          "perturbationNumber": [
+            0
+          ],
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 1,
+          "typeOfTimeIncrement": 2
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf",
+      "when": {
+        "member": [
+          0
+        ],
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T06:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "stage1.4/1.4-02/carrier-index.tsv#reps-003",
+        "stage1.4/1.4-06-original-values/README.md#reps-003",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04C/supplement/historical-status.tsv#reps:0-1-29:initial:positive",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04C/supplement/production-sources.json#reps",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04C/supplement/reps-diagnostics.json"
+      ],
+      "id": "sf.diagnostic.initial.positive.2026110206",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": 0,
+          "generatingProcessIdentifier": 128,
+          "indicatorOfUnitForTimeRange": 1,
+          "indicatorOfUnitOfTimeRange": 1,
+          "lengthOfTimeRange": [
+            0
+          ],
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 1,
+          "parameterNumber": 29,
+          "perturbationNumber": [
+            1
+          ],
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 3,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 1,
+          "typeOfTimeIncrement": 2
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf",
+      "when": {
+        "member": [
+          1
+        ],
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T06:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "stage1.4/1.4-02/carrier-index.tsv#reps-003",
+        "stage1.4/1.4-06-original-values/README.md#reps-003",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04C/supplement/historical-status.tsv#reps:0-1-29:initial:negative",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04C/supplement/production-sources.json#reps",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04C/supplement/reps-diagnostics.json"
+      ],
+      "id": "sf.diagnostic.initial.negative.2026110206",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": 0,
+          "generatingProcessIdentifier": 128,
+          "indicatorOfUnitForTimeRange": 1,
+          "indicatorOfUnitOfTimeRange": 1,
+          "lengthOfTimeRange": [
+            0
+          ],
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 1,
+          "parameterNumber": 29,
+          "perturbationNumber": [
+            2,
+            14
+          ],
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 0,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 2,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 1,
+          "typeOfTimeIncrement": 2
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf",
+      "when": {
+        "member": [
+          2,
+          14
+        ],
+        "step": [
+          "PT0H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T06:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "stage1.4/1.4-02/carrier-index.tsv#reps-003",
+        "stage1.4/1.4-06-original-values/README.md#reps-003",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04C/supplement/historical-status.tsv#reps:0-1-29:forecast:control",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04C/supplement/production-sources.json#reps",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04C/supplement/reps-diagnostics.json"
+      ],
+      "id": "sf.diagnostic.forecast.control.2026110206",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": 0,
+          "generatingProcessIdentifier": 128,
+          "indicatorOfUnitForTimeRange": 1,
+          "indicatorOfUnitOfTimeRange": 1,
+          "lengthOfTimeRange": [
+            6,
+            48
+          ],
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 1,
+          "parameterNumber": 29,
+          "perturbationNumber": [
+            0
+          ],
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 0,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 3,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 1,
+          "typeOfTimeIncrement": 2
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf",
+      "when": {
+        "member": [
+          0
+        ],
+        "step": [
+          "PT6H",
+          "PT48H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T06:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "stage1.4/1.4-02/carrier-index.tsv#reps-003",
+        "stage1.4/1.4-06-original-values/README.md#reps-003",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04C/supplement/historical-status.tsv#reps:0-1-29:forecast:positive",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04C/supplement/production-sources.json#reps",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04C/supplement/reps-diagnostics.json"
+      ],
+      "id": "sf.diagnostic.forecast.positive.2026110206",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": 0,
+          "generatingProcessIdentifier": 128,
+          "indicatorOfUnitForTimeRange": 1,
+          "indicatorOfUnitOfTimeRange": 1,
+          "lengthOfTimeRange": [
+            6,
+            48
+          ],
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 1,
+          "parameterNumber": 29,
+          "perturbationNumber": [
+            1
+          ],
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 3,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 1,
+          "typeOfTimeIncrement": 2
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf",
+      "when": {
+        "member": [
+          1
+        ],
+        "step": [
+          "PT6H",
+          "PT48H"
+        ]
+      }
+    },
+    {
+      "applies_to": {
+        "dataset": "cma_reps",
+        "product": "orig",
+        "product_version": "current",
+        "time": "2026-11-02T06:00:00Z"
+      },
+      "backend": "grib2",
+      "evidence": [
+        "stage1.4/1.4-02/carrier-index.tsv#reps-003",
+        "stage1.4/1.4-06-original-values/README.md#reps-003",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04C/supplement/historical-status.tsv#reps:0-1-29:forecast:negative",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04C/supplement/production-sources.json#reps",
+        "doc/2026-11-14-stage1.5-query-reki/evidence/1.5-04C/supplement/reps-diagnostics.json"
+      ],
+      "id": "sf.diagnostic.forecast.negative.2026110206",
+      "native": {
+        "match": {
+          "centre": 38,
+          "discipline": 0,
+          "edition": 2,
+          "forecastTime": 0,
+          "generatingProcessIdentifier": 128,
+          "indicatorOfUnitForTimeRange": 1,
+          "indicatorOfUnitOfTimeRange": 1,
+          "lengthOfTimeRange": [
+            6,
+            48
+          ],
+          "localTablesVersion": 0,
+          "numberOfForecastsInEnsemble": 0,
+          "numberOfTimeRange": 1,
+          "parameterCategory": 1,
+          "parameterNumber": 29,
+          "perturbationNumber": [
+            2,
+            14
+          ],
+          "productDefinitionTemplateNumber": 11,
+          "productionStatusOfProcessedData": 0,
+          "significanceOfReferenceTime": 1,
+          "subCentre": 0,
+          "tablesVersion": 4,
+          "typeOfEnsembleForecast": 2,
+          "typeOfFirstFixedSurface": 1,
+          "typeOfGeneratingProcess": 4,
+          "typeOfProcessedData": 4,
+          "typeOfSecondFixedSurface": 255,
+          "typeOfStatisticalProcessing": 1,
+          "typeOfTimeIncrement": 2
+        },
+        "translate": {
+          "member": {
+            "rule": "grib.member"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.sf",
+      "when": {
+        "member": [
+          2,
+          14
+        ],
+        "step": [
+          "PT6H",
+          "PT48H"
+        ]
+      }
     }
   ],
   "tables": [],
-  "version": "11"
+  "version": "12"
 }

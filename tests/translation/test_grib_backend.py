@@ -8,13 +8,13 @@ import numpy as np
 import pytest
 import eccodes
 
-from cedarkit_query import SourceError
+from cedarkit_query import QueryError, SourceError
 from reki import from_source
 from reki.catalog import load_resource, plan_source_binding
 from reki.diagnostics import collect_io_metrics
 from reki.selection.core import construct_source
 from reki.translation.grib_backend import GribBackend
-from reki.translation.grib_mapping import _observed_units
+from reki.translation.grib_mapping import _observed_units, named_branches
 
 
 @pytest.fixture
@@ -503,6 +503,36 @@ def test_named_trailing_window_checks_the_encoded_bounds(write_grib, tmp_path, w
                 "start": "2026-01-01T05:00:00Z",
                 "end": "2026-01-01T06:00:00Z",
             }
+
+
+@pytest.mark.parametrize("missing_bound", [None, "time", "step", "forecastTime", "lengthOfTimeRange"])
+def test_snow_diagnostic_unit_requires_pinned_encoded_bounds(tmp_path, missing_bound):
+    config = plan_source_binding(
+        {"kind": "file", "path": str(tmp_path / "reps.grib2"), "dataset": "cma_reps"}
+    )
+    query = {
+        "parameter": "cedarkit.sf",
+        "time": "2026-11-02T06:00:00Z",
+        "step": "PT6H",
+        "member": 2,
+    }
+    resource = config.mappings[0].to_dict()
+    target = next(row for row in resource["mappings"] if row["id"] == "sf.diagnostic.forecast.negative.2026110206")
+    if missing_bound is not None:
+        for group in (target["applies_to"], target["when"], target["native"]["match"]):
+            group.pop(missing_bound, None)
+    mappings = {(resource["id"], row["id"]): row for row in resource["mappings"]}
+    if missing_bound is None:
+        branches = named_branches(query, 0, config, mappings)
+        reviewed, = [branch for branch in branches if branch["basis"][0]["mapping"] == target["id"]]
+        assert reviewed["candidate_filter"]["forecastTime"] == 0
+        assert set(reviewed["candidate_filter"]["lengthOfTimeRange"]) == {6, 48}
+        assert set(reviewed["candidate_filter"]["perturbationNumber"]) == {2, 14}
+        assert "period" not in config.parameters["cedarkit.sf"]["fixed_conditions"]["statistics"]
+    else:
+        with pytest.raises(QueryError) as caught:
+            named_branches(query, 0, config, mappings)
+        assert caught.value.context["reason"] == "translation_unavailable"
 
 
 @pytest.mark.parametrize(

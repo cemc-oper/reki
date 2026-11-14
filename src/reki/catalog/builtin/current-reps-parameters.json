@@ -428,8 +428,8 @@
       "unit": "-"
     },
     {
-      "description": "CMA-REPS ORIG SF. Physical meaning and stored unit pending verification.",
-      "description_cn": "CMA-REPS ORIG SF。物理含义和存值单位待证。",
+      "description": "CMA-REPS ORIG snowfall (SF) as liquid-water-equivalent depth. The reviewed 2026-11-02 06 UTC members 0, 1, 2 and 14 at 0, 6 and 48 h combine accumulated large-scale snowfall with a convective snow diagnostic recomputed at each output. Values may decrease within the encoded interval from initialization.",
+      "description_cn": "CMA-REPS ORIG 降雪（SF）的液态水当量深度。已核定 2026-11-02 06 UTC 起报成员 0、1、2、14 的 0／6／48h，为累计大尺度雪量与各输出时刻重算的对流雪诊断量之和。报头区间从起报开始，数值可随时效下降。",
       "fixed_conditions": {
         "level_type": "surface",
         "statistics": {
@@ -439,8 +439,8 @@
       },
       "name": "sf",
       "parameter_id": "cedarkit.sf",
-      "unit": "-"
+      "unit": "m"
     }
   ],
-  "version": "8"
+  "version": "9"
 }

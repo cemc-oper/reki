@@ -109,6 +109,7 @@ def named_branches(query, index, config, mappings):
                 residual["native"] = {"grib": narrowed}
             rules = row["native"].get("translate", {})
             convert_values = "unit" in rules
+            declared_unit = rules.get("unit", {}).get("config", {}).get("source_unit")
             check_statistic = convert_values or "statistics" in rules
             template = filters.get("productDefinitionTemplateNumber")
             statistics = definition["fixed_conditions"].get("statistics", {})
@@ -127,9 +128,21 @@ def named_branches(query, index, config, mappings):
                     continue
                 residual = member_domain.to_dict()
             operation = statistics.get("operation", "instantaneous")
+            native_match = row["native"]["match"]
+            # A pinned diagnostic can use the encoded interval for selection without a physical period.
+            encoded_interval = (
+                period is None
+                and declared_unit is not None
+                and "statistics" not in rules
+                and isinstance(scope.get("time"), str)
+                and "step" in row["when"]
+                and native_match.get("forecastTime") == 0
+                and "lengthOfTimeRange" in native_match
+                and "typeOfStatisticalProcessing" in native_match
+            )
             reviewed_statistic = statistics.get("over", "time") == "time" and (
                 operation in grib.TIME_OPERATIONS
-                and period in {"since_initialization", "trailing"}
+                and (period in {"since_initialization", "trailing"} or encoded_interval)
                 if template in {8, 11}
                 else operation == "instantaneous"
             )
@@ -163,7 +176,6 @@ def named_branches(query, index, config, mappings):
                     narrowed = {name: thaw(filters[name]) for name in selectors}
                     native_conflict |= narrowed != selectors
                     residual["native"] = {"grib": narrowed}
-            declared_unit = rules.get("unit", {}).get("config", {}).get("source_unit")
             if declared_unit is not None:
                 _conversion(declared_unit, definition["unit"], pid=pid, index=index)
             basis = [
@@ -473,10 +485,10 @@ def interpret_named(native, candidates, config, mappings):
         meta["description"] = definition["description"]
     links = tuple((qi, branch["index"]) for qi, branch in selected)
     identity["parameter"] = pid
-    if interval is not None and (
+    period = definition["fixed_conditions"].get("statistics", {}).get("period")
+    if interval is not None and period is not None and (
         translated or any(has_rule(b, "statistics") for _, b in selected)
     ):
-        period = definition["fixed_conditions"]["statistics"]["period"]
         if period["kind"] == "since_initialization":
             correct_window = interval["start"] == times["time"]
         else:
