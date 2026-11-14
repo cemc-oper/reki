@@ -447,9 +447,7 @@ def interpret_named(native, candidates, config, mappings):
     if not candidates:
         return None, (), {}, 0.0
     vertical = {}
-    if any(
-        has_rule(branch, "vertical") or has_rule(branch, "unit") for _, branch in candidates
-    ):
+    if any(has_rule(branch, "vertical") for _, branch in candidates):
         vertical = grib.fixed_surfaces(native)
     identity = {**vertical, **times, "native": {"grib": native}}
     if native["productDefinitionTemplateNumber"] in {1, 11}:

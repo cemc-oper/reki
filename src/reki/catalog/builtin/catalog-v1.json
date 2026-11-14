@@ -730,14 +730,14 @@
       "mappings": {
         "grib2": {
           "path": "current-meso1-mappings.json",
-          "sha256": "a5933d2045b50aebecb2909937adfe8a98f3bed8b49861c165d0f5927594b3ac",
-          "version": "15"
+          "sha256": "4e1bd826dad770985cb053bac74d153058ef8bf219ac67c8e9dbf0a98f283b7c",
+          "version": "16"
         }
       },
       "parameter_registry": {
         "path": "current-meso1-parameters.json",
-        "sha256": "7d2f2c19894260f2f88eda43bb561ce769310cdcbea19cc74b645643a0dd8ac4",
-        "version": "12"
+        "sha256": "c95792d95aa3f7b86de2ed144fadfb38106128dc3b1e5c1165edadd74ec6954e",
+        "version": "13"
       },
       "products": [
         {
@@ -999,14 +999,14 @@
       "mappings": {
         "grib2": {
           "path": "current-tym-mappings.json",
-          "sha256": "c8bfc5ba2fb5a499f7865e1ec4c661b328d8e2c285c0bd267477e79bf9804195",
-          "version": "15"
+          "sha256": "60e6c87679ff184658d3089e48f7c878157421070402067d4ad312ea3963ebcd",
+          "version": "16"
         }
       },
       "parameter_registry": {
         "path": "current-tym-parameters.json",
-        "sha256": "59fcaf38aa4c45737309fb7974b06783182b1102531fd5a42d958dd36dc869cd",
-        "version": "12"
+        "sha256": "a8a34eea80413891a8571dbe1ad8b44f46213ecf9c2740f26b101dca3b5f59a8",
+        "version": "13"
       },
       "products": [
         {
@@ -43331,5 +43331,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "56"
+  "version": "57"
 }

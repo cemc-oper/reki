@@ -872,6 +872,8 @@
       "unit": "1.e-6 k/s"
     },
     {
+      "description": "Updraft helicity maximum. For the reviewed ORIG cycle of 2026-11-02 12 UTC, the 6 and 48 h values accumulate over the preceding output hour. The 0 h field is initialized to zero. Integration uses the 2000–5000 m terrain-following reference coordinate. The GRIB fixed surfaces and statistical interval preserve the producer's encoded selectors.",
+      "description_cn": "上升气流螺旋度最大值。2026-11-02 12 UTC 起报的 ORIG +6／+48h 在各自输出前一小时内取最大值，0h 为初始化零场。积分使用 2000–5000 m 地形跟随参考坐标。GRIB 固定面与统计窗保留生产端编码。",
       "fixed_conditions": {
         "statistics": {
           "operation": "maximum",
@@ -891,5 +893,5 @@
       "unit": "m2/s2"
     }
   ],
-  "version": "12"
+  "version": "13"
 }
