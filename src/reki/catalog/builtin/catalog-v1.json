@@ -13,14 +13,14 @@
       "mappings": {
         "grib2": {
           "path": "current-gfs-mappings.json",
-          "sha256": "c686d85a738d9e7fb685d684d449e59fbd9b51ee61da694437d96f20d1e1b07b",
-          "version": "24"
+          "sha256": "b179fb87483f72f4958140c36f06081d9eaac355734c43356743215c3beb4617",
+          "version": "25"
         }
       },
       "parameter_registry": {
         "path": "current-gfs-parameters.json",
-        "sha256": "beffabd1b83213b16a6493a7c9c15d4e3388f0af1b2ab92486e219b369a958e6",
-        "version": "18"
+        "sha256": "ad8d474f1fd551d0f12f04f6a81da77bd21f67c91157f932246207e4ef7bd33b",
+        "version": "19"
       },
       "products": [
         {
@@ -404,14 +404,14 @@
       "mappings": {
         "grib2": {
           "path": "current-meso3-mappings.json",
-          "sha256": "8deed5c281b09e4548a139294db74312e8c8ec0ad51035c5378303abed8a617f",
-          "version": "15"
+          "sha256": "5218f996edf523641250ff5ccd21d83db10004d027853a7ef8693c4476e8332b",
+          "version": "16"
         }
       },
       "parameter_registry": {
         "path": "current-meso3-parameters.json",
-        "sha256": "ec04076c061c0142e5c8abb18d7dc0e4a314ce6b8329bb60df88fbdce8731483",
-        "version": "12"
+        "sha256": "175af39c78094967ade1b5f9ec041c66c83f4939309512c75045498a801b49bd",
+        "version": "13"
       },
       "products": [
         {
@@ -999,14 +999,14 @@
       "mappings": {
         "grib2": {
           "path": "current-tym-mappings.json",
-          "sha256": "d8c68ed0c2fed74f9486569ea1e5bf554b552ed4a7cbd9a4dd164724c3e2a13c",
-          "version": "14"
+          "sha256": "c8bfc5ba2fb5a499f7865e1ec4c661b328d8e2c285c0bd267477e79bf9804195",
+          "version": "15"
         }
       },
       "parameter_registry": {
         "path": "current-tym-parameters.json",
-        "sha256": "f898ae1b8066e1c7aaea8cd5164da97eee776426ea962bed5051afd0cf9ab2fd",
-        "version": "11"
+        "sha256": "59fcaf38aa4c45737309fb7974b06783182b1102531fd5a42d958dd36dc869cd",
+        "version": "12"
       },
       "products": [
         {
@@ -43331,5 +43331,5 @@
     }
   ],
   "id": "reki.cemc-catalog",
-  "version": "53"
+  "version": "54"
 }
