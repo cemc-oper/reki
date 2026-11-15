@@ -12,6 +12,56 @@ Local sources use dataset-specific file layouts. Supply the origin in UTC, and o
 
 For REPS, `kind="local"` prefers the archive directory for the origin's Beijing date. A matching file in the next Beijing-date directory fills an absent entry. Both directories use the requested UTC origin, lead and member in the filename.
 
+## CEMC ORIG support in catalog v57
+
+For named selection from full CEMC `grib2/orig` files, pass one of the
+following dataset IDs to `from_source()`. Both an explicit file path
+(`kind="file"`) and a mounted archive root (`kind="local"`) have been exercised
+for all six products. Select the parameter by canonical name or stable CedarKit
+ID. For archive queries, use the UTC initialization time, lead and file member
+applicable to the record.
+
+| Product | Dataset ID | Frozen originals read with v52 | Additional originals read with v57 |
+| --- | --- | ---: | ---: |
+| GFS | `cma_gfs_gmf` | 64 | 1 |
+| MESO-1KM | `cma_meso_1km` | 43 | 1 |
+| MESO-3KM | `cma_meso_3km` | 53 | 1 |
+| TYM | `cma_tym` | 43 | 1 |
+| GEPS | `cma_geps` | 320 | 0 |
+| REPS | `cma_reps` | 227 | 1 (member 2) |
+
+The v57 handoff reuses the v52 full-file results for 181,179 messages across
+463 carrier groups. The five additional v57 originals are +6 h forecasts.
+All 2,388 messages in those files passed named selection by both identifiers,
+original-byte checks and xarray decoding. The 143 historical B05/B06 groups
+(925 messages) have individual acceptance records for reading or for reviewed
+producer semantics.
+
+Review applies to the recorded cycles, leads, levels, encoded statistics and
+members. A mapping with an applicable reviewed unit rule exposes standard
+`units`. A raw-value branch preserves decoded values and missingness and
+exposes the encoded metadata in `field.metadata["native_fields"]`. For
+example, v57 reads MESO-3KM `cedarkit.ripbl` as decoded raw values. Its frozen
+0, 6 and 48 h files from 2026-11-02 12 UTC carry the field at one-based
+`count=29`. The scale for nonzero producer values remains open. For requests
+with no independent expected domain, available reads report `unchecked`
+with `expected_set_unknown`.
+
+The five additional cycle scans found zero exact matches for the seven B10
+selectors. Those results cover the scanned cycles. Further cycles and product
+versions require their own availability evidence. The CedarKit development
+workspace's 1.5-06 handoff records the cycles, release artifacts and receipts.
+
+The verified installation uses
+`reki 2026.9.1.dev122+g1a95894.orig57` with `cedarkit-query 0.2.1`.
+For rollback, install the pinned `reki 2026.9.1.dev121+g111cb2a.orig56`
+artifact with its bundled catalog and product resources. If the caller pins
+an explicit catalog path, switch it to the target `catalog-v1.json` with its
+relative resources. The wheel's `reki/catalog/builtin/` directory contains the
+full set. The parameter browser pairs schema 4 revision 17 with v57 and
+revision 16 with v56. Switch the browser build and its `reviewed/` snapshot
+together.
+
 ## Reviewed MESO-1KM column water
 
 Catalog v41 adds the native `cma_meso_1km` binding for `cedarkit.pwat` from the
