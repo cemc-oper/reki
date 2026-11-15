@@ -34,18 +34,20 @@ The v57 handoff reuses the v52 full-file results for 181,179 messages across
 463 carrier groups. The five additional v57 originals are +6 h forecasts.
 All 2,388 messages in those files passed named selection by both identifiers,
 original-byte checks and xarray decoding. The 143 historical B05/B06 groups
-(925 messages) have individual acceptance records for reading or for reviewed
-producer semantics.
+(925 messages) have individual records for ORIG field selection and reading.
 
-Review applies to the recorded cycles, leads, levels, encoded statistics and
-members. A mapping with an applicable reviewed unit rule exposes standard
+Acceptance checks the named binding and message position against the GRIB2
+headers for the recorded cycles, leads, levels, encoded statistics and
+members. Callers interpret the returned values for their applications.
+A mapping with an applicable reviewed unit rule exposes standard
 `units`. A raw-value branch preserves decoded values and missingness and
 exposes the encoded metadata in `field.metadata["native_fields"]`. For
 example, v57 reads MESO-3KM `cedarkit.ripbl` as decoded raw values. Its frozen
 0, 6 and 48 h files from 2026-11-02 12 UTC carry the field at one-based
-`count=29`. The scale for nonzero producer values remains open. For requests
-with no independent expected domain, available reads report `unchecked`
-with `expected_set_unknown`.
+`count=29`.
+
+For requests with no independent expected domain, available reads report
+`unchecked` with `expected_set_unknown`.
 
 The five additional cycle scans found zero exact matches for the seven B10
 selectors. Those results cover the scanned cycles. Further cycles and product
