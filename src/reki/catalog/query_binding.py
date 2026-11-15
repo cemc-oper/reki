@@ -13,9 +13,13 @@ from cedarkit_query import (
 )
 from cedarkit_query.resources import effective_parameters
 
+from ._cache import _ResourceCache
 from .current import current_registration
-from .loader import load_context, load_resource
+from .loader import _resource_content_key, load_context, load_resource
 from .model import SourceConfiguration, freeze
+
+
+_VALIDATED_BINDINGS = _ResourceCache(maxsize=32)
 
 
 def _missing(path, message):
@@ -125,14 +129,24 @@ def _bind_resources(ctx, dataset, catalog, kind, origins, definitions):
             )
         definitions.append(freeze(loaded.snapshot("mappings", backend=backend)))
         origins["mappings." + backend] = origin
-        mappings.append(loaded.value)
-    effective = validate_resource_set(
-        parameters.value,
-        mappings,
-        catalog.value,
-        dataset["id"],
+        mappings.append(loaded)
+    dataset_id = dataset["id"]
+    mapping_values = tuple(loaded.value for loaded in mappings)
+    cache_key = (
+        _resource_content_key(catalog),
+        _resource_content_key(parameters),
+        tuple(_resource_content_key(loaded) for loaded in mappings),
+        dataset_id,
     )
-    return freeze(effective), tuple(mappings), freeze(products[0])
+    effective = _VALIDATED_BINDINGS.get_or_create(
+        cache_key,
+        lambda: freeze(
+            validate_resource_set(
+                parameters.value, mapping_values, catalog.value, dataset_id
+            )
+        ),
+    )
+    return effective, mapping_values, freeze(products[0])
 
 
 def plan_source_binding(source, *, context=None, base_dir=None, client=None):

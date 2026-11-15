@@ -7,6 +7,7 @@ from types import MappingProxyType
 
 from cedarkit_query import Context, QueryError, SourceError, load_value
 
+from ._cache import _ResourceCache
 from .model import LoadedResource, freeze
 
 # Defaults are activated only by an explicitly registered dataset.
@@ -32,6 +33,7 @@ BUILTINS = MappingProxyType(
         },
     }
 )
+_PARSED_RESOURCES = _ResourceCache(maxsize=32)
 
 
 def _read(path, pointer):
@@ -53,6 +55,23 @@ def _format(path, pointer):
     if path.suffix.lower() not in {".yaml", ".yml", ".json"}:
         raise QueryError("invalid_config", pointer, "resource must be JSON or YAML")
     return "json" if path.suffix.lower() == ".json" else "yaml"
+
+
+def _resource_path(reference, pointer):
+    if "builtin" not in reference:
+        return Path(reference["path"])
+    path = BUILTINS.get(reference["builtin"])
+    if path is None:
+        raise QueryError(
+            "invalid_config", pointer, "unknown builtin resource",
+            {"reason": "unknown_resource"},
+        )
+    return path
+
+
+def _resource_content_key(resource):
+    path = _resource_path(resource.reference, "/resource")
+    return _format(path, "/resource"), resource.sha256
 
 
 def load_context(value=None, *, base_dir=None):
@@ -84,17 +103,7 @@ def load_resource(reference, kind, *, base_dir=None, pointer="/resource"):
             exc.message,
             dict(exc.context),
         ) from exc
-    if "builtin" in ref:
-        path = BUILTINS.get(ref["builtin"])
-        if path is None:
-            raise QueryError(
-                "invalid_config",
-                pointer,
-                "unknown builtin resource",
-                {"reason": "unknown_resource"},
-            )
-    else:
-        path = Path(ref["path"])
+    path = _resource_path(ref, pointer)
     raw = _read(path, pointer)
     digest = hashlib.sha256(raw).hexdigest()
     if "sha256" in ref and digest != ref["sha256"]:
@@ -105,7 +114,11 @@ def load_resource(reference, kind, *, base_dir=None, pointer="/resource"):
         text = raw.decode("utf-8")
     except UnicodeDecodeError as exc:
         raise QueryError("invalid_config", pointer, "resource must be UTF-8") from exc
-    value = load_value(text, kind, format=_format(path, pointer))
+    resource_format = _format(path, pointer)
+    value = _PARSED_RESOURCES.get_or_create(
+        (kind, resource_format, digest),
+        lambda: load_value(text, kind, format=resource_format),
+    )
     if "version" in ref and value.version != ref["version"]:
         raise QueryError(
             "invalid_config", pointer + "/version", "exact resource version mismatch"

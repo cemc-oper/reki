@@ -6,7 +6,8 @@ from copy import deepcopy
 import pytest
 from cedarkit_query import QueryError, Request, prepare_queries
 from reki import from_source
-from reki.catalog import load_resource, plan_source_binding
+from reki.catalog import load_resource, plan_source_binding, query_binding
+from reki.catalog._cache import _ResourceCache
 from reki.catalog.loader import BUILTINS
 
 SOURCE = {"kind": "local", "dataset": "CMA-GFS", "root": "/CMADAAS"}
@@ -21,6 +22,66 @@ QUERIES = [
         **TIME,
     },
 ]
+
+
+def test_load_resource_reuses_identical_content_per_format(tmp_path):
+    text = (
+        "api_version: cedarkit.catalog/v1\n"
+        "id: test.catalog\n"
+        "version: '1'\n"
+        "datasets: [{id: test}]\n"
+    )
+    original = tmp_path / "catalog.yaml"
+    original.write_text(text)
+    nested = tmp_path / "nested"
+    nested.mkdir()
+    copy = nested / "catalog.yml"
+    copy.write_text(text)
+
+    first = load_resource({"path": str(original)}, "catalog")
+    second = load_resource({"path": str(copy)}, "catalog")
+    assert second.value is first.value
+    assert second.base_dir == nested
+    assert second.reference["path"] == str(copy)
+
+    json_path = tmp_path / "catalog.json"
+    json_path.write_text(text)
+    with pytest.raises(QueryError):
+        load_resource({"path": str(json_path)}, "catalog")
+
+    original.write_text(text.replace("test.catalog", "updated.catalog"))
+    updated = load_resource({"path": str(original)}, "catalog")
+    assert updated.value.id == "updated.catalog"
+    assert updated.sha256 != first.sha256
+
+
+def test_bindings_cache_resource_validation_per_dataset(monkeypatch):
+    seen = []
+    validate = query_binding.validate_resource_set
+
+    def record_validation(parameters, mappings, catalog, dataset_id):
+        seen.append(dataset_id)
+        return validate(parameters, mappings, catalog, dataset_id)
+
+    monkeypatch.setattr(query_binding, "_VALIDATED_BINDINGS", _ResourceCache(maxsize=2))
+    monkeypatch.setattr(query_binding, "validate_resource_set", record_validation)
+    context = {"catalog": {"builtin": "reki.catalog.cmadaas.task07a"}}
+    analysis = {"kind": "cmadaas", "dataset": "cma_gfs_gmf_analysis_cmadaas"}
+    forecast = {"kind": "cmadaas", "dataset": "cma_gfs_gmf_cmadaas"}
+
+    first = plan_source_binding(analysis, context=context, client=object())
+    repeated = plan_source_binding(
+        analysis,
+        context={**context, "execution": {"max_expansion": 5}},
+        client=object(),
+    )
+    other = plan_source_binding(forecast, context=context, client=object())
+
+    assert seen == [analysis["dataset"], forecast["dataset"]]
+    assert repeated.parameters is first.parameters
+    assert repeated.execution_defaults["max_expansion"] == 5
+    assert first.execution_defaults["max_expansion"] != 5
+    assert other.product["id"] == "forecast"
 
 
 def test_packaged_gfs_snapshots_bind_frozen_requests(tmp_path):
@@ -142,6 +203,11 @@ def test_reject_resource_pins_without_fallback(role, field, bad):
 def test_reject_incompatible_mappings(tmp_path, problem, path):
     plan = plan_source_binding(SOURCE)
     data = plan.mappings[0].to_dict()
+    resource = tmp_path / "maps.json"
+    context = {"mappings": {"grib2": {"path": str(resource)}}}
+    resource.write_text(json.dumps(data))
+    plan_source_binding(SOURCE, context=context)
+
     first = next(
         row for row in data["mappings"] if row["id"] == "t2m.operational.instantaneous"
     )
@@ -157,12 +223,9 @@ def test_reject_incompatible_mappings(tmp_path, problem, path):
         data["mappings"] = [
             row for row in data["mappings"] if row["parameter_id"] != first["parameter_id"]
         ]
-    resource = tmp_path / "maps.json"
     resource.write_text(json.dumps(data))
     with pytest.raises(QueryError) as caught:
-        plan_source_binding(
-            SOURCE, context={"mappings": {"grib2": {"path": str(resource)}}}
-        )
+        plan_source_binding(SOURCE, context=context)
     assert caught.value.code == "invalid_config"
     assert path in caught.value.path
 
