@@ -1,10 +1,10 @@
 import multiprocessing
+from contextlib import closing
 
 import eccodes
 
 from reki.diagnostics import collect_io_metrics
 from reki.readers.grib.index import INDEX_SCHEMA_VERSION, IndexStore, index_path_for
-from reki.readers.grib.reader import GribReader
 
 
 def _write(path, levels=(850, 500)):
@@ -22,9 +22,10 @@ def _write(path, levels=(850, 500)):
 
 def _concurrent_open(source, root, queue):
     """Spawn-safe worker used to verify the on-disk advisory lock."""
-    with collect_io_metrics() as metrics:
-        fields = GribReader(None, source, index_policy="auto", index_dir=root).all()
-        queue.put((len(fields), metrics.snapshot().to_dict()))
+    store = IndexStore(source, index_dir=root)
+    with collect_io_metrics() as metrics, closing(store.build()) as connection:
+        field_count = connection.execute("select count(*) from fields").fetchone()[0]
+        queue.put((field_count, metrics.snapshot().to_dict()))
 
 
 def test_build_open_and_invalidate_without_touching_source(tmp_path):

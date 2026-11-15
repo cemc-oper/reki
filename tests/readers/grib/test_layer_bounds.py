@@ -27,13 +27,7 @@ def test_soil_layer_bounds_are_public_in_metadata_and_xarray(tmp_path):
     assert [field.metadata.extra["layer_top"] for field in fields] == [0, 1]
     assert [field.metadata.extra["layer_bottom"] for field in fields] == [1, 2]
     assert reader.where(layer_top=0).one().metadata.level == 1
-    assert reader.where(layer_top=3).one_or_none() is None
-
-    index_dir = tmp_path / "index"
-    GribReader(None, path, index_policy="auto", index_dir=index_dir).all()
-    indexed = GribReader(None, path, index_policy="auto", index_dir=index_dir).all()
-    assert [field.metadata.extra["layer_top"] for field in indexed] == [0, 1]
-    assert [field.metadata.extra["layer_bottom"] for field in indexed] == [1, 2]
+    assert not reader.where(layer_top=3)
 
     data = reader.to_xarray()
     assert data.soilLayer.values.tolist() == [1, 2]

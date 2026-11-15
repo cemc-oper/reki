@@ -56,11 +56,11 @@ reki-finder = "reki.data_finder.__main__:main"
 reki-test-data = "reki.sources.test:main"
 
 [project.optional-dependencies]
-cmadaas = ["nuwe-cmadaas"]
+cmadaas = ["nuwe-cmadaas>=0.4.0"]
 lazy = ["dask"]
 
 [dependency-groups]
-test = ["pytest", "scipy", "nuwe-cmadaas", "jsonschema"]
+test = ["pytest", "scipy", "nuwe-cmadaas>=0.4.0", "jsonschema"]
 cov = [
     { include-group = "test" },
     "pytest-cov",

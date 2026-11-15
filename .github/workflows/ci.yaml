@@ -17,16 +17,14 @@ jobs:
         with:
           version: "latest"
           python-version: ${{ matrix.python }}
-      - name: Sync test environment
-        # The local sources are available in the development workspace, but
-        # not in this standalone GitHub checkout. Use published metadata in CI.
-        run: uv sync --no-default-groups --group test --no-sources
+      - name: Install package and test dependencies
+        run: uv pip install --no-sources --group test -e .
       - name: Run tests
         # The regular data-backed tests use the rolling CMA-GFS WIS source.
         # Frozen real-data coverage is provided by the docs job below through
         # cedarkit-test-data's ecmwf_ifs assets.
         run: >-
-          uv run --no-sources pytest tests -v --tb=short
+          uv run --no-sync pytest tests -v --tb=short
           -m "not needs_data and not cma_hpc and not cmadaas_local and not cmadaas_service"
       - name: Build
         run: uv build --no-sources
@@ -43,8 +41,6 @@ jobs:
           version: "latest"
           python-version: "3.12"
       - name: Install dependencies
-        run: |
-          uv pip install --group docs
-          uv pip install --no-sources .
+        run: uv pip install --no-sources --group docs .
       - name: Build and check docs
         run: uv run --no-sync make -C doc check SPHINXOPTS="-W --keep-going"
