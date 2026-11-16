@@ -4,7 +4,8 @@ import json
 from copy import deepcopy
 
 import pytest
-from cedarkit_query import QueryError, Request, prepare_queries
+from cedarkit_query import QueryError, Request, prepare_queries, validate_resource_set
+from cedarkit_query.resources import effective_parameters
 from reki import from_source
 from reki.catalog import load_resource, plan_source_binding, query_binding
 from reki.catalog._cache import _ResourceCache
@@ -53,6 +54,50 @@ def test_load_resource_reuses_identical_content_per_format(tmp_path):
     updated = load_resource({"path": str(original)}, "catalog")
     assert updated.value.id == "updated.catalog"
     assert updated.sha256 != first.sha256
+
+
+def test_default_catalog_resource_combinations_pass_cross_validation():
+    catalog = load_resource({"builtin": "reki.catalog"}, "catalog")
+    for dataset in catalog.value.datasets:
+        if not dataset.get("products"):
+            continue
+        parameters = load_resource(
+            dataset["parameter_registry"], "parameters", base_dir=catalog.base_dir
+        ).value
+        mappings = tuple(
+            load_resource(ref, "mappings", base_dir=catalog.base_dir).value
+            for ref in dataset.get("mappings", {}).values()
+        )
+        validated = validate_resource_set(
+            parameters, mappings, catalog.value, dataset["id"]
+        )
+        assert validated == effective_parameters(parameters), dataset["id"]
+
+
+@pytest.mark.parametrize("role", ["catalog", "parameter_registry", "mappings"])
+def test_default_binding_cache_validates_explicit_resources(monkeypatch, role):
+    seen = []
+    validate = query_binding.validate_resource_set
+
+    def record_validation(parameters, mappings, catalog, dataset_id):
+        seen.append(dataset_id)
+        return validate(parameters, mappings, catalog, dataset_id)
+
+    monkeypatch.setattr(query_binding, "_VALIDATED_BINDINGS", _ResourceCache(maxsize=2))
+    monkeypatch.setattr(query_binding, "validate_resource_set", record_validation)
+    default = plan_source_binding(SOURCE)
+    repeated = plan_source_binding(SOURCE, context={"execution": {"max_expansion": 5}})
+    assert repeated.parameters is default.parameters
+    assert not seen
+
+    row = next(row for row in default.definitions if row["role"] == role)
+    ref = dict(row["reference"])
+    if role == "catalog":
+        ref["path"] = str(BUILTINS[ref.pop("builtin")])
+    context = {role: {"grib2": ref} if role == "mappings" else ref}
+    explicit = plan_source_binding(SOURCE, context=context)
+    assert seen == [default.source["dataset"]]
+    assert explicit.parameters == default.parameters
 
 
 def test_bindings_cache_resource_validation_per_dataset(monkeypatch):

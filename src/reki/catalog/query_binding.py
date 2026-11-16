@@ -132,16 +132,25 @@ def _bind_resources(ctx, dataset, catalog, kind, origins, definitions):
         mappings.append(loaded)
     dataset_id = dataset["id"]
     mapping_values = tuple(loaded.value for loaded in mappings)
+    # CI validates the resource combinations declared in the default catalog.
+    default_resources = (
+        catalog.reference.get("builtin") == "reki.catalog"
+        and "parameter_registry" not in ctx
+        and not ctx.get("mappings")
+    )
     cache_key = (
         _resource_content_key(catalog),
         _resource_content_key(parameters),
         tuple(_resource_content_key(loaded) for loaded in mappings),
         dataset_id,
+        default_resources,
     )
     effective = _VALIDATED_BINDINGS.get_or_create(
         cache_key,
         lambda: freeze(
-            validate_resource_set(
+            effective_parameters(parameters.value)
+            if default_resources
+            else validate_resource_set(
                 parameters.value, mapping_values, catalog.value, dataset_id
             )
         ),
