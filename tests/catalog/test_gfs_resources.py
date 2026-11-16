@@ -7,7 +7,7 @@ import pytest
 from cedarkit_query import QueryError, Request, prepare_queries, validate_resource_set
 from cedarkit_query.resources import effective_parameters
 from reki import from_source
-from reki.catalog import load_resource, plan_source_binding, query_binding
+from reki.catalog import load_resource, loader, plan_source_binding, query_binding
 from reki.catalog._cache import _ResourceCache
 from reki.catalog.loader import BUILTINS
 
@@ -57,15 +57,23 @@ def test_load_resource_reuses_identical_content_per_format(tmp_path):
 
 
 def test_default_catalog_resource_combinations_pass_cross_validation():
-    catalog = load_resource({"builtin": "reki.catalog"}, "catalog")
+    def load_and_compare(reference, kind, *, base_dir=None):
+        checked = load_resource(reference, kind, base_dir=base_dir)
+        prevalidated = loader._load_resource(
+            reference, kind, base_dir=base_dir, prevalidated=True
+        )
+        assert prevalidated == checked
+        return checked
+
+    catalog = load_and_compare({"builtin": "reki.catalog"}, "catalog")
     for dataset in catalog.value.datasets:
         if not dataset.get("products"):
             continue
-        parameters = load_resource(
+        parameters = load_and_compare(
             dataset["parameter_registry"], "parameters", base_dir=catalog.base_dir
         ).value
         mappings = tuple(
-            load_resource(ref, "mappings", base_dir=catalog.base_dir).value
+            load_and_compare(ref, "mappings", base_dir=catalog.base_dir).value
             for ref in dataset.get("mappings", {}).values()
         )
         validated = validate_resource_set(
@@ -77,18 +85,37 @@ def test_default_catalog_resource_combinations_pass_cross_validation():
 @pytest.mark.parametrize("role", ["catalog", "parameter_registry", "mappings"])
 def test_default_binding_cache_validates_explicit_resources(monkeypatch, role):
     seen = []
+    checked = []
+    prevalidated = []
     validate = query_binding.validate_resource_set
+    load_checked = loader.load_value
+    load_prevalidated = loader.load_prevalidated_resource
 
     def record_validation(parameters, mappings, catalog, dataset_id):
         seen.append(dataset_id)
         return validate(parameters, mappings, catalog, dataset_id)
 
+    def record_checked(text, kind, **kwargs):
+        checked.append(kind)
+        return load_checked(text, kind, **kwargs)
+
+    def record_prevalidated(text, kind):
+        prevalidated.append(kind)
+        if load_prevalidated is not None:
+            return load_prevalidated(text, kind)
+        return load_checked(text, kind, format="json")
+
     monkeypatch.setattr(query_binding, "_VALIDATED_BINDINGS", _ResourceCache(maxsize=2))
     monkeypatch.setattr(query_binding, "validate_resource_set", record_validation)
+    monkeypatch.setattr(loader, "_PARSED_RESOURCES", _ResourceCache(maxsize=6))
+    monkeypatch.setattr(loader, "load_value", record_checked)
+    monkeypatch.setattr(loader, "load_prevalidated_resource", record_prevalidated)
     default = plan_source_binding(SOURCE)
     repeated = plan_source_binding(SOURCE, context={"execution": {"max_expansion": 5}})
     assert repeated.parameters is default.parameters
     assert not seen
+    assert prevalidated == ["catalog", "parameters", "mappings"]
+    assert not checked
 
     row = next(row for row in default.definitions if row["role"] == role)
     ref = dict(row["reference"])
@@ -98,6 +125,11 @@ def test_default_binding_cache_validates_explicit_resources(monkeypatch, role):
     explicit = plan_source_binding(SOURCE, context=context)
     assert seen == [default.source["dataset"]]
     assert explicit.parameters == default.parameters
+    assert checked == {
+        "catalog": ["catalog", "parameters", "mappings"],
+        "parameter_registry": ["parameters"],
+        "mappings": ["mappings"],
+    }[role]
 
 
 def test_bindings_cache_resource_validation_per_dataset(monkeypatch):

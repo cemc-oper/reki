@@ -15,7 +15,7 @@ from cedarkit_query.resources import effective_parameters
 
 from ._cache import _ResourceCache
 from .current import current_registration
-from .loader import _resource_content_key, load_context, load_resource
+from .loader import _load_resource, _resource_content_key, load_context
 from .model import SourceConfiguration, freeze
 
 
@@ -101,12 +101,14 @@ def _bind_resources(ctx, dataset, catalog, kind, origins, definitions):
         _missing("/source/dataset", "source must bind one unambiguous product version")
     if not products and references:
         _missing("/source/dataset", "mapping resources require a catalog product")
+    default_catalog = catalog.reference.get("builtin") == "reki.catalog"
     origin = "context" if "parameter_registry" in ctx else "dataset"
-    parameters = load_resource(
+    parameters = _load_resource(
         parameter_ref,
         "parameters",
         base_dir=catalog.base_dir,
         pointer="/context/parameter_registry",
+        prevalidated=default_catalog and origin == "dataset",
     )
     origins["parameter_registry"] = origin
     definitions.append(freeze(parameters.snapshot("parameter_registry")))
@@ -115,11 +117,12 @@ def _bind_resources(ctx, dataset, catalog, kind, origins, definitions):
 
     mappings = []
     for backend, (ref, origin) in sorted(references.items()):
-        loaded = load_resource(
+        loaded = _load_resource(
             ref,
             "mappings",
             base_dir=catalog.base_dir,
             pointer="/context/mappings/" + backend,
+            prevalidated=default_catalog and origin == "dataset",
         )
         if loaded.value.backend != backend:
             raise QueryError(
@@ -134,9 +137,7 @@ def _bind_resources(ctx, dataset, catalog, kind, origins, definitions):
     mapping_values = tuple(loaded.value for loaded in mappings)
     # CI validates the resource combinations declared in the default catalog.
     default_resources = (
-        catalog.reference.get("builtin") == "reki.catalog"
-        and "parameter_registry" not in ctx
-        and not ctx.get("mappings")
+        default_catalog and "parameter_registry" not in ctx and not ctx.get("mappings")
     )
     cache_key = (
         _resource_content_key(catalog),
@@ -170,10 +171,12 @@ def plan_source_binding(source, *, context=None, base_dir=None, client=None):
     if source["kind"] == "cmadaas" and "config" not in source and client is None:
         _missing("/source/config", "CMADaaS needs config or an external client")
 
-    catalog = load_resource(
-        ctx.get("catalog", {"builtin": "reki.catalog"}),
+    catalog_ref = ctx.get("catalog", {"builtin": "reki.catalog"})
+    catalog = _load_resource(
+        catalog_ref,
         "catalog",
         pointer="/context/catalog",
+        prevalidated=catalog_ref.get("builtin") == "reki.catalog",
     )
     dataset = {}
     if "dataset" in source:

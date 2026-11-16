@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 from types import MappingProxyType
 
+import cedarkit_query
 from cedarkit_query import Context, QueryError, SourceError, load_value
 
 from ._cache import _ResourceCache
@@ -34,6 +35,8 @@ BUILTINS = MappingProxyType(
     }
 )
 _PARSED_RESOURCES = _ResourceCache(maxsize=32)
+# cedarkit-query 0.2.1 uses the strict loader.
+load_prevalidated_resource = getattr(cedarkit_query, "load_prevalidated_resource", None)
 
 
 def _read(path, pointer):
@@ -92,6 +95,13 @@ def load_context(value=None, *, base_dir=None):
 
 
 def load_resource(reference, kind, *, base_dir=None, pointer="/resource"):
+    """Read and validate one catalog, parameter registry, or mapping resource."""
+    return _load_resource(reference, kind, base_dir=base_dir, pointer=pointer)
+
+
+def _load_resource(
+    reference, kind, *, base_dir=None, pointer="/resource", prevalidated=False
+):
     if kind not in {"catalog", "parameters", "mappings"}:
         raise ValueError(f"unknown resource kind: {kind}")
     try:
@@ -115,9 +125,20 @@ def load_resource(reference, kind, *, base_dir=None, pointer="/resource"):
     except UnicodeDecodeError as exc:
         raise QueryError("invalid_config", pointer, "resource must be UTF-8") from exc
     resource_format = _format(path, pointer)
+    use_prevalidated = (
+        prevalidated
+        and load_prevalidated_resource is not None
+        and resource_format == "json"
+        and path.parent == _BUILTIN_DIR
+    )
+
+    def parse_resource():
+        if use_prevalidated:
+            return load_prevalidated_resource(text, kind)
+        return load_value(text, kind, format=resource_format)
+
     value = _PARSED_RESOURCES.get_or_create(
-        (kind, resource_format, digest),
-        lambda: load_value(text, kind, format=resource_format),
+        (kind, resource_format, digest, use_prevalidated), parse_resource
     )
     if "version" in ref and value.version != ref["version"]:
         raise QueryError(
