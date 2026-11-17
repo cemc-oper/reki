@@ -1,0 +1,441 @@
+{
+  "api_version": "cedarkit.mappings/v1",
+  "backend": "grib2",
+  "id": "cedarkit.grib2.generic",
+  "mappings": [
+    {
+      "applies_to": {},
+      "backend": "grib2",
+      "evidence": [
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table1-0.shtml",
+        "https://github.com/wmo-im/GRIB2/releases/tag/v37",
+        "https://codes.ecmwf.int/grib/format/grib2/sections/1/",
+        "https://codes.ecmwf.int/grib/format/grib2/templates/4/0/",
+        "https://codes.ecmwf.int/grib/format/grib2/ctables/4/5/",
+        "doc/2026-11-16-stage1.6-query-reki/evidence/1.6-02/cross-centre-headers.json",
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table4-2-0-0.shtml"
+      ],
+      "id": "wmo.t2m.instantaneous.103",
+      "native": {
+        "match": {
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "tablesVersion": {
+            "range": {
+              "end": 37,
+              "start": 1
+            }
+          },
+          "typeOfFirstFixedSurface": 103,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      }
+    },
+    {
+      "applies_to": {},
+      "backend": "grib2",
+      "evidence": [
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table1-0.shtml",
+        "https://github.com/wmo-im/GRIB2/releases/tag/v37",
+        "https://codes.ecmwf.int/grib/format/grib2/sections/1/",
+        "https://codes.ecmwf.int/grib/format/grib2/templates/4/0/",
+        "https://codes.ecmwf.int/grib/format/grib2/ctables/4/5/",
+        "doc/2026-11-16-stage1.6-query-reki/evidence/1.6-02/cross-centre-headers.json",
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table4-2-0-0.shtml"
+      ],
+      "id": "wmo.td2m.instantaneous.103",
+      "native": {
+        "match": {
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 6,
+          "productDefinitionTemplateNumber": 0,
+          "tablesVersion": {
+            "range": {
+              "end": 37,
+              "start": 1
+            }
+          },
+          "typeOfFirstFixedSurface": 103,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.td2m",
+      "when": {
+        "level": 2,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      }
+    },
+    {
+      "applies_to": {},
+      "backend": "grib2",
+      "evidence": [
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table1-0.shtml",
+        "https://github.com/wmo-im/GRIB2/releases/tag/v37",
+        "https://codes.ecmwf.int/grib/format/grib2/sections/1/",
+        "https://codes.ecmwf.int/grib/format/grib2/templates/4/0/",
+        "https://codes.ecmwf.int/grib/format/grib2/ctables/4/5/",
+        "doc/2026-11-16-stage1.6-query-reki/evidence/1.6-02/cross-centre-headers.json",
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table4-2-0-2.shtml",
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table3-3.shtml"
+      ],
+      "id": "wmo.u10m.instantaneous.103",
+      "native": {
+        "match": {
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 0,
+          "tablesVersion": {
+            "range": {
+              "end": 37,
+              "start": 1
+            }
+          },
+          "typeOfFirstFixedSurface": 103,
+          "typeOfSecondFixedSurface": 255,
+          "uvRelativeToGrid": 0
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      }
+    },
+    {
+      "applies_to": {},
+      "backend": "grib2",
+      "evidence": [
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table1-0.shtml",
+        "https://github.com/wmo-im/GRIB2/releases/tag/v37",
+        "https://codes.ecmwf.int/grib/format/grib2/sections/1/",
+        "https://codes.ecmwf.int/grib/format/grib2/templates/4/0/",
+        "https://codes.ecmwf.int/grib/format/grib2/ctables/4/5/",
+        "doc/2026-11-16-stage1.6-query-reki/evidence/1.6-02/cross-centre-headers.json",
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table4-2-0-2.shtml",
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table3-3.shtml"
+      ],
+      "id": "wmo.v10m.instantaneous.103",
+      "native": {
+        "match": {
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 0,
+          "tablesVersion": {
+            "range": {
+              "end": 37,
+              "start": 1
+            }
+          },
+          "typeOfFirstFixedSurface": 103,
+          "typeOfSecondFixedSurface": 255,
+          "uvRelativeToGrid": 0
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v10m",
+      "when": {
+        "level": 10,
+        "level_type": "height_above_ground",
+        "level_unit": "m"
+      }
+    },
+    {
+      "applies_to": {},
+      "backend": "grib2",
+      "evidence": [
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table1-0.shtml",
+        "https://github.com/wmo-im/GRIB2/releases/tag/v37",
+        "https://codes.ecmwf.int/grib/format/grib2/sections/1/",
+        "https://codes.ecmwf.int/grib/format/grib2/templates/4/0/",
+        "https://codes.ecmwf.int/grib/format/grib2/ctables/4/5/",
+        "doc/2026-11-16-stage1.6-query-reki/evidence/1.6-02/cross-centre-headers.json",
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table4-2-0-0.shtml"
+      ],
+      "id": "wmo.t.instantaneous.100",
+      "native": {
+        "match": {
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 0,
+          "parameterNumber": 0,
+          "productDefinitionTemplateNumber": 0,
+          "tablesVersion": {
+            "range": {
+              "end": 37,
+              "start": 1
+            }
+          },
+          "typeOfFirstFixedSurface": 100,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "K"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.t",
+      "when": {}
+    },
+    {
+      "applies_to": {},
+      "backend": "grib2",
+      "evidence": [
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table1-0.shtml",
+        "https://github.com/wmo-im/GRIB2/releases/tag/v37",
+        "https://codes.ecmwf.int/grib/format/grib2/sections/1/",
+        "https://codes.ecmwf.int/grib/format/grib2/templates/4/0/",
+        "https://codes.ecmwf.int/grib/format/grib2/ctables/4/5/",
+        "doc/2026-11-16-stage1.6-query-reki/evidence/1.6-02/cross-centre-headers.json",
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table4-2-0-2.shtml",
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table3-3.shtml"
+      ],
+      "id": "wmo.u.instantaneous.100",
+      "native": {
+        "match": {
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 2,
+          "productDefinitionTemplateNumber": 0,
+          "tablesVersion": {
+            "range": {
+              "end": 37,
+              "start": 1
+            }
+          },
+          "typeOfFirstFixedSurface": 100,
+          "typeOfSecondFixedSurface": 255,
+          "uvRelativeToGrid": 0
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.u",
+      "when": {}
+    },
+    {
+      "applies_to": {},
+      "backend": "grib2",
+      "evidence": [
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table1-0.shtml",
+        "https://github.com/wmo-im/GRIB2/releases/tag/v37",
+        "https://codes.ecmwf.int/grib/format/grib2/sections/1/",
+        "https://codes.ecmwf.int/grib/format/grib2/templates/4/0/",
+        "https://codes.ecmwf.int/grib/format/grib2/ctables/4/5/",
+        "doc/2026-11-16-stage1.6-query-reki/evidence/1.6-02/cross-centre-headers.json",
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table4-2-0-2.shtml",
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table3-3.shtml"
+      ],
+      "id": "wmo.v.instantaneous.100",
+      "native": {
+        "match": {
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 2,
+          "parameterNumber": 3,
+          "productDefinitionTemplateNumber": 0,
+          "tablesVersion": {
+            "range": {
+              "end": 37,
+              "start": 1
+            }
+          },
+          "typeOfFirstFixedSurface": 100,
+          "typeOfSecondFixedSurface": 255,
+          "uvRelativeToGrid": 0
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "m/s"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.v",
+      "when": {}
+    },
+    {
+      "applies_to": {},
+      "backend": "grib2",
+      "evidence": [
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table1-0.shtml",
+        "https://github.com/wmo-im/GRIB2/releases/tag/v37",
+        "https://codes.ecmwf.int/grib/format/grib2/sections/1/",
+        "https://codes.ecmwf.int/grib/format/grib2/templates/4/0/",
+        "https://codes.ecmwf.int/grib/format/grib2/ctables/4/5/",
+        "doc/2026-11-16-stage1.6-query-reki/evidence/1.6-02/cross-centre-headers.json",
+        "https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table4-2-0-3.shtml"
+      ],
+      "id": "wmo.h.instantaneous.100",
+      "native": {
+        "match": {
+          "discipline": 0,
+          "edition": 2,
+          "localTablesVersion": 0,
+          "parameterCategory": 3,
+          "parameterNumber": 5,
+          "productDefinitionTemplateNumber": 0,
+          "tablesVersion": {
+            "range": {
+              "end": 37,
+              "start": 1
+            }
+          },
+          "typeOfFirstFixedSurface": 100,
+          "typeOfSecondFixedSurface": 255
+        },
+        "translate": {
+          "statistics": {
+            "rule": "grib.statistics"
+          },
+          "time": {
+            "rule": "grib.time"
+          },
+          "unit": {
+            "config": {
+              "source_unit": "Gpm"
+            },
+            "rule": "common.value_unit"
+          },
+          "vertical": {
+            "rule": "grib.fixed_surfaces"
+          }
+        }
+      },
+      "parameter_id": "cedarkit.h",
+      "when": {}
+    }
+  ],
+  "tables": [],
+  "version": "1"
+}

@@ -5,18 +5,24 @@ import os
 from pathlib import Path
 from types import MappingProxyType
 
-import cedarkit_query
-from cedarkit_query import Context, QueryError, SourceError, load_value
+from cedarkit_query import (
+    Context,
+    QueryError,
+    SourceError,
+    load_prevalidated_resource,
+    load_value,
+)
 
 from ._cache import _ResourceCache
 from .model import LoadedResource, freeze
 
-# Defaults are activated only by an explicitly registered dataset.
 _BUILTIN_DIR = Path(__file__).with_name("builtin")
 BUILTINS = MappingProxyType(
     {
         "reki.catalog": _BUILTIN_DIR / "catalog-v1.json",
         "reki.catalog.cmadaas.task07a": _BUILTIN_DIR / "cmadaas-task07a-catalog.json",
+        "reki.parameters.public": _BUILTIN_DIR / "public-parameters.json",
+        "reki.mappings.grib2.generic": _BUILTIN_DIR / "generic-grib2-mappings.json",
         **{
             f"reki.{kind}.cmadaas.current": _BUILTIN_DIR / f"current-cmadaas-{kind}.json"
             for kind in ("parameters", "mappings")
@@ -34,9 +40,21 @@ BUILTINS = MappingProxyType(
         },
     }
 )
+_FILE_PARAMETERS = freeze(
+    {
+        "builtin": "reki.parameters.public",
+        "version": "1",
+        "sha256": "b4c0c79293bbfe4b0c7f6183f5020efc563c69ae0cb8eaed4044606a2985e2c1",
+    }
+)
+_FILE_GRIB2_MAPPINGS = freeze(
+    {
+        "builtin": "reki.mappings.grib2.generic",
+        "version": "1",
+        "sha256": "b531422ee7a2b7b70e6124bc7ae27bb0187334eadb4fd45c7d98dfe6f29a144a",
+    }
+)
 _PARSED_RESOURCES = _ResourceCache(maxsize=32)
-# cedarkit-query 0.2.1 uses the strict loader.
-load_prevalidated_resource = getattr(cedarkit_query, "load_prevalidated_resource", None)
 
 
 def _read(path, pointer):
@@ -126,10 +144,7 @@ def _load_resource(
         raise QueryError("invalid_config", pointer, "resource must be UTF-8") from exc
     resource_format = _format(path, pointer)
     use_prevalidated = (
-        prevalidated
-        and load_prevalidated_resource is not None
-        and resource_format == "json"
-        and path.parent == _BUILTIN_DIR
+        prevalidated and resource_format == "json" and path.parent == _BUILTIN_DIR
     )
 
     def parse_resource():

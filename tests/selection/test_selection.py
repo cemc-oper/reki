@@ -81,10 +81,10 @@ def test_empty_intersection_does_not_hide_later_invalid(factory, q):
     with pytest.raises(QueryError) as caught:
         selected.sel(parameter="not-registered")
     assert (caught.value.code, caught.value.path) == (
-        "unsupported",
+        "invalid_query",
         "/queries/0/parameter",
     )
-    assert caught.value.context["reason"] == "translation_unavailable"
+    assert caught.value.context["reason"] == "unknown_parameter"
     assert backend.starts == 0
     with pytest.raises(QueryError):
         selected.sel(member=-1)

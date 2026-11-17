@@ -49,11 +49,15 @@ def named_branches(query, index, config, mappings):
     source = {
         k: context[k] for k in ("dataset", "product", "product_version") if k in context
     }
-    provided = [
-        thaw(row)
-        for row in (config.product or {}).get("provides", ())
-        if row.get("parameter") == pid
-    ]
+    provided = (
+        [{}]
+        if config.product is None
+        else [
+            thaw(row)
+            for row in config.product.get("provides", ())
+            if row.get("parameter") == pid
+        ]
+    )
     branches = []
     branches_by_mode = {False: [], True: []}
     native_conflict = False

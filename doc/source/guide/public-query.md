@@ -1,4 +1,4 @@
-# Native field queries
+# GRIB field queries
 
 Open a GRIB file with `reki.from_source({"kind": "file", "path": path})`. Pass `native={"grib": {...}}` to `sel` using the encoded scalar keys of the intended record. For CEMC local tables, include centre, table version, parameter triple, PDT or fixed surface keys as needed. Use `Field.metadata["native_fields"]` to inspect the selected record.
 
@@ -6,11 +6,27 @@ Open a GRIB file with `reki.from_source({"kind": "file", "path": path})`. Pass `
 
 To enumerate every message in one file, use `source.sel().all()`. Each returned field has a one-based file ordinal, byte offset and encoded length in `field.metadata["source"]`. The fields are in file order, including repeated native keys at different offsets. While the source is open, call `field.read_grib_message()` on a field to retrieve its original bytes without decoding the values. This method also works on fields selected from `kind="local"`.
 
-For an exported CEMC ORIG catalog, pass its path in `context={"catalog": {"path": ...}}` and use `source.sel(parameter="cldb").all()` to select cloud base by name. The catalog resolves the product's parameter and mapping files relative to its own location. A named GRIB mapping without a unit rule returns the original decoded values and their missingness. The returned field carries the encoded keys in `field.metadata["native_fields"]` and omits the standard `units` attribute. A vertical rule projects the encoded fixed surfaces into Query coordinates when the mapping declares that interpretation.
+For an exported CEMC ORIG catalog, set the source's `dataset` and pass the catalog path in `context={"catalog": {"path": ...}}`. Use `source.sel(parameter="cldb").all()` to select cloud base by name. The catalog resolves the product's parameter and mapping files relative to its own location. A named GRIB mapping without a unit rule returns the original decoded values and their missingness. The returned field carries the encoded keys in `field.metadata["native_fields"]` and omits the standard `units` attribute. A vertical rule projects the encoded fixed surfaces into Query coordinates when the mapping declares that interpretation.
 
 Local sources use dataset-specific file layouts. Supply the origin in UTC, and optionally the lead or file member. For multi-record queries, a successful scan is bounded by the selected files. Product-wide completeness requires its own independent domain.
 
 For REPS, `kind="local"` prefers the archive directory for the origin's Beijing date. A matching file in the next Beijing-date directory fills an absent entry. Both directories use the requested UTC origin, lead and member in the filename.
+
+## Named selection from a GRIB2 file
+
+A file source with just a path uses reki's public parameter registry and generic GRIB2 mappings.
+
+```python
+from reki import from_source
+
+with from_source({"kind": "file", "path": "forecast.grib2"}) as source:
+    field = source.sel(parameter="t2m").one()
+    temperature = field.to_xarray().t2m
+```
+
+`t2m`, `cedarkit.t2m` and `2t` select the same 2 m temperature field in K. The bundled rules cover instantaneous `t2m`, `td2m`, `u10m`, `v10m` and the isobaric fields `t`, `u`, `v` and `h`. Each rule checks the GRIB2 header and the applicable field conditions.
+
+`source.sel(parameter="t2m").explain()` and `Field.report` record the registry and mapping IDs, content versions and SHA-256 digests. File queries report `unchecked` with `expected_set_unknown` when an independent expected domain is absent. An explicit standalone bundle can be selected through `context` with both `parameter_registry` and `mappings.grib2` references.
 
 ## CEMC ORIG support in catalog v57
 

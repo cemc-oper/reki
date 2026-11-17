@@ -183,6 +183,46 @@ def test_named_and_native_union_deduplicates_and_keeps_paired_conditions(dataset
         assert t500.report.overall["status"] == "unchecked"
 
 
+def test_plain_file_uses_the_generic_named_mapping_and_an_unknown_expected_set(dataset):
+    _, path, offsets = dataset
+    with from_source({"kind": "file", "path": str(path)}) as owner:
+        for name in ("t2m", "cedarkit.t2m", "2t"):
+            selection = owner.sel({**T2M, "parameter": name})
+            explanation = selection.explain().to_dict()
+            assert explanation["context"]["source"] == {"kind": "file"}
+            assert explanation["analysis"]["expected_count"] is None
+            branch = explanation["analysis"]["translations"][0]["branches"][0]
+            assert branch["scope"] == {}
+            assert [
+                row["resource"]["id"] for row in branch["basis"] if "resource" in row
+            ] == ["cedarkit.grib2.generic", "cedarkit.parameters.public"]
+            assert branch["basis"][0]["mapping"] == "wmo.t2m.instantaneous.103"
+            field = selection.one()
+            assert field.metadata["source"]["offset"] == offsets[1]
+            assert field.identity.parameter == "cedarkit.t2m"
+            assert field.identity.level == 2
+            assert field.report.to_dict()["context"]["definitions"] == (
+                explanation["context"]["definitions"]
+            )
+            assert field.report.overall["status"] == "unchecked"
+            assert [row["code"] for row in field.report.overall["reasons"]] == [
+                "expected_set_unknown"
+            ]
+            actual = field.to_xarray().t2m
+            assert actual.attrs["units"] == "K"
+            np.testing.assert_array_equal(actual, 282)
+
+        with pytest.raises(CompletenessError) as caught:
+            selection.one(completeness="required")
+        assert caught.value.code == "completeness_undetermined"
+        with pytest.raises(QueryError) as caught:
+            owner.sel(parameter="kidx")
+        assert caught.value.code == "unsupported"
+        assert caught.value.context["reason"] == "mapping_coverage_gap"
+        native = owner.sel(native={"grib": {"shortName": "2t"}}).one()
+        assert "parameter" not in native.identity.to_dict()
+
+
 def test_missing_and_unbounded_expectations_are_distinct(tmp_path):
     path = tmp_path / RELATIVE_FILE
     write_fields(path, [("heightAboveGround", 2, 282)])

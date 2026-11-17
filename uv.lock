@@ -113,7 +113,7 @@ wheels = [
 
 [[package]]
 name = "cedarkit-query"
-version = "0.2.2"
+version = "0.2.3"
 source = { directory = "../cedarkit-query" }
 dependencies = [
     { name = "jsonschema" },

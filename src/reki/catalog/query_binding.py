@@ -10,12 +10,19 @@ from cedarkit_query import (
     intersect_scopes,
     prepare_queries,
     validate_resource_set,
+    validate_standalone_grib2,
 )
 from cedarkit_query.resources import effective_parameters
 
 from ._cache import _ResourceCache
 from .current import current_registration
-from .loader import _load_resource, _resource_content_key, load_context
+from .loader import (
+    _FILE_GRIB2_MAPPINGS,
+    _FILE_PARAMETERS,
+    _load_resource,
+    _resource_content_key,
+    load_context,
+)
 from .model import SourceConfiguration, freeze
 
 
@@ -81,11 +88,16 @@ def _layout(value):
 
 def _bind_resources(ctx, dataset, catalog, kind, origins, definitions):
     parameter_ref = ctx.get("parameter_registry", dataset.get("parameter_registry"))
+    parameter_origin = "context" if "parameter_registry" in ctx else "dataset"
     references = {
         backend: (ref, origin)
         for owner, origin in ((dataset, "dataset"), (ctx, "context"))
         for backend, ref in owner.get("mappings", {}).items()
     }
+    if catalog is None and parameter_ref is None and not references:
+        parameter_ref = _FILE_PARAMETERS
+        parameter_origin = "builtin"
+        references = {"grib2": (_FILE_GRIB2_MAPPINGS, "builtin")}
     products = [
         product
         for product in dataset.get("products", ())
@@ -99,20 +111,25 @@ def _bind_resources(ctx, dataset, catalog, kind, origins, definitions):
         )
     if len(products) > 1:
         _missing("/source/dataset", "source must bind one unambiguous product version")
-    if not products and references:
+    if not products and references and (catalog is not None or "cmadaas" in references):
         _missing("/source/dataset", "mapping resources require a catalog product")
-    default_catalog = catalog.reference.get("builtin") == "reki.catalog"
-    origin = "context" if "parameter_registry" in ctx else "dataset"
+    base_dir = catalog.base_dir if catalog is not None else None
+    default_catalog = (
+        catalog is not None and catalog.reference.get("builtin") == "reki.catalog"
+    )
     parameters = _load_resource(
         parameter_ref,
         "parameters",
-        base_dir=catalog.base_dir,
+        base_dir=base_dir,
         pointer="/context/parameter_registry",
-        prevalidated=default_catalog and origin == "dataset",
+        prevalidated=(
+            parameter_origin == "builtin"
+            or (default_catalog and parameter_origin == "dataset")
+        ),
     )
-    origins["parameter_registry"] = origin
+    origins["parameter_registry"] = parameter_origin
     definitions.append(freeze(parameters.snapshot("parameter_registry")))
-    if not products:
+    if not products and not references:
         return freeze(effective_parameters(parameters.value)), (), None
 
     mappings = []
@@ -120,9 +137,9 @@ def _bind_resources(ctx, dataset, catalog, kind, origins, definitions):
         loaded = _load_resource(
             ref,
             "mappings",
-            base_dir=catalog.base_dir,
+            base_dir=base_dir,
             pointer="/context/mappings/" + backend,
-            prevalidated=default_catalog and origin == "dataset",
+            prevalidated=origin == "builtin" or (default_catalog and origin == "dataset"),
         )
         if loaded.value.backend != backend:
             raise QueryError(
@@ -133,16 +150,26 @@ def _bind_resources(ctx, dataset, catalog, kind, origins, definitions):
         definitions.append(freeze(loaded.snapshot("mappings", backend=backend)))
         origins["mappings." + backend] = origin
         mappings.append(loaded)
-    dataset_id = dataset["id"]
     mapping_values = tuple(loaded.value for loaded in mappings)
+    resource_keys = (
+        _resource_content_key(parameters),
+        tuple(_resource_content_key(loaded) for loaded in mappings),
+    )
+    if catalog is None:
+        effective = _VALIDATED_BINDINGS.get_or_create(
+            resource_keys,
+            lambda: freeze(validate_standalone_grib2(parameters.value, mapping_values[0])),
+        )
+        return effective, mapping_values, None
+
+    dataset_id = dataset["id"]
     # CI validates the resource combinations declared in the default catalog.
     default_resources = (
         default_catalog and "parameter_registry" not in ctx and not ctx.get("mappings")
     )
     cache_key = (
         _resource_content_key(catalog),
-        _resource_content_key(parameters),
-        tuple(_resource_content_key(loaded) for loaded in mappings),
+        *resource_keys,
         dataset_id,
         default_resources,
     )
@@ -171,13 +198,18 @@ def plan_source_binding(source, *, context=None, base_dir=None, client=None):
     if source["kind"] == "cmadaas" and "config" not in source and client is None:
         _missing("/source/config", "CMADaaS needs config or an external client")
 
-    catalog_ref = ctx.get("catalog", {"builtin": "reki.catalog"})
-    catalog = _load_resource(
-        catalog_ref,
-        "catalog",
-        pointer="/context/catalog",
-        prevalidated=catalog_ref.get("builtin") == "reki.catalog",
-    )
+    catalog = None
+    origins, definitions = {}, []
+    if "dataset" in source or "catalog" in ctx:
+        catalog_ref = ctx.get("catalog", {"builtin": "reki.catalog"})
+        catalog = _load_resource(
+            catalog_ref,
+            "catalog",
+            pointer="/context/catalog",
+            prevalidated=catalog_ref.get("builtin") == "reki.catalog",
+        )
+        origins["catalog"] = "context" if "catalog" in ctx else "builtin"
+        definitions.append(freeze(catalog.snapshot("catalog")))
     dataset = {}
     if "dataset" in source:
         dataset = next(
@@ -194,8 +226,6 @@ def plan_source_binding(source, *, context=None, base_dir=None, client=None):
 
     execution = {"completeness": "available", "max_expansion": 10000}
     roles = {}
-    origins = {"catalog": "context" if "catalog" in ctx else "builtin"}
-    definitions = [freeze(catalog.snapshot("catalog"))]
     parameters, mappings, product = _bind_resources(
         ctx,
         dataset,
@@ -204,7 +234,11 @@ def plan_source_binding(source, *, context=None, base_dir=None, client=None):
         origins,
         definitions,
     )
-    registration = current_registration(catalog, dataset.get("id"), product=product) or {}
+    registration = (
+        current_registration(catalog, dataset["id"], product=product)
+        if dataset
+        else None
+    ) or {}
     layout, fallback_layout = None, ()
     if source["kind"] == "local":
         layout = _layout(dataset.get("local_layout") or registration.get("local_layout"))
