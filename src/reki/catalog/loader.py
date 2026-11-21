@@ -43,15 +43,15 @@ BUILTINS = MappingProxyType(
 _FILE_PARAMETERS = freeze(
     {
         "builtin": "reki.parameters.public",
-        "version": "2",
-        "sha256": "3570093eddbb072cd4a08d83bd4c8bb0a09f94e688ea9c63846ac4463012f354",
+        "version": "3",
+        "sha256": "a8a919798cc656369d675f19062f750f28f77e57d1dfcacd7207565740b05ae3",
     }
 )
 _FILE_GRIB2_MAPPINGS = freeze(
     {
         "builtin": "reki.mappings.grib2.generic",
-        "version": "4",
-        "sha256": "d0b6a8ba71468c18e36829c86477e0e3ada44a8aca7aff2b0c31c3cb01937e30",
+        "version": "5",
+        "sha256": "b1f2f12572055e235f29f7389bab9533e9d4059f0171d26001655663e5ec40c2",
     }
 )
 _PARSED_RESOURCES = _ResourceCache(maxsize=32)

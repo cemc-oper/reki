@@ -24,7 +24,9 @@ with from_source({"kind": "file", "path": "forecast.grib2"}) as source:
     temperature = field.to_xarray().t2m
 ```
 
-`t2m`, `cedarkit.t2m` and `2t` select the same 2 m temperature field in K. The bundled registry defines 226 unified IDs, and 344 independent rules recognize 129 of them from GRIB2 headers. Each rule checks the relevant tables, template and field conditions per message. A named rule without a reviewed unit translation returns the original decoded values and retains the decoder's unit metadata in `Field.metadata["native_fields"]`.
+`t2m`, `cedarkit.t2m` and `2t` select the same 2 m temperature field in K. The bundled registry defines 229 IDs, and 347 independent rules recognize 132 of them from GRIB2 headers. Each rule checks the relevant tables, template and field conditions per message. A named rule without a reviewed unit translation returns the original decoded values and retains the decoder's unit metadata in `Field.metadata["native_fields"]`.
+
+Use `source.sel(parameter="gsw").one()` to read the original CEMC surface net short-wave field. The names `glw`, `gsw` and `hfx` select reviewed CEMC surface encodings and return `cedarkit.glw.raw`, `cedarkit.gsw.raw` and `cedarkit.hfx.raw`, respectively. The readings preserve the decoded values and retain the encoded statistical interval in metadata. Their xarray output omits the standard `units` attribute because the same encoding carries flux or accumulated energy across products.
 
 For reviewed individual ensemble fields (PDT 1 or 11), `member` is the encoded `perturbationNumber` and `member_role` comes from the encoded forecast type. Use either selector to narrow a named query to ensemble fields, for example `source.sel(parameter="t2m", member_role="control").all()`. Explicit product queries use their catalog's member numbering. [WMO code table 4.6](https://raw.githubusercontent.com/wmo-im/GRIB2/v37/GRIB2_CodeFlag_4_6_CodeTable_en.csv)
 

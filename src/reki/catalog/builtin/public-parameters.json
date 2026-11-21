@@ -2530,7 +2530,37 @@
       "name": "zs",
       "parameter_id": "cedarkit.zs",
       "parent": "cedarkit.h.any"
+    },
+    {
+      "description": "Original values of the CEMC surface downward long-wave radiation field",
+      "description_cn": "CEMC 地表下行长波辐射原值",
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "glw",
+      "parameter_id": "cedarkit.glw.raw",
+      "unit": "unknown"
+    },
+    {
+      "description": "Original values of the CEMC surface net short-wave radiation field",
+      "description_cn": "CEMC 地表净短波辐射原值",
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "gsw",
+      "parameter_id": "cedarkit.gsw.raw",
+      "unit": "unknown"
+    },
+    {
+      "description": "Original values of the CEMC upward surface sensible heat field",
+      "description_cn": "CEMC 地表向上感热原值",
+      "fixed_conditions": {
+        "level_type": "surface"
+      },
+      "name": "hfx",
+      "parameter_id": "cedarkit.hfx.raw",
+      "unit": "unknown"
     }
   ],
-  "version": "2"
+  "version": "3"
 }

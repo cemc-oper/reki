@@ -769,6 +769,60 @@ def test_slhf_accumulated_energy_preserves_native_values(write_grib, slhf_record
         )
 
 
+@pytest.mark.parametrize(
+    "name,triple", [("glw", (0, 5, 5)), ("gsw", (0, 4, 9)), ("hfx", (2, 0, 24))]
+)
+def test_plain_file_selects_cemc_surface_original_values_by_name(write_grib, name, triple):
+    discipline, category, number = triple
+    values = [-120.0, 0.0, 80.0, 1000.0]
+    surface = {
+        "productDefinitionTemplateNumber": 8,
+        "centre": 38,
+        "subCentre": 0,
+        "tablesVersion": 4,
+        "localTablesVersion": 0,
+        "productionStatusOfProcessedData": 0,
+        "generatingProcessIdentifier": 15,
+        "significanceOfReferenceTime": 1,
+        "typeOfProcessedData": 1,
+        "typeOfGeneratingProcess": 2,
+        "discipline": discipline,
+        "parameterCategory": category,
+        "parameterNumber": number,
+        "typeOfFirstFixedSurface": 1,
+        "typeOfSecondFixedSurface": 255,
+        "indicatorOfUnitOfTimeRange": 1,
+        "forecastTime": 3,
+        "typeOfStatisticalProcessing": 1,
+        "numberOfTimeRange": 1,
+        "typeOfTimeIncrement": 2,
+        "indicatorOfUnitForTimeRange": 1,
+        "lengthOfTimeRange": 3,
+        "yearOfEndOfOverallTimeInterval": 2026,
+        "monthOfEndOfOverallTimeInterval": 1,
+        "dayOfEndOfOverallTimeInterval": 1,
+        "hourOfEndOfOverallTimeInterval": 6,
+        "minuteOfEndOfOverallTimeInterval": 0,
+        "secondOfEndOfOverallTimeInterval": 0,
+        "values": values,
+    }
+    path = write_grib(records=[
+        {**surface, "typeOfFirstFixedSurface": 8},
+        surface,
+        {**surface, "centre": 98},
+    ])
+    with from_source({"kind": "file", "path": str(path)}) as source:
+        field = source.sel(parameter=name).one()
+        pid = f"cedarkit.{name}.raw"
+        assert field.identity.parameter == pid
+        assert field.metadata["source"]["ordinal"] == 2
+        assert field.metadata["statistical_interval"]["start"] == "2026-01-01T03:00:00Z"
+        assert field.read_grib_message() == source.sel(parameter=pid).one().read_grib_message()
+        array = field.to_xarray()[name]
+        assert "units" not in array.attrs
+        np.testing.assert_array_equal(array.values.ravel(), values)
+
+
 def test_slhf_unit_review_rejects_a_different_carrier(write_grib, slhf_record, tmp_path):
     path = write_grib(records=[{**slhf_record, "parameterNumber": 11}])
     source = {"kind": "file", "path": str(path), "dataset": "cma_gfs_gmf"}
