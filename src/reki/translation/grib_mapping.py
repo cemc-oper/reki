@@ -61,6 +61,11 @@ def named_branches(query, index, config, mappings):
     branches = []
     branches_by_mode = {False: [], True: []}
     native_conflict = False
+    standalone = config.product is None
+    member_selector = next(
+        (name for name in ("member", "member_role") if name in query), None
+    )
+    deterministic_member_conflict = False
     selectors = query.get("native", {}).get("grib", {})
     members = sorted(set((config.member_numbering or {}).values()))
     for (resource, mapping_id), row in mappings.items():
@@ -118,14 +123,9 @@ def named_branches(query, index, config, mappings):
             template = filters.get("productDefinitionTemplateNumber")
             statistics = definition["fixed_conditions"].get("statistics", {})
             period = statistics.get("period", {}).get("kind")
-            if template in {0, 8} and {"member", "member_role"} & query.keys():
-                _error(
-                    index,
-                    "fixed_condition_conflict",
-                    "deterministic fields have no member identity",
-                    code="constraint_conflict",
-                    field="member" if "member" in query else "member_role",
-                )
+            if template in {0, 8} and member_selector:
+                deterministic_member_conflict = True
+                continue
             if template in {1, 11} and members and "member" in residual:
                 member_domain = intersect_scopes(residual, {"member": members})
                 if member_domain is None:
@@ -153,7 +153,11 @@ def named_branches(query, index, config, mappings):
             if (
                 any(_RULES.get(duty) != rule["rule"] for duty, rule in rules.items())
                 or template not in {0, 1, 8, 11}
-                or (template in {1, 11} and config.member_numbering is None)
+                or (
+                    template in {1, 11}
+                    and config.member_numbering is None
+                    and (not standalone or "member" not in rules)
+                )
                 or (check_statistic and not reviewed_statistic)
             ):
                 _error(
@@ -239,6 +243,14 @@ def named_branches(query, index, config, mappings):
                     )
             branches.append(branch)
             same_mode.append(branch)
+    if deterministic_member_conflict and (not standalone or not branches):
+        _error(
+            index,
+            "fixed_condition_conflict",
+            "deterministic fields have no member identity",
+            code="constraint_conflict",
+            field=member_selector,
+        )
     if not branches and native_conflict:
         _error(
             index,

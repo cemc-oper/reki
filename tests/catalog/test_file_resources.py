@@ -22,8 +22,8 @@ def test_bundled_standalone_resources_pass_full_validation(tmp_path, monkeypatch
     assert plan.product is None
     assert plan.member_numbering is None
     assert [(row["role"], row["id"], row["version"]) for row in plan.definitions] == [
-        ("parameter_registry", "cedarkit.parameters.public", "1"),
-        ("mappings", "cedarkit.grib2.generic", "1"),
+        ("parameter_registry", "cedarkit.parameters.public", "2"),
+        ("mappings", "cedarkit.grib2.generic", "4"),
     ]
     parameters, mappings = (
         load_resource(row["reference"], kind)

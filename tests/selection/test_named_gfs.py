@@ -191,7 +191,11 @@ def test_plain_file_uses_the_generic_named_mapping_and_an_unknown_expected_set(d
             explanation = selection.explain().to_dict()
             assert explanation["context"]["source"] == {"kind": "file"}
             assert explanation["analysis"]["expected_count"] is None
-            branch = explanation["analysis"]["translations"][0]["branches"][0]
+            branches = explanation["analysis"]["translations"][0]["branches"]
+            (branch,) = (
+                row for row in branches
+                if row["candidate_filter"]["productDefinitionTemplateNumber"] == 0
+            )
             assert branch["scope"] == {}
             assert [
                 row["resource"]["id"] for row in branch["basis"] if "resource" in row
@@ -216,7 +220,7 @@ def test_plain_file_uses_the_generic_named_mapping_and_an_unknown_expected_set(d
             selection.one(completeness="required")
         assert caught.value.code == "completeness_undetermined"
         with pytest.raises(QueryError) as caught:
-            owner.sel(parameter="kidx")
+            owner.sel(parameter="gsw-flux")
         assert caught.value.code == "unsupported"
         assert caught.value.context["reason"] == "mapping_coverage_gap"
         native = owner.sel(native={"grib": {"shortName": "2t"}}).one()

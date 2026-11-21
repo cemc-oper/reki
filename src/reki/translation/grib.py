@@ -260,6 +260,8 @@ def time_fields(meta):
 
 
 TIME_OPERATIONS = {"mean": 0, "accumulation": 1, "maximum": 2, "minimum": 3}
+_CONTROL_FORECAST_TYPES = {0, 1, 5}
+_PERTURBED_FORECAST_TYPES = {2, 3, 6, 7, 8, 9}
 
 
 def member_fields(meta, configuration):
@@ -269,19 +271,33 @@ def member_fields(meta, configuration):
     number = integer(
         meta, "perturbationNumber", maximum=254, reason="invalid_member_metadata"
     )
+    fields = {"typeOfEnsembleForecast": kind, "perturbationNumber": number}
+    if configuration.member_numbering is None:
+        # A standalone rule identifies the individual forecast. WMO table 4.6
+        # supplies its role and the native perturbation number supplies its ID.
+        if kind in _CONTROL_FORECAST_TYPES:
+            return {"member": number, "member_role": "control"}
+        if kind in _PERTURBED_FORECAST_TYPES:
+            return {"member": number, "member_role": "perturbation"}
+        metadata_error(
+            "unmapped_native_value",
+            "ensemble forecast type has no reviewed standalone member role",
+            fields=fields,
+        )
+
     member = configuration.member_numbering.get((kind, number))
     if member is None:
         metadata_error(
             "unmapped_native_value",
             "member has no reviewed numbering",
-            fields={"typeOfEnsembleForecast": kind, "perturbationNumber": number},
+            fields=fields,
         )
     role = configuration.member_role(member)
-    expected = "control" if kind in {0, 1, 5} else "perturbation"
+    expected = "control" if kind in _CONTROL_FORECAST_TYPES else "perturbation"
     if role != expected:
         metadata_error(
             "inconsistent_native_metadata",
             "member role contradicts the native code",
-            fields={"typeOfEnsembleForecast": kind, "perturbationNumber": number},
+            fields=fields,
         )
     return {"member": member, "member_role": role}

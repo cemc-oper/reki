@@ -181,6 +181,59 @@ def test_local_named_query_discovers_all_member_mapping_branches(
         )
 
 
+def test_plain_file_selects_members_from_reviewed_headers(write_grib):
+    deterministic = {
+        "centre": 38,
+        "tablesVersion": 4,
+        "localTablesVersion": 0,
+        "typeOfFirstFixedSurface": 103,
+        "scaledValueOfFirstFixedSurface": 2,
+    }
+    ensemble = {
+        **deterministic,
+        "productDefinitionTemplateNumber": 1,
+        "typeOfGeneratingProcess": 4,
+        "generatingProcessIdentifier": 128,
+    }
+    records = [deterministic]
+    members = ((0, 0, 31), (3, 1, 31), (2, 2, 31), (3, 0, 31), (3, 1, 29))
+    for kind, member, count in members:
+        records.append({
+            **ensemble,
+            "typeOfProcessedData": 3 if kind == 0 else 4,
+            "typeOfEnsembleForecast": kind,
+            "perturbationNumber": member,
+            "numberOfForecastsInEnsemble": count,
+        })
+    path = write_grib("renamed-m019.grib2", records=records)
+    with from_source({"kind": "file", "path": str(path)}) as source:
+        all_fields = source.sel(parameter="t2m").all()
+        assert [f.metadata["source"]["ordinal"] for f in all_fields] == [1, 2, 3, 4]
+        assert "member" not in all_fields[0].identity.to_dict()
+        assert [(f.identity.member, f.identity.member_role) for f in all_fields[1:]] == [
+            (0, "control"), (1, "perturbation"), (2, "perturbation")
+        ]
+        control = source.sel(parameter="cedarkit.t2m", member_role="control").one()
+        assert control.metadata["source"]["ordinal"] == 2
+        assert control.report.overall["status"] == "unchecked"
+        assert [r["code"] for r in control.report.overall["reasons"]] == ["expected_set_unknown"]
+        perturbed = source.sel(
+            parameter="t2m", member=[1, 2], member_role="perturbation"
+        ).all()
+        assert [f.metadata["source"]["ordinal"] for f in perturbed] == [3, 4]
+        assert perturbed.to_xarray().member_role.values.tolist() == ["perturbation"] * 2
+        native = source.sel(native={"grib": {
+            "productDefinitionTemplateNumber": 1,
+            "typeOfEnsembleForecast": 0,
+            "perturbationNumber": 0,
+        }}).one()
+        assert control.read_grib_message() == native.read_grib_message()
+        assert not source.sel(parameter="t2m", member=19).all()
+        with pytest.raises(QueryError) as caught:
+            source.sel(parameter="q2m", member=0)
+        assert caught.value.code == "constraint_conflict"
+
+
 def test_file_replacement_fails_delayed_reference(configured, write_grib):
     source, file, _ = configured()
     field = source.sel(native={"grib": {"parameterNumber": 0}}).one()
