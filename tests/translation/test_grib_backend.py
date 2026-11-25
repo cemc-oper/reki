@@ -278,6 +278,81 @@ def test_native_query_does_not_fabricate_business_id(configured):
     assert field.metadata["native_fields"]["units"] == "K"
 
 
+def test_parameter_names_resolve_in_order_and_support_prefixes(write_grib):
+    path = write_grib(records=[
+        {},
+        {"typeOfFirstFixedSurface": 103, "scaledValueOfFirstFixedSurface": 2},
+        {"parameterCategory": 3, "parameterNumber": 5},
+    ])
+    with from_source({"kind": "file", "path": str(path)}) as source:
+        for name in ("2t", "cedarkit:2t", "cedarkit.t2m"):
+            field = source.sel(parameter=name).one()
+            assert field.metadata["parameter_id"] == "cedarkit.t2m"
+            assert field.metadata["source"]["ordinal"] == 2
+
+        field = source.sel(parameter="eccodes:2t").one()
+        assert "parameter_id" not in field.metadata
+        assert field.metadata["source"]["ordinal"] == 2
+        with pytest.raises(QueryError, match="explicit choice conflicts"):
+            source.sel(parameter="2t", level_type="height_above_ground", level=10)
+
+        query = source.sel(parameter="TMP").sel(level_type="pressure", level=850)
+        field = query.one()
+        assert field.metadata["source"]["ordinal"] == 1
+        assert field.metadata["native_fields"]["wgrib2Name"] == "TMP"
+        assert "v3.8.0" in field.report.context["origins"]["wgrib2_names"]
+        assert query.explain().effective_queries[0]["query"]["native"]["grib"] == {
+            "wgrib2Name": "TMP"
+        }
+
+        fields = source.sel(parameter=["t2m", "wgrib2:TMP", "gh"]).all()
+        assert [item.metadata["source"]["ordinal"] for item in fields] == [1, 2, 3]
+        assert sorted(row["summary"]["field_count"] for row in fields.report.queries) == [
+            1, 1, 2
+        ]
+        assert fields[-1].metadata["native_fields"]["shortName"] == "gh"
+
+
+def test_wgrib2_name_uses_centre_and_local_table(write_grib):
+    freezing_rain = {"parameterCategory": 1, "parameterNumber": 225}
+    path = write_grib(records=[
+        dict(freezing_rain, centre=38, localTablesVersion=1),
+        dict(freezing_rain, centre=7, localTablesVersion=1),
+        dict(freezing_rain, centre=7, localTablesVersion=0),
+        {
+            "centre": 98,
+            "localTablesVersion": 1,
+            "parameterCategory": 1,
+            "parameterNumber": 195,
+        },
+    ])
+    with from_source({"kind": "file", "path": str(path)}) as source:
+        fields = source.sel(parameter="FRZR").all()
+        assert [field.metadata["source"]["ordinal"] for field in fields] == [2, 3]
+        assert not source.sel(parameter="FRZR", native={"grib": {"centre": 38}}).all()
+        field = source.sel(parameter="wgrib2:CP").one()
+        assert field.metadata["source"]["ordinal"] == 4
+        assert field.metadata["native_fields"]["wgrib2Name"] == "CP"
+        with pytest.raises(QueryError, match="unknown parameter"):
+            source.sel(parameter="wgrib2:cp")
+
+
+def test_parameter_name_errors_depend_on_the_resolved_namespace(configured):
+    source, _, _ = configured()
+    with source:
+        for name in ("cedarkit.misspelled", "wgrib2:misspelled", "eccodes:unknown"):
+            with pytest.raises(QueryError) as invalid:
+                source.sel(parameter=name)
+            assert invalid.value.context["reason"] == "unknown_parameter"
+        with pytest.raises(QueryError, match="expected a name after the prefix"):
+            source.sel(parameter="eccodes:")
+        selection = source.sel(parameter="misspelled")
+        assert not selection.all()
+        with pytest.raises(QueryError) as absent:
+            selection.one()
+        assert absent.value.code == "no_match"
+
+
 def test_no_match_is_empty_but_truncated_stream_is_a_source_error(configured):
     source, file, _ = configured()
     assert (

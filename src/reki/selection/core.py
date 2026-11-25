@@ -362,6 +362,7 @@ class Selection:
         if not inputs:
             raise QueryError("invalid_query", "/queries", "Query list must be nonempty")
         config = self._owner.configuration
+        prepare_parameters = getattr(self._owner._backend, "prepare_parameters", None)
         raw, prepared, indexes = [], [], []
         si = len(self._inputs)
         for qi, value in enumerate(inputs):
@@ -379,7 +380,7 @@ class Selection:
                         prepared_input = Query(
                             {"level_type": kinds.pop(), **q.to_dict()}
                         )
-                values = _prepare_input(prepared_input, config)
+                values = _prepare_input(prepared_input, config, prepare_parameters)
                 for normalized in values:
                     _check_member_roles(normalized, config)
                 prepared.extend(values)
@@ -923,12 +924,12 @@ def _needs_vertical_type(query):
     )
 
 
-def _prepare_input(query, configuration):
+def _prepare_input(query, configuration, prepare_parameters):
     scope = configuration.scope.to_dict()
     raw = query.to_dict()
-    if (
-        "parameter" in raw or "parameter" in scope
-    ) and configuration.parameters is None:
+    if configuration.parameters is None and (
+        "parameter" in scope or ("parameter" in raw and prepare_parameters is None)
+    ):
         raise QueryError(
             "unsupported",
             "/parameter" if "parameter" in raw else "/context/scope/parameter",
@@ -967,7 +968,11 @@ def _prepare_input(query, configuration):
     if "parameter" in raw:
         if "level_type" in scope and "level_type" not in raw:
             raw["level_type"] = scope["level_type"]
-        candidates = prepare_queries([raw], configuration.parameters)
+        candidates = (
+            prepare_queries([raw], configuration.parameters)
+            if prepare_parameters is None
+            else prepare_parameters(raw)
+        )
     else:
         candidates = (query,)
     result = []
@@ -1135,7 +1140,7 @@ def _execution_context(context, extra):
     # existing configuration provenance is never overwritten. No client/request body.
     if (
         set(extra) - {"source", "origins"}
-        or set(extra.get("origins", {})) - {"adapter", "native_library"}
+        or set(extra.get("origins", {})) - {"adapter", "native_library", "wgrib2_names"}
         or set(extra.get("source", {}))
         - {
             "paths",

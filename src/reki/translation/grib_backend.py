@@ -10,7 +10,13 @@ from threading import Lock
 import numpy as np
 import xarray as xr
 
-from cedarkit_query import Query, QueryError, SourceError
+from cedarkit_query import (
+    Query,
+    QueryError,
+    SourceError,
+    constrain_query,
+    prepare_queries,
+)
 from cedarkit_query.normalize import _contains
 from reki._legacy import reader_errors
 from reki.catalog.model import thaw
@@ -18,6 +24,12 @@ from reki.selection.backend import Plan, FieldReference, BranchEvent
 from reki.selection.core import key as identity_key, matches
 from reki.selection.files import FileSnapshot, discover_paths
 from reki.grib_io import decode_values, iter_grib2_headers, iter_headers, open_grib_file
+from reki.grib_names import (
+    WGRIB2_NAME_KEY,
+    get_wgrib2_name,
+    is_wgrib2_name,
+    wgrib2_name_origin,
+)
 from . import grib
 from .common import metadata_error, software_origin
 from .grib_mapping import expected_cells, has_rule, interpret_named, named_branches
@@ -140,7 +152,9 @@ def check_filter(condition):
             if isinstance(value, dict)
             else [value]
         )
-        expected = int if key in INTEGER_KEYS else str if key in STRING_KEYS else None
+        expected = int if key in INTEGER_KEYS else None
+        if key in STRING_KEYS or key == WGRIB2_NAME_KEY:
+            expected = str
         if expected is not None and any(type(v) is not expected for v in values):
             raise QueryError(
                 "invalid_query",
@@ -159,7 +173,9 @@ def _metadata(handle, *, keys=None):
         else keys
     ):
         try:
-            if (
+            if key == WGRIB2_NAME_KEY:
+                result[key] = get_wgrib2_name(handle)
+            elif (
                 not eccodes.codes_is_defined(handle, key)
                 or eccodes.codes_is_missing(handle, key)
                 or eccodes.codes_get_size(handle, key) != 1
@@ -256,6 +272,56 @@ class GribBackend:
             if resource.backend == "grib2"
             for row in resource.to_dict()["mappings"]
         }
+
+    def prepare_parameters(self, query):
+        """Resolve the requested name before testing any records."""
+        constraints = dict(query)
+        tokens = constraints.pop("parameter")
+        parameters = self.configuration.parameters
+        if not isinstance(tokens, list):
+            tokens = [tokens]
+        for token in tokens:
+            namespace, separator, name = token.partition(":")
+            if not separator or namespace not in {"cedarkit", "wgrib2", "eccodes"}:
+                namespace, name = None, token
+            elif not name or name != name.strip():
+                raise QueryError(
+                    "invalid_query", "/parameter", "expected a name after the prefix"
+                )
+
+            cedar_only = namespace == "cedarkit" or name.startswith("cedarkit.")
+            if namespace in (None, "cedarkit"):
+                if parameters is None and cedar_only:
+                    raise QueryError(
+                        "unsupported",
+                        "/parameter",
+                        "business parameter execution requires a bound mapping",
+                        {"reason": "translation_unavailable"},
+                    )
+                if parameters is not None:
+                    try:
+                        prepared = prepare_queries(
+                            [dict(constraints, parameter=name)], parameters
+                        )
+                    except QueryError as exc:
+                        if cedar_only or exc.context.get("reason") != "unknown_parameter":
+                            raise
+                    else:
+                        yield from prepared
+                        continue
+
+            if namespace != "eccodes" and is_wgrib2_name(name):
+                native_key = WGRIB2_NAME_KEY
+            elif namespace == "wgrib2" or name == "unknown":
+                raise QueryError(
+                    "invalid_query",
+                    "/parameter",
+                    f"unknown parameter {name!r}",
+                    {"reason": "unknown_parameter"},
+                )
+            else:
+                native_key = "shortName"
+            yield constrain_query({"native": {"grib": {native_key: name}}}, constraints)
 
     def plan(self, queries, configuration):
         translations, expected = [], []
@@ -385,6 +451,8 @@ class GribScan:
                 for k in branch["candidate_filter"]
             }
         )
+        if WGRIB2_NAME_KEY in self.keys:
+            self.context["origins"]["wgrib2_names"] = wgrib2_name_origin()
 
     def __iter__(self):
         self._iterator = self._fields()

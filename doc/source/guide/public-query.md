@@ -32,6 +32,33 @@ For reviewed individual ensemble fields (PDT 1 or 11), `member` is the encoded `
 
 `source.sel(parameter="t2m").explain()` and `Field.report` record the registry and mapping IDs, content versions and SHA-256 digests. File queries report `unchecked` with `expected_set_unknown` when an independent expected domain is absent. An explicit standalone bundle can be selected through `context` with both `parameter_registry` and `mappings.grib2` references.
 
+### wgrib2 and ecCodes short names
+
+For GRIB file and local archive sources, `parameter=` resolves an exact CedarKit
+name, alias or ID first, then a short name from the bundled wgrib2 NCEP tables,
+then the ecCodes `shortName` of each record. Use uppercase wgrib2 names and the
+exact spelling of CedarKit and ecCodes names. The selected naming convention
+applies even when other selectors leave no matching records. Use `cedarkit:`,
+`wgrib2:` or `eccodes:` to select a particular convention. For example, bare
+`APCP` uses the CedarKit accumulation definition. `wgrib2:APCP` selects records
+that have the upstream short name.
+
+```python
+temperature = source.sel(
+    parameter="TMP", level_type="pressure", level=850, level_unit="hPa"
+).one()
+height = source.sel(
+    parameter="eccodes:gh", level_type="pressure", level=850, level_unit="hPa"
+).one()
+```
+
+External short names use native GRIB selection and decoding. `explain()` shows
+the effective native predicates. The field report records the upstream version
+and digest when a query uses the wgrib2 table. For a name sent to ecCodes, an
+absent match gives an empty `all()` result or a `no_match` error from `one()`.
+Use the existing coordinate selectors to narrow short names that span multiple
+levels or time windows.
+
 ## CEMC ORIG support in catalog v57
 
 For named selection from full CEMC `grib2/orig` files, pass one of the
