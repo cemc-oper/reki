@@ -16,6 +16,14 @@ xarray datasets.
 - Read NetCDF, GrADS, and tabular data with format-specific readers.
 - Extract regions, sample points, and interpolate gridded data.
 
+### Data sources
+
+| `kind` | Use case |
+| --- | --- |
+| `file` | Read a local GRIB2 file at a known path. |
+| `local` | Find and read GRIB2 files in a mounted archive using a dataset ID and mount root. |
+| `cmadaas` | Query CMADaaS MUSIC using a dataset ID and a CedarKit YAML file with connection settings and credentials. |
+
 ## Installation
 
 reki requires Python 3.11 or newer. Install a release from PyPI.
@@ -33,8 +41,8 @@ Dask-backed arrays in supported readers.
 ## Quick start
 
 Read 2 m air temperature from a local GRIB2 file with one matching field.
-A public ECMWF IFS example is available in the
-[sample data guide](https://reki.readthedocs.io/zh-cn/latest/quick-start/test-data.html).
+For a public ECMWF IFS example, run `reki-test-data download ecmwf_ifs` and
+replace `forecast.grib2` with the downloaded file path.
 
 ```python
 from reki import from_source
@@ -45,18 +53,15 @@ with from_source({"kind": "file", "path": "forecast.grib2"}) as source:
 print(temperature)
 ```
 
+With the ECMWF IFS sample, the output is an `xarray.DataArray` named `t2m`
+with `units` set to `K` (kelvin).
+
 ## Documentation
 
-- [Documentation home](https://reki.readthedocs.io/)
-- [Finding data](https://reki.readthedocs.io/zh-cn/latest/guide/finding/index.html)
-- [Querying GRIB2 fields](https://reki.readthedocs.io/zh-cn/latest/guide/public-query.html)
-- [Using CMADaaS MUSIC](https://reki.readthedocs.io/zh-cn/latest/guide/cmadaas-query.html)
-- [Migrating from older versions](https://reki.readthedocs.io/zh-cn/latest/guide/migration.html)
+[中文文档](https://reki.readthedocs.io/)
 
 ## Contributing
 
-Development setup is covered in the
-[contributing guide](https://reki.readthedocs.io/zh-cn/latest/development/contributing.html).
 Report bugs or request features on [GitHub Issues](https://github.com/cemc-oper/reki/issues).
 
 ## License
