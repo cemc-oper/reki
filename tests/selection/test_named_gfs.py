@@ -116,7 +116,7 @@ def test_python_and_requests_read_named_temperature(
             assert field.report.overall["status"] == "complete"
             assert field.report.overall["field_count"] == 1
             assert metrics.snapshot()["value_decode_count"] == 0
-            actual = field.to_xarray()
+            actual = field.to_xarray(include_report=True)
             assert actual[name].dims == ("time", "step", axis, "latitude", "longitude")
             assert actual[axis].item() == level
             assert actual[name].attrs["cedarkit_parameter_id"] == query["parameter"]
@@ -127,7 +127,7 @@ def test_python_and_requests_read_named_temperature(
                 == field.report
             )
             assert field.report.context["source"]["product_version"] == "current"
-            renamed = field.to_xarray(rename="temperature")
+            renamed = field.to_xarray(rename="temperature", include_report=True)
             assert renamed.temperature.attrs == actual[name].attrs
             assert renamed.attrs == actual.attrs
         np.testing.assert_array_equal(actual[name], value)
@@ -147,7 +147,7 @@ def test_python_and_requests_read_named_temperature(
         request = Request.load(request_path)
         with from_source(request.source, context=request.context) as owner:
             result = owner.sel(request.queries).one(completeness=request.completeness)
-            request_ds = result.to_xarray()
+            request_ds = result.to_xarray(include_report=True)
             assert (
                 QueryReport.from_json(request_ds.attrs["cedarkit_query_report"])
                 == field.report

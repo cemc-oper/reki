@@ -4,6 +4,7 @@ from dataclasses import replace
 import json
 
 import pytest
+import xarray as xr
 
 from cedarkit_query import (
     Query,
@@ -263,14 +264,28 @@ def test_lifecycle_snapshot_and_no_query_or_value_cache(factory, q):
     assert float(ds.t.values.flat[0]) == 1
 
 
-def test_report_snapshot_is_json_independent_and_no_values_claim(factory, q):
+@pytest.mark.parametrize("entry", ["selection", "field", "fields"])
+def test_report_snapshot_is_opt_in(factory, q, entry):
     source, backend, _ = factory([q], [q])
-    fields = source.sel(q).all()
+    selection = source.sel(q)
+    fields = selection.all()
+    to_xarray = {
+        "selection": selection.to_xarray,
+        "field": fields[0].to_xarray,
+        "fields": fields.to_xarray,
+    }[entry]
     assert backend.loads == 0
-    ds = fields.to_xarray()
-    report = QueryReport.from_json(ds.attrs["cedarkit_query_report"])
+    key = "cedarkit_query_report"
+    default = to_xarray()
+    assert key not in default.attrs and key not in default.t.attrs
+    xr.testing.assert_identical(to_xarray(include_report=False), default)
+
+    ds = to_xarray(include_report=True)
+    snapshot = ds.attrs.pop(key)
+    assert ds.t.attrs.pop(key) == snapshot
+    xr.testing.assert_identical(ds, default)
+    report = QueryReport.from_json(snapshot)
     assert report == fields.report
-    assert ds.t.attrs["cedarkit_query_report"] == report.to_json()
     assert "execution" in report.translations[0]["branches"][0]
     assert "array" not in json.dumps(report.to_dict())
 

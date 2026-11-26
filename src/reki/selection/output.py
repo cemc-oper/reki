@@ -131,7 +131,7 @@ def _values(field):
     return array
 
 
-def assemble(fields, report, rename, *, parameters=None):
+def assemble(fields, report, rename, *, parameters=None, include_report: bool = False):
     groups, names, positions, grids, vertical, roles = {}, {}, set(), [], {}, {}
     for field in fields:
         semantic, name, identity, meta = _variable(field)
@@ -317,9 +317,10 @@ def assemble(fields, report, rename, *, parameters=None):
     for axis, unit in (("latitude", "degrees_north"), ("longitude", "degrees_east")):
         if axis in ds.coords:
             ds[axis].attrs["units"] = unit
-    # Presence/translation reports do not claim value quality or conversion checks.
-    snapshot = report.to_json()
-    ds.attrs["cedarkit_query_report"] = snapshot
-    for array in ds.data_vars.values():
-        array.attrs["cedarkit_query_report"] = snapshot
+    if include_report:
+        # Presence/translation reports do not claim value quality or conversion checks.
+        snapshot = report.to_json()
+        ds.attrs["cedarkit_query_report"] = snapshot
+        for array in ds.data_vars.values():
+            array.attrs["cedarkit_query_report"] = snapshot
     return ds.load().copy(deep=True)

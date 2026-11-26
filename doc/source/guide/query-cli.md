@@ -6,4 +6,6 @@ Successful requests exit with status 0 and write the explanation or report to st
 
 `reki request read` stages the NetCDF file beside the destination and replaces the destination only after the write succeeds. Output I/O errors use the JSON Pointer `/output`.
 
+Pass `--include-report` to store the JSON report in the NetCDF `cedarkit_query_report` attributes.
+
 `reki inspect`, `reki ls` and `reki query` also expose file metadata for local exploration.

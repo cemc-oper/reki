@@ -81,6 +81,8 @@ For a mounted CEMC original product, use `{"kind": "local", "dataset": "cma_gfs_
 
 `one()` requires a unique original message. `all()` returns each matching field in source order. Assemble fields on a compatible grid with `to_xarray()`; inspect individual fields when grids differ. Original scalar metadata is available from each Field. Legacy message readers still accept an ecCodes shortName, a native key mapping or a record count.
 
+`to_xarray(include_report=True)` stores the query report as a JSON string in `cedarkit_query_report` on the Dataset and its variables. The default is `include_report=False`. Field and Fields objects expose the query report through `.report`.
+
 See [native field queries](doc/source/guide/public-query.md).
 
 ## CMADaaS public queries
@@ -91,7 +93,7 @@ The optional `reki[cmadaas]` dependency supports named scalar grid requests thro
 
 The ordinary `reki.format.grib.load_field_from_file` and ecCodes `reki.readers.grib.eccodes.load_field_from_file` retain first-match scalar selection, file-order level lists, native names/units/coordinates, and lazy value access. A missing match, including an empty requested level list, returns `None`. Historical `start_time`, `forecast_time`, and `valid_time` arguments remain header predicates. Returned ecCodes handles belong to the caller and must be released; `count` is a one-based physical message number and overrides filters. Byte readers preserve the original message bytes.
 
-`load_field_from_files` returns a single-variable DataArray or `None`; `load_fields_from_file` returns a Dataset, including an empty Dataset on no match. These collection functions use the public v1 coordinate organization, duplicate/grid checks and `cedarkit_query_report`. For collections, `level=None` or `"all"` imposes no level restriction; `level_dim` and `lazy=True` are unsupported. Only a single variable may be renamed by `field_name`. An empty file list is invalid. Legacy filters not expressible in the public Query schema remain adapter predicates and are recorded in the report's adapter provenance (`grib.legacy;selection=...`), alongside the expressible native Query criteria. They do not introduce another public query language.
+`load_field_from_files` returns a single-variable DataArray or `None`; `load_fields_from_file` returns a Dataset, including an empty Dataset on no match. These collection functions use the public v1 coordinate organization and duplicate/grid checks. Pass `include_report=True` to attach `cedarkit_query_report`. For collections, `level=None` or `"all"` imposes no level restriction; `level_dim` and `lazy=True` are unsupported. Only a single variable may be renamed by `field_name`. An empty file list is invalid. Legacy filters not expressible in the public Query schema remain adapter predicates and are recorded in the report's adapter provenance (`grib.legacy;selection=...`), alongside the expressible native Query criteria. They do not introduce another public query language.
 
 The cfgrib backend, its named import paths and dependency have been removed. Explicit `engine="cfgrib"` raises `QueryError(code="unsupported")`. Protected GRIB functions accept `with_index=True` or a path string only to emit one caller-facing `FutureWarning`; they never inspect, read or write that index. `False` is quiet. Public queries do not use indexes.
 

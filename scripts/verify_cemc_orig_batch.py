@@ -122,7 +122,7 @@ def verify(case, sample, *, mounted=False):
             field.metadata.get("statistical_interval") == case["interval"],
             "statistical interval differs",
         )
-        dataset = field.to_xarray()
+        dataset = field.to_xarray(include_report=True)
         (name,) = dataset.data_vars
         data = dataset[name]
         require(

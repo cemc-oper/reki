@@ -94,7 +94,7 @@ def test_services_python_and_requests(case, tmp_path):
         assert branch["backend"] == "cmadaas"
         assert any(b["kind"] == "request_association" for b in branch["basis"])
         field = selected.one(completeness="required")
-        ds = field.to_xarray()
+        ds = field.to_xarray(include_report=True)
         parameter = case["query"]["parameter"]
         name = source.configuration.parameters[parameter]["name"]
         assert ds[name].attrs["cedarkit_parameter_id"] == parameter
@@ -142,7 +142,7 @@ def test_services_python_and_requests(case, tmp_path):
             actual = (
                 source.sel(request.queries)
                 .one(completeness=request.completeness)
-                .to_xarray()
+                .to_xarray(include_report=True)
             )
         xr.testing.assert_identical(actual, expected)
 

@@ -2,7 +2,6 @@
 
 from pathlib import Path
 import importlib
-import json
 import warnings
 
 import eccodes as ec
@@ -146,29 +145,42 @@ def test_index_warning_once_at_caller_without_touching_index(
     assert not list(raw.parent.glob("*.idx"))
 
 
-def test_low_frequency_organization_report_zero_and_unsupported(raw, tmp_path):
-    dataset = load_fields_from_file(raw, parameter="t", level_type="pl", level="all")
+@pytest.mark.parametrize("report_options", [{}, {"include_report": True}])
+def test_low_frequency_organization_report_zero_and_unsupported(raw, report_options):
+    include_report = report_options.get("include_report", False)
+    key = "cedarkit_query_report"
+    dataset = load_fields_from_file(
+        raw, parameter="t", level_type="pl", level="all", **report_options
+    )
     assert set(dataset.dims) == {"time", "step", "pressure", "latitude", "longitude"}
     assert dataset.sizes["pressure"] == 3 and dataset.sizes["step"] == 2
-    report = QueryReport(json.loads(dataset.attrs["cedarkit_query_report"]))
-    assert report.overall["status"] == "unchecked"
-    assert "selection=" in report.context["origins"]["adapter"]
-    assert next(iter(dataset.data_vars.values())).attrs["units"] == "K"
+    (variable,) = dataset.data_vars.values()
+    assert variable.attrs["units"] == "K"
+    assert (key in dataset.attrs) == (key in variable.attrs) == include_report
+    if include_report:
+        snapshot = dataset.attrs[key]
+        assert variable.attrs[key] == snapshot
+        report = QueryReport.from_json(snapshot)
+        assert report.overall["status"] == "unchecked"
+        assert "selection=" in report.context["origins"]["adapter"]
     array = load_field_from_files(
         [raw, raw],
         parameter="t",
         level_type="pl",
         level=[850, 500, 700],
         field_name="chosen",
+        **report_options,
     )
     assert array.name == "chosen" and array.sizes["pressure"] == 2
-    assert array.attrs["cedarkit_query_report"]
+    assert (key in array.attrs) == include_report
+    if include_report:
+        assert QueryReport.from_json(array.attrs[key]).overall["field_count"] == 3
     assert (
         load_field_from_files([raw], parameter="absent", level_type=None, level=None)
         is None
     )
-    empty = load_fields_from_file(raw, parameter="absent")
-    assert not empty.data_vars and "cedarkit_query_report" in empty.attrs
+    empty = load_fields_from_file(raw, parameter="absent", **report_options)
+    assert not empty.data_vars and (key in empty.attrs) == include_report
     for kwargs in [{"lazy": True}, {"level_dim": "pl"}]:
         with pytest.raises(QueryError, match="unsupported"):
             load_field_from_files([raw], "t", "pl", None, **kwargs)

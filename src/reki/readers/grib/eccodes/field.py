@@ -221,7 +221,9 @@ def load_field_from_file(
 
 
 def load_field_from_files(file_list, parameter, level_type, level, level_dim=None,
-                          show_progress=False, lazy=False, **kwargs):
+                          show_progress=False, lazy=False, *,
+                          include_report: bool = False, **kwargs):
     from .._legacy_collection import load_field_from_files as load_collection
     return load_collection(file_list, parameter, level_type, level,
-                           level_dim=level_dim, show_progress=show_progress, lazy=lazy, **kwargs)
+                           level_dim=level_dim, show_progress=show_progress, lazy=lazy,
+                           include_report=include_report, **kwargs)

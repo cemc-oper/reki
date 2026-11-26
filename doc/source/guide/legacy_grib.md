@@ -174,7 +174,7 @@ bool((t2m_first == t2m).all())
 
 ### 多层次检索
 
-`reki.format.grib.load_fields_from_file()` 使用 ecCodes 与公共 v1 组织／报告，
+`reki.format.grib.load_fields_from_file()` 使用 ecCodes 与公共 v1 坐标组织，
 `level` 传入列表可一次加载多个层次，返回带层次维的
 `xarray.Dataset`：
 
@@ -267,9 +267,11 @@ eccodes.codes_release(message)
 高频单文件保留原序与首匹配、部分层列表、原生坐标／单位／命名及 lazy，不强加报告。
 低频多文件 DataArray / 单文件 Dataset 使用公共维度、去重、冲突和网格规则；
 level=None / "all" 不加层值限制，多文件 field_name 只重命名单变量，显式 level_dim
-或 lazy=True 报 unsupported。零匹配分别返回 None / 携带报告的空 Dataset。
+或 lazy=True 报 unsupported。零匹配分别返回 None / 空 Dataset。
 
-低频报告为 cedarkit_query_report JSON；额外原生过滤条件记录在 adapter provenance，
+`load_field_from_files()` 和 `load_fields_from_file()` 的 `include_report` 默认为 `False`。
+传入 `include_report=True` 时将 JSON 报告写入 `cedarkit_query_report` 属性，空 Dataset 也可携带报告。
+额外原生过滤条件记录在 adapter provenance，
 不扩展公共 schema。cfgrib 命名路径已删除。with_index True / 字符串只在调用处发出
 一次 FutureWarning，False 无提示，索引路径零访问。消息 / 字节返回原生顺序与所有权，
 count 为一基物理序号且优先于条件。来源与查询错误使用公共 SourceError / QueryError。

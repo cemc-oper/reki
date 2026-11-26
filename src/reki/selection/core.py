@@ -758,8 +758,10 @@ class Selection:
     def all(self, *, completeness=None):
         return self._execute("all", completeness)
 
-    def to_xarray(self, *, completeness=None, rename=None):
-        return self.all(completeness=completeness).to_xarray(rename=rename)
+    def to_xarray(self, *, completeness=None, rename=None, include_report: bool = False):
+        return self.all(completeness=completeness).to_xarray(
+            rename=rename, include_report=include_report
+        )
 
 
 def _report(
@@ -868,8 +870,10 @@ class Field:
             )
         return read()
 
-    def to_xarray(self, *, rename=None):
-        return Fields(self._owner, (self,), self.report).to_xarray(rename=rename)
+    def to_xarray(self, *, rename=None, include_report: bool = False):
+        return Fields(self._owner, (self,), self.report).to_xarray(
+            rename=rename, include_report=include_report
+        )
 
 
 class Fields:
@@ -892,7 +896,8 @@ class Fields:
     def first(self):
         return self._fields[0] if self._fields else None
 
-    def to_xarray(self, *, rename=None):
+    def to_xarray(self, *, rename=None, include_report: bool = False):
+        """Assemble a Dataset and optionally embed the query report in attrs."""
         self._owner._ensure_open()
         from .output import assemble
 
@@ -901,6 +906,7 @@ class Fields:
             self.report,
             rename,
             parameters=self._owner.configuration.parameters,
+            include_report=include_report,
         )
 
 

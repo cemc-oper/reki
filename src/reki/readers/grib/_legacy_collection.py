@@ -27,6 +27,7 @@ def read_collection(
     engine="eccodes",
     with_index=False,
     single_variable=False,
+    include_report: bool = False,
     **conditions,
 ):
     check_engine(engine)
@@ -82,7 +83,7 @@ def read_collection(
                         "variable_count": len(variables),
                     },
                 )
-        return fields.to_xarray()
+        return fields.to_xarray(include_report=include_report)
 
 
 def load_fields_from_file(
@@ -93,10 +94,17 @@ def load_fields_from_file(
     with_index=False,
     *,
     engine="eccodes",
+    include_report: bool = False,
 ):
-    """Return a memory Dataset, including a report on an empty result."""
+    """Return a memory Dataset, with a report on request even if empty."""
     return read_collection(
-        [file_path], parameter, level_type, level, with_index=with_index, engine=engine
+        [file_path],
+        parameter,
+        level_type,
+        level,
+        with_index=with_index,
+        engine=engine,
+        include_report=include_report,
     )
 
 
@@ -109,6 +117,8 @@ def load_field_from_files(
     show_progress=False,
     lazy=False,
     field_name=None,
+    *,
+    include_report: bool = False,
     **kwargs,
 ):
     """Return one variable or None; reject unsupported options and ambiguity."""
@@ -123,7 +133,13 @@ def load_field_from_files(
             "unsupported", "/lazy", "Collection results are independent memory arrays"
         )
     dataset = read_collection(
-        file_list, parameter, level_type, level, single_variable=True, **kwargs
+        file_list,
+        parameter,
+        level_type,
+        level,
+        single_variable=True,
+        include_report=include_report,
+        **kwargs,
     )
     if not dataset.data_vars:
         return None
@@ -138,9 +154,4 @@ def load_field_from_files(
             },
         )
     value = dataset[next(iter(dataset.data_vars))]
-    value = value.rename(field_name) if field_name is not None else value
-    value.attrs = {
-        **value.attrs,
-        "cedarkit_query_report": dataset.attrs["cedarkit_query_report"],
-    }
-    return value
+    return value.rename(field_name) if field_name is not None else value

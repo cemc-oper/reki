@@ -46,8 +46,11 @@ def list_fields(input_path):
     "input_path", type=click.Path(exists=True, dir_okay=False, path_type=Path)
 )
 @click.argument("output_path", type=click.Path(dir_okay=False, path_type=Path))
-def read_fields(input_path, output_path):
-    _run(input_path, "read", output_path)
+@click.option(
+    "--include-report", is_flag=True, help="Store the query report in the NetCDF attributes."
+)
+def read_fields(input_path, output_path, include_report):
+    _run(input_path, "read", output_path, include_report=include_report)
 
 
 def _write_netcdf(dataset, path):
@@ -78,7 +81,7 @@ def _write_netcdf(dataset, path):
         raise SourceError(code, "/output", str(exc), context) from exc
 
 
-def _run(path, action, output_path=None):
+def _run(path, action, output_path=None, *, include_report=False):
     try:
         declaration = Request.load(path)
         dataset = None
@@ -89,7 +92,7 @@ def _run(path, action, output_path=None):
             else:
                 fields = selection.all(completeness=declaration.completeness)
                 if output_path is not None:
-                    dataset = fields.to_xarray()
+                    dataset = fields.to_xarray(include_report=include_report)
                 result = fields.report.to_json()
         if dataset is not None:
             _write_netcdf(dataset, output_path)

@@ -158,7 +158,7 @@ def verify_field(field, path, case, oracle):
         and report["overall"]["field_count"] == 1,
         f"{case.name}: unexpected completeness report",
     )
-    ds = field.to_xarray()
+    ds = field.to_xarray(include_report=True)
     require(
         QueryReport.from_json(ds.attrs["cedarkit_query_report"]) == field.report,
         f"{case.name}: Dataset report differs from field report",

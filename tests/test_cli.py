@@ -85,7 +85,8 @@ def test_catalog_commands_remain_available():
     assert "show" in result.output and "list" in result.output
 
 
-def test_native_request_cli_can_explain_and_read(tmp_path):
+@pytest.mark.parametrize("include_report", [False, True])
+def test_native_request_cli_can_explain_and_read(tmp_path, include_report):
     path = tmp_path / "fields.grib"
     _write(path)
     request = tmp_path / "request.json"
@@ -101,11 +102,21 @@ def test_native_request_cli_can_explain_and_read(tmp_path):
     listed = runner.invoke(cli, ["request", "list", str(request)])
     assert listed.exit_code == 0 and listed.stderr == ""
     out = tmp_path / "raw.nc"
-    result = runner.invoke(cli, ["request", "read", str(request), str(out)])
+    args = ["request", "read", str(request), str(out)]
+    if include_report:
+        args.append("--include-report")
+    result = runner.invoke(cli, args)
     assert result.exit_code == 0, result.output
     report = json.loads(result.stdout)
     assert out.is_file() and report["overall"]["field_count"] == 1
     assert report == json.loads(listed.stdout)
+    with xr.open_dataset(out) as dataset:
+        (variable,) = dataset.data_vars.values()
+        key = "cedarkit_query_report"
+        assert (key in dataset.attrs) == (key in variable.attrs) == include_report
+        if include_report:
+            assert json.loads(dataset.attrs[key]) == report
+            assert variable.attrs[key] == dataset.attrs[key]
 
 
 @pytest.fixture
