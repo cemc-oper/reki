@@ -11,12 +11,30 @@ SourceSpec / FieldQuery / FieldList / FieldMetadata、旧异常及 one_or_none �
 | cfgrib / 其命名路径 | 已删除；显式 engine="cfgrib" 报 unsupported。 |
 | with_index | False 无提示；True / 路径 FutureWarning 一次，路径零访问。 |
 | 高频 load_field_from_file | 继续保护原生首匹配／文件顺序／单位／lazy，不等同公共 Dataset。 |
-| 低频 load_field_from_files / load_fields_from_file | 返回 DataArray 或 None / Dataset，采用公共组织与报告。 |
+| 低频 load_field_from_files / load_fields_from_file | 返回 DataArray 或 None / Dataset，采用公共维度组织，可选附加查询报告。 |
 | NetCDF / GrADS | 保留原生格式函数及其惰性，不声明公共 Query 已支持所有格式。 |
 | 原生消息／字节 | 保留 count、顺序和句柄所有权；不以 DataArray 替代原报文操作。 |
 
 完整工作流见 {doc}`/quick-start/first-workflow`，原生条件与公共输出见
 {doc}`public-query`，旧函数的精确保护范围见 {doc}`legacy_grib`。
+
+## 读取与导出查询报告
+
+通过 `Field.report` 或 `Fields.report` 读取查询报告。`to_xarray()` 默认省略
+`cedarkit_query_report` 属性。需要将报告随 xarray 结果保存时，传入 `include_report=True`。
+
+```python
+report = field.report
+dataset = field.to_xarray(include_report=True)
+```
+
+使用 CLI 写 NetCDF 时，通过 `--include-report` 将报告写入文件的属性。
+
+```bash
+reki request read --include-report request.json output.nc
+```
+
+报告属性的位置与格式见 {doc}`grib/xarray-output`，CLI 用法见 {doc}`query-cli`。
 
 ## 内容覆盖矩阵
 

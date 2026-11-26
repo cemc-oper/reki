@@ -3,8 +3,8 @@ reki
 
 reki 是一个用于查找、读取、查询和处理气象数据的 Python 工具库。
 
-reki 当前主要支持 GRIB2 格式数据，通过统一的 ``source → reader → field query`` 模型定位数据、查询元数据，并在需要时将选定
-字段转换为 ``xarray.DataArray``。
+reki 主要支持 GRIB2 格式数据。通过来源和查询声明选择字段、查看元数据，并将所选字段
+转换为 ``xarray.Dataset``，再按变量获取 ``xarray.DataArray``。
 
 reki 提供以下功能：
 
@@ -23,16 +23,14 @@ reki 提供以下功能：
 * :doc:`/quick-start/installation`：安装要求和可选依赖；
 * :doc:`/quick-start/test-data`：下载可重复使用的测试数据。
 
-准备好 ``ecmwf_ifs`` 测试数据后，下面的代码可以选择并加载 2 米温度：
+将 ``forecast.grib2`` 替换为下载的样例文件路径，即可读取 2 米气温。
 
 .. code-block:: python
 
     from reki import from_source
 
-    with from_source({"kind": "file", "path": "original.grib2"}) as source:
-        field = source.sel(native={"grib": {"shortName": "2t"}},
-                           level_type="height_above_ground", level=2).one()
-        t2m = field.to_xarray(rename="t2m").t2m.squeeze(drop=True)
+    with from_source({"kind": "file", "path": "forecast.grib2"}) as source:
+        t2m = source.sel(parameter="t2m").one().to_xarray()["t2m"]
 
 完整示例见 :doc:`/quick-start/first-workflow`。
 

@@ -1,12 +1,17 @@
 # 远程与服务来源
 
-当前公共服务来源使用声明式 CMADaaS dataset，连接及凭据来自调用方配置；实际请求在读取
-时发生，explain 不访问服务。已接受范围、单位与响应错误见 {doc}`/guide/cmadaas-query`。
+CMADaaS 来源接受数据集 ID 和 CedarKit YAML 配置路径。读取时发出服务请求，
+`explain()` 可先查看请求映射。安装、配置和读取说明见 {doc}`/guide/cmadaas-query`。
 
 ```python
 from reki import from_source
 
-with from_source({"kind": "cmadaas", "dataset": "cma_gfs_gmf_cmadaas"}) as source:
+source_options = {
+    "kind": "cmadaas",
+    "dataset": "cma_gfs_gmf_cmadaas",
+    "config": "cedarkit.yaml",
+}
+with from_source(source_options) as source:
     selected = source.sel(parameter="cedarkit.t2m", time="2026-11-02T12:00:00Z", step="PT6H")
     explanation = selected.explain()
 ```

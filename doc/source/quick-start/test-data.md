@@ -1,34 +1,34 @@
 # 准备测试数据
 
-本文档使用内置 `test` source 的冻结 `ecmwf_ifs` 数据集。
-该数据集是由 [cemc-oper/cedarkit-test-data](https://github.com/cemc-oper/cedarkit-test-data) 项目根据 ECMWF IFS 开放数据制作的一系列小文件，用于进行自动化测试，包括：
+本文档使用 `ecmwf_ifs` 数据集。它是一组基于 ECMWF IFS 开放数据制作的 GRIB2 样例，
+由 [cedarkit-test-data](https://github.com/cemc-oper/cedarkit-test-data) 提供。
 
 ## 下载 ecmwf_ifs 数据集
 
-在安装 reki 的 uv 环境中下载默认东亚域数据：
+激活已安装 reki 的环境，然后下载默认的东亚样例。
 
 ```bash
-uv run reki-test-data download ecmwf_ifs
+reki-test-data download ecmwf_ifs
 ```
 
-区域处理示例还需要全球场时，额外下载：
+需要全球场时，下载 `global` 样例。
 
 ```bash
-uv run reki-test-data download ecmwf_ifs --variant global
+reki-test-data download ecmwf_ifs --variant global
 ```
 
-可以下载 ecmwf_ifs 的全部样例数据：
+用 `--all` 下载全部 `ecmwf_ifs` 样例。
 
 ```bash
-uv run reki-test-data download ecmwf_ifs --all
+reki-test-data download ecmwf_ifs --all
 ```
 
-数据默认被下载到 `/tmp/cedarkit-test-data/` 目录中。
+数据默认下载到 `/tmp/cedarkit-test-data/`。下载完成后可运行 {doc}`first-workflow`。
 
 ## 下载 cma_gfs 数据集
 
 reki-test-data 也支持从 CMA 的 WIS 网站下载 CMA-GFS 数据。
 
 ```bash
-uv run reki-test-data download cma_gfs
+reki-test-data download cma_gfs
 ```

@@ -32,24 +32,9 @@
 
 按下面的顺序阅读：
 
-1. {doc}`installation`：安装 reki，并了解 `cmadaas`、`lazy` 等可选依赖；
+1. {doc}`installation`：安装与本文档示例匹配的 reki，并了解可选依赖；
 2. {doc}`test-data`：下载默认的东亚测试数据，必要时再下载全球场或其他 variant；
 3. {doc}`first-workflow`：运行完整示例，完成数据探索、字段选择、xarray 转换和区域裁剪。
-
-如果只想先验证安装是否成功，可以先执行：
-
-```bash
-uv add reki
-uv run reki-test-data download ecmwf_ifs
-```
-
-下载完成后，继续运行 {doc}`first-workflow`。示例将测试资料工具取得的路径传给公开 file 来源：
-
-```python
-from reki import from_source
-
-source = from_source({"kind": "file", "path": "/data/ifs_eastasia_2026090712_f024.grib2"})
-```
 
 ## 按目标继续阅读
 
