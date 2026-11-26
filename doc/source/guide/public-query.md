@@ -26,7 +26,7 @@ with from_source({"kind": "file", "path": "forecast.grib2"}) as source:
 
 `t2m`, `cedarkit.t2m` and `2t` select the same 2 m temperature field in K. The bundled registry defines 229 IDs, and 347 independent rules recognize 132 of them from GRIB2 headers. Each rule checks the relevant tables, template and field conditions per message. A named rule without a reviewed unit translation returns the original decoded values and retains the decoder's unit metadata in `Field.metadata["native_fields"]`.
 
-Python `sel()` accepts `level_type="pl"` as an alias for `"pressure"` in keyword arguments and query mappings. For example, `source.sel(parameter="t", level_type="pl", level=850)` selects 850 hPa. Pass `level_unit="Pa"` for level values in Pa. Use `level_type="pressure"` in Query objects and JSON or YAML Request documents.
+Python `sel()` accepts `pl`, `sfc`, and `ml` as `level_type` aliases for `pressure`, `surface`, and `model_level` in keyword arguments and query mappings. `source.sel(parameter="t", level_type="pl", level=850)` selects 850 hPa. Pass `level_unit="Pa"` for level values in Pa. Use the canonical names in Query objects and JSON or YAML Request documents. See [GRIB level conventions](grib/levels.md) for surface and model levels.
 
 Use `source.sel(parameter="gsw").one()` to read the original CEMC surface net short-wave field. The names `glw`, `gsw` and `hfx` select reviewed CEMC surface encodings and return `cedarkit.glw.raw`, `cedarkit.gsw.raw` and `cedarkit.hfx.raw`, respectively. The readings preserve the decoded values and retain the encoded statistical interval in metadata. Their xarray output omits the standard `units` attribute because the same encoding carries flux or accumulated energy across products.
 

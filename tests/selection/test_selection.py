@@ -72,23 +72,54 @@ def test_union_intersection_origins_and_aliases(factory, q):
     ]
 
 
-@pytest.mark.parametrize("level", [{"level": 850}, {"level": 85000, "level_unit": "Pa"}])
-def test_pressure_level_type_alias(factory, q, level):
-    source, _, _ = factory([q], [q])
-    conditions = {"level_type": "pl", **level}
+@pytest.mark.parametrize(
+    ("conditions", "canonical"),
+    [
+        (
+            {"level_type": "pl", "level": 850},
+            {"level_type": "pressure", "level": 850, "level_unit": "hPa"},
+        ),
+        (
+            {"level_type": "pl", "level": 85000, "level_unit": "Pa"},
+            {"level_type": "pressure", "level": 850, "level_unit": "hPa"},
+        ),
+        ({"level_type": "sfc"}, {"level_type": "surface"}),
+        ({"level_type": "sfc", "level": 0}, {"level_type": "surface"}),
+        ({"level_type": "ml", "level": 2}, {"level_type": "model_level", "level": 2}),
+    ],
+)
+def test_level_type_aliases(factory, q, conditions, canonical):
+    identity = q.to_dict()
+    identity.pop("level")
+    identity.pop("level_unit")
+    expected = Query({**identity, **canonical})
+    source, _, _ = factory([expected], [expected])
+    original = dict(conditions)
 
     selected = source.sel(**conditions)
-    assert selected.explain().effective_queries[0]["query"] == {
-        "level_type": "pressure",
-        "level": 850,
-        "level_unit": "hPa",
-    }
-    assert selected.one().identity == q
+    assert selected.explain().effective_queries[0]["query"] == canonical
+    assert selected.one().identity == expected
 
-    chained = source.sel(q).sel([conditions])
-    assert chained.explain().effective_queries[0]["query"] == q.to_dict()
-    assert chained.one().identity == q
-    assert conditions["level_type"] == "pl"
+    chained = source.sel(expected).sel([conditions])
+    assert chained.explain().effective_queries[0]["query"] == expected.to_dict()
+    assert chained.one().identity == expected
+    assert conditions == original
+
+
+@pytest.mark.parametrize(
+    ("conditions", "field"),
+    [
+        ({"level_type": "surface", "level": 0}, "level"),
+        ({"level_type": "sfc", "level": 1}, "level"),
+        ({"level_type": "ml", "level": 2, "level_unit": "m"}, "level_unit"),
+    ],
+)
+def test_level_type_aliases_validate_other_conditions(factory, conditions, field):
+    source, _, _ = factory()
+    with pytest.raises(QueryError) as caught:
+        source.sel(**conditions)
+    assert caught.value.code == "invalid_query"
+    assert caught.value.path == f"/queries/0/{field}"
 
 
 def test_empty_intersection_does_not_hide_later_invalid(factory, q):

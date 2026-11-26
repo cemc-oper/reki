@@ -6,8 +6,15 @@ kernelspec: {display_name: Python 3, language: python, name: python3}
 
 # 层次
 
-公共压力坐标使用 `level_type="pressure"` 与 hPa 层值；离地高度使用
-`height_above_ground` 与米。旧 `pl/isobaricInhPa` 别名只在受保护读取函数中适配。
+公共压力坐标使用 `level_type="pressure"`，默认单位为 hPa。离地高度使用
+`height_above_ground` 与米。`isobaricInhPa` 可在旧式 GRIB 读取函数中用作 ecCodes 层类型。
+
+Python `source.sel()` 接受 `pl`、`sfc` 和 `ml`，对应 `pressure`、`surface` 和
+`model_level`。直接构造 Query 或编写 JSON/YAML Request 时使用规范名称。
+
+地面层可以省略 `level`，也支持旧写法 `level_type="sfc", level=0`。模式层使用非负整数编号，
+例如 `level_type="ml", level=20`。CMA MODELVAR 中固定面编码为 131 的报文可按原生 GRIB 键
+查询，也可使用旧式 GRIB 读取函数。
 
 ```{code-cell} ipython3
 from reki import from_source

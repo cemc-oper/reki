@@ -31,6 +31,8 @@ from .backend import (
     FieldReference,
 )
 
+_LEVEL_TYPE_ALIASES = {"pl": "pressure", "sfc": "surface", "ml": "model_level"}
+
 
 def key(value):
     return json.dumps(thaw(value), sort_keys=True, separators=(",", ":"))
@@ -370,8 +372,16 @@ class Selection:
             try:
                 if isinstance(value, Mapping):
                     level_type = value.get("level_type")
-                    if isinstance(level_type, str) and level_type == "pl":
-                        value = {**value, "level_type": "pressure"}
+                    if isinstance(level_type, str) and level_type in _LEVEL_TYPE_ALIASES:
+                        value = {**value, "level_type": _LEVEL_TYPE_ALIASES[level_type]}
+                        level = value.get("level")
+                        if (
+                            level_type == "sfc"
+                            and type(level) in (int, float)
+                            and level == 0
+                            and "layer" not in value
+                        ):
+                            del value["level"]
                 q = value if isinstance(value, Query) else Query(value)
                 raw.append(q)
                 prepared_input = q
