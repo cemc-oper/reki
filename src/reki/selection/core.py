@@ -1,5 +1,6 @@
 """Selection, presence reports and ownership, independent of native backends."""
 
+from collections.abc import Mapping
 import json
 from pathlib import Path
 
@@ -367,6 +368,10 @@ class Selection:
         si = len(self._inputs)
         for qi, value in enumerate(inputs):
             try:
+                if isinstance(value, Mapping):
+                    level_type = value.get("level_type")
+                    if isinstance(level_type, str) and level_type == "pl":
+                        value = {**value, "level_type": "pressure"}
                 q = value if isinstance(value, Query) else Query(value)
                 raw.append(q)
                 prepared_input = q

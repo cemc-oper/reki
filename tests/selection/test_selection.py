@@ -72,6 +72,25 @@ def test_union_intersection_origins_and_aliases(factory, q):
     ]
 
 
+@pytest.mark.parametrize("level", [{"level": 850}, {"level": 85000, "level_unit": "Pa"}])
+def test_pressure_level_type_alias(factory, q, level):
+    source, _, _ = factory([q], [q])
+    conditions = {"level_type": "pl", **level}
+
+    selected = source.sel(**conditions)
+    assert selected.explain().effective_queries[0]["query"] == {
+        "level_type": "pressure",
+        "level": 850,
+        "level_unit": "hPa",
+    }
+    assert selected.one().identity == q
+
+    chained = source.sel(q).sel([conditions])
+    assert chained.explain().effective_queries[0]["query"] == q.to_dict()
+    assert chained.one().identity == q
+    assert conditions["level_type"] == "pl"
+
+
 def test_empty_intersection_does_not_hide_later_invalid(factory, q):
     source, backend, _ = factory([q], [q])
     selected = source.sel(q).sel(level_type="pressure", level=500)
