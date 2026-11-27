@@ -41,6 +41,15 @@ def _is_lazy(data) -> bool:
     return isinstance(data.variable._data, LazilyIndexedArray)
 
 
+@pytest.mark.parametrize("lazy", [False, True])
+def test_forecast_time_uses_the_selected_record(grads_ctl_path, lazy):
+    named = grads_ctl_path.with_name("post.ctl_2020010100_006")
+    named.write_text(grads_ctl_path.read_text())
+    field = load_field_from_file(named, "t", level=500, forecast_time="0h", lazy=lazy)
+    assert field.valid_time.values == field.start_time.values
+    assert field.forecast_time.values == np.timedelta64(0, "h")
+
+
 class TestSingleLevel:
     def test_values_identical_to_eager(self, grads_ctl_path):
         eager = load_field_from_file(

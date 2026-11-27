@@ -264,10 +264,18 @@ eccodes.codes_release(message)
 
 ## 当前保护边界
 
-高频单文件保留原序与首匹配、部分层列表、原生坐标／单位／命名及 lazy，不强加报告。
-低频多文件 DataArray / 单文件 Dataset 使用公共维度、去重、冲突和网格规则；
-level=None / "all" 不加层值限制，多文件 field_name 只重命名单变量，显式 level_dim
-或 lazy=True 报 unsupported。零匹配分别返回 None / 空 Dataset。
+单场读取保留物理顺序、首匹配和惰性访问。普通入口的 `level_type="pl"`
+使用报文的层坐标，例如 `isobaricInhPa`，直连 ecCodes 入口使用 `pl`。
+两入口提供 `long_name`、已知的 `eccodes_name`、`cemc_name` 和
+`wgrib2_name`，并提供可取得的 `units` 和 `GRIB_units`。
+省略 `field_name` 并按 GRIB 键字典选参时，优先使用旧表中匹配的 CEMC 名称。
+
+`load_field_from_files(level=None)` 每文件取首个匹配场，常规经纬度场使用
+原有的 `(time, step, latitude, longitude)`。显式选层（含 `level="all"`）
+及 `load_fields_from_file()` 使用公共维度。集合读取执行去重、冲突和网格检查。
+多文件的 `field_name` 重命名单变量，显式 `level_dim` 或 `lazy=True`
+报 `unsupported`。零匹配分别返回 `None` 和空 Dataset。
+替代用法见 {ref}`migration-grib-collections`。
 
 `load_field_from_files()` 和 `load_fields_from_file()` 的 `include_report` 默认为 `False`。
 传入 `include_report=True` 时将 JSON 报告写入 `cedarkit_query_report` 属性，空 Dataset 也可携带报告。

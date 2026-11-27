@@ -131,7 +131,7 @@ def _values(field):
     return array
 
 
-def assemble(fields, report, rename, *, parameters=None, include_report: bool = False):
+def _group_fields(fields):
     groups, names, positions, grids, vertical, roles = {}, {}, set(), [], {}, {}
     for field in fields:
         semantic, name, identity, meta = _variable(field)
@@ -180,7 +180,19 @@ def assemble(fields, report, rename, *, parameters=None, include_report: bool = 
                     name=name,
                 )
             names[name] = semantic
+    return groups, names, roles
 
+
+def _attach_report(dataset, report):
+    # Presence/translation reports do not claim value quality or conversion checks.
+    snapshot = report.to_json()
+    dataset.attrs["cedarkit_query_report"] = snapshot
+    for array in dataset.data_vars.values():
+        array.attrs["cedarkit_query_report"] = snapshot
+
+
+def assemble(fields, report, rename, *, parameters=None, include_report: bool = False):
+    groups, names, roles = _group_fields(fields)
     if isinstance(rename, str):
         if len(groups) != 1:
             _error(
@@ -318,9 +330,5 @@ def assemble(fields, report, rename, *, parameters=None, include_report: bool = 
         if axis in ds.coords:
             ds[axis].attrs["units"] = unit
     if include_report:
-        # Presence/translation reports do not claim value quality or conversion checks.
-        snapshot = report.to_json()
-        ds.attrs["cedarkit_query_report"] = snapshot
-        for array in ds.data_vars.values():
-            array.attrs["cedarkit_query_report"] = snapshot
+        _attach_report(ds, report)
     return ds.load().copy(deep=True)

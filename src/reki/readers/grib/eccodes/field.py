@@ -203,6 +203,7 @@ def load_field_from_file(
                     values = lazy_values(file_path, offset, shape, MISSING_VALUE, np.nan)
                 arrays.append(create_data_array_from_message(
                     message, level_dim_name=fixed_level_dim, field_name=field_name, values=values,
+                    _legacy_names=True,
                 ))
             if len(arrays) == 1:
                 return arrays[0]

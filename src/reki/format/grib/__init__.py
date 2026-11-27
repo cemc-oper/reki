@@ -7,6 +7,8 @@ def load_field_from_file(file_path, parameter, level_type=None, level=None, engi
     from reki._legacy import check_engine
     from reki.readers.grib.eccodes import load_field_from_file as load_eccodes
     check_engine(engine)
+    if isinstance(level_type, str):
+        level_type = fix_level_type(level_type)
     return load_eccodes(file_path, parameter, level_type, level, **kwargs)
 
 

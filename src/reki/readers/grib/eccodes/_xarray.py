@@ -10,6 +10,7 @@ import eccodes
 from reki.grib_io import decode_values, fill_missing
 
 from reki.readers.grib.common import MISSING_VALUE
+from ._legacy_names import output_aliases
 
 # from loguru import logger
 
@@ -21,6 +22,8 @@ def create_data_array_from_message(
         missing_value: Optional[float] = None,
         fill_missing_value: Optional = np.nan,
         values: Optional[np.ndarray] = None,
+        *,
+        _legacy_names: bool = False,
 ) -> xr.DataArray:
     """
     Create ``xarray.DataArray`` from one GRIB2 message.
@@ -203,12 +206,10 @@ def create_data_array_from_message(
     }
 
     # name
-    names = get_field_name(all_attrs, field_name=field_name)
+    names = get_field_name(all_attrs, field_name=field_name, legacy_names=_legacy_names)
 
-    var_name = names['name']
-
-    if "eccodes_name" in names:
-        data_attrs["eccodes_name"] = names["eccodes_name"]
+    var_name = names.pop("name")
+    data_attrs.update(names)
 
     # Preserve native units even though they are parameter rather than identity keys.
     if all_attrs.get("units") not in (None, "undef", "unknown"):
@@ -300,16 +301,26 @@ def get_attrs_from_message(keys: list[str], message) -> dict[str, Union[str, int
     return all_attrs
 
 
-def get_field_name(all_attrs, field_name=None):
-    """Use the explicit name or the ecCodes shortName, with a numeric fallback."""
+def get_field_name(all_attrs, field_name=None, *, legacy_names=False):
+    """Return the native name or the metadata expected by the legacy loaders."""
     short_name = all_attrs.get("shortName")
     if short_name in {None, "", "unknown", "undef"}:
         short_name = None
-    code = "_".join(str(all_attrs.get(key, "unknown")) for key in (
-        "discipline", "parameterCategory", "parameterNumber",
-    ))
-    return {"name": field_name or short_name or code,
-            **({"eccodes_name": short_name} if short_name else {})}
+    aliases = {"eccodes_name": short_name} if short_name is not None else {}
+    discipline, category, number = (
+        all_attrs.get(key, "unknown")
+        for key in ("discipline", "parameterCategory", "parameterNumber")
+    )
+    code = f"{discipline}_{category}_{number}"
+    if not legacy_names:
+        return {"name": field_name or short_name or code, **aliases}
+    aliases.update(output_aliases(all_attrs))
+    aliases["long_name"] = all_attrs.get(
+        "name", f"discipline={discipline} parmcat={category} parm={number}"
+    )
+    if field_name is None:
+        field_name = aliases.get("cemc_name") or short_name or aliases.get("wgrib2_name") or code
+    return {"name": field_name, **aliases}
 
 
 def get_level_coordinate_name(data: xr.DataArray) -> Optional[str]:

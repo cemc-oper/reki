@@ -102,6 +102,7 @@ include-package-data = false
 [tool.setuptools.package-data]
 "reki.catalog" = ["builtin/*.json"]
 "reki.data_finder" = ["README.md", "conf/**/*.yaml"]
+"reki.readers.grib.eccodes" = ["legacy-names.yaml"]
 
 [tool.setuptools_scm]
 version_file = "src/reki/_version.py"

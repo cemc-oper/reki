@@ -1,0 +1,1145 @@
+# Frozen output names from v2026.9.0 reki/readers/grib/config/param_registry.yaml.
+# Keys are GRIB2 discipline, category and number. Only naming conditions are retained.
+- key:
+  - 0
+  - 0
+  - 0
+  name: t
+  wgrib2_name: TMP
+  variants:
+  - name: t2m
+    when:
+      first_level_type: 103
+      first_level: 2
+  - name: ts
+    when:
+      first_level_type: 1
+  - name: st
+    when:
+      first_level_type: 106
+  - name: st(0-10)
+    when:
+      first_level_type: 106
+      first_level: 0
+      second_level_type: 106
+      second_level: 0.1
+  - name: st(10-40)
+    when:
+      first_level_type: 106
+      first_level: 0.1
+      second_level_type: 106
+      second_level: 0.4
+  - name: st(40-100)
+    when:
+      first_level_type: 106
+      first_level: 0.4
+      second_level_type: 106
+      second_level: 1
+  - name: st(100-200)
+    when:
+      first_level_type: 106
+      first_level: 1
+      second_level_type: 106
+      second_level: 2
+- key:
+  - 0
+  - 0
+  - 3
+  name: thetaSe
+  wgrib2_name: EPOT
+- key:
+  - 0
+  - 0
+  - 4
+  name: mx2t
+  wgrib2_name: TMAX
+  variants:
+  - name: mx2t
+    when:
+      first_level_type: 103
+      first_level: 2
+      stepType: max
+- key:
+  - 0
+  - 0
+  - 5
+  name: mn2t
+  wgrib2_name: TMIN
+  variants:
+  - name: mn2t
+    when:
+      first_level_type: 103
+      first_level: 2
+      stepType: min
+- key:
+  - 0
+  - 0
+  - 6
+  name: td
+  wgrib2_name: DPT
+  variants:
+  - name: td2m
+    when:
+      first_level_type: 103
+      first_level: 2
+- key:
+  - 0
+  - 0
+  - 7
+  name: ttd
+  wgrib2_name: DEPR
+- key:
+  - 0
+  - 0
+  - 10
+  name: slhf
+  wgrib2_name: LHTFL
+- key:
+  - 0
+  - 0
+  - 17
+  name: SKINT
+  wgrib2_name: SKINT
+- key:
+  - 0
+  - 0
+  - 24
+  name: hfx
+  variants:
+  - name: hfx
+    when:
+      first_level_type: 1
+      stepType: accum
+- key:
+  - 0
+  - 0
+  - 224
+  name: tadv
+- key:
+  - 0
+  - 0
+  - 225
+  name: saunaidx
+- key:
+  - 0
+  - 0
+  - 226
+  name: htdn
+- key:
+  - 0
+  - 0
+  - 227
+  name: ata
+- key:
+  - 0
+  - 0
+  - 228
+  name: tn
+- key:
+  - 0
+  - 0
+  - 229
+  name: thp
+- key:
+  - 0
+  - 1
+  - 0
+  name: q
+  wgrib2_name: SPFH
+  variants:
+  - name: q2m
+    when:
+      first_level_type: 103
+      first_level: 2
+  - name: sw
+    when:
+      first_level_type: 106
+  - name: sw(0-10)
+    when:
+      first_level_type: 106
+      first_level: 0
+      second_level_type: 106
+      second_level: 0.1
+  - name: sw(10-40)
+    when:
+      first_level_type: 106
+      first_level: 0.1
+      second_level_type: 106
+      second_level: 0.4
+  - name: sw(40-100)
+    when:
+      first_level_type: 106
+      first_level: 0.4
+      second_level_type: 106
+      second_level: 1
+  - name: sw(100-200)
+    when:
+      first_level_type: 106
+      first_level: 1
+      second_level_type: 106
+      second_level: 2
+- key:
+  - 0
+  - 1
+  - 1
+  name: rh
+  wgrib2_name: RH
+  variants:
+  - name: rh2m
+    when:
+      first_level_type: 103
+      first_level: 2
+- key:
+  - 0
+  - 1
+  - 3
+  name: pwat
+  wgrib2_name: PWAT
+  variants:
+  - name: pwat
+    when:
+      first_level_type: 10
+- key:
+  - 0
+  - 1
+  - 8
+  name: rain
+  wgrib2_name: APCP
+  variants:
+  - name: rain
+    when:
+      first_level_type: 1
+      stepType: accum
+- key:
+  - 0
+  - 1
+  - 9
+  name: rainnc
+  wgrib2_name: NCPCP
+  variants:
+  - name: rainnc
+    when:
+      first_level_type: 1
+      stepType: accum
+- key:
+  - 0
+  - 1
+  - 10
+  name: rainc
+  wgrib2_name: ACPCP
+  variants:
+  - name: rainc
+    when:
+      first_level_type: 1
+      stepType: accum
+- key:
+  - 0
+  - 1
+  - 11
+  name: sd
+  wgrib2_name: SNOD
+  variants:
+  - name: sd
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 1
+  - 19
+  name: precitype
+  wgrib2_name: PTYPE
+- key:
+  - 0
+  - 1
+  - 22
+  name: qc
+  wgrib2_name: CLMR
+- key:
+  - 0
+  - 1
+  - 23
+  name: qi
+  wgrib2_name: ICMR
+- key:
+  - 0
+  - 1
+  - 24
+  name: qr
+  wgrib2_name: RWMR
+- key:
+  - 0
+  - 1
+  - 25
+  name: qs
+  wgrib2_name: SNMR
+- key:
+  - 0
+  - 1
+  - 29
+  name: sf
+  wgrib2_name: ASNOW
+  variants:
+  - name: sf
+    when:
+      first_level_type: 1
+      stepType: accum
+- key:
+  - 0
+  - 1
+  - 32
+  name: graupel
+  wgrib2_name: GRLE
+- key:
+  - 0
+  - 1
+  - 53
+  name: TSRWE
+  wgrib2_name: TSRWE
+- key:
+  - 0
+  - 1
+  - 64
+  name: tvw
+  wgrib2_name: TCIWV
+  variants:
+  - name: tvw
+    when:
+      first_level_type: 10
+- key:
+  - 0
+  - 1
+  - 69
+  name: tcw
+  wgrib2_name: TCOLW
+  variants:
+  - name: tcw
+    when:
+      first_level_type: 10
+- key:
+  - 0
+  - 1
+  - 70
+  name: tiw
+  wgrib2_name: TCOLI
+  variants:
+  - name: tiw
+    when:
+      first_level_type: 10
+- key:
+  - 0
+  - 1
+  - 224
+  name: qflx
+- key:
+  - 0
+  - 1
+  - 225
+  name: qdiv
+  wgrib2_name: FRZR
+- key:
+  - 0
+  - 1
+  - 226
+  name: src
+- key:
+  - 0
+  - 1
+  - 227
+  name: ro
+- key:
+  - 0
+  - 1
+  - 228
+  name: pc
+  variants:
+  - name: pc
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 1
+  - 229
+  name: qfxsfc
+  variants:
+  - name: qfxsfc
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 1
+  - 230
+  name: qpe
+- key:
+  - 0
+  - 1
+  - 231
+  name: rhmax
+  variants:
+  - name: rhmax2m
+    when:
+      first_level_type: 103
+      first_level: 2
+- key:
+  - 0
+  - 1
+  - 232
+  name: rhmin
+  variants:
+  - name: rhmin2m
+    when:
+      first_level_type: 103
+      first_level: 2
+- key:
+  - 0
+  - 1
+  - 233
+  name: rainp
+- key:
+  - 0
+  - 1
+  - 234
+  name: rainpr
+- key:
+  - 0
+  - 1
+  - 235
+  name: rainh
+- key:
+  - 0
+  - 1
+  - 236
+  name: hail
+- key:
+  - 0
+  - 1
+  - 237
+  name: raint
+- key:
+  - 0
+  - 1
+  - 238
+  name: light
+- key:
+  - 0
+  - 1
+  - 239
+  name: hi
+  wgrib2_name: HI
+  variants:
+  - name: hi
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 1
+  - 240
+  name: II
+- key:
+  - 0
+  - 1
+  - 241
+  name: rain5max
+  variants:
+  - name: rain5max
+    when:
+      first_level_type: 1
+      stepType: max
+- key:
+  - 0
+  - 2
+  - 2
+  name: u
+  wgrib2_name: UGRD
+  variants:
+  - name: u10m
+    when:
+      first_level_type: 103
+      first_level: 10
+      stepType: instant
+  - name: u10mmax#1
+    when:
+      first_level_type: 103
+      first_level: 10
+      stepType: max
+      time_range_hours: 1
+  - name: u10mmax#3
+    when:
+      first_level_type: 103
+      first_level: 10
+      stepType: max
+      time_range_hours: 3
+  - name: u10mmax
+    when:
+      first_level_type: 103
+      first_level: 10
+      stepType: max
+- key:
+  - 0
+  - 2
+  - 3
+  name: v
+  wgrib2_name: VGRD
+  variants:
+  - name: v10m
+    when:
+      first_level_type: 103
+      first_level: 10
+      stepType: instant
+  - name: v10mmax#1
+    when:
+      first_level_type: 103
+      first_level: 10
+      stepType: max
+      time_range_hours: 1
+  - name: v10mmax#3
+    when:
+      first_level_type: 103
+      first_level: 10
+      stepType: max
+      time_range_hours: 3
+  - name: v10mmax
+    when:
+      first_level_type: 103
+      first_level: 10
+      stepType: max
+- key:
+  - 0
+  - 2
+  - 9
+  name: w
+  wgrib2_name: DZDT
+  variants:
+  - name: w
+    when:
+      first_level_type: 100
+  - name: wmax#1
+    when:
+      first_level_type: 100
+      stepType: max
+      time_range_hours: 1
+  - name: wmax#3
+    when:
+      first_level_type: 100
+      stepType: max
+      time_range_hours: 3
+  - name: wmax
+    when:
+      first_level_type: 100
+      stepType: max
+- key:
+  - 0
+  - 2
+  - 12
+  name: vor
+  wgrib2_name: RELV
+- key:
+  - 0
+  - 2
+  - 13
+  name: div
+  wgrib2_name: RELD
+- key:
+  - 0
+  - 2
+  - 22
+  name: gust
+  wgrib2_name: GUST
+- key:
+  - 0
+  - 2
+  - 25
+  name: shr
+  wgrib2_name: VWSH
+  variants:
+  - name: shr(0-1000)
+    when:
+      first_level_type: 103
+      first_level: 1000
+      second_level_type: 103
+      second_level: 0
+  - name: shr(0-3000)
+    when:
+      first_level_type: 103
+      first_level: 3000
+      second_level_type: 103
+      second_level: 0
+  - name: shr(0-6000)
+    when:
+      first_level_type: 103
+      first_level: 6000
+      second_level_type: 103
+      second_level: 0
+- key:
+  - 0
+  - 2
+  - 224
+  name: voradv
+- key:
+  - 0
+  - 2
+  - 225
+  name: mpv1
+- key:
+  - 0
+  - 2
+  - 226
+  name: mpv2
+- key:
+  - 0
+  - 2
+  - 227
+  name: wess
+  variants:
+  - name: wess
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 2
+  - 228
+  name: nsss
+  variants:
+  - name: nsss
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 2
+  - 229
+  name: thunwind
+- key:
+  - 0
+  - 2
+  - 230
+  name: seawave
+- key:
+  - 0
+  - 2
+  - 231
+  name: weph
+- key:
+  - 0
+  - 2
+  - 232
+  name: haze
+- key:
+  - 0
+  - 2
+  - 233
+  name: apd
+- key:
+  - 0
+  - 2
+  - 234
+  name: fog
+- key:
+  - 0
+  - 2
+  - 235
+  name: vi
+- key:
+  - 0
+  - 2
+  - 236
+  name: wi
+  variants:
+  - name: wi
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 2
+  - 237
+  name: shrmax
+  variants:
+  - name: shrmax(0-600)
+    when:
+      first_level_type: 103
+      first_level: 600
+      second_level_type: 103
+      second_level: 0
+- key:
+  - 0
+  - 2
+  - 238
+  name: shrmaxdir
+  variants:
+  - name: shrmaxdir(0-600)
+    when:
+      first_level_type: 103
+      first_level: 600
+      second_level_type: 103
+      second_level: 0
+- key:
+  - 0
+  - 3
+  - 0
+  name: ps
+  wgrib2_name: PRES
+  variants:
+  - name: ps
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 3
+  - 1
+  name: psl
+  wgrib2_name: PRMSL
+  variants:
+  - name: psl
+    when:
+      first_level_type: 101
+- key:
+  - 0
+  - 3
+  - 5
+  name: h
+  wgrib2_name: HGT
+  variants:
+  - name: h
+    when:
+      first_level_type: 100
+  - name: zs
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 3
+  - 18
+  name: pblh
+  wgrib2_name: HPBL
+  variants:
+  - name: pblh
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 3
+  - 26
+  name: pi
+- key:
+  - 0
+  - 3
+  - 224
+  name: pip
+- key:
+  - 0
+  - 3
+  - 225
+  name: ht0
+  variants:
+  - name: ht0
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 3
+  - 226
+  name: ht2
+  variants:
+  - name: ht2
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 3
+  - 227
+  name: hib
+- key:
+  - 0
+  - 3
+  - 228
+  name: znt
+  variants:
+  - name: znt
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 4
+  - 8
+  name: gusw
+  wgrib2_name: USWRF
+  variants:
+  - name: gusw
+    when:
+      first_level_type: 1
+  - name: tusw
+    when:
+      first_level_type: 8
+- key:
+  - 0
+  - 4
+  - 9
+  name: gsw
+  wgrib2_name: NSWRF
+  variants:
+  - name: tsw
+    when:
+      first_level_type: 8
+      stepType: accum
+- key:
+  - 0
+  - 4
+  - 11
+  name: gswc
+  wgrib2_name: NSWRFCS
+  variants:
+  - name: gswc
+    when:
+      first_level_type: 1
+  - name: tswc
+    when:
+      first_level_type: 8
+- key:
+  - 0
+  - 4
+  - 53
+  name: guswc
+  wgrib2_name: USWRFCS
+  variants:
+  - name: guswc
+    when:
+      first_level_type: 1
+  - name: tuswc
+    when:
+      first_level_type: 8
+- key:
+  - 0
+  - 4
+  - 227
+  name: btv
+- key:
+  - 0
+  - 4
+  - 228
+  name: bti
+- key:
+  - 0
+  - 5
+  - 4
+  name: gulw
+  wgrib2_name: ULWRF
+  variants:
+  - name: gulw
+    when:
+      first_level_type: 1
+  - name: tulw
+    when:
+      first_level_type: 8
+- key:
+  - 0
+  - 5
+  - 5
+  name: glw
+  wgrib2_name: NLWRF
+- key:
+  - 0
+  - 5
+  - 8
+  name: gdlwc
+  wgrib2_name: DLWRFCS
+  variants:
+  - name: gdlwc
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 5
+  - 224
+  name: gulwc
+  variants:
+  - name: gulwc
+    when:
+      first_level_type: 1
+  - name: tulwc
+    when:
+      first_level_type: 8
+- key:
+  - 0
+  - 6
+  - 1
+  name: tcc
+  wgrib2_name: TCDC
+- key:
+  - 0
+  - 6
+  - 3
+  name: lcc
+  wgrib2_name: LCDC
+- key:
+  - 0
+  - 6
+  - 4
+  name: mcc
+  wgrib2_name: MCDC
+- key:
+  - 0
+  - 6
+  - 5
+  name: hcc
+  wgrib2_name: HCDC
+- key:
+  - 0
+  - 6
+  - 11
+  name: cldb
+  wgrib2_name: CDCB
+- key:
+  - 0
+  - 6
+  - 12
+  name: cldt
+  wgrib2_name: CDCTOP
+- key:
+  - 0
+  - 6
+  - 13
+  name: ceiling
+  wgrib2_name: CEIL
+- key:
+  - 0
+  - 6
+  - 22
+  name: cc
+  wgrib2_name: CDCC
+- key:
+  - 0
+  - 7
+  - 0
+  name: pli
+  wgrib2_name: PLI
+  variants:
+  - name: pli
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 7
+  - 1
+  name: bli
+  wgrib2_name: BLI
+- key:
+  - 0
+  - 7
+  - 2
+  name: kidx
+  wgrib2_name: KX
+  variants:
+  - name: kidx
+    when:
+      first_level_type: 101
+- key:
+  - 0
+  - 7
+  - 4
+  name: tti
+  wgrib2_name: TOTALX
+  variants:
+  - name: tti
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 7
+  - 5
+  name: sweatidx
+  wgrib2_name: SX
+  variants:
+  - name: sweatidx
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 7
+  - 6
+  name: cape
+  wgrib2_name: CAPE
+  variants:
+  - name: cape
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 7
+  - 7
+  name: cin
+  wgrib2_name: CIN
+  variants:
+  - name: cin
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 7
+  - 8
+  name: srh
+  wgrib2_name: HLCY
+  variants:
+  - name: srh(0-1000)
+    when:
+      first_level_type: 103
+      first_level: 1000
+      second_level_type: 103
+      second_level: 0
+  - name: srh(0-3000)
+    when:
+      first_level_type: 103
+      first_level: 3000
+      second_level_type: 103
+      second_level: 0
+- key:
+  - 0
+  - 7
+  - 12
+  name: ri
+  wgrib2_name: RI
+  variants:
+  - name: risfc
+    when:
+      first_level_type: 1
+  - name: ripbl
+    when:
+      first_level_type: 166
+- key:
+  - 0
+  - 7
+  - 13
+  name: si
+  wgrib2_name: SHWINX
+  variants:
+  - name: si
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 7
+  - 15
+  name: uhmax
+  wgrib2_name: UPHL
+  variants:
+  - name: uhmax
+    when:
+      stepType: max
+  - name: uhmax(2000-5000)
+    when:
+      first_level_type: 103
+      first_level: 5000
+      second_level_type: 103
+      second_level: 2000
+      stepType: max
+- key:
+  - 0
+  - 7
+  - 224
+  name: dcape
+  wgrib2_name: DCAPE
+- key:
+  - 0
+  - 7
+  - 225
+  name: ssi
+- key:
+  - 0
+  - 7
+  - 226
+  name: asi
+- key:
+  - 0
+  - 16
+  - 3
+  name: echotop
+  wgrib2_name: RETOP
+- key:
+  - 0
+  - 16
+  - 224
+  name: cdbz
+  wgrib2_name: CR
+  variants:
+  - name: cdbzmax
+    when:
+      stepType: max
+  - name: cdbzmax#1
+    when:
+      stepType: max
+      time_range_hours: 1
+  - name: cdbzmax#3
+    when:
+      stepType: max
+      time_range_hours: 3
+- key:
+  - 0
+  - 16
+  - 225
+  name: dbz
+  variants:
+  - name: dbzmax
+    when:
+      stepType: max
+  - name: dbzmax#3
+    when:
+      stepType: max
+      time_range_hours: 3
+- key:
+  - 0
+  - 16
+  - 226
+  name: dbzmaxh
+- key:
+  - 0
+  - 19
+  - 0
+  name: vis
+  wgrib2_name: VIS
+  variants:
+  - name: vis
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 19
+  - 1
+  name: albedo
+  wgrib2_name: ALBDO
+  variants:
+  - name: albedo
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 19
+  - 224
+  name: fogh
+  variants:
+  - name: fogh
+    when:
+      first_level_type: 1
+- key:
+  - 0
+  - 19
+  - 225
+  name: fogod
+  variants:
+  - name: fogod
+    when:
+      first_level_type: 1
+- key:
+  - 2
+  - 0
+  - 2
+  name: TSOIL
+  wgrib2_name: TSOIL
+- key:
+  - 2
+  - 0
+  - 22
+  name: SOIL_M
+  wgrib2_name: SOIL_M
+- key:
+  - 2
+  - 0
+  - 24
+  name: sshf
+  wgrib2_name: HFLUX

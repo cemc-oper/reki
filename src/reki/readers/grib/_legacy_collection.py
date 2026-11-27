@@ -7,15 +7,58 @@ v1 still owns deduplication, conflicts, grid checks, coordinates and reports.
 
 import json
 
+import eccodes
+import xarray as xr
+
 from cedarkit_query import QueryError
-from reki._legacy import check_engine, ignore_index
+from reki._legacy import check_engine, ignore_index, reader_errors
 from reki.catalog import plan_source_binding
 from reki.core.source_spec import redact
 from reki.selection.core import construct_source
 from reki.translation.grib_backend import GribBackend, NATIVE_KEYS
 from reki.translation.common import software_origin
+from .eccodes.bytes import create_message_from_bytes
 from .eccodes._check import _check_message
 from .eccodes._level import _fix_level
+from .eccodes._xarray import create_data_array_from_message
+
+
+def _has_legacy_grid(field):
+    native = field.metadata["native_fields"]
+    return native.get("gridType") == "regular_ll" and not (
+        native.get("jPointsAreConsecutive") or native.get("alternativeRowScanning")
+    )
+
+
+def _first_field_dataset(fields, parameter, level_dim, include_report):
+    """Assemble the first matching records with the original DataArray layout."""
+    from reki.selection.output import _attach_report, _group_fields
+
+    _group_fields(fields)
+    field_name = parameter if isinstance(parameter, str) else None
+    datasets = []
+    for field in fields:
+        path = field.metadata["source"]["path"]
+        with reader_errors(path, "load_field_from_files"):
+            message = create_message_from_bytes(field.read_grib_message())
+            try:
+                array = create_data_array_from_message(
+                    message, level_dim_name=level_dim, field_name=field_name,
+                    _legacy_names=True,
+                )
+            finally:
+                eccodes.codes_release(message)
+        datasets.append(array.expand_dims(["time", "step"]).to_dataset())
+    dataset = (
+        xr.combine_by_coords(
+            datasets, coords="different", compat="no_conflicts",
+            join="outer", combine_attrs="drop_conflicts",
+        ).transpose("time", "step", ...)
+        if datasets else xr.Dataset()
+    )
+    if include_report:
+        _attach_report(dataset, fields.report)
+    return dataset
 
 
 def read_collection(
@@ -35,15 +78,18 @@ def read_collection(
     paths = list(paths)
     if not paths:
         raise QueryError("invalid_query", "/files", "File collection must be nonempty")
-    fixed, _ = _fix_level(level_type, None)
-    if level == "all":
-        level = None
+    fixed, level_dim = _fix_level(level_type, None)
+    first_per_file = single_variable and level is None
     selector = dict(
         parameter=parameter, level_type=level_type, level=level, **conditions
     )
     encoded = json.dumps(redact(selector), sort_keys=True, default=str)
+    if level == "all":
+        level = None
 
     class LegacyBackend(GribBackend):
+        _legacy_first_per_file = first_per_file
+
         def _legacy_filter(self, handle):
             return _check_message(handle, parameter, fixed, level, **conditions)
 
@@ -83,6 +129,8 @@ def read_collection(
                         "variable_count": len(variables),
                     },
                 )
+        if first_per_file and all(_has_legacy_grid(field) for field in fields):
+            return _first_field_dataset(fields, parameter, level_dim, include_report)
         return fields.to_xarray(include_report=include_report)
 
 

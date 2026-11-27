@@ -620,6 +620,8 @@ class GribScan:
                                 self.backend.read_grib_message, snapshot, offset, length
                             ),
                         )
+                        if getattr(self.backend, "_legacy_first_per_file", False):
+                            break
                 finally:
                     iterator.close()
                 snapshot.verify()

@@ -64,6 +64,7 @@ reki 提供以下功能：
    快速开始 <quick-start/index>
    指南 <guide/index>
    开发 <development/index>
+   发布说明 <release-notes>
 
 
 .. _cemc-oper/cedarkit-test-data: https://github.com/cemc-oper/cedarkit-test-data
