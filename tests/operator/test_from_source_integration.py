@@ -1,4 +1,4 @@
-"""End-to-end tests: from_source().to_xarray() output feeds operators.
+"""End-to-end tests feeding GRIB query results and lazy fields to operators.
 
 Uses the real GRIB2 test file (fetched through the ``test`` source via
 the root conftest fixture). GRIB fields come with descending latitude,
@@ -10,16 +10,16 @@ import pytest
 import xarray as xr
 
 import reki
+from reki.format.grib import load_field_from_file
 from reki.operator import extract_point, extract_region, interpolate_grid
 
 
 @pytest.fixture
 def field(grib2_gfs_basic_file_path) -> xr.DataArray:
-    data = reki.from_source("file", grib2_gfs_basic_file_path).to_xarray(
-        parameter="t", level_type="pl", level=850,
-    )
-    assert isinstance(data, xr.DataArray)
-    return data
+    declaration = {"kind": "file", "path": str(grib2_gfs_basic_file_path)}
+    with reki.from_source(declaration) as source:
+        data = source.sel(parameter="t", level_type="pl", level=850).one().to_xarray()
+    return data["t"].squeeze(drop=True)
 
 
 @pytest.fixture
@@ -78,9 +78,11 @@ class TestLazyField:
 
     @pytest.fixture
     def lazy_field(self, grib2_gfs_basic_file_path) -> xr.DataArray:
-        return reki.from_source("file", grib2_gfs_basic_file_path).to_xarray(
-            parameter="t", level_type="pl", level=850, lazy=True,
+        data = load_field_from_file(
+            grib2_gfs_basic_file_path, parameter="t", level_type="pl", level=850, lazy=True,
         )
+        assert isinstance(data, xr.DataArray)
+        return data
 
     def test_extract_region_matches_eager(self, lazy_field, field, region_bounds):
         lazy_region = extract_region(lazy_field, **region_bounds)
